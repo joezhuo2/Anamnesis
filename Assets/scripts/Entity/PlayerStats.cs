@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "player_stats", menuName = "Scriptable Objects/stats/player")]
-public class PlayerStats : Stats
+public class PlayerStats : EntityStats
 {
     [Header("Stamina")]
     public int currentStamina;
