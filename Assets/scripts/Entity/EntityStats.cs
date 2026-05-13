@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
-public class Stats : ScriptableObject
+public class EntityStats : ScriptableObject
 {
     [Header("Offense")]
     public int damagePct;
