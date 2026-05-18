@@ -16,6 +16,7 @@ public class ProjectileData : ScriptableObject
     [Header("Advanced")]
     public bool canHitSameEntity;
     public int followDistance;
+    public EntityStats owner;
     
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
