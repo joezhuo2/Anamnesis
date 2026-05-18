@@ -9,7 +9,7 @@ public class EntityStats : ScriptableObject
     public int attackSpeedPct;
     public int physicalDmgPct;
     public int spellDmgPct;
-    public int critChance;
+    [Range(0, 100)] public int critChance;
     public int critDamage;
     public float aoePct;
 
