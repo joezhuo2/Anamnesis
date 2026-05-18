@@ -3,10 +3,9 @@ using UnityEngine;
 
 public static class DamageCalculator
 {
-    public static DamagePacket BuildDamagePacket(EntityStats stats, AttackData attack)
+    public static DamagePacket BuildDamagePacket(ProjectileData pd)
     {
         DamagePacket dp = new();
-        ProjectileData pd = attack.projectilePrefab.GetComponent<ProjectileData>();
 
         var typeMults = new Dictionary<DamageType, float>
         {
@@ -21,9 +20,9 @@ public static class DamageCalculator
 
             DamageType type = kvp.Key;
 
-            float damage = stats.attack * mult * TypeBonus(type, stats);
+            float damage = pd.owner.attack * mult * TypeBonus(type, pd.owner);
 
-            var (finalDamage, isCrit) = RollCrits(damage, stats);
+            var (finalDamage, isCrit) = RollCrits(damage, pd.owner);
 
             dp.AddInstance(type, finalDamage, isCrit);
         }
