@@ -10,12 +10,11 @@ public class AttackData : ScriptableObject
     [Header("Spawn Logic")]
     public int projectileCount = 1;
     public int randomCount; // max number of additional projectiles to spawn
-    public float spread;
+    public float spread; // this becomes radius for barrage attacks
     public float randomSpread; // max increase/decrease to spread
     public float minDelay; // min delay between each projectile
     public float maxDelay; // max delay between each projectile
-    
-    [Header("Player Only")]
+    [Header("Resource Costs")]
     public float staminaCost;
     public float staminaCostPct;
     public float healthCost;
