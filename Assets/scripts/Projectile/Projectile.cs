@@ -54,30 +54,49 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleSize()
     {
-        float sizeMult = 1f + pd.owner.aoePct / 100f;
+        float sizeMult = 1f + (pd.owner.aoePct / 100f);
         transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
     }
 
     private void HandleDirection()
     {
-        if (pd.owner.GameObject().CompareTag("Enemy") || !(dir == Vector2.zero)) return;
+        if (pd.owner.GameObject().CompareTag("Enemy") || dir != Vector2.zero) return;
 
         // finish this later
     }
 
     private void HandleMovement(bool start)
     {
-        
+        if (rb == null || pd.speed <= 0) return;
+
+        if (start) rb.linearVelocity = dir.normalized * pd.speed;
+
+        if (pd.followDistance > 0)
+        {
+            bool isEnemy = pd.owner.GameObject().CompareTag("Enemy");
+            followTarget = FindClosestTargetInRange(pd.followDistance, isEnemy);
+
+            FollowTarget();
+        }
+    }
+    private void FollowTarget()
+    {
+        float dist = Vector2.Distance(transform.position, followTarget.position);
+        if (dist <= pd.followDistance)
+        {
+            Vector2 newDir = (followTarget.position - transform.position).normalized;
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, newDir * pd.speed, 0.1f);
+        }
     }
 
     private void SetTarget(Transform target) => followTarget = target;
 
-    private Transform FindClosestTargetInRange(float range)
+    private Transform FindClosestTargetInRange(float range, bool searchForPlayer)
     {
         Transform closest = null;
         float minDist = range;
 
-        if (pd.owner.GameObject().CompareTag("Player"))
+        if (searchForPlayer)
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject e in enemies)
@@ -92,7 +111,7 @@ public class Projectile : MonoBehaviour {
                 }
             }
         }
-        else if (pd.owner.GameObject().CompareTag("Enemy"))
+        else
         {
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject p in players)
@@ -118,6 +137,6 @@ public class Projectile : MonoBehaviour {
 
     private void SelfApplyEffect()
     {
-        
+
     }
 }
