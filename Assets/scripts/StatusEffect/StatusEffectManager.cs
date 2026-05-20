@@ -17,7 +17,10 @@ public class StatusEffectManager : MonoBehaviour
                 existing.currentStacks++;
                 existing.OnStack();
             }
-            else existing.currentTime = 0;
+            else
+            {
+                existing.currentTime = 0;
+            }
         }
         else
         {
