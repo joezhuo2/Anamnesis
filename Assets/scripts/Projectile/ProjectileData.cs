@@ -8,16 +8,18 @@ public class ProjectileData : ScriptableObject
     public float speed;
     public float lifetime;
     public int numPierce = 1;
-
     [Header("Damage Multipliers")]
     public float physicalMult;
     public float spellMult;
-
     [Header("Advanced")]
     public bool canHitSameEntity;
     public int followDistance;
     public EntityStats owner;
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
-    [Range(0, 1)] public float additionalChance = 0; 
+    [Range(0, 1)] public float additionalChance = 0;
+    [Header("Effects")]
+    public StatusEffect effect;
+    public bool selfApply;
+    [Range(0, 1)] public float effectChance = 0;
 }

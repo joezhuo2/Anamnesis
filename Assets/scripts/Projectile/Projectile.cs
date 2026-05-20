@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -28,13 +29,8 @@ public class Projectile : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         if (pierced > pd.numPierce) return;
-        if (other.TryGetComponent<EntityStats>(out var stats))
-        {
-            if (pd.owner != stats)
-            {
-                HandleHitEntity(stats);
-            }
-        }
+        if (other.TryGetComponent<EntityStats>(out var stats) && pd.owner != stats)
+            HandleHitEntity(stats);
     }
     private void HandleHitEntity(EntityStats other)
     {
@@ -45,12 +41,17 @@ public class Projectile : MonoBehaviour {
         eh.TakeDamage(packet);
         pierced++;
 
-        if (pd.additionalChance > 0f) HandleAdditionalSpawns();
+        if (pd.additionalChance > 0f && pd.additionalAttack != null)
+            HandleAdditionalSpawns();
+
+        if (pd.effect == null) return;
+        if (pd.owner.GameObject() != other.GameObject()) ApplyEffect(other.GameObject());
+        else if (pd.selfApply) ApplyEffect();
     }
 
     private void HandleAdditionalSpawns()
     {
-
+        // still TO-DO
     }
     private void HandleSize()
     {
@@ -88,7 +89,6 @@ public class Projectile : MonoBehaviour {
             rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, newDir * pd.speed, 0.1f);
         }
     }
-
     private void SetTarget(Transform target) => followTarget = target;
 
     private Transform FindClosestTargetInRange(float range, bool searchForPlayer)
@@ -126,17 +126,15 @@ public class Projectile : MonoBehaviour {
                 }
             }
         }
-
         return closest;
     }
-
-    private void TargetApplyEffect(Collider2D target)
+    private void ApplyEffect(GameObject target = null)
     {
-        
-    }
+        if (!(Random.value <= pd.effectChance)) return;
 
-    private void SelfApplyEffect()
-    {
-
+        if (target == null && pd.owner.GameObject().TryGetComponent<StatusEffectManager>(out var ssem))
+            ssem.AddEffect(pd.effect, pd.owner.GameObject());
+        else if (target.TryGetComponent<StatusEffectManager>(out var tsem))
+            tsem.AddEffect(pd.effect, pd.owner.GameObject());
     }
 }
