@@ -15,6 +15,7 @@ public class ProjectileData : ScriptableObject
     public bool canHitSameEntity;
     public int followDistance;
     public EntityStats owner;
+    public float rotationOffset;
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
     [Range(0, 1)] public float additionalChance = 0;

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data.Common;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,10 +24,14 @@ public class Projectile : MonoBehaviour {
         Destroy(gameObject, pd.lifetime);
     }
 
-    void Update() => HandleMovement(false);
+    void FixedUpdate() => HandleMovement(false);
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (pierced > pd.numPierce) return;
+        if (pierced >= pd.numPierce)
+        {
+            Destroy(gameObject);
+            return;
+        }
         if (other.TryGetComponent<EntityStats>(out var stats) && pd.owner != stats)
             HandleHitEntity(stats);
     }
@@ -40,6 +43,9 @@ public class Projectile : MonoBehaviour {
 
         eh.TakeDamage(packet);
         pierced++;
+        hit.Add(other.GameObject());
+
+        if (pierced >= pd.numPierce) Destroy(gameObject);
 
         if (pd.additionalChance > 0f && pd.additionalAttack != null)
             HandleAdditionalSpawns();
@@ -63,7 +69,13 @@ public class Projectile : MonoBehaviour {
     {
         if (pd.owner.GameObject().CompareTag("Enemy") || dir != Vector2.zero) return;
 
-        // finish this later
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
+        mouseWorldPos.z = 0f;
+
+        dir = (mouseWorldPos - transform.position).normalized;
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle + pd.rotationOffset);
     }
 
     private void HandleMovement(bool start)
@@ -74,14 +86,19 @@ public class Projectile : MonoBehaviour {
 
         if (pd.followDistance > 0)
         {
-            bool isEnemy = pd.owner.GameObject().CompareTag("Enemy");
-            followTarget = FindClosestTargetInRange(pd.followDistance, isEnemy);
+            if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
+            {
+                bool searchForPlayer = pd.owner.GameObject().CompareTag("Enemy");
+                followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
+            }
 
             FollowTarget();
         }
     }
     private void FollowTarget()
     {
+        if (followTarget == null) return;
+
         float dist = Vector2.Distance(transform.position, followTarget.position);
         if (dist <= pd.followDistance)
         {
@@ -96,34 +113,20 @@ public class Projectile : MonoBehaviour {
         Transform closest = null;
         float minDist = range;
 
-        if (searchForPlayer)
-        {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject e in enemies)
-            {
-                if (hit.Contains(e) && !pd.canHitSameEntity) continue;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range);
+        string targetTag = searchForPlayer ? "Player" : "Enemy";
 
-                float dist = Vector2.Distance(transform.position, e.transform.position);
-                if (dist < minDist)
-                {
-                    minDist = dist;
-                    closest = e.transform;
-                }
-            }
-        }
-        else
+        foreach (Collider2D col in colliders)
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            foreach (GameObject p in players)
-            {
-                if (hit.Contains(p) && !pd.canHitSameEntity) continue;
+            if (!col.CompareTag(targetTag)) continue;
 
-                float dist = Vector2.Distance(transform.position, p.transform.position);
-                if (dist < minDist)
-                {
-                    minDist = dist;
-                    closest = p.transform;
-                }
+            if (!pd.canHitSameEntity && hit.Contains(col.gameObject)) continue;
+
+            float dist = Vector2.Distance(transform.position, col.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = col.transform;
             }
         }
         return closest;
