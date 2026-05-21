@@ -1,5 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
+
+public enum ProjectilePattern { Single, Spread, Circle, Barrage }
 
 public class ProjectileSpawner : MonoBehaviour 
 {
@@ -58,7 +60,7 @@ public class ProjectileSpawner : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnSpread(GameObject prefab, Vector2 origin, Vector2 dir, float radius, EntityStats source = null)
+    public IEnumerator SpawnSpread(GameObject prefab, Vector2 origin, Vector2 dir, float dist, EntityStats source = null)
     {
         ProjectileData pd = prefab.GetComponent<Projectile>().pd;
         AttackData ad = pd.mainAttack;
@@ -75,7 +77,7 @@ public class ProjectileSpawner : MonoBehaviour
             if (ad.randomSpread > 0f) angle += Random.Range(-ad.randomSpread / 2f, ad.randomSpread / 2f);
 
             Vector2 targetDir = Quaternion.Euler(0, 0, angle - baseAngle) * dir.normalized;
-            Vector2 spawnPos = origin + (targetDir * radius);
+            Vector2 spawnPos = origin + (targetDir * dist);
 
             SpawnProjectile(prefab, spawnPos, targetDir, true, source);
 
@@ -97,6 +99,53 @@ public class ProjectileSpawner : MonoBehaviour
 
             SpawnProjectile(prefab, spawnPos, dir, true, source);
             yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
+        }
+    }
+
+    public IEnumerator SpawnFromPattern(
+        GameObject prefab,
+        GameObject source,
+        Vector2? center = null
+    )
+    {
+        Projectile p = prefab.GetComponent<Projectile>();
+        ProjectileData pd = p.pd;
+        AttackData ad = pd.mainAttack;
+        EntityStats es = source.GetComponent<EntityStats>();
+
+        Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
+
+        pd.owner = es;
+
+        Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
+        Vector2 dir = source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right;
+
+        float finalDist = pd.spawnDistance;
+        if (!pd.fixedDistance && source.CompareTag("Player"))
+        {
+            float mouseDist = Vector2.Distance(spawnCenter, mouse);
+            finalDist = Mathf.Min(mouseDist, finalDist);
+        }
+
+        Vector2 spawnPos = spawnCenter + (dir * finalDist);
+
+        if (ad.minDelay > 0 || ad.maxDelay > 0)
+            yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
+
+        switch (ad.pattern)
+        {
+            case ProjectilePattern.Single:
+                SpawnProjectile(prefab, spawnPos, dir, true, es);
+                break;
+            case ProjectilePattern.Spread:
+                yield return SpawnSpread(prefab, spawnPos, dir, finalDist, es);
+                break;
+            case ProjectilePattern.Circle:
+                yield return SpawnCircle(prefab, spawnPos, finalDist, es);
+                break;
+            case ProjectilePattern.Barrage:
+                yield return SpawnBarrage(prefab, spawnPos, dir, es);
+                break;
         }
     }
 }

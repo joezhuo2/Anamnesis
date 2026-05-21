@@ -16,6 +16,8 @@ public class ProjectileData : ScriptableObject
     public int followDistance;
     public EntityStats owner;
     public float rotationOffset;
+    public float spawnDistance;
+    public bool fixedDistance;
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
     [Range(0, 1)] public float additionalChance = 0;

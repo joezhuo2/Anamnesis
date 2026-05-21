@@ -6,7 +6,7 @@ public class AttackData : ScriptableObject
     [Header("Basic")]
     public float cooldown;
     public GameObject projectilePrefab;
-
+    public ProjectilePattern pattern;
     [Header("Spawn Logic")]
     public int projectileCount = 1;
     public int randomCount; // max number of additional projectiles to spawn
