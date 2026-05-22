@@ -105,22 +105,23 @@ public class ProjectileSpawner : MonoBehaviour
     public IEnumerator SpawnFromPattern(
         GameObject prefab,
         GameObject source,
-        Vector2? center = null
+        Vector2? center = null,
+        Vector2? dirOverride = null,
+        float? distOverride = null
     )
     {
         Projectile p = prefab.GetComponent<Projectile>();
         ProjectileData pd = p.pd;
         AttackData ad = pd.mainAttack;
         EntityStats es = source.GetComponent<EntityStats>();
-
         Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
 
         pd.owner = es;
 
         Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
-        Vector2 dir = source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right;
+        Vector2 dir = dirOverride ?? (source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right);
+        float finalDist = distOverride ?? pd.spawnDistance;
 
-        float finalDist = pd.spawnDistance;
         if (!pd.fixedDistance && source.CompareTag("Player"))
         {
             float mouseDist = Vector2.Distance(spawnCenter, mouse);

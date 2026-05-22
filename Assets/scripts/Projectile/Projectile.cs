@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour {
     private readonly List<GameObject> hit = new();
     private Transform followTarget;
     private Rigidbody2D rb;
-    void Start()
+    private void Start()
     {
         pierced = 0;
         HandleSize();
@@ -24,14 +24,16 @@ public class Projectile : MonoBehaviour {
         Destroy(gameObject, pd.lifetime);
     }
 
-    void FixedUpdate() => HandleMovement(false);
-    void OnTriggerEnter2D(Collider2D other)
+    private void FixedUpdate() => HandleMovement(false);
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (pierced >= pd.numPierce)
         {
             Destroy(gameObject);
             return;
         }
+        if (!pd.canHitSameEntity && hit.Contains(other.gameObject)) return;
+
         if (other.TryGetComponent<EntityStats>(out var stats) && pd.owner != stats)
             HandleHitEntity(stats);
     }
@@ -57,7 +59,16 @@ public class Projectile : MonoBehaviour {
 
     private void HandleAdditionalSpawns()
     {
-        // still TO-DO
+        if (Random.value > pd.additionalChance) return;
+        if (pd.additionalAttack == null || pd.additionalAttack.projectilePrefab == null) return;
+        if (ProjectileSpawner.Instance == null) return;
+
+        ProjectileSpawner spawner = ProjectileSpawner.Instance;
+        GameObject prefab = pd.additionalAttack.projectilePrefab;
+        GameObject s = pd.owner.GameObject();
+        Vector2? addDir = pd.additionalFollowsMouse ? null : dir;
+
+        spawner.StartCoroutine(spawner.SpawnFromPattern(prefab, s, transform.position, addDir, pd.distFromCenter));
     }
     private void HandleSize()
     {

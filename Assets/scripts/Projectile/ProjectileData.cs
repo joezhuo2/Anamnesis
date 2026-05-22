@@ -21,6 +21,8 @@ public class ProjectileData : ScriptableObject
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
     [Range(0, 1)] public float additionalChance = 0;
+    public bool additionalFollowsMouse = false;
+    public float? distFromCenter = 0f; // distance from location where projectile splits (must be positive to work)
     [Header("Effects")]
     public StatusEffect effect;
     public bool selfApply;
