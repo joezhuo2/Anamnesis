@@ -15,6 +15,7 @@ public class PlayerStats : EntityStats
     public int dashStaminaCost;
     public bool dashShouldApplyIFrame;
     [HideInInspector] public bool isDashing;
+    [HideInInspector] public bool canDash;
     [HideInInspector] public bool canGainStamina;
 
     [Header("Skill points")]
