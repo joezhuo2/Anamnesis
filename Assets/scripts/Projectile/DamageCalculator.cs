@@ -7,25 +7,17 @@ public static class DamageCalculator
     {
         DamagePacket dp = new();
 
-        var typeMults = new Dictionary<DamageType, float>
+        void AddDamageIfValid(DamageType type, float mult)
         {
-            { DamageType.Physical, pd.physicalMult },
-            { DamageType.Spell, pd.spellMult }
-        };
-
-        foreach(var kvp in typeMults)
-        {
-            float mult = kvp.Value;
-            if (mult <= 0) continue;
-
-            DamageType type = kvp.Key;
-
+            if (mult <= 0) return;
             float damage = pd.owner.attack * mult * TypeBonus(type, pd.owner);
-
             var (finalDamage, isCrit) = RollCrits(damage, pd.owner);
-
             dp.AddInstance(type, finalDamage, isCrit);
         }
+
+        AddDamageIfValid(DamageType.Physical, pd.physicalMult);
+        AddDamageIfValid(DamageType.Spell, pd.spellMult);
+
         return dp;
     }
     private static float TypeBonus(DamageType type, EntityStats stats) => type switch
