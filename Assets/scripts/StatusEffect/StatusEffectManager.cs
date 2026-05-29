@@ -53,7 +53,7 @@ public class StatusEffectManager : MonoBehaviour
             if (e.currentTime > e.duration)
             {
                 e.OnExpire();
-                if (activeEffects.Contains(e)) activeEffects.Remove(e);
+                activeEffects.RemoveAt(i);
             }
         }
     }
