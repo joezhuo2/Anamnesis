@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    public PlayerStats p;
+    [HideInInspector] public PlayerStats p;
     public Rigidbody2D rb;
     public Vector2 moveInput;
     public Animator animator;
@@ -13,10 +13,14 @@ public class PlayerMovement : MonoBehaviour
     private static float dashTravelled;
     public static int playerDir = 1; // 1 => facing right, -1 => facing left
     private void Awake() => animator = GetComponent<Animator>();
-    private void Start() => rb = GetComponent<Rigidbody2D>();
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        p = GetComponent<EntityStatManager>()?.s as PlayerStats;
+    }
     private void FixedUpdate()
     {
-        if (!p.isAlive || p.canMove)
+        if (!p.isAlive || !p.canMove)
         {
             rb.linearVelocity = Vector2.zero;
             return;

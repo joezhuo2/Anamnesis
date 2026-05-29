@@ -1,11 +1,11 @@
 using Unity.Mathematics;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyStats), typeof(Animator))]
+[RequireComponent(typeof(Animator))]
 public class EnemyMovement : MonoBehaviour
 {
     private static readonly int IsMovingHash = Animator.StringToHash("isMoving");
-    public EnemyStats es;
+    [HideInInspector] public EnemyStats es;
     public Animator a;
     private bool wasMoving = false;
 
@@ -19,7 +19,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        es = GetComponent<EnemyStats>();
+        es = GetComponent<EntityStatManager>()?.s as EnemyStats;
         a = GetComponent<Animator>();
 
         cTransform = transform;

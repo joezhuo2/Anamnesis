@@ -7,7 +7,13 @@ public class PlayerStamina : MonoBehaviour
     private readonly float regenInterval = 0.2f;
     private readonly float fullRegenFrequency = 5f;
     private float accumaltedRegen = 0f;
-    public PlayerStats p;
+    [HideInInspector] public PlayerStats p;
+
+    private void Start()
+    {
+        p = GetComponent<EntityStatManager>()?.s as PlayerStats;
+    }
+
     public void Update()
     {
         if (p.isAlive)

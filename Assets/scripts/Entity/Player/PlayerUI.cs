@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    public PlayerStats p;
+    [HideInInspector] public PlayerStats p;
     [Header("Levelling")]
     public Slider xpBar;
     public TextMeshProUGUI xpBarText;
@@ -24,9 +24,15 @@ public class PlayerUI : MonoBehaviour
     private int lastStamina = -1;
     private int lastMaxStamina = -1;
 
-    private void Start() => Update();
-    private void Update()
+    private void Start()
     {
+        p = GetComponent<EntityStatManager>()?.s as PlayerStats;
+        UpdateUI();
+    }
+    private void Update() => UpdateUI();
+    private void UpdateUI()
+    {
+        if (p == null) return;
         UpdateXpBar();
         UpdateHealthBar();
         UpdateStaminaBar();
