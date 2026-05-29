@@ -8,11 +8,17 @@ using UnityEngine;
 [RequireComponent(typeof(RectTransform))]
 public class Projectile : MonoBehaviour {
     public ProjectileData pd;
+    [HideInInspector] public GameObject ownerObj;
     [HideInInspector] public Vector2 dir;
     [HideInInspector] public int pierced;
     private readonly List<GameObject> hit = new();
     private Transform followTarget;
     private Rigidbody2D rb;
+    private void Awake()
+    {
+        if (pd != null) pd = Instantiate(pd);
+    }
+
     private void Start()
     {
         pierced = 0;
@@ -34,18 +40,18 @@ public class Projectile : MonoBehaviour {
         }
         if (!pd.canHitSameEntity && hit.Contains(other.gameObject)) return;
 
-        if (other.TryGetComponent<EntityStats>(out var stats) && pd.owner != stats)
-            HandleHitEntity(stats);
+        if (other.TryGetComponent<EntityStatManager>(out var statManager) && pd.owner != statManager.s)
+            HandleHitEntity(other.gameObject, statManager.s);
     }
-    private void HandleHitEntity(EntityStats other)
+    private void HandleHitEntity(GameObject target, EntityStats otherStats)
     {
-        if (!other.GameObject().TryGetComponent<EntityHealth>(out var eh)) return;
+        if (!target.TryGetComponent<EntityHealth>(out var eh)) return;
 
         var packet = DamageCalculator.BuildDamagePacket(pd);
 
         eh.TakeDamage(packet);
         pierced++;
-        hit.Add(other.GameObject());
+        hit.Add(target);
 
         if (pierced >= pd.numPierce) Destroy(gameObject);
 
@@ -53,7 +59,7 @@ public class Projectile : MonoBehaviour {
             HandleAdditionalSpawns();
 
         if (pd.effect == null) return;
-        if (pd.owner.GameObject() != other.GameObject()) ApplyEffect(other.GameObject());
+        if (ownerObj != target) ApplyEffect(target);
         else if (pd.selfApply) ApplyEffect();
     }
 
@@ -65,7 +71,7 @@ public class Projectile : MonoBehaviour {
 
         ProjectileSpawner spawner = ProjectileSpawner.Instance;
         GameObject prefab = pd.additionalAttack.projectilePrefab;
-        GameObject s = pd.owner.GameObject();
+        GameObject s = ownerObj;
         Vector2? addDir = pd.additionalFollowsMouse ? null : dir;
 
         spawner.StartCoroutine(spawner.SpawnFromPattern(prefab, s, transform.position, addDir, pd.distFromCenter));

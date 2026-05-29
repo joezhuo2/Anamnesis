@@ -18,7 +18,7 @@ public class ProjectileSpawner : MonoBehaviour
         Vector2 spawnPos,
         Vector2 dir,
         bool rotateToDir,
-        EntityStats source = null
+        GameObject sourceObj = null
     )
     {
         if (prefab == null) return null;
@@ -35,13 +35,16 @@ public class ProjectileSpawner : MonoBehaviour
         {
             p.dir = dir;
             p.pierced = 0;
-            if (p.pd != null) p.pd.owner = source;
+            p.ownerObj = sourceObj;
+
+            EntityStatManager statManager = sourceObj != null ? sourceObj.GetComponent<EntityStatManager>() : null;
+            if (p.pd != null && statManager != null) p.pd.owner = statManager.s;
         }
 
         return proj;
     }
 
-    public IEnumerator SpawnCircle(GameObject prefab, Vector2 center, float radius, EntityStats source = null)
+    public IEnumerator SpawnCircle(GameObject prefab, Vector2 center, float radius, GameObject sourceObj = null)
     {
         ProjectileData pd = prefab.GetComponent<Projectile>().pd;
         AttackData ad = pd.mainAttack;
@@ -55,12 +58,12 @@ public class ProjectileSpawner : MonoBehaviour
             Vector2 dir = new(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             Vector2 spawnPos = center + (dir * radius);
 
-            SpawnProjectile(prefab, spawnPos, dir, true, source);
+            SpawnProjectile(prefab, spawnPos, dir, true, sourceObj);
             yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
         }
     }
 
-    public IEnumerator SpawnSpread(GameObject prefab, Vector2 origin, Vector2 dir, float dist, EntityStats source = null)
+    public IEnumerator SpawnSpread(GameObject prefab, Vector2 origin, Vector2 dir, float dist, GameObject sourceObj = null)
     {
         ProjectileData pd = prefab.GetComponent<Projectile>().pd;
         AttackData ad = pd.mainAttack;
@@ -79,13 +82,13 @@ public class ProjectileSpawner : MonoBehaviour
             Vector2 targetDir = Quaternion.Euler(0, 0, angle - baseAngle) * dir.normalized;
             Vector2 spawnPos = origin + (targetDir * dist);
 
-            SpawnProjectile(prefab, spawnPos, targetDir, true, source);
+            SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj);
 
             yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
         }
     }
 
-    public IEnumerator SpawnBarrage(GameObject prefab, Vector2 origin, Vector2 dir, EntityStats source)
+    public IEnumerator SpawnBarrage(GameObject prefab, Vector2 origin, Vector2 dir, GameObject sourceObj)
     {
         ProjectileData pd = prefab.GetComponent<Projectile>().pd;
         AttackData ad = pd.mainAttack;
@@ -97,7 +100,7 @@ public class ProjectileSpawner : MonoBehaviour
             Vector2 randomOffset = Random.insideUnitCircle * ad.spread;
             Vector2 spawnPos = origin + randomOffset;
 
-            SpawnProjectile(prefab, spawnPos, dir, true, source);
+            SpawnProjectile(prefab, spawnPos, dir, true, sourceObj);
             yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
         }
     }
@@ -113,7 +116,10 @@ public class ProjectileSpawner : MonoBehaviour
         Projectile p = prefab.GetComponent<Projectile>();
         ProjectileData pd = p.pd;
         AttackData ad = pd.mainAttack;
-        EntityStats es = source.GetComponent<EntityStats>();
+
+        EntityStatManager statManager = source.GetComponent<EntityStatManager>();
+        EntityStats es = statManager != null ? statManager.s : null;
+
         Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
 
         pd.owner = es;
@@ -136,16 +142,16 @@ public class ProjectileSpawner : MonoBehaviour
         switch (ad.pattern)
         {
             case ProjectilePattern.Single:
-                SpawnProjectile(prefab, spawnPos, dir, true, es);
+                SpawnProjectile(prefab, spawnPos, dir, true, source);
                 break;
             case ProjectilePattern.Spread:
-                yield return SpawnSpread(prefab, spawnPos, dir, finalDist, es);
+                yield return SpawnSpread(prefab, spawnPos, dir, finalDist, source);
                 break;
             case ProjectilePattern.Circle:
-                yield return SpawnCircle(prefab, spawnPos, finalDist, es);
+                yield return SpawnCircle(prefab, spawnPos, finalDist, source);
                 break;
             case ProjectilePattern.Barrage:
-                yield return SpawnBarrage(prefab, spawnPos, dir, es);
+                yield return SpawnBarrage(prefab, spawnPos, dir, source);
                 break;
         }
     }
