@@ -7,6 +7,9 @@ public class AttackData : ScriptableObject
     public float cooldown;
     public GameObject projectilePrefab;
     public ProjectilePattern pattern;
+    public float spawnDelay;
+    public bool canMoveDuringAttack;
+    public float animationLength;
     [Header("Spawn Logic")]
     public int projectileCount = 1;
     public int randomCount; // max number of additional projectiles to spawn
@@ -14,7 +17,9 @@ public class AttackData : ScriptableObject
     public float randomSpread; // max increase/decrease to spread
     public float minDelay; // min delay between each projectile
     public float maxDelay; // max delay between each projectile
-    [Header("Resource Costs")]
+    [Header("Enemy Only")]
+    public float maxRange;
+    [Header("Resource Costs (Player Only)")]
     public float staminaCost;
     public float staminaCostPct;
     public float healthCost;
