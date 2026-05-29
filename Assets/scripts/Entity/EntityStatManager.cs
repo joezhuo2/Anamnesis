@@ -1,8 +1,8 @@
-using UnityEngine;
-using System.Reflection;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
+using System.Reflection;
+using UnityEngine;
 
 public class EntityStatManager : MonoBehaviour
 {
@@ -10,6 +10,8 @@ public class EntityStatManager : MonoBehaviour
     public List<StatBuff> currentBuffs = new();
     private void Awake()
     {
+        if (s != null) s = Instantiate(s);
+
         s.canAttack = true;
         s.isAttacking = false;
         s.canGainHp = true;
@@ -42,11 +44,6 @@ public class EntityStatManager : MonoBehaviour
             }
         }
 
-        else
-        {
-            Debug.LogWarning($"Stat named '{b.name}' not found on EntityStats!");
-        }
-
         if (show)
         {
             if (isAdding) currentBuffs.Add(b);
@@ -68,7 +65,7 @@ public struct StatBuff : IEquatable<StatBuff>
     public string name;
     public float value;
 
-    public bool Equals(StatBuff other)
+    public readonly bool Equals(StatBuff other)
     {
         return name == other.name && Mathf.Approximately(value, other.value);
     }
