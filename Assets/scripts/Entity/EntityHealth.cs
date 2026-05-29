@@ -33,7 +33,7 @@ public class EntityHealth : MonoBehaviour
             float finalDamage = defOverride ? i.amount : CalculateDamageTaken(i.type, i.amount);
 
             if (finalDamage > 0)
-                ChangeHealth(-(int)finalDamage, true, i.isCrit);
+                ChangeHealth(-Mathf.RoundToInt(finalDamage), true, i.isCrit);
         }
     }
     public void ChangeHealth(int amount, bool showIndicator, bool isCrit)
@@ -106,7 +106,7 @@ public class EntityHealth : MonoBehaviour
     private float CalculateDamageTaken(DamageType type, float rawDamage)
     {
         float resMult = 1f - es.damageRes;
-        float armorMult = 1f - (es.armor / (es.armor + 100));
+        float armorMult = 1f - ((float)es.armor / (es.armor + 100f));
 
         float typeMult = type switch
         {
