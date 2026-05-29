@@ -12,18 +12,20 @@ public class EnemyAttackHandler : MonoBehaviour
     private Animator a;
     private bool isAttackingCoroutineRunning = false;
     private List<int> availableIndexes = new();
+
     private void Awake()
     {
-        es = Instantiate(es);
-        es.isAlive = true;
-        es.canMove = true;
-        es.isAttacking = false;
-
         a = GetComponent<Animator>();
 
         cooldowns = new float[attacks.Count];
         for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].cooldown;
     }
+
+    private void Start()
+    {
+        es = GetComponent<EntityStatManager>()?.s as EnemyStats;
+    }
+
     private void Update()
     {
         if (!es.isAlive) return;
