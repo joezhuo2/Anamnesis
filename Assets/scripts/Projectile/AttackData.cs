@@ -10,6 +10,7 @@ public class AttackData : ScriptableObject
     public float spawnDelay;
     public bool canMoveDuringAttack;
     public float animationLength;
+    public AttackType type;
     [Header("Spawn Logic")]
     public int projectileCount = 1;
     public int randomCount; // max number of additional projectiles to spawn
