@@ -54,6 +54,7 @@ public class StatusEffectManager : MonoBehaviour
             {
                 e.OnExpire();
                 activeEffects.RemoveAt(i);
+                Destroy(e);
             }
         }
     }

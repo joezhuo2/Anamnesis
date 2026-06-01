@@ -18,6 +18,11 @@ public class Projectile : MonoBehaviour {
     {
         if (pd != null) pd = Instantiate(pd);
     }
+    
+    private void OnDestroy()
+    {
+        if (pd != null) Destroy(pd);
+    }
 
     private void Start()
     {

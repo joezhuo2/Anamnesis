@@ -18,6 +18,11 @@ public class EntityStatManager : MonoBehaviour
         s.isAlive = true;
         s.isImmune = false;
     }
+
+    private void OnDestroy()
+    {
+        if (s != null) Destroy(s);
+    }
     private static readonly Dictionary<string, FieldInfo> cachedFields = new();
 
     public void AddStat(StatBuff b, bool isAdding = true, bool show = false)
