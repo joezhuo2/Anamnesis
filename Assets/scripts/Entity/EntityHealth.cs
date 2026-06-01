@@ -51,9 +51,17 @@ public class EntityHealth : MonoBehaviour
         var pos = transform.position;
 
         if (dis != null && showIndicator)
-            dis.SpawnDamageIndicator(amount < 0 ? -finalAmount : finalAmount, pos, Color.green, isCrit ? 1.5f : 1f, 0.6f, 1f);
+        {
+            dis.SpawnDamageIndicator(
+                finalAmount < 0 ? -finalAmount : finalAmount, pos,
+                finalAmount < 0 ? Color.red : Color.green,
+                isCrit ? 1.5f : 1f,
+                0.6f,
+                1f
+            );
+        }
 
-        if (amount < 0 && animator != null && es.currentHp > 0)
+        if (finalAmount < 0 && animator != null && es.currentHp > 0)
         {
             animator.SetBool(IsHurtHash, true);
             StartCoroutine(HurtDelay(0.3f));
