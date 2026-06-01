@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EntityHealth : MonoBehaviour
 {
+    private static readonly int IsDeadHash = Animator.StringToHash("isDead");
     private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
     private float regenTimer;
     private const float regenInterval = 0.5f; // how often hp regens, in seconds
@@ -22,7 +23,7 @@ public class EntityHealth : MonoBehaviour
     }
     private void Update()
     {
-        if (es.canGainHp) RegenHp();
+        if (es != null && es.canGainHp) RegenHp();
     }
 
     public void TakeDamage(DamagePacket dp, bool defOverride = false)
@@ -33,24 +34,24 @@ public class EntityHealth : MonoBehaviour
             float finalDamage = defOverride ? i.amount : CalculateDamageTaken(i.type, i.amount);
 
             if (finalDamage > 0)
-                ChangeHealth(-Mathf.RoundToInt(finalDamage), true, i.isCrit);
+                ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit);
         }
     }
-    public void ChangeHealth(int amount, bool showIndicator, bool isCrit)
+    public void ChangeHealth(float amount, float pctAmt, bool showIndicator, bool isCrit)
     {
-        if ((amount < 0 && es.isImmune) || (amount > 0 && !es.canGainHp) || amount == 0) return;
+        if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return;
 
-        int newHp = Math.Min(es.currentHp + amount, es.maxHp);
+        int finalAmount = Mathf.RoundToInt(amount + (pctAmt * es.maxHp));
+        if (finalAmount == 0) return;
+
+        int newHp = Math.Min(es.currentHp + finalAmount, es.maxHp);
         es.currentHp = Mathf.Max(0, newHp);
 
         var dis = DamageIndicatorSpawner.Instance;
         var pos = transform.position;
+
         if (dis != null && showIndicator)
-        {
-            float scale = isCrit ? 1.5f : 1f;
-            if (amount < 0) dis.SpawnDamageIndicator(-amount, pos, Color.red, scale, 0.6f, 1f);
-            else dis.SpawnDamageIndicator(amount, pos, Color.green, scale, 0.6f, 1f);
-        }
+            dis.SpawnDamageIndicator(amount < 0 ? -finalAmount : finalAmount, pos, Color.green, isCrit ? 1.5f : 1f, 0.6f, 1f);
 
         if (amount < 0 && animator != null && es.currentHp > 0)
         {
@@ -72,7 +73,7 @@ public class EntityHealth : MonoBehaviour
 
         if (regenTimer >= regenInterval)
         {
-            regenTimer = 0f;
+            regenTimer -= regenInterval;
 
             float hpPerSecond = es.hpRegen / fullRegenFrequency;
             float hpPerTick = hpPerSecond * regenInterval;
@@ -83,7 +84,7 @@ public class EntityHealth : MonoBehaviour
             {
                 int intRegen = Mathf.FloorToInt(accumulatedRegen);
                 accumulatedRegen -= intRegen;
-                ChangeHealth(intRegen, false, false);
+                ChangeHealth(intRegen, 0, false, false);
             }
         }
     }
@@ -94,7 +95,7 @@ public class EntityHealth : MonoBehaviour
 
         if (animator != null && !es.isAlive)
         {
-            animator.SetBool("isDead", true);
+            animator.SetBool(IsDeadHash, true);
             StartCoroutine(DeathDelay(1.25f));
         }
         else

@@ -13,32 +13,35 @@ public class PlayerStamina : MonoBehaviour
     {
         p = GetComponent<EntityStatManager>()?.s as PlayerStats;
     }
-
     public void Update()
     {
-        if (p.isAlive)
+        if (p != null && p.isAlive)
             RegenStamina();
     }
-    public void ChangeStamina(int amount)
+    public void ChangeStamina(float amount, float pctAmt = 0)
     {
-        if (amount > 0 && !p.canGainStamina) return;
-        p.currentStamina = Math.Min(p.currentStamina + amount, p.maxStamina);
+        if ((amount > 0 || pctAmt > 0)&& !p.canGainStamina) return;
+        p.currentStamina = Math.Min(Mathf.RoundToInt(p.currentStamina + (amount + (pctAmt * p.maxStamina))), p.maxStamina);
     }
     public void RegenStamina()
     {
-        if (p == null || p.currentStamina > p.maxStamina || p.staminaRegen == 0) return;
+        if (p == null || p.currentStamina >= p.maxStamina || p.staminaRegen == 0) return;
 
         regenTimer += Time.deltaTime;
 
-        float regenPerTick = p.staminaRegen / fullRegenFrequency * regenInterval;
-
-        accumaltedRegen += regenPerTick;
-
-        if (accumaltedRegen >= 1f)
+        if (regenTimer >= regenInterval)
         {
-            int intRegen = Mathf.FloorToInt(accumaltedRegen);
-            accumaltedRegen -= intRegen;
-            ChangeStamina(intRegen);
+            float regenPerTick = p.staminaRegen / fullRegenFrequency * regenInterval;
+
+            accumaltedRegen += regenPerTick;
+
+            if (accumaltedRegen >= 1f)
+            {
+                int intRegen = Mathf.FloorToInt(accumaltedRegen);
+                accumaltedRegen -= intRegen;
+                ChangeStamina(intRegen);
+            }
+            regenTimer -= regenInterval;
         }
     }
 }
