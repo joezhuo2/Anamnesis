@@ -14,7 +14,6 @@ public class ProjectileData : ScriptableObject
     [Header("Advanced")]
     public bool canHitSameEntity;
     public int followDistance;
-    public EntityStats owner;
     public float rotationOffset;
     public float spawnDistance;
     public bool fixedDistance;

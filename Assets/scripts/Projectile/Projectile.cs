@@ -45,10 +45,10 @@ public class Projectile : MonoBehaviour {
         }
         if (!pd.canHitSameEntity && hit.Contains(other.gameObject)) return;
 
-        if (other.TryGetComponent<EntityStatManager>(out var statManager) && pd.owner != statManager.s)
-            HandleHitEntity(other.gameObject, statManager.s);
+        if (other.TryGetComponent<EntityStatManager>(out var statManager) && ownerObj != other.gameObject)
+            HandleHitEntity(other.gameObject);
     }
-    private void HandleHitEntity(GameObject target, EntityStats otherStats)
+    private void HandleHitEntity(GameObject target)
     {
         if (!target.TryGetComponent<EntityHealth>(out var eh)) return;
 
@@ -75,21 +75,23 @@ public class Projectile : MonoBehaviour {
         if (ProjectileSpawner.Instance == null) return;
 
         ProjectileSpawner spawner = ProjectileSpawner.Instance;
-        GameObject prefab = pd.additionalAttack.projectilePrefab;
+        GameObject prefab = Instantiate(pd.additionalAttack.projectilePrefab);
         GameObject s = ownerObj;
+
         Vector2? addDir = pd.additionalFollowsMouse ? null : dir;
 
         spawner.StartCoroutine(spawner.SpawnFromPattern(prefab, s, transform.position, addDir, pd.distFromCenter));
     }
     private void HandleSize()
     {
-        float sizeMult = 1f + (pd.owner.aoePct / 100f);
+        if (!ownerObj.TryGetComponent<EntityStatManager>(out var esm) && esm.s.aoePct == 0) return;
+
+        float sizeMult = 1f + (esm.s.aoePct * 0.01f);
         transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
     }
-
     private void HandleDirection()
     {
-        if (pd.owner.GameObject().CompareTag("Enemy") || dir != Vector2.zero) return;
+        if (ownerObj.CompareTag("Enemy") || dir != Vector2.zero) return;
 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
         mouseWorldPos.z = 0f;
@@ -110,7 +112,7 @@ public class Projectile : MonoBehaviour {
         {
             if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
             {
-                bool searchForPlayer = pd.owner.GameObject().CompareTag("Enemy");
+                bool searchForPlayer = ownerObj.GameObject().CompareTag("Enemy");
                 followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
             }
 
@@ -129,7 +131,6 @@ public class Projectile : MonoBehaviour {
         }
     }
     private void SetTarget(Transform target) => followTarget = target;
-
     private Transform FindClosestTargetInRange(float range, bool searchForPlayer)
     {
         Transform closest = null;
@@ -157,9 +158,9 @@ public class Projectile : MonoBehaviour {
     {
         if (!(Random.value <= pd.effectChance)) return;
 
-        if (target == null && pd.owner.GameObject().TryGetComponent<StatusEffectManager>(out var ssem))
-            ssem.AddEffect(pd.effect, pd.owner.GameObject());
+        if (target == null && ownerObj.TryGetComponent<StatusEffectManager>(out var ssem))
+            ssem.AddEffect(pd.effect, ownerObj);
         else if (target.TryGetComponent<StatusEffectManager>(out var tsem))
-            tsem.AddEffect(pd.effect, pd.owner.GameObject());
+            tsem.AddEffect(pd.effect, ownerObj);
     }
 }

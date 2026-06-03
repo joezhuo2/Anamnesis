@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class DamageCalculator
@@ -10,8 +11,10 @@ public static class DamageCalculator
         void AddDamageIfValid(DamageType type, float mult)
         {
             if (mult <= 0) return;
-            float damage = pd.owner.attack * mult * TypeBonus(type, pd.owner);
-            var (finalDamage, isCrit) = RollCrits(damage, pd.owner);
+            if (!pd.GameObject().TryGetComponent<EntityStatManager>(out var esm)) return;
+
+            float damage = esm.s.attack * mult * TypeBonus(type, esm.s);
+            var (finalDamage, isCrit) = RollCrits(damage, esm.s);
             dp.AddInstance(type, finalDamage, isCrit);
         }
 

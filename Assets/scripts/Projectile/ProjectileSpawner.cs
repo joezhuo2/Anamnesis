@@ -36,9 +36,6 @@ public class ProjectileSpawner : MonoBehaviour
             p.dir = dir;
             p.pierced = 0;
             p.ownerObj = sourceObj;
-
-            EntityStatManager statManager = sourceObj != null ? sourceObj.GetComponent<EntityStatManager>() : null;
-            if (p.pd != null && statManager != null) p.pd.owner = statManager.s;
         }
 
         return proj;
@@ -114,21 +111,21 @@ public class ProjectileSpawner : MonoBehaviour
     )
     {
         Projectile p = prefab.GetComponent<Projectile>();
-        ProjectileData pd = p.pd;
-        AttackData ad = pd.mainAttack;
+        p.pd = Instantiate(p.pd);
+        AttackData ad = p.pd.mainAttack;
 
         EntityStatManager statManager = source.GetComponent<EntityStatManager>();
         EntityStats es = statManager != null ? statManager.s : null;
 
         Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
 
-        pd.owner = es;
+        p.ownerObj = source;
 
         Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
         Vector2 dir = dirOverride ?? (source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right);
-        float finalDist = distOverride ?? pd.spawnDistance;
+        float finalDist = distOverride ?? p.pd.spawnDistance;
 
-        if (!pd.fixedDistance && source.CompareTag("Player"))
+        if (!p.pd.fixedDistance && source.CompareTag("Player"))
         {
             float mouseDist = Vector2.Distance(spawnCenter, mouse);
             finalDist = Mathf.Min(mouseDist, finalDist);
