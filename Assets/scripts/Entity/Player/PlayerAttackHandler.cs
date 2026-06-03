@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AttackType { Basic, Skill, Ultimate, Technique }
+public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 [RequireComponent(typeof(Animator))]
 
 [RequireComponent(typeof(EntityStatManager))]
@@ -25,7 +25,6 @@ public class PlayerAttackHandler : MonoBehaviour
         ps = GetComponent<PlayerStamina>();
         ph = GetComponent<EntityHealth>();
     }
-
     public void PerformAttack(AttackType type)
     {
         if (p == null || !p.isAlive) return;
@@ -60,5 +59,13 @@ public class PlayerAttackHandler : MonoBehaviour
 
         if (ps != null) ps.ChangeStamina(attack.staminaCost, attack.staminaCostPct);
         if (ph != null) ph.ChangeHealth(attack.healthCost, attack.healthCostPct, true, false);
+    }
+    public void UpdateAttack(AttackType type, AttackData newAttack)
+    {
+        if (newAttack == null) return;
+        AttackData current = attacks.Find(atk => atk.type == type);
+
+        attacks.Remove(current);
+        attacks.Add(newAttack);
     }
 }
