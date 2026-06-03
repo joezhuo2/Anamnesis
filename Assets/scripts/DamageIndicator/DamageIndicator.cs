@@ -1,11 +1,11 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class DamageIndicator : MonoBehaviour 
 {
     public float floatSpeed;
-    public Vector2 maxRandomOffset = new Vector2(0.5f, 0.5f);
+    public Vector2 maxRandomOffset = new(0.5f, 0.5f);
     private TextMeshProUGUI text;
     private Vector3 worldPos;
     private Camera mainCam;
@@ -13,11 +13,11 @@ public class DamageIndicator : MonoBehaviour
 
     public void Initialize(int damage, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed)
     {
-        text ??= GetComponent<TextMeshProUGUI>();
-        mainCam ??= Camera.main;
+        text = text != null ? text : GetComponent<TextMeshProUGUI>();
+        mainCam = mainCam != null ? mainCam : Camera.main;
 
         worldPos = sourcePos + new Vector3(Random.Range(-maxRandomOffset.x, maxRandomOffset.x), Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 0f);
-        
+
         text.text = damage.ToString();
         text.color = color;
         text.fontSize *= scale;
@@ -26,7 +26,7 @@ public class DamageIndicator : MonoBehaviour
         this.floatSpeed = floatSpeed;
     }
 
-    void Update()
+    private void Update()
     {
         if (mainCam == null) return;
 

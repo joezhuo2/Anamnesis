@@ -1,20 +1,20 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class EnemySpawnController : MonoBehaviour 
+public class EnemySpawnController : MonoBehaviour
 {
     public EnemySpawner spawnerData;
     public List<GameObject> currentEnemies = new();
     public Transform player;
-    private float SpawnTimer;
-    
+    private float spawnTimer;
+
     void Update()
     {
         currentEnemies.RemoveAll(e => e == null);
 
-        SpawnTimer += Time.deltaTime;
+        spawnTimer += Time.deltaTime;
 
-        if (SpawnTimer >= GetNextSpawnTime() && currentEnemies.Count < spawnerData.maxEnemies && IsPlayerNearby())
+        if (spawnTimer >= GetNextSpawnTime() && currentEnemies.Count < spawnerData.maxEnemies && IsPlayerNearby())
             SpawnEnemy();
     }
 
@@ -36,7 +36,7 @@ public class EnemySpawnController : MonoBehaviour
         GameObject enemyInstance = Instantiate(spawnerData.enemyToSpawn, spawnPos, Quaternion.identity);
 
         currentEnemies.Add(enemyInstance);
-        SpawnTimer = 0f;
+        spawnTimer = 0f;
     }
 
     private bool IsPlayerNearby()
