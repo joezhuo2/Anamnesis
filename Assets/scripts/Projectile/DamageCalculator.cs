@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,7 +24,7 @@ public static class DamageCalculator
     }
     private static float TypeBonus(DamageType type, EntityStats stats) => type switch
     {
-        DamageType.Physical => 1f + stats.physicalDmgPct / 100f,
+        DamageType.Physical => 1f + (stats.physicalDmgPct / 100f),
         DamageType.Spell => 1f + stats.spellDmgPct / 100f,
         _ => 1f
     };

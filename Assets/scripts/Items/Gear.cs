@@ -12,7 +12,7 @@ public enum StatRollType
 public struct StatRoll
 {
     public StatRollType rollType;
-    public string statName;
+    public string name;
     public float maxRoll;
     public float minRoll;
 }
@@ -30,6 +30,8 @@ public enum EquipmentSlot
 public class GearItem : Item
 {
     public EquipmentSlot slot;
-    public StatRoll baseStat;
-    public List<StatRoll> rolls;
+    public StatRoll potentialBaseRoll;
+    public StatBuff baseRoll;
+    public List<StatRoll> potentialRolls;
+    public List<StatBuff> rolls;
 }
