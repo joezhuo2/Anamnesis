@@ -22,7 +22,6 @@ public class Projectile : MonoBehaviour {
     {
         if (pd != null) Destroy(pd);
     }
-
     private void Start()
     {
         pierced = 0;

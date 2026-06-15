@@ -24,8 +24,8 @@ public static class DamageCalculator
     }
     private static float TypeBonus(DamageType type, EntityStats stats) => type switch
     {
-        DamageType.Physical => 1f + (stats.physicalDmgPct / 100f),
-        DamageType.Spell => 1f + stats.spellDmgPct / 100f,
+        DamageType.Physical => 1f + (stats.physicalDmgPct * 0.01f),
+        DamageType.Spell => 1f + (stats.spellDmgPct * 0.01f),
         _ => 1f
     };
 
