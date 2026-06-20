@@ -23,16 +23,16 @@ public class EntityStatManager : MonoBehaviour
     {
         if (s != null) Destroy(s);
     }
-    private static readonly Dictionary<string, FieldInfo> cachedFields = new();
+    private static readonly Dictionary<StatType, FieldInfo> cachedFields = new();
 
     public void AddStat(StatBuff b, bool isAdding = true, bool show = false)
     {
         float factor = isAdding ? 1f : -1f;
 
-        if (!cachedFields.TryGetValue(b.name, out FieldInfo field))
+        if (!cachedFields.TryGetValue(b.type, out FieldInfo field))
         {
-            field = typeof(EntityStats).GetField(b.name, BindingFlags.Public | BindingFlags.Instance);
-            cachedFields[b.name] = field;
+            field = typeof(EntityStats).GetField(b.type.ToString(), BindingFlags.Public | BindingFlags.Instance);
+            cachedFields[b.type] = field;
         }
 
         if (field != null)
@@ -67,14 +67,19 @@ public class EntityStatManager : MonoBehaviour
 [System.Serializable]
 public struct StatBuff : IEquatable<StatBuff>
 {
-    public string name;
+    public StatType type;
     public float value;
 
+    public StatBuff(StatType type, float value) : this()
+    {
+        this.type = type;
+        this.value = value;
+    }
     public readonly bool Equals(StatBuff other)
     {
-        return name == other.name && Mathf.Approximately(value, other.value);
+        return type == other.type && Mathf.Approximately(value, other.value);
     }
 
     public override bool Equals(object obj) => obj is StatBuff other && Equals(other);
-    public override int GetHashCode() => HashCode.Combine(name, value);
+    public override int GetHashCode() => HashCode.Combine(type, value);
 }

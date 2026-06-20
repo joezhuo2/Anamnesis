@@ -1,5 +1,28 @@
 using UnityEngine;
 
+public enum StatType
+{
+    damagePct,
+    attack,
+    attackSpeedPct,
+    physicalDmgPct,
+    spellDmgPct,
+    critChance,
+    critDamage,
+    aoePct,
+    currentHp,
+    maxHp,
+    hpRegen,
+    armor,
+    damageRes,
+    dodgeChance,
+    dodgeResPct,
+    physicalRes,
+    spellRes,
+    moveSpeed,
+    moveSpeedPct
+}
+
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
 public class EntityStats : ScriptableObject
 {
