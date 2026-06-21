@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +7,7 @@ public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 
 [RequireComponent(typeof(EntityStatManager))]
 [RequireComponent(typeof(PlayerStamina))]
+[RequireComponent(typeof(EntityHealth))]
 public class PlayerAttackHandler : MonoBehaviour
 {
     private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
@@ -27,7 +27,7 @@ public class PlayerAttackHandler : MonoBehaviour
     }
     public void PerformAttack(AttackType type)
     {
-        if (p == null || !p.isAlive) return;
+        if (p == null || !p.isAlive || !p.canAttack) return;
 
         AttackData selected = attacks.Find(atk => atk.type == type);
         if (selected == null) return;
@@ -38,11 +38,12 @@ public class PlayerAttackHandler : MonoBehaviour
 
         lastAttackTimes[type] = Time.time;
 
-        StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(selected.projectilePrefab, gameObject, transform.position, PlayerInputHandler.mousePos.normalized));
+        StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(selected.projectilePrefab, gameObject, transform.position));
 
+        HandleStatChanges(selected);
         a.SetBool(IsAttackingHash, true);
         a.speed = Mathf.Max(0.1f, 1f + (p.attackSpeedPct * 0.01f));
-        StartCoroutine(ResetAttackType(0.5f / a.speed));
+        StartCoroutine(ResetAttackType(selected.animationLength));
     }
     public IEnumerator ResetAttackType(float delay)
     {
