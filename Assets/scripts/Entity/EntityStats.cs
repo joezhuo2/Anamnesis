@@ -53,10 +53,10 @@ public class EntityStats : ScriptableObject
 
     [Header("Misc")]
     public int level;
-    [HideInInspector] public bool isAlive;
-    [HideInInspector] public bool isImmune;
-    [HideInInspector] public bool canAttack;
-    [HideInInspector] public bool isAttacking;
-    [HideInInspector] public bool canMove;
-    [HideInInspector] public bool canGainHp;
+    public bool isAlive;
+    public bool isImmune;
+    public bool canAttack;
+    public bool isAttacking;
+    public bool canMove;
+    public bool canGainHp;
 }
