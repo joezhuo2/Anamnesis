@@ -27,13 +27,13 @@ public enum StatType
 public class EntityStats : ScriptableObject
 {
     [Header("Offense")]
-    public int damagePct;
+    public float damagePct;
     public int attack;
-    public int attackSpeedPct;
-    public int physicalDmgPct;
-    public int spellDmgPct;
-    [Range(0, 100)] public int critChance;
-    public int critDamage;
+    public float attackSpeedPct;
+    public float physicalDmgPct;
+    public float spellDmgPct;
+    [Range(0f, 100f)] public float critChance;
+    public float critDamage;
     public float aoePct;
 
     [Header("Defense")]
@@ -41,15 +41,15 @@ public class EntityStats : ScriptableObject
     public int maxHp;
     public int hpRegen;
     public int armor;
-    [Range(0, 1)] public float damageRes;
-    [Range(0, 100)] public float dodgeChance;
-    [Range(0, 1)] public float dodgeResPct;
-    [Range(0, 1)] public float physicalRes;
-    [Range(0, 1)] public float spellRes;
+    [Range(0f, 1f)] public float damageRes;
+    [Range(0f, 100f)] public float dodgeChance;
+    [Range(0f, 1f)] public float dodgeResPct;
+    [Range(0f, 1f)] public float physicalRes;
+    [Range(0f, 1f)] public float spellRes;
 
     [Header("Movement")]
-    public int moveSpeed;
-    public int moveSpeedPct;
+    public float moveSpeed;
+    public float moveSpeedPct;
 
     [Header("Misc")]
     public int level;
