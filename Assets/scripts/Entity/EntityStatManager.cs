@@ -8,24 +8,30 @@ public class EntityStatManager : MonoBehaviour
 {
     public EntityStats s;
     public List<StatBuff> currentBuffs = new();
-    private void Start()
+    private void Awake()
     {
         if (s != null) s = Instantiate(s);
 
-        if (gameObject.CompareTag("Enemy"))
-        {
-            if (s.level > 1)
-            {
-                ScaleBaseStats(s.level);
-            }
-            s.currentHp = s.maxHp;
-        }
+        if (gameObject.CompareTag("Enemy") && s.level > 1)
+            ScaleBaseStats(s.level);
 
+        s.currentHp = s.maxHp;
         s.canAttack = true;
         s.isAttacking = false;
+        s.canMove = true;
         s.canGainHp = true;
         s.isAlive = true;
         s.isImmune = false;
+    }
+    public void ScaleStatsToLevel(int targetLevel)
+    {
+        if (s == null) return;
+
+        s.level = targetLevel;
+
+        if (s.level > 1) ScaleBaseStats(s.level);
+
+        s.currentHp = s.maxHp;
     }
     private void ScaleBaseStats(int currentLevel)
     {
