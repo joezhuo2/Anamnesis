@@ -148,10 +148,16 @@ public class EntityHealth : MonoBehaviour
     {
         es.isAlive = false;
 
+        if (healthBarInstance != null && healthBarTextInstance != null)
+        {
+            Destroy(healthBarInstance.gameObject);
+            Destroy(healthBarTextInstance.gameObject);
+        }
+
         if (animator != null && !es.isAlive)
         {
             animator.SetBool(IsDeadHash, true);
-            StartCoroutine(DeathDelay(1.25f));
+            StartCoroutine(DeathDelay(1f));
         }
         else
         {
@@ -184,7 +190,6 @@ public class EntityHealth : MonoBehaviour
                 lastDodgeTime = Time.time;
             }
         }
-
 
         return finalDamage;
     }
