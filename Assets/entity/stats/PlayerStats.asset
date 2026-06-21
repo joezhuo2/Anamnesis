@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf47b81b6e65f3499ecdccea4f0bde0, type: 3}
+  m_Name: PlayerStats
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  damagePct: 0
+  attack: 10
+  attackSpeedPct: 0
+  physicalDmgPct: 0
+  spellDmgPct: 0
+  critChance: 5
+  critDamage: 50
+  aoePct: 0
+  currentHp: 100
+  maxHp: 100
+  hpRegen: 5
+  armor: 0
+  damageRes: 0
+  dodgeChance: 5
+  dodgeResPct: 0.4
+  physicalRes: 0
+  spellRes: 0
+  moveSpeed: 2
+  moveSpeedPct: 0
+  level: 1
+  isAlive: 0
+  isImmune: 0
+  canAttack: 0
+  isAttacking: 0
+  canMove: 0
+  canGainHp: 0
+  currentStamina: 100
+  maxStamina: 100
+  staminaRegen: 5
+  dashSpeedMult: 5
+  dashCooldown: 3
+  dashDistance: 1.5
+  dashStaminaCost: 15
+  dashShouldApplyIFrame: 1
+  isDashing: 0
+  canDash: 0
+  canGainStamina: 0
+  currentXp: 0
