@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(EnemyStats))]
+[RequireComponent(typeof(EntityStatManager))]
 public class EnemyAttackHandler : MonoBehaviour
 {
     private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
-    public EnemyStats es;
+    private EnemyStats es;
     public List<AttackData> attacks;
     private float[] cooldowns;
     public Vector2 projSpawnOffset;
@@ -21,7 +21,7 @@ public class EnemyAttackHandler : MonoBehaviour
         for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].cooldown;
     }
 
-    private void Start() => es = GetComponent<EnemyStats>();
+    private void Start() => es = GetComponent<EntityStatManager>().s as EnemyStats;
     private void Update()
     {
         if (!es.isAlive) return;

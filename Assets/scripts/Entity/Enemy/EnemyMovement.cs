@@ -1,12 +1,14 @@
 using Unity.Mathematics;
 using UnityEngine;
-
 [RequireComponent(typeof(Animator))]
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyMovement : MonoBehaviour
 {
-    private static readonly int IsMovingHash = Animator.StringToHash("isMoving");
+    private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public EnemyStats es;
-    public Animator a;
+    private Rigidbody2D rb;
+    private Animator a;
     private bool wasMoving = false;
 
     [Header("Targeting")]
@@ -21,19 +23,21 @@ public class EnemyMovement : MonoBehaviour
     {
         es = GetComponent<EntityStatManager>()?.s as EnemyStats;
         a = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
 
         cTransform = transform;
         cScale = cTransform.localScale;
 
         UpdateTargeting();
     }
-    private void Update() {
+    private void Update()
+    {
         if (!es.isAlive) return;
 
         UpdateTargeting();
         MoveToTarget();
     }
-    public void SetTarget(GameObject target) => es.target = target;
+    private void SetTarget(GameObject target) => es.target = target;
     private void MoveToTarget()
     {
         if (es.target == null || !es.canMove)
@@ -48,6 +52,7 @@ public class EnemyMovement : MonoBehaviour
         if (distMag > es.detectionRange)
         {
             es.target = null;
+            rb.linearVelocity = Vector2.zero;
             SetAnimator(false);
             return;
         }
@@ -58,7 +63,7 @@ public class EnemyMovement : MonoBehaviour
             : new Vector2(0, Mathf.Sign(dir.y));
 
         float finalSpeed = es.moveSpeed * (1f + (0.01f * es.moveSpeedPct));
-        cTransform.position += finalSpeed * Time.deltaTime * (Vector3)dir;
+        rb.linearVelocity = dir * finalSpeed;
 
         if (dir.x != 0)
         {
@@ -78,7 +83,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (a != null && moving != wasMoving)
         {
-            a.SetBool(IsMovingHash, moving);
+            a.SetFloat(SpeedHash, moving ? 1f : 0f);
             wasMoving = moving;
         }
     }

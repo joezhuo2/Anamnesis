@@ -8,18 +8,18 @@ public class AttackData : ScriptableObject
     public GameObject projectilePrefab;
     public ProjectilePattern pattern;
     public float spawnDelay;
-    public bool canMoveDuringAttack;
     public float animationLength;
     public AttackType type;
     [Header("Spawn Logic")]
     public int projectileCount = 1;
-    public int randomCount; // max number of additional projectiles to spawn
-    public float spread; // this becomes radius for barrage attacks
-    public float randomSpread; // max increase/decrease to spread
-    public float minDelay; // min delay between each projectile
-    public float maxDelay; // max delay between each projectile
+    [Tooltip("Additional projectiles to spawn")] public int randomCount;
+    [Tooltip("Spread radius for barrage attacks")] public float spread;
+    [Tooltip("Maximum increase/decrease to spread")] public float randomSpread;
+    [Tooltip("Minimum delay between each projectile")] public float minDelay;
+    [Tooltip("Maximum delay between each projectile")] public float maxDelay;
     [Header("Enemy Only")]
     public float maxRange;
+    public bool canMoveDuringAttack;
     [Header("Resource Costs (Player Only)")]
     public float staminaCost;
     public float staminaCostPct;
