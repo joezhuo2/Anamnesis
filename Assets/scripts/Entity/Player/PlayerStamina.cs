@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class PlayerStamina : MonoBehaviour
 {
@@ -12,6 +12,8 @@ public class PlayerStamina : MonoBehaviour
     private void Start()
     {
         p = GetComponent<EntityStatManager>()?.s as PlayerStats;
+
+        p.canGainStamina = true;
     }
     public void Update()
     {
