@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(EntityStatManager))]
 public class EntityHealth : MonoBehaviour
 {
     private static readonly int IsDeadHash = Animator.StringToHash("isDead");
@@ -14,9 +15,11 @@ public class EntityHealth : MonoBehaviour
     private float accumulatedRegen;
     private float lastDodgeTime;
     public Animator animator;
-    public EntityStats es;
+    private EntityStats es;
     private void Start()
     {
+        es = GetComponent<EntityStatManager>()?.s;
+
         regenTimer = 0f;
         accumulatedRegen = 0f;
         lastDodgeTime = -Mathf.Infinity;
