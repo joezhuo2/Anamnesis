@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [HideInInspector] public PlayerStats p;
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
     public Vector2 moveInput;
-    public Animator animator;
+    private Animator animator;
     public static readonly float baseAnimSpeed = 2.5f;
     private static float lastDashTime;
     private static float dashTravelled;

@@ -11,7 +11,7 @@ public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 public class PlayerAttackHandler : MonoBehaviour
 {
     private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
-    public PlayerStats p;
+    private PlayerStats p;
     private Animator a;
     private PlayerStamina ps;
     private EntityHealth ph;
