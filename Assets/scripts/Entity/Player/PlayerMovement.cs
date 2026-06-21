@@ -4,41 +4,51 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public PlayerStats p;
     private Rigidbody2D rb;
     public Vector2 moveInput;
     private Animator animator;
-    public static readonly float baseAnimSpeed = 2.5f;
-    private static float lastDashTime;
-    private static float dashTravelled;
+    public static readonly float baseAnimSpeed = 1f;
+    private float lastDashTime;
+    private float dashTravelled;
+    private Vector2 dashDir;
     public static int playerDir = 1; // 1 => facing right, -1 => facing left
     private void Awake() => animator = GetComponent<Animator>();
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         p = GetComponent<EntityStatManager>()?.s as PlayerStats;
+
+        p.canDash = true;
+        p.isDashing = false;
+
+        lastDashTime = -Mathf.Infinity;
     }
     private void FixedUpdate()
     {
         if (!p.isAlive || !p.canMove)
         {
             rb.linearVelocity = Vector2.zero;
+            animator.speed = baseAnimSpeed;
             return;
         }
 
-        float inputMag = moveInput.magnitude;
         float rawSpeed = p.moveSpeed * (1f + (p.moveSpeedPct * 0.01f));
-        float currentSpeed = p.isDashing ? rawSpeed * p.dashSpeedMult : rawSpeed;
 
-        rb.linearVelocity = moveInput * currentSpeed;
+        if (p.isDashing) rb.linearVelocity = dashDir * (rawSpeed * p.dashSpeedMult);
+        else rb.linearVelocity = Vector2.ClampMagnitude(moveInput, 1f) * rawSpeed;
 
-        if ((moveInput.x > 0 && transform.localScale.x < 0) || (moveInput.x < 0 && transform.localScale.x > 0))
+        float inputMag = moveInput.magnitude;
+
+        if (!p.isDashing && ((moveInput.x > 0 && transform.localScale.x < 0) || (moveInput.x < 0 && transform.localScale.x > 0)))
         {
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             playerDir *= -1;
         }
 
         if (inputMag > 0.1) animator.speed = Mathf.Max(inputMag * baseAnimSpeed, 0.01f);
+        animator.SetFloat(SpeedHash, inputMag);
     }
     public void TryStartDash()
     {
@@ -49,6 +59,9 @@ public class PlayerMovement : MonoBehaviour
         p.currentStamina -= p.dashStaminaCost;
         lastDashTime = Time.time;
         dashTravelled = 0f;
+
+        dashDir = moveInput.magnitude > 0.01f ? moveInput.normalized : new Vector2(playerDir, 0f);
+        if (dashDir == Vector2.zero) dashDir = new Vector2(playerDir, 0f);
 
         p.isDashing = true;
 

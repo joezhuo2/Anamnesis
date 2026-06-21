@@ -14,7 +14,8 @@ public class PlayerInputHandler : MonoBehaviour
         pm = GetComponent<PlayerMovement>();
         pah = GetComponent<PlayerAttackHandler>();
     }
-    private void OnEnable() {
+    private void OnEnable()
+    {
         controls.Player.Enable();
 
         mousePos = controls.Player.MousePosition.ReadValue<Vector2>();
