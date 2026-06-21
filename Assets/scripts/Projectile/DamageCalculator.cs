@@ -12,7 +12,7 @@ public static class DamageCalculator
             if (mult <= 0) return;
             if (!pd.GameObject().TryGetComponent<EntityStatManager>(out var esm)) return;
 
-            float damage = esm.s.attack * mult * TypeBonus(type, esm.s);
+            float damage = esm.s.attack * (1f + (esm.s.damagePct * 0.01f)) * mult * TypeBonus(type, esm.s);
             var (finalDamage, isCrit) = RollCrits(damage, esm.s);
             dp.AddInstance(type, finalDamage, isCrit);
         }
