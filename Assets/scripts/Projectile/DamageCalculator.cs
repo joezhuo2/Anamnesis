@@ -3,14 +3,14 @@ using UnityEngine;
 
 public static class DamageCalculator
 {
-    public static DamagePacket BuildDamagePacket(ProjectileData pd)
+    public static DamagePacket BuildDamagePacket(ProjectileData pd, GameObject source)
     {
         DamagePacket dp = new();
 
         void AddDamageIfValid(DamageType type, float mult)
         {
             if (mult <= 0) return;
-            if (!pd.GameObject().TryGetComponent<EntityStatManager>(out var esm)) return;
+            if (!source.TryGetComponent<EntityStatManager>(out var esm)) return;
 
             float damage = esm.s.attack * (1f + (esm.s.damagePct * 0.01f)) * mult * TypeBonus(type, esm.s);
             var (finalDamage, isCrit) = RollCrits(damage, esm.s);
