@@ -53,6 +53,6 @@ public class EntityGearManager : MonoBehaviour
 
         return new StatBuff(type, roll);
     }
-    public void EquipGear(GearItem item) {}
-    public void RemoveGear(GearItem item) {}
+    public void EquipGear(EquipmentSlot slot) {}
+    public void RemoveGear(EquipmentSlot slot) {}
 }
