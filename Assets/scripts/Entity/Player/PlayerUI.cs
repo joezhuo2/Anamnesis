@@ -44,7 +44,7 @@ public class PlayerUI : MonoBehaviour
         xpBar.maxValue = maxXp;
         xpBar.value = p.currentXp;
 
-        xpBarText.text = $"{p.currentXp}/{maxXp} xp";
+        xpBarText.text = $"{p.currentXp}/{maxXp}";
         levelText.text = $"{p.level}";
 
         lastXp = p.currentXp;
