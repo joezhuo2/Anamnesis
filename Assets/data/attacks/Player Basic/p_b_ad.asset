@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: p_b_ad
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 5
-  projectilePrefab: {fileID: 0}
+  cooldown: 3
+  projectilePrefab: {fileID: 7905348454811799927, guid: f4ef1cf3b6211f448b7d0967f72645cb, type: 3}
   pattern: 0
   spawnDelay: 0
-  animationLength: 0
+  animationLength: 0.5
   type: 0
   projectileCount: 1
   randomCount: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   maxDelay: 0
   maxRange: 0
   canMoveDuringAttack: 0
-  staminaCost: 0
-  staminaCostPct: 0
+  staminaCost: -10
+  staminaCostPct: -0.05
   healthCost: 0
   healthCostPct: 0

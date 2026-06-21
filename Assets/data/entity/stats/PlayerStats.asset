@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   damagePct: 0
-  attack: 10
+  attack: 50
   attackSpeedPct: 0
   physicalDmgPct: 0
   spellDmgPct: 0
@@ -32,9 +32,9 @@ MonoBehaviour:
   moveSpeed: 2
   moveSpeedPct: 0
   level: 1
-  isAlive: 0
+  isAlive: 1
   isImmune: 0
-  canAttack: 0
+  canAttack: 1
   isAttacking: 0
   canMove: 0
   canGainHp: 0
