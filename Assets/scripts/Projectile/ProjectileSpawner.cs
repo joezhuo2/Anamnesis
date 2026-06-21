@@ -3,10 +3,9 @@ using UnityEngine;
 
 public enum ProjectilePattern { Single, Spread, Circle, Barrage }
 
-public class ProjectileSpawner : MonoBehaviour 
+public class ProjectileSpawner : MonoBehaviour
 {
     public static ProjectileSpawner Instance;
-
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -110,22 +109,19 @@ public class ProjectileSpawner : MonoBehaviour
         float? distOverride = null
     )
     {
-        Projectile p = prefab.GetComponent<Projectile>();
-        p.pd = Instantiate(p.pd);
-        AttackData ad = p.pd.mainAttack;
+        ProjectileData pd = prefab.GetComponent<Projectile>().pd;
+        AttackData ad = pd.mainAttack;
 
         EntityStatManager statManager = source.GetComponent<EntityStatManager>();
         EntityStats es = statManager != null ? statManager.s : null;
 
         Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
 
-        p.ownerObj = source;
-
         Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
         Vector2 dir = dirOverride ?? (source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right);
-        float finalDist = distOverride ?? p.pd.spawnDistance;
+        float finalDist = distOverride ?? pd.spawnDistance;
 
-        if (!p.pd.fixedDistance && source.CompareTag("Player"))
+        if (!pd.fixedDistance && source.CompareTag("Player"))
         {
             float mouseDist = Vector2.Distance(spawnCenter, mouse);
             finalDist = Mathf.Min(mouseDist, finalDist);
@@ -133,8 +129,8 @@ public class ProjectileSpawner : MonoBehaviour
 
         Vector2 spawnPos = spawnCenter + (dir * finalDist);
 
-        if (ad.minDelay > 0 || ad.maxDelay > 0)
-            yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
+        if (ad.spawnDelay > 0)
+            yield return new WaitForSeconds(ad.spawnDelay);
 
         switch (ad.pattern)
         {

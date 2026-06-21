@@ -50,7 +50,7 @@ public class Projectile : MonoBehaviour {
     {
         if (!target.TryGetComponent<EntityHealth>(out var eh)) return;
 
-        var packet = DamageCalculator.BuildDamagePacket(pd);
+        var packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
 
         eh.TakeDamage(packet);
         pierced++;
