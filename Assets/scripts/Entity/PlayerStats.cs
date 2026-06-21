@@ -18,15 +18,15 @@ public class PlayerStats : EntityStats
     [HideInInspector] public bool canDash;
     [HideInInspector] public bool canGainStamina;
 
-    [Header("Skill points")]
-    public int agility;
-    public int defense;
-    public int strength;
-    public int dexterity;
-    public int intellegence;
-    public int vitality;
+    // [Header("Skill points")]
+    // public int agility;
+    // public int defense;
+    // public int strength;
+    // public int dexterity;
+    // public int intellegence;
+    // public int vitality;
 
     [Header("Levelling")]
     public int currentXp;
-    public int xpBonus;
+    // public int xpBonus;
 }
