@@ -14,7 +14,9 @@ public class EntityStatManager : MonoBehaviour
 
         if (gameObject.CompareTag("Enemy") && s.level > 1)
             ScaleBaseStats(s.level);
-
+    }
+    private void Start()
+    {
         s.currentHp = s.maxHp;
         s.canAttack = true;
         s.isAttacking = false;
@@ -23,6 +25,7 @@ public class EntityStatManager : MonoBehaviour
         s.isAlive = true;
         s.isImmune = false;
     }
+
     public void ScaleStatsToLevel(int targetLevel)
     {
         if (s == null) return;
