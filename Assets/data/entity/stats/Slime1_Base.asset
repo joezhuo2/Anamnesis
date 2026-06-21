@@ -39,5 +39,5 @@ MonoBehaviour:
   canMove: 0
   canGainHp: 0
   enemyDirection: 0
-  detectionRange: 10
+  detectionRange: 4
   target: {fileID: 0}

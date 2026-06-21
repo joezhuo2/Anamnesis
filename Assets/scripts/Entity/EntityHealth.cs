@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
-[RequireComponent(typeof(EntityStatManager))]
+using UnityEngine.UI;
 
+[RequireComponent(typeof(EntityStatManager))]
 [RequireComponent(typeof(Animator))]
 public class EntityHealth : MonoBehaviour
 {
@@ -17,18 +19,52 @@ public class EntityHealth : MonoBehaviour
     private float lastDodgeTime;
     private Animator animator;
     private EntityStats es;
+    public Slider healthBarPrefab;
+    private Slider healthBarInstance;
+    public Vector3 healthBarOffset = new(0, 0, 0);
+    public TextMeshProUGUI healthBarTextPrefab;
+    private TextMeshProUGUI healthBarTextInstance;
+    private Camera mainCamera;
     private void Start()
     {
         es = GetComponent<EntityStatManager>()?.s;
         animator = GetComponent<Animator>();
 
+        mainCamera = Camera.main;
+
         regenTimer = 0f;
         accumulatedRegen = 0f;
         lastDodgeTime = -Mathf.Infinity;
+
+        InitializeHealthBar();
+    }
+    private void InitializeHealthBar()
+    {
+        Canvas canvas = FindAnyObjectByType<Canvas>();
+        if (healthBarPrefab != null)
+        {
+            healthBarInstance = Instantiate(healthBarPrefab, canvas.transform);
+            healthBarInstance.maxValue = es.maxHp;
+            healthBarInstance.value = es.maxHp;
+
+            healthBarTextInstance = Instantiate(healthBarTextPrefab, canvas.transform);
+            healthBarTextInstance.text = $"{es.currentHp}/{es.maxHp}";
+        }
     }
     private void Update()
     {
         if (es != null && es.canGainHp) RegenHp();
+        MoveHealthBar();
+    }
+    private void MoveHealthBar()
+    {
+        if (healthBarInstance != null && mainCamera != null && es.isAlive && healthBarTextInstance != null)
+        {
+            Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position + healthBarOffset);
+            healthBarInstance.transform.position = screenPos;
+
+            healthBarTextInstance.transform.position = screenPos + healthBarOffset;
+        }
     }
 
     public void TakeDamage(DamagePacket dp, bool defOverride = false)
@@ -74,9 +110,15 @@ public class EntityHealth : MonoBehaviour
         }
 
         if (es.currentHp <= 0 && es.isAlive)
+        {
             StartDeathSequence();
+        }
+        else
+        {
+            healthBarInstance.value = es.currentHp;
+            healthBarTextInstance.text = $"{es.currentHp}/{es.maxHp}";
+        }
     }
-
     private void RegenHp()
     {
         if (es?.isAlive != true || es.hpRegen <= 0f) return;
