@@ -58,7 +58,7 @@ public class Projectile : MonoBehaviour {
 
         var packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
 
-        eh.TakeDamage(packet, isPlayer);
+        eh.TakeDamage(packet, isPlayer, ownerObj.GetComponent<EntityStatManager>().s);
         pierced++;
         hit.Add(target);
 

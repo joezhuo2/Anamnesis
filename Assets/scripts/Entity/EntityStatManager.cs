@@ -17,7 +17,7 @@ public class EntityStatManager : MonoBehaviour
     }
     private void Start()
     {
-        s.currentHp = s.maxHp;
+        s.currentHp = s.EffMaxHp;
         s.canAttack = true;
         s.isAttacking = false;
         s.canMove = true;
@@ -39,6 +39,7 @@ public class EntityStatManager : MonoBehaviour
         int levelOffset = currentLevel - 1;
 
         s.attack = Mathf.RoundToInt(s.attack * (1f + (0.10f * levelOffset)));
+        s.atkPct += 2f * levelOffset;
 
         s.damagePct += 0.01f * levelOffset;
         s.physicalDmgPct *= (1f + (0.03f * levelOffset));
@@ -50,9 +51,14 @@ public class EntityStatManager : MonoBehaviour
         s.aoePct += 0.015f * levelOffset;
 
         s.maxHp = Mathf.RoundToInt(s.maxHp * (1f + (0.15f * levelOffset)));
-        s.currentHp = s.maxHp;
+        s.hpPct += 3f * levelOffset;
+
+        s.currentHp = s.EffMaxHp;
+
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
+        s.hpRegPct += 2f * levelOffset;
         s.armor = Mathf.RoundToInt(s.armor * (1f + (0.05f * levelOffset)));
+        s.armorPct += 2f * levelOffset;
 
         s.damageRes = Mathf.Clamp(s.damageRes + (levelOffset), 0f, 35f);
         s.physicalRes = Mathf.Clamp(s.physicalRes + (levelOffset), 0f, 70f);

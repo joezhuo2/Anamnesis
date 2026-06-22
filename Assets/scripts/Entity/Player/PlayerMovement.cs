@@ -34,10 +34,8 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        float rawSpeed = p.moveSpeed * (1f + (p.moveSpeedPct * 0.01f));
-
-        if (p.isDashing) rb.linearVelocity = dashDir * (rawSpeed * p.dashSpeedMult);
-        else rb.linearVelocity = Vector2.ClampMagnitude(moveInput, 1f) * rawSpeed;
+        if (p.isDashing) rb.linearVelocity = dashDir * (p.FinalSpd * p.dashSpeedMult);
+        else rb.linearVelocity = Vector2.ClampMagnitude(moveInput, 1f) * p.FinalSpd;
 
         float inputMag = moveInput.magnitude;
 
@@ -65,8 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
         p.isDashing = true;
 
-        float rawSpeed = p.moveSpeed * (1f + (p.moveSpeedPct * 0.01f));
-        float dashSpeed = rawSpeed * p.dashSpeedMult;
+        float dashSpeed = p.FinalSpd * p.dashSpeedMult;
         float dashDuration = dashSpeed > 0 ? p.dashDistance / dashSpeed : 0.2f;
 
         if (p.dashShouldApplyIFrame && gameObject.TryGetComponent<EntityHealth>(out var eh)) 
