@@ -108,6 +108,25 @@ public class EntityStatManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         AddStat(b, false, show);
     }
+    public float GetBaseStat(StatType type)
+    {
+        if (!cachedFields.TryGetValue(type, out FieldInfo field))
+        {
+            field = typeof(EntityStats).GetField(type.ToString(), BindingFlags.Public | BindingFlags.Instance);
+            cachedFields[type] = field;
+        }
+
+        if (field == null) return 0f;
+
+        float currentVal = 0f;
+        if (field.FieldType == typeof(int)) currentVal = (int)field.GetValue(s);
+        else if (field.FieldType == typeof(float)) currentVal = (float)field.GetValue(s);
+
+        foreach (var buff in currentBuffs)
+            if (buff.type == type) currentVal -= buff.value;
+
+        return currentVal;
+    }
 }
 
 [System.Serializable]
