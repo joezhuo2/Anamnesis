@@ -32,11 +32,11 @@ public class PlayerAttackHandler : MonoBehaviour
         AttackData selected = attacks.Find(atk => atk.type == type);
         if (selected == null) return;
 
-        if (!HandleStatChanges(selected)) return;
-
         float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
         float cooldown = selected.cooldown * (1f - (p.attackSpeedPct * 0.01f));
         if (Time.time - lastTime < cooldown) return;
+
+        if (!HandleStatChanges(selected)) return;
 
         lastAttackTimes[type] = Time.time;
 
@@ -59,7 +59,7 @@ public class PlayerAttackHandler : MonoBehaviour
         float totalStaminaCost = attack.staminaCost + (p.maxStamina * (attack.staminaCostPct * 0.01f));
         float totalHealthCost = attack.healthCost + (p.maxHp * (attack.healthCostPct * 0.01f));
 
-        if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp) return false; 
+        if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp) return false;
 
         if (ps != null) ps.ChangeStamina(totalStaminaCost);
         if (ph != null) ph.ChangeHealth(totalHealthCost, 0f, true, false);
