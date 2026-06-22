@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
+  m_Name: s1_a_pd
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
+  mainAttack: {fileID: 0}
+  speed: 0
+  lifetime: 0
+  numPierce: 1
+  physicalMult: 0
+  spellMult: 0
+  canHitSameEntity: 0
+  followDistance: 0
+  rotationOffset: 0
+  spawnDistance: 0
+  fixedDistance: 0
+  additionalAttack: {fileID: 0}
+  additionalChance: 0
+  additionalFollowsMouse: 0
+  effect: {fileID: 0}
+  selfApply: 0
+  effectChance: 0

@@ -36,7 +36,7 @@ MonoBehaviour:
   isImmune: 0
   canAttack: 1
   isAttacking: 0
-  canMove: 0
+  canMove: 1
   canGainHp: 0
   currentStamina: 100
   maxStamina: 100
