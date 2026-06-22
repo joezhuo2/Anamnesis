@@ -57,24 +57,24 @@ public class PlayerUI : MonoBehaviour
         {
             if (healthUI.value != 0)
             {
-                healthUI.maxValue = p.maxHp;
+                healthUI.maxValue = p.EffMaxHp;
                 healthUI.value = 0;
-                healthText.text = $"0/{p.maxHp}";
+                healthText.text = $"0/{p.EffMaxHp}";
             }
 
             lastHp = 0;
-            lastMaxHp = p.maxHp;
+            lastMaxHp = p.EffMaxHp;
             return;
         }
 
-        if (p.currentHp == lastHp && p.maxHp == lastMaxHp) return;
+        if (p.currentHp == lastHp && p.EffMaxHp == lastMaxHp) return;
 
-        healthUI.maxValue = p.maxHp;
+        healthUI.maxValue = p.EffMaxHp;
         healthUI.value = p.currentHp;
-        healthText.text = $"{p.currentHp}/{p.maxHp}";
+        healthText.text = $"{p.currentHp}/{p.EffMaxHp}";
 
         lastHp = p.currentHp;
-        lastMaxHp = p.maxHp;
+        lastMaxHp = p.EffMaxHp;
     }
     private void UpdateStaminaBar()
     {

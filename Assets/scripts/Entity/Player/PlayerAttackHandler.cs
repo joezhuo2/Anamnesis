@@ -57,7 +57,8 @@ public class PlayerAttackHandler : MonoBehaviour
         if (attack == null) return false;
 
         float totalStaminaCost = attack.staminaCost + (p.maxStamina * (attack.staminaCostPct * 0.01f));
-        float totalHealthCost = attack.healthCost + (p.maxHp * (attack.healthCostPct * 0.01f));
+
+        float totalHealthCost = attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f));
 
         if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp) return false;
 
