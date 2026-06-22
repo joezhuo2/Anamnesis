@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public enum RewardRarity { Common, Uncommon, Rare, Epic, Legendary }
+public enum RewardRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
 
 [System.Serializable]
 public class RarityData
@@ -13,12 +13,14 @@ public class RarityData
     public float weight;
 }
 
-public class BaseReward : ScriptableObject
+[System.Serializable]
+public class BaseReward
 {
     public Sprite icon;
     public StatBuff baseBuff;
 }
 
+[System.Serializable]
 public class GeneratedReward
 {
     public BaseReward br;
