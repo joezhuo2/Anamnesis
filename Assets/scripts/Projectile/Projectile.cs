@@ -84,7 +84,7 @@ public class Projectile : MonoBehaviour {
     {
         if (!ownerObj.TryGetComponent<EntityStatManager>(out var esm) && esm.s.aoePct == 0) return;
 
-        float sizeMult = 1f + (esm.s.aoePct * 0.01f);
+        float sizeMult = pd.size + (esm.s.aoePct * 0.01f);
         transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
     }
     private void HandleDirection()

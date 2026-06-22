@@ -8,6 +8,7 @@ public class ProjectileData : ScriptableObject
     public float speed;
     public float lifetime;
     public int numPierce = 1;
+    public float size = 1f;
     [Header("Damage Multipliers")]
     public float physicalMult;
     public float spellMult;
@@ -15,8 +16,6 @@ public class ProjectileData : ScriptableObject
     public bool canHitSameEntity;
     public int followDistance;
     public float rotationOffset;
-    public float spawnDistance;
-    public bool fixedDistance;
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
     [Range(0, 1)] public float additionalChance = 0;
