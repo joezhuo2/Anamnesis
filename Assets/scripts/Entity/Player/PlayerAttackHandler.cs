@@ -27,7 +27,7 @@ public class PlayerAttackHandler : MonoBehaviour
     }
     public void PerformAttack(AttackType type)
     {
-        if (p == null || !p.isAlive || !p.canAttack) return;
+        if (p == null || !p.isAlive || !p.canAttack || Time.timeScale == 0f) return;
 
         AttackData selected = attacks.Find(atk => atk.type == type);
         if (selected == null) return;
