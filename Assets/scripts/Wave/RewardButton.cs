@@ -1,30 +1,44 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-[RequireComponent(typeof(Button))]
 public class RewardButton : MonoBehaviour
 {
-    public TextMeshProUGUI title;
-    public TextMeshProUGUI desc;
-    public Image icon;
-    public Image border;
-    private GeneratedReward gr;
-    private System.Action<GeneratedReward> onRewardSelectedCallback;
+    [Header("UI Visual Elements")]
+    public TMP_Text titleText;
+    public TMP_Text descriptionText;
+    public Image cardBackground;
+    public Image borderHighlight;
+    public Image iconImage;
 
-    public void Setup(GeneratedReward data, System.Action<GeneratedReward> onSelected)
+    private GeneratedReward rewardData;
+    private Action<GeneratedReward> onClaimCallback;
+
+    public void Setup(GeneratedReward reward, Action<GeneratedReward> claimCallback)
     {
-        gr = data;
-        onRewardSelectedCallback = onSelected;
+        rewardData = reward;
+        onClaimCallback = claimCallback;
 
-        title.text = data.GetDisplayName();
-        title.color = data.rd.displayColor;
+        descriptionText.text = reward.GetDescription();
 
-        if (desc != null) desc.text = data.GetDescription();
-        if (icon != null) icon.sprite = data.br.icon;
-        if (border != null) border.color = data.rd.displayColor;
+        if (reward.rd != null)
+        {
+            if (borderHighlight != null) borderHighlight.color = reward.rd.displayColor;
+            titleText.text = reward.br.baseBuff.type.ToString().ToUpper();
+        }
 
-        GetComponent<Button>().onClick.RemoveAllListeners();
-        GetComponent<Button>().onClick.AddListener(() => onRewardSelectedCallback?.Invoke(gr));
+        if (iconImage != null && reward.br.icon != null)
+            iconImage.sprite = reward.br.icon;
+
+        if (TryGetComponent<Button>(out var btn))
+        {
+            btn.onClick.RemoveAllListeners();
+            btn.onClick.AddListener(HandleClick);
+        }
+    }
+    private void HandleClick()
+    {
+        onClaimCallback?.Invoke(rewardData);
     }
 }

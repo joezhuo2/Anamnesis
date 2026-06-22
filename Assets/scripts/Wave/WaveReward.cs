@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public enum RewardRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
 
@@ -27,8 +26,5 @@ public class GeneratedReward
     public RarityData rd;
 
     public float finalVal => br.baseBuff.value * rd.mult;
-
-    public string GetDisplayName() => $"[{rd.rarityName}] {br.baseBuff}";
-    public string GetDescription() => $"+{finalVal} {br.baseBuff} (x{rd.mult})";
+    public string GetDescription() => $"+{finalVal} {br.baseBuff.type.ToString()} (x{rd.mult})";
 }
-

@@ -16,7 +16,7 @@ public class WaveManager : MonoBehaviour
     public List<BaseReward> baseBuffPool;
     public List<RarityData> rarityData;
     private List<GameObject> activeRewardButtons = new();
-
+    public Transform buttonContainer;
     private EntityStatManager cPlayerStatManager;
 
     private void Start() => StartNextWave();
@@ -103,6 +103,8 @@ public class WaveManager : MonoBehaviour
         if (rewardPanel != null) rewardPanel.SetActive(true);
         ClearRewardButtons();
 
+        Time.timeScale = 0f;
+
         for (int i = 0; i < rewardChoices; i++)
         {
             if (baseBuffPool.Count == 0 || rarityData.Count == 0) break;
@@ -113,7 +115,8 @@ public class WaveManager : MonoBehaviour
 
             GeneratedReward generated = new() { br = randomBuff, rd = chosenRarity };
 
-            GameObject btnObj = Instantiate(rewardButtonPrefab, rewardPanel.transform);
+            Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
+            GameObject btnObj = Instantiate(rewardButtonPrefab, targetParent);
             activeRewardButtons.Add(btnObj);
 
             if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
@@ -135,7 +138,7 @@ public class WaveManager : MonoBehaviour
             if (roll <= weightSum) return d;
         }
 
-        return rarityData[0]; // Fallback
+        return rarityData[0];
     }
     private void OnRewardClaimed(GeneratedReward chosenReward)
     {
@@ -147,8 +150,9 @@ public class WaveManager : MonoBehaviour
         if (cPlayerStatManager == null)
             cPlayerStatManager = GameObject.FindWithTag("Player")?.GetComponent<EntityStatManager>();
 
-        if (cPlayerStatManager != null)
-            cPlayerStatManager.AddStat(finalBuff);
+        if (cPlayerStatManager != null) cPlayerStatManager.AddStat(finalBuff);
+
+        Time.timeScale = 1f;
 
         StartNextWave();
     }
