@@ -44,11 +44,12 @@ public class EntityHealth : MonoBehaviour
         if (healthBarPrefab != null)
         {
             healthBarInstance = Instantiate(healthBarPrefab, canvas.transform);
-            healthBarInstance.maxValue = es.maxHp;
-            healthBarInstance.value = es.maxHp;
+
+            healthBarInstance.maxValue = es.EffMaxHp;
+            healthBarInstance.value = es.EffMaxHp;
 
             healthBarTextInstance = Instantiate(healthBarTextPrefab, canvas.transform);
-            healthBarTextInstance.text = $"{es.currentHp}/{es.maxHp}";
+            healthBarTextInstance.text = $"{es.currentHp}/{es.EffMaxHp}";
         }
     }
     private void Update()
@@ -67,12 +68,12 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(DamagePacket dp, bool bypassIFrames = false)
+    public void TakeDamage(DamagePacket dp, bool bypassIFrames, EntityStats source)
     {
         if (dp == null) return;
         foreach (var i in dp.instances)
         {
-            float finalDamage = CalculateDamageTaken(i.type, i.amount);
+            float finalDamage = CalculateDamageTaken(i.type, i.amount, source);
 
             if (finalDamage > 0)
                 ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit, i.type == DamageType.Spell ? Color.purple : Color.gray, bypassIFrames);
@@ -82,10 +83,10 @@ public class EntityHealth : MonoBehaviour
     {
         if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return;
 
-        int finalAmount = Mathf.RoundToInt(amount + (pctAmt * es.maxHp));
+        int finalAmount = Mathf.RoundToInt(amount + (pctAmt * es.EffMaxHp));
         if (finalAmount == 0) return;
 
-        int newHp = Math.Min(es.currentHp + finalAmount, es.maxHp);
+        int newHp = Math.Min(es.currentHp + finalAmount, (int)es.EffMaxHp);
         es.currentHp = Mathf.Max(0, newHp);
 
         DamageIndicatorSpawner dis = DamageIndicatorSpawner.Instance;
@@ -121,14 +122,14 @@ public class EntityHealth : MonoBehaviour
             if (healthBarInstance != null && healthBarTextInstance != null)
             {
                 healthBarInstance.value = es.currentHp;
-                healthBarTextInstance.text = $"{es.currentHp}/{es.maxHp}";
+                healthBarTextInstance.text = $"{es.currentHp}/{es.EffMaxHp}";
             }
         }
     }
     private void RegenHp()
     {
-        if (es?.isAlive != true || es.hpRegen <= 0f) return;
-        if (es.currentHp >= es.maxHp) return;
+        if (es?.isAlive != true || es.EffHpReg <= 0f) return;
+        if (es.currentHp >= (int)es.EffMaxHp) return;
 
         regenTimer += Time.deltaTime;
 
@@ -136,7 +137,7 @@ public class EntityHealth : MonoBehaviour
         {
             regenTimer -= regenInterval;
 
-            float hpPerSecond = es.hpRegen / fullRegenFrequency;
+            float hpPerSecond = es.EffHpReg / fullRegenFrequency;
             float hpPerTick = hpPerSecond * regenInterval;
 
             accumulatedRegen += hpPerTick;
@@ -171,10 +172,12 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    private float CalculateDamageTaken(DamageType type, float rawDamage)
+    private float CalculateDamageTaken(DamageType type, float rawDamage, EntityStats source)
     {
-        float resMult = 1f - (es.damageRes * 0.01f);
-        float armorMult = 1f - ((float)es.armor / (es.armor + 100f));
+        float effRes = Mathf.Max(-100f, es.damageRes - source.resPen);
+        float resMult = 1f - (effRes * 0.01f);
+        float effArmor = Mathf.Max(0, es.EffArmor - source.defShred);
+        float armorMult = 1f - ((float)effArmor / (effArmor + 100f));
 
         float typeMult = type switch
         {
