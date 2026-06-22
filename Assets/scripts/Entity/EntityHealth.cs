@@ -67,18 +67,18 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(DamagePacket dp, bool defOverride = false)
+    public void TakeDamage(DamagePacket dp, bool bypassIFrames = false)
     {
         if (dp == null) return;
         foreach (var i in dp.instances)
         {
-            float finalDamage = defOverride ? i.amount : CalculateDamageTaken(i.type, i.amount);
+            float finalDamage = CalculateDamageTaken(i.type, i.amount);
 
             if (finalDamage > 0)
-                ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit);
+                ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit, i.type == DamageType.Spell ? Color.purple : Color.gray, bypassIFrames);
         }
     }
-    public void ChangeHealth(float amount, float pctAmt, bool showIndicator, bool isCrit)
+    public void ChangeHealth(float amount, float pctAmt, bool showIndicator, bool isCrit, Color colorOverride = default, bool bypassIFrames = false)
     {
         if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return;
 
@@ -88,14 +88,16 @@ public class EntityHealth : MonoBehaviour
         int newHp = Math.Min(es.currentHp + finalAmount, es.maxHp);
         es.currentHp = Mathf.Max(0, newHp);
 
-        var dis = DamageIndicatorSpawner.Instance;
-        var pos = transform.position;
+        DamageIndicatorSpawner dis = DamageIndicatorSpawner.Instance;
+        Vector3 pos = transform.position;
+
+        Color indicatorColor = colorOverride != default ? colorOverride : (finalAmount < 0 ? Color.red : Color.green);
 
         if (dis != null && showIndicator)
         {
             dis.SpawnDamageIndicator(
                 finalAmount < 0 ? -finalAmount : finalAmount, pos,
-                finalAmount < 0 ? Color.red : Color.green,
+                indicatorColor,
                 isCrit ? 1.5f : 1f,
                 0.6f,
                 1f
@@ -106,7 +108,8 @@ public class EntityHealth : MonoBehaviour
         {
             animator.SetBool(IsHurtHash, true);
             StartCoroutine(HurtDelay(0.3f));
-            StartCoroutine(TriggerIFrames(hurtIFrameDuration));
+            if (!bypassIFrames)
+                StartCoroutine(TriggerIFrames(hurtIFrameDuration));
         }
 
         if (es.currentHp <= 0 && es.isAlive)
