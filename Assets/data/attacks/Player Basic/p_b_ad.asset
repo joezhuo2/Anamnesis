@@ -29,6 +29,6 @@ MonoBehaviour:
   maxRange: 0
   canMoveDuringAttack: 0
   staminaCost: 10
-  staminaCostPct: 0
+  staminaCostPct: 5
   healthCost: 0
   healthCostPct: 0

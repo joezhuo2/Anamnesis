@@ -17,8 +17,8 @@ MonoBehaviour:
   lifetime: 0.5
   numPierce: 4
   size: 3
-  physicalMult: 2.5
-  spellMult: 1.1
+  physicalMult: 4.5
+  spellMult: 2.25
   canHitSameEntity: 0
   followDistance: 0
   rotationOffset: 0

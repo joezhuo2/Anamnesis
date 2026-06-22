@@ -28,7 +28,7 @@ MonoBehaviour:
   dodgeChance: 0
   dodgeResPct: 0
   physicalRes: 10
-  spellRes: 0
+  spellRes: -20
   moveSpeed: 0.65
   moveSpeedPct: 0
   level: 0

@@ -20,8 +20,8 @@ MonoBehaviour:
     maxTotalEnemies: 5
     maxCurrentEnemies: 5
     enemyLevel: 1
-    minSpawnFrequency: 10
-    maxSpawnFrequency: 15
+    minSpawnFrequency: 3
+    maxSpawnFrequency: 5
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
