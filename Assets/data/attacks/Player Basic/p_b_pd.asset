@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
   speed: 0
-  lifetime: 0.1
+  lifetime: 0.5
   numPierce: 3
   size: 2
-  physicalMult: 1
-  spellMult: 1
+  physicalMult: 1.2
+  spellMult: 0.3
   canHitSameEntity: 0
   followDistance: 0
-  rotationOffset: 0
+  rotationOffset: 90
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0

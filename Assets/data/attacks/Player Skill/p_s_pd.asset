@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: s1_a_pd
+  m_Name: p_s_pd
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: 5b9ca13cda46da94fb3c221b94bc1a98, type: 2}
-  speed: 1.5
-  lifetime: 0.83
-  numPierce: 1
-  size: 2
-  physicalMult: 0.8
-  spellMult: 0
+  mainAttack: {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
+  speed: 0
+  lifetime: 0.5
+  numPierce: 4
+  size: 3
+  physicalMult: 2.5
+  spellMult: 1.1
   canHitSameEntity: 0
   followDistance: 0
   rotationOffset: 0

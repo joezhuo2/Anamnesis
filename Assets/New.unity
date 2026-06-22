@@ -826,8 +826,105 @@ MonoBehaviour:
   rewardPanel: {fileID: 0}
   rewardButtonPrefab: {fileID: 0}
   baseBuffPool:
-  - {fileID: 0}
-  rarityData: []
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 0
+      value: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 1
+      value: 5
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 2
+      value: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 3
+      value: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 4
+      value: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 5
+      value: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 6
+      value: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 7
+      value: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 9
+      value: 5
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 10
+      value: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 11
+      value: 5
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 12
+      value: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 13
+      value: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 14
+      value: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 15
+      value: 8
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 16
+      value: 8
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 18
+      value: 3
+  rarityData:
+  - rarity: 0
+    rarityName: Common
+    displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 0}
+    mult: 1
+    weight: 300
+  - rarity: 1
+    rarityName: Uncommon
+    displayColor: {r: 0.21562162, g: 0.754717, b: 0, a: 0}
+    mult: 2
+    weight: 200
+  - rarity: 2
+    rarityName: Rare
+    displayColor: {r: 0, g: 0.39995039, b: 0.745283, a: 0}
+    mult: 3
+    weight: 125
+  - rarity: 3
+    rarityName: Epic
+    displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 0}
+    mult: 5
+    weight: 50
+  - rarity: 4
+    rarityName: Legendary
+    displayColor: {r: 0.74509805, g: 0.32248145, b: 0, a: 0}
+    mult: 8
+    weight: 15
+  - rarity: 5
+    rarityName: Mythic
+    displayColor: {r: 1, g: 0, b: 0.6273154, a: 0}
+    mult: 12
+    weight: 1
 --- !u!4 &587400166
 Transform:
   m_ObjectHideFlags: 0
@@ -836,12 +933,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587400164}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11171, y: -0.20755, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.88453, y: 0.18288, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1770876247}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &675121549
 GameObject:
@@ -2138,6 +2235,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1723689854}
+  - {fileID: 587400166}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1831102150
@@ -2360,4 +2458,3 @@ SceneRoots:
   - {fileID: 1181093676}
   - {fileID: 1434897402}
   - {fileID: 1770876247}
-  - {fileID: 587400166}
