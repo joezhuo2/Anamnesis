@@ -11,6 +11,14 @@ public class WaveManager : MonoBehaviour
     private bool isWaveActive = false;
     private Coroutine spawnCoroutine;
 
+    public GameObject rewardPanel;
+    public GameObject rewardButtonPrefab;
+    public List<BaseReward> baseBuffPool;
+    public List<RarityData> rarityData;
+    private List<GameObject> activeRewardButtons = new();
+
+    private EntityStatManager cPlayerStatManager;
+
     public void StartNextWave()
     {
         if (isWaveActive) return;
@@ -89,6 +97,62 @@ public class WaveManager : MonoBehaviour
     {
         WaveData completedWave = currentSequence.waves[currentWaveIndex - 1];
         int rewardChoices = Random.Range(completedWave.minRewardChoices, completedWave.maxRewardChoices + 1);
-        float qualityModifier = completedWave.rewardQualityBoost;
+
+        if (rewardPanel != null) rewardPanel.SetActive(true);
+        ClearRewardButtons();
+
+        for (int i = 0; i < rewardChoices; i++)
+        {
+            if (baseBuffPool.Count == 0 || rarityData.Count == 0) break;
+
+            BaseReward randomBuff = baseBuffPool[Random.Range(0, baseBuffPool.Count)];
+
+            RarityData chosenRarity = GetWeightedRandomRarity();
+
+            GeneratedReward generated = new() { br = randomBuff, rd = chosenRarity };
+
+            GameObject btnObj = Instantiate(rewardButtonPrefab, rewardPanel.transform);
+            activeRewardButtons.Add(btnObj);
+
+            if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
+                rewardButton.Setup(generated, OnRewardClaimed);
+        }
+    }
+
+    private RarityData GetWeightedRandomRarity()
+    {
+        float totalWeight = 0;
+        foreach (var d in rarityData) totalWeight += d.weight;
+
+        float roll = Random.Range(0f, totalWeight);
+        float weightSum = 0;
+
+        foreach (var d in rarityData)
+        {
+            weightSum += d.weight;
+            if (roll <= weightSum) return d;
+        }
+
+        return rarityData[0]; // Fallback
+    }
+    private void OnRewardClaimed(GeneratedReward chosenReward)
+    {
+        ClearRewardButtons();
+        if (rewardPanel != null) rewardPanel.SetActive(false);
+
+        StatBuff finalBuff = new(chosenReward.br.baseBuff.type, chosenReward.finalVal);
+
+        if (cPlayerStatManager == null)
+            cPlayerStatManager = GameObject.FindWithTag("Player")?.GetComponent<EntityStatManager>();
+
+        cPlayerStatManager.AddStat(finalBuff);
+
+        StartNextWave();
+    }
+
+    private void ClearRewardButtons()
+    {
+        foreach (var btn in activeRewardButtons) if (btn != null) Destroy(btn);
+        activeRewardButtons.Clear();
     }
 }
