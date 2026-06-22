@@ -13,17 +13,23 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   damagePct: 0
-  attack: 10
-  attackSpeedPct: 0
   physicalDmgPct: 0
   spellDmgPct: 0
+  attack: 10
+  atkPct: 0
+  attackSpeedPct: 0
   critChance: 5
   critDamage: 50
   aoePct: 0
+  defShred: 0
+  resPen: 0
   currentHp: 100
   maxHp: 100
+  hpPct: 0
   hpRegen: 5
+  hpRegPct: 0
   armor: 0
+  armorPct: 0
   damageRes: 0
   dodgeChance: 5
   dodgeResPct: 0.4
@@ -44,7 +50,7 @@ MonoBehaviour:
   dashSpeedMult: 5
   dashCooldown: 3
   dashDistance: 1.5
-  dashStaminaCost: 15
+  dashStaminaCost: 30
   dashShouldApplyIFrame: 1
   isDashing: 0
   canDash: 0

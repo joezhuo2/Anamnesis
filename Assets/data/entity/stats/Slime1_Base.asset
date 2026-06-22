@@ -13,22 +13,28 @@ MonoBehaviour:
   m_Name: Slime1_Base
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
-  attack: 15
-  attackSpeedPct: 0
   physicalDmgPct: 5
   spellDmgPct: 0
+  attack: 15
+  atkPct: 0
+  attackSpeedPct: 0
   critChance: 5
   critDamage: 50
   aoePct: 0
+  defShred: 0
+  resPen: 0
   currentHp: 100
   maxHp: 100
+  hpPct: 0
   hpRegen: 0
-  armor: 100
+  hpRegPct: 0
+  armor: 30
+  armorPct: 0
   damageRes: 0
   dodgeChance: 0
   dodgeResPct: 0
   physicalRes: 10
-  spellRes: -20
+  spellRes: -30
   moveSpeed: 0.65
   moveSpeedPct: 0
   level: 0

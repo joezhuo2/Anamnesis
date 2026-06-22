@@ -291,8 +291,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b71555f0-f320-43d5-becc-fc8f8ba5e762"",
-                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""id"": ""d5a3dcde-6e1f-4bc0-b093-82d667099337"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
