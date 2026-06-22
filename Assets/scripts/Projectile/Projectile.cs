@@ -52,7 +52,9 @@ public class Projectile : MonoBehaviour {
 
         var packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
 
-        eh.TakeDamage(packet);
+        bool isPlayer = ownerObj.CompareTag("Player");
+
+        eh.TakeDamage(packet, isPlayer);
         pierced++;
         hit.Add(target);
 
