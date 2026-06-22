@@ -32,6 +32,8 @@ public class PlayerAttackHandler : MonoBehaviour
         AttackData selected = attacks.Find(atk => atk.type == type);
         if (selected == null) return;
 
+        if (!HandleStatChanges(selected)) return;
+
         float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
         float cooldown = selected.cooldown * (1f - (p.attackSpeedPct * 0.01f));
         if (Time.time - lastTime < cooldown) return;
@@ -40,7 +42,6 @@ public class PlayerAttackHandler : MonoBehaviour
 
         StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(selected.projectilePrefab, gameObject, transform.position));
 
-        HandleStatChanges(selected);
         a.SetBool(IsAttackingHash, true);
         a.speed = Mathf.Max(0.1f, 1f + (p.attackSpeedPct * 0.01f));
         StartCoroutine(ResetAttackType(selected.animationLength));
@@ -51,15 +52,19 @@ public class PlayerAttackHandler : MonoBehaviour
         a.SetBool(IsAttackingHash, false);
         a.speed = 1f;
     }
-    public void HandleStatChanges(AttackData attack)
+    public bool HandleStatChanges(AttackData attack)
     {
-        if (attack == null) return;
+        if (attack == null) return false;
 
-        if (attack.staminaCost == 0 && attack.healthCost == 0 &&
-            attack.staminaCostPct == 0 && attack.healthCostPct == 0) return;
+        float totalStaminaCost = attack.staminaCost + (p.maxStamina * (attack.staminaCostPct * 0.01f));
+        float totalHealthCost = attack.healthCost + (p.maxHp * (attack.healthCostPct * 0.01f));
 
-        if (ps != null) ps.ChangeStamina(attack.staminaCost, attack.staminaCostPct);
-        if (ph != null) ph.ChangeHealth(attack.healthCost, attack.healthCostPct, true, false);
+        if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp) return false; 
+
+        if (ps != null) ps.ChangeStamina(totalStaminaCost);
+        if (ph != null) ph.ChangeHealth(totalHealthCost, 0f, true, false);
+
+        return true;
     }
     public void UpdateAttack(AttackType type, AttackData newAttack)
     {
