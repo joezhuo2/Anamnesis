@@ -2213,7 +2213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd73f34db5b961248b84f439dfc1048e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackHandler
-  attacks: []
+  attacks:
+  - {fileID: 11400000, guid: 5b9ca13cda46da94fb3c221b94bc1a98, type: 2}
   projSpawnOffset: {x: 0, y: 0}
 --- !u!114 &1720392288
 MonoBehaviour:

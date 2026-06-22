@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
   m_Name: s1_a_pd
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 0}
-  speed: 0
-  lifetime: 0
+  mainAttack: {fileID: 11400000, guid: 5b9ca13cda46da94fb3c221b94bc1a98, type: 2}
+  speed: 2
+  lifetime: 0.83
   numPierce: 1
-  physicalMult: 0
+  size: 2
+  physicalMult: 0.8
   spellMult: 0
   canHitSameEntity: 0
   followDistance: 0
   rotationOffset: 0
-  spawnDistance: 0
-  fixedDistance: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0

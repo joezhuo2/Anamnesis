@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Slime1_Base
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
-  attack: 10
+  attack: 15
   attackSpeedPct: 0
-  physicalDmgPct: 3
+  physicalDmgPct: 5
   spellDmgPct: 0
   critChance: 5
   critDamage: 50
@@ -29,9 +29,9 @@ MonoBehaviour:
   dodgeResPct: 0
   physicalRes: 0
   spellRes: 0
-  moveSpeed: 0.5
+  moveSpeed: 0.65
   moveSpeedPct: 0
-  level: 1
+  level: 3
   isAlive: 0
   isImmune: 0
   canAttack: 0

@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: s1_a_ad
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 0
-  projectilePrefab: {fileID: 0}
-  pattern: 0
-  spawnDelay: 0
-  animationLength: 0
+  cooldown: 3
+  projectilePrefab: {fileID: 8726194261462263514, guid: 34db5de69d1f9ce4592bab31c85d8434, type: 3}
+  pattern: 1
+  spawnDelay: 0.325
+  spawnDistance: 0.25
+  fixedDistance: 1
+  animationLength: 0.83
   type: 0
-  projectileCount: 1
+  projectileCount: 3
   randomCount: 0
-  spread: 0
-  randomSpread: 0
+  spread: 30
+  randomSpread: 15
   minDelay: 0
   maxDelay: 0
-  maxRange: 0
+  maxRange: 4
   canMoveDuringAttack: 0
   staminaCost: 0
   staminaCostPct: 0
