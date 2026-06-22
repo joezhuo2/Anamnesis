@@ -8,6 +8,8 @@ public class AttackData : ScriptableObject
     public GameObject projectilePrefab;
     public ProjectilePattern pattern;
     public float spawnDelay;
+    public float spawnDistance;
+    public bool fixedDistance;
     public float animationLength;
     public AttackType type;
     [Header("Spawn Logic")]

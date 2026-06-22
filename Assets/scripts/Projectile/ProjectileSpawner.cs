@@ -119,9 +119,9 @@ public class ProjectileSpawner : MonoBehaviour
 
         Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
         Vector2 dir = dirOverride ?? (source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right);
-        float finalDist = distOverride ?? pd.spawnDistance;
+        float finalDist = distOverride ?? ad.spawnDistance;
 
-        if (!pd.fixedDistance && source.CompareTag("Player"))
+        if (!ad.fixedDistance && source.CompareTag("Player"))
         {
             float mouseDist = Vector2.Distance(spawnCenter, mouse);
             finalDist = Mathf.Min(mouseDist, finalDist);
