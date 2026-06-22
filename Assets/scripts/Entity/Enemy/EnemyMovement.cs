@@ -67,8 +67,7 @@ public class EnemyMovement : MonoBehaviour
             ? new Vector2(Mathf.Sign(dir.x), 0)
             : new Vector2(0, Mathf.Sign(dir.y));
 
-        float finalSpeed = es.moveSpeed * (1f + (0.01f * es.moveSpeedPct));
-        rb.linearVelocity = dir * finalSpeed;
+        rb.linearVelocity = dir * es.FinalSpd;
 
         if (dir.x != 0)
         {
