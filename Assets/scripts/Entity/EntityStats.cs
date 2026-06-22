@@ -44,8 +44,8 @@ public class EntityStats : ScriptableObject
     [Range(0f, 100f)] public float damageRes;
     [Range(0f, 100f)] public float dodgeChance;
     [Range(0f, 100f)] public float dodgeResPct;
-    [Range(0f, 100f)] public float physicalRes;
-    [Range(0f, 100f)] public float spellRes;
+    [Range(-300f, 100f)] public float physicalRes;
+    [Range(-300f, 100f)] public float spellRes;
 
     [Header("Movement")]
     public float moveSpeed;
