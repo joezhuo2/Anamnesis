@@ -48,27 +48,27 @@ public class EntityStatManager : MonoBehaviour
         s.critChance = Mathf.Clamp(s.critChance * (1f + (0.01f * levelOffset)), 0f, 100f);
         s.critDamage *= (1f + (0.03f * levelOffset));
 
-        s.aoePct += 0.015f * levelOffset;
+        s.aoePct += 0.3f * levelOffset;
 
-        s.maxHp = Mathf.RoundToInt(s.maxHp * (1f + (0.15f * levelOffset)));
-        s.hpPct += 3f * levelOffset;
+        s.maxHp = Mathf.RoundToInt(s.maxHp * (1f + (0.10f * levelOffset)));
+        s.hpPct += 5f * levelOffset;
 
         s.currentHp = s.EffMaxHp;
 
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
         s.hpRegPct += 2f * levelOffset;
-        s.armor = Mathf.RoundToInt(s.armor * (1f + (0.05f * levelOffset)));
+        s.armor = Mathf.RoundToInt(s.armor * (1f + (0.03f * levelOffset)));
         s.armorPct += 2f * levelOffset;
 
-        s.damageRes = Mathf.Clamp(s.damageRes + (levelOffset), 0f, 35f);
-        s.physicalRes = Mathf.Clamp(s.physicalRes + (levelOffset), 0f, 70f);
-        s.spellRes = Mathf.Clamp(s.spellRes + (levelOffset), 0f, 70f);
+        s.damageRes = Mathf.Clamp(s.damageRes + (0.2f * levelOffset), 0f, 50f);
+        s.physicalRes = Mathf.Clamp(s.physicalRes + (0.3f * levelOffset), 0f, 70f);
+        s.spellRes = Mathf.Clamp(s.spellRes + (0.3f * levelOffset), 0f, 70f);
 
-        s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.5f * levelOffset), 0f, 40f);
-        s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (levelOffset), 0f, 60f);
+        s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.3f * levelOffset), 0f, 40f);
+        s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (0.5f * levelOffset), 0f, 60f);
 
-        s.moveSpeed = Mathf.Clamp(s.moveSpeed * (1f + (0.01f * levelOffset)), 0f, 3.0f);
-        s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct + levelOffset, 0f, 100f);
+        s.moveSpeed = Mathf.Clamp(s.moveSpeed * (1f + (0.01f * levelOffset)), 0.1f, 2.0f);
+        s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct + (0.3f * levelOffset), 0f, 80f);
     }
 
     private void OnDestroy()
