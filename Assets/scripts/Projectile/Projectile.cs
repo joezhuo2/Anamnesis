@@ -49,10 +49,14 @@ public class Projectile : MonoBehaviour {
     private void HandleHitEntity(GameObject target)
     {
         if (!target.TryGetComponent<EntityHealth>(out var eh)) return;
+        bool targetIsPlayer = target.CompareTag("Player");
+        bool isPlayer = ownerObj.CompareTag("Player");
+        bool targetIsEnemy = target.CompareTag("Enemy");
+        bool isEnemy = ownerObj.CompareTag("Enemy");
+
+        if (targetIsPlayer == isPlayer || targetIsEnemy == isEnemy) return;
 
         var packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
-
-        bool isPlayer = ownerObj.CompareTag("Player");
 
         eh.TakeDamage(packet, isPlayer);
         pierced++;
