@@ -3,11 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "player_stats", menuName = "Scriptable Objects/stats/player")]
 public class PlayerStats : EntityStats
 {
-    [Header("Stamina")]
-    public int currentStamina;
-    public int maxStamina;
-    public int staminaRegen;
-    
     [Header("Dash")]
     public float dashSpeedMult;
     public float dashCooldown;

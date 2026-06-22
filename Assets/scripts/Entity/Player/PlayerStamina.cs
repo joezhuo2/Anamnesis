@@ -27,13 +27,13 @@ public class PlayerStamina : MonoBehaviour
     }
     public void RegenStamina()
     {
-        if (p == null || p.currentStamina >= p.maxStamina || p.staminaRegen == 0) return;
+        if (p == null || p.currentStamina >= p.maxStamina || p.EffStReg == 0) return;
 
         regenTimer += Time.deltaTime;
 
         if (regenTimer >= regenInterval)
         {
-            float regenPerTick = p.staminaRegen / fullRegenFrequency * regenInterval;
+            float regenPerTick = p.EffStReg / fullRegenFrequency * regenInterval;
 
             accumaltedRegen += regenPerTick;
 
