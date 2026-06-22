@@ -1,5 +1,5 @@
-using System.ComponentModel.Design;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
@@ -8,26 +8,26 @@ public class StatusEffectManager : MonoBehaviour
 
     public void AddEffect(StatusEffect se, GameObject source)
     {
+        if (se == null) return;
+
         StatusEffect existing = activeEffects.Find(e => e.GetType() == se.GetType());
 
         if (existing != null)
         {
+            existing.currentTime = 0f;
+
             if (existing.currentStacks < existing.maxStacks)
             {
                 existing.currentStacks++;
                 existing.OnStack();
-            }
-            else
-            {
-                existing.currentTime = 0;
             }
         }
         else
         {
             StatusEffect runtimeEffect = Instantiate(se);
             runtimeEffect.target = gameObject;
-            runtimeEffect.currentStacks = 1;
             runtimeEffect.source = source;
+            runtimeEffect.currentStacks = 1;
             runtimeEffect.currentTime = 0;
 
             activeEffects.Add(runtimeEffect);
@@ -37,18 +37,22 @@ public class StatusEffectManager : MonoBehaviour
 
     private void Update()
     {
+        float dt = Time.deltaTime;
+
         for (int i = activeEffects.Count - 1; i >= 0; i--)
         {
             StatusEffect e = activeEffects[i];
+            if (e == null) continue;
 
             if (e.tickInterval > 0)
             {
                 int oldTicks = Mathf.FloorToInt(e.currentTime / e.tickInterval);
-                int newTicks = Mathf.FloorToInt((e.currentTime + Time.deltaTime) / e.tickInterval);
+                int newTicks = Mathf.FloorToInt((e.currentTime + dt) / e.tickInterval);
+
                 if (newTicks > oldTicks) e.OnTick();
             }
 
-            e.currentTime += Time.deltaTime;
+            e.currentTime += dt;
 
             if (e.currentTime > e.duration)
             {
