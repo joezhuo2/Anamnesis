@@ -41,11 +41,11 @@ public class EntityStats : ScriptableObject
     public int maxHp;
     public int hpRegen;
     public int armor;
-    [Range(0f, 1f)] public float damageRes;
+    [Range(0f, 100f)] public float damageRes;
     [Range(0f, 100f)] public float dodgeChance;
-    [Range(0f, 1f)] public float dodgeResPct;
-    [Range(0f, 1f)] public float physicalRes;
-    [Range(0f, 1f)] public float spellRes;
+    [Range(0f, 100f)] public float dodgeResPct;
+    [Range(0f, 100f)] public float physicalRes;
+    [Range(0f, 100f)] public float spellRes;
 
     [Header("Movement")]
     public float moveSpeed;

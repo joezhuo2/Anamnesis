@@ -170,13 +170,13 @@ public class EntityHealth : MonoBehaviour
 
     private float CalculateDamageTaken(DamageType type, float rawDamage)
     {
-        float resMult = 1f - es.damageRes;
+        float resMult = 1f - (es.damageRes * 0.01f);
         float armorMult = 1f - ((float)es.armor / (es.armor + 100f));
 
         float typeMult = type switch
         {
-            DamageType.Physical => 1f - es.physicalRes,
-            DamageType.Spell => 1f - es.spellRes,
+            DamageType.Physical => 1f - (es.physicalRes * 0.01f),
+            DamageType.Spell => 1f - (es.spellRes * 0.01f),
             _ => 1f
         };
 
@@ -184,8 +184,8 @@ public class EntityHealth : MonoBehaviour
 
         if (Time.time >= lastDodgeTime + dodgeCooldown)
         {
-            float dc = es.dodgeChance / 100f;
-            float dodgeMult = 1f - es.dodgeResPct;
+            float dc = es.dodgeChance * 0.01f;
+            float dodgeMult = 1f - (es.dodgeResPct * 0.01f);
 
             if (UnityEngine.Random.Range(0f, 1f) < dc)
             {

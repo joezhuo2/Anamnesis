@@ -54,15 +54,15 @@ public class EntityStatManager : MonoBehaviour
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
         s.armor = Mathf.RoundToInt(s.armor * (1f + (0.05f * levelOffset)));
 
-        s.damageRes = Mathf.Clamp(s.damageRes + (0.01f * levelOffset), 0f, 0.35f);
-        s.physicalRes = Mathf.Clamp(s.physicalRes + (0.01f * levelOffset), 0f, 0.70f);
-        s.spellRes = Mathf.Clamp(s.spellRes + (0.01f * levelOffset), 0f, 0.70f);
+        s.damageRes = Mathf.Clamp(s.damageRes + (levelOffset), 0f, 35f);
+        s.physicalRes = Mathf.Clamp(s.physicalRes + (levelOffset), 0f, 70f);
+        s.spellRes = Mathf.Clamp(s.spellRes + (levelOffset), 0f, 70f);
 
-        s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.5f * levelOffset), 0f, 60f);
-        s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (0.01f * levelOffset), 0f, 0.80f);
+        s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.5f * levelOffset), 0f, 40f);
+        s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (levelOffset), 0f, 60f);
 
         s.moveSpeed = Mathf.Clamp(s.moveSpeed * (1f + (0.01f * levelOffset)), 0f, 3.0f);
-        s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct * (1f + (0.01f * levelOffset)), 0f, 2.0f);
+        s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct + levelOffset, 0f, 100f);
     }
 
     private void OnDestroy()

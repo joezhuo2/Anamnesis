@@ -34,7 +34,7 @@ public static class DamageCalculator
         float roll = Random.Range(0f, 1000f) / 10f;
         if (roll <= stats.critChance)
         {
-            float critDamage = baseDamage * (100f + stats.critDamage) / 100f;
+            float critDamage = baseDamage * (100f + stats.critDamage) * 0.01f;
             return (critDamage, true);
         }
         return (baseDamage, false);
