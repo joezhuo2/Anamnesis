@@ -115,8 +115,11 @@ public class EntityHealth : MonoBehaviour
         }
         else
         {
-            healthBarInstance.value = es.currentHp;
-            healthBarTextInstance.text = $"{es.currentHp}/{es.maxHp}";
+            if (healthBarInstance != null && healthBarTextInstance != null)
+            {
+                healthBarInstance.value = es.currentHp;
+                healthBarTextInstance.text = $"{es.currentHp}/{es.maxHp}";
+            }
         }
     }
     private void RegenHp()
@@ -196,7 +199,6 @@ public class EntityHealth : MonoBehaviour
 
     private IEnumerator HurtDelay(float time)
     {
-        yield return null;
         yield return new WaitForSeconds(time);
         animator?.SetBool(IsHurtHash, false);
     }
