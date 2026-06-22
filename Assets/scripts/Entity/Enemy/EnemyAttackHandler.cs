@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(EntityStatManager))]
@@ -83,7 +84,7 @@ public class EnemyAttackHandler : MonoBehaviour
                     gameObject,
                     transform.position,
                     dir,
-                    attack.maxRange
+                    attack.spawnDistance
                 ));
             }
         }
