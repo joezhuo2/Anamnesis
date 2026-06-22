@@ -26,7 +26,10 @@ public enum StatType
     physicalRes,
     spellRes,
     moveSpeed,
-    moveSpeedPct
+    moveSpeedPct,
+    maxStamina,
+    staminaRegen,
+    stRegPct,
 }
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
@@ -68,6 +71,13 @@ public class EntityStats : ScriptableObject
     public float FinalSpd => moveSpeed * (1f + (moveSpeedPct * 0.01f));
     public float moveSpeed;
     public float moveSpeedPct;
+
+    [Header("Stamina - Player Only")]
+    public int currentStamina;
+    public int maxStamina;
+    public float EffStReg => staminaRegen * (1f + (stRegPct * 0.01f));
+    public float staminaRegen;
+    public float stRegPct;
 
     [Header("Misc")]
     public int level;
