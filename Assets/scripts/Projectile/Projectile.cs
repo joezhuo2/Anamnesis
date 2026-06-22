@@ -48,7 +48,9 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleHitEntity(GameObject target)
     {
+        if (target == null && ownerObj == null && target == ownerObj) return;
         if (!target.TryGetComponent<EntityHealth>(out var eh)) return;
+
         bool targetIsPlayer = target.CompareTag("Player");
         bool isPlayer = ownerObj.CompareTag("Player");
         bool targetIsEnemy = target.CompareTag("Enemy");
