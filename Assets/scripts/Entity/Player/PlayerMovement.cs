@@ -66,8 +66,8 @@ public class PlayerMovement : MonoBehaviour
         float dashSpeed = p.FinalSpd * p.dashSpeedMult;
         float dashDuration = dashSpeed > 0 ? p.dashDistance / dashSpeed : 0.2f;
 
-        if (p.dashShouldApplyIFrame && gameObject.TryGetComponent<EntityHealth>(out var eh)) 
-            eh.StartCoroutine(eh.TriggerIFrames(dashDuration));
+        if (p.dashShouldApplyIFrame && gameObject.TryGetComponent<EntityHealth>(out var eh))
+            eh.StartCoroutine(eh.TriggerIFrames(dashDuration + 0.2f));
 
         StartCoroutine(DashRoutine(dashSpeed));
     }
