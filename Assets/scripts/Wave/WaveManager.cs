@@ -19,6 +19,8 @@ public class WaveManager : MonoBehaviour
 
     private EntityStatManager cPlayerStatManager;
 
+    private void Start() => StartNextWave();
+
     public void StartNextWave()
     {
         if (isWaveActive) return;
@@ -145,7 +147,8 @@ public class WaveManager : MonoBehaviour
         if (cPlayerStatManager == null)
             cPlayerStatManager = GameObject.FindWithTag("Player")?.GetComponent<EntityStatManager>();
 
-        cPlayerStatManager.AddStat(finalBuff);
+        if (cPlayerStatManager != null)
+            cPlayerStatManager.AddStat(finalBuff);
 
         StartNextWave();
     }
