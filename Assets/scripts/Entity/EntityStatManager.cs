@@ -33,8 +33,6 @@ public class EntityStatManager : MonoBehaviour
         s.level = targetLevel;
 
         if (s.level > 1) ScaleBaseStats(s.level);
-
-        s.currentHp = s.maxHp;
     }
     private void ScaleBaseStats(int currentLevel)
     {
@@ -52,6 +50,7 @@ public class EntityStatManager : MonoBehaviour
         s.aoePct += 0.015f * levelOffset;
 
         s.maxHp = Mathf.RoundToInt(s.maxHp * (1f + (0.15f * levelOffset)));
+        s.currentHp = s.maxHp;
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
         s.armor = Mathf.RoundToInt(s.armor * (1f + (0.05f * levelOffset)));
 
