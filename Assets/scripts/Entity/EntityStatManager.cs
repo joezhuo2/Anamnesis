@@ -153,4 +153,38 @@ public struct StatBuff : IEquatable<StatBuff>
 
     public override bool Equals(object obj) => obj is StatBuff other && Equals(other);
     public override int GetHashCode() => HashCode.Combine(type, value);
+    public override string ToString()
+    {
+        string name = type switch
+        {
+            StatType.attack => "Attack",
+            StatType.atkPct => "Attack %",
+            StatType.damagePct => "Damage %",
+            StatType.physicalDmgPct => "Physical Damage %",
+            StatType.spellDmgPct => "Spell Damage %",
+            StatType.critChance => "Crit Chance",
+            StatType.critDamage => "Crit Damage",
+            StatType.aoePct => "AoE %",
+            StatType.maxHp => "Max HP",
+            StatType.hpPct => "HP %",
+            StatType.hpRegen => "HP Regen",
+            StatType.hpRegPct => "HP Regen %",
+            StatType.armor => "Armor",
+            StatType.armorPct => "Armor %",
+            StatType.damageRes => "Damage Resistance",
+            StatType.physicalRes => "Physical Resistance",
+            StatType.spellRes => "Spell Resistance",
+            StatType.dodgeChance => "Dodge Chance",
+            StatType.dodgeResPct => "Dodge Resistance %",
+            StatType.moveSpeedPct => "Move Speed %",
+            StatType.attackSpeedPct => "Attack Speed %",
+            StatType.defShred => "Defense Shred",
+            StatType.resPen => "Resistance Penetration",
+            StatType.maxStamina => "Max Stamina",
+            StatType.staminaRegen => "Stamina Regen",
+            StatType.stRegPct => "Stamina Regen %",
+            _ => type.ToString()
+        };
+        return name;
+    }
 }
