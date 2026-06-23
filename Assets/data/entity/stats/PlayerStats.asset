@@ -41,7 +41,7 @@ MonoBehaviour:
   maxStamina: 100
   staminaRegen: 5
   stRegPct: 0
-  currentMana: 0
+  currentMana: 100
   maxMana: 100
   level: 1
   isAlive: 1

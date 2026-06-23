@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85e3225e831594049a21d854519b172d, type: 3}
-  m_Name: Weaken
-  m_EditorClassIdentifier: Assembly-CSharp::Weaken
+  m_Script: {fileID: 11500000, guid: 250927b2c856d284fbeac08bdebd8821, type: 3}
+  m_Name: Slow 1 40
+  m_EditorClassIdentifier: Assembly-CSharp::Slow
   currentTime: 0
   duration: 5
   tickInterval: 0
   target: {fileID: 0}
   source: {fileID: 0}
-  maxStacks: 10
+  maxStacks: 1
   currentStacks: 0
-  redPerStack: 5
+  redPerStack: 40

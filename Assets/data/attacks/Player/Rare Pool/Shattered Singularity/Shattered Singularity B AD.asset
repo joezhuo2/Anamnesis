@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: s1_a_ad
+  m_Name: Shattered Singularity B AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 1
-  projectilePrefab: {fileID: 8726194261462263514, guid: 34db5de69d1f9ce4592bab31c85d8434, type: 3}
-  pattern: 1
-  spawnDelay: 0.325
-  spawnDistance: 0.25
+  cooldown: 0
+  projectilePrefab: {fileID: 1097377348343080085, guid: 57f3210327aa072438da9b8e23ac2847, type: 3}
+  pattern: 2
+  spawnDelay: 0.25
+  spawnDistance: 1.25
   fixedDistance: 1
-  animationLength: 0.83
-  type: 0
-  projectileCount: 3
+  animationLength: 0
+  type: 4
+  projectileCount: 6
   randomCount: 0
-  spread: 40
-  randomSpread: 20
+  spread: 0
+  randomSpread: 0
   minDelay: 0
   maxDelay: 0
-  maxRange: 2
+  maxRange: 0
   canMoveDuringAttack: 0
-  staminaCost: 0
-  staminaCostPct: 0
+  staminaCost: 4
+  staminaCostPct: 2
   healthCost: 0
   healthCostPct: 0
-  manaCost: 0
-  manaCostPct: 0
+  manaCost: 3
+  manaCostPct: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
   healthGainOnHit: 0

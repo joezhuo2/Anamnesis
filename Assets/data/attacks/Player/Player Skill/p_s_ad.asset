@@ -32,3 +32,11 @@ MonoBehaviour:
   staminaCostPct: -10
   healthCost: 0
   healthCostPct: 0
+  manaCost: 0
+  manaCostPct: 0
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 5
+  manaPctGainOnHit: 3

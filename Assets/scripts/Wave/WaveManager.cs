@@ -117,6 +117,7 @@ public class WaveManager : MonoBehaviour
 
         if (currentWaveIndex % 5 == 0)
         {
+            rerolls++;
             isShowingRarePool = true;
             GenerateRarePool();
         }
