@@ -12,8 +12,7 @@ public static class DamageCalculator
             if (mult <= 0) return;
             if (!source.TryGetComponent<EntityStatManager>(out var esm)) return;
 
-            float effAtk = esm.s.attack * (1f + (esm.s.atkPct * 0.01f));
-            float damage = effAtk * (1f + (esm.s.damagePct * 0.01f)) * mult * TypeBonus(type, esm.s);
+            float damage = esm.s.EffAtk * (1f + (esm.s.damagePct * 0.01f)) * mult * TypeBonus(type, esm.s);
             var (finalDamage, isCrit) = RollCrits(damage, esm.s);
             dp.AddInstance(type, finalDamage, isCrit);
         }

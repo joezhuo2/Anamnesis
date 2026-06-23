@@ -39,6 +39,7 @@ public class EntityStats : ScriptableObject
     public float damagePct;
     public float physicalDmgPct;
     public float spellDmgPct;
+    public float EffAtk => attack * (1f + (atkPct * 0.01f));
     public int attack;
     public float atkPct;
     public float attackSpeedPct;
@@ -78,6 +79,10 @@ public class EntityStats : ScriptableObject
     public float EffStReg => staminaRegen * (1f + (stRegPct * 0.01f));
     public float staminaRegen;
     public float stRegPct;
+
+    [Header("Mana - Player Only")]
+    public int currentMana;
+    public int maxMana;
 
     [Header("Misc")]
     public int level;
