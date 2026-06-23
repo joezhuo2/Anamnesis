@@ -41,6 +41,8 @@ MonoBehaviour:
   maxStamina: 100
   staminaRegen: 5
   stRegPct: 0
+  currentMana: 0
+  maxMana: 100
   level: 1
   isAlive: 1
   isImmune: 0
@@ -56,4 +58,4 @@ MonoBehaviour:
   isDashing: 0
   canDash: 0
   canGainStamina: 0
-  currentXp: 0
+  canGainMana: 0

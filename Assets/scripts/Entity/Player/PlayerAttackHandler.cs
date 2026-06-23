@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
@@ -8,6 +9,7 @@ public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 [RequireComponent(typeof(EntityStatManager))]
 [RequireComponent(typeof(PlayerStamina))]
 [RequireComponent(typeof(EntityHealth))]
+[RequireComponent(typeof(PlayerMana))]
 public class PlayerAttackHandler : MonoBehaviour
 {
     private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
@@ -15,7 +17,8 @@ public class PlayerAttackHandler : MonoBehaviour
     private Animator a;
     private PlayerStamina ps;
     private EntityHealth ph;
-    private Dictionary<AttackType, float> lastAttackTimes = new();
+    private PlayerMana pm;
+    private readonly Dictionary<AttackType, float> lastAttackTimes = new();
     public List<AttackData> attacks = new();
 
     private void Awake()
@@ -24,6 +27,7 @@ public class PlayerAttackHandler : MonoBehaviour
         p = GetComponent<EntityStatManager>()?.s as PlayerStats;
         ps = GetComponent<PlayerStamina>();
         ph = GetComponent<EntityHealth>();
+        pm = GetComponent<PlayerMana>();
     }
     public void PerformAttack(AttackType type)
     {
@@ -57,13 +61,15 @@ public class PlayerAttackHandler : MonoBehaviour
         if (attack == null) return false;
 
         float totalStaminaCost = attack.staminaCost + (p.maxStamina * (attack.staminaCostPct * 0.01f));
-
         float totalHealthCost = attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f));
+        float totalManaCost = attack.manaCost + (p.maxMana * (attack.manaCostPct * 0.01f));
 
-        if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp) return false;
+        if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp || totalManaCost > p.currentMana)
+            return false;
 
         if (ps != null) ps.ChangeStamina(totalStaminaCost);
         if (ph != null) ph.ChangeHealth(totalHealthCost, 0f, true, false);
+        if (pm != null) pm.ChangeMana(totalManaCost, 0f);
 
         return true;
     }
@@ -72,7 +78,11 @@ public class PlayerAttackHandler : MonoBehaviour
         if (newAttack == null) return;
         AttackData current = attacks.Find(atk => atk.type == type);
 
-        attacks.Remove(current);
-        attacks.Add(newAttack);
+        if (current != null) attacks.Remove(current);
+
+        AttackData runtimeAttackCopy = Instantiate(newAttack);
+        runtimeAttackCopy.type = type;
+
+        attacks.Add(runtimeAttackCopy);
     }
 }

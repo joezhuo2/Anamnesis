@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: s1_a_ad
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 5
+  cooldown: 1
   projectilePrefab: {fileID: 8726194261462263514, guid: 34db5de69d1f9ce4592bab31c85d8434, type: 3}
   pattern: 1
   spawnDelay: 0.325
@@ -32,3 +32,11 @@ MonoBehaviour:
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
+  manaCost: 0
+  manaCostPct: 0
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 0
+  manaPctGainOnHit: 0

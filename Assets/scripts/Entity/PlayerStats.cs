@@ -12,6 +12,7 @@ public class PlayerStats : EntityStats
     [HideInInspector] public bool isDashing;
     [HideInInspector] public bool canDash;
     [HideInInspector] public bool canGainStamina;
+    [HideInInspector] public bool canGainMana;
 
     // [Header("Skill points")]
     // public int agility;
@@ -21,7 +22,7 @@ public class PlayerStats : EntityStats
     // public int intellegence;
     // public int vitality;
 
-    [Header("Levelling")]
-    public int currentXp;
+    // [Header("Levelling")]
+    // public int currentXp;
     // public int xpBonus;
 }
