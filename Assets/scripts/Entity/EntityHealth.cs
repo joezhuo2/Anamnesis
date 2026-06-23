@@ -177,7 +177,7 @@ public class EntityHealth : MonoBehaviour
         float effRes = Mathf.Max(-100f, es.damageRes - source.resPen);
         float resMult = 1f - (effRes * 0.01f);
         float effArmor = Mathf.Max(0, es.EffArmor - source.defShred);
-        float armorMult = 1f - ((float)effArmor / (effArmor + 100f));
+        float armorMult = type == DamageType.Physical ? 1f - ((float)effArmor / (effArmor + 100f)) : 1f;
 
         float typeMult = type switch
         {
