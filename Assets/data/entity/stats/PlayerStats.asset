@@ -37,6 +37,10 @@ MonoBehaviour:
   spellRes: 0
   moveSpeed: 1.5
   moveSpeedPct: 0
+  currentStamina: 100
+  maxStamina: 100
+  staminaRegen: 5
+  stRegPct: 0
   level: 1
   isAlive: 1
   isImmune: 0
@@ -44,9 +48,6 @@ MonoBehaviour:
   isAttacking: 0
   canMove: 1
   canGainHp: 0
-  currentStamina: 100
-  maxStamina: 100
-  staminaRegen: 5
   dashSpeedMult: 5
   dashCooldown: 3
   dashDistance: 1.5
