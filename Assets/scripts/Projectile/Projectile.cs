@@ -51,10 +51,10 @@ public class Projectile : MonoBehaviour {
         if (target == null && ownerObj == null && target == ownerObj) return;
         if (!target.TryGetComponent<EntityHealth>(out var eh)) return;
 
-        bool targetIsPlayer = target.CompareTag("Player");
-        bool isPlayer = ownerObj.CompareTag("Player");
-        bool targetIsEnemy = target.CompareTag("Enemy");
-        bool isEnemy = ownerObj.CompareTag("Enemy");
+        bool targetIsPlayer = target?.CompareTag("Player") ?? true;
+        bool isPlayer = ownerObj?.CompareTag("Player") ?? false;
+        bool targetIsEnemy = target?.CompareTag("Enemy") ?? false;
+        bool isEnemy = ownerObj?.CompareTag("Enemy") ?? true;
 
         if (targetIsPlayer == isPlayer || targetIsEnemy == isEnemy) return;
 
