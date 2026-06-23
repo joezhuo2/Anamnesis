@@ -17,10 +17,9 @@ public class Weaken : StatusEffect
     {
         if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return;
 
-        float baseAttack = esm.GetBaseStat(StatType.attack);
         float redPct = Mathf.Clamp(redPerStack * 0.01f * currentStacks, 0f, 0.9f);
 
-        StatBuff newDebuff = new(StatType.attack, redPct * baseAttack);
+        StatBuff newDebuff = new(StatType.attack, redPct * esm.s.EffAtk);
         currentActiveDebuff = newDebuff;
 
         esm.AddStat(newDebuff, false, true);
