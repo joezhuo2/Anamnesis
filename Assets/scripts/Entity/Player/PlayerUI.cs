@@ -6,12 +6,10 @@ public class PlayerUI : MonoBehaviour
 {
     [HideInInspector] public PlayerStats p;
     [Header("Levelling")]
-    public Slider xpBar;
-    public TextMeshProUGUI xpBarText;
-    public TextMeshProUGUI levelText;
-    private int lastXp = -1;
-    private int lastMaxXp = -1;
-    private int lastLevel = -1;
+    public Slider manaBar;
+    public TextMeshProUGUI manaText;
+    private int lastMana = -1;
+    private int lastMaxMana = -1;
     [Header("Health")]
     public Slider healthUI;
     public TextMeshProUGUI healthText;
@@ -32,24 +30,21 @@ public class PlayerUI : MonoBehaviour
     private void UpdateUI()
     {
         if (p == null) return;
-        UpdateXpBar();
+        UpdateManaBar();
         UpdateHealthBar();
         UpdateStaminaBar();
     }
-    private void UpdateXpBar()
+    private void UpdateManaBar()
     {
-        int maxXp = (p.level * p.level * 100) + (p.level * 150);
-        if (p.currentXp == lastXp && maxXp == lastMaxXp && p.level == lastLevel) return;
+        if (p.currentMana == lastMana && p.maxMana == lastMaxMana) return;
 
-        xpBar.maxValue = maxXp;
-        xpBar.value = p.currentXp;
+        manaBar.maxValue = p.maxMana;
+        manaBar.value = p.currentMana;
 
-        xpBarText.text = $"{p.currentXp}/{maxXp}";
-        levelText.text = $"{p.level}";
+        manaText.text = $"{p.currentMana}/{p.maxMana}";
 
-        lastXp = p.currentXp;
-        lastMaxXp = maxXp;
-        lastLevel = p.level;
+        lastMana = p.currentMana;
+        lastMaxMana = p.maxMana;
     }
     private void UpdateHealthBar()
     {
