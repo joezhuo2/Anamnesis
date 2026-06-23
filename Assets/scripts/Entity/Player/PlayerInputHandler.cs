@@ -17,6 +17,7 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnEnable()
     {
         controls.Player.Enable();
+        controls.UI.Enable();
 
         mousePos = controls.Player.MousePosition.ReadValue<Vector2>();
 
