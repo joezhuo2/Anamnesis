@@ -33,7 +33,7 @@ public class PlayerAttackHandler : MonoBehaviour
         if (selected == null) return;
 
         float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
-        float cooldown = selected.cooldown * (1f - (p.attackSpeedPct * 0.01f));
+        float cooldown = selected.cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.1f, 10f);
         if (Time.time - lastTime < cooldown) return;
 
         if (!HandleStatChanges(selected)) return;
