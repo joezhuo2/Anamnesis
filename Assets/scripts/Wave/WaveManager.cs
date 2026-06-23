@@ -17,6 +17,7 @@ public class WaveManager : MonoBehaviour
     public GameObject rewardButtonPrefab;
     public List<BaseReward> baseBuffPool;
     public List<AttackReward> rarePool;
+    private readonly List<AttackReward> availablePool = new();
     public List<RarityData> rarityData;
     private List<GameObject> activeRewardButtons = new();
     public Transform buttonContainer;
@@ -27,7 +28,11 @@ public class WaveManager : MonoBehaviour
     public Button rerollButton;
     public TextMeshProUGUI rerollText;
 
+    public Button skipButton;
+
     private bool isShowingRarePool = false;
+
+    private void Awake() => availablePool.AddRange(rarePool);
 
     private void Start()
     {
@@ -135,7 +140,7 @@ public class WaveManager : MonoBehaviour
         {
             if (baseBuffPool.Count == 0 || rarityData.Count == 0) break;
 
-            BaseReward randomBuff = baseBuffPool[Random.Range(0, baseBuffPool.Count)];
+            BaseReward randomBuff = GetWeightedRandomBuff();
 
             RarityData chosenRarity = GetWeightedRandomRarity();
 
@@ -161,9 +166,9 @@ public class WaveManager : MonoBehaviour
 
         for (int i = 0; i < rewardChoices; i++)
         {
-            if (rarePool.Count == 0) break;
+            if (availablePool.Count == 0) break;
 
-            AttackReward buff = rarePool[Random.Range(0, rarePool.Count)];
+            AttackReward buff = availablePool[Random.Range(0, availablePool.Count)];
 
             Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
             GameObject btnObj = Instantiate(rewardButtonPrefab, targetParent);
@@ -178,6 +183,12 @@ public class WaveManager : MonoBehaviour
         if (rerollText != null) rerollText.text = rerolls.ToString();
 
         if (rerollButton != null) rerollButton.interactable = rerolls > 0;
+    }
+    public void OnSkipButtonClicked()
+    {
+        ClearRewardButtons();
+        CloseRewardUI();
+        ResumeGameLoop();
     }
     public void OnRerollButtonClicked()
     {
@@ -213,6 +224,22 @@ public class WaveManager : MonoBehaviour
 
         return rarityData[0];
     }
+    private BaseReward GetWeightedRandomBuff()
+    {
+        float totalWeight = 0;
+        foreach (var b in baseBuffPool) totalWeight += b.weight;
+
+        float roll = Random.Range(0f, totalWeight);
+        float weightSum = 0;
+
+        foreach (var b in baseBuffPool)
+        {
+            weightSum += b.weight;
+            if (roll <= weightSum) return b;
+        }
+
+        return baseBuffPool[0];
+    }
     private void OnRewardClaimed(GeneratedReward chosenReward)
     {
         CloseRewardUI();
@@ -234,6 +261,8 @@ public class WaveManager : MonoBehaviour
             cpah = GameObject.FindWithTag("Player")?.GetComponent<PlayerAttackHandler>();
 
         cpah?.UpdateAttack(chosenAttack.type, chosenAttack.newAttack);
+
+        if (availablePool.Contains(chosenAttack)) availablePool.Remove(chosenAttack);
 
         ResumeGameLoop();
     }

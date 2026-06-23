@@ -17,6 +17,7 @@ public class BaseReward
 {
     public Sprite icon;
     public StatBuff baseBuff;
+    public float weight;
 }
 
 [System.Serializable]
