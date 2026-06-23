@@ -30,6 +30,8 @@ public enum StatType
     maxStamina,
     staminaRegen,
     stRegPct,
+    addPhysDmgPct,
+    addSplDmgPct
 }
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
@@ -48,6 +50,8 @@ public class EntityStats : ScriptableObject
     public float aoePct;
     public int defShred;
     public float resPen;
+    public float addPhysDmgPct;
+    public float addSplDmgPct;
     // lifeStealPct, effectChance
 
     [Header("Defense")]

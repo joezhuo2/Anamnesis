@@ -184,3 +184,15 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+  - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+    maxTotalEnemies: 3
+    maxCurrentEnemies: 3
+    enemyLevel: 100
+    minSpawnFrequency: 5
+    maxSpawnFrequency: 10
+    minRewardChoices: 2
+    maxRewardChoices: 5
+    rewardQualityBoost: 0
+    Type: 0
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 

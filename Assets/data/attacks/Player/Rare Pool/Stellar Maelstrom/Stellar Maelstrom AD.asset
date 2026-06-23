@@ -20,21 +20,21 @@ MonoBehaviour:
   fixedDistance: 0
   animationLength: 0
   type: 1
-  projectileCount: 8
-  randomCount: 4
+  projectileCount: 12
+  randomCount: 6
   spread: 30
   randomSpread: 15
-  minDelay: 0
-  maxDelay: 0.1
+  minDelay: 0.1
+  maxDelay: 0.3
   maxRange: 0
   canMoveDuringAttack: 0
-  staminaCost: -36
-  staminaCostPct: -14
+  staminaCost: -42
+  staminaCostPct: -16
   healthCost: 0
   healthCostPct: 0
-  manaCost: 0
-  manaCostPct: -8
-  staminaGainOnHit: 0
+  manaCost: -18
+  manaCostPct: -16
+  staminaGainOnHit: 2
   staminaPctGainOnHit: 1
   healthGainOnHit: 0
   healthPctGainOnHit: 0

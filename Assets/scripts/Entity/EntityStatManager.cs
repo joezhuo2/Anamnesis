@@ -166,6 +166,8 @@ public struct StatBuff : IEquatable<StatBuff>
             StatType.maxStamina => "Max Stamina",
             StatType.staminaRegen => "Stamina Regen",
             StatType.stRegPct => "Stamina Regen %",
+            StatType.addPhysDmgPct => "Add Phys Dmg %",
+            StatType.addSplDmgPct => "Add Spl Dmg %",
             _ => type.ToString()
         };
         return name;

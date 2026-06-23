@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour {
 
         if (targetIsPlayer == isPlayer || targetIsEnemy == isEnemy) return;
 
-        var packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
+        DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
 
         eh.TakeDamage(packet, isPlayer, ownerObj.GetComponent<EntityStatManager>().s);
         TriggerStatGainsOnHit(ownerObj, pd.mainAttack);

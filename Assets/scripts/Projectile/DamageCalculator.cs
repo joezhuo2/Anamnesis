@@ -9,10 +9,19 @@ public static class DamageCalculator
 
         void AddDamageIfValid(DamageType type, float mult)
         {
-            if (mult <= 0) return;
             if (!source.TryGetComponent<EntityStatManager>(out var esm)) return;
 
-            float damage = esm.s.EffAtk * (1f + (esm.s.damagePct * 0.01f)) * mult * TypeBonus(type, esm.s);
+            float addMultPct = type switch
+            {
+                DamageType.Physical => esm.s.addPhysDmgPct,
+                DamageType.Spell => esm.s.addSplDmgPct,
+                _ => 0f
+            };
+
+            float dmgMult = 1f + (esm.s.damagePct * 0.01f);
+            float finalMult = mult + (addMultPct * 0.01f);
+
+            float damage = esm.s.EffAtk * dmgMult * finalMult * TypeBonus(type, esm.s);
             var (finalDamage, isCrit) = RollCrits(damage, esm.s);
             dp.AddInstance(type, finalDamage, isCrit);
         }

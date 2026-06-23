@@ -1409,6 +1409,16 @@ MonoBehaviour:
       type: 27
       value: 3
     weight: 6
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 28
+      value: 2
+    weight: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 29
+      value: 2
+    weight: 1
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0
@@ -1416,7 +1426,7 @@ MonoBehaviour:
     attackName: Astral Nova
     desc: 
   - newAttack: {fileID: 11400000, guid: a5e26884cd5205647beae0358e00234c, type: 2}
-    type: 2
+    type: 1
     icon: {fileID: 0}
     attackName: Stellar Maelstrom
     desc: 
