@@ -16,14 +16,18 @@ public class WaveManager : MonoBehaviour
     public GameObject rewardPanel;
     public GameObject rewardButtonPrefab;
     public List<BaseReward> baseBuffPool;
+    public List<AttackReward> rarePool;
     public List<RarityData> rarityData;
     private List<GameObject> activeRewardButtons = new();
     public Transform buttonContainer;
     private EntityStatManager cPlayerStatManager;
+    private PlayerAttackHandler cpah;
 
     public int rerolls;
     public Button rerollButton;
     public TextMeshProUGUI rerollText;
+
+    private bool isShowingRarePool = false;
 
     private void Start()
     {
@@ -105,7 +109,17 @@ public class WaveManager : MonoBehaviour
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
 
         UpdateRerollUI();
-        GenerateRewards();
+
+        if (currentWaveIndex % 5 == 0)
+        {
+            isShowingRarePool = true;
+            GenerateRarePool();
+        }
+        else
+        {
+            isShowingRarePool = false;
+            GenerateRewards();
+        }
     }
     private void GenerateRewards()
     {
@@ -135,6 +149,30 @@ public class WaveManager : MonoBehaviour
                 rewardButton.Setup(generated, OnRewardClaimed);
         }
     }
+    private void GenerateRarePool()
+    {
+        WaveData completedWave = currentSequence.waves[currentWaveIndex - 1];
+        int rewardChoices = Random.Range(completedWave.minRewardChoices, completedWave.maxRewardChoices + 1);
+
+        if (rewardPanel != null) rewardPanel.SetActive(true);
+        ClearRewardButtons();
+
+        Time.timeScale = 0f;
+
+        for (int i = 0; i < rewardChoices; i++)
+        {
+            if (rarePool.Count == 0) break;
+
+            AttackReward buff = rarePool[Random.Range(0, rarePool.Count)];
+
+            Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
+            GameObject btnObj = Instantiate(rewardButtonPrefab, targetParent);
+            activeRewardButtons.Add(btnObj);
+
+            if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
+                rewardButton.Setup(buff, OnAttackRewardClaimed);
+        }
+    }
     private void UpdateRerollUI()
     {
         if (rerollText != null) rerollText.text = rerolls.ToString();
@@ -149,7 +187,15 @@ public class WaveManager : MonoBehaviour
         UpdateRerollUI();
 
         ClearRewardButtons();
-        GenerateRewards();
+
+        if (isShowingRarePool)
+        {
+            GenerateRarePool();
+        }
+        else
+        {
+            GenerateRewards();
+        }
     }
     private RarityData GetWeightedRandomRarity()
     {
@@ -169,21 +215,39 @@ public class WaveManager : MonoBehaviour
     }
     private void OnRewardClaimed(GeneratedReward chosenReward)
     {
-        ClearRewardButtons();
-        if (rewardPanel != null) rewardPanel.SetActive(false);
+        CloseRewardUI();
 
         StatBuff finalBuff = new(chosenReward.br.baseBuff.type, chosenReward.finalVal);
 
         if (cPlayerStatManager == null)
             cPlayerStatManager = GameObject.FindWithTag("Player")?.GetComponent<EntityStatManager>();
 
-        if (cPlayerStatManager != null) cPlayerStatManager.AddStat(finalBuff);
+        cPlayerStatManager?.AddStat(finalBuff);
 
-        Time.timeScale = 1f;
+        ResumeGameLoop();
+    }
+    private void OnAttackRewardClaimed(AttackReward chosenAttack)
+    {
+        CloseRewardUI();
 
-        StartNextWave();
+        if (cpah == null)
+            cpah = GameObject.FindWithTag("Player")?.GetComponent<PlayerAttackHandler>();
+
+        cpah?.UpdateAttack(chosenAttack.type, chosenAttack.newAttack);
+
+        ResumeGameLoop();
+    }
+    private void CloseRewardUI()
+    {
+        ClearRewardButtons();
+        if (rewardPanel != null) rewardPanel.SetActive(false);
     }
 
+    private void ResumeGameLoop()
+    {
+        Time.timeScale = 1f;
+        StartNextWave();
+    }
     private void ClearRewardButtons()
     {
         foreach (var btn in activeRewardButtons) if (btn != null) Destroy(btn);

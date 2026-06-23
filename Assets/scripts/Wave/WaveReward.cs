@@ -28,3 +28,13 @@ public class GeneratedReward
     public float finalVal => br.baseBuff.value * rd.mult;
     public string GetDescription() => $"+{finalVal} {br.baseBuff.type.ToString()} (x{rd.mult})";
 }
+
+[System.Serializable]
+public class AttackReward
+{
+    public AttackData newAttack;
+    public AttackType type;
+    public Sprite icon;
+    public string attackName;
+    [TextArea] public string desc;
+}
