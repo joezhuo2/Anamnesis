@@ -61,6 +61,8 @@ public class Projectile : MonoBehaviour {
         var packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
 
         eh.TakeDamage(packet, isPlayer, ownerObj.GetComponent<EntityStatManager>().s);
+        TriggerStatGainsOnHit(ownerObj, pd.mainAttack);
+
         pierced++;
         hit.Add(target);
 
@@ -168,5 +170,25 @@ public class Projectile : MonoBehaviour {
             ssem.AddEffect(pd.effect, ownerObj);
         else if (target.TryGetComponent<StatusEffectManager>(out var tsem))
             tsem.AddEffect(pd.effect, ownerObj);
+    }
+    private void TriggerStatGainsOnHit(GameObject target, AttackData a)
+    {
+        if (ownerObj == null || !ownerObj.TryGetComponent<EntityStatManager>(out var esm)) return;
+
+        if (ownerObj.TryGetComponent<PlayerStamina>(out var ps))
+        {
+            float gain = a.staminaGainOnHit + (a.staminaPctGainOnHit * 0.01f * esm.s.maxStamina);
+            ps.ChangeStamina(gain);
+        }
+        if (ownerObj.TryGetComponent<EntityHealth>(out var eh))
+        {
+            float gain = a.healthGainOnHit + (a.healthPctGainOnHit * 0.01f * esm.s.maxHp);
+            eh.ChangeHealth(gain, 0f, true, false);
+        }
+        if (ownerObj.TryGetComponent<PlayerMana>(out var pm))
+        {
+            float gain = a.manaGainOnHit + (a.manaPctGainOnHit * 0.01f * esm.s.maxMana);
+            pm.ChangeMana(gain, 0f);
+        }
     }
 }

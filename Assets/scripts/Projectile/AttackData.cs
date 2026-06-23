@@ -22,9 +22,20 @@ public class AttackData : ScriptableObject
     [Header("Enemy Only")]
     public float maxRange;
     public bool canMoveDuringAttack;
+
     [Header("Resource Costs (Player Only)")]
     public float staminaCost;
     public float staminaCostPct;
     public float healthCost;
     public float healthCostPct;
+    public float manaCost;
+    public float manaCostPct;
+
+    [Header("Resource gains on hit (Player Only)")]
+    public float staminaGainOnHit;
+    public float staminaPctGainOnHit;
+    public float healthGainOnHit;
+    public float healthPctGainOnHit;
+    public float manaGainOnHit;
+    public float manaPctGainOnHit;
 }
