@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
@@ -19,8 +21,17 @@ public class WaveManager : MonoBehaviour
     public Transform buttonContainer;
     private EntityStatManager cPlayerStatManager;
 
-    private void Start() => StartNextWave();
+    public int rerolls;
+    public Button rerollButton;
+    public TextMeshProUGUI rerollText;
 
+    private void Start()
+    {
+        rewardPanel.SetActive(false);
+
+        UpdateRerollUI();
+        StartNextWave();
+    }
     public void StartNextWave()
     {
         if (isWaveActive) return;
@@ -93,6 +104,7 @@ public class WaveManager : MonoBehaviour
         isWaveActive = false;
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
 
+        UpdateRerollUI();
         GenerateRewards();
     }
     private void GenerateRewards()
@@ -123,7 +135,22 @@ public class WaveManager : MonoBehaviour
                 rewardButton.Setup(generated, OnRewardClaimed);
         }
     }
+    private void UpdateRerollUI()
+    {
+        if (rerollText != null) rerollText.text = rerolls.ToString();
 
+        if (rerollButton != null) rerollButton.interactable = rerolls > 0;
+    }
+    public void OnRerollButtonClicked()
+    {
+        if (rerolls <= 0) return;
+
+        rerolls--;
+        UpdateRerollUI();
+
+        ClearRewardButtons();
+        GenerateRewards();
+    }
     private RarityData GetWeightedRandomRarity()
     {
         float totalWeight = 0;
