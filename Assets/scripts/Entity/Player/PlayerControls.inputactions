@@ -276,7 +276,7 @@
             "id": "b487b625-d9bd-4a65-9f35-0c727276ef40",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "ToggleSkillTree",
                     "type": "Button",
                     "id": "0e6f6e51-a080-4903-ae63-8e21f1b4f3dc",
                     "expectedControlType": "",
@@ -289,11 +289,11 @@
                 {
                     "name": "",
                     "id": "fa4399ed-2f64-4eb0-bf43-eee253d7bef2",
-                    "path": "",
+                    "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "ToggleSkillTree",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
