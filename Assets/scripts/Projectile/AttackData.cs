@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "attack_data", menuName = "Scriptable Objects/data/attack")]
+[CreateAssetMenu(fileName = "ad", menuName = "Data/Attack")]
 public class AttackData : ScriptableObject
 {
     [Header("Basic")]
