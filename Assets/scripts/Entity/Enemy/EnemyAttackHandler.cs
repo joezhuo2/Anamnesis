@@ -1,18 +1,21 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Windows.Speech;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(EntityStatManager))]
 public class EnemyAttackHandler : MonoBehaviour
 {
+    public Vector2 projSpawnOffset;
+    public List<AttackData> attacks;
+    public float globalCooldown;
     private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
     private EnemyStats es;
-    public List<AttackData> attacks;
     private float[] cooldowns;
-    public Vector2 projSpawnOffset;
     private Animator a;
     private bool isAttackingCoroutineRunning = false;
     private List<int> availableIndexes = new();
+    private float lastAttackEndTime;
 
     private void Awake()
     {
@@ -36,6 +39,7 @@ public class EnemyAttackHandler : MonoBehaviour
     private void TryAttack()
     {
         if (attacks.Count == 0 || es.target == null) return;
+        if (globalCooldown > 0 && Time.time - lastAttackEndTime < globalCooldown) return;
 
         int chosen = ChooseAttackIndex();
 
@@ -55,6 +59,12 @@ public class EnemyAttackHandler : MonoBehaviour
             AttackData a = attacks[i];
 
             if (cooldowns[i] > 0f || dist > (a.maxRange * a.maxRange)) continue;
+
+            float hpPct = (float)es.currentHp / es.EffMaxHp;
+
+            if (a.minHpPct > 0 && hpPct < a.minHpPct) continue;
+            if (a.maxHpPct < 100f && hpPct > a.maxHpPct) continue;
+            if (a.phaseReq >= 0 && (es.phase != a.phaseReq)) continue;
 
             availableIndexes.Add(i);
         }
@@ -89,14 +99,21 @@ public class EnemyAttackHandler : MonoBehaviour
             }
         }
 
-        cooldowns[index] = attack.cooldown;
+        if (index >= 0) cooldowns[index] = attack.cooldown;
 
         if (attack.animationLength > 0) yield return new WaitForSeconds(attack.animationLength);
 
-        isAttackingCoroutineRunning = false;
-        es.isAttacking = false;
-        es.canMove = true;
-
-        if (a != null) a.SetBool(IsAttackingHash, false);
+        if (attack.nextAttack != null)
+        {
+            yield return PerformAttack(attack.nextAttack, -1);
+        }
+        else
+        {
+            isAttackingCoroutineRunning = false;
+            es.isAttacking = false;
+            es.canMove = true;
+            lastAttackEndTime = Time.time;
+            if (a != null) a.SetBool(IsAttackingHash, false);
+        }
     }
 }
