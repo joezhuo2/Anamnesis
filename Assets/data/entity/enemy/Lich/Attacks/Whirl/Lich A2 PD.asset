@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
   m_Name: Lich A2 PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 0}
-  speed: 0
-  lifetime: 0
+  mainAttack: {fileID: 11400000, guid: 3fbcbd6ac701c904e8076bb3e85cd3ba, type: 2}
+  speed: 4
+  lifetime: 1.5
   numPierce: 1
-  size: 1
+  size: 1.75
   physicalMult: 0
-  spellMult: 0
-  trueMult: 0
+  spellMult: 0.6
+  trueMult: 0.3
   scalingStat: 31
   canHitSameEntity: 0
-  followDistance: 0
+  followDistance: 1.5
   rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0

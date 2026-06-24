@@ -18,12 +18,14 @@ MonoBehaviour:
   numPierce: 15
   size: 8
   physicalMult: 0
-  spellMult: 1.4
-  trueMult: 0.3
+  spellMult: 0.9
+  trueMult: 0.2
   scalingStat: 31
   canHitSameEntity: 0
   followDistance: 0
   rotationOffset: 0
+  angleOverride: 0
+  useTrueAngle: 1
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0

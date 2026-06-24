@@ -1286,12 +1286,12 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 0
-      value: 1
+      value: 2
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
       type: 1
-      value: 2
+      value: 3
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
@@ -1301,17 +1301,17 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 3
-      value: 3
+      value: 2
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 4
-      value: 2
+      value: 3
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 5
-      value: 2
+      value: 3
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
@@ -1326,7 +1326,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 8
-      value: 3
+      value: 2
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
@@ -1341,7 +1341,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 12
-      value: 3
+      value: 5
     weight: 16
   - icon: {fileID: 0}
     baseBuff:
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 14
-      value: 2
+      value: 5
     weight: 4
   - icon: {fileID: 0}
     baseBuff:
@@ -1361,7 +1361,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 16
-      value: 5
+      value: 8
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
@@ -1396,7 +1396,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 24
-      value: 3
+      value: 4
     weight: 8
   - icon: {fileID: 0}
     baseBuff:
@@ -1444,6 +1444,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Sanguine Reminiscence
     desc: Hp AOE True Bleed
+  treasurePool:
+  - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Hex Cast
+    desc: Attacks may use health instead of stamina
   rarityData:
   - rarity: 0
     rarityName: Common
@@ -2353,7 +2358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5d0b824db3c4345a977e471711e53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUpgradeManager
-  activeUpgrades: []
+  activeUpgrades:
+  - {fileID: 0}
 --- !u!114 &1181093668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3203,7 +3209,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.7288992
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

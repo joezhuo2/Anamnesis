@@ -30,7 +30,7 @@ MonoBehaviour:
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
-  phaseReq: -1
+  phaseReq: 1
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0

@@ -16,18 +16,18 @@ MonoBehaviour:
   nextSequence: {fileID: 0}
   sequenceName: 
   waves:
-  - enemyPrefab: {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
+  - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 1
     maxCurrentEnemies: 1
-    enemyLevel: 15
+    enemyLevel: 1
     minSpawnFrequency: 3
     maxSpawnFrequency: 5
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
     Type: 0
-    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
-    bossBarName: Ophiuchus. The Event Horizon
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 2
     maxCurrentEnemies: 2
@@ -184,10 +184,10 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
-  - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+  - enemyPrefab: {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
     maxTotalEnemies: 1
     maxCurrentEnemies: 1
-    enemyLevel: 100
+    enemyLevel: 15
     minSpawnFrequency: 0
     maxSpawnFrequency: 0
     minRewardChoices: 2
@@ -195,16 +195,4 @@ MonoBehaviour:
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
-    bossBarName: '[Lv. 100] Big Slime'
-  - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
-    maxTotalEnemies: 1
-    maxCurrentEnemies: 1
-    enemyLevel: 100
-    minSpawnFrequency: 0
-    maxSpawnFrequency: 0
-    minRewardChoices: 2
-    maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
-    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
-    bossBarName: Ophiuchus. The Event Horizon
+    bossBarName: Lich Guy

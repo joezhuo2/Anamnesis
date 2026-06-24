@@ -27,10 +27,10 @@ MonoBehaviour:
   addSplDmgPct: 0
   currentHp: 800
   maxHp: 800
-  hpPct: 0
+  hpPct: 50
   hpRegen: 0
   hpRegPct: 0
-  armor: -400
+  armor: 0
   armorPct: 0
   damageRes: 0
   dodgeChance: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
   physicalRes: -20
   spellRes: 60
   hurtTime: 0.25
-  moveSpeed: 1.3
+  moveSpeed: 1.45
   moveSpeedPct: 0
   currentStamina: 0
   maxStamina: 0
