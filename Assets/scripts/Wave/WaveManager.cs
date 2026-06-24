@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
+    [Header("Basic")]
     public WaveSequence currentSequence;
     private int currentWaveIndex = 0;
     private int totalSpawned = 0;
@@ -13,6 +14,13 @@ public class WaveManager : MonoBehaviour
     private bool isWaveActive = false;
     private Coroutine spawnCoroutine;
 
+    [Header("Wave Settings")]
+    public GameObject waveInfoPanel;
+    public TextMeshProUGUI waveText;
+    public Transform bossBarContainer;
+    private GameObject activeBossBar;
+
+    [Header("Reward Panel Settings")]
     public GameObject rewardPanel;
     public GameObject rewardButtonPrefab;
     public List<BaseReward> baseBuffPool;
@@ -23,13 +31,9 @@ public class WaveManager : MonoBehaviour
     public Transform buttonContainer;
     private EntityStatManager cPlayerStatManager;
     private PlayerAttackHandler cpah;
-
     public int rerolls;
     public Button rerollButton;
     public TextMeshProUGUI rerollText;
-
-    public Button skipButton;
-
     private bool isShowingRarePool = false;
 
     private void Awake() => availablePool.AddRange(rarePool);
@@ -37,6 +41,7 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         rewardPanel.SetActive(false);
+        waveInfoPanel.SetActive(true);
 
         UpdateRerollUI();
         StartNextWave();
@@ -64,6 +69,9 @@ public class WaveManager : MonoBehaviour
         currentEnemies.Clear();
         isWaveActive = true;
         currentWaveIndex++;
+
+        waveInfoPanel.SetActive(true);
+        waveText.text = $"Wave {currentWaveIndex}";
 
         HandleWave(currentWave);
     }
@@ -101,7 +109,16 @@ public class WaveManager : MonoBehaviour
         if (enemy.TryGetComponent<EntityStatManager>(out var statManager))
             statManager.ScaleStatsToLevel(c.enemyLevel);
 
-        totalSpawned++;
+        if (c.bossBarPrefab != null && activeBossBar == null)
+        {
+            Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
+            activeBossBar = Instantiate(c.bossBarPrefab, spawnParent);
+
+            if (activeBossBar.TryGetComponent<BossBarUI>(out var bossBarScript))
+                bossBarScript.Setup(c.bossBarName, statManager);
+        }
+
+            totalSpawned++;
         currentEnemies.Add(enemy);
     }
     private void CleanEnemyList()
@@ -111,7 +128,14 @@ public class WaveManager : MonoBehaviour
     private void EndWave()
     {
         isWaveActive = false;
+        waveInfoPanel.SetActive(false);
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
+
+        if (activeBossBar != null)
+        {
+            Destroy(activeBossBar);
+            activeBossBar = null;
+        }
 
         UpdateRerollUI();
 
