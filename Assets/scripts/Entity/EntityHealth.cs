@@ -97,6 +97,18 @@ public class EntityHealth : MonoBehaviour
         int newHp = Math.Min(es.currentHp + finalAmount, (int)es.EffMaxHp);
         es.currentHp = Mathf.Max(0, newHp);
 
+        if (es is EnemyStats enemyStats && enemyStats.phaseThresholds != null)
+        {
+            float hpPct = (float)es.currentHp / es.EffMaxHp * 100f;
+            int newPhase = 0;
+            for (int i = 0; i < enemyStats.phaseThresholds.Length; i++)
+            {
+                if (hpPct <= enemyStats.phaseThresholds[i]) newPhase = i + 1;
+                else break;
+            }
+            enemyStats.phase = newPhase;
+        }
+
         DamageIndicatorSpawner dis = DamageIndicatorSpawner.Instance;
         Vector3 pos = transform.position;
 
@@ -117,7 +129,7 @@ public class EntityHealth : MonoBehaviour
         if (finalAmount < 0 && animator != null && es.currentHp > 0)
         {
             animator.SetBool(IsHurtHash, true);
-            StartCoroutine(HurtDelay(0.3f));
+            StartCoroutine(HurtDelay(es.hurtTime));
             if (!bypassIFrames)
                 StartCoroutine(TriggerIFrames(hurtIFrameDuration));
         }
