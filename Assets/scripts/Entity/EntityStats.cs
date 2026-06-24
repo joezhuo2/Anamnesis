@@ -31,7 +31,12 @@ public enum StatType
     staminaRegen,
     stRegPct,
     addPhysDmgPct,
-    addSplDmgPct
+    addSplDmgPct,
+    EffMaxHp,
+    EffAtk,
+    EffHpReg,
+    EffStReg,
+    EffSpd
 }
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]

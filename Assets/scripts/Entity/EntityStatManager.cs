@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class EntityStatManager : MonoBehaviour
 {
+    public EntityStats baseStats;
     public EntityStats s;
     public List<StatBuff> currentBuffs = new();
     private void Awake()
     {
-        if (s != null) s = Instantiate(s);
+        if (baseStats != null) s = Instantiate(baseStats);
 
         if (gameObject.CompareTag("Enemy") && s.level > 1)
             ScaleBaseStats(s.level);
@@ -78,35 +79,88 @@ public class EntityStatManager : MonoBehaviour
         if (s != null) Destroy(s);
     }
     private static readonly Dictionary<StatType, FieldInfo> cachedFields = new();
+    public float GetStat(StatType type)
+    {
+        float value = type switch
+        {
+            StatType.attack => s.attack,
+            StatType.atkPct => s.atkPct,
+            StatType.damagePct => s.damagePct,
+            StatType.physicalDmgPct => s.physicalDmgPct,
+            StatType.spellDmgPct => s.spellDmgPct,
+            StatType.critChance => s.critChance,
+            StatType.critDamage => s.critDamage,
+            StatType.aoePct => s.aoePct,
+            StatType.maxHp => s.maxHp,
+            StatType.hpPct => s.hpPct,
+            StatType.hpRegen => s.hpRegen,
+            StatType.hpRegPct => s.hpRegPct,
+            StatType.armor => s.armor,
+            StatType.armorPct => s.armorPct,
+            StatType.damageRes => s.damageRes,
+            StatType.physicalRes => s.physicalRes,
+            StatType.spellRes => s.spellRes,
+            StatType.dodgeChance => s.dodgeChance,
+            StatType.dodgeResPct => s.dodgeResPct,
+            StatType.moveSpeedPct => s.moveSpeedPct,
+            StatType.attackSpeedPct => s.attackSpeedPct,
+            StatType.defShred => s.defShred,
+            StatType.resPen => s.resPen,
+            StatType.maxStamina => s.maxStamina,
+            StatType.staminaRegen => s.staminaRegen,
+            StatType.stRegPct => s.stRegPct,
+            StatType.addPhysDmgPct => s.addPhysDmgPct,
+            StatType.addSplDmgPct => s.addSplDmgPct,
+            StatType.currentHp => s.currentHp,
+            StatType.moveSpeed => s.moveSpeed,
+            StatType.EffMaxHp => s.EffMaxHp,
+            StatType.EffAtk => s.EffAtk,
+            StatType.EffHpReg => s.EffHpReg,
+            StatType.EffStReg => s.EffStReg,
+            StatType.EffSpd => s.FinalSpd,
+            _ => 0f,
+        };
+        return value;
+    }
 
     public void AddStat(StatBuff b, bool isAdding = true, bool show = false)
     {
         float factor = isAdding ? 1f : -1f;
+        float mod = b.value * factor;
 
-        if (!cachedFields.TryGetValue(b.type, out FieldInfo field))
+        switch (b.type)
         {
-            field = typeof(EntityStats).GetField(b.type.ToString(), BindingFlags.Public | BindingFlags.Instance);
-            cachedFields[b.type] = field;
-        }
+            case StatType.attack: s.attack += Mathf.RoundToInt(mod); break;
+            case StatType.atkPct: s.atkPct += mod; break;
+            case StatType.damagePct: s.damagePct += mod; break;
+            case StatType.physicalDmgPct: s.physicalDmgPct += mod; break;
+            case StatType.spellDmgPct: s.spellDmgPct += mod; break;
+            case StatType.critChance: s.critChance += mod; break;
+            case StatType.critDamage: s.critDamage += mod; break;
+            case StatType.aoePct: s.aoePct += mod; break;
+            case StatType.maxHp: s.maxHp += Mathf.RoundToInt(mod); break;
+            case StatType.hpPct: s.hpPct += mod; break;
+            case StatType.hpRegen: s.hpRegen += Mathf.RoundToInt(mod); break;
+            case StatType.hpRegPct: s.hpRegPct += mod; break;
+            case StatType.armor: s.armor += Mathf.RoundToInt(mod); break;
+            case StatType.armorPct: s.armorPct += mod; break;
+            case StatType.damageRes: s.damageRes += mod; break;
+            case StatType.physicalRes: s.physicalRes += mod; break;
+            case StatType.spellRes: s.spellRes += mod; break;
+            case StatType.dodgeChance: s.dodgeChance += mod; break;
+            case StatType.dodgeResPct: s.dodgeResPct += mod; break;
+            case StatType.moveSpeedPct: s.moveSpeedPct += mod; break;
+            case StatType.attackSpeedPct: s.attackSpeedPct += mod; break;
+            case StatType.defShred: s.defShred += Mathf.RoundToInt(mod); break;
+            case StatType.resPen: s.resPen += mod; break;
+            case StatType.maxStamina: s.maxStamina += Mathf.RoundToInt(mod); break;
+            case StatType.staminaRegen: s.staminaRegen += Mathf.RoundToInt(mod); break;
+            case StatType.stRegPct: s.stRegPct += mod; break;
+            case StatType.addPhysDmgPct: s.addPhysDmgPct += mod; break;
+            case StatType.addSplDmgPct: s.addSplDmgPct += mod; break;
+            case StatType.moveSpeed: s.moveSpeed += mod; break;
+            default: break;
 
-        if (field != null)
-        {
-            if (field.FieldType == typeof(int))
-            {
-                int current = (int)field.GetValue(s);
-                field.SetValue(s, current + Mathf.RoundToInt(b.value * factor));
-            }
-            else if (field.FieldType == typeof(float))
-            {
-                float current = (float)field.GetValue(s);
-                field.SetValue(s, current + (b.value * factor));
-            }
-        }
-
-        if (show)
-        {
-            if (isAdding) currentBuffs.Add(b);
-            else if (currentBuffs.Contains(b)) currentBuffs.Remove(b);
         }
     }
     public void AddBuffForDuration(StatBuff b, float duration, bool show) => StartCoroutine(AddBuffForDurationRoutine(b, duration, show));

@@ -21,7 +21,7 @@ public class PlayerAttackHandler : MonoBehaviour
     private readonly Dictionary<AttackType, float> lastAttackTimes = new();
     public List<AttackData> attacks = new();
 
-    private void Awake()
+    private void Start()
     {
         a = GetComponent<Animator>();
         p = GetComponent<EntityStatManager>()?.s as PlayerStats;
@@ -60,16 +60,21 @@ public class PlayerAttackHandler : MonoBehaviour
     {
         if (attack == null) return false;
 
-        float totalStaminaCost = attack.staminaCost + (p.maxStamina * (attack.staminaCostPct * 0.01f));
-        float totalHealthCost = attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f));
-        float totalManaCost = attack.manaCost + (p.maxMana * (attack.manaCostPct * 0.01f));
+        float totalStaminaCost = Mathf.Abs(attack.staminaCost + (p.maxStamina * (attack.staminaCostPct * 0.01f)));
+        float totalHealthCost = Mathf.Abs(attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f)));
+        float totalManaCost = Mathf.Abs(attack.manaCost + (p.maxMana * (attack.manaCostPct * 0.01f)));
+
+        Debug.Log($"{totalStaminaCost} {totalHealthCost} {totalManaCost}");
+        Debug.Log($"{p.currentStamina} {p.currentHp} {p.currentMana}");
 
         if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp || totalManaCost > p.currentMana)
             return false;
 
-        if (ps != null) ps.ChangeStamina(totalStaminaCost);
-        if (ph != null) ph.ChangeHealth(totalHealthCost, 0f, true, false);
-        if (pm != null) pm.ChangeMana(totalManaCost, 0f);
+        Debug.Log("Cast");
+
+        if (ps != null) ps.ChangeStamina(-totalStaminaCost);
+        if (ph != null) ph.ChangeHealth(-totalHealthCost, 0f, true, false);
+        if (pm != null) pm.ChangeMana(-totalManaCost, 0f);
 
         return true;
     }
