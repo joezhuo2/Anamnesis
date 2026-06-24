@@ -1439,6 +1439,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Shattered Singularity
     desc: Burst AOE Spl
+  - newAttack: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
+    type: 0
+    icon: {fileID: 0}
+    attackName: Sanguine Reminiscence
+    desc: Hp AOE True Bleed
   rarityData:
   - rarity: 0
     rarityName: Common
@@ -2393,8 +2398,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHandler
   attacks:
-  - {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
   - {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
+  - {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
 --- !u!114 &1181093671
 MonoBehaviour:
   m_ObjectHideFlags: 0

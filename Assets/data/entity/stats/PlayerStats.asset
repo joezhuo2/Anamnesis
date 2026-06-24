@@ -39,7 +39,7 @@ MonoBehaviour:
   spellRes: 0
   moveSpeed: 1.5
   moveSpeedPct: 0
-  currentStamina: 0
+  currentStamina: 100
   maxStamina: 100
   staminaRegen: 5
   stRegPct: 0

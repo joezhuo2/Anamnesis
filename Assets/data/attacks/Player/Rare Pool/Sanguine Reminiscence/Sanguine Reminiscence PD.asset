@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: s1_a_pd
+  m_Name: Sanguine Reminiscence PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: 5b9ca13cda46da94fb3c221b94bc1a98, type: 2}
-  speed: 2.25
-  lifetime: 0.83
-  numPierce: 1
-  size: 1.5
-  physicalMult: 0.6
+  mainAttack: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
+  speed: 0
+  lifetime: 0.5
+  numPierce: 16
+  size: 2
+  physicalMult: 0
   spellMult: 0
-  trueMult: 0
-  scalingStat: 31
+  trueMult: 0.8
+  scalingStat: 30
   canHitSameEntity: 0
   followDistance: 0
   rotationOffset: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: bcae2e0aa1dedbe4aba7f78dfcf41e9f, type: 2}
   selfApply: 0
-  effectChance: 0
+  effectChance: 0.5

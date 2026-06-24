@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Sanguine Reminiscence AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  cooldown: 1
+  projectilePrefab: {fileID: 9179472077719303980, guid: f02d1ae2865471a45b42b03c12b49b25, type: 3}
+  pattern: 0
+  spawnDelay: 0
+  spawnDistance: 0.5
+  fixedDistance: 1
+  animationLength: 0.5
+  type: 0
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 0
+  canMoveDuringAttack: 0
+  staminaCost: 0
+  staminaCostPct: 0
+  healthCost: 24
+  healthCostPct: 6
+  manaCost: 0
+  manaCostPct: 0
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 5
+  healthPctGainOnHit: 1
+  manaGainOnHit: 0
+  manaPctGainOnHit: 0

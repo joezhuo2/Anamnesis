@@ -100,12 +100,13 @@ public class EntityHealth : MonoBehaviour
         DamageIndicatorSpawner dis = DamageIndicatorSpawner.Instance;
         Vector3 pos = transform.position;
 
-        Color indicatorColor = colorOverride != default ? colorOverride : (finalAmount < 0 ? Color.red : Color.green);
-
         if (dis != null && showIndicator)
         {
+            Color indicatorColor = colorOverride != default ? colorOverride : (finalAmount < 0 ? Color.red : Color.green);
+
             dis.SpawnDamageIndicator(
-                finalAmount < 0 ? -finalAmount : finalAmount, pos,
+                Mathf.Abs(finalAmount),
+                pos,
                 indicatorColor,
                 isCrit ? 1.5f : 1f,
                 0.6f,

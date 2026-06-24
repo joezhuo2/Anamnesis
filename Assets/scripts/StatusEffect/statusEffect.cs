@@ -5,7 +5,7 @@ public abstract class StatusEffect : ScriptableObject
     [Header("Basic")]
     [HideInInspector] public float currentTime;
     public float duration;
-    [Tooltip("How often effect triggers")]public float tickInterval;
+    [Tooltip("How often effect triggers")] public float tickInterval;
     [HideInInspector] public GameObject target;
     [HideInInspector] public GameObject source;
     [Header("Stacking")]
