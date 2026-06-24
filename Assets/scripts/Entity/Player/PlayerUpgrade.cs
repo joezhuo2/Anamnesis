@@ -1,12 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "Player/Upgrade")]
+[CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade")]
 public abstract class PlayerUpgrade : ScriptableObject
 {
     public enum TriggerCondition
     {
         OnBasicAttack,
         OnSkillAttack,
+        OnUltAttack,
         OnAttack,
         OnTakeHit,
         OnTakeDamage,
@@ -14,7 +15,8 @@ public abstract class PlayerUpgrade : ScriptableObject
         OnEndDash,
         OnHealthRegen,
         OnDeath,
-        OnStaminaGain
+        OnStaminaRegen,
+        OnCalculateAttackCost
     }
     public TriggerCondition[] conditions;
     public float chance;

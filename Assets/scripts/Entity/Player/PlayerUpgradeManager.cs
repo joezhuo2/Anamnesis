@@ -7,7 +7,7 @@ public class PlayerUpgradeManager : MonoBehaviour
     public static PlayerUpgradeManager Instance { get; private set; }
     public List<PlayerUpgrade> activeUpgrades = new();
 
-    private void Awake() 
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -15,6 +15,12 @@ public class PlayerUpgradeManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+    public bool HasUpgradeOfType<T>() where T : PlayerUpgrade
+    {
+        foreach (var u in activeUpgrades)
+            if (u is T) return true;
+        return false;
     }
     public void AddUpgrade(PlayerUpgrade pu)
     {

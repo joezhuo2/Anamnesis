@@ -10,8 +10,11 @@ public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 [RequireComponent(typeof(PlayerStamina))]
 [RequireComponent(typeof(EntityHealth))]
 [RequireComponent(typeof(PlayerMana))]
+[RequireComponent(typeof(PlayerUpgradeManager))]
 public class PlayerAttackHandler : MonoBehaviour
 {
+    public List<AttackData> attacks = new();
+
     private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
     private PlayerStats p;
     private Animator a;
@@ -19,7 +22,7 @@ public class PlayerAttackHandler : MonoBehaviour
     private EntityHealth ph;
     private PlayerMana pm;
     private readonly Dictionary<AttackType, float> lastAttackTimes = new();
-    public List<AttackData> attacks = new();
+    private PlayerUpgradeManager pum;
 
     private void Start()
     {
@@ -28,6 +31,7 @@ public class PlayerAttackHandler : MonoBehaviour
         ps = GetComponent<PlayerStamina>();
         ph = GetComponent<EntityHealth>();
         pm = GetComponent<PlayerMana>();
+        pum = GetComponent<PlayerUpgradeManager>();
     }
     public void PerformAttack(AttackType type)
     {
@@ -60,9 +64,13 @@ public class PlayerAttackHandler : MonoBehaviour
     {
         if (attack == null) return false;
 
+        pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
+
         float totalStaminaCost = Mathf.Abs(attack.staminaCost + (p.maxStamina * (attack.staminaCostPct * 0.01f)));
         float totalHealthCost = Mathf.Abs(attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f)));
         float totalManaCost = Mathf.Abs(attack.manaCost + (p.maxMana * (attack.manaCostPct * 0.01f)));
+
+        (totalHealthCost, totalStaminaCost) = HandleHexCast(totalHealthCost, totalStaminaCost);
 
         if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp || totalManaCost > p.currentMana)
             return false;
@@ -84,5 +92,17 @@ public class PlayerAttackHandler : MonoBehaviour
         runtimeAttackCopy.type = type;
 
         attacks.Add(runtimeAttackCopy);
+    }
+    private (float finalHpCost, float finalStaminaCost) HandleHexCast(float hpCost, float staminaCost)
+    {
+        if (!pum.HasUpgradeOfType<HexCast>() || p.currentStamina >= staminaCost)
+            return (hpCost, staminaCost);
+
+        float missingStamina = staminaCost - p.currentStamina;
+
+        float newStaminaCost = p.currentStamina;
+        float newHpCost = hpCost + missingStamina;
+
+        return (newHpCost, newStaminaCost);
     }
 }
