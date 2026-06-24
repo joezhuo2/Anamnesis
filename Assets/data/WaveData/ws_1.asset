@@ -26,8 +26,8 @@ MonoBehaviour:
     maxRewardChoices: 5
     rewardQualityBoost: 0
     Type: 0
-    bossBarPrefab: {fileID: 0}
-    bossBarName: 
+    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+    bossBarName: Lich
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 2
     maxCurrentEnemies: 2

@@ -15,7 +15,7 @@ MonoBehaviour:
   mainAttack: {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
   speed: 0
   lifetime: 0.5
-  numPierce: 4
+  numPierce: 6
   size: 3
   physicalMult: 6.2
   spellMult: 0

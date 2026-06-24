@@ -1,7 +1,7 @@
 using Unity.Mathematics;
 using UnityEngine;
-[RequireComponent(typeof(Animator))]
 
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyMovement : MonoBehaviour
 {

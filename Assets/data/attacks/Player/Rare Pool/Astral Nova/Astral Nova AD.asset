@@ -15,8 +15,8 @@ MonoBehaviour:
   cooldown: 3
   projectilePrefab: {fileID: 7220300455555897671, guid: 6d5c8aa8d542c2941a8bf8e597f21e22, type: 3}
   pattern: 0
-  spawnDelay: 0.5
-  spawnDistance: 10
+  spawnDelay: 1
+  spawnDistance: 3
   fixedDistance: 0
   animationLength: 0.75
   type: 0
