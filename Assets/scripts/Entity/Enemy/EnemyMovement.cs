@@ -5,17 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyMovement : MonoBehaviour
 {
+    public bool cardinalOnly = true;
+    public bool canDeaggro = true;
+    public float stoppingDistance = 0;
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public EnemyStats es;
     private Rigidbody2D rb;
     private Animator a;
     private bool wasMoving = false;
-
-    [Header("Targeting")]
     private readonly float targetCheckInterval = 0.25f;
     private float nextTargetCheckTime = 0f;
-
-    [Header("Cached")]
     private Transform cTransform;
     private Vector3 cScale;
 
@@ -54,7 +53,14 @@ public class EnemyMovement : MonoBehaviour
         Vector2 dist = es.target.transform.position - cTransform.position;
         float distMag = dist.magnitude;
 
-        if (distMag > es.detectionRange)
+        if (distMag > 0 && distMag <= stoppingDistance)
+        {
+            rb.linearVelocity = Vector2.zero;
+            SetAnimator(false);
+            return;
+        }
+
+        if (canDeaggro && distMag > es.detectionRange)
         {
             es.target = null;
             rb.linearVelocity = Vector2.zero;
@@ -63,9 +69,12 @@ public class EnemyMovement : MonoBehaviour
         }
 
         Vector2 dir = dist.normalized;
-        dir = Mathf.Abs(dir.x) > Mathf.Abs(dir.y)
-            ? new Vector2(Mathf.Sign(dir.x), 0)
-            : new Vector2(0, Mathf.Sign(dir.y));
+        if (cardinalOnly)
+        {
+            dir = Mathf.Abs(dir.x) > Mathf.Abs(dir.y)
+                        ? new Vector2(Mathf.Sign(dir.x), 0)
+                        : new Vector2(0, Mathf.Sign(dir.y));
+        }
 
         rb.linearVelocity = dir * es.FinalSpd;
 
@@ -76,7 +85,6 @@ public class EnemyMovement : MonoBehaviour
             {
                 cScale.x *= -1;
                 cTransform.localScale = cScale;
-                es.enemyDirection *= -1;
             }
         }
 
