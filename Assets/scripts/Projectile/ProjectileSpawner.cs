@@ -118,7 +118,8 @@ public class ProjectileSpawner : MonoBehaviour
         Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
 
         Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
-        Vector2 dir = dirOverride ?? (source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right);
+        Vector2 trueAngle = new(Mathf.Cos(pd.angleOverride * Mathf.Deg2Rad), Mathf.Sin(pd.angleOverride * Mathf.Deg2Rad));
+        Vector2 dir = pd.useTrueAngle ? trueAngle : dirOverride ?? (source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right);
         float finalDist = distOverride ?? ad.spawnDistance;
 
         if (!ad.fixedDistance && source.CompareTag("Player"))

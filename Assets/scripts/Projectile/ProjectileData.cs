@@ -9,20 +9,26 @@ public class ProjectileData : ScriptableObject
     public float lifetime;
     public int numPierce = 1;
     public float size = 1f;
+
     [Header("Damage Multipliers")]
     public float physicalMult;
     public float spellMult;
     public float trueMult;
     public StatType scalingStat = StatType.EffAtk;
+
     [Header("Advanced")]
     public bool canHitSameEntity;
-    public int followDistance;
+    public float followDistance;
     public float rotationOffset;
+    public float angleOverride;
+    public bool useTrueAngle;
+
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
     [Range(0, 1)] public float additionalChance = 0;
     public bool additionalFollowsMouse = false;
     public float? distFromCenter = 0f; // distance from location where projectile splits (must be positive to work)
+
     [Header("Effects")]
     public StatusEffect effect;
     public bool selfApply;
