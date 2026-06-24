@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Sanguine Reminiscence AD
+  m_Name: Lich B AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 1
-  projectilePrefab: {fileID: 9179472077719303980, guid: f02d1ae2865471a45b42b03c12b49b25, type: 3}
+  cooldown: 5
+  projectilePrefab: {fileID: 5741884360374562337, guid: 699523dabbe9b7f469bd2c8665dc4d7b, type: 3}
   pattern: 0
-  spawnDelay: 0
-  spawnDistance: 0.5
+  spawnDelay: 0.5
+  spawnDistance: 0
   fixedDistance: 1
-  animationLength: 0.5
+  animationLength: 0.25
   type: 0
   projectileCount: 1
   randomCount: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   randomSpread: 0
   minDelay: 0
   maxDelay: 0
-  maxRange: 0
+  maxRange: 2
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
@@ -34,13 +34,13 @@ MonoBehaviour:
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
-  healthCost: 28
-  healthCostPct: 7
+  healthCost: 0
+  healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
-  healthGainOnHit: 5
-  healthPctGainOnHit: 2
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0

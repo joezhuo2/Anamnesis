@@ -75,6 +75,7 @@ public class EntityStats : ScriptableObject
     [Range(0f, 100f)] public float dodgeResPct;
     [Range(-100f, 100f)] public float physicalRes = 0f;
     [Range(-100f, 100f)] public float spellRes = 0f;
+    public float hurtTime = 0.3f;
     // effectRes, critRes, healingPct
 
     [Header("Movement")]

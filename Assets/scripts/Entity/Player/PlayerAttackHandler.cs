@@ -64,13 +64,8 @@ public class PlayerAttackHandler : MonoBehaviour
         float totalHealthCost = Mathf.Abs(attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f)));
         float totalManaCost = Mathf.Abs(attack.manaCost + (p.maxMana * (attack.manaCostPct * 0.01f)));
 
-        Debug.Log($"{totalStaminaCost} {totalHealthCost} {totalManaCost}");
-        Debug.Log($"{p.currentStamina} {p.currentHp} {p.currentMana}");
-
         if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp || totalManaCost > p.currentMana)
             return false;
-
-        Debug.Log("Cast");
 
         if (ps != null) ps.ChangeStamina(-totalStaminaCost);
         if (ph != null) ph.ChangeHealth(-totalHealthCost, 0f, true, false);

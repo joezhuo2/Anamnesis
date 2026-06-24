@@ -7,8 +7,8 @@ using UnityEngine;
 public class EntityStatManager : MonoBehaviour
 {
     public EntityStats baseStats;
-    public EntityStats s;
-    public List<StatBuff> currentBuffs = new();
+    [HideInInspector] public EntityStats s;
+    [HideInInspector] public List<StatBuff> currentBuffs = new();
     private void Awake()
     {
         if (baseStats != null) s = Instantiate(baseStats);

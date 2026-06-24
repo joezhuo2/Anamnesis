@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d87bbbeb6804b4bbe36ab86d5cd763, type: 3}
+  m_Name: Lich_Base
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  damagePct: 0
+  physicalDmgPct: 0
+  spellDmgPct: 5
+  attack: 10
+  atkPct: 0
+  attackSpeedPct: 0
+  critChance: 10
+  critDamage: 80
+  aoePct: 0
+  defShred: 0
+  resPen: 0
+  addPhysDmgPct: 0
+  addSplDmgPct: 0
+  currentHp: 800
+  maxHp: 800
+  hpPct: 0
+  hpRegen: 0
+  hpRegPct: 0
+  armor: -400
+  armorPct: 0
+  damageRes: 0
+  dodgeChance: 0
+  dodgeResPct: 0
+  physicalRes: -20
+  spellRes: 60
+  hurtTime: 0.25
+  moveSpeed: 1.3
+  moveSpeedPct: 0
+  currentStamina: 0
+  maxStamina: 0
+  staminaRegen: 0
+  stRegPct: 0
+  currentMana: 0
+  maxMana: 0
+  level: 0
+  isAlive: 0
+  isImmune: 0
+  canAttack: 0
+  isAttacking: 0
+  canMove: 0
+  canGainHp: 0
+  detectionRange: 12
+  target: {fileID: 0}
+  phase: 0
+  phaseThresholds:
+  - 50
