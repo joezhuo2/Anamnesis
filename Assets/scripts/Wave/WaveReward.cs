@@ -39,3 +39,12 @@ public class AttackReward
     public string attackName;
     [TextArea] public string desc;
 }
+
+[System.Serializable]
+public class PlayerUpgradeReward
+{
+    public PlayerUpgrade upgrade;
+    public Sprite icon;
+    public string upgradeName;
+    [TextArea] public string desc;
+}

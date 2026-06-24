@@ -8,37 +8,44 @@ public class WaveManager : MonoBehaviour
 {
     [Header("Basic")]
     public WaveSequence currentSequence;
-    private int currentWaveIndex = 0;
-    private int totalSpawned = 0;
-    private readonly List<GameObject> currentEnemies = new();
-    private bool isWaveActive = false;
-    private Coroutine spawnCoroutine;
     public float spawnRadius = 2f;
 
     [Header("Wave Settings")]
     public GameObject waveInfoPanel;
     public TextMeshProUGUI waveText;
     public Transform bossBarContainer;
-    private GameObject activeBossBar;
 
     [Header("Reward Panel Settings")]
     public GameObject rewardPanel;
     public GameObject rewardButtonPrefab;
     public List<BaseReward> baseBuffPool;
     public List<AttackReward> rarePool;
-    private readonly List<AttackReward> availablePool = new();
+    public List<PlayerUpgradeReward> treasurePool;
     public List<RarityData> rarityData;
-    private List<GameObject> activeRewardButtons = new();
     public Transform buttonContainer;
-    private EntityStatManager cPlayerStatManager;
-    private PlayerAttackHandler cpah;
     public int rerolls;
     public Button rerollButton;
     public TextMeshProUGUI rerollText;
-    private bool isShowingRarePool = false;
 
-    private void Awake() => availablePool.AddRange(rarePool);
+    private RewardType type = RewardType.Basic;
+    private GameObject activeBossBar;
+    private EntityStatManager cPlayerStatManager;
+    private PlayerAttackHandler cpah;
+    private PlayerUpgradeManager cpum;
+    private List<GameObject> activeRewardButtons = new();
+    private readonly List<AttackReward> availableRarePool = new();
+    private readonly List<PlayerUpgradeReward> availableTreasurePool = new();
+    private int currentWaveIndex = 0;
+    private int totalSpawned = 0;
+    private readonly List<GameObject> currentEnemies = new();
+    private bool isWaveActive = false;
+    private Coroutine spawnCoroutine;
 
+    private void Awake()
+    {
+        availableRarePool.AddRange(rarePool);
+        availableTreasurePool.AddRange(treasurePool);
+    }
     private void Start()
     {
         rewardPanel.SetActive(false);
@@ -141,27 +148,27 @@ public class WaveManager : MonoBehaviour
 
         UpdateRerollUI();
 
-        if (currentWaveIndex % 5 == 0)
+        if (currentWaveIndex % 15 == 0)
         {
             rerolls++;
-            isShowingRarePool = true;
+            type = RewardType.Treasure;
+            GenerateTreasurePool();
+        }
+        else if (currentWaveIndex % 5 == 0)
+        {
+            rerolls++;
+            type = RewardType.Rare;
             GenerateRarePool();
         }
         else
         {
-            isShowingRarePool = false;
+            type = RewardType.Basic;
             GenerateRewards();
         }
     }
     private void GenerateRewards()
     {
-        WaveData completedWave = currentSequence.waves[currentWaveIndex - 1];
-        int rewardChoices = Random.Range(completedWave.minRewardChoices, completedWave.maxRewardChoices + 1);
-
-        if (rewardPanel != null) rewardPanel.SetActive(true);
-        ClearRewardButtons();
-
-        Time.timeScale = 0f;
+        int rewardChoices = PoolPreSetup();
 
         for (int i = 0; i < rewardChoices; i++)
         {
@@ -183,19 +190,13 @@ public class WaveManager : MonoBehaviour
     }
     private void GenerateRarePool()
     {
-        WaveData completedWave = currentSequence.waves[currentWaveIndex - 1];
-        int rewardChoices = Random.Range(completedWave.minRewardChoices, completedWave.maxRewardChoices + 1);
-
-        if (rewardPanel != null) rewardPanel.SetActive(true);
-        ClearRewardButtons();
-
-        Time.timeScale = 0f;
+        int rewardChoices = PoolPreSetup();
 
         for (int i = 0; i < rewardChoices; i++)
         {
-            if (availablePool.Count == 0) break;
+            if (availableRarePool.Count == 0) break;
 
-            AttackReward buff = availablePool[Random.Range(0, availablePool.Count)];
+            AttackReward buff = availableRarePool[Random.Range(0, availableRarePool.Count)];
 
             Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
             GameObject btnObj = Instantiate(rewardButtonPrefab, targetParent);
@@ -204,6 +205,37 @@ public class WaveManager : MonoBehaviour
             if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
                 rewardButton.Setup(buff, OnAttackRewardClaimed);
         }
+    }
+    public void GenerateTreasurePool()
+    {
+        int rewardChoices = PoolPreSetup();
+
+        for (int i = 0; i < rewardChoices; i++)
+        {
+            if (availableTreasurePool.Count == 0) break;
+
+            PlayerUpgradeReward buff = availableTreasurePool[Random.Range(0, availableTreasurePool.Count)];
+
+            Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
+            GameObject btnObj = Instantiate(rewardButtonPrefab, targetParent);
+            activeRewardButtons.Add(btnObj);
+
+            if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
+                rewardButton.Setup(buff, OnPlayerUpgradeRewardClaimed);
+        }
+
+    }
+    private int PoolPreSetup()
+    {
+        WaveData completedWave = currentSequence.waves[currentWaveIndex - 1];
+        int rewardChoices = Random.Range(completedWave.minRewardChoices, completedWave.maxRewardChoices + 1);
+
+        if (rewardPanel != null) rewardPanel.SetActive(true);
+        ClearRewardButtons();
+
+        Time.timeScale = 0f;
+
+        return rewardChoices;
     }
     private void UpdateRerollUI()
     {
@@ -226,13 +258,11 @@ public class WaveManager : MonoBehaviour
 
         ClearRewardButtons();
 
-        if (isShowingRarePool)
+        switch (type)
         {
-            GenerateRarePool();
-        }
-        else
-        {
-            GenerateRewards();
+            case RewardType.Basic: GenerateRewards(); break;
+            case RewardType.Rare: GenerateRarePool(); break;
+            case RewardType.Treasure: GenerateTreasurePool(); break;
         }
     }
     private RarityData GetWeightedRandomRarity()
@@ -284,12 +314,23 @@ public class WaveManager : MonoBehaviour
     {
         CloseRewardUI();
 
-        if (cpah == null)
-            cpah = GameObject.FindWithTag("Player")?.GetComponent<PlayerAttackHandler>();
+        if (cpah == null) cpah = GameObject.FindWithTag("Player")?.GetComponent<PlayerAttackHandler>();
 
         cpah?.UpdateAttack(chosenAttack.type, chosenAttack.newAttack);
 
-        if (availablePool.Contains(chosenAttack)) availablePool.Remove(chosenAttack);
+        if (availableRarePool.Contains(chosenAttack)) availableRarePool.Remove(chosenAttack);
+
+        ResumeGameLoop();
+    }
+    private void OnPlayerUpgradeRewardClaimed(PlayerUpgradeReward chosenUpgrade)
+    {
+        CloseRewardUI();
+
+        if (cpum == null) cpum = GameObject.FindWithTag("Player")?.GetComponent<PlayerUpgradeManager>();
+
+        if (cpum != null) cpum.AddUpgrade(chosenUpgrade.upgrade);
+
+        if (availableTreasurePool.Contains(chosenUpgrade)) availableTreasurePool.Remove(chosenUpgrade);
 
         ResumeGameLoop();
     }

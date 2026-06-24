@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum RewardType { Basic, Rare, Treasure }
+
 public class RewardButton : MonoBehaviour
 {
     [Header("UI Visual Elements")]
@@ -14,16 +16,18 @@ public class RewardButton : MonoBehaviour
 
     private GeneratedReward statRewardData;
     private AttackReward attackRewardData;
-    private bool isAttackReward = false;
+    private PlayerUpgradeReward playerUpgradeRewardData;
+    private RewardType type = RewardType.Basic;
 
     private Action<GeneratedReward> onStatClaimedCallback;
     private Action<AttackReward> onAttackClaimedCallback;
+    private Action<PlayerUpgradeReward> onPlayerUpgradeClaimedCallback;
 
     public void Setup(GeneratedReward reward, Action<GeneratedReward> claimCallback)
     {
         statRewardData = reward;
         onStatClaimedCallback = claimCallback;
-        isAttackReward = false;
+        type = RewardType.Basic;
 
         descriptionText.text = reward.GetDescription();
 
@@ -42,7 +46,7 @@ public class RewardButton : MonoBehaviour
     {
         attackRewardData = attackReward;
         onAttackClaimedCallback = claimCallback;
-        isAttackReward = true;
+        type = RewardType.Rare;
 
         titleText.text = attackReward.attackName;
         descriptionText.text = attackReward.desc;
@@ -54,6 +58,23 @@ public class RewardButton : MonoBehaviour
 
         LinkButtonComponent();
     }
+    public void Setup(PlayerUpgradeReward upgradeReward, Action<PlayerUpgradeReward> claimCallback)
+    {
+        playerUpgradeRewardData = upgradeReward;
+        onPlayerUpgradeClaimedCallback = claimCallback;
+        type = RewardType.Treasure;
+
+        titleText.text = upgradeReward.upgradeName;
+        descriptionText.text = upgradeReward.desc;
+
+        if (borderHighlight != null) borderHighlight.color = Color.purple;
+
+        if (iconImage != null && upgradeReward.icon != null)
+            iconImage.sprite = upgradeReward.icon;
+
+        LinkButtonComponent();
+    }
+
 
     private void LinkButtonComponent()
     {
@@ -66,13 +87,12 @@ public class RewardButton : MonoBehaviour
 
     private void HandleClick()
     {
-        if (isAttackReward)
+        switch (type)
         {
-            onAttackClaimedCallback?.Invoke(attackRewardData);
-        }
-        else
-        {
-            onStatClaimedCallback?.Invoke(statRewardData);
+            case RewardType.Rare: onAttackClaimedCallback?.Invoke(attackRewardData); break;
+            case RewardType.Basic: onStatClaimedCallback?.Invoke(statRewardData); break;
+            case RewardType.Treasure: onPlayerUpgradeClaimedCallback?.Invoke(playerUpgradeRewardData); break;
+            default: break;
         }
     }
 }
