@@ -73,10 +73,18 @@ public class EntityHealth : MonoBehaviour
         if (dp == null) return;
         foreach (var i in dp.instances)
         {
-            float finalDamage = CalculateDamageTaken(i.type, i.amount, source);
+            float finalDamage = i.type == DamageType.True ? i.amount : CalculateDamageTaken(i.type, i.amount, source);
+
+            Color color = i.type switch
+            {
+                DamageType.Physical => Color.gray,
+                DamageType.Spell => Color.purple,
+                DamageType.True => Color.lightBlue,
+                _ => Color.white
+            };
 
             if (finalDamage > 0)
-                ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit, i.type == DamageType.Spell ? Color.purple : Color.gray, bypassIFrames);
+                ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit, color, bypassIFrames);
         }
     }
     public void ChangeHealth(float amount, float pctAmt, bool showIndicator, bool isCrit, Color colorOverride = default, bool bypassIFrames = false)

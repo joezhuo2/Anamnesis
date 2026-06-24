@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DamageType { Physical, Spell }
+public enum DamageType { Physical, Spell, True }
 
 public struct DamageInstance
 {

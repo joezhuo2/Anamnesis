@@ -21,13 +21,14 @@ public static class DamageCalculator
             float dmgMult = 1f + (esm.s.damagePct * 0.01f);
             float finalMult = mult + (addMultPct * 0.01f);
 
-            float damage = esm.s.EffAtk * dmgMult * finalMult * TypeBonus(type, esm.s);
+            float damage = esm.GetStat(pd.scalingStat) * dmgMult * finalMult * TypeBonus(type, esm.s);
             var (finalDamage, isCrit) = RollCrits(damage, esm.s);
             dp.AddInstance(type, finalDamage, isCrit);
         }
 
         AddDamageIfValid(DamageType.Physical, pd.physicalMult);
         AddDamageIfValid(DamageType.Spell, pd.spellMult);
+        AddDamageIfValid(DamageType.True, pd.trueMult);
 
         return dp;
     }
