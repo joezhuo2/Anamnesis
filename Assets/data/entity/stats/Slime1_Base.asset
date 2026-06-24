@@ -23,6 +23,8 @@ MonoBehaviour:
   aoePct: 0
   defShred: 0
   resPen: 0
+  addPhysDmgPct: 0
+  addSplDmgPct: 0
   currentHp: 100
   maxHp: 100
   hpPct: 0
@@ -35,8 +37,14 @@ MonoBehaviour:
   dodgeResPct: 0
   physicalRes: 10
   spellRes: -30
-  moveSpeed: 0.65
+  moveSpeed: 0.8
   moveSpeedPct: 0
+  currentStamina: 0
+  maxStamina: 0
+  staminaRegen: 0
+  stRegPct: 0
+  currentMana: 0
+  maxMana: 0
   level: 0
   isAlive: 0
   isImmune: 0
@@ -45,5 +53,5 @@ MonoBehaviour:
   canMove: 0
   canGainHp: 0
   enemyDirection: 0
-  detectionRange: 5
+  detectionRange: 8
   target: {fileID: 0}

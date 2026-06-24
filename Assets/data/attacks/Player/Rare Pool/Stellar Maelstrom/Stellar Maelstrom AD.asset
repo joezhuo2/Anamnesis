@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Stellar Maelstrom AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 4
+  cooldown: 3
   projectilePrefab: {fileID: 1912948799897464993, guid: 44a0efc95ef6c52449bcf113755f7076, type: 3}
   pattern: 1
   spawnDelay: 0
@@ -28,12 +28,12 @@ MonoBehaviour:
   maxDelay: 0.3
   maxRange: 0
   canMoveDuringAttack: 0
-  staminaCost: -42
-  staminaCostPct: -16
+  staminaCost: 48
+  staminaCostPct: 18
   healthCost: 0
   healthCostPct: 0
-  manaCost: -18
-  manaCostPct: -16
+  manaCost: 12
+  manaCostPct: 16
   staminaGainOnHit: 2
   staminaPctGainOnHit: 1
   healthGainOnHit: 0

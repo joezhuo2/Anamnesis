@@ -25,6 +25,6 @@ MonoBehaviour:
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0
-  effect: {fileID: 11400000, guid: 45ad58ac9c5e2f0459580d3286ec478b, type: 2}
+  effect: {fileID: 0}
   selfApply: 0
-  effectChance: 1
+  effectChance: 0

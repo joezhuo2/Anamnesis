@@ -88,7 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4274b1e4542f000428bc3b26c85b915a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityStatManager
-  s: {fileID: 11400000, guid: 9c58e2e0cf903214dbe4e53206c8370c, type: 2}
+  baseStats: {fileID: 11400000, guid: 9c58e2e0cf903214dbe4e53206c8370c, type: 2}
+  s: {fileID: 0}
   currentBuffs: []
 --- !u!114 &7853728701400887008
 MonoBehaviour:

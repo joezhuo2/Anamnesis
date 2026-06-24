@@ -26,14 +26,14 @@ MonoBehaviour:
     maxRewardChoices: 5
     rewardQualityBoost: 0
     Type: 0
-    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
-    bossBarName: Lich
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 2
     maxCurrentEnemies: 2
     enemyLevel: 2
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
     maxCurrentEnemies: 4
     enemyLevel: 4
     minSpawnFrequency: 1
-    maxSpawnFrequency: 2
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -68,8 +68,8 @@ MonoBehaviour:
     maxTotalEnemies: 5
     maxCurrentEnemies: 5
     enemyLevel: 5
-    minSpawnFrequency: 0.5
-    maxSpawnFrequency: 2
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 1
     maxRewardChoices: 3
     rewardQualityBoost: 0
@@ -80,8 +80,8 @@ MonoBehaviour:
     maxTotalEnemies: 5
     maxCurrentEnemies: 5
     enemyLevel: 6
-    minSpawnFrequency: 0.5
-    maxSpawnFrequency: 2
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -92,8 +92,8 @@ MonoBehaviour:
     maxTotalEnemies: 6
     maxCurrentEnemies: 6
     enemyLevel: 7
-    minSpawnFrequency: 0.5
-    maxSpawnFrequency: 1.5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -104,8 +104,8 @@ MonoBehaviour:
     maxTotalEnemies: 6
     maxCurrentEnemies: 6
     enemyLevel: 8
-    minSpawnFrequency: 0.5
-    maxSpawnFrequency: 1
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -116,8 +116,8 @@ MonoBehaviour:
     maxTotalEnemies: 7
     maxCurrentEnemies: 7
     enemyLevel: 9
-    minSpawnFrequency: 0
-    maxSpawnFrequency: 1
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -128,8 +128,8 @@ MonoBehaviour:
     maxTotalEnemies: 7
     maxCurrentEnemies: 7
     enemyLevel: 10
-    minSpawnFrequency: 0
-    maxSpawnFrequency: 1
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 1
     maxRewardChoices: 3
     rewardQualityBoost: 0
@@ -140,8 +140,8 @@ MonoBehaviour:
     maxTotalEnemies: 8
     maxCurrentEnemies: 8
     enemyLevel: 11
-    minSpawnFrequency: 0
-    maxSpawnFrequency: 1
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -152,8 +152,8 @@ MonoBehaviour:
     maxTotalEnemies: 8
     maxCurrentEnemies: 8
     enemyLevel: 12
-    minSpawnFrequency: 0
-    maxSpawnFrequency: 1
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -164,8 +164,8 @@ MonoBehaviour:
     maxTotalEnemies: 9
     maxCurrentEnemies: 9
     enemyLevel: 13
-    minSpawnFrequency: 0
-    maxSpawnFrequency: 1
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -176,8 +176,8 @@ MonoBehaviour:
     maxTotalEnemies: 10
     maxCurrentEnemies: 10
     enemyLevel: 14
-    minSpawnFrequency: 0
-    maxSpawnFrequency: 1
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -185,14 +185,26 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
-    maxTotalEnemies: 3
-    maxCurrentEnemies: 3
+    maxTotalEnemies: 1
+    maxCurrentEnemies: 1
     enemyLevel: 100
-    minSpawnFrequency: 5
-    maxSpawnFrequency: 10
+    minSpawnFrequency: 0
+    maxSpawnFrequency: 0
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
     Type: 0
-    bossBarPrefab: {fileID: 0}
-    bossBarName: 
+    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+    bossBarName: '[Lv. 100] Big Slime'
+  - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+    maxTotalEnemies: 1
+    maxCurrentEnemies: 1
+    enemyLevel: 100
+    minSpawnFrequency: 0
+    maxSpawnFrequency: 0
+    minRewardChoices: 2
+    maxRewardChoices: 5
+    rewardQualityBoost: 0
+    Type: 0
+    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+    bossBarName: Ophiuchus. The Event Horizon

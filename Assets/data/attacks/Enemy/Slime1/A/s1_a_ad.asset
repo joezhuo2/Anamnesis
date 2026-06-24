@@ -22,8 +22,8 @@ MonoBehaviour:
   type: 0
   projectileCount: 3
   randomCount: 0
-  spread: 40
-  randomSpread: 20
+  spread: 30
+  randomSpread: 15
   minDelay: 0
   maxDelay: 0
   maxRange: 2

@@ -28,12 +28,12 @@ MonoBehaviour:
   maxDelay: 0
   maxRange: 0
   canMoveDuringAttack: 0
-  staminaCost: -40
-  staminaCostPct: -15
+  staminaCost: 40
+  staminaCostPct: 15
   healthCost: 0
   healthCostPct: 0
-  manaCost: -50
-  manaCostPct: -20
+  manaCost: 50
+  manaCostPct: 20
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
   healthGainOnHit: 0

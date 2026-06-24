@@ -19,6 +19,8 @@ MonoBehaviour:
   size: 2.5
   physicalMult: 1.8
   spellMult: 0
+  trueMult: 0
+  scalingStat: 31
   canHitSameEntity: 0
   followDistance: 0
   rotationOffset: 90

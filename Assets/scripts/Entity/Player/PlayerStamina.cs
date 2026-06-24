@@ -22,7 +22,7 @@ public class PlayerStamina : MonoBehaviour
     }
     public void ChangeStamina(float amount, float pctAmt = 0)
     {
-        if ((amount > 0 || pctAmt > 0)&& !p.canGainStamina) return;
+        if ((amount > 0 || pctAmt > 0) && !p.canGainStamina) return;
         p.currentStamina = Math.Min(Mathf.RoundToInt(p.currentStamina + (amount + (pctAmt * p.maxStamina))), p.maxStamina);
     }
     public void RegenStamina()

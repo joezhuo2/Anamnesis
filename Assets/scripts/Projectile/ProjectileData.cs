@@ -12,6 +12,8 @@ public class ProjectileData : ScriptableObject
     [Header("Damage Multipliers")]
     public float physicalMult;
     public float spellMult;
+    public float trueMult;
+    public StatType scalingStat = StatType.EffAtk;
     [Header("Advanced")]
     public bool canHitSameEntity;
     public int followDistance;
