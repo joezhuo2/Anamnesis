@@ -13,6 +13,7 @@ public class WaveManager : MonoBehaviour
     private readonly List<GameObject> currentEnemies = new();
     private bool isWaveActive = false;
     private Coroutine spawnCoroutine;
+    public float spawnRadius = 2f;
 
     [Header("Wave Settings")]
     public GameObject waveInfoPanel;
@@ -104,7 +105,8 @@ public class WaveManager : MonoBehaviour
     }
     private void HandleSpawns(WaveData c)
     {
-        GameObject enemy = Instantiate(c.enemyPrefab, currentSequence.spawnLocation, Quaternion.identity);
+        Vector2 spawnPosition = Random.insideUnitCircle * spawnRadius + (Vector2)currentSequence.spawnLocation;
+        GameObject enemy = Instantiate(c.enemyPrefab, spawnPosition, Quaternion.identity);
 
         if (enemy.TryGetComponent<EntityStatManager>(out var statManager))
             statManager.ScaleStatsToLevel(c.enemyLevel);
