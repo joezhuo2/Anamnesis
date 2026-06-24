@@ -104,7 +104,6 @@ public class Projectile : MonoBehaviour {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle + pd.rotationOffset);
     }
-
     private void HandleMovement(bool start)
     {
         if (rb == null || pd.speed <= 0) return;
@@ -147,6 +146,8 @@ public class Projectile : MonoBehaviour {
             if (!col.CompareTag(targetTag)) continue;
 
             if (!pd.canHitSameEntity && hit.Contains(col.gameObject)) continue;
+
+            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && !esm.s.isAlive) continue;
 
             float dist = Vector2.Distance(transform.position, col.transform.position);
             if (dist < minDist)
