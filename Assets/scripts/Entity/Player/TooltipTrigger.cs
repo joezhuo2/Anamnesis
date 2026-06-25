@@ -39,7 +39,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         string details = "";
         if (staminaPerSecond != 0) details += $"Stamina: {staminaPerSecond:F1}/s";
         if (healthPerSecond != 0) details += $"\nHealth: {healthPerSecond:F1}/s";
-        if (cps.EffArmor != 0) details += $"\nArmor: {cps.EffArmor} (-{(1f-cps.ArmorRes):F1}%)";
+        if (cps.EffArmor != 0) details += $"\nArmor: {cps.EffArmor} (-{100f-(cps.ArmorRes*100f):F1}%)";
         if (cps.damageRes != 0) details += $"\nRes: {cps.damageRes:F1}%";
 
         TooltipUI.Instance.ShowTooltip("Resources", details);
@@ -70,7 +70,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (hpGain != 0f) details += $"\nHealth Gain: {hpGain:F0}";
         if (staminaCost != 0f) details += $"\nStamina Cost: {staminaCost:F0}";
         if (staminaGain != 0f) details += $"\nStamina Gain: {staminaGain:F0}";
-        if (manaCost != 0f) details += $"\nMana Cost: {manaCost:F0}\n";
+        if (manaCost != 0f) details += $"\nMana Cost: {manaCost:F0}";
         if (manaGain != 0f) details += $"\nMana Gain: {manaGain:F0}";
         if (basePhysDmg != 0f) details += $"\nBase: {basePhysDmg:F0}P";
         if (baseSplDmg != 0f) details += $" {baseSplDmg:F0}S";

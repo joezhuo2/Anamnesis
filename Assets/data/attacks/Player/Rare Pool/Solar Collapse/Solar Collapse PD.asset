@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: p_b_pd
+  m_Name: Solar Collapse PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
+  mainAttack: {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
   speed: 0
-  lifetime: 0.5
-  numPierce: 3
-  size: 2.5
-  physicalMult: 1.8
+  lifetime: 6
+  numPierce: 300
+  size: 3
+  physicalMult: 3.4
   spellMult: 0
-  trueMult: 0
+  trueMult: 0.3
   scalingStat: 31
-  timeBeforeSameEnemy: 0
+  timeBeforeSameEnemy: 0.5
   followDistance: 0
-  rotationOffset: 90
+  rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: c03fbc26749db444e85496d5b6d9879f, type: 2}
   selfApply: 0
-  effectChance: 1
+  effectChance: 0.3

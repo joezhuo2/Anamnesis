@@ -18,10 +18,10 @@ MonoBehaviour:
   numPierce: 5
   size: 3
   physicalMult: 0
-  spellMult: 0.3
+  spellMult: 0.2
   trueMult: 0
   scalingStat: 31
-  canHitSameEntity: 0
+  timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
   angleOverride: 0

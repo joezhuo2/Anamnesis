@@ -18,7 +18,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnDistance: 0
   fixedDistance: 0
-  animationLength: 0
+  animationLength: 0.5
   projectileCount: 12
   randomCount: 6
   spread: 30
@@ -31,18 +31,18 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 60
-  staminaCostPct: 24
+  staminaCost: 50
+  staminaCostPct: 34
   healthCost: 0
   healthCostPct: 0
-  manaCost: 28
-  manaCostPct: 32
+  manaCost: 18
+  manaCostPct: 42
   staminaGainOnHit: 2
-  staminaPctGainOnHit: 2
+  staminaPctGainOnHit: 1
   healthGainOnHit: 0
   healthPctGainOnHit: 0
   manaGainOnHit: 2
-  manaPctGainOnHit: 2
+  manaPctGainOnHit: 1
   type: 1
   icon: {fileID: 6870509921151519667, guid: ab5d336405cf45d4fa62ff93137977c1, type: 3}
   displayName: Stellar Maelstrom

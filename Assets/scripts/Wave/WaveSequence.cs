@@ -3,12 +3,11 @@ using UnityEngine;
 
 public enum WaveType { Normal, Boss, Endless }
 
-[CreateAssetMenu(fileName = "ws", menuName = "Wave System/Wave Sequence")]
+[CreateAssetMenu(fileName = "ws", menuName = "Data/Wave Sequence")]
 public class WaveSequence : ScriptableObject
 {
     public Vector2 spawnLocation;
     public WaveSequence nextSequence;
-    public string sequenceName;
     public List<WaveData> waves = new();
 }
 

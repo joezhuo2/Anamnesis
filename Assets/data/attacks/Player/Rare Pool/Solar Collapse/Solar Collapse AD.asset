@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Astral Nova AD
+  m_Name: Solar Collapse AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 3
-  projectilePrefab: {fileID: 7220300455555897671, guid: 6d5c8aa8d542c2941a8bf8e597f21e22, type: 3}
+  cooldown: 18
+  projectilePrefab: {fileID: 2201037258136207567, guid: d8e9deb5a2d66e847b21745e96ece005, type: 3}
   pattern: 0
-  spawnDelay: 1.25
-  spawnDistance: 3
+  spawnDelay: 0
+  spawnDistance: 2
   fixedDistance: 0
   animationLength: 0.5
   projectileCount: 1
@@ -31,18 +31,18 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 0
-  staminaCostPct: 0
+  staminaCost: 55
+  staminaCostPct: 20
   healthCost: 0
   healthCostPct: 0
-  manaCost: 0
-  manaCostPct: 0
-  staminaGainOnHit: 10
-  staminaPctGainOnHit: 6
+  manaCost: 35
+  manaCostPct: 45
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 7
-  manaPctGainOnHit: 3
-  type: 0
-  icon: {fileID: -1373909529987573398, guid: b2625615903b287418f1a0e3c142e88e, type: 3}
-  displayName: Astral Nova
+  manaGainOnHit: 0
+  manaPctGainOnHit: 0
+  type: 2
+  icon: {fileID: 5455728258843455495, guid: 3c5ff77736f775047864cffda692080c, type: 3}
+  displayName: Solar Collapse

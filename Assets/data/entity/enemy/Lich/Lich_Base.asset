@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
   physicalDmgPct: 0
-  spellDmgPct: 5
-  attack: 10
+  spellDmgPct: 3
+  attack: 8
   atkPct: 0
   attackSpeedPct: 0
   critChance: 10
@@ -32,11 +32,11 @@ MonoBehaviour:
   hpRegPct: 0
   armor: 200
   armorPct: 0
-  damageRes: 30
+  damageRes: 40
   dodgeChance: 0
   dodgeResPct: 0
-  physicalRes: 20
-  spellRes: 50
+  physicalRes: 10
+  spellRes: 60
   hurtTime: 0.25
   moveSpeed: 1.45
   moveSpeedPct: 0

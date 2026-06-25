@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade")]
 public abstract class PlayerUpgrade : ScriptableObject
 {
     public enum TriggerCondition

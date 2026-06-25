@@ -18,7 +18,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnDistance: 0.5
   fixedDistance: 0
-  animationLength: 0
+  animationLength: 0.5
   projectileCount: 1
   randomCount: 0
   spread: 0

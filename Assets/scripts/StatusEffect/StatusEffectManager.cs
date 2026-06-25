@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class StatusEffectManager : MonoBehaviour
 {
-    private readonly List<StatusEffect> activeEffects = new();
+    [HideInInspector] public readonly List<StatusEffect> activeEffects = new();
 
+
+    public List<T> GetActiveEffectsOfType<T>() where T : StatusEffect
+    {
+        List<T> found = new();
+        foreach (var e in activeEffects)
+        {
+            if (e is T effect)
+            {
+                found.Add(effect);
+            }
+        }
+        return found;
+    }
     public void AddEffect(StatusEffect se, GameObject source)
     {
         if (se == null) return;

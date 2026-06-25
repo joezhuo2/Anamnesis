@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 8f2eed84bdf2b144ca0eab5f6b6dc37b, type: 2}
+  currentSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
   spawnRadius: 2
   waveInfoPanel: {fileID: 2059475857}
   waveText: {fileID: 1154343300}
@@ -1444,6 +1444,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Sanguine Reminiscence
     desc: Hp AOE True Bleed
+  - newAttack: {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
+    type: 2
+    icon: {fileID: 0}
+    attackName: Solar Collapse
+    desc: AOE True DoT Slow
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}

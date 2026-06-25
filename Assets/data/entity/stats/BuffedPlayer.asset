@@ -10,40 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bf47b81b6e65f3499ecdccea4f0bde0, type: 3}
-  m_Name: PlayerStats
+  m_Name: BuffedPlayer
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  damagePct: 0
-  physicalDmgPct: 0
-  spellDmgPct: 0
-  attack: 40
-  atkPct: 0
-  attackSpeedPct: 0
-  critChance: 5
-  critDamage: 50
-  aoePct: 0
-  defShred: 0
-  resPen: 0
-  addPhysDmgPct: 0
-  addSplDmgPct: 0
-  currentHp: 1
-  maxHp: 100
-  hpPct: 0
-  hpRegen: 5
-  hpRegPct: 0
-  armor: 0
-  armorPct: 0
-  damageRes: 0
+  damagePct: 50
+  physicalDmgPct: 80
+  spellDmgPct: 80
+  attack: 150
+  atkPct: 50
+  attackSpeedPct: 40
+  critChance: 70
+  critDamage: 300
+  aoePct: 40
+  defShred: 200
+  resPen: 30
+  addPhysDmgPct: 20
+  addSplDmgPct: 20
+  currentHp: 300
+  maxHp: 300
+  hpPct: 60
+  hpRegen: 40
+  hpRegPct: 50
+  armor: 500
+  armorPct: 50
+  damageRes: 20
   dodgeChance: 5
   dodgeResPct: 0.4
-  physicalRes: 0
-  spellRes: 0
+  physicalRes: 30
+  spellRes: 30
   hurtTime: 0.3
   moveSpeed: 1.5
-  moveSpeedPct: 0
+  moveSpeedPct: 50
   currentStamina: 100
   maxStamina: 100
-  staminaRegen: 5
-  stRegPct: 0
+  staminaRegen: 35
+  stRegPct: 50
   currentMana: 100
   maxMana: 100
   level: 1
