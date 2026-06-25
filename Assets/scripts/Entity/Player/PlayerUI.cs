@@ -2,8 +2,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(PlayerStamina))]
 public class PlayerUI : MonoBehaviour
 {
+    public GameObject resourceHoverZone;
     [HideInInspector] public PlayerStats p;
     [Header("Levelling")]
     public Slider manaBar;
@@ -25,6 +27,12 @@ public class PlayerUI : MonoBehaviour
     {
         p = GetComponent<EntityStatManager>()?.s as PlayerStats;
         UpdateUI();
+        if (p != null) Initialize(p);
+    }
+    public void Initialize(PlayerStats stats)
+    {
+        if (resourceHoverZone.TryGetComponent<TooltipTrigger>(out var trigger))
+            trigger.SetupTooltipData(stats);
     }
     private void Update() => UpdateUI();
     private void UpdateUI()
