@@ -17,7 +17,7 @@ public class ProjectileData : ScriptableObject
     public StatType scalingStat = StatType.EffAtk;
 
     [Header("Advanced")]
-    public bool canHitSameEntity;
+    public float timeBeforeSameEnemy;
     public float followDistance;
     public float rotationOffset;
     public float angleOverride;

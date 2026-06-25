@@ -38,7 +38,15 @@ public class Projectile : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (pierced >= pd.numPierce) return;
-        if (!pd.canHitSameEntity && hit.Contains(other.gameObject)) return;
+        if (hit.Contains(other.gameObject)) return;
+
+        if (other.TryGetComponent<EntityStatManager>(out var statManager) && ownerObj != other.gameObject)
+            HandleHitEntity(other.gameObject);
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (pierced >= pd.numPierce) return;
+        if (hit.Contains(other.gameObject)) return;
 
         if (other.TryGetComponent<EntityStatManager>(out var statManager) && ownerObj != other.gameObject)
             HandleHitEntity(other.gameObject);
@@ -62,6 +70,8 @@ public class Projectile : MonoBehaviour {
 
         pierced++;
         hit.Add(target);
+
+        if (pd.timeBeforeSameEnemy > 0f) StartCoroutine(RemoveFromHitHistory(target, pd.timeBeforeSameEnemy));
 
         if (pierced >= pd.numPierce) Destroy(gameObject);
 
@@ -145,7 +155,7 @@ public class Projectile : MonoBehaviour {
         {
             if (!col.CompareTag(targetTag)) continue;
 
-            if (!pd.canHitSameEntity && hit.Contains(col.gameObject)) continue;
+            if (hit.Contains(col.gameObject)) continue;
 
             if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && !esm.s.isAlive) continue;
 
@@ -167,21 +177,26 @@ public class Projectile : MonoBehaviour {
         else if (target.TryGetComponent<StatusEffectManager>(out var tsem))
             tsem.AddEffect(pd.effect, ownerObj);
     }
+    private System.Collections.IEnumerator RemoveFromHitHistory(GameObject target, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (hit != null && target != null) hit.Remove(target);
+    }
     private void TriggerStatGainsOnHit(GameObject target, AttackData a)
     {
-        if (ownerObj == null || !ownerObj.TryGetComponent<EntityStatManager>(out var esm)) return;
+        if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return;
 
-        if (ownerObj.TryGetComponent<PlayerStamina>(out var ps))
+        if (target.TryGetComponent<PlayerStamina>(out var ps))
         {
             float gain = a.staminaGainOnHit + (a.staminaPctGainOnHit * 0.01f * esm.s.maxStamina);
             ps.ChangeStamina(gain);
         }
-        if (ownerObj.TryGetComponent<EntityHealth>(out var eh))
+        if (target.TryGetComponent<EntityHealth>(out var eh))
         {
             float gain = a.healthGainOnHit + (a.healthPctGainOnHit * 0.01f * esm.s.maxHp);
             eh.ChangeHealth(gain, 0f, true, false);
         }
-        if (ownerObj.TryGetComponent<PlayerMana>(out var pm))
+        if (target.TryGetComponent<PlayerMana>(out var pm))
         {
             float gain = a.manaGainOnHit + (a.manaPctGainOnHit * 0.01f * esm.s.maxMana);
             pm.ChangeMana(gain, 0f);
