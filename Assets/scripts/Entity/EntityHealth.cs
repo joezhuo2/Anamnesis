@@ -25,6 +25,8 @@ public class EntityHealth : MonoBehaviour
     public TextMeshProUGUI healthBarTextPrefab;
     private TextMeshProUGUI healthBarTextInstance;
     private Camera mainCamera;
+    private PlayerUpgradeManager cpum;
+
     private void Start()
     {
         es = GetComponent<EntityStatManager>()?.s;
@@ -35,6 +37,8 @@ public class EntityHealth : MonoBehaviour
         regenTimer = 0f;
         accumulatedRegen = 0f;
         lastDodgeTime = -Mathf.Infinity;
+
+        if (TryGetComponent<PlayerUpgradeManager>(out var pum)) cpum = pum;
 
         InitializeHealthBar();
     }
@@ -168,6 +172,8 @@ public class EntityHealth : MonoBehaviour
                 int intRegen = Mathf.FloorToInt(accumulatedRegen);
                 accumulatedRegen -= intRegen;
                 ChangeHealth(intRegen, 0, false, false);
+
+                if (cpum != null) cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnHealthRegen);
             }
         }
     }

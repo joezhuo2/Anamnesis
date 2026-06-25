@@ -42,6 +42,7 @@ public class PlayerUpgradeManager : MonoBehaviour
             {
                 if (c == condition)
                 {
+                    if (Random.Range(0f, 100f) > u.chance) continue;
                     if (u.delay > 0) StartCoroutine(TriggerWithDelay(u));
                     else u.TriggerUpgradeEffect(gameObject);
                     break;
