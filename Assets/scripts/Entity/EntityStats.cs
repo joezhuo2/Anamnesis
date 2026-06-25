@@ -67,7 +67,8 @@ public class EntityStats : ScriptableObject
     public int EffHpReg => Mathf.RoundToInt(hpRegen * (1f + (hpRegPct * 0.01f)));
     public int hpRegen;
     public float hpRegPct;
-    public int EffArmor => Mathf.RoundToInt(armor * (1f + (armorPct * 0.01f)));
+    public float EffArmor => Mathf.RoundToInt(armor * (1f + (armorPct * 0.01f)));
+    public float ArmorRes => EffArmor / (EffArmor + 100f);
     public int armor;
     public float armorPct;
     [Range(-100f, 100f)] public float damageRes = 0f;

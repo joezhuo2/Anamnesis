@@ -19,7 +19,7 @@ MonoBehaviour:
   size: 3
   physicalMult: 0
   spellMult: 0.3
-  trueMult: 0.1
+  trueMult: 0
   scalingStat: 31
   canHitSameEntity: 0
   followDistance: 0

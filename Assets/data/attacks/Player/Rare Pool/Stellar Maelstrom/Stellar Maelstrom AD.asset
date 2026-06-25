@@ -19,7 +19,6 @@ MonoBehaviour:
   spawnDistance: 0
   fixedDistance: 0
   animationLength: 0
-  type: 1
   projectileCount: 12
   randomCount: 6
   spread: 30
@@ -44,3 +43,6 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 2
   manaPctGainOnHit: 2
+  type: 1
+  icon: {fileID: 6870509921151519667, guid: ab5d336405cf45d4fa62ff93137977c1, type: 3}
+  displayName: Stellar Maelstrom

@@ -148,7 +148,7 @@ public class WaveManager : MonoBehaviour
 
         UpdateRerollUI();
 
-        if (currentWaveIndex % 15 == 0)
+        if (currentWaveIndex % 10 == 0)
         {
             rerolls++;
             type = RewardType.Treasure;

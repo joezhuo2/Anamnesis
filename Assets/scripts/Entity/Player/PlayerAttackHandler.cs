@@ -23,6 +23,7 @@ public class PlayerAttackHandler : MonoBehaviour
     private PlayerStamina ps;
     private EntityHealth ph;
     private PlayerMana pm;
+    private EntityStatManager esm;
     [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
     private Dictionary<AttackType, GameObject> spawnedUIElements = new Dictionary<AttackType, GameObject>();
     private PlayerUpgradeManager pum;
@@ -30,6 +31,7 @@ public class PlayerAttackHandler : MonoBehaviour
     private void Start()
     {
         a = GetComponent<Animator>();
+        esm = GetComponent<EntityStatManager>();
         p = GetComponent<EntityStatManager>()?.s as PlayerStats;
         ps = GetComponent<PlayerStamina>();
         ph = GetComponent<EntityHealth>();
@@ -51,7 +53,7 @@ public class PlayerAttackHandler : MonoBehaviour
         spawnedUIElements[attack.type] = uiObj;
 
         if (uiObj.TryGetComponent<PlayerAttackCooldownUI>(out var pacui))
-            pacui.Setup(this, p, attack.type);
+            pacui.Setup(this, p, attack.type, esm);
 
         if (uiObj.TryGetComponent<Button>(out var b))
         {

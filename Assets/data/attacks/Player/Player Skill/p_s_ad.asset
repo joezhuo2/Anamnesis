@@ -19,7 +19,6 @@ MonoBehaviour:
   spawnDistance: 3
   fixedDistance: 0
   animationLength: 0.5
-  type: 1
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -28,6 +27,10 @@ MonoBehaviour:
   maxDelay: 0
   maxRange: 0
   canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
   staminaCost: 12
   staminaCostPct: 8
   healthCost: 0
@@ -40,3 +43,6 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 3
   manaPctGainOnHit: 2
+  type: 1
+  icon: {fileID: 196999898347057192, guid: 4511473431829134fa55de9598a0d9c5, type: 3}
+  displayName: Cyclone Cleave

@@ -19,7 +19,6 @@ MonoBehaviour:
   spawnDistance: 0.5
   fixedDistance: 0
   animationLength: 0
-  type: 2
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -28,6 +27,10 @@ MonoBehaviour:
   maxDelay: 0
   maxRange: 0
   canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
   staminaCost: 40
   staminaCostPct: 15
   healthCost: 0
@@ -40,3 +43,6 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  type: 2
+  icon: {fileID: -5601940278307094400, guid: 6a3d89f2323a76b4c810f06fe05db656, type: 3}
+  displayName: Shattered Singularity

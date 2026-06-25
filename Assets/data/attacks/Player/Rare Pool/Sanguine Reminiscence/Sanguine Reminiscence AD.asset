@@ -19,7 +19,6 @@ MonoBehaviour:
   spawnDistance: 0.5
   fixedDistance: 1
   animationLength: 0.5
-  type: 0
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -44,3 +43,6 @@ MonoBehaviour:
   healthPctGainOnHit: 2
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  type: 0
+  icon: {fileID: -7578176016135970186, guid: 38bffc924a2673d45894fc045ea1b3a3, type: 3}
+  displayName: Sanguine Reminiscence

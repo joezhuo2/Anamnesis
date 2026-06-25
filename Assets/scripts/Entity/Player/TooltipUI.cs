@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
 public class TooltipUI : MonoBehaviour
@@ -9,6 +8,7 @@ public class TooltipUI : MonoBehaviour
 
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descriptionText;
+    public Vector2 offset;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class TooltipUI : MonoBehaviour
 
     private void Update()
     {
-        GetComponent<RectTransform>().position = PlayerInputHandler.mousePos + new Vector2(15f, -15f);
+        GetComponent<RectTransform>().position = PlayerInputHandler.mousePos + offset;
     }
 
     public void ShowTooltip(string title, string description)

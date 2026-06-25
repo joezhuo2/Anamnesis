@@ -10,18 +10,20 @@ public class PlayerAttackCooldownUI : MonoBehaviour
     private AttackData cad;
     private PlayerAttackHandler cpah;
     private PlayerStats cps;
+    private EntityStatManager cesm;
 
-    public void Setup(PlayerAttackHandler pah, PlayerStats ps, AttackType type)
+    public void Setup(PlayerAttackHandler pah, PlayerStats ps, AttackType type, EntityStatManager esm)
     {
         cpah = pah;
         cps = ps;
         ctype = type;
+        cesm = esm;
 
         cad = cpah.attacks.Find(a => a.type == ctype);
 
         if (cad != null && cad.icon != null && iconImage != null) iconImage.sprite = cad.icon;
 
-        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupTooltipData(cad, cps);
+        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupTooltipData(cad, cps, cesm);
 
         if (cooldownImage != null)
         {

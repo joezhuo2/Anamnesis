@@ -19,7 +19,6 @@ MonoBehaviour:
   spawnDistance: 0.5
   fixedDistance: 0
   animationLength: 0.5
-  type: 0
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -28,6 +27,10 @@ MonoBehaviour:
   maxDelay: 0
   maxRange: 0
   canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
   healthCost: 0
@@ -40,3 +43,6 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 2
   manaPctGainOnHit: 1
+  type: 0
+  icon: {fileID: -4290406455011644030, guid: ac0de4f746fa7df4daae01d78607f013, type: 3}
+  displayName: Lacerate

@@ -48,4 +48,5 @@ public class AttackData : ScriptableObject
     [Header("Misc - Player Only")]
     public AttackType type;
     public Sprite icon;
+    public string displayName;
 }
