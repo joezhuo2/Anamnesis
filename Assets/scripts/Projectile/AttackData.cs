@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "ad", menuName = "Data/Attack")]
 public class AttackData : ScriptableObject
@@ -11,7 +12,7 @@ public class AttackData : ScriptableObject
     public float spawnDistance;
     public bool fixedDistance;
     public float animationLength;
-    public AttackType type;
+
     [Header("Spawn Logic")]
     public int projectileCount = 1;
     [Tooltip("Additional projectiles to spawn")] public int randomCount;
@@ -43,4 +44,8 @@ public class AttackData : ScriptableObject
     public float healthPctGainOnHit;
     public float manaGainOnHit;
     public float manaPctGainOnHit;
+
+    [Header("Misc - Player Only")]
+    public AttackType type;
+    public Sprite icon;
 }

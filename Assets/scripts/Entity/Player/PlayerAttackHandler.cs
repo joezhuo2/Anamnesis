@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 [RequireComponent(typeof(Animator))]
@@ -14,6 +14,8 @@ public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 public class PlayerAttackHandler : MonoBehaviour
 {
     public List<AttackData> attacks = new();
+    public GameObject cooldownPrefab;
+    public Transform objContainer;
 
     private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
     private PlayerStats p;
@@ -21,7 +23,8 @@ public class PlayerAttackHandler : MonoBehaviour
     private PlayerStamina ps;
     private EntityHealth ph;
     private PlayerMana pm;
-    private readonly Dictionary<AttackType, float> lastAttackTimes = new();
+    [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
+    private Dictionary<AttackType, GameObject> spawnedUIElements = new Dictionary<AttackType, GameObject>();
     private PlayerUpgradeManager pum;
 
     private void Start()
@@ -32,6 +35,29 @@ public class PlayerAttackHandler : MonoBehaviour
         ph = GetComponent<EntityHealth>();
         pm = GetComponent<PlayerMana>();
         pum = GetComponent<PlayerUpgradeManager>();
+
+        SpawnAttackButtons();
+    }
+    private void SpawnAttackButtons()
+    {
+        if (cooldownPrefab == null || objContainer == null) return;
+
+        foreach (AttackData attack in attacks)
+            CreateButtonUI(attack);
+    }
+    private void CreateButtonUI(AttackData attack)
+    {
+        GameObject uiObj = Instantiate(cooldownPrefab, objContainer);
+        spawnedUIElements[attack.type] = uiObj;
+
+        if (uiObj.TryGetComponent<PlayerAttackCooldownUI>(out var pacui))
+            pacui.Setup(this, p, attack.type);
+
+        if (uiObj.TryGetComponent<Button>(out var b))
+        {
+            AttackType attackType = attack.type;
+            b.onClick.AddListener(() => PerformAttack(attackType));
+        }
     }
     public void PerformAttack(AttackType type)
     {
@@ -48,7 +74,9 @@ public class PlayerAttackHandler : MonoBehaviour
 
         lastAttackTimes[type] = Time.time;
 
-        StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(selected.projectilePrefab, gameObject, transform.position));
+        ProjectileSpawner ps = ProjectileSpawner.Instance;
+        if (ps != null)
+            StartCoroutine(ps.SpawnFromPattern(selected.projectilePrefab, gameObject, transform.position));
 
         a.SetBool(IsAttackingHash, true);
         a.speed = Mathf.Max(0.1f, 1f + (p.attackSpeedPct * 0.01f));
@@ -92,6 +120,13 @@ public class PlayerAttackHandler : MonoBehaviour
         runtimeAttackCopy.type = type;
 
         attacks.Add(runtimeAttackCopy);
+
+        if (spawnedUIElements.ContainsKey(type))
+        {
+            Destroy(spawnedUIElements[type]);
+            spawnedUIElements.Remove(type);
+        }
+        CreateButtonUI(runtimeAttackCopy);
     }
     private (float finalHpCost, float finalStaminaCost) HandleHexCast(float hpCost, float staminaCost)
     {
