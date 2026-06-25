@@ -21,6 +21,8 @@ public class PlayerAttackCooldownUI : MonoBehaviour
 
         if (cad != null && cad.icon != null && iconImage != null) iconImage.sprite = cad.icon;
 
+        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupTooltipData(cad, cps);
+
         if (cooldownImage != null)
         {
             Color orig = cooldownImage.color;
