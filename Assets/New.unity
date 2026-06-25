@@ -1449,6 +1449,10 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Hex Cast
     desc: Attacks may use health instead of stamina
+  - upgrade: {fileID: 11400000, guid: d442c0a382ce7cf4cb0853a33c9f1319, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Stellar Surge
+    desc: Chance to additionally heal whenever hp naturally regens.
   rarityData:
   - rarity: 0
     rarityName: Common
@@ -2358,8 +2362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5d0b824db3c4345a977e471711e53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUpgradeManager
-  activeUpgrades:
-  - {fileID: 0}
+  activeUpgrades: []
 --- !u!114 &1181093668
 MonoBehaviour:
   m_ObjectHideFlags: 0

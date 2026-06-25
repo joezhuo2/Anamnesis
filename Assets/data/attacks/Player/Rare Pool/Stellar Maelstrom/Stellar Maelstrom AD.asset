@@ -28,15 +28,19 @@ MonoBehaviour:
   maxDelay: 0.3
   maxRange: 0
   canMoveDuringAttack: 0
-  staminaCost: 48
-  staminaCostPct: 18
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 60
+  staminaCostPct: 24
   healthCost: 0
   healthCostPct: 0
-  manaCost: 12
-  manaCostPct: 16
+  manaCost: 28
+  manaCostPct: 32
   staminaGainOnHit: 2
-  staminaPctGainOnHit: 1
+  staminaPctGainOnHit: 2
   healthGainOnHit: 0
   healthPctGainOnHit: 0
   manaGainOnHit: 2
-  manaPctGainOnHit: 1
+  manaPctGainOnHit: 2

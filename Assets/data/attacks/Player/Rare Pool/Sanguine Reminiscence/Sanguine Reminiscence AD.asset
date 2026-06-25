@@ -34,13 +34,13 @@ MonoBehaviour:
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
-  healthCost: 28
+  healthCost: 16
   healthCostPct: 7
   manaCost: 0
   manaCostPct: 0
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
-  healthGainOnHit: 5
+  healthGainOnHit: 3
   healthPctGainOnHit: 2
   manaGainOnHit: 0
   manaPctGainOnHit: 0

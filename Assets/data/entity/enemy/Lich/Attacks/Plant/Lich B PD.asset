@@ -16,10 +16,10 @@ MonoBehaviour:
   speed: 0
   lifetime: 1
   numPierce: 15
-  size: 8
+  size: 9
   physicalMult: 0
-  spellMult: 0.9
-  trueMult: 0.2
+  spellMult: 0.5
+  trueMult: 0.15
   scalingStat: 31
   canHitSameEntity: 0
   followDistance: 0

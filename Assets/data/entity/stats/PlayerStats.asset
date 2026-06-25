@@ -25,7 +25,7 @@ MonoBehaviour:
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
-  currentHp: 100
+  currentHp: 1
   maxHp: 100
   hpPct: 0
   hpRegen: 5
