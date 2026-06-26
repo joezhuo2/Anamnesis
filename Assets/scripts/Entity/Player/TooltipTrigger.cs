@@ -41,7 +41,14 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s");
         if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s");
         if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (-{(cps.ArmorRes*100f):F1}%)");
-        if (cps.damageRes != 0) lines.Add($"Res: {cps.damageRes:F1}%");
+
+        List<string> resTypes = new();
+        if (cps.damageRes != 0f) resTypes.Add($"{cps.damageRes:F1}%");
+        if (cps.physicalRes != 0f) resTypes.Add($"P:{cps.physicalRes:F1}%");
+        if (cps.spellRes != 0f) resTypes.Add($"S:{cps.spellRes:F1}%");
+
+        if (resTypes.Count > 0)
+            lines.Add($"Res: {string.Join(" ", resTypes)}");
 
         TooltipUI.Instance.ShowTooltip("Resources", string.Join("\n", lines));
     }

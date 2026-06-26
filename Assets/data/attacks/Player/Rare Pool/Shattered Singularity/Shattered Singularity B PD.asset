@@ -16,12 +16,16 @@ MonoBehaviour:
   speed: 0
   lifetime: 0.75
   numPierce: 8
-  size: 2
-  physicalMult: 1.6
-  spellMult: 2.4
-  canHitSameEntity: 1
+  size: 2.5
+  physicalMult: 2.4
+  spellMult: 3.8
+  trueMult: 0
+  scalingStat: 31
+  timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
+  angleOverride: 0
+  useTrueAngle: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0

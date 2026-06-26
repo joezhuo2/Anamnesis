@@ -145,6 +145,8 @@ public class PlayerAttackHandler : MonoBehaviour
 
         float missingStamina = staminaCost - p.currentStamina;
 
+        if (missingStamina >= p.currentHp) return (hpCost, staminaCost);
+
         float newStaminaCost = p.currentStamina;
         float newHpCost = hpCost + missingStamina;
 

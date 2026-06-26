@@ -39,7 +39,7 @@ public class EntityStatManager : MonoBehaviour
     {
         int levelOffset = currentLevel - 1;
 
-        s.attack += 5 * levelOffset;
+        s.attack += 4 * levelOffset;
         s.atkPct += 2f * levelOffset;
 
         s.maxHp += 15 * levelOffset;
@@ -49,23 +49,23 @@ public class EntityStatManager : MonoBehaviour
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
         s.hpRegPct += 2f * levelOffset;
 
-        s.armor += 5 * levelOffset;
+        s.armor += 4 * levelOffset;
         s.armorPct += 2f * levelOffset;
 
         s.damagePct += levelOffset;
-        s.physicalDmgPct *= (1f + (0.05f * levelOffset));
-        s.spellDmgPct *= (1f + (0.05f * levelOffset));
 
         if (levelOffset % 5 == 0)
         {
+            s.physicalDmgPct  += 0.5f * levelOffset;
+            s.spellDmgPct += 0.5f * levelOffset;
             s.aoePct += 2f * levelOffset;
 
             s.critChance = Mathf.Clamp(s.critChance * (1f + (0.03f * levelOffset)), 0f, 100f);
             s.critDamage += 2f * levelOffset;
 
-            s.damageRes = Mathf.Clamp(s.damageRes + (0.3f * levelOffset), 0f, 50f);
-            s.physicalRes = Mathf.Clamp(s.physicalRes * (1f + (0.1f * levelOffset)), -100f, 70f);
-            s.spellRes = Mathf.Clamp(s.spellRes * (1f + (0.1f * levelOffset)), -100f, 70f);
+            s.damageRes = Mathf.Clamp(s.damageRes + (0.2f * levelOffset), 0f, 50f);
+            s.physicalRes = Mathf.Clamp(s.physicalRes * (0.5f * levelOffset), -100f, 70f);
+            s.spellRes = Mathf.Clamp(s.spellRes + (0.5f * levelOffset), -100f, 70f);
 
             s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.3f * levelOffset), 0f, 40f);
             s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (0.5f * levelOffset), 0f, 60f);

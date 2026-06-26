@@ -16,10 +16,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1097377348343080085, guid: 57f3210327aa072438da9b8e23ac2847, type: 3}
   pattern: 2
   spawnDelay: 0.25
-  spawnDistance: 0.75
+  spawnDistance: 1.25
   fixedDistance: 1
   animationLength: 0
-  type: 4
   projectileCount: 6
   randomCount: 0
   spread: 0
@@ -28,6 +27,10 @@ MonoBehaviour:
   maxDelay: 0
   maxRange: 0
   canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
   staminaCost: 4
   staminaCostPct: 2
   healthCost: 0
@@ -40,3 +43,6 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  type: 4
+  icon: {fileID: 0}
+  displayName: 
