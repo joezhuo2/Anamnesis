@@ -118,6 +118,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.EffHpReg => s.EffHpReg,
             StatType.EffStReg => s.EffStReg,
             StatType.EffSpd => s.FinalSpd,
+            StatType.EffArmor => s.EffArmor,
             _ => 0f,
         };
         return value;

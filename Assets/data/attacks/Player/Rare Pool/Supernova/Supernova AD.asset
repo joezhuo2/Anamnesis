@@ -10,39 +10,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Stellar Maelstrom AD
+  m_Name: Supernova AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 3
-  projectilePrefab: {fileID: 1912948799897464993, guid: 44a0efc95ef6c52449bcf113755f7076, type: 3}
-  pattern: 1
+  cooldown: 5
+  projectilePrefab: {fileID: 3196581985793714705, guid: 4c90613353e49a3479ac6268eca0b4f3, type: 3}
+  pattern: 0
   spawnDelay: 0
-  spawnDistance: 0
-  fixedDistance: 0
+  spawnDistance: 1
+  fixedDistance: 1
   animationLength: 0.5
-  projectileCount: 12
-  randomCount: 6
-  spread: 30
-  randomSpread: 15
-  minDelay: 0.1
-  maxDelay: 0.3
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
   maxRange: 0
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 40
-  staminaCostPct: 44
+  staminaCost: 20
+  staminaCostPct: 10
   healthCost: 0
   healthCostPct: 0
-  manaCost: 18
-  manaCostPct: 52
-  staminaGainOnHit: 2
+  manaCost: 5
+  manaCostPct: 0
+  staminaGainOnHit: 4
   staminaPctGainOnHit: 1
-  healthGainOnHit: 0
-  healthPctGainOnHit: 0
-  manaGainOnHit: 2
-  manaPctGainOnHit: 1
+  healthGainOnHit: 4
+  healthPctGainOnHit: 1
+  manaGainOnHit: 0
+  manaPctGainOnHit: 0
   type: 1
-  icon: {fileID: 6870509921151519667, guid: ab5d336405cf45d4fa62ff93137977c1, type: 3}
-  displayName: Stellar Maelstrom
+  icon: {fileID: 1520652673195428207, guid: 200003f81e59f234eb518c9441cf9f83, type: 3}
+  displayName: Supernova

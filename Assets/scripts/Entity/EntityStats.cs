@@ -36,7 +36,8 @@ public enum StatType
     EffAtk,
     EffHpReg,
     EffStReg,
-    EffSpd
+    EffSpd,
+    EffArmor
 }
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]

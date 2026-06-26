@@ -1449,6 +1449,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Solar Collapse
     desc: AOE True DoT Slow
+  - newAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
+    type: 1
+    icon: {fileID: 0}
+    attackName: Supernova
+    desc: AOE True Armor Gen
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
