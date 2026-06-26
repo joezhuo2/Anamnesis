@@ -9,6 +9,7 @@ public class WaveSequence : ScriptableObject
     public Vector2 spawnLocation;
     public WaveSequence nextSequence;
     public List<WaveData> waves = new();
+    public int waveOffset = 0;
 }
 
 [System.Serializable]

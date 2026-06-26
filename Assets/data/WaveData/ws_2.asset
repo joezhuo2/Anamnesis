@@ -183,3 +183,4 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+  waveOffset: 15

@@ -25,12 +25,12 @@ MonoBehaviour:
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
-  currentHp: 100
-  maxHp: 100
+  currentHp: 70
+  maxHp: 70
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0
-  armor: 50
+  armor: 80
   armorPct: 0
   damageRes: 15
   dodgeChance: 0

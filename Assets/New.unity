@@ -1458,6 +1458,10 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Stellar Surge
     desc: Chance to additionally heal whenever hp naturally regens.
+  - upgrade: {fileID: 11400000, guid: bb4bcf9afa30af94eb3f23f41e8596df, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Shattered Vessel
+    desc: Overkill creates a rift that violently splits into 6 seeking projectiles.
   rarityData:
   - rarity: 0
     rarityName: Common

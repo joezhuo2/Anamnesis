@@ -79,7 +79,7 @@ public class WaveManager : MonoBehaviour
         currentWaveIndex++;
 
         waveInfoPanel.SetActive(true);
-        waveText.text = $"Wave {currentWaveIndex}";
+        waveText.text = $"Wave {currentWaveIndex + currentSequence.waveOffset}";
 
         HandleWave(currentWave);
     }

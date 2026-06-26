@@ -112,9 +112,6 @@ public class ProjectileSpawner : MonoBehaviour
         ProjectileData pd = prefab.GetComponent<Projectile>().pd;
         AttackData ad = pd.mainAttack;
 
-        EntityStatManager statManager = source.GetComponent<EntityStatManager>();
-        EntityStats es = statManager != null ? statManager.s : null;
-
         Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
 
         Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
