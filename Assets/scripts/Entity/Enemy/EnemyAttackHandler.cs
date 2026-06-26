@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Windows.Speech;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(EntityStatManager))]
 public class EnemyAttackHandler : MonoBehaviour
@@ -9,7 +7,8 @@ public class EnemyAttackHandler : MonoBehaviour
     public Vector2 projSpawnOffset;
     public List<AttackData> attacks;
     public float globalCooldown;
-    private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
+
+    private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
     private EnemyStats es;
     private float[] cooldowns;
     private Animator a;
@@ -79,7 +78,7 @@ public class EnemyAttackHandler : MonoBehaviour
         es.isAttacking = true;
         es.canMove = attack.canMoveDuringAttack;
 
-        if (a != null) a.SetBool(IsAttackingHash, true);
+        if (a != null) a.SetInteger(AttackIndexHash, index);
 
         if (attack.projectilePrefab != null)
         {
@@ -113,7 +112,7 @@ public class EnemyAttackHandler : MonoBehaviour
             es.isAttacking = false;
             es.canMove = true;
             lastAttackEndTime = Time.time;
-            if (a != null) a.SetBool(IsAttackingHash, false);
+            if (a != null) a.SetInteger(AttackIndexHash, -1);
         }
     }
 }

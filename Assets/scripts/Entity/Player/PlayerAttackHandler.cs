@@ -13,11 +13,11 @@ public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 [RequireComponent(typeof(PlayerUpgradeManager))]
 public class PlayerAttackHandler : MonoBehaviour
 {
+    private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
     public List<AttackData> attacks = new();
     public GameObject cooldownPrefab;
     public Transform objContainer;
 
-    private static readonly int IsAttackingHash = Animator.StringToHash("isAttacking");
     private PlayerStats p;
     private Animator a;
     private PlayerStamina ps;
@@ -80,14 +80,22 @@ public class PlayerAttackHandler : MonoBehaviour
         if (ps != null)
             StartCoroutine(ps.SpawnFromPattern(selected.projectilePrefab, gameObject, transform.position));
 
-        a.SetBool(IsAttackingHash, true);
+        int attackIndex = type switch
+        {
+            AttackType.Basic => 0,
+            AttackType.Skill => 1,
+            AttackType.Ultimate => 2,
+            _ => -1
+        };
+
+        a.SetInteger(AttackIndexHash, attackIndex);
         a.speed = Mathf.Max(0.1f, 1f + (p.attackSpeedPct * 0.01f));
         StartCoroutine(ResetAttackType(selected.animationLength));
     }
     public IEnumerator ResetAttackType(float delay)
     {
         yield return new WaitForSeconds(delay);
-        a.SetBool(IsAttackingHash, false);
+        a.SetInteger(AttackIndexHash, -1);
         a.speed = 1f;
     }
     public bool HandleStatChanges(AttackData attack)
