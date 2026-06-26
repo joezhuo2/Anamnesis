@@ -72,12 +72,12 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(DamagePacket dp, bool bypassIFrames, EntityStats source)
+    public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source)
     {
         if (dp == null) return;
         foreach (var i in dp.instances)
         {
-            float finalDamage = i.type == DamageType.True ? i.amount : CalculateDamageTaken(i.type, i.amount, source);
+            float finalDamage = i.type == DamageType.True ? i.amount : CalculateDamageTaken(i.type, i.amount, source.GetComponent<EntityStatManager>().s);
 
             Color color = i.type switch
             {
@@ -88,15 +88,21 @@ public class EntityHealth : MonoBehaviour
             };
 
             if (finalDamage > 0)
-                ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit, color, bypassIFrames);
+                ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit, color, bypassIFrames, source);
         }
     }
-    public void ChangeHealth(float amount, float pctAmt, bool showIndicator, bool isCrit, Color colorOverride = default, bool bypassIFrames = false)
+    public void ChangeHealth(float amount, float pctAmt, bool showIndicator, bool isCrit, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
     {
         if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return;
 
         int finalAmount = Mathf.RoundToInt(amount + (pctAmt * es.EffMaxHp));
         if (finalAmount == 0) return;
+
+        if (finalAmount < 0 && es.currentHp > 0 && Mathf.Abs(finalAmount) >= es.currentHp * 3f)
+        {
+            if (source != null && source.TryGetComponent<PlayerUpgradeManager>(out var pum))
+                pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnOverkill);
+        }
 
         int newHp = Math.Min(es.currentHp + finalAmount, (int)es.EffMaxHp);
         es.currentHp = Mathf.Max(0, newHp);
