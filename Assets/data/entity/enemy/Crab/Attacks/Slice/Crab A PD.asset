@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Astral Nova PD
+  m_Name: Crab A PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
+  mainAttack: {fileID: 11400000, guid: 7f4f8986811f2b1489537d6386511433, type: 2}
   speed: 0
   lifetime: 0.75
-  numPierce: 6
-  size: 2
-  physicalMult: 0
-  spellMult: 2.8
-  trueMult: 0.3
+  numPierce: 50
+  size: 1.5
+  physicalMult: 0.6
+  spellMult: 0
+  trueMult: 0.15
   scalingStat: 31
   timeBeforeSameEnemy: 0
   followDistance: 0
@@ -29,6 +29,6 @@ MonoBehaviour:
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0
-  effect: {fileID: 11400000, guid: 45ad58ac9c5e2f0459580d3286ec478b, type: 2}
+  effect: {fileID: 0}
   selfApply: 0
-  effectChance: 0.6
+  effectChance: 0

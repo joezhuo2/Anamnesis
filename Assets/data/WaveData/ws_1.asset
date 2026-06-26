@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ws_1
   m_EditorClassIdentifier: Assembly-CSharp::WaveSequence
   spawnLocation: {x: 0, y: 0}
-  nextSequence: {fileID: 0}
+  nextSequence: {fileID: 11400000, guid: 5d907911dbf5bc84a88b2208617ed284, type: 2}
   waves:
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 1
@@ -79,8 +79,8 @@ MonoBehaviour:
     maxTotalEnemies: 6
     maxCurrentEnemies: 6
     enemyLevel: 6
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -91,8 +91,8 @@ MonoBehaviour:
     maxTotalEnemies: 7
     maxCurrentEnemies: 7
     enemyLevel: 7
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -103,8 +103,8 @@ MonoBehaviour:
     maxTotalEnemies: 7
     maxCurrentEnemies: 7
     enemyLevel: 8
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -115,8 +115,8 @@ MonoBehaviour:
     maxTotalEnemies: 7
     maxCurrentEnemies: 7
     enemyLevel: 9
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -127,8 +127,8 @@ MonoBehaviour:
     maxTotalEnemies: 8
     maxCurrentEnemies: 8
     enemyLevel: 10
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -139,8 +139,8 @@ MonoBehaviour:
     maxTotalEnemies: 9
     maxCurrentEnemies: 9
     enemyLevel: 11
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -151,8 +151,8 @@ MonoBehaviour:
     maxTotalEnemies: 10
     maxCurrentEnemies: 10
     enemyLevel: 12
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -163,8 +163,8 @@ MonoBehaviour:
     maxTotalEnemies: 10
     maxCurrentEnemies: 10
     enemyLevel: 13
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0
@@ -175,8 +175,8 @@ MonoBehaviour:
     maxTotalEnemies: 11
     maxCurrentEnemies: 11
     enemyLevel: 14
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 4
     minRewardChoices: 2
     maxRewardChoices: 5
     rewardQualityBoost: 0

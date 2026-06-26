@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2
   waveInfoPanel: {fileID: 2059475857}
   waveText: {fileID: 1154343300}
@@ -1286,17 +1286,17 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 0
-      value: 2
+      value: 3
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
       type: 1
-      value: 3
+      value: 2
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
       type: 2
-      value: 2
+      value: 3
     weight: 5
   - icon: {fileID: 0}
     baseBuff:
@@ -1306,12 +1306,12 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 4
-      value: 3
+      value: 4
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 5
-      value: 3
+      value: 4
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
@@ -1336,7 +1336,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 10
-      value: 2
+      value: 3
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
@@ -1351,12 +1351,12 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 14
-      value: 5
+      value: 3
     weight: 4
   - icon: {fileID: 0}
     baseBuff:
       type: 15
-      value: 3
+      value: 4
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
@@ -1366,7 +1366,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 17
-      value: 3
+      value: 4
     weight: 4
   - icon: {fileID: 0}
     baseBuff:
@@ -1381,37 +1381,37 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 20
-      value: 1.5
+      value: 2
     weight: 1
   - icon: {fileID: 0}
     baseBuff:
       type: 21
-      value: 2
+      value: 3
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 22
-      value: 2
+      value: 3
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 24
-      value: 4
+      value: 3
     weight: 8
   - icon: {fileID: 0}
     baseBuff:
       type: 25
-      value: 3
+      value: 4
     weight: 5
   - icon: {fileID: 0}
     baseBuff:
       type: 26
-      value: 1
+      value: 2
     weight: 4
   - icon: {fileID: 0}
     baseBuff:
       type: 27
-      value: 3
+      value: 4
     weight: 6
   - icon: {fileID: 0}
     baseBuff:

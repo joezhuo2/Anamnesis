@@ -15,7 +15,7 @@ MonoBehaviour:
   cooldown: 3
   projectilePrefab: {fileID: 7220300455555897671, guid: 6d5c8aa8d542c2941a8bf8e597f21e22, type: 3}
   pattern: 0
-  spawnDelay: 1.25
+  spawnDelay: 1.5
   spawnDistance: 3
   fixedDistance: 0
   animationLength: 0.5
@@ -37,11 +37,11 @@ MonoBehaviour:
   healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
-  staminaGainOnHit: 10
-  staminaPctGainOnHit: 6
-  healthGainOnHit: 0
-  healthPctGainOnHit: 0
-  manaGainOnHit: 7
+  staminaGainOnHit: 8
+  staminaPctGainOnHit: 5
+  healthGainOnHit: 2
+  healthPctGainOnHit: 1
+  manaGainOnHit: 5
   manaPctGainOnHit: 3
   type: 0
   icon: {fileID: -1373909529987573398, guid: b2625615903b287418f1a0e3c142e88e, type: 3}

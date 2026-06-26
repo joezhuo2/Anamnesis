@@ -63,8 +63,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: isAttacking
+  - m_ConditionMode: 4
+    m_ConditionEvent: attackIndex
     m_EventTreshold: 0
   - m_ConditionMode: 3
     m_ConditionEvent: speed
@@ -91,9 +91,9 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: isAttacking
-    m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: attackIndex
+    m_EventTreshold: -1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8993189146655502643}
   m_Solo: 0
@@ -138,8 +138,8 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: isAttacking
+  - m_ConditionMode: 4
+    m_ConditionEvent: attackIndex
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -604424935818527011}
@@ -268,9 +268,9 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: isAttacking
-    m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: attackIndex
+    m_EventTreshold: -1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8993189146655502643}
   m_Solo: 0
@@ -349,10 +349,10 @@ AnimatorController:
   m_Name: player
   serializedVersion: 6
   m_AnimatorParameters:
-  - m_Name: isAttacking
-    m_Type: 4
+  - m_Name: attackIndex
+    m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 0
+    m_DefaultInt: -1
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: speed
@@ -419,6 +419,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: isHurt
+    m_EventTreshold: 0
+  - m_ConditionMode: 4
+    m_ConditionEvent: attackIndex
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4560584450846905013}
@@ -529,9 +532,9 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: isAttacking
-    m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: attackIndex
+    m_EventTreshold: -1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8993189146655502643}
   m_Solo: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   damagePct: 0
   physicalDmgPct: 0
   spellDmgPct: 0
-  attack: 40
+  attack: 10
   atkPct: 0
   attackSpeedPct: 0
   critChance: 5
