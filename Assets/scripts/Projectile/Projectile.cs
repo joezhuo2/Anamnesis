@@ -65,15 +65,13 @@ public class Projectile : MonoBehaviour {
 
         DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
 
-        eh.TakeDamage(packet, isPlayer, ownerObj.GetComponent<EntityStatManager>().s);
+        eh.TakeDamage(packet, isPlayer, ownerObj);
         TriggerStatGainsOnHit(ownerObj, pd.mainAttack);
 
         pierced++;
         hit.Add(target);
 
         if (pd.timeBeforeSameEnemy > 0f) StartCoroutine(RemoveFromHitHistory(target, pd.timeBeforeSameEnemy));
-
-        if (pierced >= pd.numPierce) Destroy(gameObject);
 
         if (pd.additionalChance > 0f && pd.additionalAttack != null)
             HandleAdditionalSpawns();
@@ -157,7 +155,7 @@ public class Projectile : MonoBehaviour {
 
             if (hit.Contains(col.gameObject)) continue;
 
-            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && !esm.s.isAlive) continue;
+            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && !esm.s.isAlive && esm.s.currentHp <= 0) continue;
 
             float dist = Vector2.Distance(transform.position, col.transform.position);
             if (dist < minDist)
