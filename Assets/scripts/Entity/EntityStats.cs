@@ -37,7 +37,8 @@ public enum StatType
     EffHpReg,
     EffStReg,
     EffSpd,
-    EffArmor
+    EffArmor,
+    MaxMana
 }
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
@@ -95,6 +96,17 @@ public class EntityStats : ScriptableObject
     [Header("Mana - Player Only")]
     public int currentMana;
     public int maxMana;
+    [HideInInspector] public bool canGainMana;
+
+    [Header("Dash - Player Only")]
+    public float dashSpeedMult;
+    public float dashCooldown;
+    public float dashDistance;
+    public int dashStaminaCost;
+    public bool dashShouldApplyIFrame;
+    [HideInInspector] public bool isDashing;
+    [HideInInspector] public bool canDash;
+    [HideInInspector] public bool canGainStamina;
 
     [Header("Misc")]
     public int level;

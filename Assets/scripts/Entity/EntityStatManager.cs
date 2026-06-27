@@ -119,6 +119,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.EffStReg => s.EffStReg,
             StatType.EffSpd => s.FinalSpd,
             StatType.EffArmor => s.EffArmor,
+            StatType.MaxMana => s.maxMana,
             _ => 0f,
         };
         return value;
@@ -160,6 +161,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.addPhysDmgPct: s.addPhysDmgPct += mod; break;
             case StatType.addSplDmgPct: s.addSplDmgPct += mod; break;
             case StatType.moveSpeed: s.moveSpeed += mod; break;
+            case StatType.MaxMana: s.maxMana += Mathf.RoundToInt(mod); break;
             default: break;
 
         }
@@ -223,6 +225,7 @@ public struct StatBuff : IEquatable<StatBuff>
             StatType.stRegPct => "Stamina Regen %",
             StatType.addPhysDmgPct => "Add Phys Dmg %",
             StatType.addSplDmgPct => "Add Spl Dmg %",
+            StatType.MaxMana => "Max Mana",
             _ => type.ToString()
         };
         return name;
