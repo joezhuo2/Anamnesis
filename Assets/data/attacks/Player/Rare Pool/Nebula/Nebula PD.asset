@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Starfury PD
+  m_Name: Nebula PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: 858bea3437e936045a1653e89167977e, type: 2}
+  mainAttack: {fileID: 11400000, guid: bd91f00154d86a04397a66652a8a79fa, type: 2}
   speed: 0
-  lifetime: 1
-  numPierce: 3000
-  size: 4
-  physicalMult: 3.4
+  lifetime: 0.75
+  numPierce: 16
+  size: 3.5
+  physicalMult: 0
   spellMult: 0
-  trueMult: 0.2
-  scalingStat: 24
-  timeBeforeSameEnemy: 0.1
+  trueMult: 0.3
+  scalingStat: 7
+  timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
   angleOverride: 0
@@ -29,6 +29,6 @@ MonoBehaviour:
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: 3d4433cf49e57f246bc881408e91cf17, type: 2}
   selfApply: 0
-  effectChance: 0
+  effectChance: 1

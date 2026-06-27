@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Sanguine Reminiscence AD
+  m_Name: Blood Pact AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   cooldown: 1
   projectilePrefab: {fileID: 9179472077719303980, guid: f02d1ae2865471a45b42b03c12b49b25, type: 3}
@@ -45,4 +45,4 @@ MonoBehaviour:
   manaPctGainOnHit: 2
   type: 0
   icon: {fileID: -7578176016135970186, guid: 38bffc924a2673d45894fc045ea1b3a3, type: 3}
-  displayName: Sanguine Reminiscence
+  displayName: Blood Pact

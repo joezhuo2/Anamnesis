@@ -15,5 +15,5 @@ MonoBehaviour:
   conditions: 0d000000
   chance: 100
   delay: 0
-  amount: 20
-  pctAmt: 10
+  amount: 10
+  pctAmt: 6

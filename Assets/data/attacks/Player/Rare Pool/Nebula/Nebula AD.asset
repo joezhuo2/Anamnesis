@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Nebula AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  cooldown: 2
+  projectilePrefab: {fileID: 4700379168762291364, guid: 267a1eb649847be4d81ffcfb7c348806, type: 3}
+  pattern: 0
+  spawnDelay: 0
+  spawnDistance: 3
+  fixedDistance: 0
+  animationLength: 0.5
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 0
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 14
+  staminaCostPct: 8
+  healthCost: 0
+  healthCostPct: 0
+  manaCost: 6
+  manaCostPct: 3
+  staminaGainOnHit: 2
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 1
+  manaPctGainOnHit: 0
+  type: 1
+  icon: {fileID: 1869335424979730921, guid: e67a6925b1352134cb1282d74e891bea, type: 3}
+  displayName: Nebula
