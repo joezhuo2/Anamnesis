@@ -40,9 +40,10 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         List<string> lines = new();
         if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s");
         if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s");
-        if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (-{(cps.ArmorRes*100f):F1}%)");
-        if (cps.attack != 0) lines.Add($"Attack: {cps.attack:F0}");
-        if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd}");
+        if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (-{cps.ArmorRes*100f:F1}%)");
+        if (cps.EffAtk != 0) lines.Add($"Attack: {cps.EffAtk:F0} (+{cps.atkPct:F0}%)");
+        if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd} (+{cps.moveSpeedPct:F0}%)");
+        if (cps.dodgeChance != 0f) lines.Add($"Dodge: {cps.dodgeChance:F0}% (-{cps.dodgeResPct:F0}%)");
 
         List<string> resTypes = new();
         if (cps.damageRes != 0f) resTypes.Add($"{cps.damageRes:F1}%");
@@ -76,12 +77,11 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         List<string> lines = new();
         if (cooldown != 0f) lines.Add($"Cooldown: {cooldown:F1}s");
-        if (hpCost != 0f) lines.Add($"Health Cost: {hpCost:F0}");
-        if (hpGain != 0f) lines.Add($"Health Gain: {hpGain:F0}");
-        if (staminaCost != 0f) lines.Add($"Stamina Cost: {staminaCost:F0}");
-        if (staminaGain != 0f) lines.Add($"Stamina Gain: {staminaGain:F0}");
-        if (manaCost != 0f) lines.Add($"Mana Cost: {manaCost:F0}");
-        if (manaGain != 0f) lines.Add($"Mana Gain: {manaGain:F0}");
+        if (hpCost != 0f || hpGain != 0f) lines.Add($"Health: -{hpCost:F0} +{hpGain:F0}");
+        if (staminaCost != 0f || staminaGain != 0f) lines.Add($"Stamina: -{staminaCost:F0} +{staminaGain:F0}");
+        if (manaCost != 0f || manaGain != 0f) lines.Add($"Mana: -{manaCost:F0} +{manaGain:F0}");
+        if (cps.critChance != 0f || cps.critDamage != 0f) lines.Add($"Crit: {cps.critChance:F1}% +{cps.critDamage:F1}%");
+        if (cps.defShred != 0f || cps.resPen != 0f) lines.Add($"Shred: {cps.defShred}A {cps.resPen}R");
 
         List<string> dmgTypes = new();
         if (basePhysDmg != 0f) dmgTypes.Add($"{basePhysDmg:F0}P");
