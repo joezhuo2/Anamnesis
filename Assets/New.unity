@@ -1351,7 +1351,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 14
-      value: 2
+      value: 1
     weight: 4
   - icon: {fileID: 0}
     baseBuff:
@@ -1397,7 +1397,7 @@ MonoBehaviour:
     baseBuff:
       type: 24
       value: 3
-    weight: 8
+    weight: 6
   - icon: {fileID: 0}
     baseBuff:
       type: 25
@@ -1406,7 +1406,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 26
-      value: 2
+      value: 1
     weight: 4
   - icon: {fileID: 0}
     baseBuff:
@@ -1423,6 +1423,11 @@ MonoBehaviour:
       type: 29
       value: 2
     weight: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 36
+      value: 2
+    weight: 3
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0
@@ -1472,6 +1477,10 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Shattered Vessel
     desc: Overkill creates a rift that violently splits into 6 seeking projectiles.
+  - upgrade: {fileID: 11400000, guid: faa3c8d59698bdb4089d810a53b1862e, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Starlit Reflexes
+    desc: Counter dodges restore mana.
   rarityData:
   - rarity: 0
     rarityName: Common

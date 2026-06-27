@@ -46,13 +46,7 @@ MonoBehaviour:
   stRegPct: 0
   currentMana: 100
   maxMana: 100
-  level: 1
-  isAlive: 1
-  isImmune: 0
-  canAttack: 1
-  isAttacking: 0
-  canMove: 1
-  canGainHp: 0
+  canGainMana: 0
   dashSpeedMult: 5
   dashCooldown: 3
   dashDistance: 1.5
@@ -61,4 +55,10 @@ MonoBehaviour:
   isDashing: 0
   canDash: 0
   canGainStamina: 0
-  canGainMana: 0
+  level: 1
+  isAlive: 1
+  isImmune: 0
+  canAttack: 1
+  isAttacking: 0
+  canMove: 1
+  canGainHp: 0
