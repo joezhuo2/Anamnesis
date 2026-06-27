@@ -16,7 +16,7 @@ MonoBehaviour:
   speed: 0
   lifetime: 0.75
   numPierce: 50
-  size: 1.5
+  size: 2.25
   physicalMult: 0.6
   spellMult: 0
   trueMult: 0.15

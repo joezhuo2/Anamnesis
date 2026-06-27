@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Supernova AD
+  m_Name: Starfury AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 3
-  projectilePrefab: {fileID: 3196581985793714705, guid: 4c90613353e49a3479ac6268eca0b4f3, type: 3}
+  cooldown: 6
+  projectilePrefab: {fileID: 3657243970708353850, guid: 173d35108134cdf4ea6d4491090ef3e3, type: 3}
   pattern: 0
   spawnDelay: 0
-  spawnDistance: 1
-  fixedDistance: 1
-  animationLength: 0.5
+  spawnDistance: 3
+  fixedDistance: 0
+  animationLength: 0
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -31,18 +31,18 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 20
-  staminaCostPct: 10
+  staminaCost: 0
+  staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 5
-  manaCostPct: 0
-  staminaGainOnHit: 4
-  staminaPctGainOnHit: 1
-  healthGainOnHit: 4
-  healthPctGainOnHit: 1
+  manaCost: 38
+  manaCostPct: 32
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
-  type: 1
-  icon: {fileID: 1520652673195428207, guid: 200003f81e59f234eb518c9441cf9f83, type: 3}
-  displayName: Supernova
+  type: 2
+  icon: {fileID: 6788657068864169533, guid: 6f568e0810a7a9545bd93086510b711a, type: 3}
+  displayName: Starfury

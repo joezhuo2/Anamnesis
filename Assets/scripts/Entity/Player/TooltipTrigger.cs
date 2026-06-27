@@ -16,7 +16,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         tooltipType = TooltipType.Attack;
         cad = ad;
         cps = ps;
-        cesm = esm; 
+        cesm = esm;
     }
     public void SetupTooltipData(PlayerStats ps)
     {
@@ -41,6 +41,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s");
         if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s");
         if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (-{(cps.ArmorRes*100f):F1}%)");
+        if (cps.attack != 0) lines.Add($"Attack: {cps.attack:F0}");
+        if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd}");
 
         List<string> resTypes = new();
         if (cps.damageRes != 0f) resTypes.Add($"{cps.damageRes:F1}%");

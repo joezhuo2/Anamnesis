@@ -32,10 +32,10 @@ MonoBehaviour:
   hpRegPct: 0
   armor: 200
   armorPct: 0
-  damageRes: 40
+  damageRes: 20
   dodgeChance: 0
   dodgeResPct: 0
-  physicalRes: 10
+  physicalRes: 0
   spellRes: 60
   hurtTime: 0.25
   moveSpeed: 1.45

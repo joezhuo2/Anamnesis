@@ -1351,7 +1351,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 14
-      value: 3
+      value: 2
     weight: 4
   - icon: {fileID: 0}
     baseBuff:
@@ -1454,6 +1454,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Supernova
     desc: AOE True Armor Gen
+  - newAttack: {fileID: 11400000, guid: 858bea3437e936045a1653e89167977e, type: 2}
+    type: 2
+    icon: {fileID: 0}
+    attackName: Starfury
+    desc: AOE True Speed
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}

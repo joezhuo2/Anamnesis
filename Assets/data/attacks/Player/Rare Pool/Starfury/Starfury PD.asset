@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Crab B PD
+  m_Name: Starfury PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: c8a8a4d0239b50949b2a5304a1db279f, type: 2}
-  speed: 6
+  mainAttack: {fileID: 11400000, guid: 858bea3437e936045a1653e89167977e, type: 2}
+  speed: 0
   lifetime: 1
-  numPierce: 50
-  size: 2
-  physicalMult: 0.4
+  numPierce: 3000
+  size: 4
+  physicalMult: 2.6
   spellMult: 0
-  trueMult: 0.2
-  scalingStat: 31
-  timeBeforeSameEnemy: 0
+  trueMult: 0.4
+  scalingStat: 24
+  timeBeforeSameEnemy: 0.1
   followDistance: 0
   rotationOffset: 0
   angleOverride: 0
