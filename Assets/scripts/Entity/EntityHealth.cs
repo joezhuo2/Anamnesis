@@ -93,6 +93,11 @@ public class EntityHealth : MonoBehaviour
     }
     public void ChangeHealth(float amount, float pctAmt, bool showIndicator, bool isCrit, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
     {
+        if ((amount < 0 || pctAmt < 0) && es.isImmune && es.isDashing && cpum != null)
+        {
+            cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCounterDodge);
+            return;
+        } 
         if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return;
 
         int finalAmount = Mathf.RoundToInt(amount + (pctAmt * es.EffMaxHp));

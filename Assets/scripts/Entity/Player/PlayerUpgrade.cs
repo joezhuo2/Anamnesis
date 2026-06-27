@@ -16,7 +16,8 @@ public abstract class PlayerUpgrade : ScriptableObject
         OnDeath,
         OnStaminaRegen,
         OnCalculateAttackCost,
-        OnOverkill
+        OnOverkill,
+        OnCounterDodge
     }
     public TriggerCondition[] conditions;
     public float chance;
