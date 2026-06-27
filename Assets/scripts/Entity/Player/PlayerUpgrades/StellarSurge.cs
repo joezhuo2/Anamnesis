@@ -8,6 +8,6 @@ public class StellarSurge : PlayerUpgrade
     {
         if (!player.TryGetComponent<EntityHealth>(out var eh)) return;
 
-        eh.ChangeHealth(0, hpPct * 0.01f, true, false, Color.teal, false);
+        eh.ChangeHealth(0, hpPct * 0.01f, true, 1f , Color.teal, false);
     }
 }

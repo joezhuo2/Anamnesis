@@ -77,7 +77,7 @@ public class EntityHealth : MonoBehaviour
         if (dp == null) return;
         foreach (var i in dp.instances)
         {
-            float finalDamage = i.type == DamageType.True ? i.amount : CalculateDamageTaken(i.type, i.amount, source.GetComponent<EntityStatManager>().s);
+            var (dmg, sizeMult)= i.type == DamageType.True ? (i.amount, 1f) : CalculateDamageTaken(i.type, i.amount, source.GetComponent<EntityStatManager>().s);
 
             Color color = i.type switch
             {
@@ -87,17 +87,19 @@ public class EntityHealth : MonoBehaviour
                 _ => Color.white
             };
 
-            if (finalDamage > 0)
-                ChangeHealth(-Mathf.RoundToInt(finalDamage), 0, true, i.isCrit, color, bypassIFrames, source);
+            if (i.isCrit) sizeMult *= 1.5f;
+
+            if (dmg > 0)
+                ChangeHealth(-Mathf.RoundToInt(dmg), 0, true, sizeMult, color, bypassIFrames, source);
         }
     }
-    public void ChangeHealth(float amount, float pctAmt, bool showIndicator, bool isCrit, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
+    public void ChangeHealth(float amount, float pctAmt, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
     {
         if ((amount < 0 || pctAmt < 0) && es.isImmune && es.isDashing && cpum != null)
         {
             cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCounterDodge);
             return;
-        } 
+        }
         if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return;
 
         int finalAmount = Mathf.RoundToInt(amount + (pctAmt * es.EffMaxHp));
@@ -135,7 +137,7 @@ public class EntityHealth : MonoBehaviour
                 Mathf.Abs(finalAmount),
                 pos,
                 indicatorColor,
-                isCrit ? 1.5f : 1f,
+                sizeMult,
                 0.6f,
                 1f
             );
@@ -182,7 +184,7 @@ public class EntityHealth : MonoBehaviour
             {
                 int intRegen = Mathf.FloorToInt(accumulatedRegen);
                 accumulatedRegen -= intRegen;
-                ChangeHealth(intRegen, 0, false, false);
+                ChangeHealth(intRegen, 0, false);
 
                 if (cpum != null) cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnHealthRegen);
             }
@@ -210,7 +212,7 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    private float CalculateDamageTaken(DamageType type, float rawDamage, EntityStats source)
+    private (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, EntityStats source)
     {
         float effRes = Mathf.Max(-100f, es.damageRes - source.resPen);
         float resMult = 1f - (effRes * 0.01f);
@@ -225,6 +227,7 @@ public class EntityHealth : MonoBehaviour
         };
 
         float finalDamage = rawDamage * resMult * armorMult * typeMult;
+        float size = 1f;
 
         if (Time.time >= lastDodgeTime + dodgeCooldown)
         {
@@ -234,11 +237,12 @@ public class EntityHealth : MonoBehaviour
             if (UnityEngine.Random.Range(0f, 1f) < dc)
             {
                 finalDamage *= dodgeMult;
+                size = 0.5f;
                 lastDodgeTime = Time.time;
             }
         }
 
-        return finalDamage;
+        return (finalDamage, size);
     }
 
     private IEnumerator HurtDelay(float time)

@@ -114,7 +114,7 @@ public class PlayerAttackHandler : MonoBehaviour
             return false;
 
         if (ps != null) ps.ChangeStamina(-totalStaminaCost);
-        if (ph != null) ph.ChangeHealth(-totalHealthCost, 0f, true, false);
+        if (ph != null) ph.ChangeHealth(-totalHealthCost, 0f, true);
         if (pm != null) pm.ChangeMana(-totalManaCost, 0f);
 
         return true;

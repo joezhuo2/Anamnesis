@@ -12,7 +12,7 @@ public class DoT : StatusEffect
         if (target == null || !target.TryGetComponent<EntityHealth>(out var eh) || !source.TryGetComponent<EntityStatManager>(out var ssm)) return;
 
         float damage = dpt * 0.01f * ssm.GetStat(scalingStat) * currentStacks;
-        eh.ChangeHealth(-damage, 0f, true, false, indicatorColor, false);
+        eh.ChangeHealth(-damage, 0f, true, 1f, indicatorColor, false);
     }
 
 }

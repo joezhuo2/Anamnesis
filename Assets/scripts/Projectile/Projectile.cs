@@ -192,7 +192,7 @@ public class Projectile : MonoBehaviour {
         if (target.TryGetComponent<EntityHealth>(out var eh))
         {
             float gain = a.healthGainOnHit + (a.healthPctGainOnHit * 0.01f * esm.s.maxHp);
-            eh.ChangeHealth(gain, 0f, true, false);
+            eh.ChangeHealth(gain, 0f);
         }
         if (target.TryGetComponent<PlayerMana>(out var pm))
         {
