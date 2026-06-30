@@ -38,7 +38,8 @@ public enum StatType
     EffStReg,
     EffSpd,
     EffArmor,
-    MaxMana
+    maxMana,
+    globalDoTCanCrit
 }
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
