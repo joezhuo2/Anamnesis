@@ -39,7 +39,10 @@ public enum StatType
     EffSpd,
     EffArmor,
     maxMana,
-    globalDoTCanCrit
+    globalDoTCanCrit,
+    UltDmgPct,
+    SkillDmgPct,
+    BasicDmgPct
 }
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
@@ -60,6 +63,9 @@ public class EntityStats : ScriptableObject
     public float resPen;
     public float addPhysDmgPct;
     public float addSplDmgPct;
+    public float basicDmgPct;
+    public float skillDmgPct;
+    public float ultDmgPct;
     // lifeStealPct, effectChance
 
     [Header("Defense")]

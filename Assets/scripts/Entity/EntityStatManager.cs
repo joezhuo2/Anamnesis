@@ -44,7 +44,6 @@ public class EntityStatManager : MonoBehaviour
 
         s.maxHp += 15 * levelOffset;
         s.hpPct += 5f * levelOffset;
-        s.currentHp = s.EffMaxHp;
 
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
         s.hpRegPct += 2f * levelOffset;
@@ -120,6 +119,9 @@ public class EntityStatManager : MonoBehaviour
             StatType.EffSpd => s.FinalSpd,
             StatType.EffArmor => s.EffArmor,
             StatType.maxMana => s.maxMana,
+            StatType.SkillDmgPct => s.skillDmgPct,
+            StatType.BasicDmgPct => s.basicDmgPct,
+            StatType.UltDmgPct => s.ultDmgPct,
             _ => 0f,
         };
         return value;
@@ -162,6 +164,9 @@ public class EntityStatManager : MonoBehaviour
             case StatType.addSplDmgPct: s.addSplDmgPct += mod; break;
             case StatType.moveSpeed: s.moveSpeed += mod; break;
             case StatType.maxMana: s.maxMana += Mathf.RoundToInt(mod); break;
+            case StatType.SkillDmgPct: s.skillDmgPct += mod; break;
+            case StatType.BasicDmgPct: s.basicDmgPct += mod; break;
+            case StatType.UltDmgPct: s.ultDmgPct += mod; break;
             default: break;
 
         }
@@ -226,6 +231,8 @@ public struct StatBuff : IEquatable<StatBuff>
             StatType.addPhysDmgPct => "Add Phys Dmg %",
             StatType.addSplDmgPct => "Add Spl Dmg %",
             StatType.maxMana => "Max Mana",
+            StatType.SkillDmgPct => "Skill Damage %",
+            StatType.BasicDmgPct => "Basic Damage %",
             _ => type.ToString()
         };
         return name;
