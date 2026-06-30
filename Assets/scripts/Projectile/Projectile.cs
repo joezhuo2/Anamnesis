@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class Projectile : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         HandleMovement(true);
 
-        Destroy(gameObject, pd.lifetime);
+        StartCoroutine(DestroyProjectileAfterDelay(pd.lifetime));
     }
 
     private void FixedUpdate() => HandleMovement(false);
@@ -65,8 +66,9 @@ public class Projectile : MonoBehaviour {
 
         DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
 
-        eh.TakeDamage(packet, isPlayer, ownerObj);
-        TriggerStatGainsOnHit(ownerObj, pd.mainAttack);
+        eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj);
+        var (hp, stamina, mana) = CalculateStatGains(ownerObj, pd.mainAttack, packet.GetTotalDamage());
+        TriggerStatGains(hp, stamina, mana, ownerObj);
 
         pierced++;
         hit.Add(target);
@@ -79,6 +81,14 @@ public class Projectile : MonoBehaviour {
         if (pd.effect == null) return;
         if (ownerObj != target) ApplyEffect(target);
         else if (pd.selfApply) ApplyEffect();
+    }
+    private IEnumerator DestroyProjectileAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (!pd.addAttackRequiresHit) HandleAdditionalSpawns();
+
+        Destroy(gameObject);
     }
 
     private void HandleAdditionalSpawns()
@@ -102,12 +112,15 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleDirection()
     {
-        if (ownerObj.CompareTag("Enemy") || dir != Vector2.zero) return;
+        // if (ownerObj.CompareTag("Enemy") || dir != Vector2.zero) return;
 
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
-        mouseWorldPos.z = 0f;
+        if (ownerObj.CompareTag("Player"))
+        {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
+            mouseWorldPos.z = 0f;
 
-        dir = (mouseWorldPos - transform.position).normalized;
+            dir = (mouseWorldPos - transform.position).normalized;
+        }
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle + pd.rotationOffset);
@@ -180,24 +193,33 @@ public class Projectile : MonoBehaviour {
         yield return new WaitForSeconds(delay);
         if (hit != null && target != null) hit.Remove(target);
     }
-    private void TriggerStatGainsOnHit(GameObject target, AttackData a)
+    public static (float hp, float stamina, float mana) CalculateStatGains(GameObject target, AttackData a, float totalDmg = 0f)
     {
-        if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return;
+        if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return (0f, 0f, 0f);
 
-        if (target.TryGetComponent<PlayerStamina>(out var ps))
+        float totalStamina = a.staminaGainOnHit;
+        float totalHp = a.healthGainOnHit;
+        float totalMana = a.manaGainOnHit;
+
+        if (a.basedOnDmgDealt)
         {
-            float gain = a.staminaGainOnHit + (a.staminaPctGainOnHit * 0.01f * esm.s.maxStamina);
-            ps.ChangeStamina(gain);
+            totalStamina += totalDmg * 0.01f * a.staminaPctGainOnHit;
+            totalHp += totalDmg * 0.01f * a.healthPctGainOnHit;
+            totalMana += totalDmg * 0.01f * a.manaPctGainOnHit;
         }
-        if (target.TryGetComponent<EntityHealth>(out var eh))
+        else if (totalDmg > 0f)
         {
-            float gain = a.healthGainOnHit + (a.healthPctGainOnHit * 0.01f * esm.s.maxHp);
-            eh.ChangeHealth(gain, 0f);
+            totalStamina += a.staminaPctGainOnHit * 0.01f * esm.s.maxStamina;
+            totalHp += a.healthPctGainOnHit * 0.01f * esm.s.maxHp;
+            totalMana += a.manaPctGainOnHit * 0.01f * esm.s.maxMana;
         }
-        if (target.TryGetComponent<PlayerMana>(out var pm))
-        {
-            float gain = a.manaGainOnHit + (a.manaPctGainOnHit * 0.01f * esm.s.maxMana);
-            pm.ChangeMana(gain, 0f);
-        }
+        return (totalHp, totalStamina, totalMana);
+    }
+    private void TriggerStatGains(float hp, float stamina, float mana, GameObject target)
+    {
+        if (target == null) return;
+        if (target.TryGetComponent<PlayerStamina>(out var ps)) ps.ChangeStamina(stamina);
+        if (target.TryGetComponent<EntityHealth>(out var eh)) eh.ChangeHealth(hp, 0f);
+        if (target.TryGetComponent<PlayerMana>(out var pm)) pm.ChangeMana(mana, 0f);
     }
 }

@@ -13,7 +13,7 @@ public class EntityHealth : MonoBehaviour
     private float regenTimer;
     private const float regenInterval = 0.5f; // how often hp regens, in seconds
     private const float fullRegenFrequency = 5f; // time to heal full amount of hpRegen stat
-    private const float hurtIFrameDuration = 0.4f; // time after taking damage where you cannot take more damage
+    private const float hurtIFrameDuration = 0.2f; // time after taking damage where you cannot take more damage
     private const float dodgeCooldown = 0.6f; // minimum time before dodges
     private float accumulatedRegen;
     private float lastDodgeTime;
