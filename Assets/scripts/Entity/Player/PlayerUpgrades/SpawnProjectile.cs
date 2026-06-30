@@ -8,6 +8,6 @@ public class SpawnProjectile : PlayerUpgrade
     {
         var ps = ProjectileSpawner.Instance;
         if (projectilePrefab != null && ps != null)
-                ps.StartCoroutine(ps.SpawnFromPattern(projectilePrefab, player));
-        }
+            ps.StartCoroutine(ps.SpawnFromPattern(projectilePrefab, player));
+    }
 }

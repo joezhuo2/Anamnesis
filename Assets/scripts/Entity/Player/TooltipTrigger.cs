@@ -38,8 +38,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         float healthPerSecond = cps.EffHpReg / 5f;
 
         List<string> lines = new();
-        if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s");
-        if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s");
+        if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s (+{cps.stRegPct:F0}%)");
+        if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s (+{cps.hpRegPct:F0}%)");
         if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (-{cps.ArmorRes*100f:F1}%)");
         if (cps.EffAtk != 0) lines.Add($"Attack: {cps.EffAtk:F0} (+{cps.atkPct:F0}%)");
         if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd} (+{cps.moveSpeedPct:F0}%)");
@@ -77,9 +77,9 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         List<string> lines = new();
         if (cooldown != 0f) lines.Add($"Cooldown: {cooldown:F1}s");
-        if (hpCost != 0f || hpGain != 0f) lines.Add($"Health: -{hpCost:F0} +{hpGain:F0}");
-        if (staminaCost != 0f || staminaGain != 0f) lines.Add($"Stamina: -{staminaCost:F0} +{staminaGain:F0}");
-        if (manaCost != 0f || manaGain != 0f) lines.Add($"Mana: -{manaCost:F0} +{manaGain:F0}");
+        if (hpCost != 0f || hpGain != 0f) lines.Add($"Health: -{hpCost:F0} +{cad.healthGainOnHit:F0} +{cad.healthPctGainOnHit:F1}%");
+        if (staminaCost != 0f || staminaGain != 0f) lines.Add($"Stamina: -{staminaCost:F0} +{cad.staminaGainOnHit:F0} +{cad.staminaPctGainOnHit:F1}%");
+        if (manaCost != 0f || manaGain != 0f) lines.Add($"Mana: -{manaCost:F0} +{cad.manaGainOnHit:F0} +{cad.manaPctGainOnHit:F1}%");
         if (cps.critChance != 0f || cps.critDamage != 0f) lines.Add($"Crit: {cps.critChance:F1}% +{cps.critDamage:F1}%");
         if (cps.defShred != 0f || cps.resPen != 0f) lines.Add($"Shred: {cps.defShred}A {cps.resPen}R");
 
