@@ -10,7 +10,7 @@ public abstract class StatusEffect : ScriptableObject
     [Header("UI")]
     public Sprite icon;
     public string effName;
-    public string desc;
+    [TextArea(3, 10)] public string desc;
 
     [Header("Stacking")]
     public int maxStacks = 1;

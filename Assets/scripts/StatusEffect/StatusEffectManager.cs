@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,10 +16,26 @@ public class StatusEffectManager : MonoBehaviour
     {
         cesm = GetComponent<EntityStatManager>();
     }
-    public List<T> GetActiveEffectsOfType<T>() where T : StatusEffect
+    public void GetActiveEffectsOfType<T>(List<StatusEffect> results) where T : StatusEffect
     {
-        return activeEffects.OfType<T>().ToList();
+        results.Clear();
+        for (int i = 0; i < activeEffects.Count; i++)
+        {
+            if (activeEffects[i] is T)
+            {
+                results.Add(activeEffects[i]);
+            }
+        }
     }
+    public T GetActiveFirstEffectOfType<T>() where T : StatusEffect
+    {
+        for (int i = 0; i < activeEffects.Count; i++)
+        {
+            if (activeEffects[i] is T) return activeEffects[i] as T;
+        }
+        return null;
+    }
+
     public void AddEffect(StatusEffect se, GameObject source)
     {
         if (se == null) return;
@@ -28,12 +45,8 @@ public class StatusEffectManager : MonoBehaviour
         if (existing != null)
         {
             existing.currentTime = 0f;
-
-            if (existing.currentStacks < existing.maxStacks)
-            {
-                existing.currentStacks++;
-                existing.OnStack();
-            }
+            if (existing.currentStacks < existing.maxStacks) existing.currentStacks++;
+            existing.OnStack();
         }
         else
         {
@@ -48,6 +61,29 @@ public class StatusEffectManager : MonoBehaviour
 
             CreateDisplayUI(runtimeEffect);
         }
+    }
+    public void RemoveStacks<T>(int stacksToRemove) where T : StatusEffect
+    {
+        T existing = GetActiveFirstEffectOfType<T>();
+        if (existing == null) return;
+
+        existing.currentStacks -= stacksToRemove;
+
+        if (existing.currentStacks <= 0)
+        {
+            existing.OnExpire();
+            activeEffects.Remove(existing);
+            Destroy(existing);
+        }
+        else
+        {
+            existing.OnStack();
+        }
+    }
+    public IEnumerator RemoveEffectAfterDelay<T>(float delay) where T : StatusEffect
+    {
+        yield return new WaitForSeconds(delay);
+        RemoveStacks<T>(int.MaxValue);
     }
     private void Update()
     {
@@ -70,9 +106,18 @@ public class StatusEffectManager : MonoBehaviour
 
             if (e.currentTime > e.duration)
             {
-                e.OnExpire();
-                activeEffects.RemoveAt(i);
-                Destroy(e);
+                if (e.currentStacks > 0)
+                {
+                    e.currentStacks--;
+                    e.currentTime = 0f;
+                    e.OnStack();
+                }
+                else
+                {
+                    e.OnExpire();
+                    activeEffects.RemoveAt(i);
+                    Destroy(e);
+                }
             }
         }
     }
