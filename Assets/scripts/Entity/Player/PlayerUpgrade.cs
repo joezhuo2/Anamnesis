@@ -23,4 +23,5 @@ public abstract class PlayerUpgrade : ScriptableObject
     public float chance;
     public float delay; // delay after triggering before effect activates
     public abstract void TriggerUpgradeEffect(GameObject player);
+    public virtual void OnUnlock(GameObject player) {}
 }

@@ -26,6 +26,7 @@ public class PlayerUpgradeManager : MonoBehaviour
     {
         if (pu == null || activeUpgrades.Contains(pu)) return;
         activeUpgrades.Add(pu);
+        pu.OnUnlock(gameObject);
     }
     public void RemoveUpgrade(PlayerUpgrade pu)
     {
