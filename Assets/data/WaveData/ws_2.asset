@@ -183,4 +183,16 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+  - enemyPrefab: {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}
+    maxTotalEnemies: 1
+    maxCurrentEnemies: 1
+    enemyLevel: 30
+    minSpawnFrequency: 0
+    maxSpawnFrequency: 0
+    minRewardChoices: 2
+    maxRewardChoices: 5
+    rewardQualityBoost: 0
+    Type: 0
+    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+    bossBarName: '[Lv. 30] Stella'
   waveOffset: 15

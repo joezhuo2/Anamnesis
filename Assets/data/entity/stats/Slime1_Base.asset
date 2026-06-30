@@ -46,6 +46,15 @@ MonoBehaviour:
   stRegPct: 0
   currentMana: 0
   maxMana: 0
+  canGainMana: 0
+  dashSpeedMult: 0
+  dashCooldown: 0
+  dashDistance: 0
+  dashStaminaCost: 0
+  dashShouldApplyIFrame: 0
+  isDashing: 0
+  canDash: 0
+  canGainStamina: 0
   level: 0
   isAlive: 0
   isImmune: 0

@@ -13,19 +13,20 @@ MonoBehaviour:
   m_Name: Crab B PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: c8a8a4d0239b50949b2a5304a1db279f, type: 2}
-  speed: 6
+  speed: 5
   lifetime: 1
   numPierce: 50
   size: 2
-  physicalMult: 0.4
+  physicalMult: 0.3
   spellMult: 0
-  trueMult: 0.2
+  trueMult: 0
   scalingStat: 31
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0

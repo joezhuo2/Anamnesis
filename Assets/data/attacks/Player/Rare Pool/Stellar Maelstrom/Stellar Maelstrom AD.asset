@@ -37,12 +37,13 @@ MonoBehaviour:
   healthCostPct: 0
   manaCost: 18
   manaCostPct: 52
-  staminaGainOnHit: 2
-  staminaPctGainOnHit: 1
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 3
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 2
-  manaPctGainOnHit: 1
+  manaGainOnHit: 0
+  manaPctGainOnHit: 3
   type: 1
   icon: {fileID: 6870509921151519667, guid: ab5d336405cf45d4fa62ff93137977c1, type: 3}
   displayName: Stellar Maelstrom

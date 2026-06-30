@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: BallSpam AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  cooldown: 5
+  projectilePrefab: {fileID: 3026196407555064995, guid: 19e7d72632914a046a49acea8e3e24e2, type: 3}
+  pattern: 2
+  spawnDelay: 0.25
+  spawnDistance: 0.75
+  fixedDistance: 1
+  animationLength: 0.5
+  projectileCount: 12
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 6
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 0
+  staminaCostPct: 0
+  healthCost: 0
+  healthCostPct: 0
+  manaCost: 0
+  manaCostPct: 0
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 0
+  manaPctGainOnHit: 0
+  type: 0
+  icon: {fileID: 0}
+  displayName: 

@@ -18,7 +18,7 @@ MonoBehaviour:
   numPierce: 5
   size: 3
   physicalMult: 0
-  spellMult: 0.2
+  spellMult: 0.3
   trueMult: 0
   scalingStat: 31
   timeBeforeSameEnemy: 0
@@ -26,6 +26,7 @@ MonoBehaviour:
   rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0

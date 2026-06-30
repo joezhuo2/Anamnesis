@@ -1275,8 +1275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
-  spawnRadius: 2
+  currentSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  spawnRadius: 3
   waveInfoPanel: {fileID: 2059475857}
   waveText: {fileID: 1154343300}
   bossBarContainer: {fileID: 756341797}
@@ -1291,7 +1291,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 1
-      value: 2
+      value: 3
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
@@ -1486,6 +1486,10 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Starlit Reflexes
     desc: Counter dodges restore mana.
+  - upgrade: {fileID: 11400000, guid: 2526bf077c7fad54d9e0fc1db17b765f, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Paradox
+    desc: Allows DoTs to deal critical damage
   rarityData:
   - rarity: 0
     rarityName: Common
@@ -1516,9 +1520,9 @@ MonoBehaviour:
     rarityName: Mythic
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
     mult: 15
-    weight: 1
+    weight: 3
   buttonContainer: {fileID: 1423259213}
-  rerolls: 5
+  rerolls: 10
   rerollButton: {fileID: 786092299}
   rerollText: {fileID: 186757956}
 --- !u!4 &587400166

@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Lich A2 AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 4
+  cooldown: 6
   projectilePrefab: {fileID: 7495200519973666611, guid: 87d6fce0f676cd24fb0c22508e8b6359, type: 3}
   pattern: 0
   spawnDelay: 0.5
   spawnDistance: 0
   fixedDistance: 0
   animationLength: 0.3
-  type: 0
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -38,9 +37,13 @@ MonoBehaviour:
   healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
+  basedOnDmgDealt: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  type: 0
+  icon: {fileID: 0}
+  displayName: 

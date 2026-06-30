@@ -31,18 +31,19 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 4
-  staminaCostPct: 2
+  staminaCost: 0
+  staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 3
-  manaCostPct: 1
+  manaCost: 0
+  manaCostPct: 0
+  basedOnDmgDealt: 1
   staminaGainOnHit: 0
-  staminaPctGainOnHit: 0
+  staminaPctGainOnHit: 3
   healthGainOnHit: 0
   healthPctGainOnHit: 0
   manaGainOnHit: 0
-  manaPctGainOnHit: 0
+  manaPctGainOnHit: 2
   type: 4
   icon: {fileID: 0}
   displayName: 

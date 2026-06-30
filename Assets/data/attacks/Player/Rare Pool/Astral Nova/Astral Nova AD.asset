@@ -37,12 +37,13 @@ MonoBehaviour:
   healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
-  staminaGainOnHit: 8
-  staminaPctGainOnHit: 5
-  healthGainOnHit: 2
-  healthPctGainOnHit: 1
-  manaGainOnHit: 5
-  manaPctGainOnHit: 3
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 15
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 0
+  manaPctGainOnHit: 15
   type: 0
   icon: {fileID: -1373909529987573398, guid: b2625615903b287418f1a0e3c142e88e, type: 3}
   displayName: Astral Nova

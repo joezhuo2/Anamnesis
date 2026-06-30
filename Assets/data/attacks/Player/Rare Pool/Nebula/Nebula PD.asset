@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: bd91f00154d86a04397a66652a8a79fa, type: 2}
   speed: 0
-  lifetime: 0.75
+  lifetime: 0.5
   numPierce: 16
   size: 3.5
   physicalMult: 0
@@ -26,6 +26,7 @@ MonoBehaviour:
   rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   additionalFollowsMouse: 0

@@ -37,12 +37,13 @@ MonoBehaviour:
   healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
-  staminaGainOnHit: 5
-  staminaPctGainOnHit: 3
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 6
+  staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 2
-  manaPctGainOnHit: 1
+  manaGainOnHit: 4
+  manaPctGainOnHit: 0
   type: 0
   icon: {fileID: -4290406455011644030, guid: ac0de4f746fa7df4daae01d78607f013, type: 3}
   displayName: Lacerate

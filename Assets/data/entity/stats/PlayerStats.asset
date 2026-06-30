@@ -25,7 +25,7 @@ MonoBehaviour:
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
-  currentHp: 1
+  currentHp: 100
   maxHp: 100
   hpPct: 0
   hpRegen: 5
@@ -39,7 +39,7 @@ MonoBehaviour:
   spellRes: 0
   hurtTime: 0.3
   moveSpeed: 1.5
-  moveSpeedPct: 0
+  moveSpeedPct: 60
   currentStamina: 100
   maxStamina: 100
   staminaRegen: 5
