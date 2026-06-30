@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lich A2 PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 3fbcbd6ac701c904e8076bb3e85cd3ba, type: 2}
-  speed: 3
+  speed: 3.5
   lifetime: 1.5
   numPierce: 1
   size: 2
@@ -29,7 +29,9 @@ MonoBehaviour:
   bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effect: {fileID: 0}
   selfApply: 0
+  applyCondition: 0
   effectChance: 0

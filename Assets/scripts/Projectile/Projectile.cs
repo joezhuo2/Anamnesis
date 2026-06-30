@@ -32,6 +32,9 @@ public class Projectile : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         HandleMovement(true);
 
+        if (pd.effect != null && pd.applyCondition == ApplyCondition.OnCast && pd.selfApply)
+            ApplyEffect();
+
         StartCoroutine(DestroyProjectileAfterDelay(pd.lifetime));
     }
 
@@ -78,9 +81,11 @@ public class Projectile : MonoBehaviour {
         if (pd.additionalChance > 0f && pd.additionalAttack != null)
             HandleAdditionalSpawns();
 
-        if (pd.effect == null) return;
-        if (ownerObj != target) ApplyEffect(target);
-        else if (pd.selfApply) ApplyEffect();
+        if (pd.effect != null && pd.applyCondition == ApplyCondition.OnHit)
+        {
+            if (pd.selfApply) ApplyEffect();
+            else if (ownerObj != target) ApplyEffect(target);
+        }
     }
     private IEnumerator DestroyProjectileAfterDelay(float delay)
     {

@@ -19,14 +19,13 @@ MonoBehaviour:
   spawnDistance: 1
   fixedDistance: 1
   animationLength: 0.3
-  type: 0
   projectileCount: 1
   randomCount: 0
   spread: 0
   randomSpread: 0
   minDelay: 0
   maxDelay: 0
-  maxRange: 4
+  maxRange: 3
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
@@ -38,9 +37,13 @@ MonoBehaviour:
   healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
+  basedOnDmgDealt: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  type: 0
+  icon: {fileID: 0}
+  displayName: 

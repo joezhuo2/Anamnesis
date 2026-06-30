@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: lich A PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 88fb5d50bc45a4b4a8e705140fe9c1a3, type: 2}
-  speed: 4.5
+  speed: 6
   lifetime: 1
   numPierce: 5
   size: 3
@@ -29,7 +29,9 @@ MonoBehaviour:
   bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effect: {fileID: 11400000, guid: e465ccf682b182b45ae0d5b84322c945, type: 2}
   selfApply: 0
+  applyCondition: 0
   effectChance: 0.6

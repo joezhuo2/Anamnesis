@@ -1,5 +1,7 @@
 using UnityEngine;
 
+public enum ApplyCondition { OnHit, OnCast }
+
 [CreateAssetMenu(fileName = "projectile_data", menuName = "Data/Projectile")]
 public class ProjectileData : ScriptableObject
 {
@@ -34,5 +36,6 @@ public class ProjectileData : ScriptableObject
     [Header("Effects")]
     public StatusEffect effect;
     public bool selfApply;
+    public ApplyCondition applyCondition;
     [Range(0, 1)] public float effectChance = 0;
 }
