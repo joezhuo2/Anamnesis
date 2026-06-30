@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 3
   waveInfoPanel: {fileID: 2059475857}
   waveText: {fileID: 1154343300}
@@ -1291,7 +1291,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 1
-      value: 3
+      value: 2
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
@@ -1331,12 +1331,12 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 9
-      value: 6
+      value: 5
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 10
-      value: 3
+      value: 1
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
@@ -1490,6 +1490,10 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Paradox
     desc: Allows DoTs to deal critical damage
+  - upgrade: {fileID: 11400000, guid: 8dff3a6c6a1703f40a9e58f59dfc2ac7, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Soul Rend
+    desc: Basic and Skill grant Soul Rend on hit
   rarityData:
   - rarity: 0
     rarityName: Common
@@ -2772,11 +2776,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf52a4cee78e1d428e438c69e58b87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHandler
-  attacks:
+  starting:
   - {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
   - {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
   cooldownPrefab: {fileID: 1749710292777410887, guid: 47db549e516fc9642bc9e1bbabac16c1, type: 3}
   objContainer: {fileID: 1186772504}
+  attacks: []
 --- !u!114 &1181093671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2968,7 +2973,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -262, y: -197}
+  m_AnchoredPosition: {x: -384, y: -207}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1186772505
@@ -3616,7 +3621,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1535559042}
   - component: {fileID: 1535559044}
-  - component: {fileID: 1535559043}
   m_Layer: 0
   m_Name: SEDisplayUI
   m_TagString: Untagged
@@ -3638,25 +3642,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1434897402}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1156, y: 332}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 369, y: -442}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1535559043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1535559041}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &1535559044
 MonoBehaviour:
   m_ObjectHideFlags: 0

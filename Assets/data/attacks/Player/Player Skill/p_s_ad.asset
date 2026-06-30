@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   cooldown: 8
   projectilePrefab: {fileID: 1131671040950222573, guid: 7fab7e39a38b7e748b6c414134e1725f, type: 3}
+  pd: {fileID: 11400000, guid: aca44a99984699548a4b77dd447bde3a, type: 2}
   pattern: 0
   spawnDelay: 0
   spawnDistance: 3
@@ -37,6 +38,7 @@ MonoBehaviour:
   healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
+  basedOnDmgDealt: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
   healthGainOnHit: 0

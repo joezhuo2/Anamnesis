@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   cooldown: 3
   projectilePrefab: {fileID: 1912948799897464993, guid: 44a0efc95ef6c52449bcf113755f7076, type: 3}
+  pd: {fileID: 11400000, guid: 325ade79064916d47a5187028e39292e, type: 2}
   pattern: 1
   spawnDelay: 0
   spawnDistance: 0
   fixedDistance: 0
   animationLength: 0.5
-  projectileCount: 12
-  randomCount: 6
+  projectileCount: 4
+  randomCount: 2
   spread: 30
   randomSpread: 15
   minDelay: 0.1

@@ -33,4 +33,5 @@ MonoBehaviour:
   additionalFollowsMouse: 0
   effect: {fileID: 0}
   selfApply: 0
-  effectChance: 1
+  applyCondition: 0
+  effectChance: 0

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea1569ed7f469a845877a417902db475, type: 3}
+  m_Name: SoulRendPU
+  m_EditorClassIdentifier: Assembly-CSharp::SoulRendPU
+  conditions: 02000000
+  chance: 100
+  delay: 0
+  projectilePrefab: {fileID: 1263769298681028274, guid: 98c7f7115b09b5f478cac8b052988900, type: 3}
+  soulRend: {fileID: 11400000, guid: 3adfa3f51232eed4b853abcfa1901ef1, type: 2}

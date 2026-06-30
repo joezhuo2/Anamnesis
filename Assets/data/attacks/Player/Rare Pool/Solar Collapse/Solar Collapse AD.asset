@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   cooldown: 8
   projectilePrefab: {fileID: 2201037258136207567, guid: d8e9deb5a2d66e847b21745e96ece005, type: 3}
+  pd: {fileID: 11400000, guid: 2de21f5dfb7f6734991d493f71c084f9, type: 2}
   pattern: 0
   spawnDelay: 0
   spawnDistance: 2
@@ -31,8 +32,8 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 80
-  staminaCostPct: 50
+  staminaCost: 0
+  staminaCostPct: 90
   healthCost: 0
   healthCostPct: 0
   manaCost: 0

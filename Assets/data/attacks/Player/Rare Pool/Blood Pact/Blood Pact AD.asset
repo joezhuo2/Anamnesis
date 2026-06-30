@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   cooldown: 1
   projectilePrefab: {fileID: 9179472077719303980, guid: f02d1ae2865471a45b42b03c12b49b25, type: 3}
+  pd: {fileID: 11400000, guid: ed3fb9658ca516e4ba945b1bd2d95ae8, type: 2}
   pattern: 0
   spawnDelay: 0
   spawnDistance: 0.5
