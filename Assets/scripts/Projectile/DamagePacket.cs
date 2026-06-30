@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DamageType { Physical, Spell, True }
+public enum DamageType { Physical, Spell, DoT, True }
 
 public struct DamageInstance
 {
@@ -19,6 +19,14 @@ public struct DamageInstance
 public class DamagePacket
 {
     public List<DamageInstance> instances = new();
-    public void AddInstance(DamageType type, float amount, bool isCrit) 
+    public void AddInstance(DamageType type, float amount, bool isCrit)
         => instances.Add(new DamageInstance(type, amount, isCrit));
+
+    public float GetTotalDamage()
+    {
+        float total = 0f;
+        foreach (var i in instances)
+            total += i.amount;
+        return total;
+    }
 }

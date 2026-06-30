@@ -38,6 +38,7 @@ public class AttackData : ScriptableObject
     public float manaCostPct;
 
     [Header("Resource gains on hit (Player Only)")]
+    public bool basedOnDmgDealt = true;
     public float staminaGainOnHit;
     public float staminaPctGainOnHit;
     public float healthGainOnHit;
