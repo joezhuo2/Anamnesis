@@ -22,10 +22,12 @@ public class ProjectileData : ScriptableObject
     public float rotationOffset;
     public float angleOverride;
     public bool useTrueAngle;
+    public bool bypassIFrames;
 
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
     [Range(0, 1)] public float additionalChance = 0;
+    public bool addAttackRequiresHit = true;
     public bool additionalFollowsMouse = false;
     public float? distFromCenter = 0f; // distance from location where projectile splits (must be positive to work)
 
