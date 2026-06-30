@@ -6,10 +6,17 @@ public abstract class StatusEffect : ScriptableObject
     [HideInInspector] public float currentTime;
     public float duration;
     [Tooltip("How often effect triggers")] public float tickInterval;
-    [HideInInspector] public GameObject target;
-    [HideInInspector] public GameObject source;
+
+    [Header("UI")]
+    public Sprite icon;
+    public string effName;
+    public string desc;
+
     [Header("Stacking")]
     public int maxStacks = 1;
+
+    [HideInInspector] public GameObject target;
+    [HideInInspector] public GameObject source;
     [HideInInspector] public int currentStacks = 0;
 
     public virtual void OnTick() {}

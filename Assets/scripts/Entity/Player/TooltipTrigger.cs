@@ -3,12 +3,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TooltipType { Attack, Resources }
+public enum TooltipType { Attack, Resources, StatusEffect }
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
     private PlayerStats cps;
     private EntityStatManager cesm;
+    private StatusEffect cse;
     private TooltipType tooltipType;
 
     public void SetupTooltipData(AttackData ad, PlayerStats ps, EntityStatManager esm)
@@ -23,16 +24,33 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         tooltipType = TooltipType.Resources;
         cps = ps;
     }
+    public void SetupTooltipData(StatusEffect se, PlayerStats ps, EntityStatManager esm)
+    {
+        tooltipType = TooltipType.StatusEffect;
+        cse = se;
+        cps = ps;
+        cesm = esm;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         switch (tooltipType)
         {
             case TooltipType.Attack: ShowAttackTooltip(); break;
             case TooltipType.Resources: ShowResourcesTooltip(); break;
+            case TooltipType.StatusEffect: ShowStatusEffectTooltip(); break;
             default: break;
         }
     }
-    public void ShowResourcesTooltip()
+    private void ShowStatusEffectTooltip()
+    {
+        List<string> lines = new();
+        if (!string.IsNullOrEmpty(cse.desc)) lines.Add(cse.desc);
+
+        string name = cse.effName + $"[{cse.currentStacks}]";
+
+        TooltipUI.Instance.ShowTooltip(name, string.Join("\n", lines));
+    }
+    private void ShowResourcesTooltip()
     {
         float staminaPerSecond = cps.EffStReg / 5f;
         float healthPerSecond = cps.EffHpReg / 5f;
@@ -55,7 +73,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         TooltipUI.Instance.ShowTooltip("Resources", string.Join("\n", lines));
     }
-    public void ShowAttackTooltip()
+    private void ShowAttackTooltip()
     {
         if (cad == null || cps == null || tooltipType != TooltipType.Attack) return;
 

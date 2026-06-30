@@ -26,8 +26,10 @@ MonoBehaviour:
   rotationOffset: 90
   angleOverride: 0
   useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effect: {fileID: 0}
   selfApply: 0

@@ -24,9 +24,9 @@ public class PlayerAttackHandler : MonoBehaviour
     private EntityHealth ph;
     private PlayerMana pm;
     private EntityStatManager esm;
-    [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
-    private Dictionary<AttackType, GameObject> spawnedUIElements = new Dictionary<AttackType, GameObject>();
+    private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
     private PlayerUpgradeManager pum;
+    [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
 
     private void Start()
     {

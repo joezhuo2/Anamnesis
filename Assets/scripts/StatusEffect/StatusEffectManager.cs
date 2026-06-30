@@ -1,23 +1,23 @@
 using System.Collections.Generic;
-using System.ComponentModel.Design;
+using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(EntityStatManager))]
 public class StatusEffectManager : MonoBehaviour
 {
+    public GameObject displayPrefab = null;
+    public Transform displayContainer = null;
+
     [HideInInspector] public readonly List<StatusEffect> activeEffects = new();
+    private EntityStatManager cesm;
 
-
+    private void Awake()
+    {
+        cesm = GetComponent<EntityStatManager>();
+    }
     public List<T> GetActiveEffectsOfType<T>() where T : StatusEffect
     {
-        List<T> found = new();
-        foreach (var e in activeEffects)
-        {
-            if (e is T effect)
-            {
-                found.Add(effect);
-            }
-        }
-        return found;
+        return activeEffects.OfType<T>().ToList();
     }
     public void AddEffect(StatusEffect se, GameObject source)
     {
@@ -45,9 +45,10 @@ public class StatusEffectManager : MonoBehaviour
 
             activeEffects.Add(runtimeEffect);
             runtimeEffect.OnApply();
+
+            CreateDisplayUI(runtimeEffect);
         }
     }
-
     private void Update()
     {
         float dt = Time.deltaTime;
@@ -73,6 +74,17 @@ public class StatusEffectManager : MonoBehaviour
                 activeEffects.RemoveAt(i);
                 Destroy(e);
             }
+        }
+    }
+    private void CreateDisplayUI(StatusEffect se)
+    {
+        if (displayPrefab == null || displayContainer == null) return;
+        GameObject uiObj = Instantiate(displayPrefab, displayContainer);
+
+        if (uiObj.TryGetComponent<StatusEffectCooldownUI>(out var secui))
+        {
+            PlayerStats ps = (cesm != null && cesm.s is PlayerStats) ? cesm.s as PlayerStats : null;
+            secui.Setup(se, ps, cesm);
         }
     }
 }
