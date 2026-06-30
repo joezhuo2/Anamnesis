@@ -146,17 +146,20 @@ public class WaveManager : MonoBehaviour
             activeBossBar = null;
         }
 
+        int actualWave = currentWaveIndex + currentSequence.waveOffset;
+
+        if (actualWave % 5 == 0)
+            rerolls++;
+
         UpdateRerollUI();
 
-        if (currentWaveIndex % 10 == 0)
+        if (actualWave % 10 == 0)
         {
-            rerolls++;
             type = RewardType.Treasure;
             GenerateTreasurePool();
         }
-        else if (currentWaveIndex % 5 == 0)
+        else if (actualWave % 5 == 0)
         {
-            rerolls++;
             type = RewardType.Rare;
             GenerateRarePool();
         }
