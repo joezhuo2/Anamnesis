@@ -21,7 +21,7 @@ public static class DamageCalculator
             float dmgMult = 1f + (esm.s.damagePct * 0.01f);
             float finalMult = mult + (addMultPct * 0.01f);
 
-            float damage = esm.GetStat(pd.scalingStat) * dmgMult * finalMult * TypeBonus(type, esm.s);
+            float damage = esm.GetStat(pd.scalingStat) * dmgMult * finalMult * TypeBonus(type, esm.s) * AttackTypeBonus(pd.mainAttack.type, esm.s);
             var (finalDamage, isCrit) = RollCrits(damage, esm.s);
             dp.AddInstance(type, finalDamage, isCrit);
         }
@@ -36,6 +36,13 @@ public static class DamageCalculator
     {
         DamageType.Physical => 1f + (stats.physicalDmgPct * 0.01f),
         DamageType.Spell => 1f + (stats.spellDmgPct * 0.01f),
+        _ => 1f
+    };
+    private static float AttackTypeBonus(AttackType type, EntityStats stats) => type switch
+    {
+        AttackType.Basic => 1f + (stats.basicDmgPct * 0.01f),
+        AttackType.Skill => 1f + (stats.skillDmgPct * 0.01f),
+        AttackType.Ultimate => 1f + (stats.ultDmgPct * 0.01f),
         _ => 1f
     };
 

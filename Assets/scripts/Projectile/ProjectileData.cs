@@ -31,7 +31,7 @@ public class ProjectileData : ScriptableObject
     [Range(0, 1)] public float additionalChance = 0;
     public bool addAttackRequiresHit = true;
     public bool additionalFollowsMouse = false;
-    public float? distFromCenter = 0f; // distance from location where projectile splits (must be positive to work)
+    [Tooltip("Distance from location where projectile splits (must be positive to work)")] public float? distFromCenter = 0f;
 
     [Header("Effects")]
     public StatusEffect effect;

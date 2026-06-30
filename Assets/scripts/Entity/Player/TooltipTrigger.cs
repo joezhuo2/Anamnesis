@@ -86,8 +86,9 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         float cooldown = cad.cooldown * Mathf.Clamp(1f - (cps.attackSpeedPct * 0.01f), 0.1f, 10f);
 
         float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
-        if (cad.projectilePrefab.TryGetComponent<Projectile>(out var p) && p.pd is ProjectileData pd)
+        if (cad.pd != null)
         {
+            var pd = cad.pd;
             basePhysDmg = (pd.physicalMult + (cps.addPhysDmgPct * 0.01f)) * cesm.GetStat(pd.scalingStat) * (1f + (cps.physicalDmgPct * 0.01f)) * (1f + (cps.damagePct * 0.01f));
             baseSplDmg = (pd.spellMult + (cps.addSplDmgPct * 0.01f)) * cesm.GetStat(pd.scalingStat) * (1f + (cps.spellDmgPct * 0.01f)) * (1f + (cps.damagePct * 0.01f));
             trueDmg = pd.trueMult * cesm.GetStat(pd.scalingStat) * (1f + (cps.damagePct * 0.01f));

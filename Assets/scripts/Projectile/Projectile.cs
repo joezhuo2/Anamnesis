@@ -17,12 +17,7 @@ public class Projectile : MonoBehaviour {
     private Rigidbody2D rb;
     private void Awake()
     {
-        if (pd != null) pd = Instantiate(pd);
         hit = new();
-    }
-    private void OnDestroy()
-    {
-        if (pd != null) Destroy(pd);
     }
     private void Start()
     {
@@ -106,7 +101,7 @@ public class Projectile : MonoBehaviour {
 
         Vector2? addDir = pd.additionalFollowsMouse ? null : dir;
 
-        spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack.projectilePrefab, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance));
+        spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance));
     }
     private void HandleSize()
     {

@@ -7,6 +7,7 @@ public class AttackData : ScriptableObject
     [Header("Basic")]
     public float cooldown;
     public GameObject projectilePrefab;
+    public ProjectileData pd;
     public ProjectilePattern pattern;
     public float spawnDelay;
     public float spawnDistance;
@@ -50,4 +51,30 @@ public class AttackData : ScriptableObject
     public AttackType type;
     public Sprite icon;
     public string displayName;
+
+    public void InitializeRuntimeCopy()
+    {
+        if (pd != null)
+        {
+            pd = Instantiate(pd);
+            pd.mainAttack = this;
+        }
+        if (nextAttack != null)
+        {
+            nextAttack = Instantiate(nextAttack);
+            nextAttack.InitializeRuntimeCopy();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (pd != null)
+        {
+            Destroy(pd);
+        }
+        if (nextAttack != null)
+        {
+            Destroy(nextAttack);
+        }
+    }
 }

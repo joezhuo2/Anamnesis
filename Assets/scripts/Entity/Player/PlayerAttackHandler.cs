@@ -14,7 +14,7 @@ public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 public class PlayerAttackHandler : MonoBehaviour
 {
     private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
-    public List<AttackData> attacks = new();
+    public List<AttackData> starting = new();
     public GameObject cooldownPrefab;
     public Transform objContainer;
 
@@ -24,8 +24,9 @@ public class PlayerAttackHandler : MonoBehaviour
     private EntityHealth ph;
     private PlayerMana pm;
     private EntityStatManager esm;
-    private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
     private PlayerUpgradeManager pum;
+    private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
+    [HideInInspector] public List<AttackData> attacks = new();
     [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
 
     private void Start()
@@ -38,7 +39,28 @@ public class PlayerAttackHandler : MonoBehaviour
         pm = GetComponent<PlayerMana>();
         pum = GetComponent<PlayerUpgradeManager>();
 
-        SpawnAttackButtons();
+        for (int i = 0; i < starting.Count; i++)
+            UpdateAttack(starting[i].type, starting[i]);
+    }
+    private void OnDestroy()
+    {
+        if (attacks != null)
+        {
+            foreach (var attack in attacks)
+            {
+                if (attack != null) Destroy(attack);
+            }
+            attacks.Clear();
+        }
+    }
+    public AttackData FindAttackOfType(AttackType type)
+    {
+        for (int i = 0; i < attacks.Count; i++)
+        {
+            if (attacks[i].type == type)
+                return attacks[i];
+        }
+        return null;
     }
     private void SpawnAttackButtons()
     {
@@ -78,7 +100,15 @@ public class PlayerAttackHandler : MonoBehaviour
 
         ProjectileSpawner ps = ProjectileSpawner.Instance;
         if (ps != null)
-            StartCoroutine(ps.SpawnFromPattern(selected.projectilePrefab, gameObject, transform.position));
+            StartCoroutine(ps.SpawnFromPattern(selected, gameObject, transform.position));
+
+        switch (type)
+        {
+            case AttackType.Basic: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnBasicAttack); break;
+            case AttackType.Skill: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnSkillAttack); break;
+            case AttackType.Ultimate: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnUltAttack); break;
+            default: break;
+        }
 
         int attackIndex = type switch
         {
@@ -124,10 +154,15 @@ public class PlayerAttackHandler : MonoBehaviour
         if (newAttack == null) return;
         AttackData current = attacks.Find(atk => atk.type == type);
 
-        if (current != null) attacks.Remove(current);
+        if (current != null)
+        {
+            attacks.Remove(current);
+            Destroy(current);
+        }
 
         AttackData runtimeAttackCopy = Instantiate(newAttack);
         runtimeAttackCopy.type = type;
+        runtimeAttackCopy.InitializeRuntimeCopy();
 
         attacks.Add(runtimeAttackCopy);
 
