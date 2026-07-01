@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48dcafcce91996a43ae2c8a1ab113707, type: 3}
-  m_Name: Poison 2 0.5 1 35 Atk
+  m_Name: Poison 2 0.5 1 20 Atk
   m_EditorClassIdentifier: Assembly-CSharp::DoT
   currentTime: 0
   duration: 2
@@ -22,7 +22,7 @@ MonoBehaviour:
   target: {fileID: 0}
   source: {fileID: 0}
   currentStacks: 0
-  dpt: 35
+  dpt: 20
   scalingStat: 31
   indicatorColor: {r: 0, g: 0.509434, b: 0.096610114, a: 1}
   canCrit: 0

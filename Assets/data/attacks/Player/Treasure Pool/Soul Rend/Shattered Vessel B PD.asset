@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Shattered Vessel B PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: b98685f093b87f84a84f1d5e9af955dd, type: 2}
-  speed: 12
+  speed: 16
   lifetime: 0.5
-  numPierce: 3
+  numPierce: 4
   size: 1.5
   physicalMult: 2.4
   spellMult: 0.6

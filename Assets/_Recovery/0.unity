@@ -1490,10 +1490,6 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Soul Rend
     desc: Basic and Skill grant Soul Rend on hit
-  - upgrade: {fileID: 11400000, guid: 40cb68c5693492e4f85d3ab4c17534c3, type: 2}
-    icon: {fileID: 0}
-    upgradeName: Reminiscence
-    desc: Attacks may additionally perform an available attack at no cost. (2s cooldown)
   rarityData:
   - rarity: 0
     rarityName: Common
@@ -2731,7 +2727,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5d0b824db3c4345a977e471711e53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUpgradeManager
-  activeUpgrades: []
+  activeUpgrades:
+  - {fileID: 11400000, guid: 40cb68c5693492e4f85d3ab4c17534c3, type: 2}
 --- !u!114 &1181093668
 MonoBehaviour:
   m_ObjectHideFlags: 0

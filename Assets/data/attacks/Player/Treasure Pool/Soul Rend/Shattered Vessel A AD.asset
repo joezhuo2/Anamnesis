@@ -17,7 +17,7 @@ MonoBehaviour:
   pd: {fileID: 11400000, guid: 437a1bacfb3d2cb4195f2354e61ed096, type: 2}
   pattern: 0
   spawnDelay: 0
-  spawnDistance: 1
+  spawnDistance: 3
   fixedDistance: 0
   animationLength: 0.5
   projectileCount: 1

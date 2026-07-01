@@ -28,8 +28,8 @@ MonoBehaviour:
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
-  currentHp: 70
-  maxHp: 70
+  currentHp: 60
+  maxHp: 60
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   physicalRes: 5
   spellRes: 5
   hurtTime: 0.3
-  moveSpeed: 0.9
+  moveSpeed: 0.85
   moveSpeedPct: 0
   currentStamina: 0
   maxStamina: 0
