@@ -131,9 +131,9 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleDirection()
     {
-        // if (ownerObj.CompareTag("Enemy") || dir != Vector2.zero) return;
+        if (ownerObj == null) return;
 
-        if (ownerObj.CompareTag("Player"))
+        if (ownerObj.CompareTag("Player") && dir == Vector2.zero)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
             mouseWorldPos.z = 0f;

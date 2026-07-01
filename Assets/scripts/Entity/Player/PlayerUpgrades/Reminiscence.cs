@@ -9,7 +9,10 @@ public class Reminiscence : PlayerUpgrade
         if (player.TryGetComponent(out PlayerAttackHandler pah))
         {
             List<AttackType> availableTypes = pah.attacks.ConvertAll(atk => atk.type);
-            pah.PerformAttack(availableTypes[Random.Range(0, availableTypes.Count)], true, true);
+            if (availableTypes.Count == 0) return;
+
+            AttackType chosen = availableTypes[Random.Range(0, availableTypes.Count)];
+            pah.PerformAttack(chosen, true, true, true);
         }
     }
 }

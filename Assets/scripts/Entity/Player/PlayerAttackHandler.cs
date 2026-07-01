@@ -83,7 +83,7 @@ public class PlayerAttackHandler : MonoBehaviour
             b.onClick.AddListener(() => PerformAttack(attackType));
         }
     }
-    public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false)
+    public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
     {
         if (p == null || !p.isAlive || !p.canAttack || Time.timeScale == 0f) return;
 
@@ -99,21 +99,14 @@ public class PlayerAttackHandler : MonoBehaviour
 
         if (!noCost && !HandleStatChanges(selected)) return;
 
-        lastAttackTimes[type] = Time.time;
+        if (!bypassCooldown) lastAttackTimes[type] = Time.time;
 
         ProjectileSpawner ps = ProjectileSpawner.Instance;
         if (ps != null)
             StartCoroutine(ps.SpawnFromPattern(selected, gameObject, transform.position));
 
-        pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);
-
-        switch (type)
-        {
-            case AttackType.Basic: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnBasicAttack); break;
-            case AttackType.Skill: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnSkillAttack); break;
-            case AttackType.Ultimate: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnUltAttack); break;
-            default: break;
-        }
+        if (triggerUpgrades)
+            TriggerUpgradesOnAttack(type);
 
         int attackIndex = type switch
         {
@@ -126,6 +119,18 @@ public class PlayerAttackHandler : MonoBehaviour
         a.SetInteger(AttackIndexHash, attackIndex);
         a.speed = Mathf.Max(0.1f, 1f + (p.attackSpeedPct * 0.01f));
         StartCoroutine(ResetAttackType(selected.animationLength));
+    }
+    private void TriggerUpgradesOnAttack(AttackType type)
+    {
+        pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);
+
+        switch (type)
+        {
+            case AttackType.Basic: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnBasicAttack); break;
+            case AttackType.Skill: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnSkillAttack); break;
+            case AttackType.Ultimate: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnUltAttack); break;
+            default: break;
+        }
     }
     public IEnumerator ResetAttackType(float delay)
     {
