@@ -84,6 +84,18 @@ public class StatusEffectManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         RemoveStacks<T>(int.MaxValue);
     }
+    public void ClearAllEffects()
+    {
+        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        {
+            StatusEffect effect = activeEffects[i];
+            if (effect == null) continue;
+
+            effect.OnExpire();
+            activeEffects.RemoveAt(i);
+            Destroy(effect);
+        }
+    }
     private void Update()
     {
         float dt = Time.deltaTime;

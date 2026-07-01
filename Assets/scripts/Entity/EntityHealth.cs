@@ -206,6 +206,9 @@ public class EntityHealth : MonoBehaviour
     {
         es.isAlive = false;
 
+        if (TryGetComponent<StatusEffectManager>(out var sem))
+            sem.ClearAllEffects();
+
         if (healthBarInstance != null && healthBarTextInstance != null)
         {
             Destroy(healthBarInstance.gameObject);
