@@ -15,11 +15,11 @@ MonoBehaviour:
   mainAttack: {fileID: 11400000, guid: bd91f00154d86a04397a66652a8a79fa, type: 2}
   speed: 0
   lifetime: 0.5
-  numPierce: 16
+  numPierce: 12
   size: 3.5
   physicalMult: 0
   spellMult: 0
-  trueMult: 0.3
+  trueMult: 0.4
   scalingStat: 7
   timeBeforeSameEnemy: 0
   followDistance: 0
@@ -29,7 +29,10 @@ MonoBehaviour:
   bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 11400000, guid: 3d4433cf49e57f246bc881408e91cf17, type: 2}
-  selfApply: 0
-  effectChance: 1
+  effects:
+  - effect: {fileID: 11400000, guid: 3d4433cf49e57f246bc881408e91cf17, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 1

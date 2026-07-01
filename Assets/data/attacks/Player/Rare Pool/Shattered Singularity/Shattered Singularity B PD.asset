@@ -17,8 +17,8 @@ MonoBehaviour:
   lifetime: 0.75
   numPierce: 8
   size: 2.5
-  physicalMult: 2.4
-  spellMult: 3.8
+  physicalMult: 1.8
+  spellMult: 5.2
   trueMult: 0
   scalingStat: 31
   timeBeforeSameEnemy: 0
@@ -26,9 +26,9 @@ MonoBehaviour:
   rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
-  selfApply: 0
-  effectChance: 0
+  effects: []

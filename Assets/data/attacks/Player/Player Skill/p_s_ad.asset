@@ -43,8 +43,8 @@ MonoBehaviour:
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 3
-  manaPctGainOnHit: 2
+  manaGainOnHit: 0
+  manaPctGainOnHit: 8
   type: 1
   icon: {fileID: 196999898347057192, guid: 4511473431829134fa55de9598a0d9c5, type: 3}
   displayName: Cyclone Cleave

@@ -17,7 +17,7 @@ MonoBehaviour:
   lifetime: 1.25
   numPierce: 1
   size: 1.5
-  physicalMult: 7.8
+  physicalMult: 6.2
   spellMult: 1.3
   trueMult: 0
   scalingStat: 31
@@ -31,7 +31,4 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
-  selfApply: 0
-  applyCondition: 0
-  effectChance: 0
+  effects: []

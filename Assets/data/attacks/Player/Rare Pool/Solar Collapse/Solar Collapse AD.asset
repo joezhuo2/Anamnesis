@@ -40,10 +40,10 @@ MonoBehaviour:
   manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 0
-  staminaPctGainOnHit: 2
+  staminaPctGainOnHit: 3
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 3
+  manaGainOnHit: 0
   manaPctGainOnHit: 0
   type: 2
   icon: {fileID: 5455728258843455495, guid: 3c5ff77736f775047864cffda692080c, type: 3}

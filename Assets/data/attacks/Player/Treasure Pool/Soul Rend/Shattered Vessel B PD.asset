@@ -15,20 +15,20 @@ MonoBehaviour:
   mainAttack: {fileID: 11400000, guid: b98685f093b87f84a84f1d5e9af955dd, type: 2}
   speed: 12
   lifetime: 0.5
-  numPierce: 8
+  numPierce: 3
   size: 1.5
   physicalMult: 2.4
   spellMult: 0.6
   trueMult: 0
   scalingStat: 31
   timeBeforeSameEnemy: 0
-  followDistance: 3
+  followDistance: 0
   rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
-  selfApply: 0
-  effectChance: 0
+  effects: []

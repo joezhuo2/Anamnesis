@@ -19,16 +19,20 @@ MonoBehaviour:
   size: 3
   physicalMult: 3.4
   spellMult: 0
-  trueMult: 0.3
+  trueMult: 0.25
   scalingStat: 31
   timeBeforeSameEnemy: 0.5
   followDistance: 0
   rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 11400000, guid: c03fbc26749db444e85496d5b6d9879f, type: 2}
-  selfApply: 0
-  effectChance: 0.3
+  effects:
+  - effect: {fileID: 11400000, guid: c03fbc26749db444e85496d5b6d9879f, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 0.4

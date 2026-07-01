@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Soul Rend
   m_EditorClassIdentifier: Assembly-CSharp::SoulRend
   currentTime: 0
-  duration: 2
+  duration: 1.5
   tickInterval: 0
   icon: {fileID: 0}
   effName: Soul Rend
@@ -28,7 +28,9 @@ MonoBehaviour:
 
     [25] +10% CritDmg
 
-    [50] +50% Ult Dmg'
+    [50] +50% Ult Dmg
+
+    [50] Infused Ultimate'
   maxStacks: 100
   target: {fileID: 0}
   source: {fileID: 0}
