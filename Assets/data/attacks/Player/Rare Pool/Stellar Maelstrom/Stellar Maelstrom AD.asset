@@ -20,8 +20,8 @@ MonoBehaviour:
   spawnDistance: 0
   fixedDistance: 0
   animationLength: 0.5
-  projectileCount: 12
-  randomCount: 8
+  projectileCount: 14
+  randomCount: 10
   spread: 30
   randomSpread: 15
   minDelay: 0.15
@@ -39,11 +39,11 @@ MonoBehaviour:
   manaCost: 18
   manaCostPct: 52
   basedOnDmgDealt: 1
-  staminaGainOnHit: 6
+  staminaGainOnHit: 3
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 4
+  manaGainOnHit: 2
   manaPctGainOnHit: 0
   type: 1
   icon: {fileID: 6870509921151519667, guid: ab5d336405cf45d4fa62ff93137977c1, type: 3}

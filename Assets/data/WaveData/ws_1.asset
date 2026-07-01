@@ -21,8 +21,8 @@ MonoBehaviour:
     enemyLevel: 1
     minSpawnFrequency: 0
     maxSpawnFrequency: 0
-    minRewardChoices: 2
-    maxRewardChoices: 5
+    minRewardChoices: 5
+    maxRewardChoices: 7
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}

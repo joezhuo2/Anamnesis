@@ -25,20 +25,23 @@ MonoBehaviour:
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
-  currentHp: 1200
-  maxHp: 1200
-  hpPct: 50
+  basicDmgPct: 0
+  skillDmgPct: 0
+  ultDmgPct: 0
+  currentHp: 1600
+  maxHp: 1600
+  hpPct: 100
   hpRegen: 20
   hpRegPct: 0
-  armor: 0
-  armorPct: 0
-  damageRes: 0
+  armor: 300
+  armorPct: 50
+  damageRes: 30
   dodgeChance: 0
   dodgeResPct: 0
-  physicalRes: 0
-  spellRes: 0
+  physicalRes: 20
+  spellRes: 10
   hurtTime: 0.3
-  moveSpeed: 0.8
+  moveSpeed: 0.6
   moveSpeedPct: 0
   currentStamina: 0
   maxStamina: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Crab B AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 4
+  cooldown: 6
   projectilePrefab: {fileID: 2770382610715656428, guid: adbf4a74426d07d48a5179657cb3fe39, type: 3}
   pd: {fileID: 11400000, guid: 3a92fc9df5a7b174d9c594ab87d7c5ca, type: 2}
   pattern: 0

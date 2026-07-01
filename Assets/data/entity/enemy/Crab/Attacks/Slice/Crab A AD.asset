@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Crab A AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 3
+  cooldown: 4
   projectilePrefab: {fileID: 5719996494618084958, guid: b9a1c4e8c42cf6b46a19f2167499ca01, type: 3}
   pd: {fileID: 11400000, guid: 3cf10ffb483df3545a8932c6b350b003, type: 2}
   pattern: 0
   spawnDelay: 0.25
-  spawnDistance: 1.5
+  spawnDistance: 1.25
   fixedDistance: 1
   animationLength: 0.5
   projectileCount: 1

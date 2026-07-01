@@ -22,7 +22,7 @@ MonoBehaviour:
     minSpawnFrequency: 2
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -34,7 +34,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -70,7 +70,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -82,7 +82,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -118,7 +118,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -154,7 +154,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -166,7 +166,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -178,7 +178,7 @@ MonoBehaviour:
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 0}
@@ -190,9 +190,9 @@ MonoBehaviour:
     minSpawnFrequency: 0
     maxSpawnFrequency: 0
     minRewardChoices: 2
-    maxRewardChoices: 5
+    maxRewardChoices: 6
     rewardQualityBoost: 0
     Type: 0
     bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
-    bossBarName: '[Lv. 30] Stella'
+    bossBarName: '[Lv. 30] Jellyfish'
   waveOffset: 15
