@@ -29,7 +29,10 @@ MonoBehaviour:
   bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
-  selfApply: 0
-  effectChance: 0
+  effects:
+  - effect: {fileID: 11400000, guid: 224b6ee68316de34bbc972db77de2145, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 0.5

@@ -106,7 +106,7 @@ public class StatusEffectManager : MonoBehaviour
 
             if (e.currentTime > e.duration)
             {
-                if (e.currentStacks > 0)
+                if (e.currentStacks > 1)
                 {
                     e.currentStacks--;
                     e.currentTime = 0f;

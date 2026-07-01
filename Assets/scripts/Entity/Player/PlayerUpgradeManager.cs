@@ -18,10 +18,17 @@ public class PlayerUpgradeManager : MonoBehaviour
     }
     public bool HasUpgradeOfType<T>() where T : PlayerUpgrade
     {
-        foreach (var u in activeUpgrades)
-            if (u is T) return true;
+        for (int i = 0; i < activeUpgrades.Count; i++)
+            if (activeUpgrades[i] is T) return true;
         return false;
     }
+    public PlayerUpgrade GetPlayerUpgradeOfType<T>() where T : PlayerUpgrade
+    {
+        for (int i = 0; i < activeUpgrades.Count; i++)
+            if (activeUpgrades[i] is T) return activeUpgrades[i];
+        return null;
+    }
+
     public void AddUpgrade(PlayerUpgrade pu)
     {
         if (pu == null || activeUpgrades.Contains(pu)) return;

@@ -17,27 +17,27 @@ MonoBehaviour:
   tickInterval: 0
   icon: {fileID: 0}
   effName: Soul Rend
-  desc: '[1] +1% Attack
+  desc: '[1] +0.5% Attack
 
-    [5] +2 DefShred
+    [5] +1 DefShred
 
     [10] + 1% ResPen
 
-    [20] +6%
+    [20] +5%
     PhysDmg
 
-    [25] +10% CritDmg
+    [25] +8% CritDmg
 
-    [50] +50% Ult Dmg
+    [50] +100% Ult Dmg
 
     [50] Infused Ultimate'
   maxStacks: 100
   target: {fileID: 0}
   source: {fileID: 0}
   currentStacks: 0
-  addPerStack: 1
+  addPerStack: 0.5
   defShredAmt: 2
   respenAmt: 1
-  physDmgPct: 6
-  critDmgAmt: 10
-  ultDmgAmt: 50
+  physDmgPct: 5
+  critDmgAmt: 8
+  ultDmgAmt: 100
