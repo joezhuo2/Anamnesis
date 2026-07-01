@@ -12,9 +12,11 @@ public class Projectile : MonoBehaviour {
     [HideInInspector] public GameObject ownerObj;
     [HideInInspector] public Vector2 dir;
     [HideInInspector] public int pierced;
+
     private List<GameObject> hit;
     private Transform followTarget;
     private Rigidbody2D rb;
+
     private void Awake()
     {
         hit = new();
@@ -27,8 +29,17 @@ public class Projectile : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         HandleMovement(true);
 
-        if (pd.effect != null && pd.applyCondition == ApplyCondition.OnCast && pd.selfApply)
-            ApplyEffect();
+        // if (pd.effect != null && pd.applyCondition == ApplyCondition.OnCast && pd.selfApply)
+        //     ApplyEffect();
+
+        if (pd.effects != null && pd.effects.Count > 0)
+        {
+            foreach (var ed in pd.effects)
+            {
+                if (ed.effect != null && ed.applyCondition == ApplyCondition.OnCast && ed.selfApply)
+                    ApplyEffect(null, ed);
+            }
+        }
 
         StartCoroutine(DestroyProjectileAfterDelay(pd.lifetime));
     }
@@ -76,10 +87,16 @@ public class Projectile : MonoBehaviour {
         if (pd.additionalChance > 0f && pd.additionalAttack != null)
             HandleAdditionalSpawns();
 
-        if (pd.effect != null && pd.applyCondition == ApplyCondition.OnHit)
+        if (pd.effects != null && pd.effects.Count > 0)
         {
-            if (pd.selfApply) ApplyEffect();
-            else if (ownerObj != target) ApplyEffect(target);
+            foreach (var ed in pd.effects)
+            {
+                if (ed.effect != null && ed.applyCondition == ApplyCondition.OnHit)
+                {
+                    if (ed.selfApply) ApplyEffect(null, ed);
+                    else if (ownerObj != target) ApplyEffect(target, ed);
+                }
+            }
         }
     }
     private IEnumerator DestroyProjectileAfterDelay(float delay)
@@ -179,14 +196,19 @@ public class Projectile : MonoBehaviour {
         }
         return closest;
     }
-    private void ApplyEffect(GameObject target = null)
+    private void ApplyEffect(GameObject target, EffectData ed)
     {
-        if (!(Random.value <= pd.effectChance)) return;
+        if (ed.effect == null) return;
 
-        if (target == null && ownerObj.TryGetComponent<StatusEffectManager>(out var ssem))
-            ssem.AddEffect(pd.effect, ownerObj);
-        else if (target.TryGetComponent<StatusEffectManager>(out var tsem))
-            tsem.AddEffect(pd.effect, ownerObj);
+        if (target == null) target = ownerObj;
+
+        if (target.TryGetComponent<StatusEffectManager>(out var sem))
+        {
+            if (ed.chance <= 0f) return;
+
+            if (Random.value <= ed.chance)
+                sem.AddEffect(ed.effect, ownerObj);
+        }
     }
     private System.Collections.IEnumerator RemoveFromHitHistory(GameObject target, float delay)
     {

@@ -21,5 +21,4 @@ public class DoT : StatusEffect
 
         eh.ChangeHealth(-finalDmg, 0f, true, isCrit ? 1.5f : 1f, indicatorColor, true);
     }
-
 }

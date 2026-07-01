@@ -29,22 +29,24 @@ public class SoulRendPU : PlayerUpgrade
             AttackData basic = pah.FindAttackOfType(AttackType.Basic);
             AttackData skill = pah.FindAttackOfType(AttackType.Skill);
 
+            EffectData soulRendEffect = new EffectData
+            {
+                effect = soulRend,
+                selfApply = true,
+                applyCondition = ApplyCondition.OnHit,
+                chance = 1f
+            };
+
             if (basic != null && basic.pd != null)
             {
                 var bpd = basic.pd;
-                bpd.effectChance = 100f;
-                bpd.selfApply = true;
-                bpd.applyCondition = ApplyCondition.OnHit;
-                bpd.effect = soulRend;
+                bpd.effects.Add(soulRendEffect);
             }
 
             if (skill != null && skill.pd != null)
             {
                 var spd = skill.pd;
-                spd.effectChance = 100f;
-                spd.selfApply = true;
-                spd.applyCondition = ApplyCondition.OnHit;
-                spd.effect = soulRend;
+                spd.effects.Add(soulRendEffect);
             }
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum ApplyCondition { OnHit, OnCast }
@@ -34,8 +35,14 @@ public class ProjectileData : ScriptableObject
     [Tooltip("Distance from location where projectile splits (must be positive to work)")] public float? distFromCenter = 0f;
 
     [Header("Effects")]
+    public List<EffectData> effects;
+}
+
+[System.Serializable]
+public struct EffectData
+{
     public StatusEffect effect;
     public bool selfApply;
     public ApplyCondition applyCondition;
-    [Range(0, 1)] public float effectChance = 0;
+    [Range(0, 1)] public float chance;
 }
