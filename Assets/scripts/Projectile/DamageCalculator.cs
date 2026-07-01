@@ -44,13 +44,7 @@ public static class DamageCalculator
         return snapshot;
     }
 
-    public static DamagePacket BuildDamagePacket(ProjectileData pd, GameObject source)
-    {
-        ProjectileDamageSnapshot snapshot = CaptureSnapshot(pd, source);
-        return BuildDamagePacket(pd, snapshot);
-    }
-
-    public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot)
+    public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits = true)
     {
         DamagePacket dp = new();
         if (pd == null || !snapshot.isValid) return dp;
@@ -68,7 +62,7 @@ public static class DamageCalculator
             float finalMult = mult + (addMultPct * 0.01f);
 
             float damage = snapshot.scalingValue * dmgMult * finalMult * TypeBonus(type, snapshot) * AttackTypeBonus(pd.mainAttack.type, snapshot);
-            var (finalDamage, isCrit) = RollCrits(damage, snapshot);
+            var (finalDamage, isCrit) = rollCrits ? RollCrits(damage, snapshot) : (damage, false);
             dp.AddInstance(type, finalDamage, isCrit);
         }
 
@@ -90,20 +84,6 @@ public static class DamageCalculator
         AttackType.Basic => 1f + (snapshot.basicDmgPct * 0.01f),
         AttackType.Skill => 1f + (snapshot.skillDmgPct * 0.01f),
         AttackType.Ultimate => 1f + (snapshot.ultDmgPct * 0.01f),
-        _ => 1f
-    };
-
-    private static float TypeBonus(DamageType type, EntityStats stats) => type switch
-    {
-        DamageType.Physical => 1f + (stats.physicalDmgPct * 0.01f),
-        DamageType.Spell => 1f + (stats.spellDmgPct * 0.01f),
-        _ => 1f
-    };
-    private static float AttackTypeBonus(AttackType type, EntityStats stats) => type switch
-    {
-        AttackType.Basic => 1f + (stats.basicDmgPct * 0.01f),
-        AttackType.Skill => 1f + (stats.skillDmgPct * 0.01f),
-        AttackType.Ultimate => 1f + (stats.ultDmgPct * 0.01f),
         _ => 1f
     };
 

@@ -15,10 +15,14 @@ MonoBehaviour:
   currentTime: 0
   duration: 2
   tickInterval: 0.5
+  icon: {fileID: 7816579671404485219, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Bleed
+  desc: 
+  maxStacks: 5
   target: {fileID: 0}
   source: {fileID: 0}
-  maxStacks: 5
   currentStacks: 0
   dpt: 15
   scalingStat: 30
   indicatorColor: {r: 1, g: 0.4009434, b: 0.4009434, a: 1}
+  canCrit: 0

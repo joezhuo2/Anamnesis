@@ -15,9 +15,9 @@ MonoBehaviour:
   currentTime: 0
   duration: 5
   tickInterval: 0
-  icon: {fileID: 0}
-  effName: 
-  desc: 
+  icon: {fileID: 6123212246031883711, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Slow
+  desc: Reduces speed by 40%.
   maxStacks: 1
   target: {fileID: 0}
   source: {fileID: 0}

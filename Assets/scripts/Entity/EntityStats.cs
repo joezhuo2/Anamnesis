@@ -42,7 +42,8 @@ public enum StatType
     globalDoTCanCrit,
     UltDmgPct,
     SkillDmgPct,
-    BasicDmgPct
+    BasicDmgPct,
+    EffectRes,
 }
 
 [CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
@@ -86,6 +87,7 @@ public class EntityStats : ScriptableObject
     [Range(-100f, 100f)] public float physicalRes = 0f;
     [Range(-100f, 100f)] public float spellRes = 0f;
     public float hurtTime = 0.3f;
+    public float effectRes = 0f;
     // effectRes, critRes, healingPct
 
     [Header("Movement")]

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WaveType { Normal, Boss, Endless }
-
 [CreateAssetMenu(fileName = "ws", menuName = "Data/Wave Sequence")]
 public class WaveSequence : ScriptableObject
 {
@@ -23,8 +21,7 @@ public class WaveData
     public float maxSpawnFrequency;
     public int minRewardChoices;
     public int maxRewardChoices;
-    public float rewardQualityBoost;
-    public WaveType Type;
     public GameObject bossBarPrefab;
     public string bossBarName;
+    public GameObject statusEffectDisplayPrefab;
 }

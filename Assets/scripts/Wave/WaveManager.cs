@@ -14,6 +14,7 @@ public class WaveManager : MonoBehaviour
     public GameObject waveInfoPanel;
     public TextMeshProUGUI waveText;
     public Transform bossBarContainer;
+    public Transform statusEffectDisplayContainer;
 
     [Header("Reward Panel Settings")]
     public GameObject rewardPanel;
@@ -127,7 +128,14 @@ public class WaveManager : MonoBehaviour
                 bossBarScript.Setup(c.bossBarName, statManager);
         }
 
-            totalSpawned++;
+        if (c.statusEffectDisplayPrefab != null && enemy.TryGetComponent<StatusEffectManager>(out var sem))
+        {
+            Transform spawnParent = statusEffectDisplayContainer != null ? statusEffectDisplayContainer : waveInfoPanel.transform.parent;
+            sem.displayPrefab = c.statusEffectDisplayPrefab;
+            sem.displayContainer = spawnParent;
+        }
+
+        totalSpawned++;
         currentEnemies.Add(enemy);
     }
     private void CleanEnemyList()

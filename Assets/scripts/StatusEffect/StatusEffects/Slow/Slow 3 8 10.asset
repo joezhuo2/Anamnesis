@@ -15,8 +15,11 @@ MonoBehaviour:
   currentTime: 0
   duration: 3
   tickInterval: 0
+  icon: {fileID: 6123212246031883711, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Slow
+  desc: Reduces speed by 10% per stack. Max 8 stacks.
+  maxStacks: 8
   target: {fileID: 0}
   source: {fileID: 0}
-  maxStacks: 8
   currentStacks: 0
   redPerStack: 10

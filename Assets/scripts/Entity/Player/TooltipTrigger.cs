@@ -75,7 +75,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     private void ShowAttackTooltip()
     {
-        if (cad == null || cps == null || tooltipType != TooltipType.Attack) return;
+        if (cad == null || cps == null || cesm == null || tooltipType != TooltipType.Attack) return;
 
         float staminaCost = Mathf.Abs(cad.staminaCost + (cps.maxStamina * (cad.staminaCostPct * 0.01f)));
         float staminaGain = Mathf.Abs(cad.staminaGainOnHit + (cps.maxStamina * (cad.staminaPctGainOnHit * 0.01f)));
@@ -88,10 +88,19 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
         if (cad.pd != null)
         {
-            var pd = cad.pd;
-            basePhysDmg = (pd.physicalMult + (cps.addPhysDmgPct * 0.01f)) * cesm.GetStat(pd.scalingStat) * (1f + (cps.physicalDmgPct * 0.01f)) * (1f + (cps.damagePct * 0.01f));
-            baseSplDmg = (pd.spellMult + (cps.addSplDmgPct * 0.01f)) * cesm.GetStat(pd.scalingStat) * (1f + (cps.spellDmgPct * 0.01f)) * (1f + (cps.damagePct * 0.01f));
-            trueDmg = pd.trueMult * cesm.GetStat(pd.scalingStat) * (1f + (cps.damagePct * 0.01f));
+            var previewSnapshot = DamageCalculator.CaptureSnapshot(cad.pd, cesm.gameObject);
+            var previewPacket = DamageCalculator.BuildDamagePacket(cad.pd, previewSnapshot, false);
+
+            foreach (var instance in previewPacket.instances)
+            {
+                switch (instance.type)
+                {
+                    case DamageType.Physical: basePhysDmg += instance.amount; break;
+                    case DamageType.Spell: baseSplDmg += instance.amount; break;
+                    case DamageType.True: trueDmg += instance.amount; break;
+                    default: break;
+                }
+            }
         }
 
         List<string> lines = new();

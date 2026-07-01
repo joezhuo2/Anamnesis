@@ -122,6 +122,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.SkillDmgPct => s.skillDmgPct,
             StatType.BasicDmgPct => s.basicDmgPct,
             StatType.UltDmgPct => s.ultDmgPct,
+            StatType.EffectRes => s.effectRes,
             _ => 0f,
         };
         return value;
@@ -167,6 +168,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.SkillDmgPct: s.skillDmgPct += mod; break;
             case StatType.BasicDmgPct: s.basicDmgPct += mod; break;
             case StatType.UltDmgPct: s.ultDmgPct += mod; break;
+            case StatType.EffectRes: s.effectRes += mod; break;
             default: break;
 
         }
@@ -233,6 +235,8 @@ public struct StatBuff : IEquatable<StatBuff>
             StatType.maxMana => "Max Mana",
             StatType.SkillDmgPct => "Skill Damage %",
             StatType.BasicDmgPct => "Basic Damage %",
+            StatType.UltDmgPct => "Ultimate Damage %",
+            StatType.EffectRes => "Effect Resistance",
             _ => type.ToString()
         };
         return name;

@@ -210,6 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e341035980819db479241b5d5f520fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatusEffectManager
+  displayPrefab: {fileID: 0}
+  displayContainer: {fileID: 0}
 --- !u!114 &2111038131489747825
 MonoBehaviour:
   m_ObjectHideFlags: 0

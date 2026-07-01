@@ -27,6 +27,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 2
     maxCurrentEnemies: 2
@@ -39,6 +40,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 2
     maxCurrentEnemies: 2
@@ -51,6 +53,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 3
     maxCurrentEnemies: 3
@@ -63,6 +66,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 3
     maxCurrentEnemies: 3
@@ -75,6 +79,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 3
     maxCurrentEnemies: 3
@@ -87,6 +92,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 4
     maxCurrentEnemies: 4
@@ -99,6 +105,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 4
     maxCurrentEnemies: 4
@@ -111,6 +118,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 4
     maxCurrentEnemies: 4
@@ -123,6 +131,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 5
     maxCurrentEnemies: 5
@@ -135,6 +144,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 5
     maxCurrentEnemies: 5
@@ -147,6 +157,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 6
     maxCurrentEnemies: 6
@@ -159,6 +170,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 7
     maxCurrentEnemies: 7
@@ -171,6 +183,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
     maxTotalEnemies: 7
     maxCurrentEnemies: 7
@@ -183,6 +196,7 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
   - enemyPrefab: {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
     maxTotalEnemies: 1
     maxCurrentEnemies: 1
@@ -195,4 +209,5 @@ MonoBehaviour:
     Type: 0
     bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
     bossBarName: '[Lv. 15] Lich'
+    statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
   waveOffset: 0
