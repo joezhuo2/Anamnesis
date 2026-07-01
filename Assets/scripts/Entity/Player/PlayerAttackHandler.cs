@@ -166,6 +166,9 @@ public class PlayerAttackHandler : MonoBehaviour
 
         attacks.Add(runtimeAttackCopy);
 
+        if (pum.HasUpgradeOfType<SoulRendPU>() && (type == AttackType.Basic || type == AttackType.Skill))
+            pum.GetPlayerUpgradeOfType<SoulRendPU>().OnUnlock(gameObject);
+
         if (spawnedUIElements.ContainsKey(type))
         {
             Destroy(spawnedUIElements[type]);
