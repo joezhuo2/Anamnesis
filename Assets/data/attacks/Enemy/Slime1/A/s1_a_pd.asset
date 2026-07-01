@@ -31,4 +31,8 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effects: []
+  effects:
+  - effect: {fileID: 11400000, guid: 3007fa26afbeb7b4893c01bfb6b93915, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 0.35
