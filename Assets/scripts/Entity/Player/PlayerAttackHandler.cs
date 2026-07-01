@@ -83,24 +83,29 @@ public class PlayerAttackHandler : MonoBehaviour
             b.onClick.AddListener(() => PerformAttack(attackType));
         }
     }
-    public void PerformAttack(AttackType type)
+    public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false)
     {
         if (p == null || !p.isAlive || !p.canAttack || Time.timeScale == 0f) return;
 
         AttackData selected = attacks.Find(atk => atk.type == type);
         if (selected == null) return;
 
-        float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
-        float cooldown = selected.cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.1f, 10f);
-        if (Time.time - lastTime < cooldown) return;
+        if (!bypassCooldown)
+        {
+            float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
+            float cooldown = selected.cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.1f, 10f);
+            if (Time.time - lastTime < cooldown) return;
+        }
 
-        if (!HandleStatChanges(selected)) return;
+        if (!noCost && !HandleStatChanges(selected)) return;
 
         lastAttackTimes[type] = Time.time;
 
         ProjectileSpawner ps = ProjectileSpawner.Instance;
         if (ps != null)
             StartCoroutine(ps.SpawnFromPattern(selected, gameObject, transform.position));
+
+        pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);
 
         switch (type)
         {
