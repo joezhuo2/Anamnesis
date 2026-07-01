@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour {
     [HideInInspector] public int pierced;
 
     private List<GameObject> hit;
+    private ProjectileDamageSnapshot damageSnapshot;
     private Transform followTarget;
     private Rigidbody2D rb;
 
@@ -24,6 +25,7 @@ public class Projectile : MonoBehaviour {
     private void Start()
     {
         pierced = 0;
+        damageSnapshot = DamageCalculator.CaptureSnapshot(pd, ownerObj);
         HandleSize();
         HandleDirection();
         rb = GetComponent<Rigidbody2D>();
@@ -73,9 +75,9 @@ public class Projectile : MonoBehaviour {
 
         if (targetIsPlayer == isPlayer || targetIsEnemy == isEnemy) return;
 
-        DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, ownerObj);
+        DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, damageSnapshot);
 
-        eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj);
+        eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj, damageSnapshot.resPen, damageSnapshot.defShred);
         var (hp, stamina, mana) = CalculateStatGains(ownerObj, pd.mainAttack, packet.GetTotalDamage());
         TriggerStatGains(hp, stamina, mana, ownerObj);
 

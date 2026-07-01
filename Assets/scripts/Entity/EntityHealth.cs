@@ -72,12 +72,23 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source)
+    public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source, float sourceResPen = float.NaN, int sourceDefShred = int.MinValue)
     {
         if (dp == null) return;
+
+        float resPen = sourceResPen;
+        int defShred = sourceDefShred;
+        if ((float.IsNaN(resPen) || defShred == int.MinValue) && source != null && source.TryGetComponent<EntityStatManager>(out var sourceStats) && sourceStats.s != null)
+        {
+            if (float.IsNaN(resPen)) resPen = sourceStats.s.resPen;
+            if (defShred == int.MinValue) defShred = sourceStats.s.defShred;
+        }
+        if (float.IsNaN(resPen)) resPen = 0f;
+        if (defShred == int.MinValue) defShred = 0;
+
         foreach (var i in dp.instances)
         {
-            var (dmg, sizeMult)= i.type == DamageType.True ? (i.amount, 1f) : CalculateDamageTaken(i.type, i.amount, source.GetComponent<EntityStatManager>().s);
+            var (dmg, sizeMult)= i.type == DamageType.True ? (i.amount, 1f) : CalculateDamageTaken(i.type, i.amount, resPen, defShred);
 
             Color color = i.type switch
             {
@@ -212,11 +223,11 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    private (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, EntityStats source)
+    private (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, float sourceResPen, int sourceDefShred)
     {
-        float effRes = Mathf.Max(-100f, es.damageRes - source.resPen);
+        float effRes = Mathf.Max(-100f, es.damageRes - sourceResPen);
         float resMult = 1f - (effRes * 0.01f);
-        float effArmor = Mathf.Max(0, es.EffArmor - source.defShred);
+        float effArmor = Mathf.Max(0, es.EffArmor - sourceDefShred);
         float armorMult = type == DamageType.Physical ? 1f - ((float)effArmor / (effArmor + 100f)) : 1f;
 
         float typeMult = type switch

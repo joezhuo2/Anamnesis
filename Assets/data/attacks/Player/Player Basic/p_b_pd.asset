@@ -23,7 +23,7 @@ MonoBehaviour:
   scalingStat: 31
   timeBeforeSameEnemy: 0
   followDistance: 0
-  rotationOffset: 90
+  rotationOffset: 270
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
@@ -31,7 +31,4 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
-  selfApply: 0
-  applyCondition: 0
-  effectChance: 0
+  effects: []

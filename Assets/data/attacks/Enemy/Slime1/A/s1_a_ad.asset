@@ -14,29 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   cooldown: 4
   projectilePrefab: {fileID: 8726194261462263514, guid: 34db5de69d1f9ce4592bab31c85d8434, type: 3}
+  pd: {fileID: 0}
   pattern: 1
   spawnDelay: 0.325
   spawnDistance: 0.25
   fixedDistance: 1
   animationLength: 0.83
-  type: 0
-  projectileCount: 3
-  randomCount: 0
-  spread: 30
-  randomSpread: 15
+  projectileCount: 2
+  randomCount: 1
+  spread: 40
+  randomSpread: 20
   minDelay: 0
-  maxDelay: 0
+  maxDelay: 0.15
   maxRange: 2
   canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
+  basedOnDmgDealt: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  type: 0
+  icon: {fileID: 0}
+  displayName: 
