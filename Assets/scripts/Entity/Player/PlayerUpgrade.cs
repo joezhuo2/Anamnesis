@@ -21,7 +21,8 @@ public abstract class PlayerUpgrade : ScriptableObject
     }
     public TriggerCondition[] conditions;
     public float chance;
-    public float delay; // delay after triggering before effect activates
+    public float cooldown;
+    public float delay; [Tooltip("delay after triggering before effect activates")]
     public abstract void TriggerUpgradeEffect(GameObject player);
     public virtual void OnUnlock(GameObject player) {}
 }
