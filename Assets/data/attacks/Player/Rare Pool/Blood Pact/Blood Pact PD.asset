@@ -15,7 +15,7 @@ MonoBehaviour:
   mainAttack: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
   speed: 0
   lifetime: 0.5
-  numPierce: 16
+  numPierce: 10
   size: 2.5
   physicalMult: 0.6
   spellMult: 0
@@ -26,9 +26,9 @@ MonoBehaviour:
   rotationOffset: 0
   angleOverride: 0
   useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 11400000, guid: bcae2e0aa1dedbe4aba7f78dfcf41e9f, type: 2}
-  selfApply: 0
-  effectChance: 0.5
+  effects: []

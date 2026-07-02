@@ -17,9 +17,9 @@ MonoBehaviour:
   lifetime: 0.75
   numPierce: 9
   size: 4
-  physicalMult: 2.5
+  physicalMult: 1.9
   spellMult: 0
-  trueMult: 0.4
+  trueMult: 0.3
   scalingStat: 35
   timeBeforeSameEnemy: 0
   followDistance: 0

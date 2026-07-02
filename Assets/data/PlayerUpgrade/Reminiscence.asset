@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Reminiscence
   m_EditorClassIdentifier: Assembly-CSharp::Reminiscence
   conditions: 03000000
-  chance: 40
+  chance: 15
   cooldown: 1
   delay: 0.25

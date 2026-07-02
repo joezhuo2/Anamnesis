@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: p_s_ad
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 8
+  cooldown: 6
   projectilePrefab: {fileID: 1131671040950222573, guid: 7fab7e39a38b7e748b6c414134e1725f, type: 3}
   pd: {fileID: 11400000, guid: aca44a99984699548a4b77dd447bde3a, type: 2}
   pattern: 0
@@ -32,8 +32,8 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 12
-  staminaCostPct: 8
+  staminaCost: 15
+  staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
   manaCost: 0

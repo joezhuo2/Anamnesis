@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
+  currentSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
   spawnRadius: 2.5
   waveInfoPanel: {fileID: 2059475857}
   waveText: {fileID: 1154343300}
@@ -2780,6 +2780,7 @@ MonoBehaviour:
   starting:
   - {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
   - {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
+  - {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
   cooldownPrefab: {fileID: 1749710292777410887, guid: 47db549e516fc9642bc9e1bbabac16c1, type: 3}
   objContainer: {fileID: 1186772504}
   attacks: []

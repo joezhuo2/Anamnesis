@@ -20,7 +20,7 @@ MonoBehaviour:
   spawnDistance: 0.1
   fixedDistance: 0
   animationLength: 0.5
-  projectileCount: 16
+  projectileCount: 8
   randomCount: 0
   spread: 0
   randomSpread: 0
