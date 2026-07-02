@@ -35,4 +35,8 @@ MonoBehaviour:
   - effect: {fileID: 11400000, guid: c03fbc26749db444e85496d5b6d9879f, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.4
+    chance: 0.3
+  - effect: {fileID: 11400000, guid: 4539ba280ea9233448a6552c93d93eb5, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 1

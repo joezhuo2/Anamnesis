@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b46b8a49af0bf7146b09e7cdc4576544, type: 3}
+  m_Name: Pulled 0.75 1 1.4 2 1.5
+  m_EditorClassIdentifier: Assembly-CSharp::Pulled
+  currentTime: 0
+  duration: 0.75
+  tickInterval: 0.016
+  icon: {fileID: 0}
+  effName: 
+  desc: 
+  maxStacks: 1
+  target: {fileID: 0}
+  source: {fileID: 0}
+  projectile: {fileID: 0}
+  currentStacks: 0
+  pullSpeed: 1.4
+  pullSpeedPerStack: 2
+  fullSpeedRadius: 1.5
+  deadZone: 0.1
+  disableMovement: 0
+  pullCenter: {x: 0, y: 0}

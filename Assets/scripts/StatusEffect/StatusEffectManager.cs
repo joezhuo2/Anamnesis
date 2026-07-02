@@ -35,7 +35,7 @@ public class StatusEffectManager : MonoBehaviour
         return null;
     }
 
-    public void AddEffect(StatusEffect se, GameObject source)
+    public void AddEffect(StatusEffect se, GameObject source, GameObject projectile = null)
     {
         if (se == null) return;
 
@@ -52,6 +52,7 @@ public class StatusEffectManager : MonoBehaviour
             StatusEffect runtimeEffect = Instantiate(se);
             runtimeEffect.target = gameObject;
             runtimeEffect.source = source;
+            runtimeEffect.projectile = projectile;
             runtimeEffect.currentStacks = 1;
             runtimeEffect.currentTime = 0;
 

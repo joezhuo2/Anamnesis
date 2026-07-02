@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Solar Collapse AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 8
+  cooldown: 12
   projectilePrefab: {fileID: 2201037258136207567, guid: d8e9deb5a2d66e847b21745e96ece005, type: 3}
   pd: {fileID: 11400000, guid: 2de21f5dfb7f6734991d493f71c084f9, type: 2}
   pattern: 0

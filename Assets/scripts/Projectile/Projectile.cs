@@ -209,7 +209,7 @@ public class Projectile : MonoBehaviour {
             if (ed.chance <= 0f) return;
 
             if (Random.value <= ed.chance)
-                sem.AddEffect(ed.effect, ownerObj);
+                sem.AddEffect(ed.effect, ownerObj, gameObject);
         }
     }
     private System.Collections.IEnumerator RemoveFromHitHistory(GameObject target, float delay)

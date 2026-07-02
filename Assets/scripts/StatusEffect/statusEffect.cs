@@ -17,6 +17,7 @@ public abstract class StatusEffect : ScriptableObject
 
     [HideInInspector] public GameObject target;
     [HideInInspector] public GameObject source;
+    [HideInInspector] public GameObject projectile;
     [HideInInspector] public int currentStacks = 0;
 
     public virtual void OnTick() {}
