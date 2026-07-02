@@ -72,6 +72,16 @@ public static class DamageCalculator
 
         return dp;
     }
+    public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, EntityStats stats, bool rollCrits = true, Color indicatorColor = default)
+    {
+        DamagePacket dp = new();
+        if (stats == null || baseDamage <= 0f) return dp;
+
+        var (finalDamage, isCrit) = rollCrits ? RollCrits(baseDamage, stats) : (baseDamage, false);
+        dp.AddInstance(type, finalDamage, isCrit, indicatorColor);
+        return dp;
+    }
+
     private static float TypeBonus(DamageType type, ProjectileDamageSnapshot snapshot) => type switch
     {
         DamageType.Physical => 1f + (snapshot.physicalDmgPct * 0.01f),

@@ -17,12 +17,13 @@ MonoBehaviour:
   tickInterval: 0.5
   icon: {fileID: -3687489427716195, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Poison
-  desc: 
+  desc: Deals 20% of enemy attack as damage every second. Max 1 stack.
   maxStacks: 1
   target: {fileID: 0}
   source: {fileID: 0}
   currentStacks: 0
   dpt: 20
   scalingStat: 31
+  damageType: 2
   indicatorColor: {r: 0, g: 0.509434, b: 0.096610114, a: 1}
   canCrit: 0

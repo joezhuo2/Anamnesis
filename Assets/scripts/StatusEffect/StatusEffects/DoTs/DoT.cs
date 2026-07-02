@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "se_dot", menuName = "Status Effects/Debuff/DoT")]
@@ -6,6 +5,7 @@ public class DoT : StatusEffect
 {
     [Tooltip("Damage per tick - % of source gameobject's stat type")] public float dpt;
     public StatType scalingStat = StatType.EffAtk;
+    public DamageType damageType = DamageType.DoT;
     public Color indicatorColor = Color.red;
     public bool canCrit = false;
 
@@ -17,8 +17,7 @@ public class DoT : StatusEffect
 
         bool globalDoTCanCrit = source.TryGetComponent<PlayerUpgradeManager>(out var pum) && pum.HasUpgradeOfType<Paradox>();
 
-        var (finalDmg, isCrit) = (globalDoTCanCrit || canCrit) ? DamageCalculator.RollCrits(damage, ssm.s) : (damage, false);
-
-        eh.ChangeHealth(-finalDmg, 0f, true, isCrit ? 1.5f : 1f, indicatorColor, true);
+        DamagePacket damagePacket = DamageCalculator.BuildDamagePacket(damage, damageType, ssm.s, globalDoTCanCrit || canCrit, indicatorColor);
+        eh.TakeDamage(damagePacket, true, source, ssm.s.resPen, ssm.s.defShred);
     }
 }

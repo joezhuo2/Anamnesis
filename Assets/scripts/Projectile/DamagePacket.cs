@@ -8,11 +8,16 @@ public struct DamageInstance
     public DamageType type;
     public float amount;
     public bool isCrit;
-    public DamageInstance(DamageType type, float amount, bool isCrit)
+    public Color indicatorColor;
+
+    public DamageInstance(DamageType type, float amount, bool isCrit) : this(type, amount, isCrit, default) {}
+
+    public DamageInstance(DamageType type, float amount, bool isCrit, Color indicatorColor)
     {
         this.type = type;
-        this.amount =  amount;
+        this.amount = amount;
         this.isCrit = isCrit;
+        this.indicatorColor = indicatorColor;
     }
 }
 
@@ -21,6 +26,9 @@ public class DamagePacket
     public List<DamageInstance> instances = new();
     public void AddInstance(DamageType type, float amount, bool isCrit)
         => instances.Add(new DamageInstance(type, amount, isCrit));
+
+    public void AddInstance(DamageType type, float amount, bool isCrit, Color indicatorColor)
+        => instances.Add(new DamageInstance(type, amount, isCrit, indicatorColor));
 
     public float GetTotalDamage()
     {

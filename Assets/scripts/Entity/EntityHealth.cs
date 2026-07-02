@@ -90,7 +90,7 @@ public class EntityHealth : MonoBehaviour
         {
             var (dmg, sizeMult)= i.type == DamageType.True ? (i.amount, 1f) : CalculateDamageTaken(i.type, i.amount, resPen, defShred);
 
-            Color color = i.type switch
+            Color color = i.indicatorColor != default ? i.indicatorColor : i.type switch
             {
                 DamageType.Physical => Color.gray,
                 DamageType.Spell => Color.purple,
