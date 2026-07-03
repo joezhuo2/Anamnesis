@@ -15,15 +15,13 @@ public class StatusEffectManager : MonoBehaviour
     {
         cesm = GetComponent<EntityStatManager>();
     }
-    public void GetActiveEffectsOfType<T>(List<StatusEffect> results) where T : StatusEffect
+    public void GetActiveEffectsOfType<T>(List<T> results) where T : StatusEffect
     {
         results.Clear();
         for (int i = 0; i < activeEffects.Count; i++)
         {
             if (activeEffects[i] is T)
-            {
-                results.Add(activeEffects[i]);
-            }
+                results.Add(activeEffects[i] as T);
         }
     }
     public T GetActiveFirstEffectOfType<T>() where T : StatusEffect
@@ -32,6 +30,11 @@ public class StatusEffectManager : MonoBehaviour
         {
             if (activeEffects[i] is T) return activeEffects[i] as T;
         }
+        return null;
+    }
+    public StatusEffect GetEffect(StatusEffect se)
+    {
+        if (activeEffects.Contains(se)) return se;
         return null;
     }
 
@@ -67,7 +70,7 @@ public class StatusEffectManager : MonoBehaviour
         T existing = GetActiveFirstEffectOfType<T>();
         if (existing == null) return;
 
-        existing.currentStacks -= stacksToRemove;
+        existing.currentStacks = Mathf.Max(0, existing.currentStacks - stacksToRemove);
 
         if (existing.currentStacks <= 0)
         {
@@ -80,10 +83,20 @@ public class StatusEffectManager : MonoBehaviour
             existing.OnStack();
         }
     }
+    public void RemoveEffect<T>() where T : StatusEffect => RemoveStacks<T>(int.MaxValue);
+    public void RemoveEffect(StatusEffect se)
+    {
+        if (!activeEffects.Contains(se)) return;
+
+        se.currentStacks = 0;
+        se.OnExpire();
+        activeEffects.Remove(se);
+        Destroy(se);
+    }
     public IEnumerator RemoveEffectAfterDelay<T>(float delay) where T : StatusEffect
     {
         yield return new WaitForSeconds(delay);
-        RemoveStacks<T>(int.MaxValue);
+        RemoveEffect<T>();
     }
     public void ClearAllEffects()
     {
