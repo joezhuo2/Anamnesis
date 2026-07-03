@@ -41,8 +41,8 @@ MonoBehaviour:
   basedOnDmgDealt: 1
   staminaGainOnHit: 2
   staminaPctGainOnHit: 0
-  healthGainOnHit: 0
-  healthPctGainOnHit: 4
+  healthGainOnHit: 4
+  healthPctGainOnHit: 8
   manaGainOnHit: 2
   manaPctGainOnHit: 0
   type: 0

@@ -1275,7 +1275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2.5
   waveInfoPanel: {fileID: 2059475857}
   waveText: {fileID: 1154343300}
@@ -1470,6 +1470,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Nebula
     desc: AOE DoT True Crit Dmg
+  - newAttack: {fileID: 11400000, guid: 0824ad99600b79844a6e35ce04f50c4b, type: 2}
+    type: 2
+    icon: {fileID: 0}
+    attackName: Revelation
+    desc: AOE DoT Spl Atk Detonate
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -1482,11 +1487,11 @@ MonoBehaviour:
   - upgrade: {fileID: 11400000, guid: faa3c8d59698bdb4089d810a53b1862e, type: 2}
     icon: {fileID: 0}
     upgradeName: Starlit Reflexes
-    desc: Counter dodges restore mana.
+    desc: Counter dodges restore mana for every projectile.
   - upgrade: {fileID: 11400000, guid: 2526bf077c7fad54d9e0fc1db17b765f, type: 2}
     icon: {fileID: 0}
     upgradeName: Paradox
-    desc: Allows DoTs to deal critical damage
+    desc: Allows DoTs to deal critical damage.
   - upgrade: {fileID: 11400000, guid: 8dff3a6c6a1703f40a9e58f59dfc2ac7, type: 2}
     icon: {fileID: 0}
     upgradeName: Soul Rend
@@ -1495,37 +1500,44 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Reminiscence
     desc: Attacks may additionally perform an available attack at no cost. (2s cooldown)
+  - upgrade: {fileID: 11400000, guid: 1bb0ed8e066ed0043a3ee4a9b47f53a7, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Cosmic Afterimage
+    desc: Dashing leaves behind a projection of yourself that distracts enemies for
+      3s. (6s cooldown)
   rarityData:
-  - rarity: 0
-    rarityName: Common
+  - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
     mult: 1
-    weight: 250
-  - rarity: 1
-    rarityName: Uncommon
+    weight: 400
+  - rarityName: Uncommon
     displayColor: {r: 0.21562162, g: 0.754717, b: 0, a: 1}
     mult: 3
-    weight: 200
-  - rarity: 2
-    rarityName: Rare
+    weight: 300
+  - rarityName: Rare
     displayColor: {r: 0, g: 0.39995039, b: 0.745283, a: 1}
     mult: 5
-    weight: 150
-  - rarity: 3
-    rarityName: Epic
+    weight: 250
+  - rarityName: Epic
     displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 1}
     mult: 7
-    weight: 100
-  - rarity: 4
-    rarityName: Legendary
+    weight: 200
+  - rarityName: Legendary
     displayColor: {r: 0.74509805, g: 0.32248145, b: 0, a: 1}
     mult: 10
-    weight: 50
-  - rarity: 5
-    rarityName: Mythic
+    weight: 80
+  - rarityName: Mythic
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
     mult: 15
+    weight: 15
+  - rarityName: Celestial
+    displayColor: {r: 0.012014951, g: 0.041026052, b: 0.509434, a: 1}
+    mult: 20
     weight: 3
+  - rarityName: Transcendent
+    displayColor: {r: 0.7783019, g: 0.9616805, b: 1, a: 1}
+    mult: 30
+    weight: 1
   buttonContainer: {fileID: 1423259213}
   rerolls: 10
   rerollButton: {fileID: 786092299}
@@ -2780,7 +2792,6 @@ MonoBehaviour:
   starting:
   - {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
   - {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
-  - {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
   cooldownPrefab: {fileID: 1749710292777410887, guid: 47db549e516fc9642bc9e1bbabac16c1, type: 3}
   objContainer: {fileID: 1186772504}
   attacks: []
@@ -2824,8 +2835,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a9d5a9cabb7594db7b9d50b77a4c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  p: {fileID: 0}
   moveInput: {x: 0, y: 0}
+  p: {fileID: 0}
 --- !u!50 &1181093674
 Rigidbody2D:
   serializedVersion: 5
@@ -2834,7 +2845,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181093661}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
