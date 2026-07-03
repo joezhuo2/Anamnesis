@@ -20,7 +20,8 @@ public class Detonator : StatusEffect
                 if (target.TryGetComponent<EntityHealth>(out var eh) && source.TryGetComponent<EntityStatManager>(out var ssm))
                 {
                     float dotTickDmg = dot.dpt * 0.01f * ssm.GetStat(dot.scalingStat) * dot.currentStacks;
-                    float dmg = dmgMult * dotTickDmg;
+                    int ticksRemaining = Mathf.CeilToInt((dot.duration - dot.currentTime) / dot.tickInterval);
+                    float dmg = dmgMult * dotTickDmg * ticksRemaining;
 
                     DamagePacket damagePacket = DamageCalculator.BuildDamagePacket(dmg, dmgType, ssm.s, true, indicatorColor);
                     eh.TakeDamage(damagePacket, true, source, ssm.s.resPen, ssm.s.defShred, 3f);

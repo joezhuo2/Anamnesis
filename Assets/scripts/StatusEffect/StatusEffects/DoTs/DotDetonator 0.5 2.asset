@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f0f5438c0fba4d4a87ffad81e12d86b, type: 3}
-  m_Name: DotDetonator 0.5 3
+  m_Name: DotDetonator 0.5 2
   m_EditorClassIdentifier: Assembly-CSharp::Detonator
   currentTime: 0
   duration: 0.5
@@ -23,6 +23,6 @@ MonoBehaviour:
   source: {fileID: 0}
   projectile: {fileID: 0}
   currentStacks: 0
-  dmgMult: 3
+  dmgMult: 2
   dmgType: 3
-  indicatorColor: {r: 0, g: 1, b: 0.64320934, a: 1}
+  indicatorColor: {r: 0, g: 1, b: 0.88411766, a: 1}
