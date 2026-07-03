@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StellarSurge
   conditions: 08000000
   chance: 20
+  cooldown: 0
   delay: 0
-  hpPct: 4
+  hpPct: 6

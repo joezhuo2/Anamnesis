@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Revelation AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  cooldown: 16
+  projectilePrefab: {fileID: 6800004516519662264, guid: de9d07d0e0c3a464b9d2701b052b83b7, type: 3}
+  pd: {fileID: 11400000, guid: 549e0993cc2b5be45b99d38772e800a1, type: 2}
+  pattern: 0
+  spawnDelay: 0.25
+  spawnDistance: 4
+  fixedDistance: 0
+  animationLength: 0.5
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 0
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 70
+  staminaCostPct: 0
+  healthCost: 0
+  healthCostPct: 0
+  manaCost: 50
+  manaCostPct: 0
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 0
+  manaPctGainOnHit: 0
+  type: 2
+  icon: {fileID: 5536397497801651327, guid: cdf4137b564c0854caba90c027127bfa, type: 3}
+  displayName: Revelation

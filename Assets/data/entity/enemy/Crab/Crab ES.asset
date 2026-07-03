@@ -36,11 +36,12 @@ MonoBehaviour:
   armor: 80
   armorPct: 0
   damageRes: 15
-  dodgeChance: 0
-  dodgeResPct: 0
+  dodgeChance: 5
+  dodgeResPct: 20
   physicalRes: 5
   spellRes: 5
   hurtTime: 0.3
+  effectRes: 0
   moveSpeed: 0.85
   moveSpeedPct: 0
   currentStamina: 0

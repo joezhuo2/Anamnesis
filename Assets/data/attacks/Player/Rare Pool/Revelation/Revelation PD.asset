@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
+  m_Name: Revelation PD
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
+  mainAttack: {fileID: 11400000, guid: 0824ad99600b79844a6e35ce04f50c4b, type: 2}
+  speed: 0
+  lifetime: 1
+  numPierce: 3000
+  size: 5
+  physicalMult: 0
+  spellMult: 3.4
+  trueMult: 0
+  scalingStat: 31
+  timeBeforeSameEnemy: 0
+  followDistance: 0
+  rotationOffset: 0
+  maxBoomerangDist: 0
+  angleOverride: 0
+  useTrueAngle: 0
+  bypassIFrames: 0
+  additionalAttack: {fileID: 0}
+  additionalChance: 0
+  addAttackRequiresHit: 1
+  additionalFollowsMouse: 0
+  effects:
+  - effect: {fileID: 11400000, guid: 6a6221ea2db673546bc66a1f79041e33, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 1

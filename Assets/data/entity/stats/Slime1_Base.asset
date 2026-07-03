@@ -25,6 +25,9 @@ MonoBehaviour:
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
+  basicDmgPct: 0
+  skillDmgPct: 0
+  ultDmgPct: 0
   currentHp: 100
   maxHp: 100
   hpPct: 0
@@ -33,11 +36,12 @@ MonoBehaviour:
   armor: 30
   armorPct: 0
   damageRes: 10
-  dodgeChance: 0
-  dodgeResPct: 0
+  dodgeChance: 3
+  dodgeResPct: 10
   physicalRes: 10
   spellRes: -30
   hurtTime: 0.3
+  effectRes: 0
   moveSpeed: 0.8
   moveSpeedPct: 0
   currentStamina: 0

@@ -77,7 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   cardinalOnly: 1
   canDeaggro: 1
-  stoppingDistance: 0
+  stoppingDistance: 1
+  flipRotation: 0
   es: {fileID: 0}
 --- !u!114 &871356776485315989
 MonoBehaviour:
@@ -208,6 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e341035980819db479241b5d5f520fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatusEffectManager
+  displayPrefab: {fileID: 0}
+  displayContainer: {fileID: 0}
 --- !u!114 &7587272326778900899
 MonoBehaviour:
   m_ObjectHideFlags: 0

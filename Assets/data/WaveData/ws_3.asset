@@ -10,26 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d38d1f0d9cc8b843b2ae91e8a168582, type: 3}
-  m_Name: ws_2
+  m_Name: ws_3
   m_EditorClassIdentifier: Assembly-CSharp::WaveSequence
   spawnLocation: {x: 0, y: 0}
-  nextSequence: {fileID: 11400000, guid: 8195f81be966f3c4c87d68885ed7f96a, type: 2}
+  nextSequence: {fileID: 0}
   waves:
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 8
-    maxCurrentEnemies: 8
-    enemyLevel: 16
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 3
-    minRewardChoices: 2
-    maxRewardChoices: 6
-    bossBarPrefab: {fileID: 0}
-    bossBarName: 
-    statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 8
-    maxCurrentEnemies: 8
-    enemyLevel: 17
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 15
+    maxCurrentEnemies: 15
+    enemyLevel: 31
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -37,10 +26,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 8
-    maxCurrentEnemies: 8
-    enemyLevel: 18
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 15
+    maxCurrentEnemies: 15
+    enemyLevel: 32
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -48,10 +37,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 9
-    maxCurrentEnemies: 9
-    enemyLevel: 19
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 15
+    maxCurrentEnemies: 15
+    enemyLevel: 33
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -59,10 +48,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 9
-    maxCurrentEnemies: 9
-    enemyLevel: 20
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 15
+    maxCurrentEnemies: 15
+    enemyLevel: 34
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -70,10 +59,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 10
-    maxCurrentEnemies: 10
-    enemyLevel: 21
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 15
+    maxCurrentEnemies: 15
+    enemyLevel: 35
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -81,10 +70,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 10
-    maxCurrentEnemies: 10
-    enemyLevel: 22
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 16
+    maxCurrentEnemies: 16
+    enemyLevel: 36
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -92,10 +81,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 11
-    maxCurrentEnemies: 11
-    enemyLevel: 23
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 16
+    maxCurrentEnemies: 16
+    enemyLevel: 37
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -103,10 +92,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 12
-    maxCurrentEnemies: 12
-    enemyLevel: 24
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 16
+    maxCurrentEnemies: 16
+    enemyLevel: 38
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -114,10 +103,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 13
-    maxCurrentEnemies: 13
-    enemyLevel: 25
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 16
+    maxCurrentEnemies: 16
+    enemyLevel: 39
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -125,10 +114,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 13
-    maxCurrentEnemies: 13
-    enemyLevel: 26
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 16
+    maxCurrentEnemies: 16
+    enemyLevel: 40
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -136,10 +125,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 13
-    maxCurrentEnemies: 13
-    enemyLevel: 27
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 17
+    maxCurrentEnemies: 17
+    enemyLevel: 41
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -147,10 +136,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 14
-    maxCurrentEnemies: 14
-    enemyLevel: 28
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 17
+    maxCurrentEnemies: 17
+    enemyLevel: 42
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -158,10 +147,10 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-    maxTotalEnemies: 14
-    maxCurrentEnemies: 14
-    enemyLevel: 29
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 17
+    maxCurrentEnemies: 17
+    enemyLevel: 43
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
@@ -169,15 +158,15 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}
-    maxTotalEnemies: 1
-    maxCurrentEnemies: 1
-    enemyLevel: 30
-    minSpawnFrequency: 0
-    maxSpawnFrequency: 0
+  - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    maxTotalEnemies: 17
+    maxCurrentEnemies: 17
+    enemyLevel: 44
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 6
-    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
-    bossBarName: '[Lv. 30] Jellyfish'
-    statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
-  waveOffset: 15
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  waveOffset: 30
