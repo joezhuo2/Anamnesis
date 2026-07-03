@@ -77,7 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   cardinalOnly: 1
   canDeaggro: 1
-  stoppingDistance: 1
+  stoppingDistance: 0.7
   flipRotation: 0
   es: {fileID: 0}
 --- !u!114 &871356776485315989

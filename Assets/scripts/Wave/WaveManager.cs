@@ -52,6 +52,8 @@ public class WaveManager : MonoBehaviour
         rewardPanel.SetActive(false);
         waveInfoPanel.SetActive(true);
 
+        rarityData.Sort((a, b) => a.mult.CompareTo(b.mult));
+
         UpdateRerollUI();
         StartNextWave();
     }
@@ -80,7 +82,7 @@ public class WaveManager : MonoBehaviour
         currentWaveIndex++;
 
         waveInfoPanel.SetActive(true);
-        waveText.text = $"Wave {currentWaveIndex + currentSequence.waveOffset}";
+        waveText.text = $"Wave {GetCurrentWave()}";
 
         HandleWave(currentWave);
     }
@@ -154,7 +156,7 @@ public class WaveManager : MonoBehaviour
             activeBossBar = null;
         }
 
-        int actualWave = currentWaveIndex + currentSequence.waveOffset;
+        int actualWave = GetCurrentWave();
 
         if (actualWave % 5 == 0)
             rerolls++;
@@ -276,21 +278,36 @@ public class WaveManager : MonoBehaviour
             case RewardType.Treasure: GenerateTreasurePool(); break;
         }
     }
+    public float CalculateQualityBoost(int wave)
+    {
+        if (wave == 1) return 0.5f;
+        if (wave <= 30) return 0.2f + ((wave / 5f) * 0.1f);
+        if (wave <= 105) return 0.8f + ((wave - 30) / 10f) * 0.01f;
+        return 1.6f;
+    }
     private RarityData GetWeightedRandomRarity()
     {
+        float qualityBoost = CalculateQualityBoost(GetCurrentWave());
+
         float totalWeight = 0;
-        foreach (var d in rarityData) totalWeight += d.weight;
+        for (int i = 0; i < rarityData.Count; i++)
+        {
+            float scalingFactor = 1f + (qualityBoost * i);
+            totalWeight += rarityData[i].weight * scalingFactor;
+        }
 
         float roll = Random.Range(0f, totalWeight);
         float weightSum = 0;
 
-        foreach (var d in rarityData)
+        for (int i = 0; i < rarityData.Count; i++)
         {
-            weightSum += d.weight;
-            if (roll <= weightSum) return d;
+            float scalingFactor = 1f + (qualityBoost * i);
+            weightSum += rarityData[i].weight * scalingFactor;
+
+            if (roll <= weightSum) return rarityData[i];
         }
 
-        return rarityData[0];
+        return rarityData[^1]; 
     }
     private BaseReward GetWeightedRandomBuff()
     {
@@ -361,4 +378,5 @@ public class WaveManager : MonoBehaviour
         foreach (var btn in activeRewardButtons) if (btn != null) Destroy(btn);
         activeRewardButtons.Clear();
     }
+    public int GetCurrentWave() => currentWaveIndex + currentSequence.waveOffset;
 }
