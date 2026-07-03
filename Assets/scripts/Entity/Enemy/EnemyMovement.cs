@@ -8,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
     public bool cardinalOnly = true;
     public bool canDeaggro = true;
     public float stoppingDistance = 0;
+    public bool flipRotation = false;
 
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public EnemyStats es;
@@ -41,7 +42,7 @@ public class EnemyMovement : MonoBehaviour
         UpdateTargeting();
         MoveToTarget();
     }
-    private void SetTarget(GameObject target) => es.target = target;
+    public void SetTarget(GameObject target) => es.target = target;
     private void MoveToTarget()
     {
         if (es.target == null || !es.canMove || !es.isAlive)
@@ -81,10 +82,13 @@ public class EnemyMovement : MonoBehaviour
 
         if (dir.x != 0)
         {
-            float sign = Mathf.Sign(dir.x);
-            if (sign != Mathf.Sign(cScale.x))
+            float directionSign = Mathf.Sign(dir.x);
+            bool shouldMirror = flipRotation ? directionSign > 0 : directionSign < 0;
+            float targetScaleX = Mathf.Abs(cScale.x) * (shouldMirror ? -1f : 1f);
+
+            if (!Mathf.Approximately(cTransform.localScale.x, targetScaleX))
             {
-                cScale.x *= -1;
+                cScale.x = targetScaleX;
                 cTransform.localScale = cScale;
             }
         }
@@ -102,6 +106,8 @@ public class EnemyMovement : MonoBehaviour
     }
     private void UpdateTargeting()
     {
+        if (es.target != null) return;
+
         if (Time.time < nextTargetCheckTime) return;
         nextTargetCheckTime = Time.time + targetCheckInterval;
 
