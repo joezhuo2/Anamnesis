@@ -23,6 +23,7 @@ public class ProjectileData : ScriptableObject
     public float timeBeforeSameEnemy;
     public float followDistance;
     public float rotationOffset;
+    [Tooltip("If > 0, projectile reverses direction after traveling this distance (boomerang effect)")] public float maxBoomerangDist = 0f;
     public float angleOverride;
     public bool useTrueAngle;
     public bool bypassIFrames;

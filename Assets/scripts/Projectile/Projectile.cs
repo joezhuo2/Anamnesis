@@ -17,6 +17,10 @@ public class Projectile : MonoBehaviour {
     private ProjectileDamageSnapshot damageSnapshot;
     private Transform followTarget;
     private Rigidbody2D rb;
+    private bool boomerangActive;
+    private bool boomerangReturning;
+    private float boomerangDecel;
+    private float boomerangSpeed;
 
     private void Awake()
     {
@@ -29,10 +33,8 @@ public class Projectile : MonoBehaviour {
         HandleSize();
         HandleDirection();
         rb = GetComponent<Rigidbody2D>();
+        InitBoomerang();
         HandleMovement(true);
-
-        // if (pd.effect != null && pd.applyCondition == ApplyCondition.OnCast && pd.selfApply)
-        //     ApplyEffect();
 
         if (pd.effects != null && pd.effects.Count > 0)
         {
@@ -144,6 +146,16 @@ public class Projectile : MonoBehaviour {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, angle + pd.rotationOffset);
     }
+    private void InitBoomerang()
+    {
+        if (pd.maxBoomerangDist > 0f)
+        {
+            boomerangActive = true;
+            boomerangReturning = false;
+            boomerangSpeed = pd.speed;
+            boomerangDecel = (pd.speed * pd.speed) / (2f * pd.maxBoomerangDist);
+        }
+    }
     private void HandleMovement(bool start)
     {
         if (rb == null || pd.speed <= 0) return;
@@ -158,7 +170,38 @@ public class Projectile : MonoBehaviour {
                 followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
             }
 
-            FollowTarget();
+            if (followTarget != null)
+            {
+                boomerangActive = false;
+                FollowTarget();
+                return;
+            }
+        }
+
+        if (boomerangActive) UpdateBoomerang();
+    }
+    private void UpdateBoomerang()
+    {
+        float dt = Time.fixedDeltaTime;
+
+        if (!boomerangReturning)
+        {
+            boomerangSpeed -= boomerangDecel * dt;
+
+            if (boomerangSpeed <= 0f)
+            {
+                boomerangSpeed = 0f;
+                boomerangReturning = true;
+            }
+
+            rb.linearVelocity = dir.normalized * boomerangSpeed;
+        }
+        else
+        {
+            boomerangSpeed += boomerangDecel * dt;
+            boomerangSpeed = Mathf.Min(boomerangSpeed, pd.speed);
+
+            rb.linearVelocity = -dir.normalized * boomerangSpeed;
         }
     }
     private void FollowTarget()
