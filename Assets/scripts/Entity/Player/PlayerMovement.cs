@@ -1,24 +1,28 @@
 using UnityEngine;
-
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
+
+[RequireComponent(typeof(PlayerUpgradeManager))]
 public class PlayerMovement : MonoBehaviour
 {
+    [HideInInspector] public Vector2 moveInput;
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public PlayerStats p;
     private Rigidbody2D rb;
-    public Vector2 moveInput;
     private Animator animator;
     public static readonly float baseAnimSpeed = 1f;
     private float lastDashTime;
     private float dashTravelled;
     private Vector2 dashDir;
-    public static int playerDir = 1; // 1 => facing right, -1 => facing left
+    [HideInInspector] public static int playerDir = 1; // 1 => facing right, -1 => facing left
     private void Awake() => animator = GetComponent<Animator>();
+    private PlayerUpgradeManager pum;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         p = GetComponent<EntityStatManager>()?.s as PlayerStats;
+        pum = GetComponent<PlayerUpgradeManager>();
 
         p.canDash = true;
         p.isDashing = false;
@@ -53,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
         if (p.isDashing || !p.canDash) return;
         if (Time.time < lastDashTime + p.dashCooldown) return;
         if (p.currentStamina < p.dashStaminaCost) return;
+
+        if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnStartDash);
 
         p.currentStamina -= p.dashStaminaCost;
         lastDashTime = Time.time;
