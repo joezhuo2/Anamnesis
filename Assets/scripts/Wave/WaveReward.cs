@@ -1,11 +1,8 @@
 using UnityEngine;
 
-public enum RewardRarity { Common, Uncommon, Rare, Epic, Legendary, Mythic }
-
 [System.Serializable]
 public class RarityData
 {
-    public RewardRarity rarity;
     public string rarityName;
     public Color displayColor;
     public float mult = 1f;
@@ -27,7 +24,7 @@ public class GeneratedReward
     public RarityData rd;
 
     public float finalVal => br.baseBuff.value * rd.mult;
-    public string GetDescription() => $"+{finalVal} {br.baseBuff.type.ToString()} (x{rd.mult})";
+    public string GetDescription() => $"+{finalVal} {br.baseBuff.type.ToString()} ({rd.rarityName} x{rd.mult})";
 }
 
 [System.Serializable]

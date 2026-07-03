@@ -33,7 +33,7 @@ public class EnemyAttackHandler : MonoBehaviour
     }
     private void UpdateCooldowns()
     {
-        for (int i = 0; i < attacks.Count; i++) if (cooldowns[i] > 0f)cooldowns[i] -= Time.deltaTime;
+        for (int i = 0; i < attacks.Count; i++) if (cooldowns[i] > 0f) cooldowns[i] -= Time.deltaTime;
     }
     private void TryAttack()
     {

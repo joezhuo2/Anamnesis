@@ -23,7 +23,7 @@ public class StatusEffectCooldownUI : MonoBehaviour
         if (cooldownImage != null)
         {
             Color orig = cooldownImage.color;
-            orig.a = 0.9f;
+            orig.a = 0.7f;
             cooldownImage.color = orig;
 
             cooldownImage.fillAmount = 1f;

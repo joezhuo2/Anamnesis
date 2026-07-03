@@ -72,7 +72,7 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source, float sourceResPen = float.NaN, int sourceDefShred = int.MinValue)
+    public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source, float sourceResPen = float.NaN, int sourceDefShred = int.MinValue, float sizeOverride = 0f)
     {
         if (dp == null) return;
 
@@ -88,7 +88,7 @@ public class EntityHealth : MonoBehaviour
 
         foreach (var i in dp.instances)
         {
-            var (dmg, sizeMult)= i.type == DamageType.True ? (i.amount, 1f) : CalculateDamageTaken(i.type, i.amount, resPen, defShred);
+            var (dmg, sizeMult)= i.type == DamageType.True || i.type == DamageType.DoT ? (i.amount, 1f) : CalculateDamageTaken(i.type, i.amount, resPen, defShred);
 
             Color color = i.indicatorColor != default ? i.indicatorColor : i.type switch
             {
@@ -99,6 +99,7 @@ public class EntityHealth : MonoBehaviour
             };
 
             if (i.isCrit) sizeMult *= 1.5f;
+            if (sizeOverride > 0f) sizeMult = sizeOverride;
 
             if (dmg > 0)
                 ChangeHealth(-Mathf.RoundToInt(dmg), 0, true, sizeMult, color, bypassIFrames, source);

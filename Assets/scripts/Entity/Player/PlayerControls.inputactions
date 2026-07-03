@@ -227,6 +227,17 @@
                 },
                 {
                     "name": "",
+                    "id": "cbb94482-9300-43e4-a9ec-6dd2d41623aa",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "47824ac2-8594-44ca-bece-b1bdc087bf82",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -251,6 +262,17 @@
                     "name": "",
                     "id": "10c1fcca-8a4e-4ae9-8b83-c046302d7b7b",
                     "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ultimate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "979bb040-f92d-4709-a129-e4fd4d58ea2f",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
