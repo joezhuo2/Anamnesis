@@ -46,7 +46,6 @@ public enum StatType
     EffectRes,
 }
 
-[CreateAssetMenu(fileName = "stats", menuName = "Scriptable Objects/stats/entity")]
 public class EntityStats : ScriptableObject
 {
     [Header("Offense")]

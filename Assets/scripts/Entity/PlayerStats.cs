@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "player_stats", menuName = "Scriptable Objects/stats/player")]
+[CreateAssetMenu(fileName = "Playerstats", menuName = "Data/Playerstats")]
 public class PlayerStats : EntityStats
 {
     // [Header("Skill points")]

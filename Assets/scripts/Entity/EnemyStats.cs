@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "enemy_stats", menuName = "Scriptable Objects/stats/enemy_stats")]
+[CreateAssetMenu(fileName = "EnemyStats", menuName = "Data/Enemystats")]
 public class EnemyStats : EntityStats
 {
     public float detectionRange;
