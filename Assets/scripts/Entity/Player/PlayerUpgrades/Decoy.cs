@@ -6,6 +6,7 @@ public class Decoy : PlayerUpgrade
     public float lifetime = 3f;
     public Vector3 spawnOffset = new(2f, 0f, 0f);
     public Color tint = new(1f, 1f, 1f, 0.75f);
+    public StatusEffect cooldownEffect;
 
     public override void TriggerUpgradeEffect(GameObject player)
     {
@@ -44,6 +45,9 @@ public class Decoy : PlayerUpgrade
 
             if (dist < maxDist && e.TryGetComponent<EnemyMovement>(out var em)) em.SetTarget(decoy);
         }
+
+        if (cooldownEffect != null && player.TryGetComponent<StatusEffectManager>(out var sem))
+            sem.AddEffect(cooldownEffect, player);
 
         if (lifetime > 0f)
             Object.Destroy(decoy, lifetime);
