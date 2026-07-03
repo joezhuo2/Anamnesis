@@ -8,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
     public bool cardinalOnly = true;
     public bool canDeaggro = true;
     public float stoppingDistance = 0;
+
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public EnemyStats es;
     private Rigidbody2D rb;
@@ -37,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-            UpdateTargeting();
+        UpdateTargeting();
         MoveToTarget();
     }
     private void SetTarget(GameObject target) => es.target = target;
@@ -101,8 +102,6 @@ public class EnemyMovement : MonoBehaviour
     }
     private void UpdateTargeting()
     {
-        if (es.target != null) return;
-
         if (Time.time < nextTargetCheckTime) return;
         nextTargetCheckTime = Time.time + targetCheckInterval;
 
