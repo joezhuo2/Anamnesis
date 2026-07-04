@@ -1506,6 +1506,10 @@ MonoBehaviour:
     upgradeName: Cosmic Afterimage
     desc: Dashing leaves behind a projection of yourself that distracts enemies for
       3s. (6s cooldown)
+  - upgrade: {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Feedback Loop
+    desc: Projectiles create shrapnel on hit (0.3s cooldown).
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
@@ -2755,8 +2759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5d0b824db3c4345a977e471711e53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUpgradeManager
-  activeUpgrades:
-  - {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
+  activeUpgrades: []
 --- !u!114 &1181093668
 MonoBehaviour:
   m_ObjectHideFlags: 0
