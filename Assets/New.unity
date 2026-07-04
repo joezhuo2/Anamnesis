@@ -1509,11 +1509,11 @@ MonoBehaviour:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
     mult: 1
-    weight: 400
+    weight: 500
   - rarityName: Uncommon
     displayColor: {r: 0.21562162, g: 0.754717, b: 0, a: 1}
     mult: 3
-    weight: 300
+    weight: 350
   - rarityName: Rare
     displayColor: {r: 0, g: 0.39995039, b: 0.745283, a: 1}
     mult: 5
@@ -1521,23 +1521,23 @@ MonoBehaviour:
   - rarityName: Epic
     displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 1}
     mult: 7
-    weight: 200
+    weight: 150
   - rarityName: Legendary
     displayColor: {r: 0.74509805, g: 0.32248145, b: 0, a: 1}
     mult: 10
-    weight: 80
+    weight: 75
   - rarityName: Mythic
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
     mult: 15
-    weight: 15
+    weight: 25
   - rarityName: Celestial
     displayColor: {r: 0.012014951, g: 0.041026052, b: 0.509434, a: 1}
     mult: 20
-    weight: 3
+    weight: 7
   - rarityName: Transcendent
     displayColor: {r: 0.7783019, g: 0.9616805, b: 1, a: 1}
     mult: 30
-    weight: 1
+    weight: 2
   buttonContainer: {fileID: 1423259213}
   rerolls: 10
   rerollButton: {fileID: 786092299}

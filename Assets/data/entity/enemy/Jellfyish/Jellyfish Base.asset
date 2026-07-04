@@ -41,6 +41,7 @@ MonoBehaviour:
   physicalRes: 20
   spellRes: 10
   hurtTime: 0.3
+  effectRes: 0
   moveSpeed: 0.6
   moveSpeedPct: 0
   currentStamina: 0
@@ -68,4 +69,23 @@ MonoBehaviour:
   detectionRange: 12
   target: {fileID: 0}
   phase: 0
-  phaseThresholds: []
+  phaseThresholds:
+  - 70
+  - 40
+  phaseBuffs:
+  - buff:
+      type: 18
+      value: 30
+    phaseReq: 1
+  - buff:
+      type: 24
+      value: -40
+    phaseReq: 1
+  - buff:
+      type: 24
+      value: 130
+    phaseReq: 2
+  - buff:
+      type: 2
+      value: 50
+    phaseReq: 2

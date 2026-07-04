@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Ripple AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 3
+  cooldown: 2
   projectilePrefab: {fileID: 8892482580215943329, guid: b29cdacba10920741807cd5a6f10ec63, type: 3}
   pd: {fileID: 11400000, guid: 8df41b459065091459ae0574ad79460b, type: 2}
   pattern: 0

@@ -22,7 +22,7 @@ public class Weaken : StatusEffect
         StatBuff newDebuff = new(StatType.attack, redPct * esm.s.EffAtk);
         currentActiveDebuff = newDebuff;
 
-        esm.AddStat(newDebuff, false, true);
+        esm.AddStat(newDebuff, false);
     }
 
     private void UndoCurrentDebuff()
@@ -31,7 +31,7 @@ public class Weaken : StatusEffect
         {
             if (currentActiveDebuff.HasValue)
             {
-                esm.AddStat(currentActiveDebuff.Value, true, true);
+                esm.AddStat(currentActiveDebuff.Value, true);
                 currentActiveDebuff = null;
             }
         }

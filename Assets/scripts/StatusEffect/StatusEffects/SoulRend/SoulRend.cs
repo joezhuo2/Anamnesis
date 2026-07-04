@@ -80,7 +80,7 @@ public class SoulRend : StatusEffect
     {
         if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            if (currentActiveAtkBuff.HasValue) esm.AddStat(currentActiveAtkBuff.Value, false, true);
+            if (currentActiveAtkBuff.HasValue) esm.AddStat(currentActiveAtkBuff.Value, false);
             currentActiveAtkBuff = null;
         }
     }
@@ -88,7 +88,7 @@ public class SoulRend : StatusEffect
     {
         if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            if (currentDefShredBuff.HasValue) esm.AddStat(currentDefShredBuff.Value, false, true);
+            if (currentDefShredBuff.HasValue) esm.AddStat(currentDefShredBuff.Value, false);
             currentDefShredBuff = null;
         }
     }
@@ -96,7 +96,7 @@ public class SoulRend : StatusEffect
     {
         if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            if (currentResPenBuff.HasValue) esm.AddStat(currentResPenBuff.Value, false, true);
+            if (currentResPenBuff.HasValue) esm.AddStat(currentResPenBuff.Value, false);
             currentResPenBuff = null;
         }
     }
@@ -104,7 +104,7 @@ public class SoulRend : StatusEffect
     {
         if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            if (currentPhysDmgBuff.HasValue) esm.AddStat(currentPhysDmgBuff.Value, false, true);
+            if (currentPhysDmgBuff.HasValue) esm.AddStat(currentPhysDmgBuff.Value, false);
             currentPhysDmgBuff = null;
         }
     }
@@ -112,7 +112,7 @@ public class SoulRend : StatusEffect
     {
         if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            if (currentCritDmgbuff.HasValue) esm.AddStat(currentCritDmgbuff.Value, false, true);
+            if (currentCritDmgbuff.HasValue) esm.AddStat(currentCritDmgbuff.Value, false);
             currentCritDmgbuff = null;
         }
     }
@@ -120,7 +120,7 @@ public class SoulRend : StatusEffect
     {
         if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            if (currentUltDmgBuff.HasValue) esm.AddStat(currentUltDmgBuff.Value, false, true);
+            if (currentUltDmgBuff.HasValue) esm.AddStat(currentUltDmgBuff.Value, false);
             currentUltDmgBuff = null;
         }
     }

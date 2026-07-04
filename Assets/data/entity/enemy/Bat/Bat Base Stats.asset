@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07d87bbbeb6804b4bbe36ab86d5cd763, type: 3}
-  m_Name: Lich_Base
+  m_Name: Bat Base Stats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
-  physicalDmgPct: 0
-  spellDmgPct: 3
-  attack: 6
+  physicalDmgPct: 1
+  spellDmgPct: 0
+  attack: 2
   atkPct: 0
   attackSpeedPct: 0
-  critChance: 10
-  critDamage: 80
+  critChance: 5
+  critDamage: 40
   aoePct: 0
   defShred: 0
   resPen: 0
@@ -28,21 +28,21 @@ MonoBehaviour:
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
-  currentHp: 800
-  maxHp: 800
-  hpPct: 50
-  hpRegen: 0
+  currentHp: 110
+  maxHp: 110
+  hpPct: 0
+  hpRegen: 3
   hpRegPct: 0
-  armor: 150
-  armorPct: 50
-  damageRes: 20
-  dodgeChance: 0
-  dodgeResPct: 0
-  physicalRes: 10
-  spellRes: 60
-  hurtTime: 0.25
+  armor: 0
+  armorPct: 0
+  damageRes: 0
+  dodgeChance: 10
+  dodgeResPct: 30
+  physicalRes: 0
+  spellRes: 0
+  hurtTime: 0.5
   effectRes: 0
-  moveSpeed: 1.45
+  moveSpeed: 0.6
   moveSpeedPct: 0
   currentStamina: 0
   maxStamina: 0
@@ -66,13 +66,7 @@ MonoBehaviour:
   isAttacking: 0
   canMove: 0
   canGainHp: 0
-  detectionRange: 12
+  detectionRange: 8
   target: {fileID: 0}
   phase: 0
-  phaseThresholds:
-  - 50
-  phaseBuffs:
-  - buff:
-      type: 24
-      value: 40
-    phaseReq: 1
+  phaseThresholds: []

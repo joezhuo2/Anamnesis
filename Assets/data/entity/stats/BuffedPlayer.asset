@@ -15,7 +15,7 @@ MonoBehaviour:
   damagePct: 50
   physicalDmgPct: 80
   spellDmgPct: 80
-  attack: 150
+  attack: 300
   atkPct: 50
   attackSpeedPct: 40
   critChance: 70
@@ -25,9 +25,12 @@ MonoBehaviour:
   resPen: 30
   addPhysDmgPct: 20
   addSplDmgPct: 20
-  currentHp: 300
-  maxHp: 300
-  hpPct: 60
+  basicDmgPct: 0
+  skillDmgPct: 0
+  ultDmgPct: 0
+  currentHp: 800
+  maxHp: 800
+  hpPct: 120
   hpRegen: 40
   hpRegPct: 50
   armor: 500
@@ -38,6 +41,7 @@ MonoBehaviour:
   physicalRes: 30
   spellRes: 30
   hurtTime: 0.3
+  effectRes: 0
   moveSpeed: 1.5
   moveSpeedPct: 50
   currentStamina: 100
@@ -46,13 +50,7 @@ MonoBehaviour:
   stRegPct: 50
   currentMana: 100
   maxMana: 100
-  level: 1
-  isAlive: 1
-  isImmune: 0
-  canAttack: 1
-  isAttacking: 0
-  canMove: 1
-  canGainHp: 0
+  canGainMana: 0
   dashSpeedMult: 5
   dashCooldown: 3
   dashDistance: 1.5
@@ -61,4 +59,10 @@ MonoBehaviour:
   isDashing: 0
   canDash: 0
   canGainStamina: 0
-  canGainMana: 0
+  level: 1
+  isAlive: 1
+  isImmune: 0
+  canAttack: 1
+  isAttacking: 0
+  canMove: 1
+  canGainHp: 0
