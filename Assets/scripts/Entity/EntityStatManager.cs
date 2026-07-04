@@ -128,7 +128,7 @@ public class EntityStatManager : MonoBehaviour
         return value;
     }
 
-    public void AddStat(StatBuff b, bool isAdding = true, bool show = false)
+    public void AddStat(StatBuff b, bool isAdding = true)
     {
         float factor = isAdding ? 1f : -1f;
         float mod = b.value * factor;
@@ -172,13 +172,6 @@ public class EntityStatManager : MonoBehaviour
             default: break;
 
         }
-    }
-    public void AddBuffForDuration(StatBuff b, float duration, bool show) => StartCoroutine(AddBuffForDurationRoutine(b, duration, show));
-    private IEnumerator AddBuffForDurationRoutine(StatBuff b, float duration, bool show)
-    {
-        AddStat(b, true, show);
-        yield return new WaitForSeconds(duration);
-        AddStat(b, false, show);
     }
 }
 

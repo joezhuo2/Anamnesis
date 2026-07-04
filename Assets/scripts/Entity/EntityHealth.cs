@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,10 +27,13 @@ public class EntityHealth : MonoBehaviour
     private TextMeshProUGUI healthBarTextInstance;
     private Camera mainCamera;
     private PlayerUpgradeManager cpum;
+    private EntityStatManager esm;
+    private int lastAppliedPhase = 0;
 
     private void Start()
     {
-        es = GetComponent<EntityStatManager>()?.s;
+        esm = GetComponent<EntityStatManager>();
+        if (esm != null) es = esm.s;
         animator = GetComponent<Animator>();
 
         mainCamera = Camera.main;
@@ -126,17 +130,7 @@ public class EntityHealth : MonoBehaviour
         int newHp = Math.Min(es.currentHp + finalAmount, (int)es.EffMaxHp);
         es.currentHp = Mathf.Max(0, newHp);
 
-        if (es is EnemyStats enemyStats && enemyStats.phaseThresholds != null)
-        {
-            float hpPct = (float)es.currentHp / es.EffMaxHp * 100f;
-            int newPhase = 0;
-            for (int i = 0; i < enemyStats.phaseThresholds.Length; i++)
-            {
-                if (hpPct <= enemyStats.phaseThresholds[i]) newPhase = i + 1;
-                else break;
-            }
-            enemyStats.phase = newPhase;
-        }
+        UpdatePhase();
 
         DamageIndicatorSpawner dis = DamageIndicatorSpawner.Instance;
         Vector3 pos = transform.position;
@@ -173,6 +167,41 @@ public class EntityHealth : MonoBehaviour
             {
                 healthBarInstance.value = es.currentHp;
                 healthBarTextInstance.text = $"{es.currentHp}/{es.EffMaxHp}";
+            }
+        }
+    }
+    private void UpdatePhase()
+    {
+        if (es is not EnemyStats enemyStats || enemyStats.phaseThresholds == null) return;
+
+        float hpPct = (float)es.currentHp / es.EffMaxHp * 100f;
+        int newPhase = 0;
+        for (int i = 0; i < enemyStats.phaseThresholds.Length; i++)
+        {
+            if (hpPct <= enemyStats.phaseThresholds[i]) newPhase = i + 1;
+            else break;
+        }
+        if (enemyStats.phase == newPhase) return;
+
+        int previousPhase = enemyStats.phase;
+        enemyStats.phase = newPhase;
+
+        if (enemyStats.phaseBuffs == null || esm == null) return;
+
+        if (newPhase > previousPhase)
+        {
+            foreach (var pb in enemyStats.phaseBuffs)
+            {
+                if (pb.phaseReq > previousPhase && pb.phaseReq <= newPhase)
+                    esm.AddStat(pb.buff);
+            }
+        }
+        else if (newPhase < previousPhase)
+        {
+            foreach (var pb in enemyStats.phaseBuffs)
+            {
+                if (pb.phaseReq > newPhase && pb.phaseReq <= previousPhase)
+                    esm.AddStat(pb.buff, false);
             }
         }
     }
