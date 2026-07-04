@@ -48,7 +48,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         string name = cse.effName + $"[{cse.currentStacks}]";
 
-        TooltipUI.Instance.ShowTooltip(name, string.Join("\n", lines));
+        TooltipUI.Instance.ShowTooltip(name, string.Join("\n", lines), new(100, -100));
     }
     private void ShowResourcesTooltip()
     {
@@ -71,7 +71,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (resTypes.Count > 0)
             lines.Add($"Res: {string.Join(" ", resTypes)}");
 
-        TooltipUI.Instance.ShowTooltip("Resources", string.Join("\n", lines));
+        TooltipUI.Instance.ShowTooltip("Resources", string.Join("\n", lines), new(100, -100));
     }
     private void ShowAttackTooltip()
     {
@@ -119,7 +119,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (dmgTypes.Count > 0)
             lines.Add($"Base: {string.Join(" ", dmgTypes)}");
 
-        TooltipUI.Instance.ShowTooltip(cad.displayName, string.Join("\n", lines));
+        TooltipUI.Instance.ShowTooltip(cad.displayName, string.Join("\n", lines), new(0, -100));
     }
     public void OnPointerExit(PointerEventData eventData)
     {

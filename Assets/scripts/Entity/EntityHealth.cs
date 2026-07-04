@@ -28,7 +28,6 @@ public class EntityHealth : MonoBehaviour
     private Camera mainCamera;
     private PlayerUpgradeManager cpum;
     private EntityStatManager esm;
-    private int lastAppliedPhase = 0;
 
     private void Start()
     {

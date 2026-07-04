@@ -23,9 +23,11 @@ public class TooltipUI : MonoBehaviour
         GetComponent<RectTransform>().position = PlayerInputHandler.mousePos + offset;
     }
 
-    public void ShowTooltip(string title, string description)
+    public void ShowTooltip(string title, string description, Vector2 os)
     {
         gameObject.SetActive(true);
+
+        offset = os;
         titleText.text = title;
         descriptionText.text = description;
     }
