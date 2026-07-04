@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum RewardType { Basic, Rare, Treasure }
+public enum RewardType { Mixed, Basic, Rare, Treasure, Anomaly }
 
 public class RewardButton : MonoBehaviour
 {
@@ -74,8 +74,6 @@ public class RewardButton : MonoBehaviour
 
         LinkButtonComponent();
     }
-
-
     private void LinkButtonComponent()
     {
         if (TryGetComponent<Button>(out var btn))
@@ -84,7 +82,6 @@ public class RewardButton : MonoBehaviour
             btn.onClick.AddListener(HandleClick);
         }
     }
-
     private void HandleClick()
     {
         switch (type)
