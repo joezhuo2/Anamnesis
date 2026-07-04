@@ -65,7 +65,7 @@ public class Projectile : MonoBehaviour {
         if (other.TryGetComponent<EntityStatManager>(out var statManager) && ownerObj != other.gameObject)
             HandleHitEntity(other.gameObject);
     }
-    private void HandleHitEntity(GameObject target)
+    private void HandleHitEntity(GameObject target, bool canTriggerUpgrades = true)
     {
         if (target == null || ownerObj == null || target == ownerObj) return;
         if (!target.TryGetComponent<EntityHealth>(out var eh)) return;
@@ -80,11 +80,15 @@ public class Projectile : MonoBehaviour {
         DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, damageSnapshot);
 
         eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj, damageSnapshot.resPen, damageSnapshot.defShred);
+
         var (hp, stamina, mana) = CalculateStatGains(ownerObj, pd.mainAttack, packet.GetTotalDamage());
         TriggerStatGains(hp, stamina, mana, ownerObj);
 
         pierced++;
         hit.Add(target);
+
+        if (canTriggerUpgrades && ownerObj.TryGetComponent<PlayerUpgradeManager>(out var pum))
+            pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnProjectileHit, target.transform.position);
 
         if (pd.timeBeforeSameEnemy > 0f) StartCoroutine(RemoveFromHitHistory(target, pd.timeBeforeSameEnemy));
 

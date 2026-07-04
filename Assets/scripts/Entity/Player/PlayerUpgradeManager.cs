@@ -66,6 +66,30 @@ public class PlayerUpgradeManager : MonoBehaviour
             }
         }
     }
+    public void TriggerUpgrades(PlayerUpgrade.TriggerCondition condition, Vector2 spawnCenter)
+    {
+        float now = Time.time;
+
+        foreach (var u in activeUpgrades)
+        {
+            if (u == null) continue;
+
+            if (u.cooldown > 0f && lastTriggerTimes.TryGetValue(u, out float lastTriggerTime) && now < lastTriggerTime + u.cooldown)
+                continue;
+
+            foreach (var c in u.conditions)
+            {
+                if (c == condition)
+                {
+                    if (Random.Range(0f, 100f) > u.chance) continue;
+                    lastTriggerTimes[u] = now;
+                    if (u.delay > 0) StartCoroutine(TriggerWithDelay(u));
+                    else u.TriggerUpgradeEffect(gameObject, spawnCenter);
+                    break;
+                }
+            }
+        }
+    }
     private IEnumerator TriggerWithDelay(PlayerUpgrade u)
     {
         yield return new WaitForSeconds(u.delay);
