@@ -23,10 +23,10 @@ MonoBehaviour:
 
     [10] + 1% ResPen
 
-    [20] +5%
+    [20] +4%
     PhysDmg
 
-    [25] +6% CritDmg
+    [25] +5% CritDmg
 
     [50] +100% Ult Dmg
 
@@ -34,10 +34,11 @@ MonoBehaviour:
   maxStacks: 100
   target: {fileID: 0}
   source: {fileID: 0}
+  projectile: {fileID: 0}
   currentStacks: 0
   addPerStack: 0.3
   defShredAmt: 2
   respenAmt: 1
-  physDmgPct: 5
-  critDmgAmt: 6
+  physDmgPct: 4
+  critDmgAmt: 5
   ultDmgAmt: 100

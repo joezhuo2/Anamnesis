@@ -6,7 +6,7 @@ public class TimeTrialInstance : AnomalyInstance
 
     public TimeTrialInstance(AnomalyData data) : base(data)
     {
-        timeRemaining = data.anamolyVal;
+        timeRemaining = data.anomalyValue;
     }
 
     public override void StartAnomaly()

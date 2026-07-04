@@ -24,6 +24,7 @@ MonoBehaviour:
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
+  maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
@@ -35,4 +36,4 @@ MonoBehaviour:
   - effect: {fileID: 11400000, guid: 7b227cb15c582744994c04526dff35e1, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 1
+    chance: 0.6

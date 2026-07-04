@@ -1278,7 +1278,7 @@ MonoBehaviour:
   currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2.5
   waveInfoPanel: {fileID: 2059475857}
-  anamolyInfoText: {fileID: 1424804071}
+  anomalyInfoText: {fileID: 1424804071}
   waveText: {fileID: 1154343300}
   bossBarContainer: {fileID: 756341797}
   statusEffectDisplayContainer: {fileID: 1613919038}
@@ -1534,22 +1534,25 @@ MonoBehaviour:
   - rarityName: Celestial
     displayColor: {r: 0.012014951, g: 0.041026052, b: 0.509434, a: 1}
     mult: 20
-    weight: 7
+    weight: 5
   - rarityName: Transcendent
     displayColor: {r: 0.7783019, g: 0.9616805, b: 1, a: 1}
     mult: 30
-    weight: 2
+    weight: 1
   buttonContainer: {fileID: 1423259213}
   rerolls: 10
   rerollButton: {fileID: 786092299}
   rerollText: {fileID: 186757956}
-  availableAnamolies:
+  availableAnomalies:
   - {fileID: 11400000, guid: c606e919e6969c94c8d5ba434c0b7055, type: 2}
-  anamolyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
+  - {fileID: 11400000, guid: 7b6a07acfa60e3f4c9965612f9969528, type: 2}
+  - {fileID: 11400000, guid: 8cdc45e75e0d1ca41885e6e563ef285c, type: 2}
+  - {fileID: 11400000, guid: 9e7d67e92c12ea449ae71ac414c026e2, type: 2}
+  anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 2
   maxAnomalyCount: 5
-  anamolyChance: 20
-  anamolyGlobalMinWave: 10
+  anomalyChance: 15
+  anomalyGlobalMinWave: 5
 --- !u!4 &587400166
 Transform:
   m_ObjectHideFlags: 0
@@ -2752,7 +2755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5d0b824db3c4345a977e471711e53c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUpgradeManager
-  activeUpgrades: []
+  activeUpgrades:
+  - {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
 --- !u!114 &1181093668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3458,7 +3462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

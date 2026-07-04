@@ -31,7 +31,7 @@ public class StatusEffectCooldownUI : MonoBehaviour
     }
     private void Update()
     {
-        if (cse == null)
+        if (cse == null || !cesm.s.isAlive)
         {
             Destroy(gameObject);
             return;

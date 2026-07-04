@@ -12,7 +12,7 @@ public class WaveManager : MonoBehaviour
 
     [Header("Wave Settings")]
     public GameObject waveInfoPanel;
-    public TextMeshProUGUI anamolyInfoText;
+    public TextMeshProUGUI anomalyInfoText;
     public TextMeshProUGUI waveText;
     public Transform bossBarContainer;
     public Transform statusEffectDisplayContainer;
@@ -30,13 +30,13 @@ public class WaveManager : MonoBehaviour
     public TextMeshProUGUI rerollText;
 
     [Header("Anomaly Settings")]
-    public List<AnomalyData> availableAnamolies = new();
-    public GameObject anamolyPrefab = null;
+    public List<AnomalyData> availableAnomalies = new();
+    public GameObject anomalyPrefab = null;
     public AnomalyInstance currentAnomaly = null;
     public int minAnomalyCount = 2;
     public int maxAnomalyCount = 5;
-    public float anamolyChance = 10;
-    public float anamolyGlobalMinWave = 10;
+    public float anomalyChance = 10;
+    public float anomalyGlobalMinWave = 10;
 
     private RewardType type = RewardType.Basic;
     private GameObject activeBossBar;
@@ -76,9 +76,9 @@ public class WaveManager : MonoBehaviour
         {
             currentAnomaly.UpdateCheck(Time.deltaTime);
 
-            if (anamolyInfoText != null)
+            if (anomalyInfoText != null)
             {
-                switch (currentAnomaly.amd.anamolyType)
+                switch (currentAnomaly.amd.anomalyType)
                 {
                     case AnomalyType.TimeTrial: UpdateAnomalyTimeInfo(); break;
                     default: break;
@@ -87,19 +87,26 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            ClearAnamolyText();
+            ClearAnomalyText();
         }
     }
-    private void ClearAnamolyText()
+    private void ClearAnomalyText()
     {
-        if (anamolyInfoText != null && anamolyInfoText.text != "")
-            anamolyInfoText.text = "";
+        if (anomalyInfoText != null && anomalyInfoText.text != "")
+            anomalyInfoText.text = "";
     }
 
     private void UpdateAnomalyTimeInfo()
     {
         if (currentAnomaly is TimeTrialInstance tt)
-            anamolyInfoText.text = $"Time Remaining: {tt.timeRemaining:F1}s";
+        {
+            if (tt.timeRemaining <= 0f)
+            {
+                anomalyInfoText.text = "Time's Up! Anomaly Failed";
+                return;
+            }
+            anomalyInfoText.text = $"Time Remaining: {tt.timeRemaining:F1}s";
+        }
     }
     private GameObject GetOrCreateRewardButton()
     {
@@ -237,6 +244,7 @@ public class WaveManager : MonoBehaviour
             }
             else
             {
+                currentAnomaly.Cleanup();
                 currentAnomaly = null;
                 ResumeGameLoop();
             }
@@ -249,6 +257,7 @@ public class WaveManager : MonoBehaviour
     private void HandleAnomalyRewards()
     {
         currentAnomaly.CompleteAnomaly();
+        currentAnomaly.Cleanup();
         currentAnomaly = null;
 
         pendingStandardRewards = true;
@@ -265,6 +274,8 @@ public class WaveManager : MonoBehaviour
     private void TriggerStandardRewards(int w)
     {
         pendingStandardRewards = false;
+        if (currentAnomaly != null) currentAnomaly.Cleanup();
+
         currentAnomaly = null;
 
         if (w % 10 == 0) GenerateTreasurePool();
@@ -274,14 +285,14 @@ public class WaveManager : MonoBehaviour
     private bool RollAndGenerateAnomaly()
     {
         if (currentAnomaly != null && currentAnomaly.isActive) return false;
-        if (availableAnamolies == null || availableAnamolies.Count == 0) return false;
-        if (anamolyPrefab == null || GetCurrentWave() <= anamolyGlobalMinWave) return false;
-        if (minAnomalyCount <= 0 || maxAnomalyCount <= 0 || anamolyChance <= 0f) return false;
+        if (availableAnomalies == null || availableAnomalies.Count == 0) return false;
+        if (anomalyPrefab == null || GetCurrentWave() <= anomalyGlobalMinWave) return false;
+        if (minAnomalyCount <= 0 || maxAnomalyCount <= 0 || anomalyChance <= 0f) return false;
 
         float roll = Random.Range(0f, 100f);
-        if (roll > anamolyChance) return false;
+        if (roll > anomalyChance) return false;
 
-        var available = availableAnamolies.FindAll(a => GetCurrentWave() >= a.minWave);
+        var available = availableAnomalies.FindAll(a => GetCurrentWave() >= a.minWave && GetCurrentWave() <= a.maxWave);
         if (available.Count == 0) return false;
 
         PanelSetup();
@@ -294,11 +305,11 @@ public class WaveManager : MonoBehaviour
             AnomalyData amd = available[Random.Range(0, available.Count)];
 
             Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
-            GameObject btnObj = Instantiate(anamolyPrefab, targetParent);
+            GameObject btnObj = Instantiate(anomalyPrefab, targetParent);
             activeRewardButtons.Add(btnObj);
 
-            if (btnObj.TryGetComponent<AnomalyButtonUI>(out var anamolyButton))
-                anamolyButton.Setup(amd, OnAnomalyButtonClicked);
+            if (btnObj.TryGetComponent<AnomalyButtonUI>(out var anomalyButton))
+                anomalyButton.Setup(amd, OnAnomalyButtonClicked);
         }
 
         return true;
@@ -421,6 +432,7 @@ public class WaveManager : MonoBehaviour
         {
             CloseRewardUI();
             Time.timeScale = 1f;
+            if (currentAnomaly != null) currentAnomaly.Cleanup();
             currentAnomaly = null;
             BeginWave();
             return;
@@ -540,6 +552,8 @@ public class WaveManager : MonoBehaviour
                 }
                 else
                 {
+                    if (btn.TryGetComponent<Button>(out var button))
+                        button.onClick.RemoveAllListeners();
                     btn.SetActive(false);
                     inactiveRewardButtonPool.Add(btn);
                 }

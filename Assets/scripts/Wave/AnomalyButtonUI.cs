@@ -21,9 +21,15 @@ public class AnomalyButtonUI : MonoBehaviour
         b.onClick.RemoveAllListeners();
         b.onClick.AddListener(OnClick);
 
-        if (titleText != null) titleText.text = data.anamolyName;
+        if (titleText != null) titleText.text = data.anomalyName;
         if (descText != null) descText.text = data.desc;
     }
 
     public void OnClick() => onSelectedCallback?.Invoke(cachedData);
+
+    private void OnDestroy()
+    {
+        onSelectedCallback = null;
+        cachedData = null;
+    }
 }

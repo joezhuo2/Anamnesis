@@ -6,9 +6,9 @@ public static class WaveQuality
     public static float CalculateQualityBoost(int wave)
     {
         if (wave == 1) return 0.5f;
-        if (wave <= 30) return 0.2f + ((wave / 5f) * 0.1f);
-        if (wave <= 105) return 0.8f + ((wave - 30) / 10f) * 0.01f;
-        return 1.6f;
+        if (wave <= 30) return (wave / 5f) * 0.1f;
+        if (wave <= 105) return 0.6f + (((wave - 30) / 10f) * 0.01f);
+        return 1.5f;
     }
     public static RarityData GetWeightedRandomRarity(int wave, List<RarityData> rarityData, float qual = 0f)
     {

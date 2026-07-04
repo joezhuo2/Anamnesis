@@ -24,6 +24,7 @@ MonoBehaviour:
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
+  maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
@@ -31,4 +32,8 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effects: []
+  effects:
+  - effect: {fileID: 11400000, guid: bcae2e0aa1dedbe4aba7f78dfcf41e9f, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 0.4
