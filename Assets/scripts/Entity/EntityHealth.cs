@@ -84,17 +84,26 @@ public class EntityHealth : MonoBehaviour
 
         float resPen = sourceResPen;
         int defShred = sourceDefShred;
+
         if ((float.IsNaN(resPen) || defShred == int.MinValue) && source != null && source.TryGetComponent<EntityStatManager>(out var sourceStats) && sourceStats.s != null)
         {
             if (float.IsNaN(resPen)) resPen = sourceStats.s.resPen;
             if (defShred == int.MinValue) defShred = sourceStats.s.defShred;
         }
+
         if (float.IsNaN(resPen)) resPen = 0f;
         if (defShred == int.MinValue) defShred = 0;
 
         foreach (var i in dp.instances)
         {
-            var (dmg, sizeMult)= i.type == DamageType.True || i.type == DamageType.DoT ? (i.amount, 1f) : CalculateDamageTaken(i.type, i.amount, resPen, defShred);
+            var (dmg, sizeMult) = i.type switch
+            {
+                DamageType.True => (i.amount, 1f),
+                DamageType.Physical => CalculateDamageTaken(i.type, i.amount, resPen, defShred),
+                DamageType.Spell => CalculateDamageTaken(i.type, i.amount, resPen, defShred),
+                DamageType.DoT => (i.amount * (1f - (esm.s.effectRes * 0.01f)), 1f),
+                _ => (0f, 1f)
+            };
 
             Color color = i.indicatorColor != default ? i.indicatorColor : i.type switch
             {
@@ -107,8 +116,7 @@ public class EntityHealth : MonoBehaviour
             if (i.isCrit) sizeMult *= 1.5f;
             if (sizeOverride > 0f) sizeMult = sizeOverride;
 
-            if (dmg > 0)
-                ChangeHealth(-Mathf.RoundToInt(dmg), 0, true, sizeMult, color, bypassIFrames, source);
+            if (dmg > 0) ChangeHealth(-Mathf.RoundToInt(dmg), 0, true, sizeMult, color, bypassIFrames, source);
         }
 
         if (cpum != null)
@@ -265,6 +273,7 @@ public class EntityHealth : MonoBehaviour
     {
         float effRes = Mathf.Max(-100f, es.damageRes - sourceResPen);
         float resMult = 1f - (effRes * 0.01f);
+
         float effArmor = Mathf.Max(0, es.EffArmor - sourceDefShred);
         float armorMult = type == DamageType.Physical ? 1f - ((float)effArmor / (effArmor + 100f)) : 1f;
 

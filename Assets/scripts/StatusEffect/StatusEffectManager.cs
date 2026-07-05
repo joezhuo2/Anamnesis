@@ -130,7 +130,9 @@ public class StatusEffectManager : MonoBehaviour
 
             e.currentTime += dt;
 
-            if (e.currentTime > e.duration)
+            float effDur = e.isBuff ? e.duration : e.duration * (1f - (cesm.s.effectRes * 0.01f));
+
+            if (e.currentTime > effDur)
             {
                 if (e.currentStacks > 1)
                 {

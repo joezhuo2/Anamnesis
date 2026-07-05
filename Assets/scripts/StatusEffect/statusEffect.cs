@@ -6,6 +6,7 @@ public abstract class StatusEffect : ScriptableObject
     [HideInInspector] public float currentTime;
     public float duration;
     [Tooltip("How often effect triggers")] public float tickInterval;
+    public bool isBuff = false;
 
     [Header("UI")]
     public Sprite icon;

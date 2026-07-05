@@ -37,16 +37,16 @@ public class StatusEffectCooldownUI : MonoBehaviour
             return;
         }
 
-        float dura = cse.duration;
+        float effDur = cse.isBuff ? cse.duration : cse.duration * (1f - (cesm.s.effectRes * 0.01f));
 
-        if (dura <= 0f)
+        if (effDur <= 0f)
         {
             cooldownImage.fillAmount = 0f;
             return;
         }
 
         float timeElapsed = cse.currentTime;
-        float cooldownRemainingPct = 1f - (timeElapsed / dura);
+        float cooldownRemainingPct = 1f - (timeElapsed / effDur);
 
         cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
     }

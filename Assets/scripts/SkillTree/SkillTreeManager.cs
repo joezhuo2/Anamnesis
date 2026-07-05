@@ -7,9 +7,13 @@ public class SkillTreeManager : MonoBehaviour
     public List<SkillNodeDef> allNodes = new();
     public int skillPoints;
 
-    private List<SkillNodeDef> runtimeNodes = new();
-    private HashSet<string> unlockedNodes = new();
+    private readonly List<SkillNodeDef> runtimeNodes = new();
+    private readonly HashSet<string> unlockedNodes = new();
 
+    public void Start ()
+    {
+        // TODO: load player
+    }
     public void GenerateRuntimeNodes()
     {
         runtimeNodes.Clear();
@@ -112,6 +116,8 @@ public class SkillTreeManager : MonoBehaviour
             foreach (var n in node.incompatibleNodes)
                 if (unlockedNodes.Contains(n.nodeID)) return false;
         }
+
+        // TODO: check for required attacks and player upgrades
 
         return true;
     }
