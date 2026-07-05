@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TooltipType { Attack, Resources, StatusEffect }
+public enum TooltipType { Attack, Resources, StatusEffect, Dash }
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
@@ -31,6 +30,11 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         cps = ps;
         cesm = esm;
     }
+    public void SetupDashTooltipData(PlayerStats ps)
+    {
+        tooltipType = TooltipType.Dash;
+        cps = ps;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         switch (tooltipType)
@@ -38,6 +42,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             case TooltipType.Attack: ShowAttackTooltip(); break;
             case TooltipType.Resources: ShowResourcesTooltip(); break;
             case TooltipType.StatusEffect: ShowStatusEffectTooltip(); break;
+            case TooltipType.Dash: ShowDashTooltip(); break;
             default: break;
         }
     }
@@ -50,6 +55,18 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         TooltipUI.Instance.ShowTooltip(name, string.Join("\n", lines), new(100, -100));
     }
+    private void ShowDashTooltip()
+    {
+        List<string> lines = new();
+        if (cps.dodgeChance != 0f) lines.Add($"Dodge: {cps.dodgeChance:F0}% (-{cps.dodgeResPct:F0}%)");
+        if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd} (+{cps.moveSpeedPct:F0}%)");
+        if (cps.dashCooldown != 0) lines.Add($"Dash Cooldown: {cps.dashCooldown:F1}s");
+        if (cps.dashDistance != 0) lines.Add($"Dash Distance: {cps.dashDistance:F1}");
+        if (cps.dashStaminaCost != 0) lines.Add($"Dash Stamina Cost: {cps.dashStaminaCost:F1}");
+
+        TooltipUI.Instance.ShowTooltip("Movement", string.Join("\n", lines), new(100, 30));
+    }
+
     private void ShowResourcesTooltip()
     {
         float staminaPerSecond = cps.EffStReg / 5f;
@@ -58,10 +75,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         List<string> lines = new();
         if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s (+{cps.stRegPct:F0}%)");
         if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s (+{cps.hpRegPct:F0}%)");
-        if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (-{cps.ArmorRes*100f:F1}%)");
+        if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (+{cps.armorPct:F0}%) [-{cps.ArmorRes*100f:F1}%P]");
         if (cps.EffAtk != 0) lines.Add($"Attack: {cps.EffAtk:F0} (+{cps.atkPct:F0}%)");
-        if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd} (+{cps.moveSpeedPct:F0}%)");
-        if (cps.dodgeChance != 0f) lines.Add($"Dodge: {cps.dodgeChance:F0}% (-{cps.dodgeResPct:F0}%)");
 
         List<string> resTypes = new();
         if (cps.damageRes != 0f) resTypes.Add($"{cps.damageRes:F1}%");

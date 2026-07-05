@@ -5,13 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerUpgradeManager))]
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject dashCooldownUI;
+
     [HideInInspector] public Vector2 moveInput;
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public PlayerStats p;
     private Rigidbody2D rb;
     private Animator animator;
     public static readonly float baseAnimSpeed = 1f;
-    private float lastDashTime;
+    [HideInInspector] public float lastDashTime;
     private float dashTravelled;
     private Vector2 dashDir;
     [HideInInspector] public static int playerDir = 1; // 1 => facing right, -1 => facing left
@@ -28,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
         p.isDashing = false;
 
         lastDashTime = -Mathf.Infinity;
+
+        if (dashCooldownUI != null && dashCooldownUI.TryGetComponent<PlayerDashCooldownUI>(out var pdcui))
+            pdcui.Setup(this, p);
     }
     private void FixedUpdate()
     {
