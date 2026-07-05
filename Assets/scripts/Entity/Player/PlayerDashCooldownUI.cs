@@ -25,6 +25,7 @@ public class PlayerDashCooldownUI : MonoBehaviour
     }
     private void Update()
     {
+        if (cps == null || cpm == null || cooldownImage == null) return;
         float cd = cps.dashCooldown;
 
         if (cd <= 0f)
