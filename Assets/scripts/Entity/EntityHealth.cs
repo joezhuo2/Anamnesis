@@ -9,6 +9,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Animator))]
 public class EntityHealth : MonoBehaviour
 {
+    public static event Action<EntityHealth> OnPlayerTakeDamage;
+
     private static readonly int IsDeadHash = Animator.StringToHash("isDead");
     private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
     private float regenTimer;
@@ -78,6 +80,7 @@ public class EntityHealth : MonoBehaviour
     public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source, float sourceResPen = float.NaN, int sourceDefShred = int.MinValue, float sizeOverride = 0f)
     {
         if (dp == null) return;
+        if (esm.s.isImmune && !bypassIFrames) return;
 
         float resPen = sourceResPen;
         int defShred = sourceDefShred;
@@ -107,6 +110,9 @@ public class EntityHealth : MonoBehaviour
             if (dmg > 0)
                 ChangeHealth(-Mathf.RoundToInt(dmg), 0, true, sizeMult, color, bypassIFrames, source);
         }
+
+        if (cpum != null)
+            OnPlayerTakeDamage?.Invoke(this);
     }
     public void ChangeHealth(float amount, float pctAmt, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
     {

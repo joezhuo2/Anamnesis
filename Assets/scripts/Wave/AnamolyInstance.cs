@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class AnomalyInstance
 {
     public AnomalyData amd;
@@ -16,7 +18,6 @@ public class AnomalyInstance
     }
 
     public virtual void UpdateCheck(float dt) { }
-
     public virtual void FailAnomaly()
     {
         if (!isActive) return;

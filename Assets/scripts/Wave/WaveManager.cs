@@ -81,6 +81,7 @@ public class WaveManager : MonoBehaviour
                 switch (currentAnomaly.amd.anomalyType)
                 {
                     case AnomalyType.TimeTrial: UpdateAnomalyTimeInfo(); break;
+                    case AnomalyType.NoDamage: anomalyInfoText.text = "No Damage Anomaly Active"; break;
                     default: break;
                 }
             }

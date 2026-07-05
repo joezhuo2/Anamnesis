@@ -17,6 +17,7 @@ public class AnomalyData : ScriptableObject
         return anomalyType switch
         {
             AnomalyType.TimeTrial => new TimeTrialInstance(this),
+            AnomalyType.NoDamage => new NoDamageTrialInstance(this),
             _ => new AnomalyInstance(this)
         };
     }
