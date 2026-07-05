@@ -41,7 +41,7 @@ MonoBehaviour:
   physicalRes: 5
   spellRes: 5
   hurtTime: 0.3
-  effectRes: 0
+  effectRes: 5
   moveSpeed: 0.85
   moveSpeedPct: 0
   currentStamina: 0
@@ -70,3 +70,4 @@ MonoBehaviour:
   target: {fileID: 0}
   phase: 0
   phaseThresholds: []
+  phaseBuffs: []

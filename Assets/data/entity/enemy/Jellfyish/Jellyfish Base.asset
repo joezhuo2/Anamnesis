@@ -41,7 +41,7 @@ MonoBehaviour:
   physicalRes: 20
   spellRes: 10
   hurtTime: 0.3
-  effectRes: 0
+  effectRes: 25
   moveSpeed: 0.6
   moveSpeedPct: 0
   currentStamina: 0

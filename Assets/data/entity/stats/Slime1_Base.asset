@@ -70,3 +70,4 @@ MonoBehaviour:
   target: {fileID: 0}
   phase: 0
   phaseThresholds: []
+  phaseBuffs: []
