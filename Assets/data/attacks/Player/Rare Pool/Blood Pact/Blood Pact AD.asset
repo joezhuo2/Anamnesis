@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Blood Pact AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 1
+  cooldown: 1.8
   projectilePrefab: {fileID: 9179472077719303980, guid: f02d1ae2865471a45b42b03c12b49b25, type: 3}
   pd: {fileID: 11400000, guid: ed3fb9658ca516e4ba945b1bd2d95ae8, type: 2}
   pattern: 0
@@ -34,15 +34,15 @@ MonoBehaviour:
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
-  healthCost: 18
-  healthCostPct: 7
+  healthCost: 14
+  healthCostPct: 11
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 2
   staminaPctGainOnHit: 0
-  healthGainOnHit: 4
-  healthPctGainOnHit: 8
+  healthGainOnHit: 6
+  healthPctGainOnHit: 6
   manaGainOnHit: 2
   manaPctGainOnHit: 0
   type: 0

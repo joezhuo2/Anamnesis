@@ -15,7 +15,7 @@ MonoBehaviour:
   damagePct: 50
   physicalDmgPct: 80
   spellDmgPct: 80
-  attack: 300
+  attack: 100
   atkPct: 50
   attackSpeedPct: 40
   critChance: 70
@@ -28,8 +28,8 @@ MonoBehaviour:
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
-  currentHp: 800
-  maxHp: 800
+  currentHp: 500
+  maxHp: 500
   hpPct: 120
   hpRegen: 40
   hpRegPct: 50

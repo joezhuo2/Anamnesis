@@ -42,7 +42,7 @@ MonoBehaviour:
   staminaGainOnHit: 4
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
-  healthPctGainOnHit: 6
+  healthPctGainOnHit: 5
   manaGainOnHit: 0
   manaPctGainOnHit: 0
   type: 1

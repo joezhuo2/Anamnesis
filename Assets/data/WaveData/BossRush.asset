@@ -18,23 +18,23 @@ MonoBehaviour:
   - enemyPrefab: {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
     maxTotalEnemies: 1
     maxCurrentEnemies: 1
-    enemyLevel: 90
+    enemyLevel: 105
     minSpawnFrequency: 0
     maxSpawnFrequency: 0
     minRewardChoices: 2
     maxRewardChoices: 5
     bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
-    bossBarName: '[Lv. 90] Lich'
+    bossBarName: '[Lv. 105] Lich'
     statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
   - enemyPrefab: {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}
     maxTotalEnemies: 1
     maxCurrentEnemies: 1
-    enemyLevel: 90
+    enemyLevel: 105
     minSpawnFrequency: 0
     maxSpawnFrequency: 0
     minRewardChoices: 2
     maxRewardChoices: 5
     bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
-    bossBarName: '[Lv. 90] Jellyfish'
+    bossBarName: '[Lv. 105] Jellyfish'
     statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
   waveOffset: 0

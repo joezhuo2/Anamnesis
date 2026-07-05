@@ -24,7 +24,7 @@ MonoBehaviour:
   source: {fileID: 0}
   projectile: {fileID: 0}
   currentStacks: 0
-  dpt: 2
+  dpt: 3
   scalingStat: 7
   damageType: 2
   indicatorColor: {r: 0.6689042, g: 1, b: 0, a: 1}

@@ -1358,7 +1358,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 15
-      value: 4
+      value: 5
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
@@ -1413,7 +1413,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 27
-      value: 4
+      value: 3
     weight: 6
   - icon: {fileID: 0}
     baseBuff:
@@ -1552,6 +1552,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7b6a07acfa60e3f4c9965612f9969528, type: 2}
   - {fileID: 11400000, guid: 8cdc45e75e0d1ca41885e6e563ef285c, type: 2}
   - {fileID: 11400000, guid: 9e7d67e92c12ea449ae71ac414c026e2, type: 2}
+  - {fileID: 11400000, guid: 93c6fc4da2bdae544957f2ca8da253b3, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 2
   maxAnomalyCount: 5

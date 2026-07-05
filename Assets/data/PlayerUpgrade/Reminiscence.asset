@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Reminiscence
   m_EditorClassIdentifier: Assembly-CSharp::Reminiscence
   conditions: 03000000
-  chance: 35
-  cooldown: 2
+  chance: 20
+  cooldown: 1
   delay: 0.25
   cooldownEffect: {fileID: 11400000, guid: 7b72bd6b4e0841e479b9f3e9ce8c26a8, type: 2}
