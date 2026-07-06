@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Bat Mark AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  cooldown: 0
+  projectilePrefab: {fileID: 3468484663591215350, guid: c187272adf180d94bb286d219a7c31e0, type: 3}
+  pd: {fileID: 11400000, guid: 97496c77675061f42b269b1b79ab0e6e, type: 2}
+  pattern: 0
+  spawnDelay: 0.5
+  spawnDistance: 6
+  fixedDistance: 0
+  animationLength: 0.5
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 6
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 0
+  staminaCostPct: 0
+  healthCost: 0
+  healthCostPct: 0
+  manaCost: 0
+  manaCostPct: 0
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 0
+  manaPctGainOnHit: 0
+  summonChance: 0
+  summonCondition: 0
+  type: 0
+  icon: {fileID: 0}
+  displayName: 

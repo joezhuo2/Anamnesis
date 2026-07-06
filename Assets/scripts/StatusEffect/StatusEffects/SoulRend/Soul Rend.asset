@@ -15,6 +15,7 @@ MonoBehaviour:
   currentTime: 0
   duration: 1.5
   tickInterval: 0
+  isBuff: 1
   icon: {fileID: -5906973516983679737, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Soul Rend
   desc: '[1] +0.3% Attack

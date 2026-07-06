@@ -15,6 +15,7 @@ MonoBehaviour:
   currentTime: 0
   duration: 2
   tickInterval: 0
+  isBuff: 1
   icon: {fileID: 0}
   effName: Reminiscence Cooldown
   desc: 

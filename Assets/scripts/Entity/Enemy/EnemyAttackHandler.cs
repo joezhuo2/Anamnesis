@@ -87,13 +87,14 @@ public class EnemyAttackHandler : MonoBehaviour
             if (es.target != null)
             {
                 Vector2 dir = (es.target.transform.position - transform.position).normalized;
+                float dist = Vector2.Distance(es.target.transform.position, transform.position);
 
                 StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
                     attack.projectilePrefab,
                     gameObject,
                     transform.position,
                     dir,
-                    attack.spawnDistance
+                    dist > attack.spawnDistance ? attack.spawnDistance : dist
                 ));
             }
         }

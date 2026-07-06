@@ -9,18 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c190c0a78fb17a4a8f664218bda8a3c, type: 3}
-  m_Name: Cosmic Afterimage
-  m_EditorClassIdentifier: Assembly-CSharp::Info
+  m_Script: {fileID: 11500000, guid: 411529bfca579104192ee5e7e49efaaf, type: 3}
+  m_Name: Vulnerable 6 6 5
+  m_EditorClassIdentifier: Assembly-CSharp::StatReduction
   currentTime: 0
   duration: 6
   tickInterval: 0
-  isBuff: 1
+  isBuff: 0
   icon: {fileID: 0}
-  effName: Cosmic Afterimage Cooldown
-  desc: 
-  maxStacks: 1
+  effName: Vulnerable
+  desc: 'Reduces Max Hp by 5% per stack. '
+  maxStacks: 8
   target: {fileID: 0}
   source: {fileID: 0}
   projectile: {fileID: 0}
   currentStacks: 0
+  redPerStack: 5
+  statType: 12
+  scalingStat: 12
+  maxRed: 0.9
+  minRed: 0

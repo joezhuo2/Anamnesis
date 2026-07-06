@@ -31,8 +31,8 @@ MonoBehaviour:
   currentHp: 1600
   maxHp: 1600
   hpPct: 100
-  hpRegen: 40
-  hpRegPct: 0
+  hpRegen: 80
+  hpRegPct: 50
   armor: 300
   armorPct: 50
   damageRes: 30

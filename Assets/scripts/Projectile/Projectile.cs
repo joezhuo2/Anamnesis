@@ -154,7 +154,9 @@ public class Projectile : MonoBehaviour {
         }
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle + pd.rotationOffset);
+        Vector2 trueAngle = pd != null ? new Vector2(Mathf.Cos(pd.angleOverride * Mathf.Deg2Rad), Mathf.Sin(pd.angleOverride * Mathf.Deg2Rad)) : Vector2.right;
+        float finalAngle = (pd != null && pd.useTrueAngle) ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
+        transform.rotation = Quaternion.Euler(0f, 0f, finalAngle);
     }
     private void InitBoomerang()
     {
