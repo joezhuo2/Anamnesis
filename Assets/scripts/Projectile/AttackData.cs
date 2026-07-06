@@ -1,5 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
+
+public enum SummonCondition { None, OnHit, OnCast }
 
 [CreateAssetMenu(fileName = "ad", menuName = "Data/Attack")]
 public class AttackData : ScriptableObject
@@ -46,6 +47,11 @@ public class AttackData : ScriptableObject
     public float healthPctGainOnHit;
     public float manaGainOnHit;
     public float manaPctGainOnHit;
+
+    [Header("Summoning")]
+    [Tooltip("Chance (0-1) to summon an entity on the given condition. 0 = disabled.")]
+    [Range(0f, 1f)] public float summonChance = 0f;
+    public SummonCondition summonCondition = SummonCondition.None;
 
     [Header("Misc - Player Only")]
     public AttackType type;

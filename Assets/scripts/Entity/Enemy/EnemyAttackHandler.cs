@@ -98,6 +98,12 @@ public class EnemyAttackHandler : MonoBehaviour
             }
         }
 
+        if (attack.summonChance > 0f && attack.summonCondition == SummonCondition.OnCast && Random.value <= attack.summonChance)
+        {
+            if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
+                summonHandler.Summon();
+        }
+
         if (index >= 0) cooldowns[index] = attack.cooldown;
 
         if (attack.animationLength > 0) yield return new WaitForSeconds(attack.animationLength);

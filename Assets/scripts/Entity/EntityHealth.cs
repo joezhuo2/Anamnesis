@@ -11,6 +11,7 @@ public class EntityHealth : MonoBehaviour
 {
     public static event Action<EntityHealth> OnPlayerTakeDamage;
 
+    public event Action<GameObject> OnDeath;
     private static readonly int IsDeadHash = Animator.StringToHash("isDead");
     private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
     private float regenTimer;
@@ -248,6 +249,8 @@ public class EntityHealth : MonoBehaviour
     private void StartDeathSequence()
     {
         es.isAlive = false;
+
+        OnDeath?.Invoke(gameObject);
 
         if (TryGetComponent<StatusEffectManager>(out var sem))
             sem.ClearAllEffects();

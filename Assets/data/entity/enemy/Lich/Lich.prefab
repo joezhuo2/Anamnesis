@@ -105,6 +105,7 @@ MonoBehaviour:
   cardinalOnly: 0
   canDeaggro: 0
   stoppingDistance: 1.5
+  flipRotation: 0
   es: {fileID: 0}
 --- !u!114 &1394068881913330021
 MonoBehaviour:

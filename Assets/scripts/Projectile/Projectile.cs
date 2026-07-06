@@ -106,6 +106,12 @@ public class Projectile : MonoBehaviour {
                 }
             }
         }
+
+        if (pd.mainAttack != null && pd.mainAttack.summonChance > 0f && pd.mainAttack.summonCondition == SummonCondition.OnHit && Random.value <= pd.mainAttack.summonChance)
+        {
+            if (ownerObj.TryGetComponent<EntitySummonHandler>(out var summonHandler))
+                summonHandler.TrySummon(out _, target.transform.position);
+        }
     }
     private IEnumerator DestroyProjectileAfterDelay(float delay)
     {
