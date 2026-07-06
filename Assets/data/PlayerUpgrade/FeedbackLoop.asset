@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb169ce3396b51408dfec9e164587aa, type: 3}
   m_Name: FeedbackLoop
   m_EditorClassIdentifier: Assembly-CSharp::SpawnProjectile
+  upgradeName: Feedback Loop
   conditions: 0e000000
   chance: 100
   cooldown: 0.3

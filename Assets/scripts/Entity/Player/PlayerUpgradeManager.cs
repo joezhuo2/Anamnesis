@@ -23,6 +23,13 @@ public class PlayerUpgradeManager : MonoBehaviour
             if (activeUpgrades[i] is T) return true;
         return false;
     }
+    public bool HasUpgrade(PlayerUpgrade pu)
+    {
+        if (pu == null) return false;
+        for (int i = 0; i < activeUpgrades.Count; i++)
+            if (activeUpgrades[i].upgradeName == pu.name) return true;
+        return false;
+    }
     public PlayerUpgrade GetPlayerUpgradeOfType<T>() where T : PlayerUpgrade
     {
         for (int i = 0; i < activeUpgrades.Count; i++)

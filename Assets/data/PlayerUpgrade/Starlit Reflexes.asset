@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01c07cc120b7b04c83151091f9a26d7, type: 3}
   m_Name: Starlit Reflexes
   m_EditorClassIdentifier: Assembly-CSharp::GainMana
+  upgradeName: Starlit Reflexes
   conditions: 0d000000
   chance: 100
+  cooldown: 0
   delay: 0
   amount: 10
   pctAmt: 6

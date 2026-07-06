@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f34c09a5e66c70418c4641a60750de8, type: 3}
   m_Name: StellarSurge
   m_EditorClassIdentifier: Assembly-CSharp::StellarSurge
+  upgradeName: Stellar Surge
   conditions: 08000000
   chance: 20
   cooldown: 0

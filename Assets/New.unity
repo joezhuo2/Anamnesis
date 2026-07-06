@@ -1417,7 +1417,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 5
-      value: 4
+      value: 5
     weight: 3
   - icon: {fileID: 0}
     baseBuff:

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f4e017d1b73c454a95c104d169633e0, type: 3}
   m_Name: Paradox
   m_EditorClassIdentifier: Assembly-CSharp::Paradox
+  upgradeName: Paradox
   conditions: 
   chance: 0
+  cooldown: 0
   delay: 0

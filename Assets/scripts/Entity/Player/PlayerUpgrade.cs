@@ -20,6 +20,7 @@ public abstract class PlayerUpgrade : ScriptableObject
         OnCounterDodge,
         OnProjectileHit
     }
+    public string upgradeName;
     public TriggerCondition[] conditions;
     public float chance;
     public float cooldown;

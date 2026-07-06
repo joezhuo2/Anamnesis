@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06175be2070aa044dac493f4b66470ea, type: 3}
   m_Name: Decoy
   m_EditorClassIdentifier: Assembly-CSharp::Decoy
+  upgradeName: Decoy
   conditions: 06000000
   chance: 100
   cooldown: 6

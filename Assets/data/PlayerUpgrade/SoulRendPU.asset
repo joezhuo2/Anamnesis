@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1569ed7f469a845877a417902db475, type: 3}
   m_Name: SoulRendPU
   m_EditorClassIdentifier: Assembly-CSharp::SoulRendPU
+  upgradeName: Soul Rend
   conditions: 02000000
   chance: 100
+  cooldown: 0
   delay: 0
   projectilePrefab: {fileID: 1263769298681028274, guid: 98c7f7115b09b5f478cac8b052988900, type: 3}
   soulRend: {fileID: 11400000, guid: 3adfa3f51232eed4b853abcfa1901ef1, type: 2}

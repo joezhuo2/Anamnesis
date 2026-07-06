@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec5b8b775c0b9145b6c63e9ba84298b, type: 3}
   m_Name: Reminiscence
   m_EditorClassIdentifier: Assembly-CSharp::Reminiscence
+  upgradeName: Reminiscence
   conditions: 03000000
   chance: 20
   cooldown: 1

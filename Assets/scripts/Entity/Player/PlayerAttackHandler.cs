@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,6 +55,15 @@ public class PlayerAttackHandler : MonoBehaviour
             attacks.Clear();
         }
     }
+    public bool HasAttack(AttackData a)
+    {
+        if (a == null || a.name == null) return false;
+        string n = a.name.Trim();
+
+        for (int i = 0; i < attacks.Count; i++)
+            if (attacks[i].name.Trim().Equals(n, StringComparison.OrdinalIgnoreCase)) return true;
+        return false;
+    }
     public AttackData FindAttackOfType(AttackType type)
     {
         for (int i = 0; i < attacks.Count; i++)
@@ -61,13 +72,6 @@ public class PlayerAttackHandler : MonoBehaviour
                 return attacks[i];
         }
         return null;
-    }
-    private void SpawnAttackButtons()
-    {
-        if (cooldownPrefab == null || objContainer == null) return;
-
-        foreach (AttackData attack in attacks)
-            CreateButtonUI(attack);
     }
     private void CreateButtonUI(AttackData attack)
     {
