@@ -24,10 +24,16 @@ public class Projectile : MonoBehaviour {
     private bool boomerangReturning;
     private float boomerangDecel;
     private float boomerangSpeed;
+    private bool orbitCancelled;
 
     private void Awake()
     {
         hit = new();
+    }
+    private void OnDestroy()
+    {
+        if (pd != null && pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null)
+            ownerObj.SendMessage("UnregisterOrbitingProjectile", this, SendMessageOptions.DontRequireReceiver);
     }
     private void Start()
     {
@@ -47,6 +53,9 @@ public class Projectile : MonoBehaviour {
                     ApplyEffect(null, ed);
             }
         }
+
+        if (pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null)
+            ownerObj.SendMessage("RegisterOrbitingProjectile", this, SendMessageOptions.DontRequireReceiver);
 
         StartCoroutine(DestroyProjectileAfterDelay(pd.lifetime));
     }
@@ -175,7 +184,7 @@ public class Projectile : MonoBehaviour {
     {
         if (rb == null || pd.speed <= 0) return;
 
-        if (pd.orbitRadius > 0)
+        if (pd.orbitRadius > 0 && !orbitCancelled)
         {
             HandleOrbitMovement();
             return;
@@ -238,12 +247,11 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleOrbitMovement()
     {
-        // Find or re-find orbit target
         if (orbitTarget == null || !orbitTarget.gameObject.activeInHierarchy)
         {
             if (pd.orbitSelf) orbitTarget = ownerObj?.transform;
             else orbitTarget = FindClosestEnemyInDirection();
-            orbitDirectionSign = 0f; // Reset sign when target changes
+            orbitDirectionSign = 0f;
         }
 
         if (orbitTarget == null) return;
@@ -327,6 +335,24 @@ public class Projectile : MonoBehaviour {
             }
         }
         return closest;
+    }
+    public void Launch(Vector2 direction)
+    {
+        orbitCancelled = true;
+        orbitTarget = null;
+        dir = direction.normalized;
+        if (rb != null)
+            rb.linearVelocity = dir * pd.speed;
+    }
+    public void Explode()
+    {
+        if (pd.additionalAttack != null && pd.additionalAttack.projectilePrefab != null && ProjectileSpawner.Instance != null)
+        {
+            ProjectileSpawner spawner = ProjectileSpawner.Instance;
+            Vector2? addDir = pd.additionalFollowsMouse ? null : dir;
+            spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance));
+        }
+        Destroy(gameObject);
     }
     private void ApplyEffect(GameObject target, EffectData ed)
     {

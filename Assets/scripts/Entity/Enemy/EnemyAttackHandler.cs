@@ -80,6 +80,8 @@ public class EnemyAttackHandler : MonoBehaviour
 
         if (a != null) a.SetInteger(AttackIndexHash, index);
 
+        HandleOrbitInteractions(attack);
+
         if (attack.projectilePrefab != null)
         {
             if (attack.spawnDelay > 0) yield return new WaitForSeconds(attack.spawnDelay);
@@ -122,4 +124,31 @@ public class EnemyAttackHandler : MonoBehaviour
             if (a != null) a.SetInteger(AttackIndexHash, -1);
         }
     }
+
+    private void HandleOrbitInteractions(AttackData attack)
+    {
+        if (attack == null) return;
+        if (!TryGetComponent<EntityProjectileHandler>(out var handler)) return;
+
+        if (attack.fireOrbits)
+        {
+            Vector2 dir = es.target != null
+                ? ((Vector2)es.target.transform.position - (Vector2)transform.position).normalized
+                : Vector2.right;
+            handler.ReleaseAll(dir);
+        }
+        else if (attack.absorbOrbits)
+        {
+            handler.AbsorbAll();
+        }
+        else if (attack.redirectOrbits)
+        {
+            handler.RedirectAll();
+        }
+        else if (attack.explodeOrbits)
+        {
+            handler.ExplodeAll();
+        }
+    }
 }
+

@@ -104,6 +104,8 @@ public class PlayerAttackHandler : MonoBehaviour
 
         if (!bypassCooldown) lastAttackTimes[type] = Time.time;
 
+        HandleOrbitInteractions(selected);
+
         ProjectileSpawner ps = ProjectileSpawner.Instance;
         if (ps != null)
             StartCoroutine(ps.SpawnFromPattern(selected, gameObject, transform.position));
@@ -129,6 +131,32 @@ public class PlayerAttackHandler : MonoBehaviour
         a.speed = Mathf.Max(0.1f, 1f + (p.attackSpeedPct * 0.01f));
         StartCoroutine(ResetAttackType(selected.animationLength));
     }
+    private void HandleOrbitInteractions(AttackData attack)
+    {
+        if (attack == null) return;
+        if (!TryGetComponent<EntityProjectileHandler>(out var handler)) return;
+
+        if (attack.fireOrbits)
+        {
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
+            mouseWorld.z = 0f;
+            Vector2 dir = ((Vector2)mouseWorld - (Vector2)transform.position).normalized;
+            handler.ReleaseAll(dir);
+        }
+        else if (attack.absorbOrbits)
+        {
+            handler.AbsorbAll();
+        }
+        else if (attack.redirectOrbits)
+        {
+            handler.RedirectAll();
+        }
+        else if (attack.explodeOrbits)
+        {
+            handler.ExplodeAll();
+        }
+    }
+
     private void TriggerUpgradesOnAttack(AttackType type)
     {
         pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);

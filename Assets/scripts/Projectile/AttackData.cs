@@ -53,6 +53,16 @@ public class AttackData : ScriptableObject
     [Range(0f, 1f)] public float summonChance = 0f;
     public SummonCondition summonCondition = SummonCondition.None;
 
+    [Header("Orbit Interactions")]
+    [Tooltip("Fires all currently orbiting projectiles toward the mouse direction before spawning this attack.")]
+    public bool fireOrbits;
+    [Tooltip("Absorbs all currently orbiting projectiles, granting stat returns per projectile.")]
+    public bool absorbOrbits;
+    [Tooltip("Redirects all currently orbiting projectiles toward the nearest enemy.")]
+    public bool redirectOrbits;
+    [Tooltip("Causes all currently orbiting projectiles to explode, triggering their additionalAttack at their current position.")]
+    public bool explodeOrbits;
+
     [Header("Misc - Player Only")]
     public AttackType type;
     public Sprite icon;
