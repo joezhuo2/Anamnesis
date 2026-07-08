@@ -37,6 +37,12 @@ public class ProjectileData : ScriptableObject
 
     [Header("Effects")]
     public List<EffectData> effects;
+
+    [Header("Orbit")]
+    public float orbitRadius;
+    public bool orbitSelf;
+    public float randOrbRadOffset;
+    public bool rotateClockwise;
 }
 
 [System.Serializable]

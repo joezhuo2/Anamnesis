@@ -3107,7 +3107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cef0ca202d7384b45915188bb7ca3721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntitySummonHandler
-  summonPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+  summonPrefab: {fileID: 0}
   maxSummons: 3
   lifetime: 0
   spawnOffset: 1.5

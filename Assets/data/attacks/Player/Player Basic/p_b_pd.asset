@@ -33,3 +33,5 @@ MonoBehaviour:
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects: []
+  orbitRadius: 0
+  orbitSelf: 0

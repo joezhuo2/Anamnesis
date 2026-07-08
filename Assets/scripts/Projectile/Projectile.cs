@@ -16,6 +16,9 @@ public class Projectile : MonoBehaviour {
     private List<GameObject> hit;
     private ProjectileDamageSnapshot damageSnapshot;
     private Transform followTarget;
+    private Transform orbitTarget;
+    private float orbitDirectionSign;
+    private float effectiveOrbitRadius;
     private Rigidbody2D rb;
     private bool boomerangActive;
     private bool boomerangReturning;
@@ -172,6 +175,12 @@ public class Projectile : MonoBehaviour {
     {
         if (rb == null || pd.speed <= 0) return;
 
+        if (pd.orbitRadius > 0)
+        {
+            HandleOrbitMovement();
+            return;
+        }
+
         if (start) rb.linearVelocity = dir.normalized * pd.speed;
 
         if (pd.followDistance > 0)
@@ -226,6 +235,72 @@ public class Projectile : MonoBehaviour {
             Vector2 newDir = (followTarget.position - transform.position).normalized;
             rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, newDir * pd.speed, 0.1f);
         }
+    }
+    private void HandleOrbitMovement()
+    {
+        // Find or re-find orbit target
+        if (orbitTarget == null || !orbitTarget.gameObject.activeInHierarchy)
+        {
+            if (pd.orbitSelf) orbitTarget = ownerObj?.transform;
+            else orbitTarget = FindClosestEnemyInDirection();
+            orbitDirectionSign = 0f; // Reset sign when target changes
+        }
+
+        if (orbitTarget == null) return;
+
+        Vector2 center = orbitTarget.position;
+        Vector2 offset = (Vector2)transform.position - center;
+        float dist = offset.magnitude;
+
+        if (dist < 0.01f)
+        {
+            rb.linearVelocity = dir.normalized * pd.speed;
+            return;
+        }
+
+        if (orbitDirectionSign == 0f)
+        {
+            effectiveOrbitRadius = pd.orbitRadius + Random.Range(0f, pd.randOrbRadOffset);
+            orbitDirectionSign = pd.rotateClockwise ? -1f : 1f;
+        }
+
+        Vector2 tangent = Vector2.Perpendicular(offset).normalized;
+        Vector2 desiredVelocity = orbitDirectionSign * pd.speed * tangent;
+
+        float radiusError = dist - effectiveOrbitRadius;
+        desiredVelocity += 2f * radiusError * -offset.normalized;
+
+        rb.linearVelocity = desiredVelocity;
+    }
+    private Transform FindClosestEnemyInDirection()
+    {
+        Transform closest = null;
+        float closestDist = float.MaxValue;
+
+        float searchRadius = pd.speed * pd.lifetime;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, searchRadius);
+
+        foreach (Collider2D col in colliders)
+        {
+            if (!col.CompareTag("Enemy")) continue;
+            if (hit.Contains(col.gameObject)) continue;
+            if (col.gameObject == ownerObj) continue;
+
+            Vector2 toEnemy = (col.transform.position - transform.position).normalized;
+            float dot = Vector2.Dot(dir.normalized, toEnemy);
+            if (dot <= 0) continue;
+
+            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && !esm.s.isAlive && esm.s.currentHp <= 0) continue;
+
+            float dist = Vector2.Distance(transform.position, col.transform.position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                closest = col.transform;
+            }
+        }
+
+        return closest;
     }
     private void SetTarget(Transform target) => followTarget = target;
     private Transform FindClosestTargetInRange(float range, bool searchForPlayer)

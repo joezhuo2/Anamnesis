@@ -45,8 +45,8 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 4
   manaPctGainOnHit: 0
-  summonChance: 1
-  summonCondition: 2
+  summonChance: 0
+  summonCondition: 0
   type: 0
   icon: {fileID: -4290406455011644030, guid: ac0de4f746fa7df4daae01d78607f013, type: 3}
   displayName: Lacerate
