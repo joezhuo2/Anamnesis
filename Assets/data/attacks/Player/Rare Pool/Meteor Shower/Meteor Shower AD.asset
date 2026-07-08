@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Meteor Shower AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 6
+  cooldown: 5
   projectilePrefab: {fileID: 3588655541012956898, guid: 826a3a6d9a42df6408142471b47b3921, type: 3}
   pd: {fileID: 11400000, guid: 412f8be2b5e9b4c4f81bd9fa7f64531f, type: 2}
   pattern: 3
@@ -20,8 +20,8 @@ MonoBehaviour:
   spawnDistance: 5
   fixedDistance: 0
   animationLength: 0.5
-  projectileCount: 18
-  randomCount: 18
+  projectileCount: 28
+  randomCount: 12
   spread: 2
   randomSpread: 0
   minDelay: 0.05

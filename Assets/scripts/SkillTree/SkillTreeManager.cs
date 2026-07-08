@@ -117,19 +117,21 @@ public class SkillTreeManager : MonoBehaviour
                 if (unlockedNodes.Contains(n.nodeID)) return false;
         }
 
-        if (node.requiredAttacks != null && node.requiredAttacks.Count > 0 && player.TryGetComponent<PlayerAttackHandler>(out var pah))
+        if (node.requiredAttacks != null && node.requiredAttacks.Count > 0)
         {
+            if (!player.TryGetComponent<PlayerAttackHandler>(out var pah)) return false;
+
             foreach (var a in node.requiredAttacks)
                 if (!pah.HasAttack(a)) return false;
         }
 
         if (node.requiredPlayerUpgrades != null && node.requiredPlayerUpgrades.Count > 0)
         {
-            if (player.TryGetComponent<PlayerUpgradeManager>(out var pum) && pum.activeUpgrades != null && pum.activeUpgrades.Count > 0)
-            {
-                foreach (var p in node.requiredPlayerUpgrades)
-                    if (!pum.HasUpgrade(p)) return false;
-            }
+            if (!player.TryGetComponent<PlayerUpgradeManager>(out var pum)) return false;
+            if (pum.activeUpgrades == null || pum.activeUpgrades.Count == 0) return false;
+
+            foreach (var p in node.requiredPlayerUpgrades)
+                if (!pum.HasUpgrade(p)) return false;
         }
 
         return true;
