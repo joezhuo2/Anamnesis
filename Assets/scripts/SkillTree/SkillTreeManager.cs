@@ -117,8 +117,6 @@ public class SkillTreeManager : MonoBehaviour
                 if (unlockedNodes.Contains(n.nodeID)) return false;
         }
 
-        // TODO: check for required attacks and player upgrades
-
         if (node.requiredAttacks != null && node.requiredAttacks.Count > 0 && player.TryGetComponent<PlayerAttackHandler>(out var pah))
         {
             foreach (var a in node.requiredAttacks)

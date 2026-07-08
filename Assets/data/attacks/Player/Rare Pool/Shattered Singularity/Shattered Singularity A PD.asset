@@ -19,12 +19,17 @@ MonoBehaviour:
   size: 1.5
   physicalMult: 0
   spellMult: 0.6
-  canHitSameEntity: 0
+  trueMult: 0
+  scalingStat: 44
+  timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
+  maxBoomerangDist: 0
+  angleOverride: 0
+  useTrueAngle: 0
+  bypassIFrames: 0
   additionalAttack: {fileID: 11400000, guid: c207eb95cf5ab114c9fac8af957ed09f, type: 2}
   additionalChance: 1
+  addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
-  selfApply: 0
-  effectChance: 0
+  effects: []

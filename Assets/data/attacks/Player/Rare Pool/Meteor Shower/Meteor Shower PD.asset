@@ -10,30 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Supernova PD
+  m_Name: Meteor Shower PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
+  mainAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
   speed: 0
-  lifetime: 0.75
-  numPierce: 9
-  size: 4
-  physicalMult: 1.9
-  spellMult: 0
-  trueMult: 0.3
-  scalingStat: 35
+  lifetime: 0.5
+  numPierce: 4
+  size: 1.25
+  physicalMult: 0
+  spellMult: 0.8
+  trueMult: 0
+  scalingStat: 44
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
-  useTrueAngle: 0
+  useTrueAngle: 1
   bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effects:
-  - effect: {fileID: 11400000, guid: e6076c0291862a842aa9b9e05e87f1e5, type: 2}
-    selfApply: 0
-    applyCondition: 0
-    chance: 0.4
+  effects: []

@@ -1595,6 +1595,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Revelation
     desc: AOE DoT Spl Atk Detonate
+  - newAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
+    type: 1
+    icon: {fileID: 0}
+    attackName: Meteor Shower
+    desc: AOE Spam Spl
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -2926,7 +2931,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHandler
   starting:
   - {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
-  - {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
+  - {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
   cooldownPrefab: {fileID: 1749710292777410887, guid: 47db549e516fc9642bc9e1bbabac16c1, type: 3}
   objContainer: {fileID: 1186772504}
   attacks: []

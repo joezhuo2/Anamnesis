@@ -36,8 +36,8 @@ MonoBehaviour:
   staminaCostPct: 8
   healthCost: 0
   healthCostPct: 0
-  manaCost: 6
-  manaCostPct: 3
+  manaCost: 12
+  manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 4
   staminaPctGainOnHit: 0
@@ -45,6 +45,8 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 3
   manaPctGainOnHit: 0
+  summonChance: 0
+  summonCondition: 0
   type: 1
   icon: {fileID: 1869335424979730921, guid: e67a6925b1352134cb1282d74e891bea, type: 3}
   displayName: Nebula

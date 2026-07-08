@@ -15,7 +15,7 @@ MonoBehaviour:
   mainAttack: {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
   speed: 0
   lifetime: 6
-  numPierce: 300
+  numPierce: 3000
   size: 3
   physicalMult: 3.4
   spellMult: 0
@@ -24,6 +24,7 @@ MonoBehaviour:
   timeBeforeSameEnemy: 0.5
   followDistance: 0
   rotationOffset: 0
+  maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0

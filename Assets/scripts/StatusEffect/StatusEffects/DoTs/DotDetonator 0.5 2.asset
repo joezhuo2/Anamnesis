@@ -15,6 +15,7 @@ MonoBehaviour:
   currentTime: 0
   duration: 0.5
   tickInterval: 0
+  isBuff: 0
   icon: {fileID: 0}
   effName: 
   desc: 
@@ -23,6 +24,6 @@ MonoBehaviour:
   source: {fileID: 0}
   projectile: {fileID: 0}
   currentStacks: 0
-  dmgMult: 2
+  dmgMult: 2.5
   dmgType: 3
   indicatorColor: {r: 0, g: 1, b: 0.88411766, a: 1}

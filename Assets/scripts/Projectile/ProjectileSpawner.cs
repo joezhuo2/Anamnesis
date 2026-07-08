@@ -44,7 +44,7 @@ public class ProjectileSpawner : MonoBehaviour
 
     public IEnumerator SpawnCircle(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 center, float radius, GameObject sourceObj = null)
     {
-        int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount);
+        int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount + 1);
 
         for (int i = 0; i < finalCount; i++)
         {
@@ -60,7 +60,7 @@ public class ProjectileSpawner : MonoBehaviour
 
     public IEnumerator SpawnSpread(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, float dist, GameObject sourceObj = null)
     {
-        int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount);
+        int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount + 1);
 
         float baseAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         float startAngle = baseAngle - (ad.spread * (finalCount - 1) / 2f);
@@ -82,7 +82,7 @@ public class ProjectileSpawner : MonoBehaviour
 
     public IEnumerator SpawnBarrage(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, GameObject sourceObj)
     {
-        int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount);
+        int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount + 1);
 
         for (int i = 0; i < finalCount; i++)
         {

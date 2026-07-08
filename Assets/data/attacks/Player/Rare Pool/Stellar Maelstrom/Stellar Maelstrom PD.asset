@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stellar Maelstrom PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: a5e26884cd5205647beae0358e00234c, type: 2}
-  speed: 6
+  speed: 8
   lifetime: 1.25
   numPierce: 1
   size: 1.5

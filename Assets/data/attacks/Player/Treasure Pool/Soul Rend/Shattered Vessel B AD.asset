@@ -18,7 +18,7 @@ MonoBehaviour:
   pattern: 2
   spawnDelay: 0.1
   spawnDistance: 0.1
-  fixedDistance: 0
+  fixedDistance: 1
   animationLength: 0.5
   projectileCount: 8
   randomCount: 0
@@ -45,6 +45,8 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  summonChance: 0
+  summonCondition: 0
   type: 4
   icon: {fileID: 0}
   displayName: 

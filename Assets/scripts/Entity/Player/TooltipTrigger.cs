@@ -77,6 +77,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s (+{cps.hpRegPct:F0}%)");
         if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (+{cps.armorPct:F0}%) [-{cps.ArmorRes*100f:F1}%P]");
         if (cps.EffAtk != 0) lines.Add($"Attack: {cps.EffAtk:F0} (+{cps.atkPct:F0}%)");
+        if (cps.EffInt != 0) lines.Add($"Int: {cps.EffInt:F0} (+{cps.intPct:F0}%)");
 
         List<string> resTypes = new();
         if (cps.damageRes != 0f) resTypes.Add($"{cps.damageRes:F1}%");

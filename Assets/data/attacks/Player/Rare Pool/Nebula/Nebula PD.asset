@@ -17,13 +17,14 @@ MonoBehaviour:
   lifetime: 0.5
   numPierce: 12
   size: 3.5
-  physicalMult: 4.2
+  physicalMult: 4.4
   spellMult: 0
   trueMult: 0
   scalingStat: 31
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
+  maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
