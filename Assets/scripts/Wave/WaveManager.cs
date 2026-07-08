@@ -279,8 +279,9 @@ public class WaveManager : MonoBehaviour
 
         currentAnomaly = null;
 
-        if (w % 10 == 0) GenerateTreasurePool();
-        else if (w % 5 == 0) GenerateRarePool();
+        if (w % 10 == 0 && w <= 20) GenerateTreasurePool();
+        else if (w % 5 == 0 && w <= 15) GenerateRarePool();
+        else if (w % 5 == 0) GenerateMixedPool();
         else GenerateRewards();
     }
     private bool RollAndGenerateAnomaly()
