@@ -23,8 +23,6 @@ MonoBehaviour:
     maxSpawnFrequency: 0
     minRewardChoices: 5
     maxRewardChoices: 7
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -32,12 +30,10 @@ MonoBehaviour:
     maxTotalEnemies: 2
     maxCurrentEnemies: 2
     enemyLevel: 2
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -45,12 +41,10 @@ MonoBehaviour:
     maxTotalEnemies: 2
     maxCurrentEnemies: 2
     enemyLevel: 3
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 4
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -58,12 +52,10 @@ MonoBehaviour:
     maxTotalEnemies: 3
     maxCurrentEnemies: 3
     enemyLevel: 4
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 4
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -71,12 +63,10 @@ MonoBehaviour:
     maxTotalEnemies: 3
     maxCurrentEnemies: 3
     enemyLevel: 5
-    minSpawnFrequency: 2
-    maxSpawnFrequency: 5
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -85,11 +75,9 @@ MonoBehaviour:
     maxCurrentEnemies: 3
     enemyLevel: 6
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -98,11 +86,9 @@ MonoBehaviour:
     maxCurrentEnemies: 4
     enemyLevel: 7
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -111,11 +97,9 @@ MonoBehaviour:
     maxCurrentEnemies: 4
     enemyLevel: 8
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -124,11 +108,9 @@ MonoBehaviour:
     maxCurrentEnemies: 4
     enemyLevel: 9
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -137,11 +119,9 @@ MonoBehaviour:
     maxCurrentEnemies: 5
     enemyLevel: 10
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -150,11 +130,9 @@ MonoBehaviour:
     maxCurrentEnemies: 5
     enemyLevel: 11
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -163,11 +141,9 @@ MonoBehaviour:
     maxCurrentEnemies: 6
     enemyLevel: 12
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -176,11 +152,9 @@ MonoBehaviour:
     maxCurrentEnemies: 7
     enemyLevel: 13
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -189,11 +163,9 @@ MonoBehaviour:
     maxCurrentEnemies: 7
     enemyLevel: 14
     minSpawnFrequency: 1
-    maxSpawnFrequency: 4
+    maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
@@ -205,8 +177,6 @@ MonoBehaviour:
     maxSpawnFrequency: 0
     minRewardChoices: 2
     maxRewardChoices: 5
-    rewardQualityBoost: 0
-    Type: 0
     bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
     bossBarName: '[Lv. 15] Lich'
     statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}

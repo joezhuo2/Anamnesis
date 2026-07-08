@@ -18,8 +18,8 @@ MonoBehaviour:
   numPierce: 3000
   size: 4
   physicalMult: 0
-  spellMult: 1.5
-  trueMult: 0.1
+  spellMult: 1.2
+  trueMult: 0.2
   scalingStat: 24
   timeBeforeSameEnemy: 0.1
   followDistance: 0

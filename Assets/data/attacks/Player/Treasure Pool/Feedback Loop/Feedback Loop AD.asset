@@ -17,7 +17,7 @@ MonoBehaviour:
   pd: {fileID: 11400000, guid: 6732b51974d55df49ac9f959599c29fe, type: 2}
   pattern: 2
   spawnDelay: 0
-  spawnDistance: 0.5
+  spawnDistance: 0.75
   fixedDistance: 1
   animationLength: 0.5
   projectileCount: 6
@@ -45,6 +45,8 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  summonChance: 0
+  summonCondition: 0
   type: 4
   icon: {fileID: 0}
   displayName: 

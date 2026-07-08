@@ -123,6 +123,9 @@ public class EntityStatManager : MonoBehaviour
             StatType.BasicDmgPct => s.basicDmgPct,
             StatType.UltDmgPct => s.ultDmgPct,
             StatType.EffectRes => s.effectRes,
+            StatType.Intelligence => s.intelligence,
+            StatType.IntPct => s.intPct,
+            StatType.EffInt => s.EffInt,
             _ => 0f,
         };
         return value;
@@ -169,6 +172,8 @@ public class EntityStatManager : MonoBehaviour
             case StatType.BasicDmgPct: s.basicDmgPct += mod; break;
             case StatType.UltDmgPct: s.ultDmgPct += mod; break;
             case StatType.EffectRes: s.effectRes += mod; break;
+            case StatType.Intelligence: s.intelligence += Mathf.RoundToInt(mod); break;
+            case StatType.IntPct: s.intPct += mod; break;
             default: break;
 
         }
@@ -230,6 +235,8 @@ public struct StatBuff : IEquatable<StatBuff>
             StatType.BasicDmgPct => "Basic Damage %",
             StatType.UltDmgPct => "Ultimate Damage %",
             StatType.EffectRes => "Effect Resistance",
+            StatType.Intelligence => "Intelligence",
+            StatType.IntPct => "Intelligence %",
             _ => type.ToString()
         };
         return name;

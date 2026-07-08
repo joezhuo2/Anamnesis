@@ -44,6 +44,9 @@ public enum StatType
     SkillDmgPct,
     BasicDmgPct,
     EffectRes,
+    Intelligence,
+    IntPct,
+    EffInt
 }
 
 public class EntityStats : ScriptableObject
@@ -55,6 +58,9 @@ public class EntityStats : ScriptableObject
     public float EffAtk => attack * (1f + (atkPct * 0.01f));
     public int attack;
     public float atkPct;
+    public float EffInt => intelligence * (1f + (intPct * 0.01f));
+    public int intelligence;
+    public float intPct;
     public float attackSpeedPct;
     [Range(0f, 100f)] public float critChance;
     public float critDamage;

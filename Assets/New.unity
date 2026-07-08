@@ -1379,7 +1379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 8195f81be966f3c4c87d68885ed7f96a, type: 2}
+  currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2.5
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
@@ -1539,6 +1539,16 @@ MonoBehaviour:
       type: 41
       value: 0.5
     weight: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 42
+      value: 2
+    weight: 10
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 43
+      value: 3
+    weight: 6
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0

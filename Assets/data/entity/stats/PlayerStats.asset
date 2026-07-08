@@ -17,6 +17,8 @@ MonoBehaviour:
   spellDmgPct: 0
   attack: 10
   atkPct: 0
+  intelligence: 10
+  intPct: 0
   attackSpeedPct: 0
   critChance: 5
   critDamage: 50

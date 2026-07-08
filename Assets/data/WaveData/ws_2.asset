@@ -19,7 +19,7 @@ MonoBehaviour:
     maxTotalEnemies: 8
     maxCurrentEnemies: 8
     enemyLevel: 16
-    minSpawnFrequency: 2
+    minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2
     maxRewardChoices: 6
