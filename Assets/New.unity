@@ -1379,7 +1379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2.5
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
@@ -1680,7 +1680,7 @@ MonoBehaviour:
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 2
   maxAnomalyCount: 5
-  anomalyChance: 15
+  anomalyChance: 20
   anomalyGlobalMinWave: 5
 --- !u!4 &587400166
 Transform:
@@ -2765,6 +2765,7 @@ GameObject:
   - component: {fileID: 1181093662}
   - component: {fileID: 1181093677}
   - component: {fileID: 1181093678}
+  - component: {fileID: 1181093679}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3094,6 +3095,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMana
   p: {fileID: 0}
+--- !u!114 &1181093679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181093661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef0ca202d7384b45915188bb7ca3721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntitySummonHandler
+  summonPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+  maxSummons: 3
+  lifetime: 0
+  spawnOffset: 1.5
+  cleanupOnDestroy: 1
+  onDeathBuffs: []
+  onDeathEffects: []
+  perSummonBuffs: []
 --- !u!1 &1186772503
 GameObject:
   m_ObjectHideFlags: 0

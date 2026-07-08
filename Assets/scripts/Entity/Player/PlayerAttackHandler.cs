@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -108,6 +107,12 @@ public class PlayerAttackHandler : MonoBehaviour
         ProjectileSpawner ps = ProjectileSpawner.Instance;
         if (ps != null)
             StartCoroutine(ps.SpawnFromPattern(selected, gameObject, transform.position));
+
+        if (selected.summonChance > 0f && selected.summonCondition == SummonCondition.OnCast && UnityEngine.Random.value <= selected.summonChance)
+        {
+            if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
+                summonHandler.Summon();
+        }
 
         if (triggerUpgrades)
             TriggerUpgradesOnAttack(type);
