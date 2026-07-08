@@ -15,6 +15,6 @@ MonoBehaviour:
   upgradeName: Feedback Loop
   conditions: 0e000000
   chance: 100
-  cooldown: 0.3
+  cooldown: 0.2
   delay: 0
   projectilePrefab: {fileID: 704896407739244531, guid: d73f9691a1a1b224096b2079ae3033d3, type: 3}

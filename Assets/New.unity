@@ -1600,6 +1600,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Meteor Shower
     desc: AOE Spam Spl
+  - newAttack: {fileID: 11400000, guid: 64ed8dbedf1b5784abeea70a41c5077f, type: 2}
+    type: 0
+    icon: {fileID: 0}
+    attackName: Aphelion
+    desc: Orbit Spl
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -1629,43 +1634,43 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Cosmic Afterimage
     desc: Dashing leaves behind a projection of yourself that distracts enemies for
-      3s. (6s cooldown)
+      4s. (6s cooldown)
   - upgrade: {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
     icon: {fileID: 0}
     upgradeName: Feedback Loop
-    desc: Projectiles create shrapnel on hit (0.3s cooldown).
+    desc: Projectiles create shrapnel on hit (0.2s cooldown).
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
     mult: 1
-    weight: 500
+    weight: 600
   - rarityName: Uncommon
     displayColor: {r: 0.21562162, g: 0.754717, b: 0, a: 1}
-    mult: 3
-    weight: 350
+    mult: 2
+    weight: 400
   - rarityName: Rare
     displayColor: {r: 0, g: 0.39995039, b: 0.745283, a: 1}
-    mult: 5
-    weight: 250
+    mult: 4
+    weight: 300
   - rarityName: Epic
     displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 1}
-    mult: 7
-    weight: 150
+    mult: 6
+    weight: 200
   - rarityName: Legendary
     displayColor: {r: 0.74509805, g: 0.32248145, b: 0, a: 1}
-    mult: 10
-    weight: 75
+    mult: 9
+    weight: 100
   - rarityName: Mythic
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
-    mult: 15
-    weight: 25
+    mult: 12
+    weight: 15
   - rarityName: Celestial
     displayColor: {r: 0.012014951, g: 0.041026052, b: 0.509434, a: 1}
-    mult: 20
-    weight: 5
+    mult: 15
+    weight: 3
   - rarityName: Transcendent
     displayColor: {r: 0.7783019, g: 0.9616805, b: 1, a: 1}
-    mult: 30
+    mult: 20
     weight: 1
   buttonContainer: {fileID: 1423259213}
   rerolls: 10
@@ -2766,6 +2771,7 @@ GameObject:
   - component: {fileID: 1181093677}
   - component: {fileID: 1181093678}
   - component: {fileID: 1181093679}
+  - component: {fileID: 1181093680}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3115,6 +3121,20 @@ MonoBehaviour:
   onDeathBuffs: []
   onDeathEffects: []
   perSummonBuffs: []
+--- !u!114 &1181093680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181093661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e937c30d23a4e448a28c2dc08ed3b91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityProjectileHandler
+  maxOrbiting: 0
+  orbitGainPct: 50
 --- !u!1 &1186772503
 GameObject:
   m_ObjectHideFlags: 0

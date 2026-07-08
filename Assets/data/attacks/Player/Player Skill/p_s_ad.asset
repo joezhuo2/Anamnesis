@@ -45,6 +45,12 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 8
+  summonChance: 0
+  summonCondition: 0
+  fireOrbits: 0
+  absorbOrbits: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
   type: 1
   icon: {fileID: 196999898347057192, guid: 4511473431829134fa55de9598a0d9c5, type: 3}
   displayName: Cyclone Cleave

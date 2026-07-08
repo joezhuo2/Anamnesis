@@ -33,13 +33,28 @@ public class EntityProjectileHandler : MonoBehaviour
         if (p != null)
             orbitingProjectiles.Remove(p);
     }
-    public void ReleaseAll(Vector2 direction)
+    public void ReleaseAll()
     {
         for (int i = orbitingProjectiles.Count - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
-                p.Launch(direction.normalized);
+            {
+                Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
+                mouseWorld.z = 0f;
+                Vector2 dir = ((Vector2)mouseWorld - (Vector2)p.gameObject.transform.position).normalized;
+                p.Launch(dir.normalized);
+            }
+        }
+        orbitingProjectiles.Clear();
+    }
+    public void ReleaseAll(Vector2 dir)
+    {
+        for (int i = orbitingProjectiles.Count - 1; i >= 0; i--)
+        {
+            Projectile p = orbitingProjectiles[i];
+            if (p != null && p.gameObject != null)
+                p.Launch(dir.normalized);
         }
         orbitingProjectiles.Clear();
     }

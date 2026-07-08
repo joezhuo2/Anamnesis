@@ -138,10 +138,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
         if (attack.fireOrbits)
         {
-            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
-            mouseWorld.z = 0f;
-            Vector2 dir = ((Vector2)mouseWorld - (Vector2)transform.position).normalized;
-            handler.ReleaseAll(dir);
+            handler.ReleaseAll();
         }
         else if (attack.absorbOrbits)
         {

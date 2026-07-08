@@ -136,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackHandler
   projSpawnOffset: {x: 0, y: 0}
   attacks:
+  - {fileID: 11400000, guid: a51593da76605a745ba87a30de4ec139, type: 2}
   - {fileID: 11400000, guid: 4b6e965a0b528d14ab6a6e953bb73b36, type: 2}
   globalCooldown: 3
 --- !u!212 &2743646851270103200

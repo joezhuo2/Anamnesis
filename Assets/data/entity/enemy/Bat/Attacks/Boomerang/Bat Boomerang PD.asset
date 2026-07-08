@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Meteor Shower PD
+  m_Name: Bat Boomerang PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
-  speed: 0
-  lifetime: 0.5
-  numPierce: 4
-  size: 1.25
-  physicalMult: 0
-  spellMult: 0.8
+  mainAttack: {fileID: 11400000, guid: a51593da76605a745ba87a30de4ec139, type: 2}
+  speed: 18
+  lifetime: 0.75
+  numPierce: 1
+  size: 1
+  physicalMult: 0.4
+  spellMult: 0
   trueMult: 0
-  scalingStat: 44
+  scalingStat: 31
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
-  maxBoomerangDist: 0
+  maxBoomerangDist: 4
   angleOverride: 0
-  useTrueAngle: 1
+  useTrueAngle: 0
   bypassIFrames: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0

@@ -10,40 +10,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Meteor Shower AD
+  m_Name: Bat Boomerang AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 5
-  projectilePrefab: {fileID: 3588655541012956898, guid: 826a3a6d9a42df6408142471b47b3921, type: 3}
-  pd: {fileID: 11400000, guid: 412f8be2b5e9b4c4f81bd9fa7f64531f, type: 2}
-  pattern: 3
-  spawnDelay: 0
-  spawnDistance: 5
-  fixedDistance: 0
+  cooldown: 6
+  projectilePrefab: {fileID: 8418604656353079913, guid: 10a58eae8cf36b444a7225c1c6041acb, type: 3}
+  pd: {fileID: 11400000, guid: 46300628c9e1b8d4b80255d092c08420, type: 2}
+  pattern: 0
+  spawnDelay: 0.5
+  spawnDistance: 0.5
+  fixedDistance: 1
   animationLength: 0.5
-  projectileCount: 28
-  randomCount: 12
-  spread: 2
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
   randomSpread: 0
-  minDelay: 0.05
-  maxDelay: 0.15
-  maxRange: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 5
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 15
+  staminaCost: 0
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 48
+  manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 2
+  staminaGainOnHit: 0
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 5
+  manaGainOnHit: 0
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
@@ -51,6 +51,6 @@ MonoBehaviour:
   absorbOrbits: 0
   redirectOrbits: 0
   explodeOrbits: 0
-  type: 1
-  icon: {fileID: 7527729127935020893, guid: 15c1414434655b74ead2b00304bced6f, type: 3}
-  displayName: Meteor Shower
+  type: 0
+  icon: {fileID: 0}
+  displayName: 
