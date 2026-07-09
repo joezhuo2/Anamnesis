@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour {
     [HideInInspector] public Vector2 dir;
     [HideInInspector] public int pierced;
 
+    private float effSpd;
     private List<GameObject> hit;
     private ProjectileDamageSnapshot damageSnapshot;
     private Transform followTarget;
@@ -37,6 +38,7 @@ public class Projectile : MonoBehaviour {
     }
     private void Start()
     {
+        effSpd = ownerObj.TryGetComponent<EntityStatManager>(out var esm) ? pd.speed * (1f + (esm.s.projSpd * 0.01f)) : pd.speed;
         pierced = 0;
         damageSnapshot = DamageCalculator.CaptureSnapshot(pd, ownerObj);
         HandleSize();
@@ -176,13 +178,13 @@ public class Projectile : MonoBehaviour {
         {
             boomerangActive = true;
             boomerangReturning = false;
-            boomerangSpeed = pd.speed;
-            boomerangDecel = (pd.speed * pd.speed) / (2f * pd.maxBoomerangDist);
+            boomerangSpeed = effSpd;
+            boomerangDecel = (effSpd * effSpd) / (2f * pd.maxBoomerangDist);
         }
     }
     private void HandleMovement(bool start)
     {
-        if (rb == null || pd.speed <= 0) return;
+        if (rb == null || effSpd <= 0) return;
 
         if (pd.orbitRadius > 0 && !orbitCancelled)
         {
@@ -190,7 +192,7 @@ public class Projectile : MonoBehaviour {
             return;
         }
 
-        if (start) rb.linearVelocity = dir.normalized * pd.speed;
+        if (start) rb.linearVelocity = dir.normalized * effSpd;
 
         if (pd.followDistance > 0)
         {
@@ -229,7 +231,7 @@ public class Projectile : MonoBehaviour {
         else
         {
             boomerangSpeed += boomerangDecel * dt;
-            boomerangSpeed = Mathf.Min(boomerangSpeed, pd.speed);
+            boomerangSpeed = Mathf.Min(boomerangSpeed, effSpd);
 
             rb.linearVelocity = -dir.normalized * boomerangSpeed;
         }
@@ -242,7 +244,7 @@ public class Projectile : MonoBehaviour {
         if (dist <= pd.followDistance)
         {
             Vector2 newDir = (followTarget.position - transform.position).normalized;
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, newDir * pd.speed, 0.1f);
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, newDir * effSpd, 0.1f);
         }
     }
     private void HandleOrbitMovement()
@@ -262,7 +264,7 @@ public class Projectile : MonoBehaviour {
 
         if (dist < 0.01f)
         {
-            rb.linearVelocity = dir.normalized * pd.speed;
+            rb.linearVelocity = dir.normalized * effSpd;
             return;
         }
 
@@ -273,7 +275,7 @@ public class Projectile : MonoBehaviour {
         }
 
         Vector2 tangent = Vector2.Perpendicular(offset).normalized;
-        Vector2 desiredVelocity = orbitDirectionSign * pd.speed * tangent;
+        Vector2 desiredVelocity = orbitDirectionSign * effSpd * tangent;
 
         float radiusError = dist - effectiveOrbitRadius;
         desiredVelocity += 2f * radiusError * -offset.normalized;
@@ -285,7 +287,7 @@ public class Projectile : MonoBehaviour {
         Transform closest = null;
         float closestDist = float.MaxValue;
 
-        float searchRadius = pd.speed * pd.lifetime;
+        float searchRadius = effSpd * pd.lifetime;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, searchRadius);
 
         foreach (Collider2D col in colliders)
@@ -341,8 +343,7 @@ public class Projectile : MonoBehaviour {
         orbitCancelled = true;
         orbitTarget = null;
         dir = direction.normalized;
-        if (rb != null)
-            rb.linearVelocity = dir * pd.speed;
+        if (rb != null) rb.linearVelocity = dir * effSpd;
     }
     public void Explode()
     {

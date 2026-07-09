@@ -126,6 +126,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.Intelligence => s.intelligence,
             StatType.IntPct => s.intPct,
             StatType.EffInt => s.EffInt,
+            StatType.ProjSpd => s.projSpd,
             _ => 0f,
         };
         return value;
@@ -174,6 +175,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.EffectRes: s.effectRes += mod; break;
             case StatType.Intelligence: s.intelligence += Mathf.RoundToInt(mod); break;
             case StatType.IntPct: s.intPct += mod; break;
+            case StatType.ProjSpd: s.projSpd += mod; break;
             default: break;
 
         }
@@ -202,41 +204,42 @@ public struct StatBuff : IEquatable<StatBuff>
     {
         string name = type switch
         {
-            StatType.attack => "Attack",
-            StatType.atkPct => "Attack %",
-            StatType.damagePct => "Damage %",
-            StatType.physicalDmgPct => "Physical Damage %",
-            StatType.spellDmgPct => "Spell Damage %",
-            StatType.critChance => "Crit Chance",
-            StatType.critDamage => "Crit Damage",
-            StatType.aoePct => "AoE %",
-            StatType.maxHp => "Max HP",
-            StatType.hpPct => "HP %",
-            StatType.hpRegen => "HP Regen",
-            StatType.hpRegPct => "HP Regen %",
-            StatType.armor => "Armor",
-            StatType.armorPct => "Armor %",
-            StatType.damageRes => "Damage Resistance",
-            StatType.physicalRes => "Physical Resistance",
-            StatType.spellRes => "Spell Resistance",
-            StatType.dodgeChance => "Dodge Chance",
-            StatType.dodgeResPct => "Dodge Resistance %",
-            StatType.moveSpeedPct => "Move Speed %",
-            StatType.attackSpeedPct => "Attack Speed %",
-            StatType.defShred => "Defense Shred",
-            StatType.resPen => "Resistance Penetration",
-            StatType.maxStamina => "Max Stamina",
-            StatType.staminaRegen => "Stamina Regen",
-            StatType.stRegPct => "Stamina Regen %",
-            StatType.addPhysDmgPct => "Add Phys Dmg %",
-            StatType.addSplDmgPct => "Add Spl Dmg %",
-            StatType.maxMana => "Max Mana",
-            StatType.SkillDmgPct => "Skill Damage %",
-            StatType.BasicDmgPct => "Basic Damage %",
-            StatType.UltDmgPct => "Ultimate Damage %",
-            StatType.EffectRes => "Effect Resistance",
-            StatType.Intelligence => "Intelligence",
-            StatType.IntPct => "Intelligence %",
+            StatType.attack =>          "Attack",
+            StatType.atkPct =>          "Increased Attack %",
+            StatType.damagePct =>       "Increased Damage %",
+            StatType.physicalDmgPct =>  "Increased Physical Damage %",
+            StatType.spellDmgPct =>     "Increased Spell Damage %",
+            StatType.critChance =>      "Crit Chance",
+            StatType.critDamage =>      "Crit Damage",
+            StatType.aoePct =>          "Increased AoE %",
+            StatType.maxHp =>           "Max Health",
+            StatType.hpPct =>           "Increased Health %",
+            StatType.hpRegen =>         "HP Regen",
+            StatType.hpRegPct =>        "Increased HP Regen %",
+            StatType.armor =>           "Armor",
+            StatType.armorPct =>        "Increased Armor %",
+            StatType.damageRes =>       "Damage Resistance",
+            StatType.physicalRes =>     "Physical Resistance",
+            StatType.spellRes =>        "Spell Resistance",
+            StatType.dodgeChance =>     "Dodge Chance",
+            StatType.dodgeResPct =>     "Dodge Resistance",
+            StatType.moveSpeedPct =>    "Increased Move Speed %",
+            StatType.attackSpeedPct =>  "Increased Attack Speed %",
+            StatType.defShred =>        "Defense Shred",
+            StatType.resPen =>          "Resistance Penetration",
+            StatType.maxStamina =>      "Max Stamina",
+            StatType.staminaRegen =>    "Stamina Regen",
+            StatType.stRegPct =>        "Increased Stamina Regen %",
+            StatType.addPhysDmgPct =>   "Added Physical Damage %",
+            StatType.addSplDmgPct =>    "Added Spell Damage %",
+            StatType.maxMana =>         "Max Mana",
+            StatType.SkillDmgPct =>     "Increased Skill Damage %",
+            StatType.BasicDmgPct =>     "Increased Basic Damage %",
+            StatType.UltDmgPct =>       "Increased Ultimate Damage %",
+            StatType.EffectRes =>       "Effect Resistance",
+            StatType.Intelligence =>    "Intelligence",
+            StatType.IntPct =>          "Increased Intelligence %",
+            StatType.ProjSpd =>         "Increased Projectile Speed %",
             _ => type.ToString()
         };
         return name;
