@@ -20,10 +20,13 @@ public class ProjectileData : ScriptableObject
     public StatType scalingStat = StatType.EffAtk;
 
     [Header("Advanced")]
+    [Tooltip("Time before the projectile can hit the same enemy")]
     public float timeBeforeSameEnemy;
+    [Tooltip("Maximum distance between the projectile and the enemy for it to follow the enemy")]
     public float followDistance;
     public float rotationOffset;
-    [Tooltip("If > 0, projectile reverses direction after traveling this distance (boomerang effect)")] public float maxBoomerangDist = 0f;
+    [Tooltip("If > 0, projectile reverses direction after traveling this distance (boomerang effect)")]
+    public float maxBoomerangDist = 0f;
     public float angleOverride;
     public bool useTrueAngle;
     public bool bypassIFrames;
@@ -40,8 +43,11 @@ public class ProjectileData : ScriptableObject
 
     [Header("Orbit")]
     public float orbitRadius;
-    public bool orbitSelf;
+    [Tooltip("Random max additional orbit radius")]
     public float randOrbRadOffset;
+    [Tooltip("If true, orbit the owner, otherwise orbit first target")]
+    public bool orbitSelf;
+    [Tooltip("Whether the orbiting projectile rotates clockwise")]
     public bool rotateClockwise;
 }
 

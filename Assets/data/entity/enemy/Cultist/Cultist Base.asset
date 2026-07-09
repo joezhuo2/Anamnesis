@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d87bbbeb6804b4bbe36ab86d5cd763, type: 3}
+  m_Name: Cultist Base
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  damagePct: 0
+  physicalDmgPct: 0
+  spellDmgPct: 0
+  attack: 0
+  atkPct: 0
+  intelligence: 0
+  intPct: 0
+  attackSpeedPct: 0
+  critChance: 0
+  critDamage: 0
+  aoePct: 0
+  defShred: 0
+  resPen: 0
+  addPhysDmgPct: 0
+  addSplDmgPct: 0
+  basicDmgPct: 0
+  skillDmgPct: 0
+  ultDmgPct: 0
+  projSpd: 0
+  currentHp: 0
+  maxHp: 0
+  hpPct: 0
+  hpRegen: 0
+  hpRegPct: 0
+  armor: 0
+  armorPct: 0
+  damageRes: 0
+  dodgeChance: 0
+  dodgeResPct: 0
+  physicalRes: 0
+  spellRes: 0
+  hurtTime: 0.75
+  effectRes: 0
+  moveSpeed: 0
+  moveSpeedPct: 0
+  currentStamina: 0
+  maxStamina: 0
+  staminaRegen: 0
+  stRegPct: 0
+  currentMana: 0
+  maxMana: 0
+  canGainMana: 0
+  dashSpeedMult: 0
+  dashCooldown: 0
+  dashDistance: 0
+  dashStaminaCost: 0
+  dashShouldApplyIFrame: 0
+  isDashing: 0
+  canDash: 0
+  canGainStamina: 0
+  level: 0
+  isAlive: 0
+  isImmune: 0
+  canAttack: 0
+  isAttacking: 0
+  canMove: 0
+  canGainHp: 0
+  detectionRange: 0
+  target: {fileID: 0}
+  phase: 0
+  phaseThresholds: []
+  phaseBuffs: []

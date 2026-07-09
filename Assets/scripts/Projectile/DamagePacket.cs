@@ -10,9 +10,7 @@ public struct DamageInstance
     public bool isCrit;
     public Color indicatorColor;
 
-    public DamageInstance(DamageType type, float amount, bool isCrit) : this(type, amount, isCrit, default) {}
-
-    public DamageInstance(DamageType type, float amount, bool isCrit, Color indicatorColor)
+    public DamageInstance(DamageType type, float amount, bool isCrit, Color indicatorColor = default)
     {
         this.type = type;
         this.amount = amount;

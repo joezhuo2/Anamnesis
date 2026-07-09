@@ -10,25 +10,41 @@ public class AttackData : ScriptableObject
     public GameObject projectilePrefab;
     public ProjectileData pd;
     public ProjectilePattern pattern;
+    [Tooltip("Time after performing the attack before projectiles spawn")]
     public float spawnDelay;
     public float spawnDistance;
+    [Tooltip("Whether to spawn the projectile at a fixed distance according to spawn distance")]
     public bool fixedDistance;
+    [Tooltip("Time after attack is performed before resetting the attack animation")]
     public float animationLength;
 
     [Header("Spawn Logic")]
     public int projectileCount = 1;
-    [Tooltip("Additional projectiles to spawn")] public int randomCount;
-    [Tooltip("Spread radius for barrage attacks")] public float spread;
-    [Tooltip("Maximum increase/decrease to spread")] public float randomSpread;
-    [Tooltip("Minimum delay between each projectile")] public float minDelay;
-    [Tooltip("Maximum delay between each projectile")] public float maxDelay;
+    [Tooltip("Random additional projectiles to spawn")]
+    public int randomCount;
+    [Tooltip("Spread angle for 'spread' attacks, and barrage radius for barrage attacks")]
+    public float spread;
+    [Tooltip("Maximum random increase/decrease to spread")]
+    public float randomSpread;
+    [Tooltip("Minimum delay between each projectile spawn if projectile count > 0")]
+    public float minDelay;
+    [Tooltip("Maximum delay between each projectile spawn if projectile count > 0")]
+    public float maxDelay;
 
     [Header("Enemy Only")]
+    [Tooltip("Maximum range for enemies to be able to use this attack")]
     public float maxRange;
+    [Tooltip("Whether the enemy can move while performing this attaack")]
     public bool canMoveDuringAttack;
-    [Range(0f, 100f)] [Tooltip("Minimum Hp % for enemy to use this attack")] public float minHpPct = 0f;
-    [Range(0f, 100f)] [Tooltip("Maximum Hp % for enemy to use this attack")] public float maxHpPct = 100f;
-    [Tooltip("Phase required to use this attack, -1 => no phase required")] public int phaseReq = -1;
+    [Range(0f, 100f)]
+    [Tooltip("Minimum Hp % for enemy to use this attack")]
+    public float minHpPct = 0f;
+    [Range(0f, 100f)]
+    [Tooltip("Maximum Hp % for enemy to use this attack")]
+    public float maxHpPct = 100f;
+    [Tooltip("Phase required to use this attack, -1 => no phase required")]
+    public int phaseReq = -1;
+    [Tooltip("Next attack for the enemy to use")]
     public AttackData nextAttack;
 
     [Header("Resource Costs (Player Only)")]
@@ -84,13 +100,7 @@ public class AttackData : ScriptableObject
 
     private void OnDestroy()
     {
-        if (pd != null)
-        {
-            Destroy(pd);
-        }
-        if (nextAttack != null)
-        {
-            Destroy(nextAttack);
-        }
+        if (pd != null) Destroy(pd);
+        if (nextAttack != null) Destroy(nextAttack);
     }
 }
