@@ -234,6 +234,7 @@ public class WaveManager : MonoBehaviour
 
         int actualWave = GetCurrentWave();
         if (actualWave % 5 == 0) rerolls++;
+        else if (Random.value < 0.5f) rerolls++;
 
         UpdateRerollUI();
 
