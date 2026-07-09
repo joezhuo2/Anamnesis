@@ -1397,12 +1397,12 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 1
-      value: 1
+      value: 2
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
       type: 2
-      value: 3
+      value: 4
     weight: 5
   - icon: {fileID: 0}
     baseBuff:
@@ -1547,8 +1547,13 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 43
-      value: 3
+      value: 4
     weight: 6
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 45
+      value: 2
+    weight: 3
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0
