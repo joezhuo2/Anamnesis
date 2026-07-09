@@ -18,12 +18,13 @@ MonoBehaviour:
   numPierce: 5
   size: 3
   physicalMult: 0
-  spellMult: 0.3
+  spellMult: 0.25
   trueMult: 0
   scalingStat: 31
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
+  maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
@@ -36,3 +37,7 @@ MonoBehaviour:
     selfApply: 0
     applyCondition: 0
     chance: 0.6
+  orbitRadius: 0
+  orbitSelf: 0
+  randOrbRadOffset: 0
+  rotateClockwise: 0

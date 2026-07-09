@@ -47,6 +47,10 @@ MonoBehaviour:
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
+  fireOrbits: 0
+  absorbOrbits: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
   type: 0
   icon: {fileID: -4290406455011644030, guid: ac0de4f746fa7df4daae01d78607f013, type: 3}
   displayName: Lacerate

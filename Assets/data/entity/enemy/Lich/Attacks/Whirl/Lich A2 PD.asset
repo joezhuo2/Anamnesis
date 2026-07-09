@@ -17,13 +17,14 @@ MonoBehaviour:
   lifetime: 1.5
   numPierce: 1
   size: 2
-  physicalMult: 0.5
+  physicalMult: 0.45
   spellMult: 0
   trueMult: 0
   scalingStat: 31
   timeBeforeSameEnemy: 0
   followDistance: 2.5
   rotationOffset: 0
+  maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
@@ -31,7 +32,8 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effect: {fileID: 0}
-  selfApply: 0
-  applyCondition: 0
-  effectChance: 0
+  effects: []
+  orbitRadius: 0
+  orbitSelf: 0
+  randOrbRadOffset: 0
+  rotateClockwise: 0

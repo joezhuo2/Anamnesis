@@ -15,8 +15,10 @@ MonoBehaviour:
   damagePct: 0
   physicalDmgPct: 3
   spellDmgPct: 0
-  attack: 4
+  attack: 2
   atkPct: 0
+  intelligence: 0
+  intPct: 0
   attackSpeedPct: 0
   critChance: 5
   critDamage: 50
@@ -28,6 +30,7 @@ MonoBehaviour:
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
+  projSpd: 0
   currentHp: 100
   maxHp: 100
   hpPct: 0

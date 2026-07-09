@@ -134,7 +134,7 @@ public class StatusEffectManager : MonoBehaviour
 
             if (e.currentTime > effDur)
             {
-                if (e.currentStacks > 1)
+                if (e.currentStacks > 1 && e != null)
                 {
                     e.currentStacks--;
                     e.currentTime = 0f;
@@ -142,8 +142,8 @@ public class StatusEffectManager : MonoBehaviour
                 }
                 else
                 {
-                    e.OnExpire();
-                    activeEffects.RemoveAt(i);
+                    if (e!= null) e.OnExpire();
+                    if (activeEffects[i] != null) activeEffects.RemoveAt(i);
                     Destroy(e);
                 }
             }
