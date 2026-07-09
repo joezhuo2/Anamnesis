@@ -24,7 +24,7 @@ public class GeneratedReward
     public RarityData rd;
 
     public float finalVal => br.baseBuff.value * rd.mult;
-    public string GetDescription() => $"+{finalVal} {br.baseBuff.type.ToString()} ({rd.rarityName} x{rd.mult})";
+    public string GetDescription() => $"+{finalVal} {br.baseBuff.ToString()} ({rd.rarityName} x{rd.mult})";
 }
 
 [System.Serializable]

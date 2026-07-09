@@ -34,7 +34,7 @@ public class RewardButton : MonoBehaviour
         if (reward.rd != null)
         {
             if (borderHighlight != null) borderHighlight.color = reward.rd.displayColor;
-            titleText.text = reward.br.baseBuff.type.ToString().ToUpper();
+            titleText.text = reward.br.baseBuff.ToString();
         }
 
         if (iconImage != null && reward.br.icon != null)

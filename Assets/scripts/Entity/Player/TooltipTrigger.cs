@@ -120,6 +120,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         List<string> lines = new();
+        lines.Add($"{cad.type}");
         if (cooldown != 0f) lines.Add($"Cooldown: {cooldown:F1}s");
         if (hpCost != 0f || hpGain != 0f) lines.Add($"Health: -{hpCost:F0} +{cad.healthGainOnHit:F0} +{cad.healthPctGainOnHit:F1}%");
         if (staminaCost != 0f || staminaGain != 0f) lines.Add($"Stamina: -{staminaCost:F0} +{cad.staminaGainOnHit:F0} +{cad.staminaPctGainOnHit:F1}%");

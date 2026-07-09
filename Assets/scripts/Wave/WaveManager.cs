@@ -338,7 +338,7 @@ public class WaveManager : MonoBehaviour
         }
         additionalQuality = 0f;
     }
-    private void    GenerateMixedPool()
+    private void GenerateMixedPool()
     {
         int rewardChoices = PoolPreSetup();
 
