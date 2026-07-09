@@ -54,10 +54,10 @@ MonoBehaviour:
   currentMana: 100
   maxMana: 100
   canGainMana: 0
-  dashSpeedMult: 5
-  dashCooldown: 3
-  dashDistance: 1.5
-  dashStaminaCost: 30
+  dashSpeedMult: 6
+  dashCooldown: 2.5
+  dashDistance: 1.75
+  dashStaminaCost: 25
   dashShouldApplyIFrame: 1
   isDashing: 0
   canDash: 0

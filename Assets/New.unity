@@ -1392,17 +1392,17 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 0
-      value: 3
+      value: 2
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
       type: 1
-      value: 2
+      value: 1
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
       type: 2
-      value: 4
+      value: 3
     weight: 5
   - icon: {fileID: 0}
     baseBuff:
@@ -1417,7 +1417,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 5
-      value: 5
+      value: 4
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
@@ -1462,12 +1462,12 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 15
-      value: 5
+      value: 4
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 16
-      value: 4
+      value: 3
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
@@ -1477,7 +1477,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 18
-      value: 2
+      value: 1
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
@@ -1492,12 +1492,12 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 21
-      value: 3
+      value: 2
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 22
-      value: 3
+      value: 2
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
@@ -1507,7 +1507,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 25
-      value: 4
+      value: 5
     weight: 5
   - icon: {fileID: 0}
     baseBuff:
@@ -1532,22 +1532,22 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 36
-      value: 2
+      value: 5
     weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 41
-      value: 0.5
+      value: 1
     weight: 1
   - icon: {fileID: 0}
     baseBuff:
       type: 42
-      value: 2
+      value: 1
     weight: 10
   - icon: {fileID: 0}
     baseBuff:
       type: 43
-      value: 4
+      value: 3
     weight: 6
   - icon: {fileID: 0}
     baseBuff:
