@@ -139,7 +139,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3fbcbd6ac701c904e8076bb3e85cd3ba, type: 2}
   - {fileID: 11400000, guid: 88fb5d50bc45a4b4a8e705140fe9c1a3, type: 2}
   - {fileID: 11400000, guid: d4194199ecd546246be73d289971a1f7, type: 2}
-  globalCooldown: 2
+  globalCooldown: 3
 --- !u!212 &3478480386570623367
 SpriteRenderer:
   serializedVersion: 2

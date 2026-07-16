@@ -6,22 +6,26 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     public GameObject resourceHoverZone;
-    [HideInInspector] public PlayerStats p;
-    [Header("Levelling")]
+
+    [Header("Mana")]
     public Slider manaBar;
     public TextMeshProUGUI manaText;
-    private int lastMana = -1;
-    private int lastMaxMana = -1;
+
     [Header("Health")]
     public Slider healthUI;
     public TextMeshProUGUI healthText;
-    private int lastHp = -1;
-    private int lastMaxHp = -1;
+
     [Header("Stamina")]
     public Slider staminaUI;
     public TextMeshProUGUI staminaText;
+
+    private int lastMana = -1;
+    private int lastMaxMana = -1;
+    private int lastHp = -1;
+    private int lastMaxHp = -1;
     private int lastStamina = -1;
     private int lastMaxStamina = -1;
+    [HideInInspector] public PlayerStats p;
 
     private void Start()
     {

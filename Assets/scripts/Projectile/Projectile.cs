@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour {
     }
     private void Start()
     {
-        effSpd = ownerObj.TryGetComponent<EntityStatManager>(out var esm) ? pd.speed * (1f + (esm.s.projSpd * 0.01f)) : pd.speed;
+        effSpd = ownerObj?.TryGetComponent<EntityStatManager>(out var esm) ? pd.speed * (1f + (esm.s.projSpd * 0.01f)) : pd.speed;
         pierced = 0;
         damageSnapshot = DamageCalculator.CaptureSnapshot(pd, ownerObj);
         HandleSize();
@@ -150,7 +150,7 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleSize()
     {
-        if (!ownerObj.TryGetComponent<EntityStatManager>(out var esm) && esm.s.aoePct == 0) return;
+        if (!ownerObj?.TryGetComponent<EntityStatManager>(out var esm) ?? false || esm.s.aoePct == 0) return;
 
         float sizeMult = pd.size + (esm.s.aoePct * 0.01f);
         transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
@@ -198,7 +198,7 @@ public class Projectile : MonoBehaviour {
         {
             if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
             {
-                bool searchForPlayer = ownerObj.GameObject().CompareTag("Enemy");
+                bool searchForPlayer = ownerObj?.gameObject.CompareTag("Enemy") ?? false;
                 followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
             }
 
@@ -251,7 +251,7 @@ public class Projectile : MonoBehaviour {
     {
         if (orbitTarget == null || !orbitTarget.gameObject.activeInHierarchy)
         {
-            if (pd.orbitSelf) orbitTarget = ownerObj?.transform;
+            if (pd != null && pd.orbitSelf) orbitTarget = ownerObj?.transform;
             else orbitTarget = FindClosestEnemyInDirection();
             orbitDirectionSign = 0f;
         }

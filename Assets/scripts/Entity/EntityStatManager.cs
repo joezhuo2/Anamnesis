@@ -55,21 +55,21 @@ public class EntityStatManager : MonoBehaviour
 
         if (levelOffset % 5 == 0)
         {
-            s.physicalDmgPct  += 0.5f * levelOffset;
-            s.spellDmgPct += 0.5f * levelOffset;
-            s.aoePct += 2f * levelOffset;
+            s.physicalDmgPct  += 0.6f * levelOffset; //3% per 5 lvs
+            s.spellDmgPct += 0.6f * levelOffset; // 3% per 5 lvs
+            s.aoePct += 2f * levelOffset; // 10% per 5 lvs
 
-            s.critChance = Mathf.Clamp(s.critChance * (1f + (0.03f * levelOffset)), 0f, 100f);
-            s.critDamage += 2f * levelOffset;
+            s.critChance = Mathf.Clamp(s.critChance * (1f + (0.03f * levelOffset)), 0f, 100f); // 1.15x per 5 lvs
+            s.critDamage += 2f * levelOffset; // 10% per 5 lvs
 
-            s.damageRes = Mathf.Clamp(s.damageRes + (0.2f * levelOffset), 0f, 40f);
-            s.physicalRes = Mathf.Clamp(s.physicalRes + (0.4f * levelOffset), -100f, 40f);
-            s.spellRes = Mathf.Clamp(s.spellRes + (0.4f * levelOffset), -100f, 40f);
+            s.damageRes = Mathf.Clamp(s.damageRes + (0.4f * levelOffset), 0f, 50f); // 2% per 5 lvs (125)
+            s.physicalRes = Mathf.Clamp(s.physicalRes + (0.6f * levelOffset), -100f, 60f); // 3% per 5 lvs (100)
+            s.spellRes = Mathf.Clamp(s.spellRes + (0.6f * levelOffset), -100f, 60f); // 3% per 5 lvs (100)
 
-            s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.3f * levelOffset), 0f, 50f);
-            s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (0.5f * levelOffset), 0f, 60f);
+            s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.3f * levelOffset), 0f, 45f); // 1.5% per 5 lvs (150)
+            s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (0.5f * levelOffset), 0f, 60f); // 2.5% per 5 lvs (120)
 
-            s.moveSpeedPct += Mathf.Clamp(2f * levelOffset, 0f, 200f);
+            s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct + (2f * levelOffset), 0f, 200f); // 10% per 5 lvs (100)
         }
     }
 
@@ -77,7 +77,6 @@ public class EntityStatManager : MonoBehaviour
     {
         if (s != null) Destroy(s);
     }
-    private static readonly Dictionary<StatType, FieldInfo> cachedFields = new();
     public float GetStat(StatType type)
     {
         float value = type switch
@@ -193,10 +192,7 @@ public struct StatBuff : IEquatable<StatBuff>
         this.type = type;
         this.value = value;
     }
-    public readonly bool Equals(StatBuff other)
-    {
-        return type == other.type && Mathf.Approximately(value, other.value);
-    }
+    public readonly bool Equals(StatBuff other) => type == other.type && Mathf.Approximately(value, other.value);
 
     public override bool Equals(object obj) => obj is StatBuff other && Equals(other);
     public override int GetHashCode() => HashCode.Combine(type, value);

@@ -1502,7 +1502,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 24
-      value: 3
+      value: 4
     weight: 6
   - icon: {fileID: 0}
     baseBuff:
@@ -2922,13 +2922,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUI
   resourceHoverZone: {fileID: 2084233291}
-  p: {fileID: 0}
   manaBar: {fileID: 452485284}
   manaText: {fileID: 1372610695}
   healthUI: {fileID: 1430961095}
   healthText: {fileID: 15952219}
   staminaUI: {fileID: 428455701}
   staminaText: {fileID: 312895896}
+  p: {fileID: 0}
 --- !u!114 &1181093670
 MonoBehaviour:
   m_ObjectHideFlags: 0

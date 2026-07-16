@@ -36,7 +36,6 @@ public class PlayerUpgradeManager : MonoBehaviour
             if (activeUpgrades[i] is T) return activeUpgrades[i];
         return null;
     }
-
     public void AddUpgrade(PlayerUpgrade pu)
     {
         if (pu == null || activeUpgrades.Contains(pu)) return;
