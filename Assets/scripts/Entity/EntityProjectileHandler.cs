@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class EntityProjectileHandler : MonoBehaviour
 
     private void OnDestroy()
     {
-        orbitingProjectiles.Clear();
+        if (gameObject.activeInHierarchy) StartCoroutine(ClearOrbitsAfterDelay(0.1f));
     }
     public void RegisterOrbitingProjectile(Projectile p)
     {
@@ -46,7 +47,7 @@ public class EntityProjectileHandler : MonoBehaviour
                 p.Launch(dir.normalized);
             }
         }
-        orbitingProjectiles.Clear();
+        StartCoroutine(ClearOrbitsAfterDelay(0.1f));
     }
     public void ReleaseAll(Vector2 dir)
     {
@@ -56,7 +57,7 @@ public class EntityProjectileHandler : MonoBehaviour
             if (p != null && p.gameObject != null)
                 p.Launch(dir.normalized);
         }
-        orbitingProjectiles.Clear();
+        StartCoroutine(ClearOrbitsAfterDelay(0.1f));
     }
     public int AbsorbAll()
     {
@@ -72,7 +73,7 @@ public class EntityProjectileHandler : MonoBehaviour
                 Destroy(p.gameObject);
             }
         }
-        orbitingProjectiles.Clear();
+        StartCoroutine(ClearOrbitsAfterDelay(0.1f));
         return count;
     }
     public void RedirectAll()
@@ -93,7 +94,7 @@ public class EntityProjectileHandler : MonoBehaviour
                 p.Launch(dir);
             }
         }
-        orbitingProjectiles.Clear();
+        StartCoroutine(ClearOrbitsAfterDelay(0.1f));
     }
     public void ExplodeAll()
     {
@@ -103,6 +104,11 @@ public class EntityProjectileHandler : MonoBehaviour
             if (p != null && p.gameObject != null)
                 p.Explode();
         }
+        StartCoroutine(ClearOrbitsAfterDelay(0.1f));
+    }
+    private IEnumerator ClearOrbitsAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         orbitingProjectiles.Clear();
     }
     private void TriggerStatGain(Projectile p)
@@ -143,4 +149,5 @@ public class EntityProjectileHandler : MonoBehaviour
         }
         return closest;
     }
+    public int GetOrbitingCount() => orbitingProjectiles.Count;
 }

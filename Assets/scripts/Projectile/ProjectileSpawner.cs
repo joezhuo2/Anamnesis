@@ -17,8 +17,8 @@ public class ProjectileSpawner : MonoBehaviour
         Vector2 spawnPos,
         Vector2 dir,
         bool rotateToDir,
-        GameObject sourceObj = null,
-        ProjectileData pdOverride = null
+        GameObject sourceObj,
+        ProjectileData pdOverride
     )
     {
         if (prefab == null) return null;
@@ -36,7 +36,7 @@ public class ProjectileSpawner : MonoBehaviour
             p.dir = dir;
             p.pierced = 0;
             p.ownerObj = sourceObj;
-            if (pdOverride != null) p.pd = pdOverride;
+            p.pd = pdOverride;
         }
 
         return proj;

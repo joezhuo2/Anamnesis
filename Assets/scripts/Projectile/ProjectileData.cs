@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ApplyCondition { OnHit, OnCast }
+public enum SpecialScalingAttribute { None, Orbits }
 
 [CreateAssetMenu(fileName = "projectile_data", menuName = "Data/Projectile")]
 public class ProjectileData : ScriptableObject
@@ -18,6 +19,8 @@ public class ProjectileData : ScriptableObject
     public float spellMult;
     public float trueMult;
     public StatType scalingStat = StatType.EffAtk;
+    public float specialMult = 1f;
+    public SpecialScalingAttribute specialSclaing = SpecialScalingAttribute.None;
 
     [Header("Advanced")]
     [Tooltip("Time before the projectile can hit the same enemy")]

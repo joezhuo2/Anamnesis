@@ -4,6 +4,7 @@ using UnityEngine;
 public struct ProjectileDamageSnapshot
 {
     public float scalingValue;
+    public float specialMult;
     public float damagePct;
     public float addPhysDmgPct;
     public float addSplDmgPct;
@@ -28,6 +29,11 @@ public static class DamageCalculator
         if (!source.TryGetComponent<EntityStatManager>(out var esm) || esm.s == null) return snapshot;
 
         snapshot.scalingValue = esm.GetStat(pd.scalingStat);
+        snapshot.specialMult = (pd.specialSclaing) switch
+        {
+            SpecialScalingAttribute.Orbits => esm.GameObject().TryGetComponent<EntityProjectileHandler>(out var eph) ? 1f + (eph.GetOrbitingCount() * pd.specialMult) : 1f,
+            _ => 1f
+        };
         snapshot.damagePct = esm.s.damagePct;
         snapshot.addPhysDmgPct = esm.s.addPhysDmgPct;
         snapshot.addSplDmgPct = esm.s.addSplDmgPct;
@@ -61,7 +67,7 @@ public static class DamageCalculator
             float dmgMult = 1f + (snapshot.damagePct * 0.01f);
             float finalMult = mult + (addMultPct * 0.01f);
 
-            float damage = snapshot.scalingValue * dmgMult * finalMult * TypeBonus(type, snapshot) * AttackTypeBonus(pd.mainAttack.type, snapshot);
+            float damage = snapshot.scalingValue * snapshot.specialMult * dmgMult * finalMult * TypeBonus(type, snapshot) * AttackTypeBonus(pd.mainAttack.type, snapshot);
             var (finalDamage, isCrit) = rollCrits ? RollCrits(damage, snapshot) : (damage, false);
             dp.AddInstance(type, finalDamage, isCrit);
         }

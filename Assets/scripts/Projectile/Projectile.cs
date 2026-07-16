@@ -9,10 +9,10 @@ using UnityEngine;
 [RequireComponent(typeof(RectTransform))]
 public class Projectile : MonoBehaviour {
     public ProjectileData pd;
+
     [HideInInspector] public GameObject ownerObj;
     [HideInInspector] public Vector2 dir;
     [HideInInspector] public int pierced;
-
     private float effSpd;
     private List<GameObject> hit;
     private ProjectileDamageSnapshot damageSnapshot;
@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour {
     }
     private void Start()
     {
-        effSpd = ownerObj?.TryGetComponent<EntityStatManager>(out var esm) ? pd.speed * (1f + (esm.s.projSpd * 0.01f)) : pd.speed;
+        effSpd = ownerObj != null ? ownerObj.TryGetComponent<EntityStatManager>(out var esm) ? pd.speed * (1f + (esm.s.projSpd * 0.01f)) : pd.speed : pd.speed;
         pierced = 0;
         damageSnapshot = DamageCalculator.CaptureSnapshot(pd, ownerObj);
         HandleSize();
@@ -150,7 +150,7 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleSize()
     {
-        if (!ownerObj?.TryGetComponent<EntityStatManager>(out var esm) ?? false || esm.s.aoePct == 0) return;
+        if (!ownerObj.TryGetComponent<EntityStatManager>(out var esm) && esm.s.aoePct == 0) return;
 
         float sizeMult = pd.size + (esm.s.aoePct * 0.01f);
         transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
@@ -198,7 +198,7 @@ public class Projectile : MonoBehaviour {
         {
             if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
             {
-                bool searchForPlayer = ownerObj?.gameObject.CompareTag("Enemy") ?? false;
+                bool searchForPlayer = ownerObj.GameObject().CompareTag("Enemy");
                 followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
             }
 
