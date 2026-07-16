@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Nirvana A AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  cooldown: 24
+  projectilePrefab: {fileID: 7236607404109697151, guid: 48c478ada976a6c4d8f908dd7f9e4ff5, type: 3}
+  pd: {fileID: 11400000, guid: 11c383e7904eab24db5ec2ae3884aed1, type: 2}
+  pattern: 0
+  spawnDelay: 0
+  spawnDistance: 3
+  fixedDistance: 0
+  animationLength: 0.5
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 0
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 0
+  staminaCostPct: 0
+  healthCost: 0
+  healthCostPct: 0
+  manaCost: 65
+  manaCostPct: 35
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 0
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 4
+  manaPctGainOnHit: 1
+  summonChance: 0
+  summonCondition: 0
+  fireOrbits: 1
+  absorbOrbits: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
+  type: 2
+  icon: {fileID: 0}
+  displayName: Nirvana
