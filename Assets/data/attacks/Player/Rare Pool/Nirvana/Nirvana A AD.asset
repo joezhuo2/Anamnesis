@@ -36,8 +36,8 @@ MonoBehaviour:
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 65
-  manaCostPct: 35
+  manaCost: 145
+  manaCostPct: 10
   basedOnDmgDealt: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
@@ -52,5 +52,5 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   type: 2
-  icon: {fileID: 0}
+  icon: {fileID: -1542465496953560609, guid: 044e0648c03a4e5478b90d5e1159ea57, type: 3}
   displayName: Nirvana
