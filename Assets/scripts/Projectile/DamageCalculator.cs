@@ -57,13 +57,7 @@ public static class DamageCalculator
 
         void AddDamageIfValid(DamageType type, float mult)
         {
-            float addMultPct = type switch
-            {
-                DamageType.Physical => snapshot.addPhysDmgPct,
-                DamageType.Spell => snapshot.addSplDmgPct,
-                _ => 0f
-            };
-
+            float addMultPct = GetAdditionalScaling(snapshot, type);
             float dmgMult = 1f + (snapshot.damagePct * 0.01f);
             float finalMult = mult + (addMultPct * 0.01f);
 
@@ -87,6 +81,12 @@ public static class DamageCalculator
         dp.AddInstance(type, finalDamage, isCrit, indicatorColor);
         return dp;
     }
+    private static float GetAdditionalScaling(ProjectileDamageSnapshot snapshot, DamageType type) => type switch
+    {
+        DamageType.Physical => snapshot.addPhysDmgPct,
+        DamageType.Spell => snapshot.addSplDmgPct,
+        _ => 0f
+    };
 
     private static float TypeBonus(DamageType type, ProjectileDamageSnapshot snapshot) => type switch
     {

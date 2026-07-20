@@ -15,12 +15,14 @@ MonoBehaviour:
   mainAttack: {fileID: 11400000, guid: f1593c0c133dfd7488959be27935583c, type: 2}
   speed: 14
   lifetime: 1.5
-  numPierce: 6
+  numPierce: 4
   size: 2
   physicalMult: 0
-  spellMult: 0.35
+  spellMult: 0.25
   trueMult: 0
   scalingStat: 44
+  specialMult: 1
+  specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
@@ -34,6 +36,6 @@ MonoBehaviour:
   additionalFollowsMouse: 0
   effects: []
   orbitRadius: 0
-  orbitSelf: 0
   randOrbRadOffset: 0
+  orbitSelf: 0
   rotateClockwise: 0

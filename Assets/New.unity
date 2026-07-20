@@ -1610,7 +1610,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Aphelion
     desc: Orbit Spl
-  - newAttack: {fileID: 11400000, guid: 64ed8dbedf1b5784abeea70a41c5077f, type: 2}
+  - newAttack: {fileID: 11400000, guid: 5476f691af2c85c4a8f8e8344c5a487a, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Nirvana
