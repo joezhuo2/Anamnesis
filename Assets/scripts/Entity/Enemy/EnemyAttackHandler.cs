@@ -74,6 +74,8 @@ public class EnemyAttackHandler : MonoBehaviour
     }
     private System.Collections.IEnumerator PerformAttack(AttackData attack, int index)
     {
+        if (!es.canAttack || !es.isAlive) yield return null;
+
         isAttackingCoroutineRunning = true;
         es.isAttacking = true;
         es.canMove = attack.canMoveDuringAttack;

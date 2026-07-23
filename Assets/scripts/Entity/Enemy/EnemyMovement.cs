@@ -32,10 +32,11 @@ public class EnemyMovement : MonoBehaviour
         UpdateTargeting();
     }
     private void Update()
-    {
-        if (!es.isAlive)
+    {   
+        if (es.target == null || !es.canMove || !es.isAlive)
         {
             rb.linearVelocity = Vector2.zero;
+            SetAnimator(false);
             return;
         }
 
@@ -45,13 +46,6 @@ public class EnemyMovement : MonoBehaviour
     public void SetTarget(GameObject target) => es.target = target;
     private void MoveToTarget()
     {
-        if (es.target == null || !es.canMove || !es.isAlive)
-        {
-            rb.linearVelocity = Vector2.zero;
-            SetAnimator(false);
-            return;
-        }
-
         Vector2 dist = es.target.transform.position - cTransform.position;
         float distMag = dist.magnitude;
 

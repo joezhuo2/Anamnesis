@@ -19,9 +19,8 @@ GameObject:
   - component: {fileID: 500516171016585450}
   - component: {fileID: 375165746433560564}
   - component: {fileID: 404276272350105028}
-  - component: {fileID: 8623531711562895370}
   m_Layer: 0
-  m_Name: Cultist
+  m_Name: Cultist Clone
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
   cardinalOnly: 0
   canDeaggro: 1
-  stoppingDistance: 1
+  stoppingDistance: 4
   flipRotation: 0
   es: {fileID: 0}
 --- !u!114 &5810120444494419227
@@ -120,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4274b1e4542f000428bc3b26c85b915a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityStatManager
-  baseStats: {fileID: 11400000, guid: 1a3666cf6dd6dd34295273edebf5785d, type: 2}
+  baseStats: {fileID: 11400000, guid: 4609b008718f9ec419d3201206862ec8, type: 2}
   s: {fileID: 0}
   currentBuffs: []
 --- !u!114 &8195867897408456428
@@ -138,7 +137,7 @@ MonoBehaviour:
   projSpawnOffset: {x: 0, y: 0}
   attacks:
   - {fileID: 11400000, guid: ad5933620eca8994dbf987d01e1707c8, type: 2}
-  globalCooldown: 3
+  globalCooldown: 2
 --- !u!212 &467692590264923639
 SpriteRenderer:
   serializedVersion: 2
@@ -276,30 +275,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.25, y: 0.32}
   m_Direction: 0
---- !u!114 &8623531711562895370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7457594691964507130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cef0ca202d7384b45915188bb7ca3721, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntitySummonHandler
-  summonPrefab: {fileID: 7457594691964507130, guid: ed6d4b1b71927f8408ba7d44890b6322, type: 3}
-  maxSummons: 4
-  lifetime: 0
-  spawnOffset: 2
-  cleanupOnDestroy: 1
-  onDeathBuffs: []
-  onDeathEffects:
-  - {fileID: 11400000, guid: 580397dbe16516d4cb3e940b785bdd91, type: 2}
-  perSummonBuffs:
-  - type: 18
-    value: 20
-  - type: 0
-    value: -10
-  - type: 24
-    value: 15
