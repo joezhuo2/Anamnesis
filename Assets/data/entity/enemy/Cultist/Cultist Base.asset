@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
   physicalDmgPct: 0
-  spellDmgPct: 0
-  attack: 0
+  spellDmgPct: 5
+  attack: 2
   atkPct: 0
   intelligence: 0
   intPct: 0
   attackSpeedPct: 0
-  critChance: 0
-  critDamage: 0
+  critChance: 30
+  critDamage: 30
   aoePct: 0
   defShred: 0
   resPen: 0
@@ -31,21 +31,21 @@ MonoBehaviour:
   skillDmgPct: 0
   ultDmgPct: 0
   projSpd: 0
-  currentHp: 0
-  maxHp: 0
-  hpPct: 0
+  currentHp: 650
+  maxHp: 650
+  hpPct: 40
   hpRegen: 0
   hpRegPct: 0
-  armor: 0
+  armor: 50
   armorPct: 0
-  damageRes: 0
-  dodgeChance: 0
-  dodgeResPct: 0
+  damageRes: 10
+  dodgeChance: 10
+  dodgeResPct: 30
   physicalRes: 0
-  spellRes: 0
-  hurtTime: 0.75
-  effectRes: 0
-  moveSpeed: 0
+  spellRes: 30
+  hurtTime: 0.5
+  effectRes: 25
+  moveSpeed: 0.55
   moveSpeedPct: 0
   currentStamina: 0
   maxStamina: 0
@@ -69,7 +69,7 @@ MonoBehaviour:
   isAttacking: 0
   canMove: 0
   canGainHp: 0
-  detectionRange: 0
+  detectionRange: 12
   target: {fileID: 0}
   phase: 0
   phaseThresholds: []

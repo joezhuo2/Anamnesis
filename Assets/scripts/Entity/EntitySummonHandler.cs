@@ -40,16 +40,7 @@ public class EntitySummonHandler : MonoBehaviour
 
         CleanupNullSummons();
 
-        if (maxSummons > 0 && activeSummons.Count >= maxSummons)
-        {
-            GameObject oldest = activeSummons[0];
-            activeSummons.RemoveAt(0);
-            if (oldest != null)
-            {
-                ApplyPerSummonBuffs(false);
-                Destroy(oldest);
-            }
-        }
+        if (maxSummons > 0 && activeSummons.Count >= maxSummons) return null;
 
         GameObject summon = Instantiate(summonPrefab, position, rotation);
 

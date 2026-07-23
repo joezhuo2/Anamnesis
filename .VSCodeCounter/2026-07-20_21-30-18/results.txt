@@ -1,0 +1,129 @@
+Date : 2026-07-20 21:30:18
+Directory : c:\Users\Joe\Anamnesis\Assets\scripts
+Total : 77 files,  5400 codes, 305 comments, 835 blanks, all 6540 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         77 |      5,400 |        305 |        835 |      6,540 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                         | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                            |         77 |      5,400 |        305 |        835 |      6,540 |
+| DamageIndicator                                                                                              |          2 |         45 |          0 |         11 |         56 |
+| Entity                                                                                                       |         37 |      2,956 |        304 |        406 |      3,666 |
+| Entity (Files)                                                                                               |          9 |      1,002 |         12 |        143 |      1,157 |
+| Entity\Enemy                                                                                                 |          6 |        332 |          0 |         71 |        403 |
+| Entity\Enemy (Files)                                                                                         |          4 |        281 |          0 |         62 |        343 |
+| Entity\Enemy\Spawner                                                                                         |          2 |         51 |          0 |          9 |         60 |
+| Entity\Player                                                                                                |         22 |      1,622 |        292 |        192 |      2,106 |
+| Entity\Player (Files)                                                                                        |         14 |      1,460 |        292 |        166 |      1,918 |
+| Entity\Player\PlayerUpgrades                                                                                 |          8 |        162 |          0 |         26 |        188 |
+| Items                                                                                                        |          2 |         43 |          0 |          6 |         49 |
+| Projectile                                                                                                   |          6 |        783 |          0 |        133 |        916 |
+| SkillTree                                                                                                    |          7 |        186 |          1 |         47 |        234 |
+| StatusEffect                                                                                                 |         13 |        598 |          0 |         96 |        694 |
+| StatusEffect (Files)                                                                                         |          3 |        209 |          0 |         35 |        244 |
+| StatusEffect\StatusEffects                                                                                   |         10 |        389 |          0 |         61 |        450 |
+| StatusEffect\StatusEffects\Deprecated                                                                        |          3 |         93 |          0 |         18 |        111 |
+| StatusEffect\StatusEffects\Deprecated\ArmorReduction                                                         |          1 |         30 |          0 |          6 |         36 |
+| StatusEffect\StatusEffects\Deprecated\Slow                                                                   |          1 |         30 |          0 |          6 |         36 |
+| StatusEffect\StatusEffects\Deprecated\Weaken                                                                 |          1 |         33 |          0 |          6 |         39 |
+| StatusEffect\StatusEffects\DoTs                                                                              |          2 |         47 |          0 |          9 |         56 |
+| StatusEffect\StatusEffects\Info                                                                              |          1 |          5 |          0 |          2 |          7 |
+| StatusEffect\StatusEffects\Pulled                                                                            |          1 |         50 |          0 |         13 |         63 |
+| StatusEffect\StatusEffects\SoulRend                                                                          |          1 |        134 |          0 |         12 |        146 |
+| StatusEffect\StatusEffects\StatReduction.cs                                                                  |          1 |         37 |          0 |          6 |         43 |
+| StatusEffect\StatusEffects\Stun                                                                              |          1 |         23 |          0 |          1 |         24 |
+| Wave                                                                                                         |         10 |        789 |          0 |        136 |        925 |
+| Wave (Files)                                                                                                 |          7 |        725 |          0 |        124 |        849 |
+| Wave\Anamoly                                                                                                 |          3 |         64 |          0 |         12 |         76 |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                     | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Joe\Anamnesis\Assets\scripts\DamageIndicator\DamageIndicator.cs                                     | C#       |         32 |          0 |          9 |         41 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\DamageIndicator\DamageIndicatorSpawner.cs                              | C#       |         13 |          0 |          2 |         15 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EnemyStats.cs                                                   | C#       |         16 |          0 |          2 |         18 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Enemy\BossBarUI.cs                                              | C#       |         40 |          0 |         13 |         53 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Enemy\Enemy.cs                                                  | C#       |          4 |          0 |          1 |          5 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Enemy\EnemyAttackHandler.cs                                     | C#       |        126 |          0 |         29 |        155 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Enemy\EnemyMovement.cs                                          | C#       |        111 |          0 |         19 |        130 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Enemy\Spawner\EnemySpawnController.cs                           | C#       |         40 |          0 |          8 |         48 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Enemy\Spawner\EnemySpawner.cs                                   | C#       |         11 |          0 |          1 |         12 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Entity.cs                                                       | C#       |          9 |          0 |          1 |         10 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityGearManager.cs                                            | C#       |         50 |          0 |          8 |         58 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityHealth.cs                                                 | C#       |        275 |          0 |         53 |        328 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityProjectileHandler.cs                                      | C#       |        139 |          0 |         15 |        154 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityStatManager.cs                                            | C#       |        221 |          0 |         22 |        243 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityStats.cs                                                  | C#       |        125 |          2 |          9 |        136 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntitySummonHandler.cs                                          | C#       |        162 |          0 |         30 |        192 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\PlayerStats.cs                                                  | C#       |          5 |         10 |          3 |         18 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\Player.cs                                                | C#       |          8 |          0 |          1 |          9 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerAttackCooldownUI.cs                                | C#       |         42 |          0 |         12 |         54 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerAttackHandler.cs                                   | C#       |        201 |          0 |         36 |        237 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerControls.cs                                        | C#       |        631 |        292 |         27 |        950 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerDashCooldownUI.cs                                  | C#       |         34 |          0 |          8 |         42 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerInputHandler.cs                                    | C#       |         31 |          0 |          4 |         35 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerMana.cs                                            | C#       |         16 |          0 |          3 |         19 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerMovement.cs                                        | C#       |         82 |          0 |         17 |         99 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerStamina.cs                                         | C#       |         42 |          0 |          7 |         49 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUI.cs                                              | C#       |         83 |          0 |         16 |         99 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrade.cs                                         | C#       |         30 |          0 |          1 |         31 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgradeManager.cs                                  | C#       |         96 |          0 |          8 |        104 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrades\Decoy.cs                                  | C#       |         43 |          0 |         12 |         55 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrades\GainMana.cs                               | C#       |         12 |          0 |          1 |         13 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrades\HexCast.cs                                | C#       |          6 |          0 |          1 |          7 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrades\Paradox.cs                                | C#       |          6 |          0 |          1 |          7 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrades\Reminiscence.cs                           | C#       |         19 |          0 |          3 |         22 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrades\SoulRendPU.cs                             | C#       |         47 |          0 |          5 |         52 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrades\SpawnProjectile.cs                        | C#       |         18 |          0 |          1 |         19 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerUpgrades\StellarSurge.cs                           | C#       |         11 |          0 |          2 |         13 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\TooltipTrigger.cs                                        | C#       |        133 |          0 |         18 |        151 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\TooltipUI.cs                                             | C#       |         31 |          0 |          8 |         39 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Items\Gear.cs                                                          | C#       |         34 |          0 |          4 |         38 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Items\Item.cs                                                          | C#       |          9 |          0 |          2 |         11 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\AttackData.cs                                               | C#       |         95 |          0 |         11 |        106 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\DamageCalculator.cs                                         | C#       |        114 |          0 |         13 |        127 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\DamagePacket.cs                                             | C#       |         32 |          0 |          7 |         39 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\Projectile.cs                                               | C#       |        343 |          0 |         63 |        406 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\ProjectileData.cs                                           | C#       |         56 |          0 |          8 |         64 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\ProjectileSpawner.cs                                        | C#       |        143 |          0 |         31 |        174 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillNodeDef.cs                                              | C#       |         20 |          0 |          3 |         23 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillNodeUI.cs                                               | C#       |          4 |          0 |          2 |          6 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreeLineRenderer.cs                                     | C#       |          4 |          0 |          2 |          6 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreeManager.cs                                          | C#       |        146 |          1 |         34 |        181 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreePanZoom.cs                                          | C#       |          4 |          0 |          2 |          6 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreeTooltip.cs                                          | C#       |          4 |          0 |          2 |          6 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreeUI.cs                                               | C#       |          4 |          0 |          2 |          6 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffect.cs                                           | C#       |         23 |          0 |          5 |         28 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffectCooldownUI.cs                                 | C#       |         42 |          0 |         11 |         53 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffectManager.cs                                    | C#       |        144 |          0 |         19 |        163 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Deprecated\ArmorReduction\ArmorReduction.cs | C#       |         30 |          0 |          6 |         36 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Deprecated\Slow\Slow.cs                     | C#       |         30 |          0 |          6 |         36 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Deprecated\Weaken\Weaken.cs                 | C#       |         33 |          0 |          6 |         39 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\DoTs\Detonator.cs                           | C#       |         29 |          0 |          4 |         33 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\DoTs\DoT.cs                                 | C#       |         18 |          0 |          5 |         23 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Info\Info.cs                                | C#       |          5 |          0 |          2 |          7 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Pulled\Pulled.cs                            | C#       |         50 |          0 |         13 |         63 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\SoulRend\SoulRend.cs                        | C#       |        134 |          0 |         12 |        146 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\StatReduction.cs\StatReduction.cs           | C#       |         37 |          0 |          6 |         43 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Stun\Stun.cs                                | C#       |         23 |          0 |          1 |         24 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\AnamolyInstance.cs                                                | C#       |         35 |          0 |          5 |         40 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\Anamoly\AnomalyData.cs                                            | C#       |         21 |          0 |          3 |         24 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\Anamoly\NoDamageTrialInstance.cs                                  | C#       |         19 |          0 |          4 |         23 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\Anamoly\TimeTrialInstance.cs                                      | C#       |         24 |          0 |          5 |         29 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\AnomalyButtonUI.cs                                                | C#       |         28 |          0 |          7 |         35 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\RewardButton.cs                                                   | C#       |         78 |          0 |         17 |         95 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\WaveManager.cs                                                    | C#       |        487 |          0 |         81 |        568 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\WaveQuality.cs                                                    | C#       |         31 |          0 |          6 |         37 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\WaveReward.cs                                                     | C#       |         41 |          0 |          6 |         47 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\WaveSequence.cs                                                   | C#       |         25 |          0 |          2 |         27 |
+| Total                                                                                                        |          |      5,400 |        305 |        835 |      6,540 |
++--------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
