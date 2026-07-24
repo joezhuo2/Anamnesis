@@ -20,6 +20,8 @@ public class Projectile : MonoBehaviour {
     private Transform orbitTarget;
     private float orbitDirectionSign;
     private float effectiveOrbitRadius;
+    private float orbitAngleOffset;
+    private bool orbitInitialized;
     private Rigidbody2D rb;
     private bool boomerangActive;
     private bool boomerangReturning;
@@ -45,7 +47,7 @@ public class Projectile : MonoBehaviour {
         HandleDirection();
         rb = GetComponent<Rigidbody2D>();
         InitBoomerang();
-        HandleMovement(true);
+        // HandleMovement(true);
 
         if (pd.effects != null && pd.effects.Count > 0)
         {
@@ -184,7 +186,7 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleMovement(bool start)
     {
-        if (rb == null || effSpd <= 0) return;
+        if (rb == null || effSpd <= 0 || ownerObj == null) return;
 
         if (pd.orbitRadius > 0 && !orbitCancelled)
         {
@@ -254,6 +256,7 @@ public class Projectile : MonoBehaviour {
             if (pd != null && pd.orbitSelf) orbitTarget = ownerObj?.transform;
             else orbitTarget = FindClosestEnemyInDirection();
             orbitDirectionSign = 0f;
+            orbitInitialized = false;
         }
 
         if (orbitTarget == null) return;
@@ -268,19 +271,34 @@ public class Projectile : MonoBehaviour {
             return;
         }
 
-        if (orbitDirectionSign == 0f)
+        if (!orbitInitialized)
         {
             effectiveOrbitRadius = pd.orbitRadius + Random.Range(0f, pd.randOrbRadOffset);
             orbitDirectionSign = pd.rotateClockwise ? -1f : 1f;
+
+            if (dist < effectiveOrbitRadius * 0.5f && dir != Vector2.zero)
+                orbitAngleOffset = Mathf.Atan2(dir.y, dir.x);
+            else 
+                orbitAngleOffset = Mathf.Atan2(offset.y, offset.x);
+
+            orbitInitialized = true;
         }
 
-        Vector2 tangent = Vector2.Perpendicular(offset).normalized;
-        Vector2 desiredVelocity = orbitDirectionSign * effSpd * tangent;
+        float currentAngle = Mathf.Atan2(offset.y, offset.x);
+        float targetAngle = orbitAngleOffset + orbitDirectionSign * effSpd * Time.fixedDeltaTime / effectiveOrbitRadius;
 
-        float radiusError = dist - effectiveOrbitRadius;
-        desiredVelocity += 2f * radiusError * -offset.normalized;
-
-        rb.linearVelocity = desiredVelocity;
+        orbitAngleOffset = targetAngle;
+        
+        Vector2 desiredPos = center + new Vector2(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)) * effectiveOrbitRadius;
+        Vector2 toDesired = desiredPos - (Vector2)transform.position;
+        
+        Vector2 tangent = Vector2.Perpendicular(desiredPos - center).normalized;
+        Vector2 orbitalVelocity = orbitDirectionSign * effSpd * tangent;
+        
+        float radiusError = Vector2.Distance(transform.position, center) - effectiveOrbitRadius;
+        Vector2 radialCorrection = -5f * radiusError * (desiredPos - center).normalized;
+        
+        rb.linearVelocity = orbitalVelocity + radialCorrection + toDesired * 5f;
     }
     private Transform FindClosestEnemyInDirection()
     {
