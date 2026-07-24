@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b46b8a49af0bf7146b09e7cdc4576544, type: 3}
-  m_Name: Pulled 0.75 1 1.4 2 1.5
+  m_Name: Pulled 0.6 1 1.5 5 0.1
   m_EditorClassIdentifier: Assembly-CSharp::Pulled
   currentTime: 0
-  duration: 0.75
+  duration: 0.6
   tickInterval: 0.016
   isBuff: 0
   icon: {fileID: 1751618896811465624, guid: 1a422c5f5436e5042861653928334be7, type: 3}
@@ -24,7 +24,7 @@ MonoBehaviour:
   source: {fileID: 0}
   projectile: {fileID: 0}
   currentStacks: 0
-  pullSpeed: 1.4
+  pullSpeed: 5
   pullSpeedPerStack: 2
   fullSpeedRadius: 1.5
   deadZone: 0.1
