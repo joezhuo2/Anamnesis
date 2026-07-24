@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Ball AD
+  m_Name: Wave AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 4
-  projectilePrefab: {fileID: 8775174737362964947, guid: 8cd644b494c634342a291da2e30c9b12, type: 3}
-  pd: {fileID: 11400000, guid: befa2278498fca341bcb9a73f9201de8, type: 2}
-  pattern: 1
-  spawnDelay: 0.75
+  cooldown: 0
+  projectilePrefab: {fileID: 2784415723355054935, guid: 890c9a37309f600418cbf8cf773218b6, type: 3}
+  pd: {fileID: 11400000, guid: c0506fc3e46d7ef44bcbfa75f20d5457, type: 2}
+  pattern: 0
+  spawnDelay: 0.65
   spawnDistance: 0.25
   fixedDistance: 1
-  animationLength: 1.06
+  animationLength: 1.07
   projectileCount: 1
-  randomCount: 2
-  spread: 15
-  randomSpread: 5
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
   minDelay: 0
-  maxDelay: 0.25
-  maxRange: 6
-  canMoveDuringAttack: 1
+  maxDelay: 0
+  maxRange: 8
+  canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
-  phaseReq: -1
+  phaseReq: 1
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
@@ -45,8 +45,8 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
-  summonChance: 1
-  summonCondition: 2
+  summonChance: 0
+  summonCondition: 0
   fireOrbits: 0
   absorbOrbits: 0
   redirectOrbits: 0

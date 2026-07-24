@@ -138,6 +138,7 @@ MonoBehaviour:
   projSpawnOffset: {x: 0, y: 0}
   attacks:
   - {fileID: 11400000, guid: ad5933620eca8994dbf987d01e1707c8, type: 2}
+  - {fileID: 11400000, guid: c507983e3fec1e5458b29c5dff279df1, type: 2}
   globalCooldown: 3
 --- !u!212 &467692590264923639
 SpriteRenderer:
@@ -291,9 +292,11 @@ MonoBehaviour:
   summonPrefab: {fileID: 7457594691964507130, guid: ed6d4b1b71927f8408ba7d44890b6322, type: 3}
   maxSummons: 4
   lifetime: 0
-  spawnOffset: 2
+  spawnOffset: 3
   cleanupOnDestroy: 1
-  onDeathBuffs: []
+  onDeathBuffs:
+  - type: 18
+    value: -15
   onDeathEffects:
   - {fileID: 11400000, guid: 580397dbe16516d4cb3e940b785bdd91, type: 2}
   perSummonBuffs:
@@ -303,3 +306,5 @@ MonoBehaviour:
     value: -10
   - type: 24
     value: 15
+  - type: 14
+    value: 8

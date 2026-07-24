@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Ball PD
+  m_Name: Wave PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: ad5933620eca8994dbf987d01e1707c8, type: 2}
-  speed: 3
-  lifetime: 3
-  numPierce: 4
-  size: 3
+  mainAttack: {fileID: 11400000, guid: c507983e3fec1e5458b29c5dff279df1, type: 2}
+  speed: 9
+  lifetime: 1
+  numPierce: 30
+  size: 1
   physicalMult: 0
-  spellMult: 0.4
+  spellMult: 0.9
   trueMult: 0
   scalingStat: 31
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0
-  followDistance: 1
-  rotationOffset: 0
+  followDistance: 0
+  rotationOffset: 180
   maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0

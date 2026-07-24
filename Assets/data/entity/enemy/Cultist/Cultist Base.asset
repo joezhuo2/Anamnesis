@@ -72,5 +72,8 @@ MonoBehaviour:
   detectionRange: 12
   target: {fileID: 0}
   phase: 0
-  phaseThresholds: []
+  phaseThresholds:
+  - 70
+  - 40
+  - 20
   phaseBuffs: []

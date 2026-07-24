@@ -2948,7 +2948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHandler
   starting:
   - {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
-  - {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
+  - {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
   cooldownPrefab: {fileID: 1749710292777410887, guid: 47db549e516fc9642bc9e1bbabac16c1, type: 3}
   objContainer: {fileID: 1186772504}
   attacks: []

@@ -137,6 +137,7 @@ MonoBehaviour:
   projSpawnOffset: {x: 0, y: 0}
   attacks:
   - {fileID: 11400000, guid: ad5933620eca8994dbf987d01e1707c8, type: 2}
+  - {fileID: 11400000, guid: c507983e3fec1e5458b29c5dff279df1, type: 2}
   globalCooldown: 2
 --- !u!212 &467692590264923639
 SpriteRenderer:
@@ -188,7 +189,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 815424164945274260, guid: 0906de5e5a0122f4882e01b8387ccd8f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
