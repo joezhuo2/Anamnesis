@@ -52,7 +52,7 @@ public static class DamageCalculator
         return snapshot;
     }
 
-    public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits = true)
+    public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits, GameObject owner)
     {
         DamagePacket dp = new();
         if (pd == null || !snapshot.isValid) return dp;
@@ -65,7 +65,7 @@ public static class DamageCalculator
 
             float damage = snapshot.scalingValue * snapshot.specialMult * dmgMult * finalMult * TypeBonus(type, snapshot) * AttackTypeBonus(pd.mainAttack.type, snapshot);
             var (finalDamage, isCrit) = rollCrits ? RollCrits(damage, snapshot) : (damage, false);
-            dp.AddInstance(type, finalDamage, isCrit);
+            dp.AddInstance(type, finalDamage, isCrit, default, owner);
         }
 
         AddDamageIfValid(DamageType.Physical, pd.physicalMult);
@@ -74,13 +74,13 @@ public static class DamageCalculator
 
         return dp;
     }
-    public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, EntityStats stats, bool rollCrits = true, Color indicatorColor = default)
+    public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, EntityStats stats, bool rollCrits, Color indicatorColor, GameObject owner)
     {
         DamagePacket dp = new();
         if (stats == null || baseDamage <= 0f) return dp;
 
         var (finalDamage, isCrit) = rollCrits ? RollCrits(baseDamage, stats) : (baseDamage, false);
-        dp.AddInstance(type, finalDamage, isCrit, indicatorColor);
+        dp.AddInstance(type, finalDamage, isCrit, indicatorColor, owner);
         return dp;
     }
     private static float GetAdditionalScaling(ProjectileDamageSnapshot snapshot, DamageType type) => type switch

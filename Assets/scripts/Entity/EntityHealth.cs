@@ -116,7 +116,7 @@ public class EntityHealth : MonoBehaviour
 
             if (i.isCrit) 
             {
-                if (gameObject.TryGetComponent<PlayerUpgradeManager>(out var pum)) 
+                if (i.owner.TryGetComponent<PlayerUpgradeManager>(out var pum)) 
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit);
 
                 sizeMult *= 1.5f;

@@ -106,7 +106,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (cad.pd != null)
         {
             var previewSnapshot = DamageCalculator.CaptureSnapshot(cad.pd, cesm.gameObject);
-            var previewPacket = DamageCalculator.BuildDamagePacket(cad.pd, previewSnapshot, false);
+            var previewPacket = DamageCalculator.BuildDamagePacket(cad.pd, previewSnapshot, false, gameObject);
 
             foreach (var instance in previewPacket.instances)
             {

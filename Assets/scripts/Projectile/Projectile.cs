@@ -93,7 +93,7 @@ public class Projectile : MonoBehaviour {
 
         if (targetIsPlayer == isPlayer || targetIsEnemy == isEnemy) return;
 
-        DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, damageSnapshot);
+        DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, damageSnapshot, true, ownerObj);
 
         eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj, damageSnapshot.resPen, damageSnapshot.defShred);
 

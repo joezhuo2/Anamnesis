@@ -23,7 +23,7 @@ public class Detonator : StatusEffect
                     int ticksRemaining = Mathf.CeilToInt((dot.duration - dot.currentTime) / dot.tickInterval);
                     float dmg = dmgMult * dotTickDmg * ticksRemaining;
 
-                    DamagePacket damagePacket = DamageCalculator.BuildDamagePacket(dmg, dmgType, ssm.s, true, indicatorColor);
+                    DamagePacket damagePacket = DamageCalculator.BuildDamagePacket(dmg, dmgType, ssm.s, true, indicatorColor, source);
                     eh.TakeDamage(damagePacket, true, source, ssm.s.resPen, ssm.s.defShred, 3f);
                 }
                 sem.RemoveEffect(dot);
