@@ -51,6 +51,6 @@ MonoBehaviour:
   absorbOrbits: 0
   redirectOrbits: 0
   explodeOrbits: 0
-  type: 0
+  type: 4
   icon: {fileID: 0}
   displayName: 

@@ -47,7 +47,7 @@ public class Projectile : MonoBehaviour {
         HandleDirection();
         rb = GetComponent<Rigidbody2D>();
         InitBoomerang();
-        // HandleMovement(true);
+        HandleMovement(true);
 
         if (pd.effects != null && pd.effects.Count > 0)
         {
