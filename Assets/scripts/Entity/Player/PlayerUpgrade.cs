@@ -18,7 +18,8 @@ public abstract class PlayerUpgrade : ScriptableObject
         OnCalculateAttackCost,
         OnOverkill,
         OnCounterDodge,
-        OnProjectileHit
+        OnProjectileHit,
+        OnCrit
     }
     public string upgradeName;
     public TriggerCondition[] conditions;

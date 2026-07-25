@@ -18,6 +18,7 @@ public struct ProjectileDamageSnapshot
     public int defShred;
     public float resPen;
     public bool isValid;
+    public GameObject owner;
 }
 
 public static class DamageCalculator
@@ -47,6 +48,7 @@ public static class DamageCalculator
         snapshot.defShred = esm.s.defShred;
         snapshot.resPen = esm.s.resPen;
         snapshot.isValid = true;
+        snapshot.owner = source;
         return snapshot;
     }
 

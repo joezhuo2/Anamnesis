@@ -59,7 +59,7 @@ public class EntityStats : ScriptableObject
     public float EffAtk => attack * (1f + (atkPct * 0.01f));
     public int attack;
     public float atkPct;
-    public float EffInt => intelligence * (1f + (intPct * 0.01f));
+    public float EffInt => intelligence * (1f + (intPct * 0.01f)) * (Mathf.Max(1f, 1f + ((maxMana - 100) * 0.01f)));
     public int intelligence;
     public float intPct;
     public float attackSpeedPct;
@@ -88,11 +88,11 @@ public class EntityStats : ScriptableObject
     public float ArmorRes => EffArmor / (EffArmor + 100f);
     public int armor;
     public float armorPct;
-    [Range(-100f, 100f)] public float damageRes = 0f;
+    [Range(-100f, 100f)] public float damageRes;
     [Range(0f, 100f)] public float dodgeChance;
     [Range(0f, 100f)] public float dodgeResPct;
-    [Range(-100f, 100f)] public float physicalRes = 0f;
-    [Range(-100f, 100f)] public float spellRes = 0f;
+    [Range(-100f, 100f)] public float physicalRes;
+    [Range(-100f, 100f)] public float spellRes;
     public float hurtTime = 0.3f;
     public float effectRes = 0f;
     // effectRes, critRes, healingPct
@@ -105,7 +105,7 @@ public class EntityStats : ScriptableObject
     [Header("Stamina - Player Only")]
     public int currentStamina;
     public int maxStamina;
-    public float EffStReg => staminaRegen * (1f + (stRegPct * 0.01f));
+    public float EffStReg => staminaRegen * (1f + (stRegPct * 0.01f)) * (Mathf.Max(1f, 1f + ((maxStamina - 100) * 0.01f)));
     public float staminaRegen;
     public float stRegPct;
 

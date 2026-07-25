@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: Warp A PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
-  speed: 1
+  speed: 0.8
   lifetime: 11
   numPierce: 3000
-  size: 3
+  size: 2.5
   physicalMult: 0
-  spellMult: 0.85
+  spellMult: 0.6
   trueMult: 0
   scalingStat: 44
   specialMult: 1
   specialSclaing: 0
-  timeBeforeSameEnemy: 1
+  timeBeforeSameEnemy: 1.5
   followDistance: 0
   rotationOffset: 0
   maxBoomerangDist: 0

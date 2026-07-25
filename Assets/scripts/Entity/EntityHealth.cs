@@ -114,7 +114,13 @@ public class EntityHealth : MonoBehaviour
                 _ => Color.white
             };
 
-            if (i.isCrit) sizeMult *= 1.5f;
+            if (i.isCrit) 
+            {
+                if (gameObject.TryGetComponent<PlayerUpgradeManager>(out var pum)) 
+                    pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit);
+
+                sizeMult *= 1.5f;
+            }
             if (sizeOverride > 0f) sizeMult = sizeOverride;
 
             if (dmg > 0) ChangeHealth(-Mathf.RoundToInt(dmg), 0, true, sizeMult, color, bypassIFrames, source);

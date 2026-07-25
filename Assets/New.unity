@@ -1616,7 +1616,7 @@ MonoBehaviour:
     attackName: Nirvana
     desc: Orbit Spl
   - newAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
-    type: 2
+    type: 1
     icon: {fileID: 0}
     attackName: Warp
     desc: Orbit Spl Add
