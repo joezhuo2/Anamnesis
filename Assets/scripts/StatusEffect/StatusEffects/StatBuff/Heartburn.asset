@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9891d8e133ce19e4280b96c8ab869ded, type: 3}
+  m_Name: Heartburn
+  m_EditorClassIdentifier: Assembly-CSharp::StatBuffs
+  currentTime: 0
+  duration: 4
+  tickInterval: 0
+  isBuff: 0
+  icon: {fileID: -7921052967969465774, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Heartburn
+  desc: For each stack, increases crit damage by 8%, damage bonus by 12% and stamina
+    cost by 15%, but reduce health regen by 12%.
+  maxStacks: 30
+  target: {fileID: 0}
+  source: {fileID: 0}
+  projectile: {fileID: 0}
+  currentStacks: 0
+  buffs:
+  - type: 0
+    value: 12
+  - type: 7
+    value: 8
+  - type: 47
+    value: 15
+  - type: 15
+    value: -12
