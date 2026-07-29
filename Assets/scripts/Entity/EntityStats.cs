@@ -47,7 +47,9 @@ public enum StatType
     Intelligence,
     IntPct,
     EffInt,
-    ProjSpd
+    ProjSpd,
+    addTrueDmgPct,
+    stCostPct
 }
 
 public class EntityStats : ScriptableObject
@@ -70,10 +72,12 @@ public class EntityStats : ScriptableObject
     public float resPen;
     public float addPhysDmgPct;
     public float addSplDmgPct;
+    public float addTrueDmgPct;
     public float basicDmgPct;
     public float skillDmgPct;
     public float ultDmgPct;
     public float projSpd;
+    public float stCostPct;
     // lifeStealPct, effectChance
 
     [Header("Defense")]

@@ -138,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackCooldownUI
   cooldownImage: {fileID: 6396199039445648262}
   iconImage: {fileID: 4355118444441382196}
+  borderImage: {fileID: 7527476035521311546}
 --- !u!114 &6905394615377536619
 MonoBehaviour:
   m_ObjectHideFlags: 0

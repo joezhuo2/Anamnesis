@@ -33,7 +33,7 @@ public class PlayerAttackCooldownUI : MonoBehaviour
 
             cooldownImage.fillAmount = 0f;
         }
-        }
+    }
     private void Update()
     {
         if (cpah == null || cad == null || !cpah.lastAttackTimes.ContainsKey(ctype)) return;

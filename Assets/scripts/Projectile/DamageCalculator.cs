@@ -8,6 +8,7 @@ public struct ProjectileDamageSnapshot
     public float damagePct;
     public float addPhysDmgPct;
     public float addSplDmgPct;
+    public float addTrueDmgPct;
     public float physicalDmgPct;
     public float spellDmgPct;
     public float basicDmgPct;
@@ -38,6 +39,7 @@ public static class DamageCalculator
         snapshot.damagePct = esm.s.damagePct;
         snapshot.addPhysDmgPct = esm.s.addPhysDmgPct;
         snapshot.addSplDmgPct = esm.s.addSplDmgPct;
+        snapshot.addTrueDmgPct = esm.s.addTrueDmgPct;
         snapshot.physicalDmgPct = esm.s.physicalDmgPct;
         snapshot.spellDmgPct = esm.s.spellDmgPct;
         snapshot.basicDmgPct = esm.s.basicDmgPct;
@@ -85,6 +87,7 @@ public static class DamageCalculator
     }
     private static float GetAdditionalScaling(ProjectileDamageSnapshot snapshot, DamageType type) => type switch
     {
+        DamageType.True => snapshot.addTrueDmgPct,
         DamageType.Physical => snapshot.addPhysDmgPct,
         DamageType.Spell => snapshot.addSplDmgPct,
         _ => 0f

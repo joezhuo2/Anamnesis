@@ -109,6 +109,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.stRegPct => s.stRegPct,
             StatType.addPhysDmgPct => s.addPhysDmgPct,
             StatType.addSplDmgPct => s.addSplDmgPct,
+            StatType.addTrueDmgPct => s.addTrueDmgPct,
             StatType.currentHp => s.currentHp,
             StatType.moveSpeed => s.moveSpeed,
             StatType.EffMaxHp => s.EffMaxHp,
@@ -126,6 +127,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.IntPct => s.intPct,
             StatType.EffInt => s.EffInt,
             StatType.ProjSpd => s.projSpd,
+            StatType.stCostPct => s.stCostPct,
             _ => 0f,
         };
         return value;
@@ -166,6 +168,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.stRegPct: s.stRegPct += mod; break;
             case StatType.addPhysDmgPct: s.addPhysDmgPct += mod; break;
             case StatType.addSplDmgPct: s.addSplDmgPct += mod; break;
+            case StatType.addTrueDmgPct: s.addTrueDmgPct += mod; break;
             case StatType.moveSpeed: s.moveSpeed += mod; break;
             case StatType.maxMana: s.maxMana += Mathf.RoundToInt(mod); break;
             case StatType.SkillDmgPct: s.skillDmgPct += mod; break;
@@ -175,6 +178,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.Intelligence: s.intelligence += Mathf.RoundToInt(mod); break;
             case StatType.IntPct: s.intPct += mod; break;
             case StatType.ProjSpd: s.projSpd += mod; break;
+            case StatType.stCostPct: s.stCostPct += mod; break;
             default: break;
 
         }

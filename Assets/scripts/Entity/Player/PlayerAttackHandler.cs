@@ -178,7 +178,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
         pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
 
-        float totalStaminaCost = Mathf.Abs(attack.staminaCost + (p.maxStamina * (attack.staminaCostPct * 0.01f)));
+        float totalStaminaCost = Mathf.Abs(attack.staminaCost + (p.maxStamina * (attack.staminaCostPct* 0.01f))) * (1f + (p.stCostPct * 0.01f));
         float totalHealthCost = Mathf.Abs(attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f)));
         float totalManaCost = Mathf.Abs(attack.manaCost + (p.maxMana * (attack.manaCostPct * 0.01f)));
 
