@@ -176,7 +176,8 @@ public class EntityHealth : MonoBehaviour
                 indicatorColor,
                 sizeMult,
                 0.6f,
-                1f
+                1f,
+                0.1f
             );
         }
 
