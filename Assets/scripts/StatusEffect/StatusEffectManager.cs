@@ -143,7 +143,8 @@ public class StatusEffectManager : MonoBehaviour
                 else
                 {
                     if (e!= null) e.OnExpire();
-                    if (activeEffects[i] != null) activeEffects.RemoveAt(i);
+                    if (i > 0 && i < activeEffects.Count && activeEffects[i] != null)
+                        activeEffects.RemoveAt(i);
                     Destroy(e);
                 }
             }

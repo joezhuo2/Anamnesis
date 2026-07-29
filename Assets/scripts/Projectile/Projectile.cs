@@ -159,7 +159,7 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleDirection()
     {
-        if (ownerObj == null) return;
+        if (ownerObj == null || pd == null) return;
 
         if (ownerObj.CompareTag("Player") && dir == Vector2.zero)
         {
@@ -170,8 +170,8 @@ public class Projectile : MonoBehaviour {
         }
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        Vector2 trueAngle = pd != null ? new Vector2(Mathf.Cos(pd.angleOverride * Mathf.Deg2Rad), Mathf.Sin(pd.angleOverride * Mathf.Deg2Rad)) : Vector2.right;
-        float finalAngle = (pd != null && pd.useTrueAngle) ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
+        Vector2 trueAngle = new(Mathf.Cos(pd.angleOverride * Mathf.Deg2Rad), Mathf.Sin(pd.angleOverride * Mathf.Deg2Rad));
+        float finalAngle = pd.randomDir ? Random.Range(0f, 360f) : pd.useTrueAngle ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
         transform.rotation = Quaternion.Euler(0f, 0f, finalAngle);
     }
     private void InitBoomerang()
@@ -253,7 +253,7 @@ public class Projectile : MonoBehaviour {
     {
         if (orbitTarget == null || !orbitTarget.gameObject.activeInHierarchy)
         {
-            if (pd != null && pd.orbitSelf) orbitTarget = ownerObj?.transform;
+            if (pd != null && pd.orbitSelf && ownerObj != null) orbitTarget = ownerObj.transform;
             else orbitTarget = FindClosestEnemyInDirection();
             orbitDirectionSign = 0f;
             orbitInitialized = false;

@@ -33,6 +33,7 @@ public class ProjectileData : ScriptableObject
     public float angleOverride;
     public bool useTrueAngle;
     public bool bypassIFrames;
+    public bool randomDir;
 
     [Header("Additional Attacks")]
     public AttackData additionalAttack;
