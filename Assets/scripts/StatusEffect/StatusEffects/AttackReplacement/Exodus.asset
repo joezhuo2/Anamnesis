@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Exodus
   m_EditorClassIdentifier: Assembly-CSharp::AttackReplacement
   currentTime: 0
-  duration: 4
+  duration: 5
   tickInterval: 0
   isBuff: 1
   icon: {fileID: -5895191231709818157, guid: 1a422c5f5436e5042861653928334be7, type: 3}
