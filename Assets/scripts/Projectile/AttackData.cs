@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum SummonCondition { None, OnHit, OnCast }
@@ -84,17 +85,53 @@ public class AttackData : ScriptableObject
     public Sprite icon;
     public string displayName;
 
-    public void InitializeRuntimeCopy()
+    public void InitializeRuntimeCopy() => DeepClone();
+    public void DeepClone()
     {
+        var visited = new HashSet<AttackData>();
+        DeepCloneInternal(visited);
+    }
+
+    private void DeepCloneInternal(HashSet<AttackData> visited)
+    {
+        if (!visited.Add(this)) return;
+
         if (pd != null)
         {
             pd = Instantiate(pd);
             pd.mainAttack = this;
+
+            if (pd.effects != null)
+            {
+                var clonedEffects = new List<EffectData>(pd.effects.Count);
+                foreach (var ef in pd.effects)
+                {
+                    var clonedEf = ef;
+                    if (ef.effect != null)
+                        clonedEf.effect = Instantiate(ef.effect);
+                    clonedEffects.Add(clonedEf);
+                }
+                pd.effects = clonedEffects;
+            }
+
+            if (pd.additionalAttack != null)
+            {
+                if (pd.additionalAttack == this)
+                {
+                    pd.additionalAttack = this;
+                }
+                else
+                {
+                    pd.additionalAttack = Instantiate(pd.additionalAttack);
+                    pd.additionalAttack.DeepCloneInternal(visited);
+                }
+            }
         }
+
         if (nextAttack != null)
         {
             nextAttack = Instantiate(nextAttack);
-            nextAttack.InitializeRuntimeCopy();
+            nextAttack.DeepCloneInternal(visited);
         }
     }
 

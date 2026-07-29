@@ -41,9 +41,7 @@ public class SkillTreeManager : MonoBehaviour
                 {
                     if (ad == null) continue;
                     AttackData rad = Instantiate(ad);
-
-                    if (rad.pd != null)
-                        rad.pd = Instantiate(rad.pd);
+                    rad.DeepClone();
                     runtimeNode.attackUpgrades.Add(rad);
                 }
             }

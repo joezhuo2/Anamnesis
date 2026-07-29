@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "se_ar", menuName = "Status Effects/Debuff/Attack Replacement")]
@@ -16,7 +17,11 @@ public class AttackReplacement : StatusEffect
         setAttack = true;
 
         AttackData original = pah.FindAttackOfType(replacement.type);
-        if (original != null) originalAttack = Instantiate(original);
+        if (original != null)
+        {
+            originalAttack = Instantiate(original);
+            originalAttack.DeepClone();
+        }
 
         pah.UpdateAttack(replacement.type, replacement);
     }
