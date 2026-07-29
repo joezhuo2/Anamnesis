@@ -33,6 +33,8 @@ public class EnemyMovement : MonoBehaviour
     }
     private void Update()
     {   
+        UpdateTargeting();
+
         if (es.target == null || !es.canMove || !es.isAlive)
         {
             rb.linearVelocity = Vector2.zero;
@@ -40,7 +42,6 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        UpdateTargeting();
         MoveToTarget();
     }
     public void SetTarget(GameObject target) => es.target = target;
