@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Heartburn
   m_EditorClassIdentifier: Assembly-CSharp::StatBuffs
   currentTime: 0
-  duration: 5
+  duration: 8
   tickInterval: 0
-  isBuff: 0
+  isBuff: 1
   icon: {fileID: -7921052967969465774, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Heartburn
   desc: For each stack, increases crit damage by 8%, damage bonus by 12% and stamina

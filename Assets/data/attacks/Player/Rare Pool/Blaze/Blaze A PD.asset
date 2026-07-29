@@ -32,7 +32,7 @@ MonoBehaviour:
   bypassIFrames: 0
   randomDir: 0
   additionalAttack: {fileID: 11400000, guid: 0bcc871b0e3d88d4faee6b858ef95aca, type: 2}
-  additionalChance: 0.2
+  additionalChance: 0.3
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects:

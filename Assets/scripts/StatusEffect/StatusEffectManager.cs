@@ -51,28 +51,31 @@ public class StatusEffectManager : MonoBehaviour
     {
         if (se == null) return;
 
-        StatusEffect existing = activeEffects.Find(e => e.GetType() == se.GetType());
+        StatusEffect existing = activeEffects.Find(
+            e => e.GetType() == se.GetType() ||
+            e.GetType().IsSubclassOf(se.GetType()) ||
+            se.GetType().IsSubclassOf(e.GetType())
+        );
 
         if (existing != null)
         {
             existing.currentTime = 0f;
             if (existing.currentStacks < existing.maxStacks) existing.currentStacks++;
             existing.OnStack();
+            return;
         }
-        else
-        {
-            StatusEffect runtimeEffect = Instantiate(se);
-            runtimeEffect.target = gameObject;
-            runtimeEffect.source = source;
-            runtimeEffect.projectile = projectile;
-            runtimeEffect.currentStacks = 1;
-            runtimeEffect.currentTime = 0;
 
-            activeEffects.Add(runtimeEffect);
-            runtimeEffect.OnApply();
+        StatusEffect runtimeEffect = Instantiate(se);
+        runtimeEffect.target = gameObject;
+        runtimeEffect.source = source;
+        runtimeEffect.projectile = projectile;
+        runtimeEffect.currentStacks = 1;
+        runtimeEffect.currentTime = 0;
 
-            CreateDisplayUI(runtimeEffect);
-        }
+        activeEffects.Add(runtimeEffect);
+        runtimeEffect.OnApply();
+
+        CreateDisplayUI(runtimeEffect);
     }
     public void RemoveStacks<T>(int stacksToRemove) where T : StatusEffect
     {
@@ -151,8 +154,8 @@ public class StatusEffectManager : MonoBehaviour
                 }
                 else
                 {
-                    if (e!= null) e.OnExpire();
-                    if (i > 0 && i < activeEffects.Count && activeEffects[i] != null)
+                    if (e != null) e.OnExpire();
+                    if (i >= 0 && i < activeEffects.Count && activeEffects[i] != null)
                         activeEffects.RemoveAt(i);
                     Destroy(e);
                 }
