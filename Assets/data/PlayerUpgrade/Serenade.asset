@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9085d839034405947bd246b3c030cda3, type: 3}
   m_Name: Serenade
   m_EditorClassIdentifier: Assembly-CSharp::AdditionalDamage
-  upgradeName: 
-  conditions: 
-  chance: 0
+  upgradeName: Serenade
+  conditions: 11000000
+  chance: 100
   cooldown: 0
   delay: 0
-  pctAmt: 0
-  type: 0
+  pctAmt: 12
+  type: 3
