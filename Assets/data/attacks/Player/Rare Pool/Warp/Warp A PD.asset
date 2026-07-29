@@ -31,7 +31,7 @@ MonoBehaviour:
   useTrueAngle: 0
   bypassIFrames: 0
   additionalAttack: {fileID: 11400000, guid: cde4c5f98bf9dd840b0ae19c9d77fa86, type: 2}
-  additionalChance: 0.2
+  additionalChance: 0.15
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects: []

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
+    private static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
     [Header("Basic")]
     public WaveSequence currentSequence;
     public float spawnRadius = 2f;
@@ -188,7 +189,7 @@ public class WaveManager : MonoBehaviour
         while (currentEnemies.Count > 0)
         {
             CleanEnemyList();
-            yield return new WaitForSeconds(0.5f);
+            yield return _waitForSeconds0_5;
         }
         EndWave();
     }
@@ -347,7 +348,7 @@ public class WaveManager : MonoBehaviour
         {
             float poolRoll = Random.Range(0f, 100f);
 
-            if (poolRoll < 60f)
+            if (poolRoll < 75f)
             {
                 if (baseBuffPool.Count == 0 || rarityData.Count == 0) continue;
 
@@ -357,7 +358,7 @@ public class WaveManager : MonoBehaviour
                 GameObject btnObj = GetOrCreateRewardButton();
                 if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(generated, OnRewardClaimed);
             }
-            else if (poolRoll < 75f)
+            else if (poolRoll < 90f)
             {
                 if (availableRarePool.Count == 0) continue;
                 AttackReward buff = availableRarePool[Random.Range(0, availableRarePool.Count)];
