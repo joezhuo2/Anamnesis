@@ -102,7 +102,7 @@ public class EntitySummonHandler : MonoBehaviour
             for (int i = 0; i < onDeathEffects.Count; i++)
             {
                 if (onDeathEffects[i] != null)
-                    sem.AddEffect(onDeathEffects[i], gameObject);
+                    sem.AddEffectAfterDelay(onDeathEffects[i], gameObject, 0.1f);
             }
         }
     }

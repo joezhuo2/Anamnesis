@@ -37,7 +37,16 @@ public class StatusEffectManager : MonoBehaviour
         if (activeEffects.Contains(se)) return se;
         return null;
     }
-
+    public void AddEffectAfterDelay(StatusEffect se, GameObject source, float delay, GameObject projectile = null)
+    {
+        StartCoroutine(AddEffectAfterDelayCoroutine(se, source, delay, projectile));
+    }
+    public IEnumerator AddEffectAfterDelayCoroutine(StatusEffect se, GameObject source, float delay, GameObject projectile = null)
+    {
+        if (se == null) yield break;
+        yield return new WaitForSeconds(delay);
+        AddEffect(se, source, projectile);
+    }
     public void AddEffect(StatusEffect se, GameObject source, GameObject projectile = null)
     {
         if (se == null) return;
