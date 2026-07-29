@@ -39,12 +39,12 @@ MonoBehaviour:
   manaCost: 8
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 2
+  staminaGainOnHit: 1
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 1
-  manaPctGainOnHit: 0
+  manaGainOnHit: 0
+  manaPctGainOnHit: 2
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0

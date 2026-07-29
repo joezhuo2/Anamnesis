@@ -18,7 +18,7 @@ MonoBehaviour:
   numPierce: 4
   size: 2
   physicalMult: 0
-  spellMult: 0.25
+  spellMult: 0.2
   trueMult: 0
   scalingStat: 44
   specialMult: 1
@@ -30,6 +30,7 @@ MonoBehaviour:
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
+  randomDir: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1

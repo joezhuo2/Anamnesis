@@ -18,9 +18,11 @@ MonoBehaviour:
   numPierce: 3000
   size: 2.25
   physicalMult: 0
-  spellMult: 0.6
+  spellMult: 0.45
   trueMult: 0
   scalingStat: 44
+  specialMult: 1
+  specialSclaing: 0
   timeBeforeSameEnemy: 0.5
   followDistance: 0
   rotationOffset: 0
@@ -28,12 +30,13 @@ MonoBehaviour:
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
+  randomDir: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects: []
   orbitRadius: 1
-  orbitSelf: 1
   randOrbRadOffset: 1
+  orbitSelf: 1
   rotateClockwise: 0

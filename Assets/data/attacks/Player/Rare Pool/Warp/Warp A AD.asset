@@ -36,8 +36,8 @@ MonoBehaviour:
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 65
-  manaCostPct: 0
+  manaCost: 50
+  manaCostPct: 15
   basedOnDmgDealt: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
