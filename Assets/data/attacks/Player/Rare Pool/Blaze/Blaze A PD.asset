@@ -16,20 +16,21 @@ MonoBehaviour:
   speed: 0
   lifetime: 1
   numPierce: 3000
-  size: 2
+  size: 2.5
   physicalMult: 9.3
   spellMult: 0
   trueMult: 0
   scalingStat: 31
   specialMult: 1
   specialSclaing: 0
-  timeBeforeSameEnemy: 0
+  timeBeforeSameEnemy: 0.5
   followDistance: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
+  randomDir: 0
   additionalAttack: {fileID: 11400000, guid: 0bcc871b0e3d88d4faee6b858ef95aca, type: 2}
   additionalChance: 0.2
   addAttackRequiresHit: 1
