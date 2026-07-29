@@ -14,6 +14,7 @@ public class EntityHealth : MonoBehaviour
     public event Action<GameObject> OnDeath;
     private static readonly int IsDeadHash = Animator.StringToHash("isDead");
     private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
+    private static bool _isTriggeringOnDealDamage;
     private float regenTimer;
     private const float regenInterval = 0.5f; // how often hp regens, in seconds
     private const float fullRegenFrequency = 5f; // time to heal full amount of hpRegen stat
@@ -114,16 +115,26 @@ public class EntityHealth : MonoBehaviour
                 _ => Color.white
             };
 
-            if (i.isCrit) 
+            if (i.owner.TryGetComponent<PlayerUpgradeManager>(out var pum) && pum != null)
+                pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTargetRecievedHit);
+
+            if (i.isCrit)
             {
-                if (i.owner.TryGetComponent<PlayerUpgradeManager>(out var pum)) 
-                    pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit);
+                if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit);
 
                 sizeMult *= 1.5f;
             }
             if (sizeOverride > 0f) sizeMult = sizeOverride;
 
-            if (dmg > 0) ChangeHealth(-Mathf.RoundToInt(dmg), 0, true, sizeMult, color, bypassIFrames, source);
+            int appliedDmg = Mathf.RoundToInt(dmg);
+            if (appliedDmg > 0) ChangeHealth(-appliedDmg, 0, true, sizeMult, color, bypassIFrames, source);
+
+            if (appliedDmg > 0 && !_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
+            {
+                _isTriggeringOnDealDamage = true;
+                dealPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDealDamage, gameObject, appliedDmg);
+                _isTriggeringOnDealDamage = false;
+            }
         }
 
         if (cpum != null)

@@ -19,7 +19,9 @@ public abstract class PlayerUpgrade : ScriptableObject
         OnOverkill,
         OnCounterDodge,
         OnProjectileHit,
-        OnCrit
+        OnCrit,
+        OnTargetRecievedHit,
+        OnDealDamage
     }
     public string upgradeName;
     public TriggerCondition[] conditions;
@@ -28,5 +30,6 @@ public abstract class PlayerUpgrade : ScriptableObject
     public float delay; [Tooltip("delay after triggering before effect activates")]
     public abstract void TriggerUpgradeEffect(GameObject player);
     public virtual void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter = null) {}
+    public virtual void TriggerUpgradeEffect(GameObject player, GameObject target, float damageDealt) {}
     public virtual void OnUnlock(GameObject player) {}
 }
