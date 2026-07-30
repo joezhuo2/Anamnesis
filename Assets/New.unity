@@ -1432,8 +1432,8 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 8
-      value: 2
-    weight: 2
+      value: 3
+    weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 9
@@ -1442,8 +1442,8 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 10
-      value: 1
-    weight: 2
+      value: 2
+    weight: 1
   - icon: {fileID: 0}
     baseBuff:
       type: 12
@@ -1483,22 +1483,22 @@ MonoBehaviour:
     baseBuff:
       type: 19
       value: 1
-    weight: 1
+    weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 20
       value: 2
-    weight: 1
+    weight: 4
   - icon: {fileID: 0}
     baseBuff:
       type: 21
       value: 2
-    weight: 3
+    weight: 2
   - icon: {fileID: 0}
     baseBuff:
       type: 22
       value: 2
-    weight: 3
+    weight: 2
   - icon: {fileID: 0}
     baseBuff:
       type: 24
@@ -1507,8 +1507,8 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 25
-      value: 5
-    weight: 5
+      value: 3
+    weight: 6
   - icon: {fileID: 0}
     baseBuff:
       type: 26
@@ -1532,8 +1532,8 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 36
-      value: 5
-    weight: 3
+      value: 3
+    weight: 6
   - icon: {fileID: 0}
     baseBuff:
       type: 41
@@ -1552,8 +1552,8 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 45
-      value: 2
-    weight: 3
+      value: 5
+    weight: 6
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0
