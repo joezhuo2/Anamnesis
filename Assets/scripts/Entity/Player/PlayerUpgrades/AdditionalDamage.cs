@@ -6,8 +6,6 @@ public class AdditionalDamage : PlayerUpgrade
     public float pctAmt;
     public DamageType type;
 
-    public override void TriggerUpgradeEffect(GameObject player) { }
-
     public override void TriggerUpgradeEffect(GameObject player, GameObject target, float damageDealt)
     {
         if (player == null || target == null || damageDealt <= 0f) return;

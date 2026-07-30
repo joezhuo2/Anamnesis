@@ -129,6 +129,7 @@ public class StatusEffectManager : MonoBehaviour
         if (activeEffects.Count == 0) return;
         for (int i = activeEffects.Count - 1; i >= 0; i--)
         {
+            if (i < 0 || i >= activeEffects.Count) return;
             StatusEffect e = activeEffects[i];
             if (e == null) continue;
 
