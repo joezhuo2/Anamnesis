@@ -100,7 +100,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         float manaGain = Mathf.Abs(cad.manaGainOnHit + (cps.maxMana * (cad.manaPctGainOnHit * 0.01f)));
         float hpCost = Mathf.Abs(cad.healthCost + (cps.EffMaxHp * (cad.healthCostPct * 0.01f)));
         float hpGain = Mathf.Abs(cad.healthGainOnHit + (cps.EffMaxHp * (cad.healthPctGainOnHit * 0.01f)));
-        float cooldown = cad.cooldown * Mathf.Clamp(1f - (cps.attackSpeedPct * 0.01f), 0.1f, 10f);
+        float cooldown = cad.cooldown * Mathf.Clamp(1f - (cps.attackSpeedPct * 0.01f), 0.3f, 10f);
 
         float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
         if (cad.pd != null)

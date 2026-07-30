@@ -96,7 +96,7 @@ public class PlayerAttackHandler : MonoBehaviour
         if (!bypassCooldown)
         {
             float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
-            float cooldown = selected.cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.1f, 10f);
+            float cooldown = selected.cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f);
             if (Time.time - lastTime < cooldown) return;
         }
 
@@ -153,7 +153,6 @@ public class PlayerAttackHandler : MonoBehaviour
             handler.ExplodeAll();
         }
     }
-
     private void TriggerUpgradesOnAttack(AttackType type)
     {
         pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);
@@ -233,5 +232,40 @@ public class PlayerAttackHandler : MonoBehaviour
         float newHpCost = hpCost + missingStamina;
 
         return (newHpCost, newStaminaCost);
+    }
+    public void AdvanceAllCooldowns(float pctAmt)
+    {
+        foreach (var type in lastAttackTimes.Keys)
+        {
+            float lastTime = lastAttackTimes[type];
+            float cooldown = attacks.Find(a => a.type == type)?.cooldown ?? 0f;
+            float effCd = cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f);
+
+            if (effCd <= 0f) continue;
+
+            float timeElapsed = Time.time - lastTime;
+            float cooldownRemainingPct = 1f - (timeElapsed / effCd);
+            float newCooldownRemainingPct = Mathf.Clamp01(cooldownRemainingPct - pctAmt);
+            float newLastTime = Time.time - ((1f - newCooldownRemainingPct) * effCd);
+
+            lastAttackTimes[type] = newLastTime;
+        }
+    }
+    public void AdvanceCooldown(AttackType type, float pctAmt)
+    {
+        if (!lastAttackTimes.ContainsKey(type)) return;
+
+        float lastTime = lastAttackTimes[type];
+        float cooldown = attacks.Find(a => a.type == type)?.cooldown ?? 0f;
+        float effCd = cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f);
+
+        if (effCd <= 0f) return;
+
+        float timeElapsed = Time.time - lastTime;
+        float cooldownRemainingPct = 1f - (timeElapsed / effCd);
+        float newCooldownRemainingPct = Mathf.Clamp01(cooldownRemainingPct - pctAmt);
+        float newLastTime = Time.time - ((1f - newCooldownRemainingPct) * effCd);
+
+        lastAttackTimes[type] = newLastTime;
     }
 }

@@ -181,7 +181,7 @@ public class WaveManager : MonoBehaviour
                 continue;
             }
 
-            HandleSpawns(c);
+            SpawnEnemy(c);
 
             float spawnDelay = Random.Range(c.minSpawnFrequency, c.maxSpawnFrequency);
             yield return new WaitForSeconds(spawnDelay);
@@ -193,9 +193,9 @@ public class WaveManager : MonoBehaviour
         }
         EndWave();
     }
-    private void HandleSpawns(WaveData c)
+    private void SpawnEnemy(WaveData c)
     {
-        Vector2 spawnPosition = Random.insideUnitCircle * spawnRadius + (Vector2)currentSequence.spawnLocation;
+        Vector2 spawnPosition = (Random.insideUnitCircle * spawnRadius) + (Vector2)currentSequence.spawnLocation;
         GameObject enemy = Instantiate(c.enemyPrefab, spawnPosition, Quaternion.identity);
 
         if (enemy.TryGetComponent<EntityStatManager>(out var statManager))

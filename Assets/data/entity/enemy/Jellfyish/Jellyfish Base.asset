@@ -17,6 +17,8 @@ MonoBehaviour:
   spellDmgPct: 3
   attack: 5
   atkPct: 0
+  intelligence: 0
+  intPct: 0
   attackSpeedPct: 0
   critChance: 20
   critDamage: 50
@@ -25,14 +27,17 @@ MonoBehaviour:
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
+  addTrueDmgPct: 0
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
+  projSpd: 0
+  stCostPct: 0
   currentHp: 1600
   maxHp: 1600
   hpPct: 100
-  hpRegen: 80
-  hpRegPct: 50
+  hpRegen: 60
+  hpRegPct: 30
   armor: 300
   armorPct: 50
   damageRes: 30

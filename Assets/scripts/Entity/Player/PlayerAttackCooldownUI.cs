@@ -38,7 +38,7 @@ public class PlayerAttackCooldownUI : MonoBehaviour
     {
         if (cpah == null || cad == null || !cpah.lastAttackTimes.ContainsKey(ctype)) return;
 
-        float effCd = cad.cooldown * Mathf.Clamp(1f - (cps.attackSpeedPct * 0.01f), 0.1f, 10f);
+        float effCd = cad.cooldown * Mathf.Clamp(1f - (cps.attackSpeedPct * 0.01f), 0.3f, 10f);
 
         if (effCd <= 0f)
         {
