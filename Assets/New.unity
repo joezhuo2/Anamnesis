@@ -1662,7 +1662,8 @@ MonoBehaviour:
   - upgrade: {fileID: 11400000, guid: c6ec0bc05c27887429bd26fce6360948, type: 2}
     icon: {fileID: 0}
     upgradeName: Serenade
-    desc: Whel dealing damage, deal an additional 12% of damage dealt as true damage.
+    desc: When dealing damage, there is a 50% chance to deal an additional 12% of
+      damage dealt as true damage.
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
