@@ -181,7 +181,7 @@ public class WaveManager : MonoBehaviour
                 continue;
             }
 
-            SpawnEnemy(c);
+            SpawnEnemies(c);
 
             float spawnDelay = Random.Range(c.minSpawnFrequency, c.maxSpawnFrequency);
             yield return new WaitForSeconds(spawnDelay);
@@ -192,6 +192,16 @@ public class WaveManager : MonoBehaviour
             yield return _waitForSeconds0_5;
         }
         EndWave();
+    }
+    private void SpawnEnemies(WaveData c)
+    {
+        if (c.maxTotalEnemies == 1 || c.maxCurrentEnemies == 1)
+        {
+            SpawnEnemy(c);
+            return;
+        }
+        int spawnCount = Mathf.RoundToInt(GetCurrentWave() / 10) + 1;
+        for (int i = 0; i < spawnCount; i++) SpawnEnemy(c);
     }
     private void SpawnEnemy(WaveData c)
     {

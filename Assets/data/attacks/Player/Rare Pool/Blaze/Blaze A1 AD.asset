@@ -32,8 +32,8 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 17
-  staminaCostPct: 8
+  staminaCost: 20
+  staminaCostPct: 10
   healthCost: 0
   healthCostPct: 0
   manaCost: 0

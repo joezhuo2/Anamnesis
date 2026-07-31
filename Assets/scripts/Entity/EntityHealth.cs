@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -174,10 +173,10 @@ public class EntityHealth : MonoBehaviour
                 Mathf.Abs(finalAmount),
                 pos,
                 indicatorColor,
-                sizeMult,
-                0.6f,
-                1f,
-                0.1f
+                sizeMult + UnityEngine.Random.Range(0f, 0.15f),
+                UnityEngine.Random.Range(0.5f, 0.7f),
+                UnityEngine.Random.Range(0.8f, 1.2f),
+                UnityEngine.Random.Range(0f, 0.2f)
             );
         }
 

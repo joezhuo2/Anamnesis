@@ -8,11 +8,8 @@ public class DamageIndicatorSpawner : MonoBehaviour
     public Canvas canvas;
     void Awake() => Instance = this;
 
-    public void SpawnDamageIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float maxSpawnDelay)
-    {
-        float delay = Random.Range(0f, maxSpawnDelay);
-        StartCoroutine(SpawnAfterDelay(damage, sourcePos, color, scale, lifetime, floatSpeed, delay));
-    }
+    public void SpawnDamageIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay)
+    => StartCoroutine(SpawnAfterDelay(damage, sourcePos, color, scale, lifetime, floatSpeed, delay));
     private IEnumerator SpawnAfterDelay(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay)
     {
         yield return new WaitForSeconds(delay);

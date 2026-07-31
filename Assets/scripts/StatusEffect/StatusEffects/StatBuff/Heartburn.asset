@@ -20,7 +20,7 @@ MonoBehaviour:
   effName: Heartburn
   desc: For each stack, increases crit damage by 8%, damage bonus by 12% and stamina
     cost by 15%, but reduce health regen by 12%.
-  maxStacks: 30
+  maxStacks: 15
   target: {fileID: 0}
   source: {fileID: 0}
   projectile: {fileID: 0}
