@@ -235,21 +235,8 @@ public class PlayerAttackHandler : MonoBehaviour
     }
     public void AdvanceAllCooldowns(float pctAmt)
     {
-        foreach (var type in lastAttackTimes.Keys)
-        {
-            float lastTime = lastAttackTimes[type];
-            float cooldown = attacks.Find(a => a.type == type)?.cooldown ?? 0f;
-            float effCd = cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f);
-
-            if (effCd <= 0f) continue;
-
-            float timeElapsed = Time.time - lastTime;
-            float cooldownRemainingPct = 1f - (timeElapsed / effCd);
-            float newCooldownRemainingPct = Mathf.Clamp01(cooldownRemainingPct - pctAmt);
-            float newLastTime = Time.time - ((1f - newCooldownRemainingPct) * effCd);
-
-            lastAttackTimes[type] = newLastTime;
-        }
+        var keys = new List<AttackType>(lastAttackTimes.Keys);
+        foreach (var type in keys) AdvanceCooldown(type, pctAmt);
     }
     public void AdvanceCooldown(AttackType type, float pctAmt)
     {
@@ -263,7 +250,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
         float timeElapsed = Time.time - lastTime;
         float cooldownRemainingPct = 1f - (timeElapsed / effCd);
-        float newCooldownRemainingPct = Mathf.Clamp01(cooldownRemainingPct - pctAmt);
+        float newCooldownRemainingPct = Mathf.Clamp01(cooldownRemainingPct - (pctAmt * 0.01f));
         float newLastTime = Time.time - ((1f - newCooldownRemainingPct) * effCd);
 
         lastAttackTimes[type] = newLastTime;

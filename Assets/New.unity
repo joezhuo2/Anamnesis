@@ -1406,9 +1406,9 @@ MonoBehaviour:
     weight: 5
   - icon: {fileID: 0}
     baseBuff:
-      type: 3
-      value: 2
-    weight: 3
+      type: 45
+      value: 5
+    weight: 6
   - icon: {fileID: 0}
     baseBuff:
       type: 4
@@ -1549,11 +1549,6 @@ MonoBehaviour:
       type: 43
       value: 3
     weight: 6
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 45
-      value: 5
-    weight: 6
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0
@@ -1664,6 +1659,10 @@ MonoBehaviour:
     upgradeName: Serenade
     desc: When dealing damage, there is a 50% chance to deal an additional 12% of
       damage dealt as true damage.
+  - upgrade: {fileID: 11400000, guid: f78bf5eb68d43ed459aeb5f8392495a1, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Hypercarry
+    desc: Dashing advances all cooldowns by 15%.
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
