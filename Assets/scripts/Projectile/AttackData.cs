@@ -79,6 +79,7 @@ public class AttackData : ScriptableObject
     public bool redirectOrbits;
     [Tooltip("Causes all currently orbiting projectiles to explode, triggering their additionalAttack at their current position.")]
     public bool explodeOrbits;
+    public int redirectCount;
 
     [Header("Misc - Player Only")]
     public AttackType type;

@@ -137,19 +137,19 @@ public class EnemyAttackHandler : MonoBehaviour
             Vector2 dir = es.target != null
                 ? ((Vector2)es.target.transform.position - (Vector2)transform.position).normalized
                 : Vector2.right;
-            handler.ReleaseAll(dir);
+            handler.ReleaseOrbits(dir, attack.redirectCount);
         }
         else if (attack.absorbOrbits)
         {
-            handler.AbsorbAll();
+            handler.AbsorbOrbits(attack.redirectCount);
         }
         else if (attack.redirectOrbits)
         {
-            handler.RedirectAll();
+            handler.RedirectOrbits(attack.redirectCount);
         }
         else if (attack.explodeOrbits)
         {
-            handler.ExplodeAll();
+            handler.ExplodeOrbits(attack.redirectCount);
         }
     }
 }

@@ -19,7 +19,7 @@ public class EntityProjectileHandler : MonoBehaviour
     {
         if (p == null || orbitingProjectiles.Contains(p)) return;
 
-        if (maxOrbiting > 0 && orbitingProjectiles.Count >= maxOrbiting)
+        if (maxOrbiting > 0 && Count >= maxOrbiting)
         {
             Projectile oldest = orbitingProjectiles[0];
             orbitingProjectiles.RemoveAt(0);
@@ -31,12 +31,11 @@ public class EntityProjectileHandler : MonoBehaviour
     }
     public void UnregisterOrbitingProjectile(Projectile p)
     {
-        if (p != null)
-            orbitingProjectiles.Remove(p);
+        if (p != null) orbitingProjectiles.Remove(p);
     }
-    public void ReleaseAll()
+    public void ReleaseOrbits(int count = 0)
     {
-        for (int i = orbitingProjectiles.Count - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -49,9 +48,9 @@ public class EntityProjectileHandler : MonoBehaviour
         }
         StartCoroutine(ClearOrbitsAfterDelay(0.1f));
     }
-    public void ReleaseAll(Vector2 dir)
+    public void ReleaseOrbits(Vector2 dir, int count = 0)
     {
-        for (int i = orbitingProjectiles.Count - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -59,11 +58,9 @@ public class EntityProjectileHandler : MonoBehaviour
         }
         StartCoroutine(ClearOrbitsAfterDelay(0.1f));
     }
-    public int AbsorbAll()
+    public int AbsorbOrbits(int count = 0)
     {
-        int count = orbitingProjectiles.Count;
-
-        for (int i = count - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -76,9 +73,9 @@ public class EntityProjectileHandler : MonoBehaviour
         StartCoroutine(ClearOrbitsAfterDelay(0.1f));
         return count;
     }
-    public void RedirectAll()
+    public void RedirectOrbits(int count = 0)
     {
-        for (int i = orbitingProjectiles.Count - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p == null || p.gameObject == null)
@@ -96,9 +93,9 @@ public class EntityProjectileHandler : MonoBehaviour
         }
         StartCoroutine(ClearOrbitsAfterDelay(0.1f));
     }
-    public void ExplodeAll()
+    public void ExplodeOrbits(int count = 0)
     {
-        for (int i = orbitingProjectiles.Count - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -149,5 +146,5 @@ public class EntityProjectileHandler : MonoBehaviour
         }
         return closest;
     }
-    public int GetOrbitingCount() => orbitingProjectiles.Count;
+    public int GetOrbitingCount() => Count;
 }

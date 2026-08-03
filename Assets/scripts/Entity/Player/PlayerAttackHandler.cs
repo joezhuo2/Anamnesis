@@ -136,22 +136,10 @@ public class PlayerAttackHandler : MonoBehaviour
         if (attack == null) return;
         if (!TryGetComponent<EntityProjectileHandler>(out var handler)) return;
 
-        if (attack.fireOrbits)
-        {
-            handler.ReleaseAll();
-        }
-        else if (attack.absorbOrbits)
-        {
-            handler.AbsorbAll();
-        }
-        else if (attack.redirectOrbits)
-        {
-            handler.RedirectAll();
-        }
-        else if (attack.explodeOrbits)
-        {
-            handler.ExplodeAll();
-        }
+        if (attack.fireOrbits) handler.ReleaseOrbits(attack.redirectCount);
+        else if (attack.absorbOrbits) handler.AbsorbOrbits(attack.redirectCount);
+        else if (attack.redirectOrbits) handler.RedirectOrbits(attack.redirectCount);
+        else if (attack.explodeOrbits) handler.ExplodeOrbits(attack.redirectCount);
     }
     private void TriggerUpgradesOnAttack(AttackType type)
     {
