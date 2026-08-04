@@ -85,8 +85,8 @@ public class EntityStats : ScriptableObject
     public int EffMaxHp => Mathf.RoundToInt(maxHp * (1f + (hpPct * 0.01f)));
     public int maxHp;
     public float hpPct;
-    public int EffHpReg => Mathf.RoundToInt(hpRegen * (1f + (hpRegPct * 0.01f)));
-    public int hpRegen;
+    public float EffHpReg => hpRegen * (1f + (hpRegPct * 0.01f)) * (Mathf.Max(1f, 1f + ((EffMaxHp - 100) * 0.01f)));
+    public float hpRegen;
     public float hpRegPct;
     public float EffArmor => armor * (1f + (armorPct * 0.01f));
     public float ArmorRes => EffArmor / (EffArmor + 100f);

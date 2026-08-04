@@ -238,7 +238,7 @@ public class EntityHealth : MonoBehaviour
     }
     private void RegenHp()
     {
-        if (es?.isAlive != true || es.EffHpReg <= 0f) return;
+        if (es == null || !es.isAlive || es.EffHpReg <= 0f) return;
         if (es.currentHp >= (int)es.EffMaxHp) return;
 
         regenTimer += Time.deltaTime;

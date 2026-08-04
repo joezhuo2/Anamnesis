@@ -17,7 +17,7 @@ MonoBehaviour:
   lifetime: 1
   numPierce: 3000
   size: 2
-  physicalMult: 4.7
+  physicalMult: 6.85
   spellMult: 0
   trueMult: 0.3
   scalingStat: 31

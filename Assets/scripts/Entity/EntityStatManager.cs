@@ -150,7 +150,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.aoePct: s.aoePct += mod; break;
             case StatType.maxHp: s.maxHp += Mathf.RoundToInt(mod); break;
             case StatType.hpPct: s.hpPct += mod; break;
-            case StatType.hpRegen: s.hpRegen += Mathf.RoundToInt(mod); break;
+            case StatType.hpRegen: s.hpRegen += mod; break;
             case StatType.hpRegPct: s.hpRegPct += mod; break;
             case StatType.armor: s.armor += Mathf.RoundToInt(mod); break;
             case StatType.armorPct: s.armorPct += mod; break;
