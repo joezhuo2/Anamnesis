@@ -60,12 +60,12 @@ public class PlayerMovement : MonoBehaviour
     public void TryStartDash()
     {
         if (p.isDashing || !p.canDash) return;
-        if (Time.time < lastDashTime + p.dashCooldown) return;
-        if (p.currentStamina < p.dashStaminaCost) return;
+        if (Time.time < lastDashTime + p.EffDashCooldown) return;
+        if (p.currentStamina < p.EffDashStaminaCost) return;
 
         if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnStartDash);
 
-        p.currentStamina -= p.dashStaminaCost;
+        p.currentStamina -= Mathf.RoundToInt(p.EffDashStaminaCost);
         lastDashTime = Time.time;
         dashTravelled = 0f;
 
@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
         p.isDashing = true;
 
         float dashSpeed = p.FinalSpd * p.dashSpeedMult;
-        float dashDuration = dashSpeed > 0 ? p.dashDistance / dashSpeed : 0.2f;
+        float dashDuration = dashSpeed > 0 ? p.EffDashDistance / dashSpeed : 0.2f;
 
         if (p.dashShouldApplyIFrame && gameObject.TryGetComponent<EntityHealth>(out var eh))
             eh.StartCoroutine(eh.TriggerIFrames(dashDuration + 0.2f));
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private System.Collections.IEnumerator DashRoutine(float dashSpeed)
     {
-        while (dashTravelled < p.dashDistance)
+        while (dashTravelled < p.EffDashDistance)
         {
             dashTravelled += dashSpeed * Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();

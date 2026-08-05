@@ -60,9 +60,9 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         List<string> lines = new();
         if (cps.dodgeChance != 0f) lines.Add($"Dodge: {cps.dodgeChance:F0}% (-{cps.dodgeResPct:F0}%)");
         if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd} (+{cps.moveSpeedPct:F0}%)");
-        if (cps.dashCooldown != 0) lines.Add($"Dash Cooldown: {cps.dashCooldown:F1}s");
-        if (cps.dashDistance != 0) lines.Add($"Dash Distance: {cps.dashDistance:F1}");
-        if (cps.dashStaminaCost != 0) lines.Add($"Dash Stamina Cost: {cps.dashStaminaCost:F1}");
+        if (cps.EffDashCooldown != 0) lines.Add($"Dash Cooldown: {cps.EffDashCooldown:F1}s");
+        if (cps.EffDashDistance != 0) lines.Add($"Dash Distance: {cps.EffDashDistance:F1}");
+        if (cps.EffDashStaminaCost != 0) lines.Add($"Dash Stamina Cost: {cps.EffDashStaminaCost:F1}");
 
         TooltipUI.Instance.ShowTooltip("Movement", string.Join("\n", lines), new(100, 30));
     }

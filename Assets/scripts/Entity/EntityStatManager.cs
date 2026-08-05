@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 public class EntityStatManager : MonoBehaviour
@@ -128,6 +126,9 @@ public class EntityStatManager : MonoBehaviour
             StatType.EffInt => s.EffInt,
             StatType.ProjSpd => s.projSpd,
             StatType.stCostPct => s.stCostPct,
+            StatType.dashCooldownRedPct => s.dashCooldownRedPct,
+            StatType.dashDistancePct => s.dashDistancePct,
+            StatType.dashStaminaCostRedPct => s.dashStaminaCostRedPct,
             _ => 0f,
         };
         return value;
@@ -179,6 +180,9 @@ public class EntityStatManager : MonoBehaviour
             case StatType.IntPct: s.intPct += mod; break;
             case StatType.ProjSpd: s.projSpd += mod; break;
             case StatType.stCostPct: s.stCostPct += mod; break;
+            case StatType.dashCooldownRedPct: s.dashCooldownRedPct += mod; break;
+            case StatType.dashDistancePct: s.dashDistancePct += mod; break;
+            case StatType.dashStaminaCostRedPct: s.dashStaminaCostRedPct += mod; break;
             default: break;
 
         }
@@ -204,42 +208,46 @@ public struct StatBuff : IEquatable<StatBuff>
     {
         string name = type switch
         {
-            StatType.attack =>          "Attack",
-            StatType.atkPct =>          "Increased Attack %",
-            StatType.damagePct =>       "Increased Damage %",
-            StatType.physicalDmgPct =>  "Increased Physical Damage %",
-            StatType.spellDmgPct =>     "Increased Spell Damage %",
-            StatType.critChance =>      "Crit Chance",
-            StatType.critDamage =>      "Crit Damage",
-            StatType.aoePct =>          "Increased AoE %",
-            StatType.maxHp =>           "Max Health",
-            StatType.hpPct =>           "Increased Health %",
-            StatType.hpRegen =>         "HP Regen",
-            StatType.hpRegPct =>        "Increased HP Regen %",
-            StatType.armor =>           "Armor",
-            StatType.armorPct =>        "Increased Armor %",
-            StatType.damageRes =>       "Damage Resistance",
-            StatType.physicalRes =>     "Physical Resistance",
-            StatType.spellRes =>        "Spell Resistance",
-            StatType.dodgeChance =>     "Dodge Chance",
-            StatType.dodgeResPct =>     "Dodge Resistance",
-            StatType.moveSpeedPct =>    "Increased Move Speed %",
-            StatType.attackSpeedPct =>  "Increased Attack Speed %",
-            StatType.defShred =>        "Defense Shred",
-            StatType.resPen =>          "Resistance Penetration",
-            StatType.maxStamina =>      "Max Stamina",
-            StatType.staminaRegen =>    "Stamina Regen",
-            StatType.stRegPct =>        "Increased Stamina Regen %",
-            StatType.addPhysDmgPct =>   "Added Physical Damage %",
-            StatType.addSplDmgPct =>    "Added Spell Damage %",
-            StatType.maxMana =>         "Max Mana",
-            StatType.SkillDmgPct =>     "Increased Skill Damage %",
-            StatType.BasicDmgPct =>     "Increased Basic Damage %",
-            StatType.UltDmgPct =>       "Increased Ultimate Damage %",
-            StatType.EffectRes =>       "Effect Resistance",
-            StatType.Intelligence =>    "Intelligence",
-            StatType.IntPct =>          "Increased Intelligence %",
-            StatType.ProjSpd =>         "Increased Projectile Speed %",
+            StatType.attack =>              "Attack",
+            StatType.atkPct =>              "Increased Attack %",
+            StatType.damagePct =>           "Increased Damage %",
+            StatType.physicalDmgPct =>      "Increased Physical Damage %",
+            StatType.spellDmgPct =>         "Increased Spell Damage %",
+            StatType.critChance =>          "Crit Chance",
+            StatType.critDamage =>          "Crit Damage",
+            StatType.aoePct =>              "Increased AoE %",
+            StatType.maxHp =>               "Max Health",
+            StatType.hpPct =>               "Increased Health %",
+            StatType.hpRegen =>             "HP Regen",
+            StatType.hpRegPct =>            "Increased HP Regen %",
+            StatType.armor =>               "Armor",
+            StatType.armorPct =>            "Increased Armor %",
+            StatType.damageRes =>           "Damage Resistance",
+            StatType.physicalRes =>         "Physical Resistance",
+            StatType.spellRes =>            "Spell Resistance",
+            StatType.dodgeChance =>         "Dodge Chance",
+            StatType.dodgeResPct =>         "Dodge Resistance",
+            StatType.moveSpeedPct =>        "Increased Move Speed %",
+            StatType.attackSpeedPct =>      "Increased Attack Speed %",
+            StatType.defShred =>            "Defense Shred",
+            StatType.resPen =>              "Resistance Penetration",
+            StatType.maxStamina =>          "Max Stamina",
+            StatType.staminaRegen =>        "Stamina Regen",
+            StatType.stRegPct =>            "Increased Stamina Regen %",
+            StatType.addPhysDmgPct =>       "Added Physical Damage %",
+            StatType.addSplDmgPct =>        "Added Spell Damage %",
+            StatType.maxMana =>             "Max Mana",
+            StatType.SkillDmgPct =>         "Increased Skill Damage %",
+            StatType.BasicDmgPct =>         "Increased Basic Damage %",
+            StatType.UltDmgPct =>           "Increased Ultimate Damage %",
+            StatType.EffectRes =>           "Effect Resistance",
+            StatType.Intelligence =>        "Intelligence",
+            StatType.IntPct =>              "Increased Intelligence %",
+            StatType.ProjSpd =>             "Increased Projectile Speed %",
+            StatType.stCostPct =>           "Reduced Stamina Cost %",
+            StatType.dashCooldownRedPct =>  "Reduced Dash Cooldown %",
+            StatType.dashDistancePct =>     "Increased Dash Distance %",
+            StatType.dashStaminaCostRedPct => "Reduced Dash Stamina Cost %",
             _ => type.ToString()
         };
         return name;

@@ -49,7 +49,10 @@ public enum StatType
     EffInt,
     ProjSpd,
     addTrueDmgPct,
-    stCostPct
+    stCostPct,
+    dashCooldownRedPct,
+    dashDistancePct,
+    dashStaminaCostRedPct,
 }
 
 public class EntityStats : ScriptableObject
@@ -121,8 +124,14 @@ public class EntityStats : ScriptableObject
     [Header("Dash - Player Only")]
     public float dashSpeedMult;
     public float dashCooldown;
+    public float dashCooldownRedPct;
+    public float EffDashCooldown => Mathf.Max(0f, dashCooldown * (1f - (dashCooldownRedPct * 0.01f)));
     public float dashDistance;
+    public float dashDistancePct;
+    public float EffDashDistance => Mathf.Max(0f, dashDistance * (1f + (dashDistancePct * 0.01f)));
     public int dashStaminaCost;
+    public float dashStaminaCostRedPct;
+    public float EffDashStaminaCost => Mathf.Max(0f, dashStaminaCost * (1f - (dashStaminaCostRedPct * 0.01f)));
     public bool dashShouldApplyIFrame;
     [HideInInspector] public bool isDashing;
     [HideInInspector] public bool canDash;
