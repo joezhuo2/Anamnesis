@@ -24,6 +24,7 @@ public class WaveManager : MonoBehaviour
     public List<BaseReward> baseBuffPool;
     public List<AttackReward> rarePool;
     public List<PlayerUpgradeReward> treasurePool;
+    public List<BaseReward> mixedPool;
     public List<RarityData> rarityData;
     public Transform buttonContainer;
     public int rerolls;
@@ -360,9 +361,9 @@ public class WaveManager : MonoBehaviour
 
             if (poolRoll < 75f)
             {
-                if (baseBuffPool.Count == 0 || rarityData.Count == 0) continue;
+                if (mixedPool.Count == 0 || rarityData.Count == 0) continue;
 
-                BaseReward randomBuff = GetWeightedRandomBuff();
+                BaseReward randomBuff = GetWeightedRandomMixedBuff();
                 RarityData chosenRarity = WaveQuality.GetWeightedRandomRarity(GetCurrentWave(), rarityData);
                 GeneratedReward generated = new() { br = randomBuff, rd = chosenRarity };
                 GameObject btnObj = GetOrCreateRewardButton();
@@ -505,6 +506,22 @@ public class WaveManager : MonoBehaviour
         }
 
         return baseBuffPool[0];
+    }
+    private BaseReward GetWeightedRandomMixedBuff()
+    {
+        float totalWeight = 0;
+        foreach (var b in mixedPool) totalWeight += b.weight;
+
+        float roll = Random.Range(0f, totalWeight);
+        float weightSum = 0;
+
+        foreach (var b in mixedPool)
+        {
+            weightSum += b.weight;
+            if (roll <= weightSum) return b;
+        }
+
+        return mixedPool[0];
     }
     private void OnRewardClaimed(GeneratedReward chosenReward)
     {

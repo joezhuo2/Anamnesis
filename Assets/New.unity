@@ -1391,94 +1391,69 @@ MonoBehaviour:
   baseBuffPool:
   - icon: {fileID: 0}
     baseBuff:
-      type: 0
-      value: 2
-    weight: 2
-  - icon: {fileID: 0}
-    baseBuff:
       type: 1
-      value: 1
+      value: 2
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
       type: 2
       value: 3
-    weight: 5
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 45
-      value: 5
     weight: 6
   - icon: {fileID: 0}
     baseBuff:
       type: 4
-      value: 4
-    weight: 3
+      value: 2
+    weight: 5
   - icon: {fileID: 0}
     baseBuff:
       type: 5
-      value: 4
-    weight: 3
+      value: 2
+    weight: 5
   - icon: {fileID: 0}
     baseBuff:
       type: 6
       value: 2
-    weight: 4
+    weight: 5
   - icon: {fileID: 0}
     baseBuff:
       type: 7
-      value: 4
-    weight: 4
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 8
       value: 3
-    weight: 3
+    weight: 9
   - icon: {fileID: 0}
     baseBuff:
       type: 9
-      value: 5
-    weight: 3
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 10
-      value: 2
-    weight: 1
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 12
-      value: 5
-    weight: 16
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 13
       value: 3
     weight: 5
   - icon: {fileID: 0}
     baseBuff:
-      type: 14
-      value: 1
-    weight: 4
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 15
-      value: 4
-    weight: 3
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 16
+      type: 12
       value: 3
     weight: 12
   - icon: {fileID: 0}
     baseBuff:
-      type: 17
+      type: 13
       value: 4
-    weight: 4
+    weight: 8
   - icon: {fileID: 0}
     baseBuff:
-      type: 18
+      type: 14
       value: 1
-    weight: 2
+    weight: 5
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 15
+      value: 3
+    weight: 6
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 16
+      value: 2
+    weight: 12
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 17
+      value: 3
+    weight: 6
   - icon: {fileID: 0}
     baseBuff:
       type: 19
@@ -1487,33 +1462,33 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 20
-      value: 2
-    weight: 4
+      value: 1.5
+    weight: 2
   - icon: {fileID: 0}
     baseBuff:
       type: 21
-      value: 2
+      value: 1
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
       type: 22
-      value: 2
+      value: 1
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
       type: 24
-      value: 4
-    weight: 6
+      value: 3
+    weight: 10
   - icon: {fileID: 0}
     baseBuff:
       type: 25
       value: 3
-    weight: 6
+    weight: 8
   - icon: {fileID: 0}
     baseBuff:
       type: 26
       value: 1
-    weight: 4
+    weight: 3
   - icon: {fileID: 0}
     baseBuff:
       type: 27
@@ -1521,34 +1496,19 @@ MonoBehaviour:
     weight: 6
   - icon: {fileID: 0}
     baseBuff:
-      type: 28
-      value: 2
-    weight: 1
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 29
-      value: 2
-    weight: 1
-  - icon: {fileID: 0}
-    baseBuff:
       type: 36
       value: 3
-    weight: 6
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 41
-      value: 1
-    weight: 1
+    weight: 7
   - icon: {fileID: 0}
     baseBuff:
       type: 42
-      value: 1
+      value: 2
     weight: 10
   - icon: {fileID: 0}
     baseBuff:
       type: 43
       value: 3
-    weight: 6
+    weight: 5
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0
@@ -1663,6 +1623,62 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Hypercarry
     desc: Dashing advances all cooldowns by 15%.
+  mixedPool:
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 0
+      value: 3
+    weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 8
+      value: 3
+    weight: 4
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 10
+      value: 2
+    weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 18
+      value: 2
+    weight: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 28
+      value: 3
+    weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 29
+      value: 3
+    weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 41
+      value: 1
+    weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 45
+      value: 4
+    weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 49
+      value: 3
+    weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 50
+      value: 3
+    weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 48
+      value: 2
+    weight: 2
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
@@ -1671,19 +1687,19 @@ MonoBehaviour:
   - rarityName: Uncommon
     displayColor: {r: 0.21562162, g: 0.754717, b: 0, a: 1}
     mult: 2
-    weight: 400
+    weight: 350
   - rarityName: Rare
     displayColor: {r: 0, g: 0.39995039, b: 0.745283, a: 1}
     mult: 4
-    weight: 300
+    weight: 200
   - rarityName: Epic
     displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 1}
     mult: 6
-    weight: 200
+    weight: 100
   - rarityName: Legendary
     displayColor: {r: 0.74509805, g: 0.32248145, b: 0, a: 1}
     mult: 9
-    weight: 100
+    weight: 50
   - rarityName: Mythic
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
     mult: 12
@@ -1710,7 +1726,7 @@ MonoBehaviour:
   minAnomalyCount: 1
   maxAnomalyCount: 6
   anomalyChance: 15
-  anomalyGlobalMinWave: 5
+  anomalyGlobalMinWave: 3
 --- !u!4 &587400166
 Transform:
   m_ObjectHideFlags: 0
