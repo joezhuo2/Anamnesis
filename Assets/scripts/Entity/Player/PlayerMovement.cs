@@ -17,9 +17,9 @@ public class PlayerMovement : MonoBehaviour
     private float dashTravelled;
     private Vector2 dashDir;
     [HideInInspector] public static int playerDir = 1; // 1 => facing right, -1 => facing left
-    private void Awake() => animator = GetComponent<Animator>();
     private PlayerUpgradeManager pum;
 
+    private void Awake() => animator = GetComponent<Animator>();
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -95,5 +95,16 @@ public class PlayerMovement : MonoBehaviour
     {
         p.isDashing = false;
         dashTravelled = 0f;
+    }
+    public void AdvanceDash(float pctAmt)
+    {
+        if (p.EffDashCooldown <= 0f) return;
+
+        float timeElapsed = Time.time - lastDashTime;
+        float cooldownRemainingPct = 1f - (timeElapsed / p.EffDashCooldown);
+        float newCooldownRemainingPct = Mathf.Clamp01(cooldownRemainingPct - (pctAmt * 0.01f));
+        float newLastTime = Time.time - ((1f - newCooldownRemainingPct) * p.EffDashCooldown);
+
+        lastDashTime = newLastTime;
     }
 }
