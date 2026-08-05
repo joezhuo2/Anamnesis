@@ -28,10 +28,12 @@ public class Projectile : MonoBehaviour {
     private float boomerangDecel;
     private float boomerangSpeed;
     private bool orbitCancelled;
+    private bool canTriggerAdd;
 
     private void Awake()
     {
         hit = new();
+        canTriggerAdd = true;
     }
     private void OnDestroy()
     {
@@ -111,6 +113,8 @@ public class Projectile : MonoBehaviour {
         if (pd.additionalChance > 0f && pd.additionalAttack != null)
             HandleAdditionalSpawns();
 
+        canTriggerAdd = false;
+
         if (pd.effects != null && pd.effects.Count > 0)
         {
             foreach (var ed in pd.effects)
@@ -122,7 +126,7 @@ public class Projectile : MonoBehaviour {
                 }
             }
         }
-
+        
         if (pd.mainAttack != null && pd.mainAttack.summonChance > 0f && pd.mainAttack.summonCondition == SummonCondition.OnHit && Random.value <= pd.mainAttack.summonChance)
         {
             if (ownerObj.TryGetComponent<EntitySummonHandler>(out var summonHandler))
@@ -140,6 +144,7 @@ public class Projectile : MonoBehaviour {
 
     private void HandleAdditionalSpawns()
     {
+        if (!canTriggerAdd) return;
         if (Random.value > pd.additionalChance) return;
         if (pd.additionalAttack == null || pd.additionalAttack.projectilePrefab == null) return;
         if (ProjectileSpawner.Instance == null) return;
