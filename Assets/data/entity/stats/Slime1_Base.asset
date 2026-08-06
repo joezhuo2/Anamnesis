@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Slime1_Base
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
-  physicalDmgPct: 3
+  physicalDmgPct: 1
   spellDmgPct: 0
   attack: 2
   atkPct: 0
@@ -21,30 +21,35 @@ MonoBehaviour:
   intPct: 0
   attackSpeedPct: 0
   critChance: 5
-  critDamage: 50
+  critDamage: 30
   aoePct: 0
   defShred: 0
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
+  addTrueDmgPct: 0
+  addDmgPct: 0
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
   projSpd: 0
-  currentHp: 100
-  maxHp: 100
+  stCostPct: 0
+  kbPct: 0
+  currentHp: 60
+  maxHp: 60
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0
-  armor: 30
+  armor: 50
   armorPct: 0
-  damageRes: 10
+  damageRes: 20
   dodgeChance: 3
   dodgeResPct: 10
   physicalRes: 10
-  spellRes: -30
+  spellRes: -40
   hurtTime: 0.3
   effectRes: 0
+  kbRes: 0
   moveSpeed: 0.8
   moveSpeedPct: 0
   currentStamina: 0
@@ -56,8 +61,11 @@ MonoBehaviour:
   canGainMana: 0
   dashSpeedMult: 0
   dashCooldown: 0
+  dashCooldownRedPct: 0
   dashDistance: 0
+  dashDistancePct: 0
   dashStaminaCost: 0
+  dashStaminaCostRedPct: 0
   dashShouldApplyIFrame: 0
   isDashing: 0
   canDash: 0

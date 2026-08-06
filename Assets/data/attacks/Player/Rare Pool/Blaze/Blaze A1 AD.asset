@@ -51,6 +51,7 @@ MonoBehaviour:
   absorbOrbits: 0
   redirectOrbits: 0
   explodeOrbits: 0
-  type: 1
+  redirectCount: 0
+  type: 0
   icon: {fileID: 5803850864075934229, guid: 931c039b9f802b445ba96e6ad71b512f, type: 3}
   displayName: Cosmic Blaze

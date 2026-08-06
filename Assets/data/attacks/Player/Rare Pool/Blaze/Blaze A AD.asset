@@ -32,18 +32,18 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 65
+  staminaCost: 0
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 25
+  manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 3
+  staminaGainOnHit: 6
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 2
+  manaGainOnHit: 3
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
   absorbOrbits: 0
   redirectOrbits: 0
   explodeOrbits: 0
-  type: 1
+  redirectCount: 0
+  type: 0
   icon: {fileID: 813295032430014784, guid: b8ec31623a46802489b0cfff37fa0762, type: 3}
   displayName: Blaze
