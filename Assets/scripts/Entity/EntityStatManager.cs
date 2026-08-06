@@ -37,16 +37,16 @@ public class EntityStatManager : MonoBehaviour
     {
         int levelOffset = currentLevel - 1;
 
-        s.attack += 3 * levelOffset;
-        s.atkPct += 3f * levelOffset;
+        s.attack += 2 * levelOffset;
+        s.atkPct += 2f * levelOffset;
 
-        s.maxHp += 10 * levelOffset;
-        s.hpPct += 10f * levelOffset;
+        s.maxHp += 8 * levelOffset;
+        s.hpPct += 8f * levelOffset;
 
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
         s.hpRegPct += 2f * levelOffset;
 
-        s.armor += 4 * levelOffset;
+        s.armor += 3 * levelOffset;
         s.armorPct += 2f * levelOffset;
 
         s.damagePct += levelOffset;
