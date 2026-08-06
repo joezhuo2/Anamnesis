@@ -1679,6 +1679,16 @@ MonoBehaviour:
       type: 48
       value: 2
     weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 52
+      value: 1
+    weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 53
+      value: 2
+    weight: 4
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}

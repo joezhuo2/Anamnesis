@@ -63,8 +63,9 @@ public class EnemyMovement : MonoBehaviour
         {
             float timeRemaining = f.time - Time.deltaTime;
             if (timeRemaining <= 0f) continue;
-            remainingForces.Add(new() { dir = f.dir, force = f.force, time = timeRemaining });
-            totalForce += f.dir * f.force;
+            float kbf = f.force * (1f - (es.kbRes * 0.01f));
+            remainingForces.Add(new() { dir = f.dir, force = kbf, time = timeRemaining });
+            totalForce += f.dir * kbf;
         }
 
         currentForces = remainingForces;

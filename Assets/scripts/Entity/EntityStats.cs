@@ -53,7 +53,9 @@ public enum StatType
     dashCooldownRedPct,
     dashDistancePct,
     dashStaminaCostRedPct,
-    addDmgPct
+    addDmgPct,
+    kbRes,
+    kbPct,
 }
 
 public class EntityStats : ScriptableObject
@@ -83,6 +85,7 @@ public class EntityStats : ScriptableObject
     public float ultDmgPct;
     public float projSpd;
     public float stCostPct;
+    public float kbPct;
     // lifeStealPct, effectChance
 
     [Header("Defense")]
@@ -104,7 +107,8 @@ public class EntityStats : ScriptableObject
     [Range(-100f, 100f)] public float spellRes;
     public float hurtTime = 0.3f;
     public float effectRes = 0f;
-    // effectRes, critRes, healingPct
+    public float kbRes;
+    // critRes, healingPct
 
     [Header("Movement")]
     public float FinalSpd => moveSpeed * (1f + (moveSpeedPct * 0.01f));

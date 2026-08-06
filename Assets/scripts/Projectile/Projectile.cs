@@ -103,12 +103,13 @@ public class Projectile : MonoBehaviour {
         {
             Vector2 kbDir = (rb2d.transform.position - transform.position).normalized;
 
+            float kbf = ownerObj.TryGetComponent<EntityStatManager>(out var esm) ? pd.kbForce * (1f + (esm.s.kbPct * 0.01f)) : pd.kbForce;
             if (target.TryGetComponent<EnemyMovement>(out var em))
-                em.ApplyKnockback(kbDir, pd.kbForce, pd.knockbackTime);
+                em.ApplyKnockback(kbDir, kbf, pd.knockbackTime);
             else if (target.TryGetComponent<PlayerMovement>(out var pm))
-                pm.ApplyKnockback(kbDir, pd.kbForce, pd.knockbackTime);
+                pm.ApplyKnockback(kbDir, kbf, pd.knockbackTime);
             else if (rb2d.bodyType == RigidbodyType2D.Dynamic)
-                rb2d.AddForce(kbDir * pd.kbForce, ForceMode2D.Impulse);
+                rb2d.AddForce(kbDir * kbf, ForceMode2D.Impulse);
         }
 
         var (hp, stamina, mana) = CalculateStatGains(ownerObj, pd.mainAttack, packet.GetTotalDamage());
