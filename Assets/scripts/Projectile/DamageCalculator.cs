@@ -14,6 +14,7 @@ public struct ProjectileDamageSnapshot
     public float basicDmgPct;
     public float skillDmgPct;
     public float ultDmgPct;
+    public float addDmgPct;
     public float critChance;
     public float critDamage;
     public int defShred;
@@ -49,6 +50,7 @@ public static class DamageCalculator
         snapshot.critDamage = esm.s.critDamage;
         snapshot.defShred = esm.s.defShred;
         snapshot.resPen = esm.s.resPen;
+        snapshot.addDmgPct = esm.s.addDmgPct;
         snapshot.isValid = true;
         snapshot.owner = source;
         return snapshot;
@@ -105,6 +107,7 @@ public static class DamageCalculator
         AttackType.Basic => 1f + (snapshot.basicDmgPct * 0.01f),
         AttackType.Skill => 1f + (snapshot.skillDmgPct * 0.01f),
         AttackType.Ultimate => 1f + (snapshot.ultDmgPct * 0.01f),
+        AttackType.Additional => 1f + (snapshot.addDmgPct * 0.01f),
         _ => 1f
     };
 

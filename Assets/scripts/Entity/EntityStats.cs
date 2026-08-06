@@ -53,6 +53,7 @@ public enum StatType
     dashCooldownRedPct,
     dashDistancePct,
     dashStaminaCostRedPct,
+    addDmgPct
 }
 
 public class EntityStats : ScriptableObject
@@ -76,6 +77,7 @@ public class EntityStats : ScriptableObject
     public float addPhysDmgPct;
     public float addSplDmgPct;
     public float addTrueDmgPct;
+    public float addDmgPct;
     public float basicDmgPct;
     public float skillDmgPct;
     public float ultDmgPct;

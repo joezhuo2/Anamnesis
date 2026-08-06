@@ -129,6 +129,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.dashCooldownRedPct => s.dashCooldownRedPct,
             StatType.dashDistancePct => s.dashDistancePct,
             StatType.dashStaminaCostRedPct => s.dashStaminaCostRedPct,
+            StatType.addDmgPct => s.addDmgPct,
             _ => 0f,
         };
         return value;
@@ -183,6 +184,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.dashCooldownRedPct: s.dashCooldownRedPct += mod; break;
             case StatType.dashDistancePct: s.dashDistancePct += mod; break;
             case StatType.dashStaminaCostRedPct: s.dashStaminaCostRedPct += mod; break;
+            case StatType.addDmgPct: s.addDmgPct += mod; break;
             default: break;
 
         }
@@ -248,6 +250,7 @@ public struct StatBuff : IEquatable<StatBuff>
             StatType.dashCooldownRedPct =>  "Reduced Dash Cooldown %",
             StatType.dashDistancePct =>     "Increased Dash Distance %",
             StatType.dashStaminaCostRedPct => "Reduced Dash Stamina Cost %",
+            StatType.addDmgPct =>           "Additional Damage %",
             _ => type.ToString()
         };
         return name;
