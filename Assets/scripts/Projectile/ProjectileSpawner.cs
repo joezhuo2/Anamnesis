@@ -45,10 +45,11 @@ public class ProjectileSpawner : MonoBehaviour
     public IEnumerator SpawnCircle(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 center, float radius, GameObject sourceObj = null)
     {
         int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount + 1);
+        float startAngle = ad.spread + Random.Range(-ad.randomSpread / 2f, ad.randomSpread / 2f);
 
         for (int i = 0; i < finalCount; i++)
         {
-            float angle = i * (360f / finalCount);
+            float angle = startAngle + (i * (360f / finalCount));
 
             Vector2 dir = new(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             Vector2 spawnPos = center + (dir * radius);

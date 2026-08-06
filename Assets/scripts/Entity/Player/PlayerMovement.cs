@@ -124,6 +124,8 @@ public class PlayerMovement : MonoBehaviour
     {
         p.isDashing = false;
         dashTravelled = 0f;
+
+        if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnEndDash);
     }
     public void AdvanceDash(float pctAmt)
     {

@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Lich A AD
+  m_Name: Supersonic AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 3
-  projectilePrefab: {fileID: 8030177708144237794, guid: 19e8d56c5744aff479d5bc429072a382, type: 3}
-  pd: {fileID: 11400000, guid: 842574bb92796584a817585b916d2990, type: 2}
-  pattern: 0
-  spawnDelay: 0.4
-  spawnDistance: 1
-  fixedDistance: 1
-  animationLength: 0.3
-  projectileCount: 1
+  cooldown: 0
+  projectilePrefab: {fileID: 4259335642319083824, guid: 7b19538c3daf2f04f80ef865345d91eb, type: 3}
+  pd: {fileID: 11400000, guid: e59de0a4b5004914e839ca7cc8a0996e, type: 2}
+  pattern: 2
+  spawnDelay: 0
+  spawnDistance: 0
+  fixedDistance: 0
+  animationLength: 1
+  projectileCount: 3
   randomCount: 0
   spread: 0
-  randomSpread: 0
+  randomSpread: 45
   minDelay: 0
   maxDelay: 0
-  maxRange: 8
+  maxRange: 0
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
@@ -39,11 +39,11 @@ MonoBehaviour:
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 0
+  staminaGainOnHit: 3
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 0
+  manaGainOnHit: 3
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0

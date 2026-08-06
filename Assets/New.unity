@@ -1623,6 +1623,10 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Hypercarry
     desc: Dashing advances all cooldowns by 15%.
+  - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Supersonic
+    desc: Dashing leaves 3 rippling echoes.
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:

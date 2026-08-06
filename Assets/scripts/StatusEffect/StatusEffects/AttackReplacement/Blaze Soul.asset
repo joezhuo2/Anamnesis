@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d5c2f52b51f56e4984b29f2fa68370b, type: 3}
-  m_Name: Exodus
+  m_Name: Blaze Soul
   m_EditorClassIdentifier: Assembly-CSharp::AttackReplacement
   currentTime: 0
   duration: 8
   tickInterval: 0
   isBuff: 1
   icon: {fileID: -5895191231709818157, guid: 1a422c5f5436e5042861653928334be7, type: 3}
-  effName: Exodus
+  effName: Blaze Soul
   desc: Upgrades Blaze to Cosmic Blaze while active.
   maxStacks: 1
   target: {fileID: 0}
