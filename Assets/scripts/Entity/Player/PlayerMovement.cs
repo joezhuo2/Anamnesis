@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject dashCooldownUI;
 
+    private List<AppliedForce> currentForces = new();
     [HideInInspector] public Vector2 moveInput;
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public PlayerStats p;
@@ -43,8 +45,12 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (p.isDashing) rb.linearVelocity = dashDir * (p.FinalSpd * p.dashSpeedMult);
-        else rb.linearVelocity = Vector2.ClampMagnitude(moveInput, 1f) * p.FinalSpd;
+        Vector2 velocity;
+        if (p.isDashing) velocity = dashDir * (p.FinalSpd * p.dashSpeedMult);
+        else velocity = Vector2.ClampMagnitude(moveInput, 1f) * p.FinalSpd;
+
+        velocity += GetKnockbackVelocity();
+        rb.linearVelocity = velocity;
 
         float inputMag = moveInput.magnitude;
 
@@ -56,6 +62,28 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputMag > 0.1) animator.speed = Mathf.Max(inputMag * baseAnimSpeed, 0.01f);
         animator.SetFloat(SpeedHash, inputMag);
+    }
+    private Vector2 GetKnockbackVelocity()
+    {
+        if (currentForces.Count == 0) return Vector2.zero;
+
+        Vector2 totalForce = Vector2.zero;
+        List<AppliedForce> remainingForces = new();
+
+        foreach (var f in currentForces)
+        {
+            float timeRemaining = f.time - Time.deltaTime;
+            if (timeRemaining <= 0f) continue;
+            remainingForces.Add(new() { dir = f.dir, force = f.force, time = timeRemaining });
+            totalForce += f.dir * f.force;
+        }
+
+        currentForces = remainingForces;
+        return totalForce;
+    }
+    public void ApplyKnockback(Vector2 d, float f, float t)
+    {
+        currentForces.Add(new() {dir = d, force = f, time = t});
     }
     public void TryStartDash()
     {

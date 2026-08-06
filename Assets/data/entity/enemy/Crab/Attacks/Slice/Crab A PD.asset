@@ -40,3 +40,5 @@ MonoBehaviour:
   randOrbRadOffset: 0
   orbitSelf: 0
   rotateClockwise: 0
+  kbForce: 5
+  knockbackTime: 0.15

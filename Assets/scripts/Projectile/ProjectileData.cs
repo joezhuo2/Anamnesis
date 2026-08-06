@@ -53,6 +53,11 @@ public class ProjectileData : ScriptableObject
     public bool orbitSelf;
     [Tooltip("Whether the orbiting projectile rotates clockwise")]
     public bool rotateClockwise;
+
+    [Header("Knockback")]
+    public float kbForce = 0f;
+    [Tooltip("How long the enemy is locked out of its own movement while being knocked back")]
+    public float knockbackTime = 0.15f;
 }
 
 [System.Serializable]

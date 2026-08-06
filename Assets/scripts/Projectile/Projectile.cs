@@ -99,6 +99,18 @@ public class Projectile : MonoBehaviour {
 
         eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj, damageSnapshot.resPen, damageSnapshot.defShred);
 
+        if (pd.kbForce > 0f && eh.TryGetComponent<Rigidbody2D>(out var rb2d))
+        {
+            Vector2 kbDir = (rb2d.transform.position - transform.position).normalized;
+
+            if (target.TryGetComponent<EnemyMovement>(out var em))
+                em.ApplyKnockback(kbDir, pd.kbForce, pd.knockbackTime);
+            else if (target.TryGetComponent<PlayerMovement>(out var pm))
+                pm.ApplyKnockback(kbDir, pd.kbForce, pd.knockbackTime);
+            else if (rb2d.bodyType == RigidbodyType2D.Dynamic)
+                rb2d.AddForce(kbDir * pd.kbForce, ForceMode2D.Impulse);
+        }
+
         var (hp, stamina, mana) = CalculateStatGains(ownerObj, pd.mainAttack, packet.GetTotalDamage());
         TriggerStatGains(hp, stamina, mana, ownerObj);
 
@@ -126,7 +138,7 @@ public class Projectile : MonoBehaviour {
                 }
             }
         }
-        
+
         if (pd.mainAttack != null && pd.mainAttack.summonChance > 0f && pd.mainAttack.summonCondition == SummonCondition.OnHit && Random.value <= pd.mainAttack.summonChance)
         {
             if (ownerObj.TryGetComponent<EntitySummonHandler>(out var summonHandler))

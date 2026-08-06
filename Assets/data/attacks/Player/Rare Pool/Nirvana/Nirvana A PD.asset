@@ -30,6 +30,7 @@ MonoBehaviour:
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
+  randomDir: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1
@@ -39,3 +40,5 @@ MonoBehaviour:
   randOrbRadOffset: 0
   orbitSelf: 0
   rotateClockwise: 0
+  kbForce: 8
+  knockbackTime: 0.15

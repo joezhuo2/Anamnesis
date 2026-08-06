@@ -1,5 +1,13 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+
+public struct AppliedForce
+{
+    public float force;
+    public float time;
+    public Vector2 dir;
+}
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -10,6 +18,7 @@ public class EnemyMovement : MonoBehaviour
     public float stoppingDistance = 0;
     public bool flipRotation = false;
 
+    private List<AppliedForce> currentForces = new();
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public EnemyStats es;
     private Rigidbody2D rb;
@@ -32,37 +41,52 @@ public class EnemyMovement : MonoBehaviour
         UpdateTargeting();
     }
     private void Update()
-    {   
+    {
         UpdateTargeting();
 
-        if (es.target == null || !es.canMove || !es.isAlive)
+        Vector2 velocity = GetKnockbackVelocity();
+
+        if (es.target != null && es.canMove && es.isAlive)
+            velocity += GetMovementVelocity();
+
+        rb.linearVelocity = velocity;
+        SetAnimator(velocity != Vector2.zero);
+    }
+    private Vector2 GetKnockbackVelocity()
+    {
+        if (currentForces.Count == 0) return Vector2.zero;
+
+        Vector2 totalForce = Vector2.zero;
+        List<AppliedForce> remainingForces = new();
+
+        foreach (var f in currentForces)
         {
-            rb.linearVelocity = Vector2.zero;
-            SetAnimator(false);
-            return;
+            float timeRemaining = f.time - Time.deltaTime;
+            if (timeRemaining <= 0f) continue;
+            remainingForces.Add(new() { dir = f.dir, force = f.force, time = timeRemaining });
+            totalForce += f.dir * f.force;
         }
 
-        MoveToTarget();
+        currentForces = remainingForces;
+        return totalForce;
+    }
+    public void ApplyKnockback(Vector2 d, float f, float t)
+    {
+        currentForces.Add(new() {dir = d, force = f, time = t});
     }
     public void SetTarget(GameObject target) => es.target = target;
-    private void MoveToTarget()
+    private Vector2 GetMovementVelocity()
     {
         Vector2 dist = es.target.transform.position - cTransform.position;
         float distMag = dist.magnitude;
 
         if (distMag > 0 && distMag <= stoppingDistance)
-        {
-            rb.linearVelocity = Vector2.zero;
-            SetAnimator(false);
-            return;
-        }
+            return Vector2.zero;
 
         if (canDeaggro && distMag > es.detectionRange)
         {
             es.target = null;
-            rb.linearVelocity = Vector2.zero;
-            SetAnimator(false);
-            return;
+            return Vector2.zero;
         }
 
         Vector2 dir = dist.normalized;
@@ -72,8 +96,6 @@ public class EnemyMovement : MonoBehaviour
                         ? new Vector2(Mathf.Sign(dir.x), 0)
                         : new Vector2(0, Mathf.Sign(dir.y));
         }
-
-        rb.linearVelocity = dir * es.FinalSpd;
 
         if (dir.x != 0)
         {
@@ -88,7 +110,7 @@ public class EnemyMovement : MonoBehaviour
             }
         }
 
-        SetAnimator(dir != Vector2.zero);
+        return dir * es.FinalSpd;
     }
 
     private void SetAnimator(bool moving)
