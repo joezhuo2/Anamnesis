@@ -1412,13 +1412,13 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 6
-      value: 2
-    weight: 5
+      value: 1
+    weight: 4
   - icon: {fileID: 0}
     baseBuff:
       type: 7
       value: 3
-    weight: 9
+    weight: 7
   - icon: {fileID: 0}
     baseBuff:
       type: 9
@@ -1456,16 +1456,6 @@ MonoBehaviour:
     weight: 6
   - icon: {fileID: 0}
     baseBuff:
-      type: 19
-      value: 1
-    weight: 3
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 20
-      value: 1.5
-    weight: 2
-  - icon: {fileID: 0}
-    baseBuff:
       type: 21
       value: 1
     weight: 2
@@ -1477,8 +1467,8 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 24
-      value: 3
-    weight: 10
+      value: 4
+    weight: 8
   - icon: {fileID: 0}
     baseBuff:
       type: 25
@@ -1636,8 +1626,8 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 8
-      value: 3
-    weight: 4
+      value: 4
+    weight: 5
   - icon: {fileID: 0}
     baseBuff:
       type: 10
@@ -1693,6 +1683,16 @@ MonoBehaviour:
       type: 53
       value: 2
     weight: 4
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 20
+      value: 1
+    weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 19
+      value: 1
+    weight: 2
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
@@ -1700,27 +1700,27 @@ MonoBehaviour:
     weight: 600
   - rarityName: Uncommon
     displayColor: {r: 0.21562162, g: 0.754717, b: 0, a: 1}
-    mult: 2
+    mult: 3
     weight: 350
   - rarityName: Rare
     displayColor: {r: 0, g: 0.39995039, b: 0.745283, a: 1}
-    mult: 4
+    mult: 5
     weight: 200
   - rarityName: Epic
     displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 1}
-    mult: 6
+    mult: 7
     weight: 100
   - rarityName: Legendary
     displayColor: {r: 0.74509805, g: 0.32248145, b: 0, a: 1}
-    mult: 9
+    mult: 10
     weight: 50
   - rarityName: Mythic
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
-    mult: 12
+    mult: 13
     weight: 15
   - rarityName: Celestial
     displayColor: {r: 0.012014951, g: 0.041026052, b: 0.509434, a: 1}
-    mult: 15
+    mult: 16
     weight: 3
   - rarityName: Transcendent
     displayColor: {r: 0.7783019, g: 0.9616805, b: 1, a: 1}

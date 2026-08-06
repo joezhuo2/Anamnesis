@@ -21,6 +21,8 @@ MonoBehaviour:
   spellMult: 2.8
   trueMult: 0.3
   scalingStat: 44
+  specialMult: 1
+  specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
   rotationOffset: 0
@@ -28,8 +30,19 @@ MonoBehaviour:
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
+  randomDir: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effects: []
+  effects:
+  - effect: {fileID: 11400000, guid: 8514239ac6067df4a904017e9be22381, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 1
+  orbitRadius: 0
+  randOrbRadOffset: 0
+  orbitSelf: 0
+  rotateClockwise: 0
+  kbForce: 0
+  knockbackTime: 0.15

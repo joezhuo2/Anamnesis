@@ -9,23 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 411529bfca579104192ee5e7e49efaaf, type: 3}
-  m_Name: Vulnerable 6 6 5
-  m_EditorClassIdentifier: Assembly-CSharp::StatReduction
+  m_Script: {fileID: 11500000, guid: 9891d8e133ce19e4280b96c8ab869ded, type: 3}
+  m_Name: Vulnerable 8 2 20
+  m_EditorClassIdentifier: Assembly-CSharp::StatBuffs
   currentTime: 0
-  duration: 6
+  duration: 8
   tickInterval: 0
   isBuff: 0
-  icon: {fileID: -2800876817223335725, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  icon: {fileID: -5906973516983679737, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Vulnerable
-  desc: 'Reduces Damage Resistance by 5% per stack. '
-  maxStacks: 8
+  desc: 'Reduces Damage Resistance by 20% per stack. '
+  maxStacks: 2
   target: {fileID: 0}
   source: {fileID: 0}
   projectile: {fileID: 0}
   currentStacks: 0
-  redPerStack: 5
-  statType: 18
-  scalingStat: 18
-  maxRed: 0.9
-  minRed: 0
+  buffs:
+  - type: 18
+    value: -20

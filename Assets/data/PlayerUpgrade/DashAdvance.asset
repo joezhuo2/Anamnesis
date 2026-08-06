@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2252a74774af25942abfcd542fc986f5, type: 3}
   m_Name: DashAdvance
   m_EditorClassIdentifier: Assembly-CSharp::CooldownAdvance
-  upgradeName: 
+  upgradeName: Hypercarry
   conditions: 06000000
   chance: 100
   cooldown: 0
