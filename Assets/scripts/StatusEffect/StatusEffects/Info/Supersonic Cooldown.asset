@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c190c0a78fb17a4a8f664218bda8a3c, type: 3}
-  m_Name: Reminiscence Cooldown
+  m_Name: Supersonic Cooldown
   m_EditorClassIdentifier: Assembly-CSharp::Info
   currentTime: 0
-  duration: 2
+  duration: 3
   tickInterval: 0
   isBuff: 1
-  icon: {fileID: -5895191231709818157, guid: 1a422c5f5436e5042861653928334be7, type: 3}
-  effName: Reminiscence Cooldown
+  icon: {fileID: -4721245407534591264, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Supersonic Cooldown
   desc: 
   maxStacks: 1
   target: {fileID: 0}
