@@ -30,6 +30,8 @@ public class SkillTreeUI : MonoBehaviour
 
     public void Toggle(GameObject player)
     {
+        if (Time.timeScale == 0f) return;
+
         if (manager != null) manager.SetPlayer(player);
 
         isOpen = !isOpen;
@@ -72,7 +74,7 @@ public class SkillTreeUI : MonoBehaviour
             }
         }
 
-        lineRenderer?.Redraw(runtimeNodes);
+        if (lineRenderer != null) lineRenderer.Redraw(runtimeNodes);
     }
 
     private SkillNodeDef FindMatchingRuntimeNode(SkillNodeUI nodeUI, IReadOnlyList<SkillNodeDef> runtimeNodes)
@@ -99,6 +101,6 @@ public class SkillTreeUI : MonoBehaviour
         if (nodeUIMap.TryGetValue(node, out var nodeUI))
             nodeUI.RefreshVisuals();
 
-        lineRenderer?.Redraw(manager.tree.runtimeNodes);
+        if (lineRenderer != null) lineRenderer.Redraw(manager.tree.runtimeNodes);
     }
 }
