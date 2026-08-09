@@ -1761,7 +1761,7 @@ MonoBehaviour:
     attackName: Warp
     desc: Orbit Spl Add
   - newAttack: {fileID: 11400000, guid: e57b60953797705408d98a079d85adec, type: 2}
-    type: 1
+    type: 0
     icon: {fileID: 0}
     attackName: Blaze
     desc: Atk Stamina Heavy Add
@@ -3336,7 +3336,6 @@ MonoBehaviour:
   maxZoom: 5
   zoomLerpSpeed: 10
   zoomToCursor: 1
-  debugLogs: 1
 --- !u!1001 &1218567419
 PrefabInstance:
   m_ObjectHideFlags: 0

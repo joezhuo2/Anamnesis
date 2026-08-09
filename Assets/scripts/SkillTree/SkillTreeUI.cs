@@ -30,7 +30,7 @@ public class SkillTreeUI : MonoBehaviour
 
     public void Toggle(GameObject player)
     {
-        if (Time.timeScale == 0f) return;
+        if (Time.timeScale == 0f && !isOpen) return;
 
         if (manager != null) manager.SetPlayer(player);
 

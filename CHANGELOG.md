@@ -5,6 +5,17 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.1_1] - 2026-08-09
+
+### Fixed
+- Skill tree not closing when pressing the toggle skill tree button
+- Blaze replacing skill instead of basic attack
+
+## [v0.1.1] - 2026-08-09 
+
+### Added
+- README.md file
+
 ## [v0.1.0] - 2026-08-09 — Release Summary
 
 This release covers the full development arc from the initial `v0.0.1` build through `v0.1.0-PR3`. Over this period Anamnesis grew from a core wave-based combat prototype into a much deeper action game with a full progression system.
