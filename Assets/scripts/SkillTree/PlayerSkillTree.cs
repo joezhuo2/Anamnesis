@@ -1,0 +1,189 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerSkillTree : MonoBehaviour
+{
+    public SkillTreeDefinition definition;
+    public int skillPoints;
+
+    [HideInInspector] public readonly List<SkillNodeDef> runtimeNodes = new();
+    private readonly HashSet<string> unlockedNodes = new();
+    private List<SkillNodeDef> allNodes = new();
+
+    private void Awake()
+    {
+        if (definition != null && definition.allNodes != null)
+            allNodes = definition.allNodes;
+        GenerateRuntimeNodes();
+    }
+
+    public void SetNodes(List<SkillNodeDef> nodes)
+    {
+        allNodes = nodes ?? new List<SkillNodeDef>();
+        GenerateRuntimeNodes();
+    }
+
+    public void GenerateRuntimeNodes()
+    {
+        runtimeNodes.Clear();
+        var runtimeNodeMap = new Dictionary<SkillNodeDef, SkillNodeDef>();
+
+        foreach (var n in allNodes)
+        {
+            if (n == null) continue;
+            SkillNodeDef runtimeNode = Instantiate(n);
+
+            if (n.playerUpgrades != null && n.playerUpgrades.Count > 0)
+            {
+                runtimeNode.playerUpgrades.Clear();
+                foreach (var pu in n.playerUpgrades)
+                {
+                    if (pu == null) continue;
+                    runtimeNode.playerUpgrades.Add(Instantiate(pu));
+                }
+            }
+
+            if (n.attackUpgrades != null && n.attackUpgrades.Count > 0)
+            {
+                runtimeNode.attackUpgrades.Clear();
+                foreach (var ad in n.attackUpgrades)
+                {
+                    if (ad == null) continue;
+                    AttackData rad = Instantiate(ad);
+                    rad.DeepClone();
+                    runtimeNode.attackUpgrades.Add(rad);
+                }
+            }
+
+            runtimeNodes.Add(runtimeNode);
+            runtimeNodeMap[n] = runtimeNode;
+        }
+
+        UpdateRuntimeNodeRequirements(runtimeNodeMap);
+        RestoreUnlockedNodes();
+    }
+
+    private void UpdateRuntimeNodeRequirements(Dictionary<SkillNodeDef, SkillNodeDef> runtimeNodeMap)
+    {
+        foreach (var node in allNodes)
+        {
+            if (node == null) continue;
+            if (!runtimeNodeMap.TryGetValue(node, out var runtimeNode)) continue;
+
+            runtimeNode.prerequisites = RemapNodeList(node.prerequisites, runtimeNodeMap);
+            runtimeNode.incompatibleNodes = RemapNodeList(node.incompatibleNodes, runtimeNodeMap);
+        }
+    }
+
+    private static List<SkillNodeDef> RemapNodeList(List<SkillNodeDef> sourceNodes, IReadOnlyDictionary<SkillNodeDef, SkillNodeDef> runtimeNodeMap)
+    {
+        if (sourceNodes == null) return new List<SkillNodeDef>();
+
+        var remappedNodes = new List<SkillNodeDef>();
+        foreach (var sourceNode in sourceNodes)
+        {
+            if (sourceNode == null) continue;
+            if (runtimeNodeMap.TryGetValue(sourceNode, out var runtimeNode))
+                remappedNodes.Add(runtimeNode);
+        }
+
+        return remappedNodes;
+    }
+
+    private void RestoreUnlockedNodes()
+    {
+        if (unlockedNodes.Count == 0) return;
+
+        var workingSavedIds = new HashSet<string>(unlockedNodes);
+        unlockedNodes.Clear();
+
+        foreach (var rn in runtimeNodes)
+        {
+            if (rn == null || string.IsNullOrEmpty(rn.nodeID)) continue;
+
+            if (workingSavedIds.Contains(rn.nodeID))
+                unlockedNodes.Add(rn.nodeID);
+        }
+    }
+
+    public (bool canUnlock, string failMessage) CanUnlock(SkillNodeDef node)
+    {
+        if (node == null) return (false, "Node is null");
+        if (unlockedNodes.Contains(node.nodeID)) return (false, "Node already unlocked");
+        if (skillPoints < 1) return (false, "Not enough skill points");
+
+        if (!node.isStartingNode)
+        {
+            if (node.prerequisites == null || node.prerequisites.Count == 0) return (false, "Node has no prerequisites");
+
+            foreach (var n in node.prerequisites)
+                if (!unlockedNodes.Contains(n.nodeID)) return (false, $"Missing prerequisite node: {n.nodeName}");
+        }
+
+        if (node.incompatibleNodes != null && node.incompatibleNodes.Count > 0)
+        {
+            foreach (var n in node.incompatibleNodes)
+                if (unlockedNodes.Contains(n.nodeID)) return (false, $"Incompatible node unlocked: {n.nodeName}");
+        }
+
+        if (node.requiredAttacks != null && node.requiredAttacks.Count > 0)
+        {
+            if (!TryGetComponent<PlayerAttackHandler>(out var pah)) return (false, "Player attack handler not found");
+
+            foreach (var a in node.requiredAttacks)
+                if (!pah.HasAttack(a)) return (false, $"Missing required attack: {a.displayName}");
+        }
+
+        if (node.requiredPlayerUpgrades != null && node.requiredPlayerUpgrades.Count > 0)
+        {
+            if (!TryGetComponent<PlayerUpgradeManager>(out var pum)) return (false, "Player upgrade manager not found");
+            if (pum.activeUpgrades == null || pum.activeUpgrades.Count == 0) return (false, "Missing required player upgrades: No active upgrades found");
+            foreach (var p in node.requiredPlayerUpgrades)
+                if (!pum.HasUpgrade(p)) return (false, $"Missing required player upgrade: {p.upgradeName}");
+        }
+
+        return (true, string.Empty);
+    }
+
+    public void UnlockNode(SkillNodeDef node)
+    {
+        var (canUnlock, failMessage) = CanUnlock(node);
+        if (!canUnlock) return;
+
+        skillPoints--;
+        unlockedNodes.Add(node.nodeID);
+
+        if (node.statBuffs != null && node.statBuffs.Count > 0) HandleStatUpgrades(node);
+        if (node.attackUpgrades != null && node.attackUpgrades.Count > 0) HandleAttackUpgrades(node);
+        if (node.playerUpgrades != null && node.playerUpgrades.Count > 0) HandlePlayerUpgrades(node);
+    }
+
+    private void HandleStatUpgrades(SkillNodeDef node)
+    {
+        if (TryGetComponent<EntityStatManager>(out var esm))
+        {
+            foreach (var sb in node.statBuffs)
+                esm.AddStat(sb);
+        }
+    }
+
+    private void HandlePlayerUpgrades(SkillNodeDef node)
+    {
+        if (TryGetComponent<PlayerUpgradeManager>(out var pum))
+        {
+            foreach (var pu in node.playerUpgrades)
+                if (pu != null) pum.AddUpgrade(pu);
+        }
+    }
+
+    private void HandleAttackUpgrades(SkillNodeDef node)
+    {
+        if (TryGetComponent<PlayerAttackHandler>(out var pah))
+        {
+            foreach (var ad in node.attackUpgrades)
+                if (ad != null) pah.UpdateAttack(ad.type, ad);
+        }
+    }
+
+    public bool IsNodeUnlocked(SkillNodeDef node) => node != null && unlockedNodes.Contains(node.nodeID);
+}

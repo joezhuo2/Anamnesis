@@ -2,13 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TooltipType { Attack, Resources, StatusEffect, Dash }
+public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree }
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
     private PlayerStats cps;
     private EntityStatManager cesm;
     private StatusEffect cse;
+    private SkillNodeDef snd;
+    private string skillTreeFailMessage = "";
     private TooltipType tooltipType;
 
     public void SetupTooltipData(AttackData ad, PlayerStats ps, EntityStatManager esm)
@@ -30,6 +32,19 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         cps = ps;
         cesm = esm;
     }
+    public void SetupTooltipData(SkillNodeDef node)
+    {
+        tooltipType = TooltipType.SkillTree;
+        snd = node;
+        skillTreeFailMessage = "";
+    }
+
+    public void SetupTooltipData(SkillNodeDef node, string failMessage)
+    {
+        tooltipType = TooltipType.SkillTree;
+        snd = node;
+        skillTreeFailMessage = failMessage ?? "";
+    }
     public void SetupDashTooltipData(PlayerStats ps)
     {
         tooltipType = TooltipType.Dash;
@@ -43,6 +58,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             case TooltipType.Resources: ShowResourcesTooltip(); break;
             case TooltipType.StatusEffect: ShowStatusEffectTooltip(); break;
             case TooltipType.Dash: ShowDashTooltip(); break;
+            case TooltipType.SkillTree: ShowSkillTreeTooltip(); break;
             default: break;
         }
     }
@@ -65,6 +81,22 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (cps.EffDashStaminaCost != 0) lines.Add($"Dash Stamina Cost: {cps.EffDashStaminaCost:F1}");
 
         TooltipUI.Instance.ShowTooltip("Movement", string.Join("\n", lines), new(100, 30));
+    }
+    public void ShowSkillTreeTooltip()
+    {
+        if (snd == null) return;
+
+        List<string> lines = new();
+        if (!string.IsNullOrEmpty(snd.desc)) lines.Add(snd.desc);
+        if (!string.IsNullOrEmpty(skillTreeFailMessage)) lines.Add($"<color=#FF4444>{skillTreeFailMessage}</color>");
+
+        TooltipUI.Instance.ShowTooltip(snd.nodeName, string.Join("\n", lines), new(100, -100));
+    }
+
+    public void HideSkillTreeTooltip()
+    {
+        skillTreeFailMessage = "";
+        if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
     }
 
     private void ShowResourcesTooltip()
@@ -141,11 +173,23 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (tooltipType == TooltipType.SkillTree)
+        {
+            HideSkillTreeTooltip();
+            return;
+        }
+
         if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
     }
 
     private void OnDisable()
     {
+        if (tooltipType == TooltipType.SkillTree)
+        {
+            HideSkillTreeTooltip();
+            return;
+        }
+
         if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
     }
 }

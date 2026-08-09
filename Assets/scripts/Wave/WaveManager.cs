@@ -45,6 +45,7 @@ public class WaveManager : MonoBehaviour
     private EntityStatManager cpsm;
     private PlayerAttackHandler cpah;
     private PlayerUpgradeManager cpum;
+    private PlayerSkillTree cpst;
     private readonly List<AttackReward> availableRarePool = new();
     private readonly List<PlayerUpgradeReward> availableTreasurePool = new();
     private int currentWaveIndex = 0;
@@ -280,6 +281,9 @@ public class WaveManager : MonoBehaviour
         UpdateRerollUI();
 
         additionalQuality += Random.Range(0.1f, 0.3f);
+
+        if (cpst == null) cpst = GameObject.FindWithTag("Player")?.GetComponent<PlayerSkillTree>();
+        if (cpst != null) cpst.skillPoints++;
 
         type = RewardType.Mixed;
         PanelSetup();

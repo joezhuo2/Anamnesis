@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Node", menuName = "Skill Tree/Node")]
 public class SkillNodeDef : ScriptableObject
 {
     [Header("Visuals")]
     public string nodeName;
-    public string desc;
+    [TextArea(3, 5)] public string desc;
     public string nodeID;
-    public Sprite icon;
 
     [Header("Requirements")]
     public bool isStartingNode;
