@@ -42,6 +42,8 @@ public class EnemyMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (Time.timeScale == 0f) return;
+
         UpdateTargeting();
 
         Vector2 velocity = GetKnockbackVelocity();

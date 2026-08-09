@@ -27,7 +27,7 @@ public class EnemyAttackHandler : MonoBehaviour
     private void Start() => es = GetComponent<EntityStatManager>().s as EnemyStats;
     private void Update()
     {
-        if (!es.isAlive) return;
+        if (!es.isAlive || Time.timeScale == 0f) return;
         UpdateCooldowns();
         if (!es.isAttacking) TryAttack();
     }

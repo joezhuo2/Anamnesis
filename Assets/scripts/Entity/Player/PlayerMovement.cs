@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void TryStartDash()
     {
-        if (p.isDashing || !p.canDash) return;
+        if (p.isDashing || !p.canDash || Time.timeScale == 0f) return;
         if (Time.time < lastDashTime + p.EffDashCooldown) return;
         if (p.currentStamina < p.EffDashStaminaCost) return;
 
