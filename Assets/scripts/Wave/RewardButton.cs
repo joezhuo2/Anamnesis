@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,13 +24,18 @@ public class RewardButton : MonoBehaviour
     private Action<AttackReward> onAttackClaimedCallback;
     private Action<PlayerUpgradeReward> onPlayerUpgradeClaimedCallback;
 
-    public void Setup(GeneratedReward reward, Action<GeneratedReward> claimCallback)
+    public void Setup(GeneratedReward reward, Action<GeneratedReward> claimCallback, string statChangeLine)
     {
         statRewardData = reward;
         onStatClaimedCallback = claimCallback;
         type = RewardType.Basic;
 
-        descriptionText.text = reward.GetDescription();
+        List<string> descLines = new()
+        {
+            reward.GetDescription(),
+            statChangeLine
+        };
+        descriptionText.text = string.Join("\n", descLines);
 
         if (reward.rd != null)
         {

@@ -350,8 +350,10 @@ public class WaveManager : MonoBehaviour
 
             GameObject btnObj = GetOrCreateRewardButton();
 
-            if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
-                rewardButton.Setup(generated, OnRewardClaimed);
+            CachePlayerStatManager();
+            string changeLine = BuildChangeLine(randomBuff.baseBuff.type, generated.finalVal);
+
+            if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(generated, OnRewardClaimed, changeLine);
         }
         additionalQuality = 0f;
     }
@@ -370,8 +372,13 @@ public class WaveManager : MonoBehaviour
                 BaseReward randomBuff = GetWeightedRandomMixedBuff();
                 RarityData chosenRarity = WaveQuality.GetWeightedRandomRarity(GetCurrentWave(), rarityData);
                 GeneratedReward generated = new() { br = randomBuff, rd = chosenRarity };
+
                 GameObject btnObj = GetOrCreateRewardButton();
-                if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(generated, OnRewardClaimed);
+
+                CachePlayerStatManager();
+                string changeLine = BuildChangeLine(randomBuff.baseBuff.type, generated.finalVal);
+
+                if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(generated, OnRewardClaimed, changeLine);
             }
             else if (poolRoll < 90f)
             {
@@ -532,7 +539,7 @@ public class WaveManager : MonoBehaviour
         CloseRewardUI();
 
         StatBuff finalBuff = new(chosenReward.br.baseBuff.type, chosenReward.finalVal);
-        if (cpsm == null) cpsm = GameObject.FindWithTag("Player")?.GetComponent<EntityStatManager>();
+        CachePlayerStatManager();
         if (cpsm != null) cpsm.AddStat(finalBuff);
 
         ResumeGameLoop();
@@ -597,4 +604,38 @@ public class WaveManager : MonoBehaviour
         activeRewardButtons.Clear();
     }
     public int GetCurrentWave() => currentWaveIndex + currentSequence.waveOffset;
+    private void CachePlayerStatManager()
+    {
+        if (cpsm == null)
+            cpsm = GameObject.FindWithTag("Player")?.GetComponent<EntityStatManager>();
+    }
+    private string BuildChangeLine(StatType type, float finalVal)
+    {
+        StatType effType = type switch
+        {
+            StatType.attack => StatType.EffAtk,
+            StatType.atkPct => StatType.EffAtk,
+            StatType.maxHp => StatType.EffMaxHp,
+            StatType.hpPct => StatType.EffMaxHp,
+            StatType.hpRegen => StatType.EffHpReg,
+            StatType.hpRegPct => StatType.EffHpReg,
+            StatType.armor => StatType.EffArmor,
+            StatType.armorPct => StatType.EffArmor,
+            StatType.moveSpeed => StatType.EffSpd,
+            StatType.moveSpeedPct => StatType.EffSpd,
+            StatType.Intelligence => StatType.EffInt,
+            StatType.IntPct => StatType.EffInt,
+            StatType.staminaRegen => StatType.EffStReg,
+            StatType.stRegPct => StatType.EffStReg,
+            _ => type,
+        };
+
+        float before = cpsm.GetStat(effType);
+        cpsm.AddStat(new StatBuff(type, finalVal));
+
+        float after = cpsm.GetStat(effType);
+        cpsm.AddStat(new StatBuff(type, finalVal), false);
+
+        return $"{before} → {after}";
+    }
 }
