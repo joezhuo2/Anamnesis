@@ -123,7 +123,7 @@ public class Projectile : MonoBehaviour {
 
         if (pd.timeBeforeSameEnemy > 0f) StartCoroutine(RemoveFromHitHistory(target, pd.timeBeforeSameEnemy));
 
-        if (pd.additionalChance > 0f && pd.additionalAttack != null)
+        if (pd.additionalChance > 0f && pd.additionalAttack != null && Random.value <= pd.additionalChance)
             HandleAdditionalSpawns();
 
         canTriggerAdd = false;
@@ -158,7 +158,6 @@ public class Projectile : MonoBehaviour {
     private void HandleAdditionalSpawns()
     {
         if (!canTriggerAdd) return;
-        if (Random.value > pd.additionalChance) return;
         if (pd.additionalAttack == null || pd.additionalAttack.projectilePrefab == null) return;
         if (ProjectileSpawner.Instance == null) return;
 

@@ -246,8 +246,16 @@ public class WaveManager : MonoBehaviour
         }
 
         int actualWave = GetCurrentWave();
-        if (actualWave % 5 == 0) rerolls++;
-        else if (Random.value < 0.5f) rerolls++;
+        if (actualWave % 5 == 0)
+        {
+            CachePlayerSkillTree();
+            if (cpst != null) cpst.skillPoints++;
+            rerolls++;
+        }
+        else if (Random.value < 0.5f)
+        {
+            rerolls++;
+        }
 
         UpdateRerollUI();
 
@@ -282,7 +290,7 @@ public class WaveManager : MonoBehaviour
 
         additionalQuality += Random.Range(0.1f, 0.3f);
 
-        if (cpst == null) cpst = GameObject.FindWithTag("Player")?.GetComponent<PlayerSkillTree>();
+        CachePlayerSkillTree();
         if (cpst != null) cpst.skillPoints++;
 
         type = RewardType.Mixed;
@@ -608,6 +616,11 @@ public class WaveManager : MonoBehaviour
     {
         if (cpsm == null)
             cpsm = GameObject.FindWithTag("Player")?.GetComponent<EntityStatManager>();
+    }
+    private void CachePlayerSkillTree()
+    {
+        if (cpst == null)
+            cpst = GameObject.FindWithTag("Player")?.GetComponent<PlayerSkillTree>();
     }
     private string BuildChangeLine(StatType type, float finalVal)
     {

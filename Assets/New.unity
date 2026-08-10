@@ -1872,6 +1872,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Blaze
     desc: Atk Stamina Heavy Add
+  - newAttack: {fileID: 11400000, guid: 8959ad3f839fa7a408b96be097ed75a7, type: 2}
+    type: 2
+    icon: {fileID: 0}
+    attackName: Exodus
+    desc: Ult Atk Int Def AOE Add
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -6087,6 +6092,14 @@ PrefabInstance:
       propertyPath: objContainer
       value: 
       objectReference: {fileID: 1186772504}
+    - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
+      propertyPath: starting.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
+      propertyPath: 'starting.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8959ad3f839fa7a408b96be097ed75a7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

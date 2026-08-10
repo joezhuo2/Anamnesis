@@ -5,6 +5,12 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.4] - 2026-08-10
+
+### Added
+- player gains a skill point every 5 waves
+- New Ultimate: Exodus (atk/int/armor scaling, respectively), deals (phys/spl/true damage, respectively), 30% chance to trigger next stage (3 stages total) on each stage, size increases with each stage, added to Rare Pool
+
 ## [v0.1.3] - 2026-08-10
 
 ### Added

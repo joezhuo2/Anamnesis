@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Exodus A AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  cooldown: 8
+  projectilePrefab: {fileID: 1596948332132845404, guid: e5ee78f2d912d1046b4946d69c109f7c, type: 3}
+  pd: {fileID: 11400000, guid: df55b0b633b75c54e98ef0da42e45623, type: 2}
+  pattern: 0
+  spawnDelay: 0
+  spawnDistance: 5
+  fixedDistance: 0
+  animationLength: 0.75
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 0
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 0
+  staminaCostPct: 40
+  healthCost: 0
+  healthCostPct: 0
+  manaCost: 0
+  manaCostPct: 60
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 1
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 1
+  manaPctGainOnHit: 0
+  summonChance: 0
+  summonCondition: 0
+  fireOrbits: 0
+  absorbOrbits: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
+  redirectCount: 0
+  type: 2
+  icon: {fileID: 1831932391, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  displayName: Exodus
