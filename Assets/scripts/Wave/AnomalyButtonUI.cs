@@ -9,27 +9,29 @@ public class AnomalyButtonUI : MonoBehaviour
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descText;
 
-    private AnomalyData cachedData;
-    private Action<AnomalyData> onSelectedCallback;
+    private AnomalyInstance cachedInstance;
+    private Action<AnomalyInstance> onSelectedCallback;
 
-    public void Setup(AnomalyData data, Action<AnomalyData> onSelect)
+    public void Setup(AnomalyInstance instance, Action<AnomalyInstance> onSelect)
     {
-        cachedData = data;
+        cachedInstance = instance;
         onSelectedCallback = onSelect;
 
         var b = GetComponent<Button>();
         b.onClick.RemoveAllListeners();
         b.onClick.AddListener(OnClick);
 
-        if (titleText != null) titleText.text = data.anomalyName;
-        if (descText != null) descText.text = data.desc;
+        if (instance != null && instance.amd == null) return;
+
+        if (titleText != null) titleText.text = instance.amd.anomalyName;
+        if (descText != null) descText.text = instance.amd.desc;
     }
 
-    public void OnClick() => onSelectedCallback?.Invoke(cachedData);
+    public void OnClick() => onSelectedCallback?.Invoke(cachedInstance);
 
     private void OnDestroy()
     {
         onSelectedCallback = null;
-        cachedData = null;
+        cachedInstance = null;
     }
 }

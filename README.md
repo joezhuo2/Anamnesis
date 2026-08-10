@@ -19,8 +19,8 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 ## Core Loop
 
 1. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters.
-2. **Choose a reward** — pick from buffs, rare attacks, or treasure-pool upgrades (with limited rerolls).
-3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*) that add risk for greater reward.
+2. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively.
+3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, and more to come) that add risk for greater reward.
 4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run.
 5. **Repeat** — waves get harder, and you get stronger.
 
@@ -28,13 +28,13 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 
 - **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward/reroll panels.
 - **Anomaly system** — randomized run modifiers with configurable frequency, counts, and reward bonuses.
-- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (spread, barrage), resource costs (stamina / mana / health), on-hit resource gains, summoning, and **orbit interactions** (fire, absorb, redirect, explode).
+- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, and **orbit interactions** (fire, absorb, redirect, explode).
 - **Status effects** — stackable DoTs, stuns, stat buffs/reductions, attack replacement, and more, with cooldown UI.
-- **Player upgrades** — trigger-condition-based `PlayerUpgrade` ScriptableObjects (on attack, on crit, on hit, on dash, on deal damage, …) with chance/cooldown/delay.
+- **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects (on attack, on crit, on hit, on dash, on deal damage, …) with chance/cooldown/delay.
 - **Skill tree** — interactive pan/zoom tree with prerequisites, incompatible nodes, tooltips, connector lines, and a skill-point currency.
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
-- **Knockback** — full knockback for players and enemies, with knockback resistance and knockback % stats.
-- **Damage indicators** — floating damage numbers with randomized timing.
+- **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.
+- **Damage indicators** — floating damage numbers with small randomness.
 
 ## Controls
 
@@ -52,18 +52,18 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 ## Content
 
 **Player attacks** — 
-Basic Attacks: Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact
-Skill: Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Supernova
-Ultimate: Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury
-Awakenings (Permenant Upgrades): Reminiscence, Serenace, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Cosmic Afterimage, Hypercarry
+- **Basic Attacks**: Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact
+- **Skill**: Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Supernova
+- **Ultimate**: Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus
+- **Awakenings**: Reminiscence, Serenace, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Cosmic Afterimage, Hypercarry
 
 **Enemies** — 
-Regular Enemies: Bat, Crab, and Slime
-Bosses: Cultist (clone summoning), Jellyfish, Lich, 
+- **Regular Enemies**: Bat, Crab, and Slime
+- **Bosses**: Cultist (clone summoning), Jellyfish, Lich, 
 
-Each enemies have their own attack sets, movement patterns, and behavior. 
+Each enemies have their own stats, attack sets, movement patterns, behavior, and inflict unique status effects. Some even have unique behaviour such as summons, and more to come! 
 
-**Status effects** — DoTs, Stun, Stat Buffs, Stat Reduction, Attack Enhancements,and more.
+**Status effects** — DoTs, Stun, Stat Buffs, Stat Reductions (Slow, Weaken, etc.), Attack Enhancements,and more.
 
 **Player upgrades** — Additional Damage, Cooldown Advance, Decoy, Gain Mana, Hex Cast, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge.
 
@@ -111,20 +111,10 @@ Assets/
 - [x] Reward & anomaly systems
 - [x] Knockback, dash, and resource systems
 - [x] Skill tree (v0.1.0 Skill Tree Update)
-- [ ] Finish Cultist Attack set 
-- [ ] Xp and Levels system
-- [ ] Enough Attacks for complete builds of all stat types (hp, armor, int, atk)
-- [ ] More skill tree nodes & branches, upgrading existing Awakenings/Attacks, and introducing new ones
-- [ ] Anamolies update
-- [ ] Wave 60 boss and enemies, and first Boss Rush (v0.2.0 Content Update)
-- [ ] Status Effect vfx
-- [ ] Data saving
-- [ ] Home Screen, difficulty selector
-- [ ] Settings and stat menu
-- [ ] Build Guide menu 
-- [ ] Audio, Tilemaps & polish
-- [ ] Gear/Items update
-- [ ] Elemental Damage/Defense system
+
+## Planned Features
+
+See [TODO.md](TODO.md) for upcoming content and rebalances.
 
 ## Changelog
 

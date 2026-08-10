@@ -85,6 +85,7 @@ public class WaveManager : MonoBehaviour
                 {
                     case AnomalyType.TimeTrial: UpdateAnomalyTimeInfo(); break;
                     case AnomalyType.NoDamage: anomalyInfoText.text = "No Damage Anomaly Active"; break;
+                    case AnomalyType.StatModifier: anomalyInfoText.text = currentAnomaly.amd.desc; break;
                     default: break;
                 }
             }
@@ -211,7 +212,12 @@ public class WaveManager : MonoBehaviour
         GameObject enemy = Instantiate(c.enemyPrefab, spawnPosition, Quaternion.identity);
 
         if (enemy.TryGetComponent<EntityStatManager>(out var statManager))
+        {
             statManager.ScaleStatsToLevel(c.enemyLevel);
+
+            if (currentAnomaly is StatModifierInstance statMod)
+                statManager.AddStat(statMod.GetBuff());
+        }
 
         if (c.bossBarPrefab != null && activeBossBar == null)
         {
@@ -330,13 +336,14 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < choices; i++)
         {
             AnomalyData amd = available[Random.Range(0, available.Count)];
+            AnomalyInstance instance = amd.CreateInstance();
 
             Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
             GameObject btnObj = Instantiate(anomalyPrefab, targetParent);
             activeRewardButtons.Add(btnObj);
 
             if (btnObj.TryGetComponent<AnomalyButtonUI>(out var anomalyButton))
-                anomalyButton.Setup(amd, OnAnomalyButtonClicked);
+                anomalyButton.Setup(instance, OnAnomalyButtonClicked);
         }
 
         return true;
@@ -494,14 +501,14 @@ public class WaveManager : MonoBehaviour
             default: break;
         }
     }
-    public void OnAnomalyButtonClicked(AnomalyData amd)
+    public void OnAnomalyButtonClicked(AnomalyInstance instance)
     {
         CloseRewardUI();
         Time.timeScale = 1f;
 
-        if (amd != null)
+        if (instance != null)
         {
-            currentAnomaly = amd.CreateInstance();
+            currentAnomaly = instance;
             currentAnomaly.StartAnomaly();
         }
 

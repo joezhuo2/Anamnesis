@@ -5,6 +5,21 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.5] - 2026-08-10
+
+### Rebalance
+# Enemy
+- hp% per level: 8 > 4
+- move speed %: +10 per 5 waves (add) > +3% per wave (multiply) 
+- max move speed %: 200% > 100%
+
+### Added
+- a to-do list for upcoming features
+- stat modifier anamoly (+5-30% for waves 5-50, +10%-60% for waves 51-105) that grants all enemies in the wave a percentage buff to a common stat (attack, hp, move speed, armor, damage)
+
+### Fixed
+- enemies that have negative base walk speed % instantly jumping to 0% because of level scaling
+
 ## [v0.1.4] - 2026-08-10
 
 ### Added

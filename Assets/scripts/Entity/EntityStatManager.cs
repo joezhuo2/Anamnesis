@@ -41,7 +41,7 @@ public class EntityStatManager : MonoBehaviour
         s.atkPct += 2f * levelOffset;
 
         s.maxHp += 8 * levelOffset;
-        s.hpPct += 8f * levelOffset;
+        s.hpPct += 4f * levelOffset;
 
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
         s.hpRegPct += 2f * levelOffset;
@@ -50,6 +50,8 @@ public class EntityStatManager : MonoBehaviour
         s.armorPct += 2f * levelOffset;
 
         s.damagePct += levelOffset;
+
+        s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct * (1f + (0.03f * levelOffset)), -100f, 100f);
 
         if (levelOffset % 5 == 0)
         {
@@ -66,8 +68,6 @@ public class EntityStatManager : MonoBehaviour
 
             s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.3f * levelOffset), 0f, 45f); // 1.5% per 5 lvs (150)
             s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (0.5f * levelOffset), 0f, 60f); // 2.5% per 5 lvs (120)
-
-            s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct + (2f * levelOffset), 0f, 200f); // 10% per 5 lvs (100)
         }
     }
 

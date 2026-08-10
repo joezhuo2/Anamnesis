@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum AnomalyType { TimeTrial, NoDamage, ResourceRestriction, ComboMastery }
+public enum AnomalyType { TimeTrial, NoDamage, StatModifier }
 
 [CreateAssetMenu(fileName = "amd", menuName = "Data/Anomaly")]
 public class AnomalyData : ScriptableObject
@@ -11,6 +11,8 @@ public class AnomalyData : ScriptableObject
     public int maxWave;
     public AnomalyType anomalyType;
     public float anomalyValue;
+    public float anamolyMinVal;
+    public float anamolyMaxVal;
 
     public AnomalyInstance CreateInstance()
     {
@@ -18,6 +20,7 @@ public class AnomalyData : ScriptableObject
         {
             AnomalyType.TimeTrial => new TimeTrialInstance(this),
             AnomalyType.NoDamage => new NoDamageTrialInstance(this),
+            AnomalyType.StatModifier => new StatModifierInstance(this),
             _ => new AnomalyInstance(this)
         };
     }

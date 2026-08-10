@@ -2038,15 +2038,12 @@ MonoBehaviour:
   rerollButton: {fileID: 786092299}
   rerollText: {fileID: 186757956}
   availableAnomalies:
-  - {fileID: 11400000, guid: c606e919e6969c94c8d5ba434c0b7055, type: 2}
-  - {fileID: 11400000, guid: 7b6a07acfa60e3f4c9965612f9969528, type: 2}
-  - {fileID: 11400000, guid: 8cdc45e75e0d1ca41885e6e563ef285c, type: 2}
-  - {fileID: 11400000, guid: 9e7d67e92c12ea449ae71ac414c026e2, type: 2}
-  - {fileID: 11400000, guid: 93c6fc4da2bdae544957f2ca8da253b3, type: 2}
+  - {fileID: 11400000, guid: c57fdda8c6062df4ab1ccc303187118d, type: 2}
+  - {fileID: 11400000, guid: cd15acce3a0ad044ba2eeb6762e2c971, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
-  anomalyChance: 15
+  anomalyChance: 5
   anomalyGlobalMinWave: 3
 --- !u!4 &587400166
 Transform:
