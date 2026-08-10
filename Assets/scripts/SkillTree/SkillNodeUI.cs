@@ -6,6 +6,7 @@ public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler
 {
     [Header("UI References")]
     public Image backgroundImage;
+    public Image iconImage;
     public GameObject lockedOverlay;
     public GameObject unlockedCheckmark;
     public GameObject availableGlow;
@@ -32,6 +33,7 @@ public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler
         if (lockedOverlay != null) lockedOverlay.SetActive(!unlocked && !canUnlock);
         if (unlockedCheckmark != null) unlockedCheckmark.SetActive(unlocked);
         if (availableGlow != null) availableGlow.SetActive(!unlocked && canUnlock);
+        if (iconImage != null && node.icon != null) iconImage.sprite = node.icon;
 
         if (backgroundImage != null)
         {

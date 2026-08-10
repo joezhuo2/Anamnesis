@@ -145,9 +145,9 @@ public class StatusEffectManager : MonoBehaviour
 
             float effDur = e.isBuff ? e.duration : e.duration * (1f - (cesm.s.effectRes * 0.01f));
 
-            if (e.currentTime > effDur)
+            if (e != null && e.currentTime > effDur)
             {
-                if (e.currentStacks > 1 && e != null)
+                if (e.currentStacks > 1 && !e.loseAllStacksOnExpire)
                 {
                     e.currentStacks--;
                     e.currentTime = 0f;
@@ -155,7 +155,7 @@ public class StatusEffectManager : MonoBehaviour
                 }
                 else
                 {
-                    if (e != null) e.OnExpire();
+                    e.OnExpire();
                     if (i >= 0 && i < activeEffects.Count && activeEffects[i] != null)
                         activeEffects.RemoveAt(i);
                     Destroy(e);

@@ -5,6 +5,20 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.2] - 2026-08-10
+
+### Added
+- Skill Tree node icons can now be set either by changing the icon image in the prefab (old) OR changing the icon image in the skill node def (new, overrides old)
+- 4 new skill nodes
+- option for status effects to remove all stacks when the timer expires (default false)
+
+### Fixed
+- Projectiles with non-zero `timeBeforeSameEnemy` not being able to trigger additional attacks multiple times as well
+- Heartburn stacks decreasing one by one
+
+## Removed
+- node prefab (duplicate a pair of node GO + node def to create new nodes instead)
+
 ## [v0.1.1_1] - 2026-08-09
 
 ### Fixed

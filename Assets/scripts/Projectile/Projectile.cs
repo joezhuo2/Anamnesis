@@ -296,27 +296,27 @@ public class Projectile : MonoBehaviour {
 
             if (dist < effectiveOrbitRadius * 0.5f && dir != Vector2.zero)
                 orbitAngleOffset = Mathf.Atan2(dir.y, dir.x);
-            else 
+            else
                 orbitAngleOffset = Mathf.Atan2(offset.y, offset.x);
 
             orbitInitialized = true;
         }
 
         float currentAngle = Mathf.Atan2(offset.y, offset.x);
-        float targetAngle = orbitAngleOffset + orbitDirectionSign * effSpd * Time.fixedDeltaTime / effectiveOrbitRadius;
+        float targetAngle = orbitAngleOffset + (orbitDirectionSign * effSpd * Time.fixedDeltaTime / effectiveOrbitRadius);
 
         orbitAngleOffset = targetAngle;
-        
-        Vector2 desiredPos = center + new Vector2(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)) * effectiveOrbitRadius;
+
+        Vector2 desiredPos = center + (new Vector2(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)) * effectiveOrbitRadius);
         Vector2 toDesired = desiredPos - (Vector2)transform.position;
-        
+
         Vector2 tangent = Vector2.Perpendicular(desiredPos - center).normalized;
         Vector2 orbitalVelocity = orbitDirectionSign * effSpd * tangent;
-        
+
         float radiusError = Vector2.Distance(transform.position, center) - effectiveOrbitRadius;
         Vector2 radialCorrection = -5f * radiusError * (desiredPos - center).normalized;
-        
-        rb.linearVelocity = orbitalVelocity + radialCorrection + toDesired * 5f;
+
+        rb.linearVelocity = orbitalVelocity + radialCorrection + (toDesired * 5f);
     }
     private Transform FindClosestEnemyInDirection()
     {
@@ -409,6 +409,7 @@ public class Projectile : MonoBehaviour {
     {
         yield return new WaitForSeconds(delay);
         if (hit != null && target != null) hit.Remove(target);
+        canTriggerAdd = true;
     }
     public static (float hp, float stamina, float mana) CalculateStatGains(GameObject target, AttackData a, float totalDmg = 0f)
     {

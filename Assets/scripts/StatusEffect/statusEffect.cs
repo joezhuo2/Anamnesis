@@ -15,6 +15,7 @@ public abstract class StatusEffect : ScriptableObject
 
     [Header("Stacking")]
     public int maxStacks = 1;
+    public bool loseAllStacksOnExpire;
 
     [HideInInspector] public GameObject target;
     [HideInInspector] public GameObject source;

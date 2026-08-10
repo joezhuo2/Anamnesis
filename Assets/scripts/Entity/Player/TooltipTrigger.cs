@@ -32,12 +32,6 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         cps = ps;
         cesm = esm;
     }
-    public void SetupTooltipData(SkillNodeDef node)
-    {
-        tooltipType = TooltipType.SkillTree;
-        snd = node;
-        skillTreeFailMessage = "";
-    }
 
     public void SetupTooltipData(SkillNodeDef node, string failMessage)
     {

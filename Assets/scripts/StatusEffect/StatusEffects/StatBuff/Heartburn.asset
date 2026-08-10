@@ -21,6 +21,7 @@ MonoBehaviour:
   desc: For each stack, increases crit damage by 20%, damage bonus by 6% and stamina
     cost by 18%, but reduce health regen by 12%.
   maxStacks: 10
+  loseAllStacksOnExpire: 1
   target: {fileID: 0}
   source: {fileID: 0}
   projectile: {fileID: 0}

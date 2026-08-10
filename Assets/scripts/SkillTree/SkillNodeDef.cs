@@ -8,6 +8,7 @@ public class SkillNodeDef : ScriptableObject
     public string nodeName;
     [TextArea(3, 5)] public string desc;
     public string nodeID;
+    public Sprite icon;
 
     [Header("Requirements")]
     public bool isStartingNode;

@@ -18,7 +18,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 
 ## Core Loop
 
-1. **Survive the wave** — enemies spawn in escalating sequences with occasional boss encounters.
+1. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters.
 2. **Choose a reward** — pick from buffs, rare attacks, or treasure-pool upgrades (with limited rerolls).
 3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*) that add risk for greater reward.
 4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run.
@@ -110,14 +110,21 @@ Assets/
 - [x] Core wave-based combat loop
 - [x] Reward & anomaly systems
 - [x] Knockback, dash, and resource systems
-- [x] Skill tree (v0.1.0)
-- [ ] Enough Attacks for complete builds of all stat types
-- [ ] More skill tree nodes & branches, 
-- [ ] Additional enemies, attacks, and status effects
-- [ ] Meta-progression / persistent unlocks
+- [x] Skill tree (v0.1.0 Skill Tree Update)
+- [ ] Finish Cultist Attack set 
+- [ ] Xp and Levels system
+- [ ] Enough Attacks for complete builds of all stat types (hp, armor, int, atk)
+- [ ] More skill tree nodes & branches, upgrading existing Awakenings/Attacks, and introducing new ones
+- [ ] Anamolies update
+- [ ] Wave 60 boss and enemies, and first Boss Rush (v0.2.0 Content Update)
+- [ ] Status Effect vfx
 - [ ] Data saving
 - [ ] Home Screen, difficulty selector
-- [ ] Audio, Maps & polish
+- [ ] Settings and stat menu
+- [ ] Build Guide menu 
+- [ ] Audio, Tilemaps & polish
+- [ ] Gear/Items update
+- [ ] Elemental Damage/Defense system
 
 ## Changelog
 

@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillNodeUI
   backgroundImage: {fileID: 3077875385191371632}
+  iconImage: {fileID: 8727901700468692292}
   lockedOverlay: {fileID: 384978517364721562}
   unlockedCheckmark: {fileID: 7046504623789165532}
   availableGlow: {fileID: 2204623797996005649}
