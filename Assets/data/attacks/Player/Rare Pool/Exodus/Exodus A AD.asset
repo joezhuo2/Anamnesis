@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Exodus A AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 8
+  cooldown: 90
   projectilePrefab: {fileID: 1596948332132845404, guid: e5ee78f2d912d1046b4946d69c109f7c, type: 3}
   pd: {fileID: 11400000, guid: df55b0b633b75c54e98ef0da42e45623, type: 2}
   pattern: 0
@@ -32,12 +32,12 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 0
-  staminaCostPct: 40
+  staminaCost: 40
+  staminaCostPct: 55
   healthCost: 0
   healthCostPct: 0
   manaCost: 0
-  manaCostPct: 60
+  manaCostPct: 40
   basedOnDmgDealt: 1
   staminaGainOnHit: 1
   staminaPctGainOnHit: 0

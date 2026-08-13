@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager Instance { get; private set; }
+
+    private static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
     private static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
     [Header("Basic")]
     public WaveSequence currentSequence;
@@ -40,6 +43,7 @@ public class WaveManager : MonoBehaviour
     public float anomalyChance = 10;
     public float anomalyGlobalMinWave = 10;
 
+    private GameController GameController => GameController.Instance;
     private RewardType type = RewardType.Basic;
     private GameObject activeBossBar;
     private EntityStatManager cpsm;
@@ -60,6 +64,9 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
         availableRarePool.AddRange(rarePool);
         availableTreasurePool.AddRange(treasurePool);
     }
@@ -108,6 +115,8 @@ public class WaveManager : MonoBehaviour
             if (tt.timeRemaining <= 0f)
             {
                 anomalyInfoText.text = "Time's Up! Anomaly Failed";
+                GameController.SetTitleForDuration("Anomaly Failed", 2f, 0.5f, 0.5f);
+                GameController.SetSubtitleForDuration("Time's Up!", 2f, 0.5f, 0.5f);
                 return;
             }
             anomalyInfoText.text = $"Time Remaining: {tt.timeRemaining:F1}s";
@@ -194,6 +203,13 @@ public class WaveManager : MonoBehaviour
             CleanEnemyList();
             yield return _waitForSeconds0_5;
         }
+
+        if (activeBossBar != null) GameController.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
+        else if (currentAnomaly != null && currentAnomaly.isActive) GameController.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
+        else GameController.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
+
+        yield return _waitForSeconds1_5;
+
         EndWave();
     }
     private void SpawnEnemies(WaveData c)
@@ -251,8 +267,16 @@ public class WaveManager : MonoBehaviour
             activeBossBar = null;
         }
 
-        int actualWave = GetCurrentWave();
-        if (actualWave % 5 == 0)
+        UpdateOccasionalWaveRewards(GetCurrentWave());
+
+        UpdateRerollUI();
+
+        if (currentAnomaly != null) CleanupAnamoly();
+        else TriggerStandardRewards(GetCurrentWave());
+    }
+    private void UpdateOccasionalWaveRewards(int wave)
+    {
+        if (wave % 5 == 0)
         {
             CachePlayerSkillTree();
             if (cpst != null) cpst.skillPoints++;
@@ -262,27 +286,21 @@ public class WaveManager : MonoBehaviour
         {
             rerolls++;
         }
-
-        UpdateRerollUI();
-
-        if (currentAnomaly != null)
+    }
+    private void CleanupAnamoly()
+    {
+        if (currentAnomaly.isActive)
         {
-            if (currentAnomaly.isActive)
-            {
-                HandleAnomalyRewards();
-            }
-            else
-            {
-                currentAnomaly.Cleanup();
-                currentAnomaly = null;
-                ResumeGameLoop();
-            }
+            HandleAnomalyRewards();
         }
         else
         {
-            TriggerStandardRewards(actualWave);
+            currentAnomaly.Cleanup();
+            currentAnomaly = null;
+            ResumeGameLoop();
         }
     }
+
     private void HandleAnomalyRewards()
     {
         currentAnomaly.CompleteAnomaly();
@@ -428,7 +446,7 @@ public class WaveManager : MonoBehaviour
                 rewardButton.Setup(buff, OnAttackRewardClaimed);
         }
     }
-    public void GenerateTreasurePool()
+    private void GenerateTreasurePool()
     {
         type = RewardType.Treasure;
         int rewardChoices = PoolPreSetup();
@@ -467,7 +485,7 @@ public class WaveManager : MonoBehaviour
 
         if (rerollButton != null) rerollButton.interactable = rerolls > 0;
     }
-    public void OnSkipButtonClicked()
+    private void OnSkipButtonClicked()
     {
         if (type == RewardType.Anomaly)
         {
@@ -482,7 +500,7 @@ public class WaveManager : MonoBehaviour
         CloseRewardUI();
         ResumeGameLoop();
     }
-    public void OnRerollButtonClicked()
+    private void OnRerollButtonClicked()
     {
         if (rerolls <= 0) return;
 
@@ -501,7 +519,7 @@ public class WaveManager : MonoBehaviour
             default: break;
         }
     }
-    public void OnAnomalyButtonClicked(AnomalyInstance instance)
+    private void OnAnomalyButtonClicked(AnomalyInstance instance)
     {
         CloseRewardUI();
         Time.timeScale = 1f;

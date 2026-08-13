@@ -5,6 +5,29 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.6] - 2026-08-13 - The Titles Update
+
+### Rebalance
+# Exodus
+- Cooldown: 8s > 90s
+- Stamina Cost: 0 > 40, 40% > 55%
+- Mana Cost: 60% > 40%
+- First: 550%P > 1365%P
+- Second Chance: 30% > 60%
+- Second: 380%S > 880%S
+- Third Chance: 30% > 40%
+- Third: 110%T > 560%T
+- Third Scaling: EffArmor > ResPen
+
+### Added
+- Game title and subtitle, with methods to update each text seperately, and options for fading in/out, and configure font and text color
+- wave manager now has wave completed and boss killed title texts
+- WaveManager now has an instance
+
+### Update
+- WaveManager's EndWave method is now cleaner, having some functions split into sub methods
+- methods in wave manager that did not need to be public are now private
+
 ## [v0.1.5] - 2026-08-10
 
 ### Rebalance

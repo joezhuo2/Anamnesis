@@ -26,7 +26,7 @@
 
 # Medium Priority
 - [ ] Status Effect vfx
-- [ ] Wave clear banner
+- [x] Wave clear banner
 - [ ] Skill Point refund option (new currency?)
 
 # Low Priority

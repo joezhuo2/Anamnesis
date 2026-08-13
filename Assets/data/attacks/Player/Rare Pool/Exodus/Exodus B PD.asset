@@ -18,7 +18,7 @@ MonoBehaviour:
   numPierce: 3000
   size: 3
   physicalMult: 0
-  spellMult: 3.8
+  spellMult: 8.8
   trueMult: 0
   scalingStat: 44
   specialMult: 1
@@ -32,7 +32,7 @@ MonoBehaviour:
   bypassIFrames: 0
   randomDir: 0
   additionalAttack: {fileID: 11400000, guid: a4a400a0c23ca2b49853c4b2c0af1895, type: 2}
-  additionalChance: 0.3
+  additionalChance: 0.4
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects: []

@@ -20,7 +20,7 @@ MonoBehaviour:
   physicalMult: 0
   spellMult: 0
   trueMult: 1.1
-  scalingStat: 35
+  scalingStat: 10
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0
