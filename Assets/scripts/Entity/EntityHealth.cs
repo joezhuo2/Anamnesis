@@ -64,7 +64,7 @@ public class EntityHealth : MonoBehaviour
     }
     private void Update()
     {
-        if (es != null && es.canGainHp) RegenHp();
+        RegenHp();
         MoveHealthBar();
     }
     private void MoveHealthBar()
@@ -238,7 +238,7 @@ public class EntityHealth : MonoBehaviour
     }
     private void RegenHp()
     {
-        if (es == null || !es.isAlive) return;
+        if (es == null || !es.isAlive || !es.canGainHp) return;
         if (es.currentHp >= (int)es.EffMaxHp) return;
 
         regenTimer += Time.deltaTime;

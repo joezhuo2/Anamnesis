@@ -74,7 +74,7 @@ public class AttackData : ScriptableObject
     [Tooltip("Fires all currently orbiting projectiles toward the mouse direction before spawning this attack.")]
     public bool fireOrbits;
     [Tooltip("Absorbs all currently orbiting projectiles, granting stat returns per projectile.")]
-    public bool absorbOrbits;
+    public float absorbOrbitPct;
     [Tooltip("Redirects all currently orbiting projectiles toward the nearest enemy.")]
     public bool redirectOrbits;
     [Tooltip("Causes all currently orbiting projectiles to explode, triggering their additionalAttack at their current position.")]

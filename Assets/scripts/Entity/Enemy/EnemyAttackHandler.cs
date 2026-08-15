@@ -139,9 +139,9 @@ public class EnemyAttackHandler : MonoBehaviour
                 : Vector2.right;
             handler.ReleaseOrbits(dir, attack.redirectCount);
         }
-        else if (attack.absorbOrbits)
+        else if (attack.absorbOrbitPct > 0f)
         {
-            handler.AbsorbOrbits(attack.redirectCount);
+            handler.AbsorbOrbits(attack.redirectCount, attack.absorbOrbitPct);
         }
         else if (attack.redirectOrbits)
         {

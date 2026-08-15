@@ -10,17 +10,21 @@ public class TooltipUI : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public Vector2 offset;
 
+    private RectTransform crt;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
 
+        CacheRectTransform();
         HideTooltip();
     }
 
     private void Update()
     {
-        GetComponent<RectTransform>().position = PlayerInputHandler.mousePos + offset;
+        CacheRectTransform();
+        crt.position = PlayerInputHandler.mousePos + offset;
     }
 
     public void ShowTooltip(string title, string description, Vector2 os)
@@ -32,8 +36,9 @@ public class TooltipUI : MonoBehaviour
         descriptionText.text = description;
     }
 
-    public void HideTooltip()
+    public void HideTooltip() => gameObject.SetActive(false);
+    private void CacheRectTransform()
     {
-        gameObject.SetActive(false);
+        if (crt == null) crt = GetComponent<RectTransform>();
     }
 }

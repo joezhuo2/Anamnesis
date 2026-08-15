@@ -257,7 +257,6 @@ public struct StatBuff : IEquatable<StatBuff>
             StatType.addDmgPct =>           "Additional Damage %",
             StatType.kbRes =>               "Knockback Resistance",
             StatType.kbPct =>               "Increased Knockback %",
-
             _ => type.ToString()
         };
         return name;

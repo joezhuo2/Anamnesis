@@ -6,10 +6,9 @@ public class EntityProjectileHandler : MonoBehaviour
 {
     [Tooltip("Maximum orbiting projectiles tracked. 0 = unlimited.")]
     public int maxOrbiting = 0;
-    public float orbitGainPct = 50f;
 
     private readonly List<Projectile> orbitingProjectiles = new();
-    public int Count => orbitingProjectiles.Count;
+    public int OrbitCount => orbitingProjectiles.Count;
 
     private void OnDestroy()
     {
@@ -19,7 +18,7 @@ public class EntityProjectileHandler : MonoBehaviour
     {
         if (p == null || orbitingProjectiles.Contains(p)) return;
 
-        if (maxOrbiting > 0 && Count >= maxOrbiting)
+        if (maxOrbiting > 0 && OrbitCount >= maxOrbiting)
         {
             Projectile oldest = orbitingProjectiles[0];
             orbitingProjectiles.RemoveAt(0);
@@ -35,7 +34,7 @@ public class EntityProjectileHandler : MonoBehaviour
     }
     public void ReleaseOrbits(int count = 0)
     {
-        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
+        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -50,7 +49,7 @@ public class EntityProjectileHandler : MonoBehaviour
     }
     public void ReleaseOrbits(Vector2 dir, int count = 0)
     {
-        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
+        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -58,14 +57,14 @@ public class EntityProjectileHandler : MonoBehaviour
         }
         StartCoroutine(ClearOrbitsAfterDelay(0.1f));
     }
-    public int AbsorbOrbits(int count = 0)
+    public int AbsorbOrbits(int count = 0, float absorbPct = 0f)
     {
-        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
+        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
             {
-                TriggerStatGain(p);
+                TriggerStatGain(p, absorbPct * 0.01f);
 
                 Destroy(p.gameObject);
             }
@@ -75,7 +74,7 @@ public class EntityProjectileHandler : MonoBehaviour
     }
     public void RedirectOrbits(int count = 0)
     {
-        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
+        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p == null || p.gameObject == null)
@@ -95,7 +94,7 @@ public class EntityProjectileHandler : MonoBehaviour
     }
     public void ExplodeOrbits(int count = 0)
     {
-        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
+        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -108,15 +107,15 @@ public class EntityProjectileHandler : MonoBehaviour
         yield return new WaitForSeconds(delay);
         orbitingProjectiles.Clear();
     }
-    private void TriggerStatGain(Projectile p)
+    private void TriggerStatGain(Projectile p, float mult = 1f)
     {
         if (p == null || p.pd == null || p.ownerObj == null) return;
 
         if (p.pd.mainAttack == null) return;
 
-        float hpGain = p.pd.mainAttack.healthGainOnHit * orbitGainPct * 0.01f;
-        float staminaGain = p.pd.mainAttack.staminaGainOnHit * orbitGainPct * 0.01f;
-        float manaGain = p.pd.mainAttack.manaGainOnHit * orbitGainPct * 0.01f;
+        float hpGain = p.pd.mainAttack.healthGainOnHit * 0.01f * mult;
+        float staminaGain = p.pd.mainAttack.staminaGainOnHit * 0.01f * mult;
+        float manaGain = p.pd.mainAttack.manaGainOnHit * 0.01f * mult;
 
         GameObject target = p.ownerObj;
         if (target.TryGetComponent<EntityHealth>(out var eh)) eh.ChangeHealth(hpGain, 0f);
@@ -146,5 +145,4 @@ public class EntityProjectileHandler : MonoBehaviour
         }
         return closest;
     }
-    public int GetOrbitingCount() => Count;
 }

@@ -34,7 +34,7 @@ public static class DamageCalculator
         snapshot.scalingValue = esm.GetStat(pd.scalingStat);
         snapshot.specialMult = (pd.specialSclaing) switch
         {
-            SpecialScalingAttribute.Orbits => esm.GameObject().TryGetComponent<EntityProjectileHandler>(out var eph) ? 1f + (eph.GetOrbitingCount() * pd.specialMult) : 1f,
+            SpecialScalingAttribute.Orbits => esm.GameObject().TryGetComponent<EntityProjectileHandler>(out var eph) ? 1f + (eph.OrbitCount * pd.specialMult) : 1f,
             _ => 1f
         };
         snapshot.damagePct = esm.s.damagePct;

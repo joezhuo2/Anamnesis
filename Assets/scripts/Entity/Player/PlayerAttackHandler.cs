@@ -137,7 +137,7 @@ public class PlayerAttackHandler : MonoBehaviour
         if (!TryGetComponent<EntityProjectileHandler>(out var handler)) return;
 
         if (attack.fireOrbits) handler.ReleaseOrbits(attack.redirectCount);
-        else if (attack.absorbOrbits) handler.AbsorbOrbits(attack.redirectCount);
+        else if (attack.absorbOrbitPct > 0f) handler.AbsorbOrbits(attack.redirectCount, attack.absorbOrbitPct);
         else if (attack.redirectOrbits) handler.RedirectOrbits(attack.redirectCount);
         else if (attack.explodeOrbits) handler.ExplodeOrbits(attack.redirectCount);
     }

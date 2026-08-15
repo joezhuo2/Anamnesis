@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree }
+public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, None }
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
@@ -165,7 +165,9 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         TooltipUI.Instance.ShowTooltip(cad.displayName, string.Join("\n", lines), new(0, -100));
     }
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData) => CloseTooltip();
+    private void OnDisable() => CloseTooltip();
+    private void CloseTooltip()
     {
         if (tooltipType == TooltipType.SkillTree)
         {
@@ -174,16 +176,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
-    }
 
-    private void OnDisable()
-    {
-        if (tooltipType == TooltipType.SkillTree)
-        {
-            HideSkillTreeTooltip();
-            return;
-        }
-
-        if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
+        tooltipType = TooltipType.None;
     }
-}
+ }
