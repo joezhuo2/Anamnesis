@@ -1,0 +1,86 @@
+Date : 2026-08-18 09:03:45
+Directory : c:\Users\Joe\Anamnesis\Assets
+Total : 55 files,  5873 codes, 878 comments, 1949 blanks, all 8700 lines
+
+Languages
++-------------+------------+------------+------------+------------+------------+
+| language    | files      | code       | comment    | blank      | total      |
++-------------+------------+------------+------------+------------+------------+
+| C#          |         34 |      3,011 |        767 |      1,193 |      4,971 |
+| UnityShader |         19 |      2,860 |        111 |        756 |      3,727 |
+| JSON        |          2 |          2 |          0 |          0 |          2 |
++-------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                             | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                |         55 |      5,873 |        878 |      1,949 |      8,700 |
+| Resources                                                                                        |          2 |          2 |          0 |          0 |          2 |
+| TextMesh Pro                                                                                     |         53 |      5,871 |        878 |      1,949 |      8,698 |
+| TextMesh Pro\Examples & Extras                                                                   |         34 |      3,011 |        767 |      1,193 |      4,971 |
+| TextMesh Pro\Examples & Extras\Scripts                                                           |         34 |      3,011 |        767 |      1,193 |      4,971 |
+| TextMesh Pro\Shaders                                                                             |         19 |      2,860 |        111 |        756 |      3,727 |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------+-------------+------------+------------+------------+------------+
+| filename                                                                                         | language    | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------+-------------+------------+------------+------------+------------+
+| c:\Users\Joe\Anamnesis\Assets\Resources\PerformanceTestRunInfo.json                              | JSON        |          1 |          0 |          0 |          1 |
+| c:\Users\Joe\Anamnesis\Assets\Resources\PerformanceTestRunSettings.json                          | JSON        |          1 |          0 |          0 |          1 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark01.cs              | C#          |         63 |         29 |         37 |        129 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark01_UGUI.cs         | C#          |         59 |         37 |         40 |        136 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark02.cs              | C#          |         65 |          6 |         27 |         98 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark03.cs              | C#          |         73 |          1 |         19 |         93 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark04.cs              | C#          |         41 |         26 |         19 |         86 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\CameraController.cs         | C#          |        198 |         25 |         69 |        292 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\ChatController.cs           | C#          |         31 |          5 |         16 |         52 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\DropdownSample.cs           | C#          |         15 |          0 |          5 |         20 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\EnvMapAnimator.cs           | C#          |         23 |          4 |          9 |         36 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\ObjectSpin.cs               | C#          |         50 |          4 |         13 |         67 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\ShaderPropAnimator.cs       | C#          |         33 |          5 |         14 |         52 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\SimpleScript.cs             | C#          |         24 |         15 |         20 |         59 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\SkewTextExample.cs          | C#          |         95 |         18 |         46 |        159 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_DigitValidator.cs       | C#          |         19 |          5 |          4 |         28 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_ExampleScript_01.cs     | C#          |         37 |          9 |         19 |         65 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_FrameRateCounter.cs     | C#          |         91 |         11 |         33 |        135 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_PhoneNumberValidator.cs | C#          |         93 |          7 |          6 |        106 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextEventCheck.cs       | C#          |         56 |          1 |         17 |         74 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextEventHandler.cs     | C#          |        172 |         36 |         56 |        264 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextInfoDebugTool.cs    | C#          |        409 |         97 |        147 |        653 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextSelector_A.cs       | C#          |        100 |         17 |         41 |        158 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextSelector_B.cs       | C#          |        250 |        191 |        107 |        548 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_UiFrameRateCounter.cs   | C#          |         96 |          1 |         28 |        125 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMPro_InstructionOverlay.cs | C#          |         55 |          6 |         24 |         85 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TeleType.cs                 | C#          |         40 |         15 |         28 |         83 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TextConsoleSimulator.cs     | C#          |         79 |         13 |         29 |        121 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TextMeshProFloatingText.cs  | C#          |        135 |         32 |         57 |        224 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TextMeshSpawner.cs          | C#          |         46 |         13 |         21 |         80 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexColorCycler.cs        | C#          |         48 |         13 |         24 |         85 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexJitter.cs             | C#          |        105 |         26 |         44 |        175 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexShakeA.cs             | C#          |         99 |         23 |         39 |        161 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexShakeB.cs             | C#          |        112 |         29 |         44 |        185 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexZoom.cs               | C#          |        112 |         32 |         48 |        192 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\WarpTextExample.cs          | C#          |         87 |         15 |         43 |        145 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl                             | UnityShader |        130 |         18 |         31 |        179 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader                | UnityShader |        113 |          2 |         31 |        146 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader                      | UnityShader |        123 |          3 |         30 |        156 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader                             | UnityShader |        113 |          2 |         31 |        146 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader                        | UnityShader |        253 |          4 |         70 |        327 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader                            | UnityShader |        253 |          4 |         65 |        322 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader                 | UnityShader |        198 |         10 |         51 |        259 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader                 | UnityShader |        193 |          8 |         52 |        253 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader                     | UnityShader |         82 |          4 |         21 |        107 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader                  | UnityShader |        290 |         15 |         85 |        390 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader                         | UnityShader |        192 |          8 |         51 |        251 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader                 | UnityShader |        104 |          8 |         28 |        140 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader                        | UnityShader |        123 |          4 |         33 |        160 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF.shader                                | UnityShader |        253 |          4 |         70 |        327 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_Sprite.shader                             | UnityShader |        111 |          0 |         21 |        132 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMPro.cginc                                   | UnityShader |         63 |          2 |         20 |         85 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc                            | UnityShader |        129 |          2 |         35 |        166 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc                        | UnityShader |         62 |          6 |         13 |         81 |
+| c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc                           | UnityShader |         75 |          7 |         18 |        100 |
+| Total                                                                                            |             |      5,873 |        878 |      1,949 |      8,700 |
++--------------------------------------------------------------------------------------------------+-------------+------------+------------+------------+------------+

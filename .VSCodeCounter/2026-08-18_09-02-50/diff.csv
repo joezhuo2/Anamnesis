@@ -1,0 +1,74 @@
+"filename", "language", "UnityShader", "C#", "JSON", "comment", "blank", "total"
+"c:\Users\Joe\Anamnesis\Assets\Resources\PerformanceTestRunInfo.json", "JSON", 0, 0, 1, 0, 0, 1
+"c:\Users\Joe\Anamnesis\Assets\Resources\PerformanceTestRunSettings.json", "JSON", 0, 0, 1, 0, 0, 1
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark01.cs", "C#", 0, 63, 0, 29, 37, 129
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark01_UGUI.cs", "C#", 0, 59, 0, 37, 40, 136
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark02.cs", "C#", 0, 65, 0, 6, 27, 98
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark03.cs", "C#", 0, 73, 0, 1, 19, 93
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\Benchmark04.cs", "C#", 0, 41, 0, 26, 19, 86
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\CameraController.cs", "C#", 0, 198, 0, 25, 69, 292
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\ChatController.cs", "C#", 0, 31, 0, 5, 16, 52
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\DropdownSample.cs", "C#", 0, 15, 0, 0, 5, 20
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\EnvMapAnimator.cs", "C#", 0, 23, 0, 4, 9, 36
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\ObjectSpin.cs", "C#", 0, 50, 0, 4, 13, 67
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\ShaderPropAnimator.cs", "C#", 0, 33, 0, 5, 14, 52
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\SimpleScript.cs", "C#", 0, 24, 0, 15, 20, 59
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\SkewTextExample.cs", "C#", 0, 95, 0, 18, 46, 159
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_DigitValidator.cs", "C#", 0, 19, 0, 5, 4, 28
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_ExampleScript_01.cs", "C#", 0, 37, 0, 9, 19, 65
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_FrameRateCounter.cs", "C#", 0, 91, 0, 11, 33, 135
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_PhoneNumberValidator.cs", "C#", 0, 93, 0, 7, 6, 106
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextEventCheck.cs", "C#", 0, 56, 0, 1, 17, 74
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextEventHandler.cs", "C#", 0, 172, 0, 36, 56, 264
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextInfoDebugTool.cs", "C#", 0, 409, 0, 97, 147, 653
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextSelector_A.cs", "C#", 0, 100, 0, 17, 41, 158
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_TextSelector_B.cs", "C#", 0, 250, 0, 191, 107, 548
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMP_UiFrameRateCounter.cs", "C#", 0, 96, 0, 1, 28, 125
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TMPro_InstructionOverlay.cs", "C#", 0, 55, 0, 6, 24, 85
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TeleType.cs", "C#", 0, 40, 0, 15, 28, 83
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TextConsoleSimulator.cs", "C#", 0, 79, 0, 13, 29, 121
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TextMeshProFloatingText.cs", "C#", 0, 135, 0, 32, 57, 224
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\TextMeshSpawner.cs", "C#", 0, 46, 0, 13, 21, 80
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexColorCycler.cs", "C#", 0, 48, 0, 13, 24, 85
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexJitter.cs", "C#", 0, 105, 0, 26, 44, 175
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexShakeA.cs", "C#", 0, 99, 0, 23, 39, 161
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexShakeB.cs", "C#", 0, 112, 0, 29, 44, 185
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\VertexZoom.cs", "C#", 0, 112, 0, 32, 48, 192
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Scripts\WarpTextExample.cs", "C#", 0, 87, 0, 15, 43, 145
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl", "UnityShader", 130, 0, 0, 18, 31, 179
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader", "UnityShader", 113, 0, 0, 2, 31, 146
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader", "UnityShader", 123, 0, 0, 3, 30, 156
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader", "UnityShader", 113, 0, 0, 2, 31, 146
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader", "UnityShader", 253, 0, 0, 4, 70, 327
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader", "UnityShader", 253, 0, 0, 4, 65, 322
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader", "UnityShader", 198, 0, 0, 10, 51, 259
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader", "UnityShader", 193, 0, 0, 8, 52, 253
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader", "UnityShader", 82, 0, 0, 4, 21, 107
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader", "UnityShader", 290, 0, 0, 15, 85, 390
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader", "UnityShader", 192, 0, 0, 8, 51, 251
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader", "UnityShader", 104, 0, 0, 8, 28, 140
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader", "UnityShader", 123, 0, 0, 4, 33, 160
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_SDF.shader", "UnityShader", 253, 0, 0, 4, 70, 327
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMP_Sprite.shader", "UnityShader", 111, 0, 0, 0, 21, 132
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMPro.cginc", "UnityShader", 63, 0, 0, 2, 20, 85
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc", "UnityShader", 129, 0, 0, 2, 35, 166
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc", "UnityShader", 62, 0, 0, 6, 13, 81
+"c:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc", "UnityShader", 75, 0, 0, 7, 18, 100
+"c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityProjectileHandler.cs", "C#", 0, -2, 0, 0, 0, -2
+"c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityStatManager.cs", "C#", 0, 0, 0, 0, -1, -1
+"c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityStats.cs", "C#", 0, 1, 0, 0, 1, 2
+"c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\TooltipTrigger.cs", "C#", 0, -13, 0, 0, -2, -15
+"c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\TooltipUI.cs", "C#", 0, 4, 0, 0, 1, 5
+"c:\Users\Joe\Anamnesis\Assets\scripts\Misc\GameController.cs", "C#", 0, 116, 0, 0, 19, 135
+"c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillNodeDef.cs", "C#", 0, 1, 0, 0, 0, 1
+"c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillNodeUI.cs", "C#", 0, 2, 0, 0, 0, 2
+"c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreePanZoom.cs", "C#", 0, 59, 0, 0, 11, 70
+"c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreeUI.cs", "C#", 0, 1, 0, 0, 1, 2
+"c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffect.cs", "C#", 0, 1, 0, 0, 0, 1
+"c:\Users\Joe\Anamnesis\Assets\scripts\Wave\Anamoly\AnomalyData.cs", "C#", 0, 3, 0, 0, 0, 3
+"c:\Users\Joe\Anamnesis\Assets\scripts\Wave\Anamoly\StatModifierInstance.cs", "C#", 0, 39, 0, 0, 9, 48
+"c:\Users\Joe\Anamnesis\Assets\scripts\Wave\AnomalyButtonUI.cs", "C#", 0, 1, 0, 0, 1, 2
+"c:\Users\Joe\Anamnesis\Assets\scripts\Wave\RewardButton.cs", "C#", 0, 22, 0, 0, 5, 27
+"c:\Users\Joe\Anamnesis\Assets\scripts\Wave\WaveManager.cs", "C#", 0, 101, 0, 0, 24, 125
+"c:\Users\Joe\Anamnesis\Assets\scripts\Wave\WaveReward.cs", "C#", 0, 1, 0, 0, 0, 1
+"Total", "-", 2860, 3348, 2, 878, 2018, 9106
