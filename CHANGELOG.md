@@ -5,6 +5,12 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [v0.1.7] - 2026-08-18
+
+## Added
+- Corruption button: can be used once per wave. When used, each button has a 40% chance to become "corrupt," recieving a stat boost by up to +80%, but downwards of -180%.
+- Game start button and title screen.
+
 # [v0.1.6_1] - 2026-08-15
 
 ## Fixed

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance { get; private set; }
-
     private static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
     private static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
     [Header("Basic")]
@@ -21,6 +20,19 @@ public class WaveManager : MonoBehaviour
     public Transform bossBarContainer;
     public Transform statusEffectDisplayContainer;
 
+    [Header("Action Buttons")]
+    public Transform buttonContainer;
+    public Button rerollButton;
+    public int rerolls;
+    public TextMeshProUGUI rerollText;
+    public Button nextWaveButton;
+    public Button corruptButton;
+
+    [Header("Corruption Settings")]
+    public float corruptChance = 40f;
+    public float corruptPositiveChance = 40f;
+    public float maxCorruptBoost = 80f;
+
     [Header("Reward Panel Settings")]
     public GameObject rewardPanel;
     public GameObject rewardButtonPrefab;
@@ -29,10 +41,6 @@ public class WaveManager : MonoBehaviour
     public List<PlayerUpgradeReward> treasurePool;
     public List<BaseReward> mixedPool;
     public List<RarityData> rarityData;
-    public Transform buttonContainer;
-    public int rerolls;
-    public Button rerollButton;
-    public TextMeshProUGUI rerollText;
 
     [Header("Anomaly Settings")]
     public List<AnomalyData> availableAnomalies = new();
@@ -72,13 +80,11 @@ public class WaveManager : MonoBehaviour
     }
     private void Start()
     {
-        rewardPanel.SetActive(false);
-        waveInfoPanel.SetActive(true);
+        waveInfoPanel.SetActive(false);
 
-        rarityData.Sort((a, b) => a.mult.CompareTo(b.mult));
-
+        SortRarityData();
+        CloseRewardButtons();
         UpdateRerollUI();
-        StartNextWave();
     }
     private void Update()
     {
@@ -102,6 +108,7 @@ public class WaveManager : MonoBehaviour
             ClearAnomalyText();
         }
     }
+
     private void ClearAnomalyText()
     {
         if (anomalyInfoText != null && anomalyInfoText.text != "")
@@ -266,6 +273,8 @@ public class WaveManager : MonoBehaviour
             Destroy(activeBossBar);
             activeBossBar = null;
         }
+
+        OpenRewardButtons();
 
         UpdateOccasionalWaveRewards(GetCurrentWave());
 
@@ -487,6 +496,9 @@ public class WaveManager : MonoBehaviour
     }
     private void OnSkipButtonClicked()
     {
+        GameController.Instance.DisableSubtitle();
+        GameController.Instance.DisableTitle();
+
         if (type == RewardType.Anomaly)
         {
             CloseRewardUI();
@@ -519,6 +531,27 @@ public class WaveManager : MonoBehaviour
             default: break;
         }
     }
+    public void OnCorruptButtonClicked()
+    {
+        foreach (GameObject rb in activeRewardButtons)
+        {
+            if (Random.value > (corruptChance * 0.01f)) continue;
+
+            float corruptMult = (Random.value < (corruptPositiveChance * 0.01f) ? 1f : -1f) * (1f + (Random.Range(1, maxCorruptBoost) * 0.01f));
+            GeneratedReward gr = rb.TryGetComponent<RewardButton>(out var grb) ? grb.statRewardData : null;
+
+            if (gr == null) continue;
+
+            gr.mult = corruptMult;
+
+            string changeLine = BuildChangeLine(gr.br.baseBuff.type, gr.finalVal);
+
+            if (rb.TryGetComponent<RewardButton>(out var nrb)) nrb.CorruptButton(changeLine, corruptMult);
+        }
+
+        corruptButton.gameObject.SetActive(false);
+    }
+
     private void OnAnomalyButtonClicked(AnomalyInstance instance)
     {
         CloseRewardUI();
@@ -602,6 +635,17 @@ public class WaveManager : MonoBehaviour
         ClearRewardButtons();
         if (rewardPanel != null) rewardPanel.SetActive(false);
     }
+    private void CloseRewardButtons()
+    {
+        ClearRewardButtons();
+        if (rerollButton != null) rerollButton.gameObject.SetActive(false);
+        if (corruptButton != null) corruptButton.gameObject.SetActive(false);
+    }
+    public void OpenRewardButtons()
+    {
+        if (rerollButton != null) rerollButton.gameObject.SetActive(true);
+        if (corruptButton != null) corruptButton.gameObject.SetActive(true);
+    }
     private void ResumeGameLoop()
     {
         if (pendingStandardRewards)
@@ -674,6 +718,7 @@ public class WaveManager : MonoBehaviour
         float after = cpsm.GetStat(effType);
         cpsm.AddStat(new StatBuff(type, finalVal), false);
 
-        return $"{before} → {after}";
+        return $"{before:F2} → {after:F2}";
     }
+    private void SortRarityData() => rarityData.Sort((a, b) => a.mult.CompareTo(b.mult));
 }

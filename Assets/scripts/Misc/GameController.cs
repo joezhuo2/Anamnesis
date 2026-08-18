@@ -19,8 +19,9 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        title.gameObject.SetActive(false);
-        subtitle.gameObject.SetActive(false);
+        SetTitle("Anamnesis");
+        SetSubtitle("Conquer the waves");
+        Time.timeScale = 0f;
     }
 
     public void SetTitle(string text)
@@ -35,10 +36,12 @@ public class GameController : MonoBehaviour
     }
     public void DisableTitle()
     {
+        title.text = "";
         title.gameObject.SetActive(false);
     }
     public void DisableSubtitle()
     {
+        subtitle.text = "";
         subtitle.gameObject.SetActive(false);
     }
     public void SetTitleForDuration(string newTitle, float duration, float fadeInTime = 0f, float fadeOutTime = 0f)

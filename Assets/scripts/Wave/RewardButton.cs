@@ -15,10 +15,11 @@ public class RewardButton : MonoBehaviour
     public Image borderHighlight;
     public Image iconImage;
 
-    private GeneratedReward statRewardData;
+    [HideInInspector] public GeneratedReward statRewardData;
     private AttackReward attackRewardData;
     private PlayerUpgradeReward playerUpgradeRewardData;
     private RewardType type = RewardType.Basic;
+    private bool isCorrupted;
 
     private Action<GeneratedReward> onStatClaimedCallback;
     private Action<AttackReward> onAttackClaimedCallback;
@@ -45,6 +46,26 @@ public class RewardButton : MonoBehaviour
 
         if (iconImage != null && reward.br.icon != null)
             iconImage.sprite = reward.br.icon;
+
+        LinkButtonComponent();
+    }
+    public void CorruptButton(string statChangeLine, float corruptMult)
+    {
+        if (isCorrupted) return;
+
+        type = RewardType.Basic;
+
+        List<string> descLines = new()
+        {
+            statRewardData.GetDescription(),
+            statChangeLine,
+            $"Corrupted: {corruptMult:F2}x"
+        };
+        descriptionText.text = string.Join("\n", descLines);
+
+        borderHighlight.color = Color.darkRed;
+
+        isCorrupted = true;
 
         LinkButtonComponent();
     }
