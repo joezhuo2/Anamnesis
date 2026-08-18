@@ -7,9 +7,11 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     public TextMeshProUGUI title;
     public TextMeshProUGUI subtitle;
+    public GameObject UIPanel;
 
     private Coroutine titleRoutine;
     private Coroutine subtitleRoutine;
+    private bool started = false;
 
     private void Awake()
     {
@@ -22,6 +24,16 @@ public class GameController : MonoBehaviour
         SetTitle("Anamnesis");
         SetSubtitle("Conquer the waves");
         Time.timeScale = 0f;
+
+        UIPanel.SetActive(false);
+        started = false;
+    }
+
+    public void OnGameStart()
+    {
+        if (started) return;
+
+        UIPanel.SetActive(true);
     }
 
     public void SetTitle(string text)

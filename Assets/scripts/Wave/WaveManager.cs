@@ -498,6 +498,7 @@ public class WaveManager : MonoBehaviour
     {
         GameController.Instance.DisableSubtitle();
         GameController.Instance.DisableTitle();
+        GameController.Instance.OnGameStart();
 
         if (type == RewardType.Anomaly)
         {
@@ -644,7 +645,7 @@ public class WaveManager : MonoBehaviour
     public void OpenRewardButtons()
     {
         if (rerollButton != null) rerollButton.gameObject.SetActive(true);
-        if (corruptButton != null) corruptButton.gameObject.SetActive(true);
+        if (corruptButton != null && GetCurrentWave() % 5 != 0) corruptButton.gameObject.SetActive(true);
     }
     private void ResumeGameLoop()
     {

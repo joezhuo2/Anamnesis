@@ -13,7 +13,7 @@
 - [ ] Wave 60 boss and enemies, and first Boss Rush (v0.2.0 Content Update)
 - [ ] Milestone rewards (every 25) (eg. bundled `Statbuff` that contain some positive, some negative)
 - [ ] Permenant version of Anamolies (active until run ends)
-- [ ] Corrupt button during reward menu that can either buff/nerf rewards by a large amount, or grant new uniques
+- [x] Corrupt button during reward menu that can either buff/nerf rewards by a large amount, or grant new uniques
 
 # Low Priority
 - [ ] Gear/Items update
@@ -23,21 +23,21 @@
 ### QoL Updates
 
 # High Priority
+- [x] Home Screen
+- [ ] Replay option
+
+# Medium Priority
+- [ ] Audio, Tilemaps & polish
+- [ ] Difficulty selector
+- [ ] Status Effect vfx
+- [x] Wave clear banner
+- [ ] Settings, controls and stat menu
+- [ ] Skill Point refund option (new currency?)
 - [ ] Full attack stats display 
 - [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
 
-# Medium Priority
-- [ ] Status Effect vfx
-- [x] Wave clear banner
-- [ ] Skill Point refund option (new currency?)
-- [ ] Home Screen
-- [ ] Audio, Tilemaps & polish
-- [ ] Replay option
-
 # Low Priority
 - [ ] Data saving
-- [ ] Difficulty selector
-- [ ] Settings, controls and stat menu
 - [ ] Build Guide menu 
 - [ ] Post-Death Summary
 - [ ] Suggest certain stats based on player's current loadout

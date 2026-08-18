@@ -19,14 +19,14 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 ## Core Loop
 
 1. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters.
-2. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively.
+2. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward.
 3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, and more to come) that add risk for greater reward.
 4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run.
 5. **Repeat** — waves get harder, and you get stronger.
 
 ## Features
 
-- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward/reroll panels.
+- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward and actional button panels, that update dynamically based on the number of objects.
 - **Anomaly system** — randomized run modifiers with configurable frequency, counts, and reward bonuses.
 - **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, and **orbit interactions** (fire, absorb, redirect, explode).
 - **Status effects** — stackable DoTs, stuns, stat buffs/reductions, attack replacement, and more, with cooldown UI.

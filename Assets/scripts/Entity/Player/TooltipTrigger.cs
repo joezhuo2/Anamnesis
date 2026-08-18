@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, None }
+public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree }
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
@@ -176,7 +176,5 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
-
-        tooltipType = TooltipType.None;
     }
- }
+}
