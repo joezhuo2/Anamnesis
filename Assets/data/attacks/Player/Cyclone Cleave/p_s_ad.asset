@@ -48,9 +48,10 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
+  redirectCount: 0
   type: 1
   icon: {fileID: 196999898347057192, guid: 4511473431829134fa55de9598a0d9c5, type: 3}
   displayName: Cyclone Cleave

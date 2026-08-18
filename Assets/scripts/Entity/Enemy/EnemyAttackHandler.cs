@@ -113,18 +113,13 @@ public class EnemyAttackHandler : MonoBehaviour
 
         if (attack.animationLength > 0) yield return new WaitForSeconds(attack.animationLength);
 
-        if (attack.nextAttack != null)
-        {
-            yield return PerformAttack(attack.nextAttack, -1);
-        }
-        else
-        {
-            isAttackingCoroutineRunning = false;
-            es.isAttacking = false;
-            es.canMove = true;
-            lastAttackEndTime = Time.time;
-            if (a != null) a.SetInteger(AttackIndexHash, -1);
-        }
+        isAttackingCoroutineRunning = false;
+        es.isAttacking = false;
+        es.canMove = true;
+        lastAttackEndTime = Time.time;
+        if (a != null) a.SetInteger(AttackIndexHash, -1);
+
+        if (attack.nextAttack != null) yield return PerformAttack(attack.nextAttack, -1);
     }
 
     private void HandleOrbitInteractions(AttackData attack)

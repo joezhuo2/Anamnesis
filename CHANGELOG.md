@@ -5,6 +5,12 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [v0.1.8] - 2026-08-19
+
+## Added
+- spread barrage attack type
+- cultist spawn clone attack, and large ball attack
+
 # [v0.1.7_2] - 2026-08-18
 
 ## Updated

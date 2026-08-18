@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Ball AD
+  m_Name: BigBall AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 4
-  projectilePrefab: {fileID: 8775174737362964947, guid: 8cd644b494c634342a291da2e30c9b12, type: 3}
-  pd: {fileID: 11400000, guid: befa2278498fca341bcb9a73f9201de8, type: 2}
-  pattern: 1
-  spawnDelay: 0.75
+  cooldown: 16
+  projectilePrefab: {fileID: 6586564722604528216, guid: afc3cbdbd7f963a488f357952b3fba4f, type: 3}
+  pd: {fileID: 11400000, guid: a943b5551455f494b8f9888599b1c403, type: 2}
+  pattern: 0
+  spawnDelay: 0.5
   spawnDistance: 0.25
   fixedDistance: 1
-  animationLength: 1.06
+  animationLength: 1.05
   projectileCount: 1
-  randomCount: 2
-  spread: 15
-  randomSpread: 5
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
   minDelay: 0
-  maxDelay: 0.25
-  maxRange: 6
-  canMoveDuringAttack: 1
+  maxDelay: 0
+  maxRange: 4
+  canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
-  phaseReq: -1
+  phaseReq: 1
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0

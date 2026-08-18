@@ -139,6 +139,8 @@ MonoBehaviour:
   attacks:
   - {fileID: 11400000, guid: ad5933620eca8994dbf987d01e1707c8, type: 2}
   - {fileID: 11400000, guid: c507983e3fec1e5458b29c5dff279df1, type: 2}
+  - {fileID: 11400000, guid: 47a3fbab105cdc94880bd388d1ccc6d1, type: 2}
+  - {fileID: 11400000, guid: 5018ef59fc68157478371e978c825e20, type: 2}
   globalCooldown: 3
 --- !u!212 &467692590264923639
 SpriteRenderer:

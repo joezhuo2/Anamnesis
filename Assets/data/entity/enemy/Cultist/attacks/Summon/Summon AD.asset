@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Ball AD
+  m_Name: Summon AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 4
-  projectilePrefab: {fileID: 8775174737362964947, guid: 8cd644b494c634342a291da2e30c9b12, type: 3}
-  pd: {fileID: 11400000, guid: befa2278498fca341bcb9a73f9201de8, type: 2}
-  pattern: 1
-  spawnDelay: 0.75
-  spawnDistance: 0.25
+  cooldown: 14
+  projectilePrefab: {fileID: 8980791689995069195, guid: f52af7965077f364d9ff5a0ac04faca9, type: 3}
+  pd: {fileID: 11400000, guid: 9aa1aebc8fcb0444f8dd9a8bbc1561bc, type: 2}
+  pattern: 0
+  spawnDelay: 0
+  spawnDistance: 0
   fixedDistance: 1
-  animationLength: 1.06
+  animationLength: 0
   projectileCount: 1
-  randomCount: 2
-  spread: 15
-  randomSpread: 5
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
   minDelay: 0
-  maxDelay: 0.25
-  maxRange: 6
-  canMoveDuringAttack: 1
+  maxDelay: 0
+  maxRange: 4
+  canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
   phaseReq: -1
@@ -45,8 +45,8 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
-  summonChance: 0
-  summonCondition: 0
+  summonChance: 1
+  summonCondition: 2
   fireOrbits: 0
   absorbOrbitPct: 0
   redirectOrbits: 0

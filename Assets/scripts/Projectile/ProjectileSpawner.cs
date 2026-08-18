@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public enum ProjectilePattern { Single, Spread, Circle, Barrage }
+public enum ProjectilePattern { Single, Spread, Circle, Barrage, SpreadBarrage }
 
 public class ProjectileSpawner : MonoBehaviour
 {
@@ -70,6 +70,27 @@ public class ProjectileSpawner : MonoBehaviour
         {
             float angle = startAngle + (i * ad.spread);
 
+            if (ad.randomSpread > 0f) angle += Random.Range(-ad.randomSpread / 2f, ad.randomSpread / 2f);
+
+            Vector2 targetDir = Quaternion.Euler(0, 0, angle - baseAngle) * dir.normalized;
+            Vector2 spawnPos = origin + (targetDir * dist);
+
+            SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd);
+
+            yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
+        }
+    }
+
+    public IEnumerator SpawnSpreadBarrage(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, float dist, GameObject sourceObj = null)
+    {
+        int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount + 1);
+        float baseAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float start = baseAngle - (ad.spread / 2f);
+        float end = baseAngle + (ad.spread / 2f);
+
+        for (int i = 0; i < finalCount; i++)
+        {
+            float angle = Random.Range(start, end);
             if (ad.randomSpread > 0f) angle += Random.Range(-ad.randomSpread / 2f, ad.randomSpread / 2f);
 
             Vector2 targetDir = Quaternion.Euler(0, 0, angle - baseAngle) * dir.normalized;
@@ -169,6 +190,10 @@ public class ProjectileSpawner : MonoBehaviour
             case ProjectilePattern.Barrage:
                 yield return SpawnBarrage(prefab, pd, ad, spawnPos, dir, source);
                 break;
+            case ProjectilePattern.SpreadBarrage:
+                yield return SpawnSpreadBarrage(prefab, pd, ad, spawnPos, dir, finalDist, source);
+                break;
+            default: break;
         }
     }
 }

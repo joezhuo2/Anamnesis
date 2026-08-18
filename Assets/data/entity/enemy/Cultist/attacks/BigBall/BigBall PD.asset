@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Wave PD
+  m_Name: BigBall PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: c507983e3fec1e5458b29c5dff279df1, type: 2}
-  speed: 11
-  lifetime: 1
-  numPierce: 30
-  size: 1
+  mainAttack: {fileID: 11400000, guid: 47a3fbab105cdc94880bd388d1ccc6d1, type: 2}
+  speed: 1.5
+  lifetime: 6
+  numPierce: 3000
+  size: 8
   physicalMult: 0
-  spellMult: 0.9
+  spellMult: 0.15
   trueMult: 0
   scalingStat: 31
   specialMult: 1
   specialSclaing: 0
-  timeBeforeSameEnemy: 0
+  timeBeforeSameEnemy: 1
   followDistance: 0
-  rotationOffset: 180
+  rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 0
