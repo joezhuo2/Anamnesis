@@ -43,8 +43,8 @@ public class EntityStatManager : MonoBehaviour
         s.maxHp += 8 * levelOffset;
         s.hpPct += 4f * levelOffset;
 
-        s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.05f * levelOffset)));
-        s.hpRegPct += 2f * levelOffset;
+        s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.02f * levelOffset)));
+        s.hpRegPct += levelOffset;
 
         s.armor += 3 * levelOffset;
         s.armorPct += 2f * levelOffset;

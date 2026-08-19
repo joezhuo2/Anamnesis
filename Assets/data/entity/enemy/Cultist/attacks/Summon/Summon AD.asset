@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Summon AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 14
+  cooldown: 20
   projectilePrefab: {fileID: 8980791689995069195, guid: f52af7965077f364d9ff5a0ac04faca9, type: 3}
   pd: {fileID: 11400000, guid: 9aa1aebc8fcb0444f8dd9a8bbc1561bc, type: 2}
   pattern: 0

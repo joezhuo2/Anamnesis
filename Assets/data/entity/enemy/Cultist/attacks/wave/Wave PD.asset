@@ -18,7 +18,7 @@ MonoBehaviour:
   numPierce: 30
   size: 1
   physicalMult: 0
-  spellMult: 0.9
+  spellMult: 1.1
   trueMult: 0
   scalingStat: 31
   specialMult: 1

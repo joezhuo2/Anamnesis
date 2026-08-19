@@ -18,12 +18,12 @@ MonoBehaviour:
   numPierce: 3000
   size: 8
   physicalMult: 0
-  spellMult: 0.15
+  spellMult: 0.2
   trueMult: 0
   scalingStat: 31
   specialMult: 1
   specialSclaing: 0
-  timeBeforeSameEnemy: 1
+  timeBeforeSameEnemy: 0.5
   followDistance: 0
   rotationOffset: 0
   maxBoomerangDist: 0

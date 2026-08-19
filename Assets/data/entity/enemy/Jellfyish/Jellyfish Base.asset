@@ -28,16 +28,18 @@ MonoBehaviour:
   addPhysDmgPct: 0
   addSplDmgPct: 0
   addTrueDmgPct: 0
+  addDmgPct: 0
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
   projSpd: 0
   stCostPct: 0
+  kbPct: 0
   currentHp: 1600
   maxHp: 1600
   hpPct: 100
-  hpRegen: 60
-  hpRegPct: 30
+  hpRegen: 30
+  hpRegPct: 20
   armor: 300
   armorPct: 50
   damageRes: 30
@@ -47,6 +49,7 @@ MonoBehaviour:
   spellRes: 10
   hurtTime: 0.3
   effectRes: 25
+  kbRes: 0
   moveSpeed: 0.6
   moveSpeedPct: 0
   currentStamina: 0
@@ -58,8 +61,11 @@ MonoBehaviour:
   canGainMana: 0
   dashSpeedMult: 0
   dashCooldown: 0
+  dashCooldownRedPct: 0
   dashDistance: 0
+  dashDistancePct: 0
   dashStaminaCost: 0
+  dashStaminaCostRedPct: 0
   dashShouldApplyIFrame: 0
   isDashing: 0
   canDash: 0
