@@ -30,6 +30,7 @@ public class RewardButton : MonoBehaviour
         statRewardData = reward;
         onStatClaimedCallback = claimCallback;
         type = RewardType.Basic;
+        isCorrupted = false;
 
         List<string> descLines = new()
         {

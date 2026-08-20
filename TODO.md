@@ -48,3 +48,4 @@
 ### High Priority
 - [ ] Enemies will loop their attack animations as long as the player is within the attack's max range
 - [ ] cultist does not have an animation for its 4th attack (summon)
+- [x] negative corruption rewards still show the original

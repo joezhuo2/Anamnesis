@@ -550,6 +550,7 @@ public class WaveManager : MonoBehaviour
             if (rb.TryGetComponent<RewardButton>(out var nrb)) nrb.CorruptButton(changeLine, corruptMult);
         }
 
+        rerollButton.gameObject.SetActive(false);
         corruptButton.gameObject.SetActive(false);
     }
 

@@ -90,10 +90,11 @@ public class EntityStats : ScriptableObject
 
     [Header("Defense")]
     public int currentHp;
+    public float CurHpPct => (currentHp / maxHp) * 100f;
     public int EffMaxHp => Mathf.RoundToInt(maxHp * (1f + (hpPct * 0.01f)));
     public int maxHp;
     public float hpPct;
-    public float EffHpReg => hpRegen * (1f + (hpRegPct * 0.01f)) * (Mathf.Max(1f, 1f + ((EffMaxHp - 100) * 0.01f)));
+    public float EffHpReg => hpRegen * (1f + (hpRegPct * 0.01f));
     public float hpRegen;
     public float hpRegPct;
     public float EffArmor => armor * (1f + (armorPct * 0.01f));

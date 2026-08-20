@@ -35,13 +35,13 @@ MonoBehaviour:
   projSpd: 0
   stCostPct: 0
   kbPct: 0
-  currentHp: 1600
-  maxHp: 1600
+  currentHp: 1800
+  maxHp: 1800
   hpPct: 100
-  hpRegen: 30
+  hpRegen: 65
   hpRegPct: 20
-  armor: 300
-  armorPct: 50
+  armor: 150
+  armorPct: 30
   damageRes: 30
   dodgeChance: 0
   dodgeResPct: 0

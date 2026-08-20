@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  currentSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2.5
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
