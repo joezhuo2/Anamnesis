@@ -4,7 +4,7 @@
 
 **A 2D wave-based action roguelite built in Unity 6**
 
-*Anamnesis* (ἀνάμνησις) — the recollection of memories. Survive endless waves of enemies, collect rewards, and rebuild your power through a branching skill tree.
+*Anamnesis* — the recollection of memories. Survive endless waves of enemies, collect rewards, and rebuild your power through a branching skill tree.
 
 </div>
 
