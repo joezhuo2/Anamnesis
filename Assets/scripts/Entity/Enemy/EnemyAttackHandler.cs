@@ -20,11 +20,36 @@ public class EnemyAttackHandler : MonoBehaviour
     {
         a = GetComponent<Animator>();
 
+        var runtimeAttacks = new List<AttackData>();
+        if (attacks != null)
+        {
+            foreach (var attack in attacks)
+            {
+                if (attack != null)
+                {
+                    var runtimeCopy = Instantiate(attack);
+                    runtimeCopy.InitializeRuntimeCopy();
+                    runtimeAttacks.Add(runtimeCopy);
+                }
+            }
+        }
+        attacks = runtimeAttacks;
+
         cooldowns = new float[attacks.Count];
         for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].cooldown;
     }
 
     private void Start() => es = GetComponent<EntityStatManager>().s as EnemyStats;
+
+    private void OnDestroy()
+    {
+        if (attacks != null)
+        {
+            foreach (var attack in attacks)
+                if (attack != null) DestroyImmediate(attack, true);
+            attacks.Clear();
+        }
+    }
     private void Update()
     {
         if (!es.isAlive || Time.timeScale == 0f) return;

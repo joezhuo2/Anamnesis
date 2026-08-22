@@ -86,6 +86,20 @@ public class WaveManager : MonoBehaviour
         CloseRewardButtons();
         UpdateRerollUI();
     }
+
+    private void OnDestroy()
+    {
+        if (currentAnomaly != null)
+        {
+            currentAnomaly.Cleanup();
+            currentAnomaly = null;
+        }
+
+        ClearRewardButtons();
+
+        if (spawnCoroutine != null)
+            StopCoroutine(spawnCoroutine);
+    }
     private void Update()
     {
         if (currentAnomaly != null && currentAnomaly.isActive)
@@ -280,7 +294,7 @@ public class WaveManager : MonoBehaviour
 
         UpdateRerollUI();
 
-        if (currentAnomaly != null) CleanupAnamoly();
+        if (currentAnomaly != null) CleanupAnomaly();
         else TriggerStandardRewards(GetCurrentWave());
     }
     private void UpdateOccasionalWaveRewards(int wave)
@@ -296,7 +310,7 @@ public class WaveManager : MonoBehaviour
             rerolls++;
         }
     }
-    private void CleanupAnamoly()
+    private void CleanupAnomaly()
     {
         if (currentAnomaly.isActive)
         {
@@ -673,7 +687,9 @@ public class WaveManager : MonoBehaviour
                 }
                 else
                 {
-                    if (btn.TryGetComponent<Button>(out var button))
+                    if (btn.TryGetComponent<RewardButton>(out var rewardButton))
+                        rewardButton.ResetForPooling();
+                    else if (btn.TryGetComponent<Button>(out var button))
                         button.onClick.RemoveAllListeners();
                     btn.SetActive(false);
                     inactiveRewardButtonPool.Add(btn);

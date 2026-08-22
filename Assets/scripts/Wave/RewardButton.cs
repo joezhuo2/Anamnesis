@@ -120,4 +120,24 @@ public class RewardButton : MonoBehaviour
             default: break;
         }
     }
+
+    public void ResetForPooling()
+    {
+        onStatClaimedCallback = null;
+        onAttackClaimedCallback = null;
+        onPlayerUpgradeClaimedCallback = null;
+        statRewardData = null;
+        attackRewardData = null;
+        playerUpgradeRewardData = null;
+        type = RewardType.Basic;
+        isCorrupted = false;
+
+        if (TryGetComponent<Button>(out var btn))
+            btn.onClick.RemoveAllListeners();
+
+        if (titleText != null) titleText.text = "";
+        if (descriptionText != null) descriptionText.text = "";
+        if (borderHighlight != null) borderHighlight.color = Color.white;
+        if (iconImage != null) iconImage.sprite = null;
+    }
 }

@@ -17,8 +17,37 @@ public class PlayerSkillTree : MonoBehaviour
         GenerateRuntimeNodes();
     }
 
+    private void CleanupNodes()
+    {
+        foreach (var node in runtimeNodes)
+        {
+            if (node == null) continue;
+
+            if (node.playerUpgrades != null)
+            {
+                foreach (var pu in node.playerUpgrades)
+                    if (pu != null) DestroyImmediate(pu, true);
+                node.playerUpgrades.Clear();
+            }
+
+            if (node.attackUpgrades != null)
+            {
+                foreach (var ad in node.attackUpgrades)
+                    if (ad != null) DestroyImmediate(ad, true);
+                node.attackUpgrades.Clear();
+            }
+
+            DestroyImmediate(node, true);
+        }
+        runtimeNodes.Clear();
+    }
+
+    private void OnDestroy() => CleanupNodes();
+
     public void SetNodes(List<SkillNodeDef> nodes)
     {
+        CleanupNodes();
+
         allNodes = nodes ?? new List<SkillNodeDef>();
         GenerateRuntimeNodes();
     }

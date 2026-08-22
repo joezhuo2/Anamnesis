@@ -5,18 +5,28 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [v0.1.8_5] - 2026-08-22
+
+## Fixed
+- enemies now deep clone and use runtime instance of SO when they spawn
+- player attack data is now cleaned up when destroyed
+- skill tree nodes are now cleaned up before creation and when destroyed
+- reward button pooling now resets all data
+- wave manager cleans up anomalies, stops courotines, and clears reward buttons when destroyed
+- fixed cultist animations (did not have transition from attack to idle) and removed test settings (fireball dealt no damage)
+- slime not being able to attack
+
+## Changed
+- moved damage indicator spawner and projectile spawner to GameController
+
 # [v0.1.8_4] - 2026-08-22
 
 ## Fixed
 - enemies now cache player, meaning that unless the player they are targeting dies, they will be locked onto that player (they choose the closest player at spawn/target death)
 - added `KnockbackHandler` to prevent duplicate knockback handling
-- `AttackData` SO instances not being destroyed on enemy death
 - canvas caching for entity health bars
 - pooled damage indicators
-- skill tree now cleans up previous runtime nodes before generating new ones and when it is destroyed
-- buttons now clear all data when disabled (goes back into pool)
 - fixed typo in anamoly => anomaly word
-- enemy attack handler cleans up attack data when destroyed
 
 # [v0.1.8_3] - 2026-08-19
 

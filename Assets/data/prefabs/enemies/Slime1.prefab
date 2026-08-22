@@ -110,7 +110,7 @@ MonoBehaviour:
   projSpawnOffset: {x: 0, y: 0}
   attacks:
   - {fileID: 11400000, guid: 5b9ca13cda46da94fb3c221b94bc1a98, type: 2}
-  globalCooldown: 0
+  globalCooldown: 2
 --- !u!212 &1197405272322073483
 SpriteRenderer:
   serializedVersion: 2

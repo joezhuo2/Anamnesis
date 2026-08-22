@@ -49,10 +49,21 @@ public class PlayerAttackHandler : MonoBehaviour
         {
             foreach (var attack in attacks)
             {
-                if (attack != null) Destroy(attack);
+                if (attack != null) DestroyImmediate(attack, true);
             }
             attacks.Clear();
         }
+
+        foreach (var kvp in spawnedUIElements)
+        {
+            if (kvp.Value != null)
+            {
+                if (kvp.Value.TryGetComponent<Button>(out var btn))
+                    btn.onClick.RemoveAllListeners();
+                Destroy(kvp.Value);
+            }
+        }
+        spawnedUIElements.Clear();
     }
     public bool HasAttack(AttackData a)
     {
