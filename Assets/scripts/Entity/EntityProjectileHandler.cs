@@ -122,6 +122,7 @@ public class EntityProjectileHandler : MonoBehaviour
         if (target.TryGetComponent<PlayerStamina>(out var ps)) ps.ChangeStamina(staminaGain);
         if (target.TryGetComponent<PlayerMana>(out var pm)) pm.ChangeMana(manaGain, 0f);
     }
+
     private Transform FindNearestEnemy(Vector3 position)
     {
         Transform closest = null;

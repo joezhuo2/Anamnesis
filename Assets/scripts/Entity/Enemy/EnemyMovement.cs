@@ -2,13 +2,6 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public struct AppliedForce
-{
-    public float force;
-    public float time;
-    public Vector2 dir;
-}
-
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyMovement : MonoBehaviour
@@ -18,7 +11,7 @@ public class EnemyMovement : MonoBehaviour
     public float stoppingDistance = 0;
     public bool flipRotation = false;
 
-    private List<AppliedForce> currentForces = new();
+    private readonly List<KnockbackHandler.AppliedForce> currentForces = new();
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public EnemyStats es;
     private Rigidbody2D rb;
@@ -28,6 +21,7 @@ public class EnemyMovement : MonoBehaviour
     private float nextTargetCheckTime = 0f;
     private Transform cTransform;
     private Vector3 cScale;
+    private GameObject cachedPlayer;
 
     private void Start()
     {
@@ -37,6 +31,8 @@ public class EnemyMovement : MonoBehaviour
 
         cTransform = transform;
         cScale = cTransform.localScale;
+
+        cachedPlayer = GameObject.FindGameObjectWithTag("Player");
 
         UpdateTargeting();
     }
@@ -54,29 +50,9 @@ public class EnemyMovement : MonoBehaviour
         rb.linearVelocity = velocity;
         SetAnimator(velocity != Vector2.zero);
     }
-    private Vector2 GetKnockbackVelocity()
-    {
-        if (currentForces.Count == 0) return Vector2.zero;
+    private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, es.kbRes);
 
-        Vector2 totalForce = Vector2.zero;
-        List<AppliedForce> remainingForces = new();
-
-        foreach (var f in currentForces)
-        {
-            float timeRemaining = f.time - Time.deltaTime;
-            if (timeRemaining <= 0f) continue;
-            float kbf = f.force * (1f - (es.kbRes * 0.01f));
-            remainingForces.Add(new() { dir = f.dir, force = kbf, time = timeRemaining });
-            totalForce += f.dir * kbf;
-        }
-
-        currentForces = remainingForces;
-        return totalForce;
-    }
-    public void ApplyKnockback(Vector2 d, float f, float t)
-    {
-        currentForces.Add(new() {dir = d, force = f, time = t});
-    }
+    public void ApplyKnockback(Vector2 d, float f, float t) => KnockbackHandler.ApplyKnockback(currentForces, d, f, t);
     public void SetTarget(GameObject target) => es.target = target;
     private Vector2 GetMovementVelocity()
     {
@@ -131,20 +107,19 @@ public class EnemyMovement : MonoBehaviour
         if (Time.time < nextTargetCheckTime) return;
         nextTargetCheckTime = Time.time + targetCheckInterval;
 
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        float minDist = math.INFINITY;
-        GameObject targetPlayer = null;
-
-        foreach (GameObject p in players)
+        if (cachedPlayer != null)
         {
-            float dist = Vector2.Distance(transform.position, p.transform.position);
-            if (dist < minDist && dist <= es.detectionRange)
+            float dist = Vector2.Distance(transform.position, cachedPlayer.transform.position);
+            if (dist <= es.detectionRange) es.target = cachedPlayer;
+        }
+        else
+        {
+            cachedPlayer = GameObject.FindGameObjectWithTag("Player");
+            if (cachedPlayer != null)
             {
-                minDist = dist;
-                targetPlayer = p;
+                float dist = Vector2.Distance(transform.position, cachedPlayer.transform.position);
+                if (dist <= es.detectionRange) es.target = cachedPlayer;
             }
         }
-
-        if (targetPlayer != null) es.target = targetPlayer;
     }
 }

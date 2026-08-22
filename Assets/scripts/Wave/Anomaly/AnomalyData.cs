@@ -11,8 +11,8 @@ public class AnomalyData : ScriptableObject
     public int maxWave;
     public AnomalyType anomalyType;
     public float anomalyValue;
-    public float anamolyMinVal;
-    public float anamolyMaxVal;
+    public float anomalyMinVal;
+    public float anomalyMaxVal;
 
     public AnomalyInstance CreateInstance()
     {

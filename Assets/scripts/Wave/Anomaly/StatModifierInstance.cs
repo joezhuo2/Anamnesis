@@ -17,7 +17,7 @@ public class StatModifierInstance : AnomalyInstance
     public StatModifierInstance(AnomalyData data) : base(data)
     {
         selectedStat = CommonStats[Random.Range(0, CommonStats.Length)];
-        boostAmount = Mathf.Round(Random.Range(data.anamolyMinVal, data.anamolyMaxVal));
+        boostAmount = Mathf.Round(Random.Range(data.anomalyMinVal, data.anomalyMaxVal));
 
         UpdateDescription();
     }

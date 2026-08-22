@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject dashCooldownUI;
 
-    private List<AppliedForce> currentForces = new();
+    private readonly List<KnockbackHandler.AppliedForce> currentForces = new();
     [HideInInspector] public Vector2 moveInput;
     private static readonly int SpeedHash = Animator.StringToHash("speed");
     [HideInInspector] public PlayerStats p;
@@ -63,29 +63,9 @@ public class PlayerMovement : MonoBehaviour
         if (inputMag > 0.1) animator.speed = Mathf.Max(inputMag * baseAnimSpeed, 0.01f);
         animator.SetFloat(SpeedHash, inputMag);
     }
-    private Vector2 GetKnockbackVelocity()
-    {
-        if (currentForces.Count == 0) return Vector2.zero;
+    private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, p.kbRes);
 
-        Vector2 totalForce = Vector2.zero;
-        List<AppliedForce> remainingForces = new();
-
-        foreach (var f in currentForces)
-        {
-            float timeRemaining = f.time - Time.deltaTime;
-            if (timeRemaining <= 0f) continue;
-            float kbf = f.force * (1f - (p.kbRes * 0.01f));
-            remainingForces.Add(new() { dir = f.dir, force = kbf, time = timeRemaining });
-            totalForce += f.dir * kbf;
-        }
-
-        currentForces = remainingForces;
-        return totalForce;
-    }
-    public void ApplyKnockback(Vector2 d, float f, float t)
-    {
-        currentForces.Add(new() {dir = d, force = f, time = t});
-    }
+    public void ApplyKnockback(Vector2 d, float f, float t) => KnockbackHandler.ApplyKnockback(currentForces, d, f, t);
     public void TryStartDash()
     {
         if (p.isDashing || !p.canDash || Time.timeScale == 0f) return;

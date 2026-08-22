@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   cooldown: 4
   projectilePrefab: {fileID: 8726194261462263514, guid: 34db5de69d1f9ce4592bab31c85d8434, type: 3}
-  pd: {fileID: 0}
+  pd: {fileID: 11400000, guid: 48167da11dc29c9478d53a4aa17a3dda, type: 2}
   pattern: 1
   spawnDelay: 0.325
   spawnDistance: 0.25
@@ -47,6 +47,11 @@ MonoBehaviour:
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
+  fireOrbits: 0
+  absorbOrbitPct: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
+  redirectCount: 0
   type: 0
   icon: {fileID: 0}
   displayName: 

@@ -18,6 +18,7 @@ public class NoDamageTrialInstance : AnomalyInstance
 
     private void OnPlayerDamaged(EntityHealth eh)
     {
-        FailAnomaly();
+        if (isActive)
+            FailAnomaly();
     }
 }

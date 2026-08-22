@@ -36,6 +36,12 @@ public class DamageIndicator : MonoBehaviour
         worldPos += floatSpeed * Time.deltaTime * Vector3.up;
 
         timer -= Time.deltaTime;
-        if (timer <= 0f) Destroy(gameObject);
+        if (timer <= 0f)
+        {
+            if (DamageIndicatorSpawner.Instance != null)
+                DamageIndicatorSpawner.Instance.ReturnToPool(this);
+            else
+                Destroy(gameObject);
+        }
     }
 }

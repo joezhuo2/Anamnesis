@@ -31,6 +31,7 @@ public class EntityHealth : MonoBehaviour
     private Camera mainCamera;
     private PlayerUpgradeManager cpum;
     private EntityStatManager esm;
+    private Canvas cachedCanvas;
 
     private void Start()
     {
@@ -50,15 +51,17 @@ public class EntityHealth : MonoBehaviour
     }
     private void InitializeHealthBar()
     {
-        Canvas canvas = FindAnyObjectByType<Canvas>();
-        if (healthBarPrefab != null)
+        if (cachedCanvas == null)
+            cachedCanvas = FindAnyObjectByType<Canvas>();
+
+        if (healthBarPrefab != null && cachedCanvas != null)
         {
-            healthBarInstance = Instantiate(healthBarPrefab, canvas.transform);
+            healthBarInstance = Instantiate(healthBarPrefab, cachedCanvas.transform);
 
             healthBarInstance.maxValue = es.EffMaxHp;
             healthBarInstance.value = es.EffMaxHp;
 
-            healthBarTextInstance = Instantiate(healthBarTextPrefab, canvas.transform);
+            healthBarTextInstance = Instantiate(healthBarTextPrefab, cachedCanvas.transform);
             healthBarTextInstance.text = $"{es.currentHp}/{es.EffMaxHp}";
         }
     }
