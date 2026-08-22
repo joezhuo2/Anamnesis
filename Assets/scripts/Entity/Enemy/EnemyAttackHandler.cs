@@ -76,6 +76,8 @@ public class EnemyAttackHandler : MonoBehaviour
     {
         if (!es.canAttack || !es.isAlive) yield return null;
 
+        float attackStartTime = Time.time;
+
         isAttackingCoroutineRunning = true;
         es.isAttacking = true;
         es.canMove = attack.canMoveDuringAttack;
@@ -111,7 +113,11 @@ public class EnemyAttackHandler : MonoBehaviour
 
         if (index >= 0) cooldowns[index] = attack.cooldown;
 
-        if (attack.animationLength > 0) yield return new WaitForSeconds(attack.animationLength);
+        if (attack.animationLength > 0)
+        {
+            float remaining = attack.animationLength - (Time.time - attackStartTime);
+            if (remaining > 0) yield return new WaitForSeconds(remaining);
+        }
 
         isAttackingCoroutineRunning = false;
         es.isAttacking = false;

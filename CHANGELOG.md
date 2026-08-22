@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # [v0.1.8_3] - 2026-08-19
 
 ## Fixed
+- animationLength not being measured from the attack start, causing enemies not moving after attacking to stay in the attack animation loop
 - readme
 
 # [v0.1.8_2] - 2026-08-18
