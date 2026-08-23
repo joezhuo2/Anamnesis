@@ -28,11 +28,13 @@ MonoBehaviour:
   addPhysDmgPct: 0
   addSplDmgPct: 0
   addTrueDmgPct: 0
+  addDmgPct: 0
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
   projSpd: 0
   stCostPct: 0
+  kbPct: 0
   currentHp: 100
   maxHp: 100
   hpPct: 0
@@ -47,6 +49,7 @@ MonoBehaviour:
   spellRes: 0
   hurtTime: 0.3
   effectRes: 0
+  kbRes: 0
   moveSpeed: 1.5
   moveSpeedPct: 0
   currentStamina: 100
@@ -68,6 +71,9 @@ MonoBehaviour:
   canDash: 0
   canGainStamina: 0
   level: 1
+  exp: 0
+  expBonus: 0
+  xpDrop: 0
   isAlive: 1
   isImmune: 0
   canAttack: 1

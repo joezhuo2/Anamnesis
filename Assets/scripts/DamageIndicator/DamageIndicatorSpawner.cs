@@ -7,7 +7,7 @@ public class DamageIndicatorSpawner : MonoBehaviour
     public static DamageIndicatorSpawner Instance;
     public DamageIndicator prefab;
     public Canvas canvas;
-    public int initialPoolSize = 20;
+    public int initialPoolSize = 100;
 
     private readonly Queue<DamageIndicator> _pool = new();
     private readonly List<DamageIndicator> _activeIndicators = new();
