@@ -109,11 +109,7 @@ Assets/
 
 ## Roadmap
 
-- [x] Core wave-based combat loop
-- [x] Reward & anomaly systems
-- [x] Knockback, dash, and resource systems
-- [x] Skill tree (v0.1.0 Skill Tree Update)
-- [x] Player Levels Update (v0.1.9 Level Update)
+See [ROADMAP.md](ROADMAP.md) for summary of major feature updates.
 
 ## Planned Features
 

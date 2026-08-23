@@ -98,10 +98,8 @@ public class SkillTreeUI : MonoBehaviour
 
     public void OnNodeStateChanged(SkillNodeDef node)
     {
-        if (nodeUIMap.TryGetValue(node, out var nodeUI))
-        {
-            nodeUI.RefreshVisuals();
-        }
+        foreach (var nUI in nodeUIMap.Values)
+            if (nUI != null) nUI.RefreshVisuals();
 
         if (lineRenderer != null) lineRenderer.Redraw(manager.tree.runtimeNodes);
     }
