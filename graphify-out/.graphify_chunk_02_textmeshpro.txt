@@ -1,0 +1,22 @@
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Anton OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Bangers - OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Oswald-Bold - OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Roboto-Bold - AFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Roboto-Bold - License.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Unity - OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Sprites\Default Sprites.png
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Brushed Metal 3.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Floor Cement.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Floor Tiles 1 - diffuse.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Fruit Jelly (B&W).jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Gradient Diagonal (Color).jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Gradient Horizontal (Color).jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Gradient Vertical (Color).jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Small Crate_diffuse.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Small Crate_normal.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Sunny Days - Seamless.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Text Overflow - Linked Text Image 1.png
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Text Overflow - Linked Text UI Screenshot.png

@@ -176,7 +176,7 @@ public class PlayerSkillTree : MonoBehaviour
 
     public void UnlockNode(SkillNodeDef node)
     {
-        var (canUnlock, failMessage) = CanUnlock(node);
+        var (canUnlock, _) = CanUnlock(node);
         if (!canUnlock) return;
 
         skillPoints--;

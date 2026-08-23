@@ -1,0 +1,10 @@
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Attacks\Boomerang\928.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Attacks\Mark\316.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Attack1.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Attack2.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Die.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Hurt.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-IdleFly.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Run.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Sleep.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-WakeUp.png

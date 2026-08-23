@@ -27,10 +27,14 @@ MonoBehaviour:
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
+  addTrueDmgPct: 0
+  addDmgPct: 0
   basicDmgPct: 0
   skillDmgPct: 0
   ultDmgPct: 0
   projSpd: 0
+  stCostPct: 0
+  kbPct: 0
   currentHp: 400
   maxHp: 400
   hpPct: 30
@@ -45,6 +49,7 @@ MonoBehaviour:
   spellRes: 20
   hurtTime: 0.5
   effectRes: 15
+  kbRes: 0
   moveSpeed: 0.5
   moveSpeedPct: 0
   currentStamina: 0
@@ -56,13 +61,19 @@ MonoBehaviour:
   canGainMana: 0
   dashSpeedMult: 0
   dashCooldown: 0
+  dashCooldownRedPct: 0
   dashDistance: 0
+  dashDistancePct: 0
   dashStaminaCost: 0
+  dashStaminaCostRedPct: 0
   dashShouldApplyIFrame: 0
   isDashing: 0
   canDash: 0
   canGainStamina: 0
   level: 0
+  exp: 0
+  expBonus: 0
+  xpDrop: 320
   isAlive: 0
   isImmune: 0
   canAttack: 0

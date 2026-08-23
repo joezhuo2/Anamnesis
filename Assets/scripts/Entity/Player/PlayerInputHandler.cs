@@ -5,7 +5,7 @@ public class PlayerInputHandler : MonoBehaviour
     private PlayerControls controls;
     private PlayerMovement pm;
     private PlayerAttackHandler pah;
-    public PlayerSkillTree pst;
+    [HideInInspector] public PlayerSkillTree pst;
     public static Vector2 mousePos;
 
     private void Awake()

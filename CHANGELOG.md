@@ -5,6 +5,26 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [v0.1.9] - 2026-08-23 - Level Update
+
+## Added
+- level system: enemies drop xp, collect xp to level up, levelling up increases hp, atk, and int, and speed by small amounts, and grant a skill point
+- enemies now drop xp: common wave enemies do not drop a ton of xp, but bosses do, and there is also a 15% randomness from enemy base exp. 
+- take the exp bonus stat from reward pools (mixed/standard) to gain even more xp to level up faster
+- level up indicator
+- more enemies spawn after wave 10, as they spawn in larger chunks
+- tier 2 skill tree nodes
+
+### Updated
+- graphify nodes
+- readme
+- todo list
+- number of enemies that spawn at once is now less
+
+### Fixed
+- player skill tree reference in `PlayerInputHandler` being assignable
+- max current enemies not being fixed
+
 # [v0.1.8_6] - 2026-08-22
 
 ## Added

@@ -22,7 +22,8 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 2. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward.
 3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, and more to come) that add risk for greater reward.
 4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run.
-5. **Repeat** — waves get harder, and you get stronger.
+5. **Level Up** — collect experience from enemies to level up, gaining stat boosts and skill points along the way.
+6. **Repeat** — waves get harder, and you get stronger.
 
 ## Features
 
@@ -35,6 +36,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
 - **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.
 - **Damage indicators** — floating damage numbers with small randomness.
+- **Levelling system** — enemies drop xp, players collect xp to level up and gain minor stat buffs and skill points
 
 ## Controls
 
@@ -59,7 +61,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 
 **Enemies** — 
 - **Regular Enemies**: Bat, Crab, and Slime
-- **Bosses**: Cultist (clone summoning), Jellyfish, Lich, 
+- **Bosses**: Cultist (clone summoning), Jellyfish, Lich
 
 Each enemies have their own stats, attack sets, movement patterns, behavior, and inflict unique status effects. Some even have unique behaviour such as summons, and more to come! 
 
@@ -88,7 +90,7 @@ Assets/
 │   ├── SkillTree/             # Skill tree definition & node assets
 │   └── WaveData/              # Wave sequences
 └── scripts/
-    ├── Entity/                # Player, Enemy, stats, health, summoning, gear
+    ├── Entity/                # Player, Enemy, stats, health, levelling, summoning, gear
     ├── Projectile/            # Projectiles, damage calculator, attack data
     ├── StatusEffect/          # Status effect system & implementations
     ├── SkillTree/             # Skill tree manager, UI, pan/zoom
@@ -111,6 +113,7 @@ Assets/
 - [x] Reward & anomaly systems
 - [x] Knockback, dash, and resource systems
 - [x] Skill tree (v0.1.0 Skill Tree Update)
+- [x] Player Levels Update (v0.1.9 Level Update)
 
 ## Planned Features
 

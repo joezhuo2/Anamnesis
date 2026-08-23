@@ -56,6 +56,7 @@ public enum StatType
     addDmgPct,
     kbRes,
     kbPct,
+    ExpBonus
 }
 
 public class EntityStats : ScriptableObject
@@ -146,8 +147,12 @@ public class EntityStats : ScriptableObject
 
     [Header("Levelling")]
     public int level;
+    public float ExpReq => 100 * Mathf.Pow(1.1f, level - 1);
+    public float exp;
+    public float expBonus;
 
     [Header("Misc")]
+    public float xpDrop;
     public bool isAlive;
     public bool isImmune;
     public bool canAttack;

@@ -132,6 +132,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.addDmgPct => s.addDmgPct,
             StatType.kbRes => s.kbRes,
             StatType.kbPct => s.kbPct,
+            StatType.ExpBonus => s.expBonus,
             _ => 0f,
         };
         return value;
@@ -189,6 +190,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.addDmgPct: s.addDmgPct += mod; break;
             case StatType.kbRes: s.kbRes += mod; break;
             case StatType.kbPct: s.kbPct += mod; break;
+            case StatType.ExpBonus: s.expBonus += mod; break;
             default: break;
 
         }
@@ -257,6 +259,7 @@ public struct StatBuff : IEquatable<StatBuff>
             StatType.addDmgPct =>           "Additional Damage %",
             StatType.kbRes =>               "Knockback Resistance",
             StatType.kbPct =>               "Increased Knockback %",
+            StatType.ExpBonus =>            "Increased Experience %",
             _ => type.ToString()
         };
         return name;

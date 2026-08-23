@@ -1,0 +1,9 @@
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Starfury\613.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Starfury\fb1011.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Stellar Maelstrom\1595.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Stellar Maelstrom\fb815.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Supernova\1010.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Supernova\fb986.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Warp\Bullet 24x24 Free  Part 1C.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Warp\fb1436.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Warp\sprite-sheet.png

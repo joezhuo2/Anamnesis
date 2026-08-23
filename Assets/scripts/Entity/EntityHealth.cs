@@ -89,7 +89,9 @@ public class EntityHealth : MonoBehaviour
         float resPen = sourceResPen;
         int defShred = sourceDefShred;
 
-        if ((float.IsNaN(resPen) || defShred == int.MinValue) && source != null && source.TryGetComponent<EntityStatManager>(out var sourceStats) && sourceStats.s != null)
+        if ((float.IsNaN(resPen) || defShred == int.MinValue) &&
+            source != null && source.TryGetComponent<EntityStatManager>(out var sourceStats) &&
+            sourceStats.s != null)
         {
             if (float.IsNaN(resPen)) resPen = sourceStats.s.resPen;
             if (defShred == int.MinValue) defShred = sourceStats.s.defShred;
@@ -129,7 +131,11 @@ public class EntityHealth : MonoBehaviour
             if (sizeOverride > 0f) sizeMult = sizeOverride;
 
             int appliedDmg = Mathf.RoundToInt(dmg);
-            if (appliedDmg > 0) ChangeHealth(-appliedDmg, 0, true, sizeMult, color, bypassIFrames, source);
+            if (appliedDmg > 0 && ChangeHealth(-appliedDmg, 0, true, sizeMult, color, bypassIFrames, source))
+            {
+                if (source.TryGetComponent<PlayerLevel>(out var pl))
+                    pl.GainExp(es.xpDrop * (Mathf.Pow(1.1f, es.level - 1)) * UnityEngine.Random.Range(0.85f, 1.15f));
+            }
 
             if (appliedDmg > 0 && !_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
             {
@@ -142,17 +148,17 @@ public class EntityHealth : MonoBehaviour
         if (cpum != null)
             OnPlayerTakeDamage?.Invoke(this);
     }
-    public void ChangeHealth(float amount, float pctAmt, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
+    public bool ChangeHealth(float amount, float pctAmt, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
     {
         if ((amount < 0 || pctAmt < 0) && es.isImmune && es.isDashing && cpum != null)
         {
             cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCounterDodge);
-            return;
+            return false;
         }
-        if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return;
+        if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return false;
 
         int finalAmount = Mathf.RoundToInt(amount + (pctAmt * es.EffMaxHp));
-        if (finalAmount == 0) return;
+        if (finalAmount == 0) return false;
 
         if (finalAmount < 0 && es.currentHp > 0 && Mathf.Abs(finalAmount) >= es.currentHp * 3f)
         {
@@ -194,6 +200,7 @@ public class EntityHealth : MonoBehaviour
         if (es.currentHp <= 0 && es.isAlive)
         {
             StartDeathSequence();
+            return true;
         }
         else
         {
@@ -203,6 +210,7 @@ public class EntityHealth : MonoBehaviour
                 healthBarTextInstance.text = $"{es.currentHp}/{es.EffMaxHp}";
             }
         }
+        return false;
     }
     private void UpdatePhase()
     {

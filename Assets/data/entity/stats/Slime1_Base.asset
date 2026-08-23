@@ -71,6 +71,9 @@ MonoBehaviour:
   canDash: 0
   canGainStamina: 0
   level: 0
+  exp: 0
+  expBonus: 0
+  xpDrop: 55
   isAlive: 0
   isImmune: 0
   canAttack: 0

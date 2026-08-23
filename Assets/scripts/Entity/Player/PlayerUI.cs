@@ -19,12 +19,19 @@ public class PlayerUI : MonoBehaviour
     public Slider staminaUI;
     public TextMeshProUGUI staminaText;
 
+    [Header("Levelling")]
+    public Slider xpBar;
+    public TextMeshProUGUI levelText;
+    public TextMeshProUGUI xpText;
+
     private int lastMana = -1;
     private int lastMaxMana = -1;
     private int lastHp = -1;
     private int lastMaxHp = -1;
     private int lastStamina = -1;
     private int lastMaxStamina = -1;
+    private int lastLevel = -1;
+    private float lastXp = -1;
     [HideInInspector] public PlayerStats p;
 
     private void Start()
@@ -44,6 +51,7 @@ public class PlayerUI : MonoBehaviour
         if (p == null) return;
         UpdateManaBar();
         UpdateHealthBar();
+        UpdateXpBar();
         UpdateStaminaBar();
     }
     private void UpdateManaBar()
@@ -95,5 +103,17 @@ public class PlayerUI : MonoBehaviour
 
         lastStamina = p.currentStamina;
         lastMaxStamina = p.maxStamina;
+    }
+    private void UpdateXpBar()
+    {
+        if (p.level == lastLevel && p.exp == lastXp) return;
+
+        xpBar.maxValue = p.ExpReq;
+        xpBar.value = p.exp;
+        levelText.text = $"Lv.{p.level}";
+        xpText.text = $"{p.exp:F0}/{p.ExpReq:F0}";
+
+        lastLevel = p.level;
+        lastXp = p.exp;
     }
 }

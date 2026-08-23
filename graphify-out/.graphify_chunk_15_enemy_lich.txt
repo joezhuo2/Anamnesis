@@ -1,0 +1,4 @@
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Lich\Attacks\Plant\655.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Lich\Attacks\Wave\465.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Lich\Attacks\Whirl\1615.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Lich\Necromancer_creativekind-Sheet.png

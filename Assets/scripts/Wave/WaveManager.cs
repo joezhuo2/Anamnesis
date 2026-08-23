@@ -210,6 +210,7 @@ public class WaveManager : MonoBehaviour
         {
             if (currentEnemies.Count >= c.maxCurrentEnemies)
             {
+                CleanEnemyList();
                 yield return null;
                 continue;
             }

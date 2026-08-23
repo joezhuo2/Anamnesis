@@ -2,7 +2,7 @@
 
 ### High Priority
 - [x] Finish Cultist Attack set 
-- [ ] Xp and Levels system (xpBonus stat, enemy xp dropping, current/max xp, xp bar/xp level text UI)
+- [x] Xp and Levels system (xpBonus stat, enemy xp dropping, current/max xp, xp bar/xp level text UI)
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, int - done, atk - missing basic, dot - missing basic)
 - [ ] More skill tree nodes & branches, upgrading existing Awakenings/Attacks (currently none) - 'capstone' nodes, and introducing new ones (currently none)
 - [ ] Wave 60 boss and enemies, and first Boss Rush (v0.2.0 Content Update)
@@ -74,3 +74,5 @@
 - [x] Enemies will loop their attack animations as long as the player is within the attack's max range
 - [x] cultist does not have an animation for its 4th attack (summon)
 - [x] negative corruption rewards still show the original
+- [ ] Skill tree node border highlights do not update when a node is unlocked, even though lines do
+- [x] maxCurrentEnemies does not work (wave manager), enemies just stop spawning at all
