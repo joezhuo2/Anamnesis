@@ -1,0 +1,27 @@
+{
+  "files": [
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime1\\Slime1_Death_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime1\\Slime1_Hurt_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime1\\Slime1_Idle_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime1\\Slime1_Run_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime1\\Slime_1_Attack.png",
+    "C:\\Users\\Joe\\Anamnesis\\CHANGELOG.md",
+    "C:\\Users\\Joe\\Anamnesis\\README.md",
+    "C:\\Users\\Joe\\Anamnesis\\TODO.md",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Exodus\\15.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Exodus\\16.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Exodus\\336.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Shattered Singularity\\295.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Shattered Singularity\\579.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Shattered Singularity\\fb786.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Warp\\Bullet 24x24 Free  Part 1C.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Warp\\fb1436.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Warp\\sprite-sheet.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime2\\Attack\\Slime2_Attack_body.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime2\\Attack\\Slime2_Attack_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime2\\Attack\\Slime2_Attack_shadow.png"
+  ],
+  "chunk_num": 6,
+  "total_chunks": 10,
+  "deep_mode": false
+}

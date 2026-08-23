@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - new planned features
 - removed testing conditions
+- graphify cache
 
 # [v0.1.8_5] - 2026-08-22
 
@@ -53,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - enemies having too much health regen
 - nerfed jellyfish and cultist
 
-# [v0.1.8] - 2026-08-18
+# [v0.1.8] - 2026-08-18 - Content Update v3 - Part II
 
 ## Added
 - spread barrage attack type

@@ -1,0 +1,25 @@
+{
+  "files": [
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\CHARGE LOOP.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\EMOTE.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\IDLE.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\SPAWN.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\WALK.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\attack.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\charge.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\death.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\emote laugh.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\images\\hurt.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Images\\Bat-Attack1.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Images\\Bat-Attack2.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Images\\Bat-Die.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Images\\Bat-Hurt.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Images\\Bat-IdleFly.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Images\\Bat-Run.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Images\\Bat-Sleep.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Images\\Bat-WakeUp.png"
+  ],
+  "chunk_num": 2,
+  "total_chunks": 10,
+  "deep_mode": false
+}

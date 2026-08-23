@@ -1,0 +1,29 @@
+{
+  "files": [
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Hurt\\Slime3_Hurt_body.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Hurt\\Slime3_Hurt_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Hurt\\Slime3_Hurt_shadow.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Idle\\Slime3_Idle_body.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Idle\\Slime3_Idle_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Idle\\Slime3_Idle_shadow.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Run\\Slime3_Run_body.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Run\\Slime3_Run_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Run\\Slime3_Run_shadow.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Walk\\Slime3_Walk_body.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Walk\\Slime3_Walk_full.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\Slime3\\Walk\\Slime3_Walk_shadow.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\TextMesh Pro\\Resources\\LineBreaking Following Characters.txt",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\TextMesh Pro\\Resources\\LineBreaking Leading Characters.txt",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Cyclone Cleave\\1157.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Cyclone Cleave\\fb1511.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Lacerate\\01.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Lacerate\\fb1510.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Aphelion\\Bullet 24x24 Part 9B Free.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Aphelion\\fb783.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Astral Nova\\274.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Rare Pool\\Astral Nova\\fb776.png"
+  ],
+  "chunk_num": 8,
+  "total_chunks": 10,
+  "deep_mode": false
+}

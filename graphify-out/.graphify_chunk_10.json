@@ -1,0 +1,29 @@
+{
+  "files": [
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Jellfyish\\charged.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Jellfyish\\idle.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\TextMesh Pro\\Fonts\\LiberationSans - OFL.txt",
+    "C:\\Users\\Joe\\Anamnesis\\ProjectSettings\\ProjectVersion.txt",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\TextMesh Pro\\Examples & Extras\\Sprites\\Default Sprites.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Enemy\\Slime1\\A\\427.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Treasure Pool\\Feedback Loop\\Bullet 24x24 Part 6C Free.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\attacks\\Player\\Treasure Pool\\Supersonic\\723.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Attacks\\Boomerang\\928.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Bat\\Attacks\\Mark\\316.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Crab\\Attacks\\Disc\\115.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Crab\\Attacks\\Slice\\295.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\attacks\\BigBall\\Bullet 24x24 Part 7B Free.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\attacks\\ball\\Bullet 24x24 Part 7A Free.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Cultist\\attacks\\wave\\sprite-sheet.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Jellfyish\\Attacks\\BallSpam\\1225.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Jellfyish\\Attacks\\Ripple\\466.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Lich\\Attacks\\Plant\\655.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Lich\\Attacks\\Wave\\465.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Lich\\Attacks\\Whirl\\1615.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\entity\\enemy\\Lich\\Necromancer_creativekind-Sheet.png",
+    "C:\\Users\\Joe\\Anamnesis\\Assets\\data\\images\\entity\\player\\SPRITE_SHEET.png"
+  ],
+  "chunk_num": 10,
+  "total_chunks": 10,
+  "deep_mode": false
+}

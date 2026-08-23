@@ -1,0 +1,204 @@
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-07-30_23-21-31\details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-07-30_23-21-31\diff-details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-07-30_23-21-31\diff.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-07-30_23-21-31\diff.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-07-30_23-21-31\results.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-07-30_23-21-31\results.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-09_00-46-01\details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-09_00-46-01\diff-details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-09_00-46-01\diff.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-09_00-46-01\diff.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-09_00-46-01\results.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-09_00-46-01\results.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-02-50\details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-02-50\diff-details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-02-50\diff.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-02-50\diff.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-02-50\results.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-02-50\results.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-23\details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-23\diff-details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-23\diff.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-23\diff.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-23\results.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-23\results.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-45\details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-45\diff-details.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-45\diff.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-45\diff.txt
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-45\results.md
+C:\Users\Joe\Anamnesis\.VSCodeCounter\2026-08-18_09-03-45\results.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Anton OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Bangers - OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Oswald-Bold - OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Roboto-Bold - AFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Roboto-Bold - License.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Fonts\Unity - OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt
+C:\Users\Joe\Anamnesis\CHANGELOG.md
+C:\Users\Joe\Anamnesis\ProjectSettings\ProjectVersion.txt
+C:\Users\Joe\Anamnesis\README.md
+C:\Users\Joe\Anamnesis\TODO.md
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Sprites\Default Sprites.png
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Brushed Metal 3.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Floor Cement.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Floor Tiles 1 - diffuse.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Fruit Jelly (B&W).jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Gradient Diagonal (Color).jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Gradient Horizontal (Color).jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Gradient Vertical (Color).jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Small Crate_diffuse.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Small Crate_normal.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Sunny Days - Seamless.jpg
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Text Overflow - Linked Text Image 1.png
+C:\Users\Joe\Anamnesis\Assets\TextMesh Pro\Examples & Extras\Textures\Text Overflow - Linked Text UI Screenshot.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Enemy\Slime1\A\427.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Cyclone Cleave\1157.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Cyclone Cleave\fb1511.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Lacerate\01.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Lacerate\fb1510.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Aphelion\Bullet 24x24 Part 9B Free.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Aphelion\fb783.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Astral Nova\274.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Astral Nova\fb776.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Blaze\485.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Blaze\486.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Blaze\509.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Blaze\710.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Blaze\fb1319.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Blaze\fb1340.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Blood Pact\123.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Blood Pact\fb1196.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Exodus\15.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Exodus\16.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Exodus\336.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Meteor Shower\fb775.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Meteor Shower\sprite-sheet.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Nebula\446.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Nebula\fb1211.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Nirvana\125.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Nirvana\fb1055.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Revelation\00.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Revelation\fb787.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Shattered Singularity\295.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Shattered Singularity\579.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Shattered Singularity\fb786.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Solar Collapse\197.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Solar Collapse\fb765.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Starfury\613.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Starfury\fb1011.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Stellar Maelstrom\1595.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Stellar Maelstrom\fb815.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Supernova\1010.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Supernova\fb986.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Warp\Bullet 24x24 Free  Part 1C.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Warp\fb1436.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Rare Pool\Warp\sprite-sheet.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Treasure Pool\Feedback Loop\Bullet 24x24 Part 6C Free.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Treasure Pool\Soul Rend\03.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Treasure Pool\Soul Rend\273.png
+C:\Users\Joe\Anamnesis\Assets\data\attacks\Player\Treasure Pool\Supersonic\723.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Attacks\Boomerang\928.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Attacks\Mark\316.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Attack1.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Attack2.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Die.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Hurt.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-IdleFly.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Run.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-Sleep.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Bat\Images\Bat-WakeUp.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Crab\Attacks\Disc\115.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Crab\Attacks\Slice\295.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Crab\images\Crab_Ability.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Crab\images\Crab_AttackC.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Crab\images\Crab_Death.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Crab\images\Crab_Idle.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Crab\images\Crab_Run.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\BigBall\Bullet 24x24 Part 7B Free.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame1.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame10.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame2.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame3.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame4.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame5.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame6.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame7.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame8.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\Summon\Vampire_skill1_frame9.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\ball\Bullet 24x24 Part 7A Free.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\attacks\wave\sprite-sheet.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\CHARGE LOOP.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\EMOTE.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\IDLE.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\SPAWN.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\WALK.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\attack.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\charge.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\death.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\emote laugh.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Cultist\images\hurt.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Jellfyish\Attacks\BallSpam\1225.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Jellfyish\Attacks\Ripple\466.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Jellfyish\Attacks\WaterSplash\529.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Jellfyish\Attacks\WaterSplash\588.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Jellfyish\charged.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Jellfyish\idle.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Lich\Attacks\Plant\655.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Lich\Attacks\Wave\465.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Lich\Attacks\Whirl\1615.png
+C:\Users\Joe\Anamnesis\Assets\data\entity\enemy\Lich\Necromancer_creativekind-Sheet.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\01.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\06.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\Border All 6.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\bossbar.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\icons.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\icons\fb1019.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\icons\fb1020.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\icons\fb671.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\icons\reroll.png
+C:\Users\Joe\Anamnesis\Assets\data\images\UI\icons\spritesheet.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime1\Slime1_Death_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime1\Slime1_Hurt_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime1\Slime1_Idle_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime1\Slime1_Run_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime1\Slime_1_Attack.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Attack\Slime2_Attack_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Attack\Slime2_Attack_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Attack\Slime2_Attack_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Death\Slime2_Death_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Death\Slime2_Death_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Death\Slime2_Death_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Hurt\Slime2_Hurt_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Hurt\Slime2_Hurt_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Hurt\Slime2_Hurt_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Idle\Slime2_Idle_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Idle\Slime2_Idle_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Idle\Slime2_Idle_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Run\Slime2_Run_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Run\Slime2_Run_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Run\Slime2_Run_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Walk\Slime2_Walk_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Walk\Slime2_Walk_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime2\Walk\Slime2_Walk_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Attack\Slime3_Attack_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Attack\Slime3_Attack_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Attack\Slime3_Attack_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Death\Slime3_Death_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Death\Slime3_Death_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Death\Slime3_Death_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Hurt\Slime3_Hurt_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Hurt\Slime3_Hurt_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Hurt\Slime3_Hurt_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Idle\Slime3_Idle_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Idle\Slime3_Idle_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Idle\Slime3_Idle_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Run\Slime3_Run_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Run\Slime3_Run_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Run\Slime3_Run_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Walk\Slime3_Walk_body.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Walk\Slime3_Walk_full.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\Slime3\Walk\Slime3_Walk_shadow.png
+C:\Users\Joe\Anamnesis\Assets\data\images\entity\player\SPRITE_SHEET.png
