@@ -18,25 +18,29 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 
 ## Core Loop
 
-1. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters.
+1. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters. Enemies can even **split** into more enemies on death, and extra spawns occur every 10 waves.
 2. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward.
-3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, and more to come) that add risk for greater reward.
-4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run.
-5. **Level Up** — collect experience from enemies to level up, gaining stat boosts and skill points along the way.
+3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, *Stat Modifier*, and more) that add risk for greater reward.
+4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run. Gain skill points from levelling up, occasionally on wave clears and every 5 waves.
+5. **Level Up** — collect experience from enemies to level up, gaining stat boosts and skill points along the way. Enemies drop XP (common enemies drop less, bosses drop more with 15% variance).
 6. **Repeat** — waves get harder, and you get stronger.
 
 ## Features
 
-- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward and actional button panels, that update dynamically based on the number of objects.
-- **Anomaly system** — randomized run modifiers with configurable frequency, counts, and reward bonuses.
-- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, and **orbit interactions** (fire, absorb, redirect, explode).
+- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward/anomaly button panels that update dynamically.
+- **Enemy splitting** — enemies can split into more enemies on death with configurable split count, health scaling, and behavior settings.
+- **Global enemy spawner** — centralized spawning system for consistent enemy management.
+- **Anomaly system** — randomized run modifiers with configurable frequency, counts, and reward bonuses (e.g., *Time Trial*, *No Damage*, *Stat Modifier*).
+- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage, spread barrage), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, orbit interactions (fire, absorb, redirect, explode), and **follow-source** option for projectiles.
 - **Status effects** — stackable DoTs, stuns, stat buffs/reductions, attack replacement, and more, with cooldown UI.
 - **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects (on attack, on crit, on hit, on dash, on deal damage, …) with chance/cooldown/delay.
-- **Skill tree** — interactive pan/zoom tree with prerequisites, incompatible nodes, tooltips, connector lines, and a skill-point currency.
+- **Skill tree** — interactive pan/zoom tree with prerequisites, incompatible nodes, tooltips, connector lines, and a skill-point currency. **Tier 2 nodes** added for deeper progression.
+- **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%).
+- **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays.
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
 - **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.
-- **Damage indicators** — floating damage numbers with small randomness.
-- **Levelling system** — enemies drop xp, players collect xp to level up and gain minor stat buffs and skill points
+- **Damage indicators** — floating damage numbers with small randomness. **XP gain indicators** and **XP wrapper option** for custom XP display.
+- **Levelling system** — enemies drop XP, players collect XP to level up and gain stat buffs (HP, ATK, INT, SPD) and skill points. **Level-up indicator** on progression.
 
 ## Controls
 
@@ -90,13 +94,14 @@ Assets/
 │   ├── SkillTree/             # Skill tree definition & node assets
 │   └── WaveData/              # Wave sequences
 └── scripts/
-    ├── Entity/                # Player, Enemy, stats, health, levelling, summoning, gear
+    ├── Entity/                # Player, Enemy, stats, health, levelling, summoning, gear, XP
     ├── Projectile/            # Projectiles, damage calculator, attack data
     ├── StatusEffect/          # Status effect system & implementations
     ├── SkillTree/             # Skill tree manager, UI, pan/zoom
-    ├── Wave/                  # WaveManager, rewards, anomalies
+    ├── Wave/                  # WaveManager, rewards, anomalies, enemy spawner
     ├── Items/                 # Item & gear definitions
-    └── DamageIndicator/       # Floating damage numbers
+    ├── TextIndicator/       # Floating damage numbers, XP indicators
+    └── UI/                    # Title system, tooltips, level-up indicator
 ```
 
 ## Getting Started

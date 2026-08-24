@@ -257,18 +257,6 @@
     "ast_hash": "e4e83bc8456713a3c2849fbefb019d08",
     "semantic_hash": ""
   },
-  "Assets/scripts/DamageIndicator/DamageIndicator.cs": {
-    "mtime": 1787512566.260517,
-    "seen": 1787538805.3414214,
-    "ast_hash": "c5372d2a969670143f786058ee19f295",
-    "semantic_hash": ""
-  },
-  "Assets/scripts/DamageIndicator/DamageIndicatorSpawner.cs": {
-    "mtime": 1787512663.8020184,
-    "seen": 1787538805.341422,
-    "ast_hash": "13dc69e5988dc61c85551a994d516a3e",
-    "semantic_hash": ""
-  },
   "Assets/scripts/Entity/EnemyStats.cs": {
     "mtime": 1787502628.999868,
     "seen": 1787538805.3414233,
@@ -318,9 +306,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityHealth.cs": {
-    "mtime": 1787537566.267453,
-    "seen": 1787538805.341431,
-    "ast_hash": "cebdeb9dac86c7dc7a290bf4ed22bab5",
+    "mtime": 1787540671.3056085,
+    "seen": 1787541774.5854037,
+    "ast_hash": "f0d54aa08d266245bdae22cb156ced54",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityProjectileHandler.cs": {
@@ -342,9 +330,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityStats.cs": {
-    "mtime": 1787504129.0742972,
-    "seen": 1787538805.3414345,
-    "ast_hash": "d9122d237342b9ea1171fc08ddc83196",
+    "mtime": 1787541684.5837011,
+    "seen": 1787541774.585413,
+    "ast_hash": "1cb80f3afd22ea3d2b76c456de3c0565",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntitySummonHandler.cs": {
@@ -396,9 +384,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerLevel.cs": {
-    "mtime": 1787504981.5560777,
-    "seen": 1787538805.3414423,
-    "ast_hash": "be922a2f027f94b5c24541a5841c5878",
+    "mtime": 1787541136.3698115,
+    "seen": 1787541774.5854306,
+    "ast_hash": "737d0f903ae3d269912d404ac0308933",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerMana.cs": {
@@ -1026,9 +1014,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787538945.9975176,
-    "seen": 1787538982.9599595,
-    "ast_hash": "2fef3c59768ea3b57911c675e4bd1ab3",
+    "mtime": 1787541761.6925282,
+    "seen": 1787541774.5856395,
+    "ast_hash": "e74656431ee3f6072309c9a0b32f0463",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -1050,9 +1038,9 @@
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1787538966.7045853,
-    "seen": 1787538982.9599645,
-    "ast_hash": "832c1f00331e1ca6ea30b91e6b32e722",
+    "mtime": 1787539446.9807148,
+    "seen": 1787541774.5856466,
+    "ast_hash": "cece1ee2060eb96ce38e5a0e7af3583f",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -2019,6 +2007,18 @@
     "mtime": 1782002438.7432632,
     "seen": 1787538805.3416293,
     "ast_hash": "72eaae712421928169b0543d45931700",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/TextIndicator/TextIndicator.cs": {
+    "mtime": 1787540629.7869923,
+    "seen": 1787541774.5855324,
+    "ast_hash": "a79d6bd842e488b2839d8f1c247465b4",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/TextIndicator/TextIndicatorSpawner.cs": {
+    "mtime": 1787540971.1614034,
+    "seen": 1787541774.5855348,
+    "ast_hash": "dc31cbe5183e3d1f3d244b00e5ff1300",
     "semantic_hash": ""
   }
 }
