@@ -134,7 +134,7 @@ public class EntityHealth : MonoBehaviour
             if (appliedDmg > 0 && ChangeHealth(-appliedDmg, 0, true, sizeMult, color, bypassIFrames, source))
             {
                 if (source.TryGetComponent<PlayerLevel>(out var pl))
-                    pl.GainExp(es.xpDrop * (Mathf.Pow(1.1f, es.level - 1)) * UnityEngine.Random.Range(0.85f, 1.15f));
+                    pl.GainExp(es.xpDrop * (Mathf.Pow(1.07f, es.level - 1)) * UnityEngine.Random.Range(0.85f, 1.15f));
             }
 
             if (appliedDmg > 0 && !_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
@@ -171,14 +171,14 @@ public class EntityHealth : MonoBehaviour
 
         UpdatePhase();
 
-        DamageIndicatorSpawner dis = DamageIndicatorSpawner.Instance;
+        TextIndicatorSpawner tis = TextIndicatorSpawner.Instance;
         Vector3 pos = transform.position;
 
-        if (dis != null && showIndicator)
+        if (tis != null && showIndicator)
         {
             Color indicatorColor = colorOverride != default ? colorOverride : (finalAmount < 0 ? Color.red : Color.green);
 
-            dis.SpawnDamageIndicator(
+            tis.SpawnTextIndicator(
                 Mathf.Abs(finalAmount),
                 pos,
                 indicatorColor,

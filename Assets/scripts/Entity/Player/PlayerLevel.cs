@@ -13,7 +13,19 @@ public class PlayerLevel : MonoBehaviour
     {
         if (amount <= 0f || !p.isAlive) return;
 
-        p.exp += amount * (1f + (p.expBonus * 0.01f));
+        float finalAmt = amount * (1f + (p.expBonus * 0.01f));
+        p.exp += finalAmt;
+
+        TextIndicatorSpawner.Instance.SpawnTextIndicator(
+            Mathf.RoundToInt(finalAmt),
+            transform.position,
+            Color.magenta,
+            0.7f + UnityEngine.Random.Range(0f, 0.15f),
+            UnityEngine.Random.Range(0.5f, 0.7f),
+            UnityEngine.Random.Range(0.8f, 1.2f),
+            UnityEngine.Random.Range(0f, 0.2f),
+            true
+        );
 
         while (p.exp >= p.ExpReq)
         {

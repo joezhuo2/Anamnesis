@@ -73,7 +73,7 @@ MonoBehaviour:
   level: 0
   exp: 0
   expBonus: 0
-  xpDrop: 320
+  xpDrop: 225
   isAlive: 0
   isImmune: 0
   canAttack: 0

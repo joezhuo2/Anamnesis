@@ -2404,8 +2404,8 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 54
-      value: 5
-    weight: 4
+      value: 1
+    weight: 3
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0
@@ -2608,7 +2608,7 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 54
-      value: 9
+      value: 3
     weight: 2
   rarityData:
   - rarityName: Common
@@ -5647,12 +5647,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1423153584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1359d7d4db3ec794894311cedb1593e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 424d28bb17ff674488911ba4d1478db6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageIndicatorSpawner
-  prefab: {fileID: 5559790915778782036, guid: 357cc8332bff8094587734888b35fd74, type: 3}
-  canvas: {fileID: 1434897405}
-  initialPoolSize: 20
+  m_EditorClassIdentifier: Assembly-CSharp::TextIndicatorSpawner
+  prefab: {fileID: 6796849851117737571, guid: 357cc8332bff8094587734888b35fd74, type: 3}
+  canvas: {fileID: 652157721}
+  initialPoolSize: 100
 --- !u!1 &1423259212
 GameObject:
   m_ObjectHideFlags: 0

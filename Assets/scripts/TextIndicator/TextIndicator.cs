@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class DamageIndicator : MonoBehaviour 
+public class TextIndicator : MonoBehaviour
 {
     public float floatSpeed;
     public Vector2 maxRandomOffset = new(0.5f, 0.5f);
@@ -11,14 +11,14 @@ public class DamageIndicator : MonoBehaviour
     private Camera mainCam;
     private float timer;
 
-    public void Initialize(int damage, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed)
+    public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false)
     {
         text = text != null ? text : GetComponent<TextMeshProUGUI>();
         mainCam = mainCam != null ? mainCam : Camera.main;
 
         worldPos = sourcePos + new Vector3(Random.Range(-maxRandomOffset.x, maxRandomOffset.x), Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 0f);
 
-        text.text = damage.ToString();
+        text.text = xpWrapperText ? $"+{val} xp" : val.ToString();
         text.color = color;
         text.fontSize *= scale;
 
@@ -38,8 +38,8 @@ public class DamageIndicator : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-            if (DamageIndicatorSpawner.Instance != null)
-                DamageIndicatorSpawner.Instance.ReturnToPool(this);
+            if (TextIndicatorSpawner.Instance != null)
+                TextIndicatorSpawner.Instance.ReturnToPool(this);
             else
                 Destroy(gameObject);
         }

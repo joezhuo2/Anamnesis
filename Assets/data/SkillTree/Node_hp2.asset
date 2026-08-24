@@ -20,7 +20,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   isStartingNode: 0
   prerequisites:
-  - {fileID: 11400000, guid: ac1428e80223cc3429204ec3269b71ab, type: 2}
+  - {fileID: 11400000, guid: 7be38c789f5ca9743944f4636eba88cf, type: 2}
   requiredAttacks: []
   requiredPlayerUpgrades: []
   incompatibleNodes: []

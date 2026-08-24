@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7392420805122913565}
   - component: {fileID: 1157327010392858487}
   - component: {fileID: 6961074376611238736}
-  - component: {fileID: 5559790915778782036}
+  - component: {fileID: 6796849851117737571}
   m_Layer: 0
-  m_Name: DamageIndicatorPrefab
+  m_Name: TextIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5559790915778782036
+--- !u!114 &6796849851117737571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,8 +147,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4718870084580703515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c10d633b0eada24a843f2670464453b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f408ebdad5e2d54e999c91bcdf8b891, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageIndicator
+  m_EditorClassIdentifier: Assembly-CSharp::TextIndicator
   floatSpeed: 0
-  maxRandomOffset: {x: 1, y: 1}
+  maxRandomOffset: {x: 0.5, y: 0.5}
