@@ -218,6 +218,22 @@ public class PlayerAttackHandler : MonoBehaviour
         }
         CreateButtonUI(runtimeAttackCopy);
     }
+
+    public void RemoveAttack(AttackType type)
+    {
+        AttackData current = attacks.Find(atk => atk.type == type);
+        if (current != null)
+        {
+            attacks.Remove(current);
+            Destroy(current);
+        }
+
+        if (spawnedUIElements.ContainsKey(type))
+        {
+            Destroy(spawnedUIElements[type]);
+            spawnedUIElements.Remove(type);
+        }
+    }
     private (float finalHpCost, float finalStaminaCost) HandleHexCast(float hpCost, float staminaCost)
     {
         if (!pum.HasUpgradeOfType<HexCast>() || p.currentStamina >= staminaCost)

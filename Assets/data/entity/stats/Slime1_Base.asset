@@ -74,6 +74,9 @@ MonoBehaviour:
   exp: 0
   expBonus: 0
   xpDrop: 14
+  goldDrop: 5
+  gold: 0
+  stealing: 0
   isAlive: 0
   isImmune: 0
   canAttack: 0

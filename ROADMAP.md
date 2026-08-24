@@ -1,4 +1,5 @@
 # Roadmap
+- [v0.1.11] The Currency Update: gold system (enemy drops, 15% variance), stealing stat, gold rerolls (200g), skill node refunds (default 50g), gold text indicators
 - [v0.1.10_2] The XP Rebalance Update: massive XP nerfs (75% common, 25% bosses), new XP formula, XP gain indicators, damage indicator → text indicator rename
 - [v0.1.10_1] Projectile Follow Update: option for projectiles to follow source objects exactly
 - [v0.1.10] The Splitting Update: enemy splitting behavior, global enemy spawner

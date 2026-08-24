@@ -28,16 +28,16 @@ public class TextIndicatorSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false)
-    => StartCoroutine(SpawnAfterDelay(damage, sourcePos, color, scale, lifetime, floatSpeed, delay, xpWrapperText));
+public void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false, bool isGold = false)
+        => StartCoroutine(SpawnAfterDelay(damage, sourcePos, color, scale, lifetime, floatSpeed, delay, xpWrapperText, isGold));
 
-    private IEnumerator SpawnAfterDelay(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false)
+    private IEnumerator SpawnAfterDelay(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false, bool isGold = false)
     {
         yield return new WaitForSeconds(delay);
-        SpawnTextIndicator(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText);
+        SpawnTextIndicator(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText, isGold);
     }
 
-    private void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false)
+    private void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false, bool isGold = false)
     {
         TextIndicator indicator;
 
@@ -51,7 +51,7 @@ public class TextIndicatorSpawner : MonoBehaviour
             indicator = Instantiate(prefab, canvas.transform);
         }
 
-        indicator.Initialize(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText);
+        indicator.Initialize(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText, isGold);
         _activeIndicators.Add(indicator);
     }
 

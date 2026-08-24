@@ -19,10 +19,10 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 ## Core Loop
 
 1. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters. Enemies can even **split** into more enemies on death, and extra spawns occur every 10 waves.
-2. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward.
+2. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward. Reroll with **gold** (200g) when out of rerolls.
 3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, *Stat Modifier*, and more) that add risk for greater reward.
-4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run. Gain skill points from levelling up, occasionally on wave clears and every 5 waves.
-5. **Level Up** — collect experience from enemies to level up, gaining stat boosts and skill points along the way. Enemies drop XP (common enemies drop less, bosses drop more with 15% variance).
+4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run. Gain skill points from levelling up, occasionally on wave clears and every 5 waves. Refund nodes using gold (default 50g).
+5. **Level Up & Earn Gold** — collect experience from enemies to level up, gaining stat boosts and skill points along the way. Enemies drop XP (common enemies drop less, bosses drop more with 15% variance). **Enemies also drop gold (15% variance), increased by the Stealing stat.**
 6. **Repeat** — waves get harder, and you get stronger.
 
 ## Features
@@ -34,13 +34,14 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage, spread barrage), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, orbit interactions (fire, absorb, redirect, explode), and **follow-source** option for projectiles.
 - **Status effects** — stackable DoTs, stuns, stat buffs/reductions, attack replacement, and more, with cooldown UI.
 - **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects (on attack, on crit, on hit, on dash, on deal damage, …) with chance/cooldown/delay.
-- **Skill tree** — interactive pan/zoom tree with prerequisites, incompatible nodes, tooltips, connector lines, and a skill-point currency. **Tier 2 nodes** added for deeper progression.
+- **Skill tree** — interactive pan/zoom tree with prerequisites, incompatible nodes, tooltips, connector lines, and a skill-point currency. Right-click unlocked nodes to refund using **gold** (default 50g, configurable per node).
 - **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%).
 - **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays.
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
 - **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.
-- **Damage indicators** — floating damage numbers with small randomness. **XP gain indicators** and **XP wrapper option** for custom XP display.
+- **Damage indicators** — floating damage numbers with small randomness. **XP gain indicators** and **XP wrapper option** for custom XP display. **Gold gain indicators** (+{gold}g in gold color).
 - **Levelling system** — enemies drop XP, players collect XP to level up and gain stat buffs (HP, ATK, INT, SPD) and skill points. **Level-up indicator** on progression.
+- **Gold system** — enemies drop gold on death (15% variance, same as XP). **Stealing stat** increases gold drops by {stealing}%. Spend gold to reroll rewards (200g when out of rerolls) or refund skill nodes.
 
 ## Controls
 

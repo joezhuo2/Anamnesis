@@ -4,7 +4,6 @@
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, int - done, atk - missing basic, dot - missing basic)
 - [ ] More skill tree nodes & branches, upgrading existing Awakenings/Attacks (currently none) - 'capstone' nodes, and introducing new ones (currently none)
 - [ ] Wave 60 boss and enemies, and first Boss Rush (v0.2.0 Content Update)
-- [ ] currency system: used for rerolls, refreshing stats during reward selection, undoing skill tree, obtained by killing enemies; stealing/gold bonus stat
 - [ ] Milestone rewards (every 25) (eg. bundled `Statbuff` that contain some positive, some negative)
 
 ### Medium Priority

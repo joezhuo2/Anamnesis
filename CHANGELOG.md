@@ -5,6 +5,21 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.11] - 2026-08-24 - Currency Update
+
+### Added
+- Gold/Currency system: enemies now drop gold on death (15% variance, same as XP); gold used to refund skill tree nodes and buy rerolls when out of rerolls
+- Stealing stat:increases gold drop rate by `{stealing}%` from all enemies; obtainable from the mixed reward pool
+- Gold text indicators: floating `"+{gold}g"` text in gold color when earning gold
+- Reroll with gold: spend 200 gold to reroll rewards when no rerolls remain; reroll button shows "200g" when affordable
+- Skill node undo cost display: tooltip shows undo cost at bottom for unlocked nodes (default 50g, configurable per node)
+
+### Updated
+- `EntityHealth.cs` - gold drop logic on enemy death with stealing bonus
+- `TextIndicator.cs` and `TextIndicatorSpawner.cs` - gold indicator support
+- `WaveManager.cs` - gold reroll fallback and UI update
+- `TooltipTrigger.cs` / `SkillNodeUI.cs` - undo cost in skill tree tooltips
+
 ## [v0.1.10_3] - 2026-08-24
 
 ### Added

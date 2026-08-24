@@ -215,4 +215,65 @@ public class PlayerSkillTree : MonoBehaviour
     }
 
     public bool IsNodeUnlocked(SkillNodeDef node) => node != null && unlockedNodes.Contains(node.nodeID);
+
+    public (bool canUndo, string failMessage) CanUndo(SkillNodeDef node)
+    {
+        if (node == null) return (false, "Node is null");
+        if (!unlockedNodes.Contains(node.nodeID)) return (false, "Node not unlocked");
+        if (node.isStartingNode) return (false, "Cannot undo starting node");
+
+        if (TryGetComponent<EntityStatManager>(out var esm))
+        {
+            int currentGold = Mathf.RoundToInt(esm.s.gold);
+            if (currentGold < node.undoCost) return (false, $"Not enough gold ({node.undoCost}g required)");
+        }
+        else
+        {
+            return (false, "EntityStatManager not found");
+        }
+
+        return (true, string.Empty);
+    }
+
+    public void UndoNode(SkillNodeDef node)
+    {
+        var (canUndo, _) = CanUndo(node);
+        if (!canUndo) return;
+
+        if (node.statBuffs != null && node.statBuffs.Count > 0) HandleStatDowngrades(node);
+        if (node.attackUpgrades != null && node.attackUpgrades.Count > 0) HandleAttackDowngrades(node);
+        if (node.playerUpgrades != null && node.playerUpgrades.Count > 0) HandlePlayerDowngrades(node);
+
+        if (TryGetComponent<EntityStatManager>(out var esm)) esm.s.gold -= node.undoCost;
+
+        skillPoints++;
+        unlockedNodes.Remove(node.nodeID);
+    }
+
+    private void HandleStatDowngrades(SkillNodeDef node)
+    {
+        if (TryGetComponent<EntityStatManager>(out var esm))
+        {
+            foreach (var sb in node.statBuffs)
+                esm.AddStat(sb, false);
+        }
+    }
+
+    private void HandlePlayerDowngrades(SkillNodeDef node)
+    {
+        if (TryGetComponent<PlayerUpgradeManager>(out var pum))
+        {
+            foreach (var pu in node.playerUpgrades)
+                if (pu != null) pum.RemoveUpgrade(pu);
+        }
+    }
+
+    private void HandleAttackDowngrades(SkillNodeDef node)
+    {
+        if (TryGetComponent<PlayerAttackHandler>(out var pah))
+        {
+            foreach (var ad in node.attackUpgrades)
+                if (ad != null) pah.RemoveAttack(ad.type);
+        }
+    }
 }

@@ -84,6 +84,17 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (!string.IsNullOrEmpty(snd.desc)) lines.Add(snd.desc);
         if (!string.IsNullOrEmpty(skillTreeFailMessage)) lines.Add($"<color=#FF4444>{skillTreeFailMessage}</color>");
 
+        if (!snd.isStartingNode)
+        {
+            var playerSkillTree = FindAnyObjectByType<PlayerSkillTree>();
+            if (playerSkillTree != null && playerSkillTree.IsNodeUnlocked(snd))
+            {
+                var (canUndo, _) = playerSkillTree.CanUndo(snd);
+                if (canUndo) lines.Add($"<color=#FFD700>Right-click to undo ({snd.undoCost}g)</color>");
+                else lines.Add($"<color=#888888>Undo cost: {snd.undoCost}g (insufficient gold)</color>");
+            }
+        }
+
         TooltipUI.Instance.ShowTooltip(snd.nodeName, string.Join("\n", lines), new(100, -100));
     }
 
@@ -111,8 +122,9 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (cps.physicalRes != 0f) resTypes.Add($"P:{cps.physicalRes:F1}%");
         if (cps.spellRes != 0f) resTypes.Add($"S:{cps.spellRes:F1}%");
 
-        if (resTypes.Count > 0)
-            lines.Add($"Res: {string.Join(" ", resTypes)}");
+        if (resTypes.Count > 0) lines.Add($"Res: {string.Join(" ", resTypes)}");
+
+        if (cps.gold > 0) lines.Add($"Gold: {cps.gold}");
 
         TooltipUI.Instance.ShowTooltip("Resources", string.Join("\n", lines), new(100, -100));
     }

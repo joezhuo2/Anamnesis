@@ -1014,9 +1014,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787585464.463737,
-    "seen": 1787585475.8374705,
-    "ast_hash": "bcdaff79e28e5cc55124747b1794b5db",
+    "mtime": 1787541761.6925282,
+    "seen": 1787541774.5856395,
+    "ast_hash": "e74656431ee3f6072309c9a0b32f0463",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -1026,15 +1026,15 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1787585051.9907863,
-    "seen": 1787585475.8374722,
-    "ast_hash": "c8842aaac93caaed05831ab1f1b08e9d",
+    "mtime": 1787508343.7125218,
+    "seen": 1787538805.3415203,
+    "ast_hash": "c68e898706f875e3ad907ef3c67fce3d",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1787585183.0640907,
-    "seen": 1787585475.837473,
-    "ast_hash": "062fe3351b58128f2945548677a2c6d1",
+    "mtime": 1787508550.2210479,
+    "seen": 1787538805.3415215,
+    "ast_hash": "092bed7fb7aee93f46f685702efbf39d",
     "semantic_hash": ""
   },
   "TODO.md": {
@@ -2019,24 +2019,6 @@
     "mtime": 1787540971.1614034,
     "seen": 1787541774.5855348,
     "ast_hash": "dc31cbe5183e3d1f3d244b00e5ff1300",
-    "semantic_hash": ""
-  },
-  ".claude/settings.local.json": {
-    "mtime": 1787584329.7798035,
-    "seen": 1787585475.8373141,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
-    "semantic_hash": ""
-  },
-  "~/.claude.json": {
-    "mtime": 1787584413.8717124,
-    "seen": 1787585475.8374333,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
-    "semantic_hash": ""
-  },
-  ".github/copilot-instructions.md": {
-    "mtime": 1787584107.1215775,
-    "seen": 1787585475.837461,
-    "ast_hash": "05fdb49e5ef90a3e8b36d968027c0ebe",
     "semantic_hash": ""
   }
 }

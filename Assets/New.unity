@@ -2272,6 +2272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb6d5f236d32354ab9c899a68449f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
+  rerollGoldCost: 200
   currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2.5
   waveInfoPanel: {fileID: 2059475857}
@@ -2610,6 +2611,11 @@ MonoBehaviour:
       type: 54
       value: 3
     weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 55
+      value: 4
+    weight: 1
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}

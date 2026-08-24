@@ -135,6 +135,7 @@ public class EntityHealth : MonoBehaviour
             {
                 if (source.TryGetComponent<PlayerLevel>(out var pl))
                     pl.GainExp(es.xpDrop * (Mathf.Pow(1.07f, es.level - 1)) * UnityEngine.Random.Range(0.85f, 1.15f));
+                DropGold(source);
             }
 
             if (appliedDmg > 0 && !_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
@@ -299,6 +300,38 @@ public class EntityHealth : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void DropGold(GameObject target)
+    {
+        if (es.goldDrop <= 0) return;
+
+        var playerStats = target.TryGetComponent<EntityStatManager>(out var esm) ? esm.s as PlayerStats : null;
+        if (playerStats == null) return;
+
+        int gold = Mathf.RoundToInt(es.goldDrop * UnityEngine.Random.Range(0.85f, 1.15f) * (1f + (playerStats.stealing * 0.01f)));
+
+        if (gold > 0)
+        {
+            playerStats.gold += gold;
+
+            TextIndicatorSpawner tis = TextIndicatorSpawner.Instance;
+            if (tis != null)
+            {
+                Color goldColor = new(1f, 0.843f, 0f);
+                tis.SpawnTextIndicator(
+                    gold,
+                    transform.position,
+                    goldColor,
+                    0.7f + UnityEngine.Random.Range(0f, 0.15f),
+                    UnityEngine.Random.Range(0.5f, 0.7f),
+                    UnityEngine.Random.Range(0.8f, 1.2f),
+                    UnityEngine.Random.Range(0f, 0.2f),
+                    false,
+                    true
+                );
+            }
         }
     }
 

@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class SkillTreeManager : MonoBehaviour
 {
-    public GameObject player = null;
-
+    [HideInInspector] public GameObject player = null;
     [HideInInspector] public PlayerSkillTree tree;
 
     public void Start()

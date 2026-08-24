@@ -56,7 +56,8 @@ public enum StatType
     addDmgPct,
     kbRes,
     kbPct,
-    ExpBonus
+    ExpBonus,
+    Stealing,
 }
 
 public class EntityStats : ScriptableObject
@@ -151,8 +152,15 @@ public class EntityStats : ScriptableObject
     public float exp;
     public float expBonus;
 
-    [Header("Misc")]
+    [Header("Experience")]
     public float xpDrop;
+    public float goldDrop;
+
+    [Header("Gold")]
+    public int gold;
+    public float stealing;
+
+    [Header("States")]
     public bool isAlive;
     public bool isImmune;
     public bool canAttack;

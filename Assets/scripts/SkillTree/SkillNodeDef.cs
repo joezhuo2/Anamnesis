@@ -21,4 +21,8 @@ public class SkillNodeDef : ScriptableObject
     public List<StatBuff> statBuffs;
     public List<AttackData> attackUpgrades;
     public List<PlayerUpgrade> playerUpgrades;
+
+    [Header("Costs")]
+    [Tooltip("Gold cost to undo this node (refunds skill point)")]
+    public int undoCost = 50;
 }

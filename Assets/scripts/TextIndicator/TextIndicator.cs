@@ -11,14 +11,17 @@ public class TextIndicator : MonoBehaviour
     private Camera mainCam;
     private float timer;
 
-    public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false)
+    public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false, bool isGold = false)
     {
         text = text != null ? text : GetComponent<TextMeshProUGUI>();
         mainCam = mainCam != null ? mainCam : Camera.main;
 
         worldPos = sourcePos + new Vector3(Random.Range(-maxRandomOffset.x, maxRandomOffset.x), Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 0f);
 
-        text.text = xpWrapperText ? $"+{val} xp" : val.ToString();
+        if (isGold) text.text = $"+{val}g";
+        else if (xpWrapperText) text.text = $"+{val} xp";
+        else text.text = val.ToString();
+
         text.color = color;
         text.fontSize *= scale;
 

@@ -9,6 +9,10 @@ public class WaveManager : MonoBehaviour
     public static WaveManager Instance { get; private set; }
     private static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
     private static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
+
+    [Header("Reroll")]
+    public int rerollGoldCost = 200;
+
     [Header("Basic")]
     public WaveSequence currentSequence;
     public float spawnRadius = 2f;
@@ -501,9 +505,30 @@ public class WaveManager : MonoBehaviour
     }
     private void UpdateRerollUI()
     {
-        if (rerollText != null) rerollText.text = rerolls.ToString();
 
-        if (rerollButton != null) rerollButton.interactable = rerolls > 0;
+        if (rerollText != null)
+        {
+            if (rerolls > 0)
+            {
+                rerollText.text = rerolls.ToString();
+            }
+            else
+            {
+                if (cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
+                    rerollText.text = $"{rerollGoldCost}g";
+                else
+                    rerollText.text = "0";
+            }
+        }
+
+        bool canReroll = rerolls > 0;
+        if (!canReroll)
+        {
+            if (cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
+                canReroll = true;
+        }
+
+        if (rerollButton != null) rerollButton.interactable = canReroll;
     }
     private void OnSkipButtonClicked()
     {
@@ -526,9 +551,17 @@ public class WaveManager : MonoBehaviour
     }
     private void OnRerollButtonClicked()
     {
-        if (rerolls <= 0) return;
+        if (rerolls <= 0)
+        {
+            if (cpsm.s is PlayerStats && cpsm.s.gold >= 200)
+                cpsm.s.gold -= rerollGoldCost;
+            else return;
+        }
+        else
+        {
+            rerolls--;
+        }
 
-        rerolls--;
         UpdateRerollUI();
 
         ClearRewardButtons();
