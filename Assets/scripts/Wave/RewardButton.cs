@@ -4,26 +4,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum RewardType { Mixed, Basic, Rare, Treasure, Anomaly }
+public enum RewardType { Mixed, Basic, Rare, Treasure, Anomaly, Milestone }
 
 public class RewardButton : MonoBehaviour
 {
     [Header("UI Visual Elements")]
     public TMP_Text titleText;
     public TMP_Text descriptionText;
-    public Image cardBackground;
     public Image borderHighlight;
     public Image iconImage;
 
     [HideInInspector] public GeneratedReward statRewardData;
     private AttackReward attackRewardData;
     private PlayerUpgradeReward playerUpgradeRewardData;
+    private MilestoneRewardData milestoneRewardData;
     private RewardType type = RewardType.Basic;
     private bool isCorrupted;
 
     private Action<GeneratedReward> onStatClaimedCallback;
     private Action<AttackReward> onAttackClaimedCallback;
     private Action<PlayerUpgradeReward> onPlayerUpgradeClaimedCallback;
+    private Action<MilestoneRewardData> onMilestoneClaimedCallback;
 
     public void Setup(GeneratedReward reward, Action<GeneratedReward> claimCallback, string statChangeLine)
     {
@@ -102,6 +103,21 @@ public class RewardButton : MonoBehaviour
 
         LinkButtonComponent();
     }
+    public void Setup(MilestoneRewardData milestoneReward, Action<MilestoneRewardData> claimCallback)
+    {
+        milestoneRewardData = milestoneReward;
+        onMilestoneClaimedCallback = claimCallback;
+        type = RewardType.Milestone;
+
+        titleText.text = milestoneReward.rewardName;
+        descriptionText.text = milestoneReward.GetDescription();
+
+        if (borderHighlight != null) borderHighlight.color = Color.teal;
+
+        if (iconImage != null) iconImage.sprite = null;
+
+        LinkButtonComponent();
+    }
     private void LinkButtonComponent()
     {
         if (TryGetComponent<Button>(out var btn))
@@ -117,6 +133,7 @@ public class RewardButton : MonoBehaviour
             case RewardType.Rare: onAttackClaimedCallback?.Invoke(attackRewardData); break;
             case RewardType.Basic: onStatClaimedCallback?.Invoke(statRewardData); break;
             case RewardType.Treasure: onPlayerUpgradeClaimedCallback?.Invoke(playerUpgradeRewardData); break;
+            case RewardType.Milestone: onMilestoneClaimedCallback?.Invoke(milestoneRewardData); break;
             default: break;
         }
     }
@@ -126,9 +143,11 @@ public class RewardButton : MonoBehaviour
         onStatClaimedCallback = null;
         onAttackClaimedCallback = null;
         onPlayerUpgradeClaimedCallback = null;
+        onMilestoneClaimedCallback = null;
         statRewardData = null;
         attackRewardData = null;
         playerUpgradeRewardData = null;
+        milestoneRewardData = null;
         type = RewardType.Basic;
         isCorrupted = false;
 

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: StatMod 10 30
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyData
   anomalyName: Augment
-  desc: All enemies in the wave gain +29% Armor
+  desc: All enemies in the wave gain +0% Health
   minWave: 5
   maxWave: 50
   anomalyType: 2
   anomalyValue: 0
-  anamolyMinVal: 5
-  anamolyMaxVal: 30
+  anomalyMinVal: 10
+  anomalyMaxVal: 30

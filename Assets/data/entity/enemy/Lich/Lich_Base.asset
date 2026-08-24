@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
   physicalDmgPct: 0
-  spellDmgPct: 3
+  spellDmgPct: 4
   attack: 4
-  atkPct: 0
+  atkPct: 3
   intelligence: 0
   intPct: 0
   attackSpeedPct: 0

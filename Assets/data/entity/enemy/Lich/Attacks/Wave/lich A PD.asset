@@ -25,6 +25,7 @@ MonoBehaviour:
   specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
@@ -44,5 +45,5 @@ MonoBehaviour:
   randOrbRadOffset: 0
   orbitSelf: 0
   rotateClockwise: 0
-  kbForce: 7
+  kbForce: 11
   knockbackTime: 0.15

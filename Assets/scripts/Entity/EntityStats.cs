@@ -148,7 +148,7 @@ public class EntityStats : ScriptableObject
 
     [Header("Levelling")]
     public int level;
-    public float ExpReq => 100 * Mathf.Pow(1.15f, level - 1);
+    public float ExpReq => 100 * Mathf.Pow(1.2f, level - 1);
     public float exp;
     public float expBonus;
 

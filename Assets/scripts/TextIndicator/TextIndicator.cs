@@ -10,10 +10,16 @@ public class TextIndicator : MonoBehaviour
     private Vector3 worldPos;
     private Camera mainCam;
     private float timer;
+    private float baseFontSize;
+
+    private void Awake()
+    {
+        text = GetComponent<TextMeshProUGUI>();
+        baseFontSize = text.fontSize;
+    }
 
     public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false, bool isGold = false)
     {
-        text = text != null ? text : GetComponent<TextMeshProUGUI>();
         mainCam = mainCam != null ? mainCam : Camera.main;
 
         worldPos = sourcePos + new Vector3(Random.Range(-maxRandomOffset.x, maxRandomOffset.x), Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 0f);
@@ -23,7 +29,7 @@ public class TextIndicator : MonoBehaviour
         else text.text = val.ToString();
 
         text.color = color;
-        text.fontSize *= scale;
+        text.fontSize = baseFontSize * scale;
 
         timer = lifetime;
         this.floatSpeed = floatSpeed;
@@ -41,10 +47,8 @@ public class TextIndicator : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
-            if (TextIndicatorSpawner.Instance != null)
-                TextIndicatorSpawner.Instance.ReturnToPool(this);
-            else
-                Destroy(gameObject);
+            if (TextIndicatorSpawner.Instance != null) TextIndicatorSpawner.Instance.ReturnToPool(this);
+            else Destroy(gameObject);
         }
     }
 }

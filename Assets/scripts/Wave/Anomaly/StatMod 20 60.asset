@@ -18,5 +18,5 @@ MonoBehaviour:
   maxWave: 105
   anomalyType: 2
   anomalyValue: 0
-  anamolyMinVal: 10
-  anamolyMaxVal: 60
+  anomalyMinVal: 20
+  anomalyMaxVal: 60

@@ -26,7 +26,7 @@ MonoBehaviour:
   randomSpread: 0
   minDelay: 0
   maxDelay: 0
-  maxRange: 2
+  maxRange: 3
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
@@ -45,6 +45,13 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
+  summonChance: 0
+  summonCondition: 0
+  fireOrbits: 0
+  absorbOrbitPct: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
+  redirectCount: 0
   type: 0
   icon: {fileID: 0}
   displayName: 

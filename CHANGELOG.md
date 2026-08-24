@@ -5,6 +5,25 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.12] - 2026-08-24 - Milestone Rewards Update
+
+### Added
+- **Milestone Rewards system**: Every 25 waves (25, 50, 75, 100...), players choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks
+- `MilestoneReward` struct (serializable, inspector-friendly) with base stat buffs, display color, icon, weight, and variance (±15% default)
+- Milestone rewards replace regular rewards at milestone waves, using the existing reward UI with custom colors
+- Reroll support for milestone rewards
+- old anamolies (i removed for testing) back into the anamoly pool
+
+### Rebalance
+- increased enemy attack and armor scaling with level
+- increased xp required to level up
+- increased anomaly chance (5 > 15)
+- buffed lich
+
+### Fixed
+- anamoly (stat mod in particular) having no value (always grants `+0%` stats)
+- text indicators having their size changing relative to previous indicator size (since they are pooled) instead of scaling with default size
+
 ## [v0.1.11_1] - 2026-08-24
 
 ### Rebalance

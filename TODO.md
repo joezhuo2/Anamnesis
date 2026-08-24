@@ -4,7 +4,6 @@
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, int - done, atk - missing basic, dot - missing basic)
 - [ ] More skill tree nodes & branches, upgrading existing Awakenings/Attacks (currently none) - 'capstone' nodes, and introducing new ones (currently none)
 - [ ] Wave 60 boss and enemies, and first Boss Rush (v0.2.0 Content Update)
-- [ ] Milestone rewards (every 25) (eg. bundled `Statbuff` that contain some positive, some negative)
 
 ### Medium Priority
 - [ ] portals
@@ -46,7 +45,6 @@
 ### High Priority
 - [ ] Pause menu with resume/restart/quit
 - [ ] Tooltips on hover for stat reward upgrades, player reward upgrades, and attack upgrades
-- [ ] Floating text for xp gains, currency
 
 ### Medium Priority
 - [ ] Audio, Tilemaps & polish
@@ -83,7 +81,6 @@
 - [ ] FPS counter & performance stats toggle
 - [ ] Confirmation dialog before corrupting a reward (undo safety)
 - [ ] Tooltip delay setting (instant vs hover-delay)
-
 # Bug Fixes
 
 ### High Priority

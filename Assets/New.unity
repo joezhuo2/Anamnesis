@@ -2649,13 +2649,212 @@ MonoBehaviour:
     displayColor: {r: 0.7783019, g: 0.9616805, b: 1, a: 1}
     mult: 20
     weight: 1
+  milestoneRewards:
+  - rewardName: Glass Cannon
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 0
+      value: 40
+    - type: 13
+      value: -40
+    weight: 1
+    variance: 0.15
+  - rewardName: Tank
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 17
+      value: 30
+    - type: 13
+      value: 20
+    - type: 24
+      value: -40
+    weight: 1
+    variance: 0.15
+  - rewardName: Rogue
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 24
+      value: 40
+    - type: 3
+      value: 25
+    - type: 18
+      value: -30
+    weight: 1
+    variance: 0.15
+  - rewardName: Berserker
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 0
+      value: 50
+    - type: 3
+      value: 30
+    - type: 17
+      value: -50
+    - type: 22
+      value: -30
+    weight: 1
+    variance: 0.15
+  - rewardName: Mana Battery
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 36
+      value: 125
+    - type: 0
+      value: -10
+    - type: 13
+      value: -15
+    weight: 1
+    variance: 0.15
+  - rewardName: Critical Master
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 6
+      value: 30
+    - type: 7
+      value: 50
+    - type: 3
+      value: -30
+    - type: 19
+      value: -10
+    weight: 1
+    variance: 0.15
+  - rewardName: Spellweaver
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 5
+      value: 40
+    - type: 8
+      value: 20
+    - type: 4
+      value: -40
+    - type: 3
+      value: -20
+    weight: 1
+    variance: 0.15
+  - rewardName: 'Iron Wall '
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 17
+      value: 60
+    - type: 18
+      value: 20
+    - type: 24
+      value: -40
+    - type: 3
+      value: -25
+    weight: 1
+    variance: 0.15
+  - rewardName: Arcane Shield
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 22
+      value: 40
+    - type: 41
+      value: 25
+    - type: 13
+      value: -30
+    - type: 5
+      value: -25
+    weight: 1
+    variance: 0.15
+  - rewardName: Executioner
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 53
+      value: 80
+    - type: 9
+      value: 150
+    - type: 13
+      value: -30
+    - type: 15
+      value: -40
+    weight: 1
+    variance: 0.15
+  - rewardName: Frenzy
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 45
+      value: 70
+    - type: 8
+      value: 30
+    - type: 3
+      value: 20
+    - type: 0
+      value: -20
+    - type: 7
+      value: -45
+    weight: 1
+    variance: 0.15
+  - rewardName: Featherweight
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 19
+      value: 30
+    - type: 20
+      value: 20
+    - type: 24
+      value: 40
+    - type: 0
+      value: -30
+    - type: 13
+      value: -50
+    weight: 1
+    variance: 0.15
+  - rewardName: Ascendant
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 0
+      value: 30
+    - type: 13
+      value: 25
+    - type: 24
+      value: 20
+    - type: 17
+      value: -30
+    - type: 18
+      value: -20
+    weight: 1
+    variance: 0.15
+  - rewardName: Blood Mage
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 13
+      value: 30
+    - type: 24
+      value: -30
+    - type: 17
+      value: -15
+    - type: 24
+      value: -15
+    weight: 1
+    variance: 0.15
+  - rewardName: Sprinter
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 27
+      value: 70
+    - type: 48
+      value: 40
+    - type: 50
+      value: -20
+    - type: 13
+      value: -10
+    weight: 1
+    variance: 0.15
+  milestoneInterval: 25
+  milestoneRewardChoices: 3
   availableAnomalies:
   - {fileID: 11400000, guid: c57fdda8c6062df4ab1ccc303187118d, type: 2}
   - {fileID: 11400000, guid: cd15acce3a0ad044ba2eeb6762e2c971, type: 2}
+  - {fileID: 11400000, guid: 93c6fc4da2bdae544957f2ca8da253b3, type: 2}
+  - {fileID: 11400000, guid: 7b6a07acfa60e3f4c9965612f9969528, type: 2}
+  - {fileID: 11400000, guid: c606e919e6969c94c8d5ba434c0b7055, type: 2}
+  - {fileID: 11400000, guid: 8cdc45e75e0d1ca41885e6e563ef285c, type: 2}
+  - {fileID: 11400000, guid: 9e7d67e92c12ea449ae71ac414c026e2, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
-  anomalyChance: 5
+  anomalyChance: 15
   anomalyGlobalMinWave: 3
 --- !u!4 &587400166
 Transform:

@@ -36,6 +36,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects (on attack, on crit, on hit, on dash, on deal damage, …) with chance/cooldown/delay.
 - **Skill tree** — interactive pan/zoom tree with prerequisites, incompatible nodes, tooltips, connector lines, and a skill-point currency. Right-click unlocked nodes to refund using **gold** (default 50g, configurable per node).
 - **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%).
+- **Milestone rewards** — every 25 waves (25, 50, 75, 100...), choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks (e.g., *Glass Cannon*: +40% Damage / -40% Max Health). Each stat has ±15% variance for replayability.
 - **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays.
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
 - **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.

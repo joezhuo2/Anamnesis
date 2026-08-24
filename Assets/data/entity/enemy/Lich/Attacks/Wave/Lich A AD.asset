@@ -26,7 +26,7 @@ MonoBehaviour:
   randomSpread: 0
   minDelay: 0
   maxDelay: 0
-  maxRange: 8
+  maxRange: 4
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
@@ -48,7 +48,7 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0

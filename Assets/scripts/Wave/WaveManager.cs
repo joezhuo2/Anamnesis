@@ -10,14 +10,14 @@ public class WaveManager : MonoBehaviour
     private static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
     private static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
 
-    [Header("Reroll")]
+    [Header("Reroll Settings")]
     public int rerollGoldCost = 200;
 
-    [Header("Basic")]
+    [Header("Basic Settings")]
     public WaveSequence currentSequence;
     public float spawnRadius = 2f;
 
-    [Header("Wave Settings")]
+    [Header("Wave Info Settings")]
     public GameObject waveInfoPanel;
     public TextMeshProUGUI anomalyInfoText;
     public TextMeshProUGUI waveText;
@@ -40,11 +40,18 @@ public class WaveManager : MonoBehaviour
     [Header("Reward Panel Settings")]
     public GameObject rewardPanel;
     public GameObject rewardButtonPrefab;
+
+    [Header("Reward Pools")]
     public List<BaseReward> baseBuffPool;
     public List<AttackReward> rarePool;
     public List<PlayerUpgradeReward> treasurePool;
     public List<BaseReward> mixedPool;
     public List<RarityData> rarityData;
+
+    [Header("Milestone Reward Settings")]
+    public List<MilestoneReward> milestoneRewards = new();
+    public int milestoneInterval = 25;
+    public int milestoneRewardChoices = 3;
 
     [Header("Anomaly Settings")]
     public List<AnomalyData> availableAnomalies = new();
@@ -52,7 +59,7 @@ public class WaveManager : MonoBehaviour
     public AnomalyInstance currentAnomaly = null;
     public int minAnomalyCount = 2;
     public int maxAnomalyCount = 5;
-    public float anomalyChance = 10;
+    public float anomalyChance = 15;
     public float anomalyGlobalMinWave = 10;
 
     private GameController GameController => GameController.Instance;
@@ -352,7 +359,8 @@ public class WaveManager : MonoBehaviour
 
         currentAnomaly = null;
 
-        if (w % 10 == 0 && w <= 20) GenerateTreasurePool();
+        if (w % milestoneInterval == 0) GenerateMilestoneRewards();
+        else if (w % 10 == 0 && w <= 20) GenerateTreasurePool();
         else if (w % 5 == 0 && w <= 15) GenerateRarePool();
         else if (w % 5 == 0) GenerateMixedPool();
         else GenerateRewards();
@@ -487,6 +495,84 @@ public class WaveManager : MonoBehaviour
                 rewardButton.Setup(buff, OnPlayerUpgradeRewardClaimed);
         }
     }
+    private void GenerateMilestoneRewards()
+    {
+        type = RewardType.Milestone;
+        int rewardChoices = Mathf.Min(milestoneRewardChoices, milestoneRewards.Count);
+
+        PanelSetup();
+
+        var selectedRewards = GetWeightedRandomMilestoneRewards(rewardChoices);
+
+        for (int i = 0; i < selectedRewards.Count; i++)
+        {
+            MilestoneReward sourceReward = selectedRewards[i];
+            MilestoneRewardData generated = GenerateMilestoneRewardData(sourceReward);
+
+            GameObject btnObj = GetOrCreateRewardButton();
+
+            if (btnObj.TryGetComponent<RewardButton>(out var rb))
+                rb.Setup(generated, OnMilestoneRewardClaimed);
+        }
+    }
+    private List<MilestoneReward> GetWeightedRandomMilestoneRewards(int count)
+    {
+        var result = new List<MilestoneReward>();
+        var available = new List<MilestoneReward>(milestoneRewards);
+
+        for (int i = 0; i < count && available.Count > 0; i++)
+        {
+            float totalWeight = 0;
+            foreach (var r in available) totalWeight += r.weight;
+
+            float roll = Random.Range(0f, totalWeight);
+            float weightSum = 0;
+
+            for (int j = 0; j < available.Count; j++)
+            {
+                weightSum += available[j].weight;
+                if (roll <= weightSum)
+                {
+                    result.Add(available[j]);
+                    available.RemoveAt(j);
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+    private MilestoneRewardData GenerateMilestoneRewardData(MilestoneReward source)
+    {
+        var data = new MilestoneRewardData
+        {
+            rewardName = source.rewardName,
+            generatedBuffs = new List<StatBuff>()
+        };
+
+        foreach (var baseBuff in source.baseStatBuffs)
+        {
+            float varianceMultiplier = 1f + Random.Range(-source.variance, source.variance);
+            float finalValue = baseBuff.value * varianceMultiplier;
+            StatBuff generatedBuff = new(baseBuff.type, finalValue);
+            data.generatedBuffs.Add(generatedBuff);
+        }
+
+        return data;
+    }
+    private void OnMilestoneRewardClaimed(MilestoneRewardData chosenReward)
+    {
+        CloseRewardUI();
+
+        CachePlayerStatManager();
+        if (cpsm != null)
+        {
+            foreach (var buff in chosenReward.generatedBuffs)
+                cpsm.AddStat(buff);
+        }
+
+        ResumeGameLoop();
+    }
     private int PoolPreSetup()
     {
         WaveData completedWave = currentSequence.waves[currentWaveIndex - 1];
@@ -573,6 +659,7 @@ public class WaveManager : MonoBehaviour
             case RewardType.Rare: GenerateRarePool(); break;
             case RewardType.Treasure: GenerateTreasurePool(); break;
             case RewardType.Mixed: GenerateMixedPool(); break;
+            case RewardType.Milestone: GenerateMilestoneRewards(); break;
             default: break;
         }
     }
@@ -690,7 +777,7 @@ public class WaveManager : MonoBehaviour
     public void OpenRewardButtons()
     {
         if (rerollButton != null) rerollButton.gameObject.SetActive(true);
-        if (corruptButton != null && GetCurrentWave() % 5 != 0) corruptButton.gameObject.SetActive(true);
+        if (corruptButton != null && GetCurrentWave() % 5 != 0 && type != RewardType.Milestone) corruptButton.gameObject.SetActive(true);
     }
     private void ResumeGameLoop()
     {
