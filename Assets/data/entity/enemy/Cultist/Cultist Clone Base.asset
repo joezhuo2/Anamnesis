@@ -35,8 +35,8 @@ MonoBehaviour:
   projSpd: 0
   stCostPct: 0
   kbPct: 0
-  currentHp: 400
-  maxHp: 400
+  currentHp: 650
+  maxHp: 650
   hpPct: 30
   hpRegen: 0
   hpRegPct: 0

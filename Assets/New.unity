@@ -2507,7 +2507,7 @@ MonoBehaviour:
   - upgrade: {fileID: 11400000, guid: 40cb68c5693492e4f85d3ab4c17534c3, type: 2}
     icon: {fileID: 0}
     upgradeName: Reminiscence
-    desc: Attacks may additionally perform an available attack at no cost. (2s cooldown)
+    desc: Attacks may additionally perform an available attack at no cost. (4s cooldown)
   - upgrade: {fileID: 11400000, guid: 1bb0ed8e066ed0043a3ee4a9b47f53a7, type: 2}
     icon: {fileID: 0}
     upgradeName: Cosmic Afterimage
@@ -2516,7 +2516,7 @@ MonoBehaviour:
   - upgrade: {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
     icon: {fileID: 0}
     upgradeName: Feedback Loop
-    desc: Projectiles create shrapnel on hit (0.2s cooldown).
+    desc: Projectiles have a 70% chance to create shrapnel on hit (0.3s cooldown).
   - upgrade: {fileID: 11400000, guid: c6ec0bc05c27887429bd26fce6360948, type: 2}
     icon: {fileID: 0}
     upgradeName: Serenade

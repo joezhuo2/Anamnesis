@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
   speed: 0.8
-  lifetime: 11
+  lifetime: 10
   numPierce: 3000
-  size: 2.5
+  size: 2
   physicalMult: 0
   spellMult: 0.6
   trueMult: 0
@@ -25,6 +25,7 @@ MonoBehaviour:
   specialSclaing: 0
   timeBeforeSameEnemy: 1.5
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
@@ -36,7 +37,7 @@ MonoBehaviour:
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects: []
-  orbitRadius: 1
+  orbitRadius: 1.25
   randOrbRadOffset: 0
   orbitSelf: 1
   rotateClockwise: 0

@@ -5,6 +5,38 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.12_1] - 2026-08-24
+
+### Rebalance
+- **Warp** 
+- count: 3-5 > 2-4
+- dura 11s > 10s
+- cd 8s > 9s
+- size 2.5 > 2
+- orbit rad 1 > 1.25
+- **Warp Rift**
+- 265%s > 215%s
+- size 1.5 > 1.25
+- **Aphelion**
+- cd 1.4s > 1.6s
+- dura 12s > 10.5s
+- size 2.25 > 2
+- 45%s > 35%s
+- **Feedback Loop**
+- speed 14 > 16
+- 20%s > 15%s
+- **Reminiscence**
+- chance 30% > 25%
+- cooldown 3s > 4s
+- delay 0.25s > 0.35s
+- **Feedback Loop**
+- cooldown 0.2s > 0.3s
+- chance 100% > 70%
+- increased cultist and cultist clone health
+
+### Added
+- boss rush now starts at the end of wave 45 (lv. 50 bosses)
+
 ## [v0.1.12] - 2026-08-24 - Milestone Rewards Update
 
 ### Added

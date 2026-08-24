@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Warp A AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 8
+  cooldown: 9
   projectilePrefab: {fileID: 3668590321147367227, guid: 1ec4a1dc8ef075d4da9427f5926da9ac, type: 3}
   pd: {fileID: 11400000, guid: 568c51cd374b96645a4debd41edce6cd, type: 2}
   pattern: 2
@@ -20,7 +20,7 @@ MonoBehaviour:
   spawnDistance: 0
   fixedDistance: 1
   animationLength: 1
-  projectileCount: 3
+  projectileCount: 2
   randomCount: 2
   spread: 0
   randomSpread: 0
@@ -48,9 +48,10 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
+  redirectCount: 0
   type: 1
   icon: {fileID: -6588443895612351326, guid: 8b906dc27e204284280d21a75e910844, type: 3}
   displayName: Warp

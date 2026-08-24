@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Aphelion AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 1.4
+  cooldown: 1.6
   projectilePrefab: {fileID: 2753827802079258189, guid: 5c465d8d3d0d9d444815da75032672e0, type: 3}
   pd: {fileID: 11400000, guid: c63c98b392b0fa54a91b87d2a035a00e, type: 2}
   pattern: 0
@@ -48,9 +48,10 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
+  redirectCount: 0
   type: 0
   icon: {fileID: 7468104345861078195, guid: e969f196ae21d2e43a7a6e06f38c568d, type: 3}
   displayName: Aphelion

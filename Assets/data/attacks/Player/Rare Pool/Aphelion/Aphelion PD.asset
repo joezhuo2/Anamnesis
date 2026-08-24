@@ -14,17 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 64ed8dbedf1b5784abeea70a41c5077f, type: 2}
   speed: 6
-  lifetime: 12
+  lifetime: 10.5
   numPierce: 3000
-  size: 2.25
+  size: 2
   physicalMult: 0
-  spellMult: 0.45
+  spellMult: 0.35
   trueMult: 0
   scalingStat: 44
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0.5
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
@@ -40,3 +41,5 @@ MonoBehaviour:
   randOrbRadOffset: 1
   orbitSelf: 1
   rotateClockwise: 0
+  kbForce: 0
+  knockbackTime: 0.15
