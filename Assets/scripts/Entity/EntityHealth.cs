@@ -280,6 +280,8 @@ public class EntityHealth : MonoBehaviour
 
         OnDeath?.Invoke(gameObject);
 
+        TrySplit();
+
         if (TryGetComponent<StatusEffectManager>(out var sem))
             sem.ClearAllEffects();
 
@@ -298,6 +300,12 @@ public class EntityHealth : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void TrySplit()
+    {
+        if (TryGetComponent<EntitySplitting>(out var splitting))
+            splitting.Split();
     }
 
     private (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, float sourceResPen, int sourceDefShred)

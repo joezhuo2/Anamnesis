@@ -6,7 +6,7 @@
 - [ ] Wave 60 boss and enemies, and first Boss Rush (v0.2.0 Content Update)
 
 ### Medium Priority
-- [ ] New enemy types (e.g. shielded, teleporting, splitting, exploding-on-death, healing aura)
+- [ ] Auras
 - [ ] Elite/Champion enemy variants with unique modifiers (extra hp, faster)
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
 - [ ] Milestone rewards (every 25) (eg. bundled `Statbuff` that contain some positive, some negative)

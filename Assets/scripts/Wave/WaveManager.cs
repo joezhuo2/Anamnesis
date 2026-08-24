@@ -244,18 +244,13 @@ public class WaveManager : MonoBehaviour
         int spawnCount = Mathf.RoundToInt(GetCurrentWave() / 10) + 1;
         for (int i = 0; i < spawnCount; i++) SpawnEnemy(c);
     }
+
     private void SpawnEnemy(WaveData c)
     {
-        Vector2 spawnPosition = (Random.insideUnitCircle * spawnRadius) + (Vector2)currentSequence.spawnLocation;
-        GameObject enemy = Instantiate(c.enemyPrefab, spawnPosition, Quaternion.identity);
+        var enemy = EnemySpawner.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, spawnRadius, c.enemyLevel);
 
-        if (enemy.TryGetComponent<EntityStatManager>(out var statManager))
-        {
-            statManager.ScaleStatsToLevel(c.enemyLevel);
-
-            if (currentAnomaly is StatModifierInstance statMod)
-                statManager.AddStat(statMod.GetBuff());
-        }
+        if (enemy.TryGetComponent<EntityStatManager>(out var esm) && currentAnomaly is StatModifierInstance statMod)
+            esm.AddStat(statMod.GetBuff());
 
         if (c.bossBarPrefab != null && activeBossBar == null)
         {
@@ -263,7 +258,7 @@ public class WaveManager : MonoBehaviour
             activeBossBar = Instantiate(c.bossBarPrefab, spawnParent);
 
             if (activeBossBar.TryGetComponent<BossBarUI>(out var bossBarScript))
-                bossBarScript.Setup(c.bossBarName, statManager);
+                bossBarScript.Setup(c.bossBarName, esm);
         }
 
         if (c.statusEffectDisplayPrefab != null && enemy.TryGetComponent<StatusEffectManager>(out var sem))
@@ -276,6 +271,7 @@ public class WaveManager : MonoBehaviour
         totalSpawned++;
         currentEnemies.Add(enemy);
     }
+
     private void CleanEnemyList() => currentEnemies.RemoveAll(enemy => enemy == null);
     private void EndWave()
     {
