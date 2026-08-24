@@ -27,6 +27,8 @@ public class ProjectileData : ScriptableObject
     public float timeBeforeSameEnemy;
     [Tooltip("Maximum distance between the projectile and the enemy for it to follow the enemy")]
     public float followDistance;
+    [Tooltip("If true, overrides projectile speed and makes the projectile mimic the source's (player or enemy) movement each frame")]
+    public bool followSource;
     public float rotationOffset;
     [Tooltip("If > 0, projectile reverses direction after traveling this distance (boomerang effect)")]
     public float maxBoomerangDist = 0f;

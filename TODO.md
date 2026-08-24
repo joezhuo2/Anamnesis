@@ -4,15 +4,14 @@
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, int - done, atk - missing basic, dot - missing basic)
 - [ ] More skill tree nodes & branches, upgrading existing Awakenings/Attacks (currently none) - 'capstone' nodes, and introducing new ones (currently none)
 - [ ] Wave 60 boss and enemies, and first Boss Rush (v0.2.0 Content Update)
+- [ ] currency system: used for rerolls, refreshing stats during reward selection, undoing skill tree, obtained by killing enemies; stealing/gold bonus stat
+- [ ] Milestone rewards (every 25) (eg. bundled `Statbuff` that contain some positive, some negative)
 
 ### Medium Priority
-- [ ] Auras
 - [ ] Elite/Champion enemy variants with unique modifiers (extra hp, faster)
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
-- [ ] Milestone rewards (every 25) (eg. bundled `Statbuff` that contain some positive, some negative)
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves
 - [ ] Corrupt button (part 2) - can turn normal rewards into new type of special rewards (very rare)
-- [ ] currency system: used for rerolls, refreshing stats during reward selection, undoing skill tree, obtained by killing enemies; stealing/gold bonus stat
 - [ ] Player summons
 - [ ] Combo/synergy bonuses for stacking related rewards (e.g. 3 fire upgrades unlock a bonus)
 - [ ] Anamolies update
@@ -38,6 +37,7 @@
 ### High Priority
 - [ ] Pause menu with resume/restart/quit
 - [ ] Tooltips on hover for stat reward upgrades, player reward upgrades, and attack upgrades
+- [ ] Floating text for xp gains, currency
 
 ### Medium Priority
 - [ ] Audio, Tilemaps & polish
@@ -50,12 +50,11 @@
 - [ ] wave progress indicator
 
 ### Low Priority
-- [ ] Floating text for xp gains, currency, and level-ups
 - [ ] Full attack stats display 
 - [ ] Gamemode selector (classic/endless/bossrush)
 - [ ] Data saving
 - [ ] Build Guide menu 
-- [ ] Minimap 
+- [ ] Minimap, map borders
 - [ ] Post-Death Summary
 - [ ] Suggest certain stats based on player's current loadout
 - [ ] Achievement system with unlock notifications

@@ -29,6 +29,7 @@ public class Projectile : MonoBehaviour {
     private float boomerangSpeed;
     private bool orbitCancelled;
     private bool canTriggerAdd;
+    private Rigidbody2D sourceRb;
 
     private void Awake()
     {
@@ -203,7 +204,15 @@ public class Projectile : MonoBehaviour {
     }
     private void HandleMovement(bool start)
     {
-        if (rb == null || effSpd <= 0 || ownerObj == null) return;
+        if (rb == null || ownerObj == null) return;
+
+        if (pd.followSource)
+        {
+            HandleFollowSourceMovement();
+            return;
+        }
+
+        if (effSpd <= 0) return;
 
         if (pd.orbitRadius > 0 && !orbitCancelled)
         {
@@ -230,6 +239,17 @@ public class Projectile : MonoBehaviour {
         }
 
         if (boomerangActive) UpdateBoomerang();
+    }
+    private void HandleFollowSourceMovement()
+    {
+        if (sourceRb == null)
+        {
+            if (ownerObj == null) return;
+            sourceRb = ownerObj.GetComponent<Rigidbody2D>();
+            if (sourceRb == null) return;
+        }
+
+        rb.linearVelocity = sourceRb.linearVelocity;
     }
     private void UpdateBoomerang()
     {
