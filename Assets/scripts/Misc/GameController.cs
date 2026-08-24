@@ -17,6 +17,19 @@ public class GameController : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        SetupEventSystem();
+    }
+
+    private void SetupEventSystem()
+    {
+        if (FindAnyObjectByType<UnityEngine.EventSystems.EventSystem>() == null)
+        {
+            var es = new GameObject("EventSystem");
+            es.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            es.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+            DontDestroyOnLoad(es);
+        }
     }
 
     private void Start()

@@ -20,7 +20,9 @@ public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         this.node = node;
         this.manager = manager ?? FindAnyObjectByType<SkillTreeManager>();
-        this.playerSkillTree = manager?.player?.GetComponent<PlayerSkillTree>();
+        this.playerSkillTree = manager?.player?.GetComponent<PlayerSkillTree>() ?? FindAnyObjectByType<PlayerSkillTree>();
+
+        if (backgroundImage != null) backgroundImage.raycastTarget = true;
 
         RefreshVisuals();
     }
@@ -28,6 +30,10 @@ public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void RefreshVisuals()
     {
         if (node == null || manager == null) return;
+        if (playerSkillTree == null)
+            playerSkillTree = manager?.player?.GetComponent<PlayerSkillTree>()  ?? FindAnyObjectByType<PlayerSkillTree>();
+
+        if (backgroundImage != null) backgroundImage.raycastTarget = true;
 
         bool unlocked = manager.IsNodeUnlocked(node);
         var (canUnlock, _) = manager.CanUnlock(node);
@@ -59,31 +65,39 @@ public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (manager == null || node == null || playerSkillTree == null) return;
+        if (manager == null || node == null || manager.tree == null) return;
 
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            var (canUnlock, _) = manager.CanUnlock(node);
-            if (canUnlock)
+            bool unlocked = manager.IsNodeUnlocked(node);
+            if (unlocked && !node.isStartingNode) UndoNode();
+            else UnlockNode();
+        }
+    }
+
+    private void UnlockNode()
+    {
+        var (canUnlock, _) = manager.CanUnlock(node);
+        if (canUnlock)
+        {
+            manager.UnlockNode(node);
+
+            var treeUI = GetComponentInParent<SkillTreeUI>();
+            if (treeUI != null) treeUI.OnNodeStateChanged(node);
+        }
+    }
+
+    private void UndoNode()
+    {
+        if (manager.tree != null)
+        {
+            var (canUndo, _) = manager.tree.CanUndo(node);
+            if (canUndo)
             {
-                manager.UnlockNode(node);
+                manager.tree.UndoNode(node);
 
                 var treeUI = GetComponentInParent<SkillTreeUI>();
                 if (treeUI != null) treeUI.OnNodeStateChanged(node);
-            }
-        }
-        else if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            if (manager.IsNodeUnlocked(node) && !node.isStartingNode)
-            {
-                var (canUndo, _) = playerSkillTree.CanUndo(node);
-                if (canUndo)
-                {
-                    playerSkillTree.UndoNode(node);
-
-                    var treeUI = GetComponentInParent<SkillTreeUI>();
-                    if (treeUI != null) treeUI.OnNodeStateChanged(node);
-                }
             }
         }
     }

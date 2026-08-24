@@ -134,7 +134,7 @@ public class EntityHealth : MonoBehaviour
             if (appliedDmg > 0 && ChangeHealth(-appliedDmg, 0, true, sizeMult, color, bypassIFrames, source))
             {
                 if (source.TryGetComponent<PlayerLevel>(out var pl))
-                    pl.GainExp(es.xpDrop * (Mathf.Pow(1.07f, es.level - 1)) * UnityEngine.Random.Range(0.85f, 1.15f));
+                    pl.GainExp(es.xpDrop * (Mathf.Pow(1.05f, es.level - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
                 DropGold(source);
             }
 
@@ -310,7 +310,7 @@ public class EntityHealth : MonoBehaviour
         var playerStats = target.TryGetComponent<EntityStatManager>(out var esm) ? esm.s as PlayerStats : null;
         if (playerStats == null) return;
 
-        int gold = Mathf.RoundToInt(es.goldDrop * UnityEngine.Random.Range(0.85f, 1.15f) * (1f + (playerStats.stealing * 0.01f)));
+        int gold = Mathf.RoundToInt(es.goldDrop * UnityEngine.Random.Range(0.7f, 1.3f) * (1f + (playerStats.stealing * 0.01f)));
 
         if (gold > 0)
         {

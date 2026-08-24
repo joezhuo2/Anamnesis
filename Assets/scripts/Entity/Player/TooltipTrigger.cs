@@ -69,7 +69,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         List<string> lines = new();
         if (cps.dodgeChance != 0f) lines.Add($"Dodge: {cps.dodgeChance:F0}% (-{cps.dodgeResPct:F0}%)");
-        if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd} (+{cps.moveSpeedPct:F0}%)");
+        if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd:F2} (+{cps.moveSpeedPct:F0}%)");
         if (cps.EffDashCooldown != 0) lines.Add($"Dash Cooldown: {cps.EffDashCooldown:F1}s");
         if (cps.EffDashDistance != 0) lines.Add($"Dash Distance: {cps.EffDashDistance:F1}");
         if (cps.EffDashStaminaCost != 0) lines.Add($"Dash Stamina Cost: {cps.EffDashStaminaCost:F1}");
@@ -90,7 +90,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             if (playerSkillTree != null && playerSkillTree.IsNodeUnlocked(snd))
             {
                 var (canUndo, _) = playerSkillTree.CanUndo(snd);
-                if (canUndo) lines.Add($"<color=#FFD700>Right-click to undo ({snd.undoCost}g)</color>");
+                if (canUndo) lines.Add($"<color=#FFD700>Left-click to undo ({snd.undoCost}g)</color>");
                 else lines.Add($"<color=#888888>Undo cost: {snd.undoCost}g (insufficient gold)</color>");
             }
         }

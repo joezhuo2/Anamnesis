@@ -219,7 +219,7 @@ public class PlayerSkillTree : MonoBehaviour
     public (bool canUndo, string failMessage) CanUndo(SkillNodeDef node)
     {
         if (node == null) return (false, "Node is null");
-        if (!unlockedNodes.Contains(node.nodeID)) return (false, "Node not unlocked");
+        if (!IsNodeUnlocked(node)) return (false, "Node not unlocked");
         if (node.isStartingNode) return (false, "Cannot undo starting node");
 
         if (TryGetComponent<EntityStatManager>(out var esm))

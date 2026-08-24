@@ -5,6 +5,21 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.1.11_1] - 2026-08-24
+
+### Rebalance
+- xp dropped nerfed, but variance increased (15% > 20%)
+- xp required for levelling up increased
+- gold variance increased (15% > 30%)
+
+### Updated
+- resource tooltip ui hover zone
+- status effect display location
+
+### Fixed
+- speed rounding in `TooltipTrigger`
+- not being able to undo unlocked nodes (revamped right click to left click)
+
 ## [v0.1.11] - 2026-08-24 - Currency Update
 
 ### Added

@@ -306,9 +306,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityHealth.cs": {
-    "mtime": 1787540671.3056085,
-    "seen": 1787541774.5854037,
-    "ast_hash": "f0d54aa08d266245bdae22cb156ced54",
+    "mtime": 1787590355.756348,
+    "seen": 1787591001.554263,
+    "ast_hash": "f7ea45b477fc7a652aa22fa2a0931aa9",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityProjectileHandler.cs": {
@@ -330,9 +330,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityStats.cs": {
-    "mtime": 1787541684.5837011,
-    "seen": 1787541774.585413,
-    "ast_hash": "1cb80f3afd22ea3d2b76c456de3c0565",
+    "mtime": 1787587901.4195445,
+    "seen": 1787591001.554274,
+    "ast_hash": "a8e362a904e5eda3c733b0be65b2bd2c",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntitySummonHandler.cs": {
@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerAttackHandler.cs": {
-    "mtime": 1787438191.5414488,
-    "seen": 1787538805.3414388,
-    "ast_hash": "95c808ac84230c8ef6ae25d4ef369aad",
+    "mtime": 1787586352.1274557,
+    "seen": 1787591001.5542874,
+    "ast_hash": "b4830d3e8d73dc06e19081656b85e918",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerControls.cs": {
@@ -486,9 +486,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/TooltipTrigger.cs": {
-    "mtime": 1787057570.9797814,
-    "seen": 1787538805.3414574,
-    "ast_hash": "58cf478a323a173c50264bf4b1245a54",
+    "mtime": 1787590440.898812,
+    "seen": 1787591001.5543425,
+    "ast_hash": "4e7cb20a76d1bcd6edac282e20f239f9",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/TooltipUI.cs": {
@@ -558,21 +558,21 @@
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/PlayerSkillTree.cs": {
-    "mtime": 1787506173.6414144,
-    "seen": 1787538805.341468,
-    "ast_hash": "15a41742c26dbe3d13e3b4d561674854",
+    "mtime": 1787586401.3554792,
+    "seen": 1787591001.5543733,
+    "ast_hash": "80b1c879c22bc61d3b2679ce3dac2de7",
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/SkillNodeDef.cs": {
-    "mtime": 1786332143.3296256,
-    "seen": 1787538805.3414688,
-    "ast_hash": "0d0b9f3da81da250e3575478856536c4",
+    "mtime": 1787586301.4992857,
+    "seen": 1787591001.5543754,
+    "ast_hash": "b4af20206c0f31dd1c3cd5a55464590c",
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/SkillNodeUI.cs": {
-    "mtime": 1786332939.3398428,
-    "seen": 1787538805.3414698,
-    "ast_hash": "019a0875c5f41247eb3a787c0bc1089f",
+    "mtime": 1787590604.7196393,
+    "seen": 1787591001.554378,
+    "ast_hash": "f24970977b5dbd014e4c10d502667f8b",
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/SkillTreeDefinition.cs": {
@@ -588,9 +588,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/SkillTreeManager.cs": {
-    "mtime": 1786189134.0406153,
-    "seen": 1787538805.3414717,
-    "ast_hash": "7e618e9ce37de2dd1878f18783caeab1",
+    "mtime": 1787590756.1039739,
+    "seen": 1787591001.554386,
+    "ast_hash": "0232c905d11968bada010942ca5ff2d5",
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/SkillTreePanZoom.cs": {
@@ -738,9 +738,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1787538032.4840937,
-    "seen": 1787538805.3414884,
-    "ast_hash": "283b924e55876eb146be2abbaeb09ae7",
+    "mtime": 1787589975.1052632,
+    "seen": 1787591001.5544415,
+    "ast_hash": "0d24f2b367a60422ab45201886d705cc",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -1014,9 +1014,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787585464.463737,
-    "seen": 1787585475.8374705,
-    "ast_hash": "bcdaff79e28e5cc55124747b1794b5db",
+    "mtime": 1787590959.17594,
+    "seen": 1787591001.5545127,
+    "ast_hash": "a8d1e1ff05ab81a50bfb417242db81da",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -1026,21 +1026,21 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1787585051.9907863,
-    "seen": 1787585475.8374722,
-    "ast_hash": "c8842aaac93caaed05831ab1f1b08e9d",
+    "mtime": 1787590988.5126247,
+    "seen": 1787591001.554516,
+    "ast_hash": "a075bde0c0617352532c15530598ab96",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1787585183.0640907,
-    "seen": 1787585475.837473,
-    "ast_hash": "062fe3351b58128f2945548677a2c6d1",
+    "mtime": 1787590848.1373782,
+    "seen": 1787591001.5545173,
+    "ast_hash": "4b843c31381a1ad63430c0020af31f83",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1787539446.9807148,
-    "seen": 1787541774.5856466,
-    "ast_hash": "cece1ee2060eb96ce38e5a0e7af3583f",
+    "mtime": 1787586130.8693528,
+    "seen": 1787591001.5545194,
+    "ast_hash": "416b18c45584bf8db41544c1c8619b56",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -2010,27 +2010,15 @@
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicator.cs": {
-    "mtime": 1787540629.7869923,
-    "seen": 1787541774.5855324,
-    "ast_hash": "a79d6bd842e488b2839d8f1c247465b4",
+    "mtime": 1787589597.7498896,
+    "seen": 1787591001.5544257,
+    "ast_hash": "1b9b2131781fe243c4450bbda2230823",
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicatorSpawner.cs": {
-    "mtime": 1787540971.1614034,
-    "seen": 1787541774.5855348,
-    "ast_hash": "dc31cbe5183e3d1f3d244b00e5ff1300",
-    "semantic_hash": ""
-  },
-  ".claude/settings.local.json": {
-    "mtime": 1787584329.7798035,
-    "seen": 1787585475.8373141,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
-    "semantic_hash": ""
-  },
-  "~/.claude.json": {
-    "mtime": 1787584413.8717124,
-    "seen": 1787585475.8374333,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "mtime": 1787589679.7195394,
+    "seen": 1787591001.5544276,
+    "ast_hash": "ba9b9f81c26ecfe3ab4c07c924555f48",
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
