@@ -5,6 +5,12 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.2_1] - 2026-08-25
+
+### Added
+- `GAME.md` - summarizes all attacks and player upgrades
+- many files (`CLAUDE.md`, `copilot-instructions.md`, `.copilotignore`, `.claudeignore`) to (hopefully) improve ai workflows
+
 ## [v0.2.2] - 2026-08-25 - Skill Tree Expansion Update
 
 ### Added

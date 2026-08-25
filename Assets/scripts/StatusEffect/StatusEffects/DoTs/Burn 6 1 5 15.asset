@@ -26,7 +26,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   currentStacks: 0
   potencyMultiplier: 1
-  dpt: 15
+  dpt: 35
   scalingStat: 31
   damageType: 2
   indicatorColor: {r: 1, g: 0.2481044, b: 0, a: 1}

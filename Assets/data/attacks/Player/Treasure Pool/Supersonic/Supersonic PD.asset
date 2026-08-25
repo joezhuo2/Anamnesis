@@ -25,6 +25,7 @@ MonoBehaviour:
   specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
@@ -35,11 +36,7 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effects:
-  - effect: {fileID: 0}
-    selfApply: 1
-    applyCondition: 1
-    chance: 1
+  effects: []
   orbitRadius: 0
   randOrbRadOffset: 0
   orbitSelf: 0

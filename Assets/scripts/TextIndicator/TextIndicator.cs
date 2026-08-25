@@ -24,8 +24,8 @@ public class TextIndicator : MonoBehaviour
 
         worldPos = sourcePos + new Vector3(Random.Range(-maxRandomOffset.x, maxRandomOffset.x), Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 0f);
 
-        if (isGold) text.text = $"+{val}g";
-        else if (xpWrapperText) text.text = $"+{val} xp";
+        if (isGold) text.text = $"{(val >= 0 ? "+" : "")}{val}g";
+        else if (xpWrapperText) text.text = $"{(val >= 0 ? "+" : "")}{val} xp";
         else text.text = val.ToString();
 
         text.color = color;

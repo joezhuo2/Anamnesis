@@ -1,0 +1,47 @@
+# Unity Caches & Generated Temp Folders
+[L|l]ibrary/
+[T|t]emp/
+[O|o]bj/
+[B|b]uild/
+[B|b]uilds/
+[L|l]ogs/
+UserSettings/
+ProfilerCaptures/
+Output/
+MemoryCaptures/
+
+# Asset Metadata & Heavy Binaries (Force code-only scanning)
+*.meta
+*.unity
+*.prefab
+*.mat
+*.asset
+*.asset.meta
+*.png
+*.jpg
+*.jpeg
+*.tga
+*.psd
+*.wav
+*.mp3
+*.ogg
+*.fbx
+*.obj
+
+# Generated Solution & Project Files
+*.csproj
+*.sln
+*.slnx
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.user
+
+# Sub-package caches & OS files
+Packages/*/node_modules/
+.DS_Store
+Thumbs.db
+TestResults/
+packages/
+*.nupkg

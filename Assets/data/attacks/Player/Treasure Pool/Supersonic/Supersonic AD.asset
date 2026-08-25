@@ -48,10 +48,10 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 0
+  type: 4
   icon: {fileID: 0}
   displayName: 
