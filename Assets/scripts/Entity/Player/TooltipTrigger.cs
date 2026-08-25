@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, PlayerUpgrade, AttackReward }
+public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, PlayerUpgrade, AttackReward, StatReward, MilestoneReward }
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
@@ -12,6 +12,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private SkillNodeDef snd;
     private PlayerUpgradeReward pur;
     private AttackReward ar;
+    private GeneratedReward gr;
+    private MilestoneRewardData mrd;
     private string skillTreeFailMessage = "";
     private TooltipType tooltipType;
 
@@ -56,6 +58,16 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         tooltipType = TooltipType.AttackReward;
         ar = attackReward;
     }
+    public void SetupTooltipData(GeneratedReward generatedReward)
+    {
+        tooltipType = TooltipType.StatReward;
+        gr = generatedReward;
+    }
+    public void SetupTooltipData(MilestoneRewardData milestoneReward)
+    {
+        tooltipType = TooltipType.MilestoneReward;
+        mrd = milestoneReward;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         switch (tooltipType)
@@ -67,6 +79,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             case TooltipType.SkillTree: ShowSkillTreeTooltip(); break;
             case TooltipType.PlayerUpgrade: ShowPlayerUpgradeTooltip(); break;
             case TooltipType.AttackReward: ShowAttackRewardTooltip(); break;
+            case TooltipType.StatReward: ShowStatRewardTooltip(); break;
+            case TooltipType.MilestoneReward: ShowMilestoneRewardTooltip(); break;
             default: break;
         }
     }
@@ -254,6 +268,26 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         TooltipUI.Instance.ShowTooltip(ar.attackName, string.Join("\n", lines), new(100, -100));
+    }
+    private void ShowStatRewardTooltip()
+    {
+        if (gr == null || gr.br == null || gr.rd == null) return;
+
+        List<string> lines = new();
+        lines.Add($"Rarity: {gr.rd.rarityName} (x{gr.rd.mult:F2})");
+        lines.Add($"Base Value: {gr.br.baseBuff.value:F2}");
+        lines.Add($"Final Value: {(gr.finalVal >= 0 ? "+" : "")}{gr.finalVal:F2}");
+        lines.Add($"Stat: {gr.br.baseBuff.ToString()}");
+
+        TooltipUI.Instance.ShowTooltip(gr.br.baseBuff.ToString(), string.Join("\n", lines), new(100, -100));
+    }
+    private void ShowMilestoneRewardTooltip()
+    {
+        if (mrd == null) return;
+
+        List<string> lines = new() { mrd.GetDescription() };
+
+        TooltipUI.Instance.ShowTooltip(mrd.rewardName, string.Join("\n", lines), new(100, -100));
     }
     public void OnPointerExit(PointerEventData eventData) => CloseTooltip();
     private void OnDisable() => CloseTooltip();

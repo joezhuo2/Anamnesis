@@ -16,16 +16,18 @@ MonoBehaviour:
   duration: 6
   tickInterval: 0
   isBuff: 0
-  icon: {fileID: -2800876817223335725, guid: 1a422c5f5436e5042861653928334be7, type: 3}
-  effName: Vulnerable
-  desc: 'Reduces Damage Resistance by 5% per stack. '
-  maxStacks: 8
+  icon: {fileID: 1751618896811465624, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Afflicted
+  desc: ???
+  maxStacks: 6
+  loseAllStacksOnExpire: 0
   target: {fileID: 0}
   source: {fileID: 0}
   projectile: {fileID: 0}
   currentStacks: 0
+  potencyMultiplier: 1
   redPerStack: 5
-  statType: 18
-  scalingStat: 18
+  statType: 12
+  scalingStat: 12
   maxRed: 0.9
   minRed: 0

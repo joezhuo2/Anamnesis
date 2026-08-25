@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
+  m_Name: Lifeforce PD
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
+  mainAttack: {fileID: 11400000, guid: 32739481cac91ff4f90db8596af86b20, type: 2}
+  speed: 0
+  lifetime: 0.75
+  numPierce: 5
+  size: 2.25
+  physicalMult: 0
+  spellMult: 0.9
+  trueMult: 0
+  scalingStat: 30
+  specialMult: 0.5
+  specialSclaing: 0
+  timeBeforeSameEnemy: 0
+  followDistance: 0
+  followSource: 0
+  rotationOffset: 0
+  maxBoomerangDist: 0
+  angleOverride: 0
+  useTrueAngle: 0
+  bypassIFrames: 0
+  randomDir: 0
+  additionalAttack: {fileID: 11400000, guid: 020fea61b27ee7c48811f4b5c4a268d9, type: 2}
+  additionalChance: 1
+  addAttackRequiresHit: 1
+  additionalFollowsMouse: 1
+  effects: []
+  orbitRadius: 0
+  randOrbRadOffset: 0
+  orbitSelf: 0
+  rotateClockwise: 0
+  kbForce: 6
+  knockbackTime: 0.15

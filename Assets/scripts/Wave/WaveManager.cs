@@ -844,6 +844,10 @@ public class WaveManager : MonoBehaviour
             StatType.IntPct => StatType.EffInt,
             StatType.staminaRegen => StatType.EffStReg,
             StatType.stRegPct => StatType.EffStReg,
+            StatType.maxStamina => StatType.EffMaxStamina,
+            StatType.maxStaminaPct => StatType.EffMaxStamina,
+            StatType.maxManaPct => StatType.EffMaxMana,
+            StatType.maxMana => StatType.EffMaxMana,
             _ => type,
         };
 

@@ -40,8 +40,8 @@ public class EntityStatManager : MonoBehaviour
         s.attack += 4 * levelOffset;
         s.atkPct += 3f * levelOffset;
 
-        s.maxHp += 8 * levelOffset;
-        s.hpPct += 4f * levelOffset;
+        s.maxHp += 12 * levelOffset;
+        s.hpPct += 8f * levelOffset;
 
         s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.02f * levelOffset)));
         s.hpRegPct += levelOffset;
@@ -133,6 +133,7 @@ public class EntityStatManager : MonoBehaviour
             StatType.kbRes => s.kbRes,
             StatType.kbPct => s.kbPct,
             StatType.ExpBonus => s.expBonus,
+            StatType.Stealing => s.stealing,
             StatType.sePotPct => s.sePotPct,
             StatType.seDurPct => s.seDurPct,
             StatType.manaGainPct => s.manaGainPct,
@@ -202,6 +203,7 @@ public class EntityStatManager : MonoBehaviour
             case StatType.kbRes: s.kbRes += mod; break;
             case StatType.kbPct: s.kbPct += mod; break;
             case StatType.ExpBonus: s.expBonus += mod; break;
+            case StatType.Stealing: s.stealing += mod; break;
             case StatType.sePotPct: s.sePotPct += mod; break;
             case StatType.seDurPct: s.seDurPct += mod; break;
             case StatType.manaGainPct: s.manaGainPct += mod; break;

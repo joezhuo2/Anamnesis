@@ -49,6 +49,9 @@ public class RewardButton : MonoBehaviour
         if (iconImage != null && reward.br.icon != null)
             iconImage.sprite = reward.br.icon;
 
+        if (TryGetComponent<TooltipTrigger>(out var tt))
+            tt.SetupTooltipData(reward);
+
         LinkButtonComponent();
     }
     public void CorruptButton(string statChangeLine, float corruptMult)
@@ -68,6 +71,9 @@ public class RewardButton : MonoBehaviour
         borderHighlight.color = Color.darkRed;
 
         isCorrupted = true;
+
+        if (TryGetComponent<TooltipTrigger>(out var tt))
+            tt.SetupTooltipData(statRewardData);
 
         LinkButtonComponent();
     }
@@ -121,6 +127,9 @@ public class RewardButton : MonoBehaviour
         if (borderHighlight != null) borderHighlight.color = Color.teal;
 
         if (iconImage != null) iconImage.sprite = null;
+
+        if (TryGetComponent<TooltipTrigger>(out var tt))
+            tt.SetupTooltipData(milestoneReward);
 
         LinkButtonComponent();
     }

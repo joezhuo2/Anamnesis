@@ -35,6 +35,7 @@ public static class DamageCalculator
         snapshot.specialMult = (pd.specialSclaing) switch
         {
             SpecialScalingAttribute.Orbits => esm.GameObject().TryGetComponent<EntityProjectileHandler>(out var eph) ? 1f + (eph.OrbitCount * pd.specialMult) : 1f,
+            SpecialScalingAttribute.HpConsumed => CalculateHpConsumedMult(pd, esm),
             _ => 1f
         };
         snapshot.damagePct = esm.s.damagePct;
@@ -131,5 +132,16 @@ public static class DamageCalculator
             return (critDamage, true);
         }
         return (baseDamage, false);
+    }
+
+    private static float CalculateHpConsumedMult(ProjectileData pd, EntityStatManager esm)
+    {
+        if (pd.mainAttack == null) return 1f;
+
+        float totalHealthCost = Mathf.Abs(pd.mainAttack.healthCost + (esm.s.EffMaxHp * (pd.mainAttack.healthCostPct * 0.01f)));
+        if (totalHealthCost <= 0f) return 1f;
+
+        float hpConsumedPct = (totalHealthCost / esm.s.EffMaxHp) * 100f;
+        return 1f + (hpConsumedPct * pd.specialMult * 0.01f);
     }
 }

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Ignotion Flash AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  cooldown: 2.8
+  projectilePrefab: {fileID: 2526318109841838836, guid: df1608f3ed2783c49b1f29f88fbb49ad, type: 3}
+  pd: {fileID: 11400000, guid: 091ddf6a425878b4f9e5a431b302393d, type: 2}
+  pattern: 0
+  spawnDelay: 0
+  spawnDistance: 0.65
+  fixedDistance: 0
+  animationLength: 0.75
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 0
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 0
+  staminaCostPct: 0
+  healthCost: 0
+  healthCostPct: 0
+  manaCost: 0
+  manaCostPct: 0
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 3
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 0
+  manaPctGainOnHit: 1
+  summonChance: 0
+  summonCondition: 0
+  fireOrbits: 0
+  absorbOrbitPct: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
+  redirectCount: 0
+  type: 0
+  icon: {fileID: -266155740, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  displayName: Ignition Flash

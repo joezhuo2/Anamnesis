@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
+  m_Name: Ignotion Flash PD
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
+  mainAttack: {fileID: 11400000, guid: 8afff44b5a5dbe947a9f4bdcc9dfce62, type: 2}
+  speed: 0
+  lifetime: 0.75
+  numPierce: 6
+  size: 2.5
+  physicalMult: 2.85
+  spellMult: 0
+  trueMult: 0
+  scalingStat: 31
+  specialMult: 1
+  specialSclaing: 0
+  timeBeforeSameEnemy: 0
+  followDistance: 0
+  followSource: 0
+  rotationOffset: 0
+  maxBoomerangDist: 0
+  angleOverride: 0
+  useTrueAngle: 0
+  bypassIFrames: 0
+  randomDir: 0
+  additionalAttack: {fileID: 0}
+  additionalChance: 0
+  addAttackRequiresHit: 1
+  additionalFollowsMouse: 0
+  effects:
+  - effect: {fileID: 11400000, guid: b7144ba4137f1fa42866988ed565e508, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 1
+  - effect: {fileID: 11400000, guid: d9ad071f6887e4e41a4dce3d3e47600b, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 0.45
+  orbitRadius: 0
+  randOrbRadOffset: 0
+  orbitSelf: 0
+  rotateClockwise: 0
+  kbForce: 5
+  knockbackTime: 0.15

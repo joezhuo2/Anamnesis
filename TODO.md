@@ -1,7 +1,7 @@
 # Content Updates 
 
 ### High Priority (To be done before 1 minor version)
-- [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, int - done, atk - missing basic, dot - missing basic)
+- [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)
 - [ ] More skill tree nodes & branches, upgrading existing Awakenings/Attacks (currently none) - 'capstone' nodes, and introducing new ones (currently none)
 - [ ] Wave 60 boss and enemies, and Boss Rush Extension (v0.3.0 Content Update)
 
@@ -41,15 +41,16 @@
 - [ ] Pause menu with resume/restart/quit, settings/controls/stats menu
 - [ ] Title/header for skill tree/reward menu
 - [ ] Audio, Tilemaps & polish
+- [ ] Gamemode selector (classic/endless/bossrush)
+- [ ] Difficulty selector
+- [ ] Data saving
 
 ### Medium Priority (to be done before 2 minor versions)
-- [ ] Difficulty selector
-- [ ] Gamemode selector (classic/endless/bossrush)
-- [ ] Data saving
 - [ ] map borders
 - [ ] wave progress indicator
 
 ### Low Priority
+- [ ] Scrollable Tooltips
 - [ ] Full attack stats display 
 - [ ] Status Effect vfx
 - [ ] Screen shake and hit-stop feedback on attacks
@@ -71,6 +72,13 @@
 - [ ] FPS counter & performance stats toggle
 - [ ] Confirmation dialog before corrupting a reward
 
-# Bug Fixes
+# Attack Content Suggestions (to fill missing build roles)
 
-### High Priority
+## HP Build - Missing Ultimate / Skill / Awakenings
+- [ ] **HP Ultimate**: "Vital Surge" - Consume 30% max HP to deal massive damage scaling with missing HP, heal to full on kill
+- [ ] **HP Skill**: "Life Tap" - Channel to convert HP into a damage shield that explodes when broken, scaling with max HP
+- [ ] **HP Awakening**: "Undying Will" - On fatal damage, survive with 1 HP and gain 3s invulnerability + 200% damage (once per wave)
+
+## Armor Build - Missing Basic / Ultimate
+- [ ] **Armor Basic**: "Shield Bash" - Melee attack dealing damage equal to 150% armor, applies 2s stun, generates 5 armor on hit
+- [ ] **Armor Ultimate**: "Iron Maiden" - Reflect 300% of damage taken for 8s, gain armor equal to damage reflected, enemies attacking you take thorns damage

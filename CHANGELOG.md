@@ -5,6 +5,19 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.1] - 2026-08-25
+
+### Added
+- `TooltipTrigger` for all reward button types
+- Ignition Flash - new DoT basic attack that also debuffs enemies
+- Lifeforce - hp scaling spell damage skill nuke, deals more damage based on hp consumed
+
+### Fixed
+- enemy health bars being invisible
+- reward buttons showing the tooltip of the previously shown attack/player upgrade
+- stealing and exp bonus stat rewards not working correctly
+- max mana/stamina % increases not showing before and after values of stamina, not stamina %
+
 ## [v0.2.0] - 2026-08-24 — Progression, Economy & Milestones Update (Release Summary)
 
 This release covers the full development arc from `v0.1.0` through `v0.1.13_1`. Over this period Anamnesis evolved from a wave-based action game with a basic skill tree into a deep roguelite with layered progression systems, a full currency economy, milestone rewards, and significantly expanded build-crafting depth.

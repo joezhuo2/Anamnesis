@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum ApplyCondition { OnHit, OnCast }
-public enum SpecialScalingAttribute { None, Orbits }
+public enum SpecialScalingAttribute { None, Orbits, HpConsumed }
 
 [CreateAssetMenu(fileName = "projectile_data", menuName = "Data/Projectile")]
 public class ProjectileData : ScriptableObject

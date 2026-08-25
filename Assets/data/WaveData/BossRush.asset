@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BossRush
   m_EditorClassIdentifier: Assembly-CSharp::WaveSequence
   spawnLocation: {x: 0, y: 0}
-  nextSequence: {fileID: 0}
+  nextSequence: {fileID: 11400000, guid: f0df4be58cf410b4a822c4473487d16e, type: 2}
   waves:
   - enemyPrefab: {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
     maxTotalEnemies: 1
