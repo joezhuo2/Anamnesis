@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree }
+public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, PlayerUpgrade, AttackReward }
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
@@ -10,6 +10,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private EntityStatManager cesm;
     private StatusEffect cse;
     private SkillNodeDef snd;
+    private PlayerUpgradeReward pur;
+    private AttackReward ar;
     private string skillTreeFailMessage = "";
     private TooltipType tooltipType;
 
@@ -44,6 +46,16 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         tooltipType = TooltipType.Dash;
         cps = ps;
     }
+    public void SetupTooltipData(PlayerUpgradeReward upgradeReward)
+    {
+        tooltipType = TooltipType.PlayerUpgrade;
+        pur = upgradeReward;
+    }
+    public void SetupTooltipData(AttackReward attackReward)
+    {
+        tooltipType = TooltipType.AttackReward;
+        ar = attackReward;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         switch (tooltipType)
@@ -53,6 +65,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             case TooltipType.StatusEffect: ShowStatusEffectTooltip(); break;
             case TooltipType.Dash: ShowDashTooltip(); break;
             case TooltipType.SkillTree: ShowSkillTreeTooltip(); break;
+            case TooltipType.PlayerUpgrade: ShowPlayerUpgradeTooltip(); break;
+            case TooltipType.AttackReward: ShowAttackRewardTooltip(); break;
             default: break;
         }
     }
@@ -185,6 +199,61 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             lines.Add($"Base: {string.Join(" ", dmgTypes)}");
 
         TooltipUI.Instance.ShowTooltip(cad.displayName, string.Join("\n", lines), new(0, -100));
+    }
+    private void ShowPlayerUpgradeTooltip()
+    {
+        if (pur == null || pur.upgrade == null) return;
+
+        var upgrade = pur.upgrade;
+        List<string> lines = new();
+
+        if (!string.IsNullOrEmpty(pur.desc)) lines.Add(pur.desc);
+
+        lines.Add($"Trigger: {string.Join(", ", upgrade.conditions)}");
+        if (upgrade.chance < 1f) lines.Add($"Chance: {upgrade.chance * 100:F0}%");
+        if (upgrade.cooldown > 0f) lines.Add($"Cooldown: {upgrade.cooldown:F1}s");
+        if (upgrade.delay > 0f) lines.Add($"Delay: {upgrade.delay:F1}s");
+
+        TooltipUI.Instance.ShowTooltip(pur.upgradeName, string.Join("\n", lines), new(100, -100));
+    }
+    private void ShowAttackRewardTooltip()
+    {
+        if (ar == null || ar.newAttack == null) return;
+
+        var attack = ar.newAttack;
+        List<string> lines = new();
+
+        lines.Add($"Type: {attack.type} ({attack.pattern})");
+        if (attack.cooldown > 0f) lines.Add($"Cooldown: {attack.cooldown:F1}s");
+
+        if (attack.staminaCost > 0f || attack.staminaCostPct > 0f) lines.Add($"Stamina Cost: {attack.staminaCost:F0} +{attack.staminaCostPct:F1}%");
+        if (attack.manaCost > 0f || attack.manaCostPct > 0f) lines.Add($"Mana Cost: {attack.manaCost:F0} +{attack.manaCostPct:F1}%");
+        if (attack.healthCost > 0f || attack.healthCostPct > 0f) lines.Add($"Health Cost: {attack.healthCost:F0} +{attack.healthCostPct:F1}%");
+
+        if (attack.healthGainOnHit > 0f || attack.healthPctGainOnHit > 0f) lines.Add($"Health Gain: {attack.healthGainOnHit:F0} +{attack.healthPctGainOnHit:F1}%");
+        if (attack.staminaGainOnHit > 0f || attack.staminaPctGainOnHit > 0f) lines.Add($"Stamina Gain: {attack.staminaGainOnHit:F0} +{attack.staminaPctGainOnHit:F1}%");
+        if (attack.manaGainOnHit > 0f || attack.manaPctGainOnHit > 0f) lines.Add($"Mana Gain: {attack.manaGainOnHit:F0} +{attack.manaPctGainOnHit:F1}%");
+
+        if (attack.explodeOrbits) lines.Add($"Explodes all orbiting projectiles");
+        if (attack.fireOrbits) lines.Add($"Fires all orbiting projectiles");
+        if (attack.absorbOrbitPct > 0f) lines.Add($"Absorbs all orbiting projectiles ({attack.absorbOrbitPct:F1}% stat returns)");
+        if (attack.redirectOrbits && attack.redirectCount > 0) lines.Add($"Redirects {attack.redirectCount} orbiting projectiles to nearest enemy");
+
+        if (attack.pd != null)
+        {
+            List<string> dmgTypes = new();
+            if (attack.pd.speed > 0f) lines.Add($"Speed: {attack.pd.speed:F1}");
+            if (attack.pd.physicalMult > 0f) dmgTypes.Add($"{attack.pd.physicalMult:F0}P");
+            if (attack.pd.spellMult > 0f) dmgTypes.Add($"{attack.pd.spellMult:F0}S");
+            if (attack.pd.trueMult > 0f) dmgTypes.Add($"{attack.pd.trueMult:F0}T");
+            if (dmgTypes.Count > 0) lines.Add($"Damage: {string.Join(" ", dmgTypes)}");
+            if (attack.pd.followDistance > 0f) lines.Add($"Homing Distance: {attack.pd.followDistance:F1}");
+            if (attack.pd.maxBoomerangDist > 0f) lines.Add($"Boomerang Distance: {attack.pd.maxBoomerangDist:F1}");
+            if (attack.pd.orbitSelf) lines.Add($"Orbits Owner at a radius of {attack.pd.orbitRadius:F1}-{attack.pd.orbitRadius + attack.pd.randOrbRadOffset:F1}");
+            if (attack.pd.kbForce > 0f) lines.Add($"Knockback: {attack.pd.kbForce:F1} for {attack.pd.knockbackTime:F2}s");
+        }
+
+        TooltipUI.Instance.ShowTooltip(ar.attackName, string.Join("\n", lines), new(100, -100));
     }
     public void OnPointerExit(PointerEventData eventData) => CloseTooltip();
     private void OnDisable() => CloseTooltip();

@@ -18,13 +18,14 @@ MonoBehaviour:
   numPierce: 3000
   size: 4
   physicalMult: 0
-  spellMult: 6.2
+  spellMult: 5.5
   trueMult: 0
   scalingStat: 44
-  specialMult: 0.3
+  specialMult: 0.2
   specialSclaing: 1
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0

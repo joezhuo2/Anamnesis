@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 8757107668349069962}
   - component: {fileID: 583441793148676687}
   - component: {fileID: 4920953457304010820}
+  - component: {fileID: 6069429209543744589}
   m_Layer: 0
   m_Name: RewardButtonPrefab
   m_TagString: Untagged
@@ -213,9 +214,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RewardButton
   titleText: {fileID: 7280224305912074801}
   descriptionText: {fileID: 8526629860128992708}
-  cardBackground: {fileID: 1876857613499962229}
   borderHighlight: {fileID: 1876857613499962229}
   iconImage: {fileID: 0}
+  statRewardData:
+    br:
+      icon: {fileID: 0}
+      baseBuff:
+        type: 0
+        value: 0
+      weight: 0
+    rd:
+      rarityName: 
+      displayColor: {r: 0, g: 0, b: 0, a: 0}
+      mult: 1
+      weight: 0
+    mult: 1
 --- !u!114 &583441793148676687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +281,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2774817416230450425}
   m_CullTransparentMesh: 1
+--- !u!114 &6069429209543744589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2774817416230450425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9105d1febb54ece40b3bc8fa9593d36b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TooltipTrigger
 --- !u!1 &8231657609266981713
 GameObject:
   m_ObjectHideFlags: 0

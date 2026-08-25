@@ -888,9 +888,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787615921.7389438,
-    "seen": 1787615938.9132307,
-    "ast_hash": "2c9abb7c9977f2523c01b417da3bacfb",
+    "mtime": 1787617087.3223104,
+    "seen": 1787617106.6795382,
+    "ast_hash": "10b260b558df9537a677a612f51c88c3",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -2001,6 +2001,12 @@
     "mtime": 1787615410.4204383,
     "seen": 1787615470.8560247,
     "ast_hash": "a7dbb7cfa7d51390e2d7258f50ae1deb",
+    "semantic_hash": ""
+  },
+  "CREDITS.md": {
+    "mtime": 1787617069.8971524,
+    "seen": 1787617106.6795404,
+    "ast_hash": "fa9d0b4dba9f02ff0658308ecd9db45c",
     "semantic_hash": ""
   }
 }

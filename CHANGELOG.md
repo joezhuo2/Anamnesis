@@ -3,7 +3,37 @@
 All notable changes to Anamnesis are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [v0.2.0] - 2026-08-24 — Progression, Economy & Milestones Update (Release Summary)
+
+This release covers the full development arc from `v0.1.0` through `v0.1.13_1`. Over this period Anamnesis evolved from a wave-based action game with a basic skill tree into a deep roguelite with layered progression systems, a full currency economy, milestone rewards, and significantly expanded build-crafting depth.
+
+### Highlights
+
+- **Level & Progression System (v0.1.9)** — Enemies now drop XP; collecting XP levels up the player, granting HP, ATK, INT, SPD increases and a skill point per level. Bosses drop significantly more XP. An `EXP Bonus` stat in reward pools accelerates leveling. Level-up indicator added.
+- **Gold/Currency Economy (v0.1.11)** — Enemies drop gold on death (15% variance, scaling with Stealing stat). Gold funds skill-node refunds (default 50g, configurable per node) and serves as a fallback reroll currency (200g) when rerolls are exhausted. Floating gold text indicators added.
+- **Milestone Rewards (v0.1.12)** — Every 25 waves (25, 50, 75, 100…) players choose from 3 synergistic reward bundles (`MilestoneReward` struct) that combine powerful buffs with meaningful drawbacks. Uses existing reward UI with custom colors; supports rerolls.
+- **Stats Extension (v0.1.13)** — Major stat system expansion:
+  - **Status Effect Stats**: `sePotPct` (potency %), `seDurPct` (duration %), `seTickRatePct` (tick rate %, min 0.1s interval).
+  - **Resource Stats**: `manaGainPct`, `maxManaPct` (via `EffMaxMana`), `maxStaminaPct` (via `EffMaxStamina`).
+  - **Per-Attack-Type CDR**: `basicCdRedPct`, `skillCdRedPct`, `ultCdRedPct` (multiplicative with attack speed).
+  - `potencyMultiplier` field on `StatusEffect` base class; all new stats integrated into `StatType`, `EntityStatManager`, reward pools, and tooltips.
+- **Enemy Splitting & Global Spawner (v0.1.10)** — Enemies can now split into more enemies with configurable settings (count, HP scaling, delay, inheritance). Centralized `GlobalEnemySpawner` for consistent spawn logic.
+- **Boss Rush (v0.1.12_1)** — After wave 45, level 50 bosses begin spawning in an endless gauntlet.
+- **Corruption System (v0.1.7)** — Once per wave, players can corrupt the reward pool: each button has a 40% chance to become "corrupted," gaining a stat multiplier of +80% to -180%.
+- **Title & Subtitle System (v0.1.6)** — Dynamic game title/subtitle with fade in/out, font/color configuration. Wave-complete and boss-killed titles integrated into `WaveManager`.
+- **New Attacks & Enemies** — Exodus ultimate (3-stage, ATK/INT/ARMOR scaling, phys/spl/true damage), Supersonic treasure attack, spread barrage pattern, Cultist clone summon & large ball attacks.
+- **Skill Tree Polish** — Tier 2 nodes added; node icons overridable per `SkillNodeDef`; undo cost shown in tooltips; right-click → left-click refund; border highlight fixes.
+- **Technical Hardening** — Deep-cloning for enemy `AttackData`/skill nodes on spawn; pooled damage/text indicators with fixed sizing; `RewardButton`/`WaveManager` cleanup on destroy; anomaly stat-mod bug fixed (was granting +0%); typo fixes (anamoly → anomaly).
+- **Rebalancing Passes** — Multiple waves: enemy HP/speed scaling curves flattened; XP formula nerfed; XP gain nerfed; gold/XP variance increased; Warp, Aphelion, Nirvana, Feedback Loop, Reminiscence, Exodus rebalanced; anomaly chance raised (5% → 15%); Lich buffed.
+- **Tooltip & UI Improvements** — Resource tooltip hover zone expanded; status effect display repositioned; speed rounding fixed; skill tree undo cost display; attack/upgrade tooltips on reward buttons.
+
+### Rebalance
+- **Nirvana**
+  - 620%S > 550%S
+  - +30%S/orbit > +20%S/orbit
+  - kbForce: 8 > 12
 
 ## [v0.1.13_1] - 2026-08-24
 

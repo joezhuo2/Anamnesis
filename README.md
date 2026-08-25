@@ -90,9 +90,10 @@ Assets/
 ├── New.unity                  # Main game scene (WaveManager, SkillTree, Player UI)
 ├── data/                      # ScriptableObject data (attacks, entities, waves, skill tree)
 │   ├── attacks/               # Player & enemy AttackData
-│   ├── entity/                # Enemy stats & data
-│   ├── prefabs/               # Player, enemies, UI prefabs
+│   ├── entity/                # Enemy stats, attacks & data
+│   ├── images/                # Images assets
 │   ├── PlayerUpgrade/         # Upgrade ScriptableObjects
+│   ├── prefabs/               # Player, enemies, UI prefabs
 │   ├── SkillTree/             # Skill tree definition & node assets
 │   └── WaveData/              # Wave sequences
 └── scripts/
@@ -102,8 +103,8 @@ Assets/
     ├── SkillTree/             # Skill tree manager, UI, pan/zoom
     ├── Wave/                  # WaveManager, rewards, anomalies, enemy spawner
     ├── Items/                 # Item & gear definitions
-    ├── TextIndicator/       # Floating damage numbers, XP indicators
-    └── UI/                    # Title system, tooltips, level-up indicator
+    ├── Misc/                  # GameController, other misc files
+    ├── TextIndicator/         # Floating damage numbers, XP/Gold indicators
 ```
 
 ## Getting Started

@@ -3964,7 +3964,7 @@ GameObject:
   - component: {fileID: 957380139}
   - component: {fileID: 957380138}
   - component: {fileID: 957380140}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DescText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4329,7 +4329,8 @@ GameObject:
   - component: {fileID: 1016790736}
   - component: {fileID: 1016790735}
   - component: {fileID: 1016790739}
-  m_Layer: 0
+  - component: {fileID: 1016790740}
+  m_Layer: 5
   m_Name: TooltipUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4391,6 +4392,30 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!223 &1016790740
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016790732}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 1
+  m_TargetDisplay: 0
 --- !u!1001 &1082951235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4504,7 +4529,7 @@ GameObject:
   - component: {fileID: 1084673231}
   - component: {fileID: 1084673233}
   - component: {fileID: 1084673232}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ContentContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6653,7 +6678,7 @@ GameObject:
   - component: {fileID: 1604680363}
   - component: {fileID: 1604680362}
   - component: {fileID: 1604680364}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7198,7 +7223,7 @@ GameObject:
   - component: {fileID: 1663598204}
   - component: {fileID: 1663598203}
   - component: {fileID: 1663598205}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8012,7 +8037,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 77572603}
   - {fileID: 8692802964581176887}
+  - {fileID: 1465221077}
   - {fileID: 652157718}
   - {fileID: 1434897402}
-  - {fileID: 1465221077}
   - {fileID: 1423153586}

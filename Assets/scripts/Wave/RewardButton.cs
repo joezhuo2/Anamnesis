@@ -85,6 +85,9 @@ public class RewardButton : MonoBehaviour
         if (iconImage != null && attackReward.icon != null)
             iconImage.sprite = attackReward.icon;
 
+        if (TryGetComponent<TooltipTrigger>(out var tt))
+            tt.SetupTooltipData(attackReward);
+
         LinkButtonComponent();
     }
     public void Setup(PlayerUpgradeReward upgradeReward, Action<PlayerUpgradeReward> claimCallback)
@@ -100,6 +103,9 @@ public class RewardButton : MonoBehaviour
 
         if (iconImage != null && upgradeReward.icon != null)
             iconImage.sprite = upgradeReward.icon;
+
+        if (TryGetComponent<TooltipTrigger>(out var tt))
+            tt.SetupTooltipData(upgradeReward);
 
         LinkButtonComponent();
     }

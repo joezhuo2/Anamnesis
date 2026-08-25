@@ -36,7 +36,5 @@ public static class KnockbackHandler
     }
 
     public static void ApplyKnockback(List<AppliedForce> forces, Vector2 direction, float force, float duration)
-    {
-        forces.Add(new AppliedForce { dir = direction, force = force, time = duration });
-    }
+        => forces.Add(new AppliedForce { dir = direction, force = force, time = duration });
 }

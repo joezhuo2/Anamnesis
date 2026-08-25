@@ -1,4 +1,8 @@
 ## Roadmap
+
+### Pre [v0.3.0]
+- [v0.2.0] - **Tooltip Expansion Update**: added tooltips to player upgrades and attack rewards
+
 ### Pre [v0.2.0] - Content Expansion Update
 - [v0.1.12] **The Milestone Update**: milestone rewards with buffs and drawbacks
 - [v0.1.11] **The Currency Update**: gold system, stealing stat, gold rerolls, skill node refunding
