@@ -56,15 +56,15 @@ public class PlayerUI : MonoBehaviour
     }
     private void UpdateManaBar()
     {
-        if (p.currentMana == lastMana && p.maxMana == lastMaxMana) return;
+        if (p.currentMana == lastMana && p.EffMaxMana == lastMaxMana) return;
 
-        manaBar.maxValue = p.maxMana;
+        manaBar.maxValue = p.EffMaxMana;
         manaBar.value = p.currentMana;
 
-        manaText.text = $"{p.currentMana}/{p.maxMana}";
+        manaText.text = $"{p.currentMana}/{p.EffMaxMana}";
 
         lastMana = p.currentMana;
-        lastMaxMana = p.maxMana;
+        lastMaxMana = Mathf.RoundToInt(p.EffMaxMana);
     }
     private void UpdateHealthBar()
     {
@@ -95,14 +95,14 @@ public class PlayerUI : MonoBehaviour
     {
         if (!p.isAlive) return;
 
-        if (p.currentStamina == lastStamina && p.maxStamina == lastMaxStamina) return;
+        if (p.currentStamina == lastStamina && p.EffMaxStamina == lastMaxStamina) return;
 
-        staminaUI.maxValue = p.maxStamina;
+        staminaUI.maxValue = p.EffMaxStamina;
         staminaUI.value = p.currentStamina;
-        staminaText.text = $"{p.currentStamina}/{p.maxStamina}";
+        staminaText.text = $"{p.currentStamina}/{p.EffMaxStamina}";
 
         lastStamina = p.currentStamina;
-        lastMaxStamina = p.maxStamina;
+        lastMaxStamina = Mathf.RoundToInt(p.EffMaxStamina);
     }
     private void UpdateXpBar()
     {

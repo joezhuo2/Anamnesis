@@ -133,6 +133,17 @@ public class EntityStatManager : MonoBehaviour
             StatType.kbRes => s.kbRes,
             StatType.kbPct => s.kbPct,
             StatType.ExpBonus => s.expBonus,
+            StatType.sePotPct => s.sePotPct,
+            StatType.seDurPct => s.seDurPct,
+            StatType.manaGainPct => s.manaGainPct,
+            StatType.seTickRatePct => s.seTickRatePct,
+            StatType.maxManaPct => s.maxManaPct,
+            StatType.maxStaminaPct => s.maxStaminaPct,
+            StatType.basicCdRedPct => s.basicCdRedPct,
+            StatType.skillCdRedPct => s.skillCdRedPct,
+            StatType.ultCdRedPct => s.ultCdRedPct,
+            StatType.EffMaxMana => s.EffMaxMana,
+            StatType.EffMaxStamina => s.EffMaxStamina,
             _ => 0f,
         };
         return value;
@@ -191,77 +202,17 @@ public class EntityStatManager : MonoBehaviour
             case StatType.kbRes: s.kbRes += mod; break;
             case StatType.kbPct: s.kbPct += mod; break;
             case StatType.ExpBonus: s.expBonus += mod; break;
+            case StatType.sePotPct: s.sePotPct += mod; break;
+            case StatType.seDurPct: s.seDurPct += mod; break;
+            case StatType.manaGainPct: s.manaGainPct += mod; break;
+            case StatType.seTickRatePct: s.seTickRatePct += mod; break;
+            case StatType.maxManaPct: s.maxManaPct += mod; break;
+            case StatType.maxStaminaPct: s.maxStaminaPct += mod; break;
+            case StatType.basicCdRedPct: s.basicCdRedPct += mod; break;
+            case StatType.skillCdRedPct: s.skillCdRedPct += mod; break;
+            case StatType.ultCdRedPct: s.ultCdRedPct += mod; break;
             default: break;
 
         }
-    }
-}
-
-[System.Serializable]
-public struct StatBuff : IEquatable<StatBuff>
-{
-    public StatType type;
-    public float value;
-
-    public StatBuff(StatType type, float value) : this()
-    {
-        this.type = type;
-        this.value = value;
-    }
-    public readonly bool Equals(StatBuff other) => type == other.type && Mathf.Approximately(value, other.value);
-
-    public override bool Equals(object obj) => obj is StatBuff other && Equals(other);
-    public override int GetHashCode() => HashCode.Combine(type, value);
-    public override string ToString()
-    {
-        string name = type switch
-        {
-            StatType.attack =>              "Attack",
-            StatType.atkPct =>              "Increased Attack %",
-            StatType.damagePct =>           "Increased Damage %",
-            StatType.physicalDmgPct =>      "Increased Physical Damage %",
-            StatType.spellDmgPct =>         "Increased Spell Damage %",
-            StatType.critChance =>          "Crit Chance",
-            StatType.critDamage =>          "Crit Damage",
-            StatType.aoePct =>              "Increased AoE %",
-            StatType.maxHp =>               "Max Health",
-            StatType.hpPct =>               "Increased Health %",
-            StatType.hpRegen =>             "HP Regen",
-            StatType.hpRegPct =>            "Increased HP Regen %",
-            StatType.armor =>               "Armor",
-            StatType.armorPct =>            "Increased Armor %",
-            StatType.damageRes =>           "Damage Resistance",
-            StatType.physicalRes =>         "Physical Resistance",
-            StatType.spellRes =>            "Spell Resistance",
-            StatType.dodgeChance =>         "Dodge Chance",
-            StatType.dodgeResPct =>         "Dodge Resistance",
-            StatType.moveSpeedPct =>        "Increased Move Speed %",
-            StatType.attackSpeedPct =>      "Increased Attack Speed %",
-            StatType.defShred =>            "Defense Shred",
-            StatType.resPen =>              "Resistance Penetration",
-            StatType.maxStamina =>          "Max Stamina",
-            StatType.staminaRegen =>        "Stamina Regen",
-            StatType.stRegPct =>            "Increased Stamina Regen %",
-            StatType.addPhysDmgPct =>       "Added Physical Damage %",
-            StatType.addSplDmgPct =>        "Added Spell Damage %",
-            StatType.maxMana =>             "Max Mana",
-            StatType.SkillDmgPct =>         "Increased Skill Damage %",
-            StatType.BasicDmgPct =>         "Increased Basic Damage %",
-            StatType.UltDmgPct =>           "Increased Ultimate Damage %",
-            StatType.EffectRes =>           "Effect Resistance",
-            StatType.Intelligence =>        "Intelligence",
-            StatType.IntPct =>              "Increased Intelligence %",
-            StatType.ProjSpd =>             "Increased Projectile Speed %",
-            StatType.stCostPct =>           "Reduced Stamina Cost %",
-            StatType.dashCooldownRedPct =>  "Reduced Dash Cooldown %",
-            StatType.dashDistancePct =>     "Increased Dash Distance %",
-            StatType.dashStaminaCostRedPct => "Reduced Dash Stamina Cost %",
-            StatType.addDmgPct =>           "Additional Damage %",
-            StatType.kbRes =>               "Knockback Resistance",
-            StatType.kbPct =>               "Increased Knockback %",
-            StatType.ExpBonus =>            "Increased Experience %",
-            _ => type.ToString()
-        };
-        return name;
     }
 }

@@ -132,13 +132,22 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (cad == null || cps == null || cesm == null || tooltipType != TooltipType.Attack) return;
 
-        float staminaCost = Mathf.Abs(cad.staminaCost + (cps.maxStamina * (cad.staminaCostPct * 0.01f))) * (1f + (cps.stCostPct * 0.01f));
-        float staminaGain = Mathf.Abs(cad.staminaGainOnHit + (cps.maxStamina * (cad.staminaPctGainOnHit * 0.01f)));
-        float manaCost = Mathf.Abs(cad.manaCost + (cps.maxMana * (cad.manaCostPct * 0.01f)));
-        float manaGain = Mathf.Abs(cad.manaGainOnHit + (cps.maxMana * (cad.manaPctGainOnHit * 0.01f)));
+        float staminaCost = Mathf.Abs(cad.staminaCost + (cps.EffMaxStamina * (cad.staminaCostPct * 0.01f))) * (1f + (cps.stCostPct * 0.01f));
+        float staminaGain = Mathf.Abs(cad.staminaGainOnHit + (cps.EffMaxStamina * (cad.staminaPctGainOnHit * 0.01f)));
+        float manaCost = Mathf.Abs(cad.manaCost + (cps.EffMaxMana * (cad.manaCostPct * 0.01f)));
+        float manaGain = Mathf.Abs(cad.manaGainOnHit + (cps.EffMaxMana * (cad.manaPctGainOnHit * 0.01f)));
         float hpCost = Mathf.Abs(cad.healthCost + (cps.EffMaxHp * (cad.healthCostPct * 0.01f)));
         float hpGain = Mathf.Abs(cad.healthGainOnHit + (cps.EffMaxHp * (cad.healthPctGainOnHit * 0.01f)));
-        float cooldown = cad.cooldown * Mathf.Clamp(1f - (cps.attackSpeedPct * 0.01f), 0.3f, 10f);
+
+        float cdRedPct = cad.type switch
+        {
+            AttackType.Basic => cps.basicCdRedPct,
+            AttackType.Skill => cps.skillCdRedPct,
+            AttackType.Ultimate => cps.ultCdRedPct,
+            _ => 0f
+        };
+
+        float cooldown = cad.cooldown * Mathf.Clamp(1f - (cps.attackSpeedPct * 0.01f), 0.3f, 10f) * Mathf.Clamp(1f - (cdRedPct * 0.01f), 0f, 0.9f);
 
         float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
         if (cad.pd != null)

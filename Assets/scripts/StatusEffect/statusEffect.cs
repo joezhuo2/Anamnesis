@@ -21,6 +21,7 @@ public abstract class StatusEffect : ScriptableObject
     [HideInInspector] public GameObject source;
     [HideInInspector] public GameObject projectile;
     [HideInInspector] public int currentStacks = 0;
+    [HideInInspector] public float potencyMultiplier = 1f;
 
     public virtual void OnTick() {}
     public virtual void OnApply() {}

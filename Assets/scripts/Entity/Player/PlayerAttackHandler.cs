@@ -107,7 +107,14 @@ public class PlayerAttackHandler : MonoBehaviour
         if (!bypassCooldown)
         {
             float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
-            float cooldown = selected.cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f);
+            float cdRedPct = type switch
+            {
+                AttackType.Basic => p.basicCdRedPct,
+                AttackType.Skill => p.skillCdRedPct,
+                AttackType.Ultimate => p.ultCdRedPct,
+                _ => 0f
+            };
+            float cooldown = selected.cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f) * Mathf.Clamp(1f - (cdRedPct * 0.01f), 0.1f, 0.9f);
             if (Time.time - lastTime < cooldown) return;
         }
 
@@ -176,9 +183,9 @@ public class PlayerAttackHandler : MonoBehaviour
 
         pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
 
-        float totalStaminaCost = Mathf.Abs(attack.staminaCost + (p.maxStamina * (attack.staminaCostPct* 0.01f))) * (1f + (p.stCostPct * 0.01f));
+        float totalStaminaCost = Mathf.Abs(attack.staminaCost + (p.EffMaxStamina * (attack.staminaCostPct* 0.01f))) * (1f + (p.stCostPct * 0.01f));
         float totalHealthCost = Mathf.Abs(attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f)));
-        float totalManaCost = Mathf.Abs(attack.manaCost + (p.maxMana * (attack.manaCostPct * 0.01f)));
+        float totalManaCost = Mathf.Abs(attack.manaCost + (p.EffMaxMana * (attack.manaCostPct * 0.01f)));
 
         (totalHealthCost, totalStaminaCost) = HandleHexCast(totalHealthCost, totalStaminaCost);
 
@@ -259,7 +266,14 @@ public class PlayerAttackHandler : MonoBehaviour
 
         float lastTime = lastAttackTimes[type];
         float cooldown = attacks.Find(a => a.type == type)?.cooldown ?? 0f;
-        float effCd = cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f);
+        float cdRedPct = type switch
+        {
+            AttackType.Basic => p.basicCdRedPct,
+            AttackType.Skill => p.skillCdRedPct,
+            AttackType.Ultimate => p.ultCdRedPct,
+            _ => 0f
+        };
+        float effCd = cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f) * Mathf.Clamp(1f - (cdRedPct * 0.01f), 0.1f, 0.9f);
 
         if (effCd <= 0f) return;
 

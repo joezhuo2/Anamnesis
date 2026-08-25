@@ -72,6 +72,18 @@ public class StatusEffectManager : MonoBehaviour
         runtimeEffect.currentStacks = 1;
         runtimeEffect.currentTime = 0;
 
+        if (source != null && source.TryGetComponent<EntityStatManager>(out var sourceEsm))
+        {
+            var sourceStats = sourceEsm.s;
+            if (sourceStats.seDurPct != 0f)
+                runtimeEffect.duration *= 1f + (sourceStats.seDurPct * 0.01f);
+
+            if (sourceStats.seTickRatePct != 0f && runtimeEffect.tickInterval > 0f)
+                runtimeEffect.tickInterval = Mathf.Max(0.1f, runtimeEffect.tickInterval / (1f + (sourceStats.seTickRatePct * 0.01f)));
+
+            runtimeEffect.potencyMultiplier = 1f + (sourceStats.sePotPct * 0.01f);
+        }
+
         activeEffects.Add(runtimeEffect);
         runtimeEffect.OnApply();
 

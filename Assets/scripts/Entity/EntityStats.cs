@@ -58,6 +58,17 @@ public enum StatType
     kbPct,
     ExpBonus,
     Stealing,
+    sePotPct,
+    seDurPct,
+    manaGainPct,
+    seTickRatePct,
+    maxManaPct,
+    maxStaminaPct,
+    basicCdRedPct,
+    skillCdRedPct,
+    ultCdRedPct,
+    EffMaxMana,
+    EffMaxStamina,
 }
 
 public class EntityStats : ScriptableObject
@@ -69,7 +80,7 @@ public class EntityStats : ScriptableObject
     public float EffAtk => attack * (1f + (atkPct * 0.01f));
     public int attack;
     public float atkPct;
-    public float EffInt => intelligence * (1f + (intPct * 0.01f)) * (Mathf.Max(1f, 1f + ((maxMana - 100) * 0.01f)));
+    public float EffInt => intelligence * (1f + (intPct * 0.01f)) * (Mathf.Max(1f, 1f + ((EffMaxMana - 100) * 0.01f)));
     public int intelligence;
     public float intPct;
     public float attackSpeedPct;
@@ -88,11 +99,16 @@ public class EntityStats : ScriptableObject
     public float projSpd;
     public float stCostPct;
     public float kbPct;
+    public float sePotPct;
+    public float manaGainPct;
+    public float basicCdRedPct;
+    public float skillCdRedPct;
+    public float ultCdRedPct;
     // lifeStealPct, effectChance
 
     [Header("Defense")]
     public int currentHp;
-    public float CurHpPct => (currentHp / maxHp) * 100f;
+    public float CurHpPct => (currentHp / EffMaxHp) * 100f;
     public int EffMaxHp => Mathf.RoundToInt(maxHp * (1f + (hpPct * 0.01f)));
     public int maxHp;
     public float hpPct;
@@ -111,6 +127,8 @@ public class EntityStats : ScriptableObject
     public float hurtTime = 0.3f;
     public float effectRes = 0f;
     public float kbRes;
+    public float seDurPct;
+    public float seTickRatePct;
     // critRes, healingPct
 
     [Header("Movement")]
@@ -121,13 +139,17 @@ public class EntityStats : ScriptableObject
     [Header("Stamina - Player Only")]
     public int currentStamina;
     public int maxStamina;
-    public float EffStReg => staminaRegen * (1f + (stRegPct * 0.01f)) * (Mathf.Max(1f, 1f + ((maxStamina - 100) * 0.01f)));
+    public float maxStaminaPct;
+    public float EffMaxStamina => Mathf.RoundToInt(maxStamina * (1f + (maxStaminaPct * 0.01f)));
+    public float EffStReg => staminaRegen * (1f + (stRegPct * 0.01f)) * (Mathf.Max(1f, 1f + ((EffMaxStamina - 100) * 0.01f)));
     public float staminaRegen;
     public float stRegPct;
 
     [Header("Mana - Player Only")]
     public int currentMana;
     public int maxMana;
+    public float maxManaPct;
+    public float EffMaxMana => Mathf.RoundToInt(maxMana * (1f + (maxManaPct * 0.01f)));
     [HideInInspector] public bool canGainMana;
 
     [Header("Dash - Player Only")]

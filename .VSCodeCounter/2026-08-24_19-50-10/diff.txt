@@ -1,0 +1,42 @@
+Date : 2026-08-24 19:50:10
+Directory : c:\Users\Joe\Anamnesis\Assets\scripts
+Total : 12 files,  98 codes, 0 comments, 10 blanks, all 108 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         12 |         98 |          0 |         10 |        108 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                       | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                          |         12 |         98 |          0 |         10 |        108 |
+| Entity                                                                     |          8 |         87 |          0 |          7 |         94 |
+| Entity (Files)                                                             |          3 |         58 |          0 |          4 |         62 |
+| Entity\Enemy                                                               |          1 |         -1 |          0 |          0 |         -1 |
+| Entity\Player                                                              |          4 |         30 |          0 |          3 |         33 |
+| Projectile                                                                 |          2 |          1 |          0 |          0 |          1 |
+| StatusEffect                                                               |          2 |         10 |          0 |          3 |         13 |
++----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                   | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Enemy\BossBarUI.cs            | C#       |         -1 |          0 |          0 |         -1 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityStatManager.cs          | C#       |        -46 |          0 |         -2 |        -48 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityStats.cs                | C#       |         22 |          0 |          0 |         22 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerAttackHandler.cs | C#       |         14 |          0 |          0 |         14 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerMana.cs          | C#       |          6 |          0 |          0 |          6 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\PlayerStamina.cs       | C#       |          3 |          0 |          1 |          4 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\TooltipTrigger.cs      | C#       |          7 |          0 |          2 |          9 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\StatBuff.cs                   | C#       |         82 |          0 |          6 |         88 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\DamageInstance.cs         | C#       |         18 |          0 |          3 |         21 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\DamagePacket.cs           | C#       |        -17 |          0 |         -3 |        -20 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffect.cs         | C#       |          1 |          0 |          0 |          1 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffectManager.cs  | C#       |          9 |          0 |          3 |         12 |
+| Total                                                                      |          |         98 |          0 |         10 |        108 |
++----------------------------------------------------------------------------+----------+------------+------------+------------+------------+

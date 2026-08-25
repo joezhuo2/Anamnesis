@@ -2407,6 +2407,16 @@ MonoBehaviour:
       type: 54
       value: 1
     weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 60
+      value: 2
+    weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 61
+      value: 2
+    weight: 3
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     type: 0
@@ -2616,6 +2626,21 @@ MonoBehaviour:
       type: 55
       value: 4
     weight: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 56
+      value: 2
+    weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 57
+      value: 2
+    weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 59
+      value: 2
+    weight: 2
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
@@ -2697,8 +2722,10 @@ MonoBehaviour:
   - rewardName: Mana Battery
     displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
     baseStatBuffs:
-    - type: 36
-      value: 125
+    - type: 60
+      value: 65
+    - type: 58
+      value: 40
     - type: 0
       value: -10
     - type: 13
@@ -2839,6 +2866,21 @@ MonoBehaviour:
       value: -20
     - type: 13
       value: -10
+    weight: 1
+    variance: 0.15
+  - rewardName: Torturer
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 59
+      value: 30
+    - type: 57
+      value: 20
+    - type: 56
+      value: 40
+    - type: 0
+      value: -80
+    - type: 13
+      value: -35
     weight: 1
     variance: 0.15
   milestoneInterval: 25
