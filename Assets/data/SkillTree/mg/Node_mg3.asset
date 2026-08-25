@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
+  m_Name: Node_mg3
+  m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
+  nodeName: Mana Gain
+  desc: +2% Mana Gained
+  nodeID: mg3
+  icon: {fileID: -266036291, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  isStartingNode: 0
+  prerequisites:
+  - {fileID: 11400000, guid: f4ffe5156cbbac14ca230740f4076e22, type: 2}
+  requiredAttacks: []
+  requiredPlayerUpgrades: []
+  incompatibleNodes: []
+  statBuffs:
+  - type: 58
+    value: 2
+  attackUpgrades: []
+  playerUpgrades: []
+  undoCost: 50

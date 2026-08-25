@@ -46,22 +46,54 @@ public class SkillTreeLineRenderer : MonoBehaviour
                 nodeUIMap[nodeUI.node] = rt;
         }
 
+        var drawnConnections = new HashSet<string>();
+
         foreach (var node in nodes)
         {
-            if (node == null || node.prerequisites == null) continue;
+            if (node == null) continue;
 
-            foreach (var prereq in node.prerequisites)
+            if (node.prerequisites != null)
             {
-                if (prereq == null) continue;
-
-                if (nodeUIMap.TryGetValue(prereq, out var fromRect) &&
-                    nodeUIMap.TryGetValue(node, out var toRect))
+                foreach (var prereq in node.prerequisites)
                 {
-                    DrawLine(parent, fromRect, toRect, GetLineColor(node, prereq));
+                    if (prereq == null) continue;
+
+                    string connectionKey = GetConnectionKey(prereq.nodeID, node.nodeID);
+                    if (drawnConnections.Contains(connectionKey)) continue;
+                    drawnConnections.Add(connectionKey);
+
+                    if (nodeUIMap.TryGetValue(prereq, out var fromRect) &&
+                        nodeUIMap.TryGetValue(node, out var toRect))
+                    {
+                        DrawLine(parent, fromRect, toRect, GetLineColor(node, prereq));
+                    }
+                }
+            }
+
+            foreach (var otherNode in nodes)
+            {
+                if (otherNode == null || otherNode == node || otherNode.prerequisites == null) continue;
+
+                foreach (var prereq in otherNode.prerequisites)
+                {
+                    if (prereq == null || prereq.nodeID != node.nodeID) continue;
+
+                    string connectionKey = GetConnectionKey(node.nodeID, otherNode.nodeID);
+                    if (drawnConnections.Contains(connectionKey)) continue;
+                    drawnConnections.Add(connectionKey);
+
+                    if (nodeUIMap.TryGetValue(node, out var fromRect) &&
+                        nodeUIMap.TryGetValue(otherNode, out var toRect))
+                    {
+                        DrawLine(parent, fromRect, toRect, GetLineColor(otherNode, node));
+                    }
                 }
             }
         }
     }
+
+    private static string GetConnectionKey(string nodeA, string nodeB)
+        => string.CompareOrdinal(nodeA, nodeB) < 0 ? $"{nodeA}|{nodeB}" : $"{nodeB}|{nodeA}";
 
     private RectTransform GetLineParent()
     {

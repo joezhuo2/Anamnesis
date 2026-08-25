@@ -5,6 +5,25 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.2] - 2026-08-25 - Skill Tree Expansion Update
+
+### Added
+- a **TON** of skill nodes (now 78 total nodes), including new starting nodes, connecting nodes, and node bundles for new special stats
+
+### Changed
+- **Skill Tree Prerequisites → Connections System**: Overhauled the skill tree unlock logic from a strict AND-based prerequisite system to a flexible bidirectional connections system with OR logic:
+  - **Bidirectional connections**: If node A lists node B as a prerequisite, you can now unlock A when B is unlocked **OR** unlock B when A is unlocked
+  - **OR logic for multiple connections**: When a node has multiple connected nodes (e.g., B and C both connect to A), only **one** connected node needs to be unlocked (B **OR** C), not all of them
+  - **Reverse connections automatically work**: No need to duplicate connections in both directions; the system checks both forward (node's prerequisites list) and reverse (nodes that have this node in their prerequisites)
+  - **Improved tooltip feedback**: Fail messages now show "Requires one of: [Node1, Node2, ...]" listing all connected nodes
+  - **Field name unchanged**: Still uses `prerequisites` field in `SkillNodeDef` for defining connections
+
+### Fixed
+- Nodes with no connections now properly show "Node has no connections" instead of incorrectly requiring prerequisites
+
+### Rebalance
+- nerfed a lot of skill nodes
+
 ## [v0.2.1] - 2026-08-25
 
 ### Added

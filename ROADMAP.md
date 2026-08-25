@@ -1,7 +1,9 @@
 ## Roadmap
 
 ### Pre [v0.3.0]
-- [v0.2.0] - **Tooltip Expansion Update**: added tooltips to player upgrades and attack rewards
+- [v0.2.2] **Skill Tree Connections Update**: bidirectional connections system with OR logic (prerequisites now work both ways, only one connected node needed)
+- [v0.2.1] **Tooltip Expansion Update**: added tooltips to player upgrades and attack rewards
+- [v0.2.0] **Progression, Economy & Milestones Update**: level system, gold economy, milestone rewards, stats extension
 
 ### Pre [v0.2.0] - Content Expansion Update
 - [v0.1.12] **The Milestone Update**: milestone rewards with buffs and drawbacks

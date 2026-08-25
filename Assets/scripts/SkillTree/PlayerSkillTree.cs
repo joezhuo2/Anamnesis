@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerSkillTree : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerSkillTree : MonoBehaviour
     public int skillPoints;
 
     [HideInInspector] public readonly List<SkillNodeDef> runtimeNodes = new();
+    [HideInInspector] public bool choseStarting;
     private readonly HashSet<string> unlockedNodes = new();
     private List<SkillNodeDef> allNodes = new();
 
@@ -139,14 +141,67 @@ public class PlayerSkillTree : MonoBehaviour
     {
         if (node == null) return (false, "Node is null");
         if (unlockedNodes.Contains(node.nodeID)) return (false, "Node already unlocked");
+        if (node.isStartingNode && choseStarting) return (false, "Starting node already chosen");
         if (skillPoints < 1) return (false, "Not enough skill points");
 
         if (!node.isStartingNode)
         {
-            if (node.prerequisites == null || node.prerequisites.Count == 0) return (false, "Node has no prerequisites");
 
-            foreach (var n in node.prerequisites)
-                if (!unlockedNodes.Contains(n.nodeID)) return (false, $"Missing prerequisite node: {n.nodeName}");
+            bool hasUnlockedConnection = false;
+            string missingConnectionMsg = "No connected nodes unlocked";
+
+            if (node.prerequisites != null && node.prerequisites.Count > 0)
+            {
+                foreach (var prereq in node.prerequisites)
+                {
+                    if (prereq != null && unlockedNodes.Contains(prereq.nodeID))
+                    {
+                        hasUnlockedConnection = true;
+                        break;
+                    }
+                }
+                if (!hasUnlockedConnection)
+                {
+                    var prereqNames = node.prerequisites.Where(p => p != null).Select(p => p.nodeName);
+                    missingConnectionMsg = $"Requires one of: {string.Join(", ", prereqNames)}";
+                }
+            }
+
+            if (!hasUnlockedConnection)
+            {
+                foreach (var otherNode in runtimeNodes)
+                {
+                    if (otherNode == null || otherNode == node) continue;
+                    if (otherNode.prerequisites != null)
+                    {
+                        foreach (var prereq in otherNode.prerequisites)
+                        {
+                            if (prereq != null && prereq.nodeID == node.nodeID && unlockedNodes.Contains(otherNode.nodeID))
+                            {
+                                hasUnlockedConnection = true;
+                                break;
+                            }
+                        }
+                        if (hasUnlockedConnection) break;
+                    }
+                }
+                if (!hasUnlockedConnection)
+                {
+                    var reverseConnections = runtimeNodes
+                        .Where(n => n != null && n != node && n.prerequisites != null && n.prerequisites.Any(p => p != null && p.nodeID == node.nodeID))
+                        .Select(n => n.nodeName)
+                        .ToList();
+                    if (reverseConnections.Count > 0)
+                        missingConnectionMsg = $"Requires one of: {string.Join(", ", reverseConnections)}";
+                }
+            }
+
+            bool hasAnyConnection = (node.prerequisites != null && node.prerequisites.Count > 0) ||
+                runtimeNodes.Any(n => n != null && n != node && n.prerequisites != null && n.prerequisites.Any(p => p != null && p.nodeID == node.nodeID));
+
+            if (!hasAnyConnection) return (false, "Node has no connections");
+
+            if (!hasUnlockedConnection) return (false, missingConnectionMsg);
         }
 
         if (node.incompatibleNodes != null && node.incompatibleNodes.Count > 0)
@@ -185,6 +240,8 @@ public class PlayerSkillTree : MonoBehaviour
         if (node.statBuffs != null && node.statBuffs.Count > 0) HandleStatUpgrades(node);
         if (node.attackUpgrades != null && node.attackUpgrades.Count > 0) HandleAttackUpgrades(node);
         if (node.playerUpgrades != null && node.playerUpgrades.Count > 0) HandlePlayerUpgrades(node);
+
+        if (node.isStartingNode) choseStarting = true;
     }
 
     private void HandleStatUpgrades(SkillNodeDef node)
