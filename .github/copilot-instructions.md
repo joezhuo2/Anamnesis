@@ -5,26 +5,23 @@
 - Use `/graphify-out` knowledge graph for file dependency & architectural lookup.
 - Use `/memories/repo/anamnesis.md` history for past debugging and decision context.
 
-## Coding
-- Abbreviate lengthy local variable/parameter names to acronyms (e.g., `EntityStatManager` → `esm`).
-- Read context first. Stop and ask before implementation if instructions are ambiguous.
-- Match existing codebase formatting and architectural conventions.
-- Prioritize modifying existing code over adding new classes/methods.
+## Workflow & Safety
+- Read context first; ask before implementing if ambiguous or missing details.
+- ALWAYS start tasks with a multi-step checklist before coding.
+- Do NOT invent non-existent Unity/C# APIs. Write new project methods freely following existing patterns.
+- Prioritize modifying existing code over creating new classes/methods.
 
-## Architecture
-- **Object Pooling:** Reset all state inside `Setup()` methods.
-- **Pause Handling:** Check `Time.timeScale == 0f` and early-return in Player and Enemy AI update loops.
-- **Safety**: Use TryGet over Get, use null checks and early returns when applicable
+## Code & Architecture
+- Abbreviate long local vars/params (e.g., `EntityStatManager` → `esm`).
+- **Pooling:** Fully Reset state in `Setup()`.
+- **Pause:** Early-return if `Time.timeScale == 0f` in Player/Enemy AI update loops.
+- **Safety:** Prefer `TryGet`, null checks, and early returns.
 
-## Response Formatting
-- Output code only. Skip conversational text and restating prompt specs.
-- Limit commentary to maximum 2 bullet points for non-obvious logic or breaking changes.
+## Output Format
+- Output code ONLY. No intro/outro fluff or spec restating.
+- Max 2 bullet points of commentary for breaking/non-obvious logic.
 
 ## Documentation
-- Auto-update docs when modifying files upon verified completion.
-- **CHANGELOG.md:**
-  - Header: `[VERYMAJOR].[MAJOR].[MINOR]_[PATCH] - YYYY-MM-DD [- UPDATENAME]`
-  - `UPDATENAME` is optional; reserve for major milestone releases.
-  - Include a `### Highlights` section summarizing key features on every MAJOR patch.
-- **ROADMAP.md:**
-  - Add significant MINOR patches with a brief description.
+- Auto-update docs on verified completion.
+- **CHANGELOG.md:** `[VERYMAJOR].[MAJOR].[MINOR]_[PATCH] - YYYY-MM-DD [- UPDATENAME]`. Include `### Highlights` on MAJOR patches.
+- **ROADMAP.md:** Add significant MINOR patches with brief descriptions.

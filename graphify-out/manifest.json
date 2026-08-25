@@ -882,9 +882,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787675907.51283,
-    "seen": 1787675918.5382204,
-    "ast_hash": "d2374ae88ab8714520fb3b58f178052f",
+    "mtime": 1787685997.304373,
+    "seen": 1787686006.2306602,
+    "ast_hash": "8e994e9c398aabef16c6e1ff920c478e",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -1878,9 +1878,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicator.cs": {
-    "mtime": 1787610652.1273131,
-    "seen": 1787611285.8671436,
-    "ast_hash": "68c6d3301ade8a51899240ef9368bdf8",
+    "mtime": 1787685117.7593808,
+    "seen": 1787686006.2305505,
+    "ast_hash": "e5681f0024efb157f458bf5bc52f03a1",
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicatorSpawner.cs": {
@@ -1890,9 +1890,9 @@
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
-    "mtime": 1787584107.1215775,
-    "seen": 1787585475.837461,
-    "ast_hash": "05fdb49e5ef90a3e8b36d968027c0ebe",
+    "mtime": 1787685462.8593175,
+    "seen": 1787686006.2306392,
+    "ast_hash": "1b4c06a3bfcd6b18ba369993690652f6",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/MilestoneReward.cs": {
@@ -2031,6 +2031,18 @@
     "mtime": 1782075401.1977272,
     "seen": 1787668943.0206103,
     "ast_hash": "d5afd4475f465f0dd68bc50d5e25aa0f",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1787684013.0122857,
+    "seen": 1787686006.2306623,
+    "ast_hash": "e0f099173f64f237b8fc385eed181812",
+    "semantic_hash": ""
+  },
+  "GAME.md": {
+    "mtime": 1787680679.9003289,
+    "seen": 1787686006.2306664,
+    "ast_hash": "1bfd32d2de126712c9480258acaa6dbb",
     "semantic_hash": ""
   }
 }

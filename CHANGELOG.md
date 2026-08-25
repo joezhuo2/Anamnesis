@@ -5,6 +5,16 @@ All notable changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.3] - 2026-08-25 - Unlimited Waves System
+
+### Added
+- **`UnlimitedWaveManager`** - a new unlimited waves system (implemented only, NOT *yet* wired up to the scene). Inherits from `WaveManager` so all shared settings (reroll cost, wave info, action buttons, corruption, reward panel, reward pools, milestone rewards, anomalies) are reused exactly as configured on the existing `WaveManager` — no reconfiguration needed.
+- **Configurable options**: max current enemies, base max total enemies (increases by 1-2 randomly every wave), base enemy level (+1 per wave), min/max spawn frequency with spawn speed increase per wave, min/max reward choices, boss bar prefab / status effect display prefab (used for all bosses), auto-generated boss bar name (`[Lv. {LEVEL}] {BOSSNAME}`), list of all spawnable enemies, list of all spawnable bosses, boss wave chance, additional boss wave chance if previous wave wasn't a boss wave, min waves between boss waves.
+- **Wave flow**: every 5 waves spawns mixed rewards only, unless every 25 waves which spawns milestone rewards. No `WaveSequence` used.
+
+### Changed
+- `WaveManager` fields/methods made `protected`/`virtual` to support inheritance by `UnlimitedWaveManager` (no behavior change to the existing wired-up system).
+
 ## [v0.2.2_1] - 2026-08-25
 
 ### Added

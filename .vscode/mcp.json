@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git"]
+    },
+    "copilot-mem": {
+      "command": "npx",
+      "args": ["-y", "copilot-mem"]
+    }
+  }
+}
