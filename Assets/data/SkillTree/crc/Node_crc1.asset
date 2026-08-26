@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Node_crc1
   m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
   nodeName: Crit Chance
-  desc: +6% Crit Damage
+  desc: +6% Crit Chance
   nodeID: crc1
   icon: {fileID: 1481606289, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0

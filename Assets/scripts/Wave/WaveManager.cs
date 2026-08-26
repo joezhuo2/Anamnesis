@@ -261,6 +261,8 @@ public class WaveManager : MonoBehaviour
         else if (currentAnomaly != null && currentAnomaly.isActive) GameController.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
         else GameController.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
 
+        UpdateOccasionalWaveRewards(GetCurrentWave());
+
         yield return _waitForSeconds1_5;
 
         EndWave();
@@ -306,6 +308,17 @@ public class WaveManager : MonoBehaviour
     protected void CleanEnemyList() => currentEnemies.RemoveAll(enemy => enemy == null);
     protected void EndWave()
     {
+        WaveCleanup();
+
+        OpenRewardButtons();
+
+        UpdateRerollUI();
+
+        if (currentAnomaly != null) CleanupAnomaly();
+        else TriggerStandardRewards(GetCurrentWave());
+    }
+    private void WaveCleanup()
+    {
         isWaveActive = false;
         waveInfoPanel.SetActive(false);
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
@@ -315,15 +328,6 @@ public class WaveManager : MonoBehaviour
             Destroy(activeBossBar);
             activeBossBar = null;
         }
-
-        OpenRewardButtons();
-
-        UpdateOccasionalWaveRewards(GetCurrentWave());
-
-        UpdateRerollUI();
-
-        if (currentAnomaly != null) CleanupAnomaly();
-        else TriggerStandardRewards(GetCurrentWave());
     }
     protected void UpdateOccasionalWaveRewards(int wave)
     {
@@ -332,10 +336,12 @@ public class WaveManager : MonoBehaviour
             CachePlayerSkillTree();
             if (cpst != null) cpst.skillPoints++;
             ActiveManager.rerolls++;
+            GameController.SetSubtitleForDuration("You gained 1 skill point and 1 reroll token!", 1f, 0.5f, 0.5f);
         }
         else if (Random.value < 0.5f)
         {
             ActiveManager.rerolls++;
+            GameController.SetSubtitleForDuration("You gained 1 reroll token!", 1f, 0.5f, 0.5f);
         }
     }
     protected void CleanupAnomaly()
@@ -360,13 +366,16 @@ public class WaveManager : MonoBehaviour
 
         pendingStandardRewards = true;
 
-        rerolls += Random.Range(1, 3);
+        int c = Random.Range(1, 4);
+        rerolls += c;
         UpdateRerollUI();
 
         additionalQuality += Random.Range(0.1f, 0.3f);
 
         CachePlayerSkillTree();
         if (cpst != null) cpst.skillPoints++;
+
+        GameController.SetSubtitleForDuration($"You gained 1 skill point and {c} reroll tokens!", 1f, 0.5f, 0.5f);
 
         type = RewardType.Mixed;
         PanelSetup();

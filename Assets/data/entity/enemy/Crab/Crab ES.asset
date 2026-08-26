@@ -15,15 +15,15 @@ MonoBehaviour:
   damagePct: 0
   physicalDmgPct: 5
   spellDmgPct: 0
-  attack: 4
-  atkPct: 0
+  attack: 3
+  atkPct: 15
   intelligence: 0
   intPct: 0
   attackSpeedPct: 0
   critChance: 10
   critDamage: 125
   aoePct: 0
-  defShred: 0
+  defShred: 35
   resPen: 0
   addPhysDmgPct: 0
   addSplDmgPct: 0
@@ -35,6 +35,11 @@ MonoBehaviour:
   projSpd: 0
   stCostPct: 0
   kbPct: 0
+  sePotPct: 0
+  manaGainPct: 0
+  basicCdRedPct: 0
+  skillCdRedPct: 0
+  ultCdRedPct: 0
   currentHp: 60
   maxHp: 60
   hpPct: 0
@@ -50,14 +55,18 @@ MonoBehaviour:
   hurtTime: 0.3
   effectRes: 5
   kbRes: 0
+  seDurPct: 0
+  seTickRatePct: 0
   moveSpeed: 0.85
   moveSpeedPct: 0
   currentStamina: 0
   maxStamina: 0
+  maxStaminaPct: 0
   staminaRegen: 0
   stRegPct: 0
   currentMana: 0
   maxMana: 0
+  maxManaPct: 0
   canGainMana: 0
   dashSpeedMult: 0
   dashCooldown: 0

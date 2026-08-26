@@ -3,7 +3,23 @@
 All *notable* changes to Anamnesis are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project *roughly* follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [v0.2.6] - 2026-08-26 - Skill Tree Enhancement Update
+
+### Added
+- a *couple* of new skill tree nodes in each section (78 → 104 nodes), introducing many new stats
+- subtitle text to inform you when you get skill points/reroll tokens 
+
+### Rebalance
+- Bat
+ - stopping range (1.5 → 3)
+ - attack (2 → 3)
+ - Mark size (2 → 2.5)
+- Crab
+ - Defense Shred (0 → 35)
+ - Attack (4 → 3)
+ - Attack % (0 → 15)
 
 ## [v0.2.5] - 2026-08-25
 

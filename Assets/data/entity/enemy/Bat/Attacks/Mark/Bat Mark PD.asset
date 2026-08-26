@@ -16,18 +16,22 @@ MonoBehaviour:
   speed: 0
   lifetime: 0.75
   numPierce: 1
-  size: 2
+  size: 2.5
   physicalMult: 0
   spellMult: 0.05
   trueMult: 0
   scalingStat: 31
+  specialMult: 1
+  specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 1
   bypassIFrames: 0
+  randomDir: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1
@@ -37,3 +41,9 @@ MonoBehaviour:
     selfApply: 0
     applyCondition: 0
     chance: 0.7
+  orbitRadius: 0
+  randOrbRadOffset: 0
+  orbitSelf: 0
+  rotateClockwise: 0
+  kbForce: 0
+  knockbackTime: 0.15
