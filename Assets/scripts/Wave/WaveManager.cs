@@ -88,6 +88,7 @@ public class WaveManager : MonoBehaviour
         availableRarePool.AddRange(rarePool);
         availableTreasurePool.AddRange(treasurePool);
     }
+
     protected virtual void Start()
     {
         waveInfoPanel.SetActive(false);
@@ -97,6 +98,7 @@ public class WaveManager : MonoBehaviour
         UpdateRerollUI();
         SetupActionButtonTooltips();
     }
+
     private void SetupActionButtonTooltips()
     {
         if (rerollButton != null)
@@ -126,8 +128,7 @@ public class WaveManager : MonoBehaviour
 
         ClearRewardButtons();
 
-        if (spawnCoroutine != null)
-            StopCoroutine(spawnCoroutine);
+        if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
     }
     private void Update()
     {
@@ -148,14 +149,8 @@ public class WaveManager : MonoBehaviour
         }
         else
         {
-            ClearAnomalyText();
+            if (anomalyInfoText != null && anomalyInfoText.text != "") anomalyInfoText.text = "";
         }
-    }
-
-    private void ClearAnomalyText()
-    {
-        if (anomalyInfoText != null && anomalyInfoText.text != "")
-            anomalyInfoText.text = "";
     }
 
     private void UpdateAnomalyTimeInfo()
@@ -172,6 +167,7 @@ public class WaveManager : MonoBehaviour
             anomalyInfoText.text = $"Time Remaining: {tt.timeRemaining:F1}s";
         }
     }
+
     protected GameObject GetOrCreateRewardButton()
     {
         GameObject btnObj;
@@ -194,6 +190,7 @@ public class WaveManager : MonoBehaviour
         activeRewardButtons.Add(btnObj);
         return btnObj;
     }
+
     public virtual void StartNextWave()
     {
         if (isWaveActive) return;
@@ -202,15 +199,9 @@ public class WaveManager : MonoBehaviour
 
         if (currentWaveIndex >= currentSequence.waves.Count)
         {
-            if (currentSequence.nextSequence != null)
-            {
-                currentSequence = currentSequence.nextSequence;
-                currentWaveIndex = 0;
-            }
-            else
-            {
-                return;
-            }
+            currentWaveIndex = 0;
+            if (currentSequence.nextSequence != null) currentSequence = currentSequence.nextSequence;
+            else return;
         }
 
         totalSpawned = 0;
@@ -218,6 +209,7 @@ public class WaveManager : MonoBehaviour
 
         if (!RollAndGenerateAnomaly()) BeginWave();
     }
+
     protected virtual void BeginWave()
     {
         WaveData currentWave = currentSequence.waves[currentWaveIndex];
@@ -230,11 +222,13 @@ public class WaveManager : MonoBehaviour
 
         HandleWave(currentWave);
     }
+
     protected void HandleWave(WaveData c)
     {
         if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
         spawnCoroutine = StartCoroutine(WaveSpawnRoutine(c));
     }
+
     protected IEnumerator WaveSpawnRoutine(WaveData c)
     {
         while (totalSpawned < c.maxTotalEnemies)
@@ -247,9 +241,7 @@ public class WaveManager : MonoBehaviour
             }
 
             SpawnEnemies(c);
-
-            float spawnDelay = Random.Range(c.minSpawnFrequency, c.maxSpawnFrequency);
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(Random.Range(c.minSpawnFrequency, c.maxSpawnFrequency));
         }
         while (currentEnemies.Count > 0)
         {
@@ -262,9 +254,9 @@ public class WaveManager : MonoBehaviour
         else GameController.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
 
         yield return _waitForSeconds1_5;
-
         EndWave();
     }
+
     protected void SpawnEnemies(WaveData c)
     {
         if (c.maxTotalEnemies == 1 || c.maxCurrentEnemies == 1)
@@ -272,8 +264,7 @@ public class WaveManager : MonoBehaviour
             SpawnEnemy(c);
             return;
         }
-        int spawnCount = Mathf.RoundToInt(GetCurrentWave() / 10) + 1;
-        for (int i = 0; i < spawnCount; i++) SpawnEnemy(c);
+        for (int i = 0; i < Mathf.RoundToInt(GetCurrentWave() / 10) + 1; i++) SpawnEnemy(c);
     }
 
     protected void SpawnEnemy(WaveData c)

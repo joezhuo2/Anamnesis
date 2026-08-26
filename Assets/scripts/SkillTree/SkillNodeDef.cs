@@ -13,9 +13,9 @@ public class SkillNodeDef : ScriptableObject
     [Header("Requirements")]
     public bool isStartingNode;
     public List<SkillNodeDef> prerequisites;
+    public List<SkillNodeDef> incompatibleNodes;
     public List<AttackData> requiredAttacks;
     public List<PlayerUpgrade> requiredPlayerUpgrades;
-    public List<SkillNodeDef> incompatibleNodes;
 
     [Header("Upgrades")]
     public List<StatBuff> statBuffs;

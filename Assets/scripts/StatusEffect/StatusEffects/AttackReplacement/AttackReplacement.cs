@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "se_ar", menuName = "Status Effects/Debuff/Attack Replacement")]
+[CreateAssetMenu(fileName = "se_ar", menuName = "Status Effects/Buff/Attack Replacement")]
 
 public class AttackReplacement : StatusEffect
 {

@@ -9,6 +9,7 @@
 - Read context first; ALWAYS clarify ambiguity and by creating a multi-step checklist before coding.
 - Do NOT invent non-existent Unity/C# APIs. Write new project methods freely following existing patterns.
 - Prioritize modifying existing code over creating new classes/methods.
+- NEVER destroy base GameObjects or ScriptableObjects.
 
 ## Code & Architecture
 - Abbreviate long local vars/params (e.g., `EntityStatManager` → `esm`).

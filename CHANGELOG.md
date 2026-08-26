@@ -5,6 +5,15 @@ All *notable* changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project *roughly* follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.8] - 2026-08-26
+
+### Removed
+- deprecated status effects (old debuffs migrated to the new system)
+
+### Updated
+- folder structure to be cleaner
+- slime now has the same folder structure as the other enemies
+
 ## [v0.2.7] - 2026-08-26 - Enemy Scaling Overhaul
 
 ### Changed
@@ -22,7 +31,7 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ### Fixed
 - mixed pools turning into normal pools on reroll
-- cosmic aftermiage not having an indicator
+- cosmic aftermiage not having an indicator`
 - status effect indicators appear for normal enemies
 
 ## [v0.2.6_1] - 2026-08-26

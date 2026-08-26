@@ -1,5 +1,6 @@
 using UnityEngine;
 
+public enum ResourceType { Health, Stamina, Mana }
 public enum StatType
 {
     damagePct,
@@ -68,8 +69,7 @@ public enum StatType
     skillCdRedPct,
     ultCdRedPct,
     EffMaxMana,
-    EffMaxStamina,
-}
+    EffMaxStamina,}
 
 public class EntityStats : ScriptableObject
 {

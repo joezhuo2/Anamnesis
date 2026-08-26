@@ -2053,8 +2053,8 @@
   },
   ".vscode/mcp.json": {
     "mtime": 1787686644.519535,
-    "seen": 1787708210.3774097,
-    "ast_hash": "",
+    "seen": 1787751544.808499,
+    "ast_hash": "f2531efb82bb0a995ae22ffad9a61f90",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/RegularWaveButtonController.cs": {

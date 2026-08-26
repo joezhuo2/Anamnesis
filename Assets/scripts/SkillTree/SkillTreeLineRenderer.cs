@@ -18,18 +18,13 @@ public class SkillTreeLineRenderer : MonoBehaviour
     private SkillTreeManager manager;
     private static Sprite defaultSprite;
 
-    void Awake()
-    {
-        manager = FindAnyObjectByType<SkillTreeManager>();
-    }
+    void Awake() => manager = FindAnyObjectByType<SkillTreeManager>();
 
     public void Redraw(IReadOnlyList<SkillNodeDef> nodes)
     {
         foreach (var line in activeLines)
-        {
-            if (line != null)
-                Destroy(line.gameObject);
-        }
+            if (line != null) Destroy(line.gameObject);
+
         activeLines.Clear();
 
         if (manager == null) manager = FindAnyObjectByType<SkillTreeManager>();
@@ -40,6 +35,7 @@ public class SkillTreeLineRenderer : MonoBehaviour
 
         var nodeUIMap = new Dictionary<SkillNodeDef, RectTransform>();
         var nodeUIs = FindObjectsByType<SkillNodeUI>();
+
         foreach (var nodeUI in nodeUIs)
         {
             if (nodeUI != null && nodeUI.node != null && nodeUI.transform is RectTransform rt)

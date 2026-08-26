@@ -37,7 +37,7 @@ MonoBehaviour:
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects:
-  - effect: {fileID: 11400000, guid: e465ccf682b182b45ae0d5b84322c945, type: 2}
+  - effect: {fileID: 11400000, guid: ad3e1da424fe2c24796394df88905b53, type: 2}
     selfApply: 0
     applyCondition: 0
     chance: 0.6

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411529bfca579104192ee5e7e49efaaf, type: 3}
+  m_Name: Crumbling 6 10 4
+  m_EditorClassIdentifier: Assembly-CSharp::StatReduction
+  currentTime: 0
+  duration: 6
+  tickInterval: 0
+  isBuff: 0
+  icon: {fileID: -2800876817223335725, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Crumbling
+  desc: Reduces armor by 10% per stack.
+  maxStacks: 4
+  loseAllStacksOnExpire: 0
+  target: {fileID: 0}
+  source: {fileID: 0}
+  projectile: {fileID: 0}
+  currentStacks: 0
+  potencyMultiplier: 1
+  redPerStack: 10
+  statType: 16
+  scalingStat: 16
+  maxRed: 0.9
+  minRed: 0
