@@ -1,11 +1,39 @@
 # Changelog
 
-All notable changes to Anamnesis are documented in this file.
+All *notable* changes to Anamnesis are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v0.2.3] - 2026-08-25 - Unlimited Waves System
+## [v0.2.4] - 2026-08-25 - Gamemode Selector Update
+
+### Added
+- `TooltipTrigger` support for action buttons (corrupt, reroll, skip)
+- **`UnlimitedWaveButtonController`** - a button (active by default, placed under `buttonContainer`) that starts unlimited waves mode
+- **Unlimited Waves mode** starts via `UnlimitedWaveManager.StartNextWave()` instead of the regular sequence. 
+- New `TooltipTrigger` describing the unlimited wave system (infinite scaling, faster spawns, periodic boss waves, endless rewards). Disables itself and the regular wave button once pressed. Never enables themselves again.
+- **`RegularWaveButtonController`** - a button (active by default, placed under `buttonContainer`) that starts the regular wave mode.
+- **Regular wave mode** starts via the base `WaveManager.StartNextWave()`. 
+- New `TooltipTrigger` describing the standard sequence. Disables itself and the unlimited wave button once pressed. Never enables  themselves again.
+- `WaveManager` now has access to the action button container, and the individual action buttons
+
+### Fixed
+- boss waves being a possiblity in the first wave (unlimited mode)
+- `PoolPreSetup()` causing a crash, and not using unlimited wave configuration in that mode
+- rerolls consuming more than 1 reroll token
+- both the regular and unlimited wave managers being active at once
+
+### Update
+- player actions are now enabled in the lobby
+
+### Removed
+- `Instance` in wave manager - was unused
+- skip button once corrupt button was used
+- skip button on game start
+- random override methods in `UnlimitedWaveManager` that was the same as the original method
+- unecessary `virtual` signatures in `WaveManager`
+
+## [v0.2.3] - 2026-08-25 - Unlimited Waves Update
 
 ### Added
 - **`UnlimitedWaveManager`** - a new unlimited waves system (implemented only, NOT *yet* wired up to the scene). Inherits from `WaveManager` so all shared settings (reroll cost, wave info, action buttons, corruption, reward panel, reward pools, milestone rewards, anomalies) are reused exactly as configured on the existing `WaveManager` — no reconfiguration needed.

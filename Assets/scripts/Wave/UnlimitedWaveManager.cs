@@ -42,7 +42,7 @@ public class UnlimitedWaveManager : WaveManager
     [Tooltip("All enemies that CAN spawn during any wave (randomly selected).")]
     public List<GameObject> enemyPrefabs = new();
 
-    private int lastBossWave = -1;
+    private int lastBossWave;
     private bool isBossWave = false;
     private int maxTotalEnemies;
 
@@ -56,6 +56,8 @@ public class UnlimitedWaveManager : WaveManager
     public override void StartNextWave()
     {
         if (isWaveActive) return;
+
+        ActiveManager = this;
 
         totalSpawned = 0;
         currentEnemies.Clear();
@@ -72,7 +74,6 @@ public class UnlimitedWaveManager : WaveManager
         isBossWave = ShouldBeBossWave(wave);
         if (isBossWave) lastBossWave = wave;
 
-        // Max total enemies increases by 1-2 randomly every wave.
         if (wave > 1) maxTotalEnemies += Random.Range(1, 3);
 
         waveInfoPanel.SetActive(true);
@@ -80,8 +81,6 @@ public class UnlimitedWaveManager : WaveManager
 
         HandleWave();
     }
-
-    protected override void HandleWave(WaveData c) => HandleWave();
 
     private void HandleWave()
     {
@@ -164,42 +163,6 @@ public class UnlimitedWaveManager : WaveManager
         currentEnemies.Add(enemy);
     }
 
-    protected override void EndWave()
-    {
-        isWaveActive = false;
-        waveInfoPanel.SetActive(false);
-        if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
-
-        if (activeBossBar != null)
-        {
-            Destroy(activeBossBar);
-            activeBossBar = null;
-        }
-
-        OpenRewardButtons();
-
-        UpdateOccasionalWaveRewards(GetCurrentWave());
-
-        UpdateRerollUI();
-
-        if (currentAnomaly != null) CleanupAnomaly();
-        else TriggerStandardRewards(GetCurrentWave());
-    }
-
-    protected override void UpdateOccasionalWaveRewards(int wave)
-    {
-        if (wave % 5 == 0)
-        {
-            CachePlayerSkillTree();
-            if (cpst != null) cpst.skillPoints++;
-            rerolls++;
-        }
-        else if (Random.value < 0.5f)
-        {
-            rerolls++;
-        }
-    }
-
     protected override void TriggerStandardRewards(int w)
     {
         pendingStandardRewards = false;
@@ -210,13 +173,6 @@ public class UnlimitedWaveManager : WaveManager
         if (w % milestoneInterval == 0) GenerateMilestoneRewards();
         else if (w % 5 == 0) GenerateMixedPool();
         else GenerateRewards();
-    }
-
-    protected override int PoolPreSetup()
-    {
-        int rewardChoices = Random.Range(minRewardChoices, maxRewardChoices + 1);
-        PanelSetup();
-        return rewardChoices;
     }
 
     protected override void OnAnomalyButtonClicked(AnomalyInstance instance)
@@ -233,44 +189,11 @@ public class UnlimitedWaveManager : WaveManager
         BeginWave();
     }
 
-    protected override void OnSkipButtonClicked()
-    {
-        GameController.Instance.DisableSubtitle();
-        GameController.Instance.DisableTitle();
-        GameController.Instance.OnGameStart();
-
-        if (type == RewardType.Anomaly)
-        {
-            CloseRewardUI();
-            Time.timeScale = 1f;
-            if (currentAnomaly != null) currentAnomaly.Cleanup();
-            currentAnomaly = null;
-            BeginWave();
-            return;
-        }
-
-        CloseRewardUI();
-        ResumeGameLoop();
-    }
-
-    protected override void ResumeGameLoop()
-    {
-        if (pendingStandardRewards)
-        {
-            TriggerStandardRewards(GetCurrentWave());
-        }
-        else
-        {
-            Time.timeScale = 1f;
-            pendingStandardRewards = false;
-            StartNextWave();
-        }
-    }
-
     public override int GetCurrentWave() => currentWaveIndex;
 
     private bool ShouldBeBossWave(int wave)
     {
+        if (wave <= minWavesBetweenBossWaves) return false;
         if (bossPrefabs == null || bossPrefabs.Count == 0) return false;
         if (wave - lastBossWave < minWavesBetweenBossWaves) return false;
 

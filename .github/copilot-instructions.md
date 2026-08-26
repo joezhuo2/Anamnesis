@@ -5,9 +5,8 @@
 - Use `/graphify-out` knowledge graph for file dependency & architectural lookup.
 - Use `/memories/repo/anamnesis.md` history for past debugging and decision context.
 
-## Workflow & Safety
-- Read context first; ask before implementing if ambiguous or missing details.
-- ALWAYS start tasks with a multi-step checklist before coding.
+## Workflow
+- Read context first; ALWAYS clarify ambiguity and by creating a multi-step checklist before coding.
 - Do NOT invent non-existent Unity/C# APIs. Write new project methods freely following existing patterns.
 - Prioritize modifying existing code over creating new classes/methods.
 

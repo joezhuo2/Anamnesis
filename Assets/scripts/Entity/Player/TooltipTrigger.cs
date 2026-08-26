@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, PlayerUpgrade, AttackReward, StatReward, MilestoneReward }
+public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, PlayerUpgrade, AttackReward, StatReward, MilestoneReward, ActionButton }
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
@@ -16,6 +16,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private MilestoneRewardData mrd;
     private string skillTreeFailMessage = "";
     private TooltipType tooltipType;
+    private string actionButtonTitle = "";
+    private string actionButtonDescription = "";
 
     public void SetupTooltipData(AttackData ad, PlayerStats ps, EntityStatManager esm)
     {
@@ -68,6 +70,12 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         tooltipType = TooltipType.MilestoneReward;
         mrd = milestoneReward;
     }
+    public void SetupTooltipData(string title, string description)
+    {
+        tooltipType = TooltipType.ActionButton;
+        actionButtonTitle = title;
+        actionButtonDescription = description;
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         switch (tooltipType)
@@ -81,6 +89,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             case TooltipType.AttackReward: ShowAttackRewardTooltip(); break;
             case TooltipType.StatReward: ShowStatRewardTooltip(); break;
             case TooltipType.MilestoneReward: ShowMilestoneRewardTooltip(); break;
+            case TooltipType.ActionButton: ShowActionButtonTooltip(); break;
             default: break;
         }
     }
@@ -288,6 +297,12 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         List<string> lines = new() { mrd.GetDescription() };
 
         TooltipUI.Instance.ShowTooltip(mrd.rewardName, string.Join("\n", lines), new(100, -100));
+    }
+    private void ShowActionButtonTooltip()
+    {
+        if (string.IsNullOrEmpty(actionButtonTitle)) return;
+
+        TooltipUI.Instance.ShowTooltip(actionButtonTitle, actionButtonDescription, new(100, -100));
     }
     public void OnPointerExit(PointerEventData eventData) => CloseTooltip();
     private void OnDisable() => CloseTooltip();

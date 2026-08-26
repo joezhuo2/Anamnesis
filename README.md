@@ -4,7 +4,7 @@
 
 **A 2D wave-based action roguelite built in Unity 6**
 
-*Anamnesis* — the recollection of memories. Survive endless waves of enemies, collect rewards, and rebuild your power through a branching skill tree.
+*Anamnesis* — the recollection of memories. Survive endless waves of enemies, collect rewards, and rebuild your power through a branching skill tree. Choose between **Regular** waves or an **Unlimited** endless mode at the start of each run.
 
 </div>
 
@@ -14,20 +14,25 @@
 
 Anamnesis is a top-down, wave-based action game currently in active development. Each wave throws escalating hordes of enemies at you while you weave together basic attacks, skills, and ultimates. Between waves you pick from randomized rewards — stat buffs, rare attacks, and powerful player upgrades — and spend skill points on a persistent skill tree.
 
+At the start of each run you pick a **gamemode**: **Regular** waves follow the standard escalating sequence, while **Unlimited** waves scale infinitely with faster spawns, periodic boss waves, and endless rewards.
+
 The game is built entirely with **ScriptableObject-driven data** (attacks, status effects, upgrades, skill tree nodes), so most content is data-authored and tuned in the Unity inspector.
 
 ## Core Loop
 
-1. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters. Enemies can even **split** into more enemies on death, and extra spawns occur every 10 waves.
-2. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward. Reroll with **gold** (200g) when out of rerolls.
-3. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, *Stat Modifier*, and more) that add risk for greater reward.
-4. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run. Gain skill points from levelling up, occasionally on wave clears and every 5 waves. Refund nodes using gold (default 50g).
-5. **Level Up & Earn Gold** — collect experience from enemies to level up, gaining stat boosts and skill points along the way. Enemies drop XP (common enemies drop less, bosses drop more with 15% variance). **Enemies also drop gold (15% variance), increased by the Stealing stat.**
-6. **Repeat** — waves get harder, and you get stronger.
+1. **Pick a gamemode** — choose **Regular** waves (standard escalating sequence) or **Unlimited** waves (infinite scaling, faster spawns, periodic boss waves, endless rewards).
+2. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters. Enemies can even **split** into more enemies on death, and extra spawns occur every 10 waves.
+3. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward. Reroll with **gold** (200g) when out of rerolls.
+4. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, *Stat Modifier*, and more) that add risk for greater reward.
+5. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run. Gain skill points from levelling up, occasionally on wave clears and every 5 waves. Refund nodes using gold (default 50g).
+6. **Level Up & Earn Gold** — collect experience from enemies to level up, gaining stat boosts and skill points along the way. Enemies drop XP (common enemies drop less, bosses drop more with 15% variance). **Enemies also drop gold (15% variance), increased by the Stealing stat.**
+7. **Repeat** — waves get harder, and you get stronger.
 
 ## Features
 
+- **Gamemode selector** — choose between **Regular** and **Unlimited** waves at the start of each run via dedicated buttons (with tooltips). Player actions are enabled in the lobby.
 - **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward/anomaly button panels that update dynamically.
+- **Unlimited waves** — an endless mode that scales infinitely: enemy level and max total enemies rise each wave, spawns speed up, boss waves appear periodically, and rewards never stop. Reuses all shared `WaveManager` settings (reroll cost, rewards, corruption, milestones, anomalies) with no reconfiguration.
 - **Enemy splitting** — enemies can split into more enemies on death with configurable split count, health scaling, and behavior settings.
 - **Global enemy spawner** — centralized spawning system for consistent enemy management.
 - **Anomaly system** — randomized run modifiers with configurable frequency, counts, and reward bonuses (e.g., *Time Trial*, *No Damage*, *Stat Modifier*).
@@ -101,7 +106,7 @@ Assets/
     ├── Projectile/            # Projectiles, damage calculator, attack data
     ├── StatusEffect/          # Status effect system & implementations
     ├── SkillTree/             # Skill tree manager, UI, pan/zoom
-    ├── Wave/                  # WaveManager, rewards, anomalies, enemy spawner
+    ├── Wave/                  # WaveManager, UnlimitedWaveManager, rewards, anomalies, enemy spawner
     ├── Items/                 # Item & gear definitions
     ├── Misc/                  # GameController, other misc files
     ├── TextIndicator/         # Floating damage numbers, XP/Gold indicators

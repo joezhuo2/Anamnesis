@@ -2,7 +2,7 @@
 
 ### High Priority (To be done before 1 minor version)
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)
-- [ ] More skill tree nodes & branches, upgrading existing Awakenings/Attacks (currently none) - 'capstone' nodes, and introducing new ones (currently none)
+- [ ] skill tree 'capstone' nodes - upgrading existing Awakenings/Attacks (currently none) and/or introducing new ones
 - [ ] Wave 60 boss and enemies, and Boss Rush Extension (v0.3.0 Content Update)
 
 ### Medium Priority (To be done before 2 minor versions)
@@ -12,7 +12,7 @@
 - [ ] Corrupt button (part 2) - can turn normal rewards into new type of special rewards (very rare)
 - [ ] Player summons
 - [ ] Anamolies update (change spawning behavior)
-- [ ] Player new "signature" that charges via a new special resourceinstead of a cooldown
+- [ ] Player new "signature" that charges via a new special resource instead of a cooldown
 
 ### Low Priority
 - [ ] portals
@@ -38,16 +38,15 @@
 # QoL Updates
 
 ### High Priority (To be done before 1 minor version)
-- [ ] Pause menu with resume/restart/quit, settings/controls/stats menu
-- [ ] Title/header for skill tree/reward menu
-- [ ] Audio, Tilemaps & polish
-- [ ] Gamemode selector (classic/endless/bossrush)
-- [ ] Difficulty selector
+- [ ] Pause menu with resume/restart/home/quit, settings/controls/stats menu
 - [ ] Data saving
+- [ ] [MINOR] Title/header for reward menu
 
 ### Medium Priority (to be done before 2 minor versions)
 - [ ] map borders
+- [ ] Audio, Tilemaps & polish
 - [ ] wave progress indicator
+- [ ] Difficulty selector
 
 ### Low Priority
 - [ ] Scrollable Tooltips
@@ -71,14 +70,3 @@
 - [ ] Screenshot mode that hides the HUD
 - [ ] FPS counter & performance stats toggle
 - [ ] Confirmation dialog before corrupting a reward
-
-# Attack Content Suggestions (to fill missing build roles)
-
-## HP Build - Missing Ultimate / Skill / Awakenings
-- [ ] **HP Ultimate**: "Vital Surge" - Consume 30% max HP to deal massive damage scaling with missing HP, heal to full on kill
-- [ ] **HP Skill**: "Life Tap" - Channel to convert HP into a damage shield that explodes when broken, scaling with max HP
-- [ ] **HP Awakening**: "Undying Will" - On fatal damage, survive with 1 HP and gain 3s invulnerability + 200% damage (once per wave)
-
-## Armor Build - Missing Basic / Ultimate
-- [ ] **Armor Basic**: "Shield Bash" - Melee attack dealing damage equal to 150% armor, applies 2s stun, generates 5 armor on hit
-- [ ] **Armor Ultimate**: "Iron Maiden" - Reflect 300% of damage taken for 8s, gain armor equal to damage reflected, enemies attacking you take thorns damage

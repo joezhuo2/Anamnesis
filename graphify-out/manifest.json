@@ -1,10 +1,4 @@
 {
-  ".VSCodeCounter/2026-08-18_09-03-23/results.json": {
-    "mtime": 1787058203.513615,
-    "seen": 1787538805.3413804,
-    "ast_hash": "42ed27cc64610a4506e12f7f511fa3d2",
-    "semantic_hash": ""
-  },
   ".VSCodeCounter/2026-08-18_09-03-45/results.json": {
     "mtime": 1787058225.328919,
     "seen": 1787538805.3413813,
@@ -24,9 +18,9 @@
     "semantic_hash": ""
   },
   ".vscode/settings.json": {
-    "mtime": 1779059404.1453888,
-    "seen": 1787538805.3413846,
-    "ast_hash": "3166794b3c255554461fd7b33919cd9d",
+    "mtime": 1787686538.7616665,
+    "seen": 1787698683.6916766,
+    "ast_hash": "205581733c8434517b8ef36776f90b78",
     "semantic_hash": ""
   },
   "Anamnesis.slnx": {
@@ -714,9 +708,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1787665750.7665408,
-    "seen": 1787668943.020448,
-    "ast_hash": "726909d716d3aa768a3610294aa1670e",
+    "mtime": 1787698667.8297408,
+    "seen": 1787698683.7016747,
+    "ast_hash": "8679bf2f66f22300549244ba5b557fc2",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -753,42 +747,6 @@
     "mtime": 1782003075.5200875,
     "seen": 1787538805.3414924,
     "ast_hash": "eeb26e313b89cd9334b828428a4847ef",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/details.md": {
-    "mtime": 1787058203.61824,
-    "seen": 1787538805.3415048,
-    "ast_hash": "6b0910c1cbaefda6af1137248c9f0f8d",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/diff-details.md": {
-    "mtime": 1787058203.61824,
-    "seen": 1787538805.3415053,
-    "ast_hash": "4700bcb90cb790c809db1d1e149b67a6",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/diff.md": {
-    "mtime": 1787058203.6197672,
-    "seen": 1787538805.341506,
-    "ast_hash": "ccd9e8d40e6d939d0619c5c639ea4673",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/diff.txt": {
-    "mtime": 1787058203.5707366,
-    "seen": 1787538805.3415067,
-    "ast_hash": "8f49a22594c0bc6d0e9afb958f58f2da",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/results.md": {
-    "mtime": 1787058203.61824,
-    "seen": 1787538805.3415074,
-    "ast_hash": "6a44a732998ec5ccb7d29ed6592a7300",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/results.txt": {
-    "mtime": 1787058203.5549035,
-    "seen": 1787538805.3415082,
-    "ast_hash": "5516ef3a53b1af5d28fbe23aa5bc8a52",
     "semantic_hash": ""
   },
   ".VSCodeCounter/2026-08-18_09-03-45/details.md": {
@@ -882,9 +840,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787685997.304373,
-    "seen": 1787686006.2306602,
-    "ast_hash": "8e994e9c398aabef16c6e1ff920c478e",
+    "mtime": 1787698627.8785188,
+    "seen": 1787698683.7037458,
+    "ast_hash": "bac49c541a091f5819fcd427a35ee8bd",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -900,9 +858,9 @@
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1787675702.6378536,
-    "seen": 1787675918.538224,
-    "ast_hash": "aebb3ebdeae90bc1e7c4a704630277b2",
+    "mtime": 1787698476.2026527,
+    "seen": 1787698683.7040367,
+    "ast_hash": "04ab9c004c72e123cad2f46a9df0f5aa",
     "semantic_hash": ""
   },
   "TODO.md": {
@@ -1890,9 +1848,9 @@
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
-    "mtime": 1787685462.8593175,
-    "seen": 1787686006.2306392,
-    "ast_hash": "1b4c06a3bfcd6b18ba369993690652f6",
+    "mtime": 1787696706.161932,
+    "seen": 1787698683.703171,
+    "ast_hash": "63d08f6073a3f8820125c40992a68c66",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/MilestoneReward.cs": {
@@ -2043,6 +2001,54 @@
     "mtime": 1787680679.9003289,
     "seen": 1787686006.2306664,
     "ast_hash": "1bfd32d2de126712c9480258acaa6dbb",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/results.json": {
+    "mtime": 1787698384.5416906,
+    "seen": 1787698683.6914723,
+    "ast_hash": "9c3183ec80ed15f698a4b0ea57da7042",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Wave/UnlimitedWaveManager.cs": {
+    "mtime": 1787698667.8297408,
+    "seen": 1787698683.7016728,
+    "ast_hash": "ed798969e5ad40293321f80287cd07a0",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/details.md": {
+    "mtime": 1787698384.5887547,
+    "seen": 1787698683.7031395,
+    "ast_hash": "26f01f3cc79ec57ed040f85b942e81c4",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/diff-details.md": {
+    "mtime": 1787698384.5887547,
+    "seen": 1787698683.7031405,
+    "ast_hash": "c3f110ac2423e4fa21d4a428cd859a01",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/diff.md": {
+    "mtime": 1787698384.5887547,
+    "seen": 1787698683.7031422,
+    "ast_hash": "0a15e4ffe00e1204d444fd3f40fea4bf",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/diff.txt": {
+    "mtime": 1787698384.5715625,
+    "seen": 1787698683.703144,
+    "ast_hash": "5e202d5c7a632c3d30558a00d26ee162",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/results.md": {
+    "mtime": 1787698384.5887547,
+    "seen": 1787698683.7031457,
+    "ast_hash": "e3ba8bc8e8d7c5209a155462a3d6bb48",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/results.txt": {
+    "mtime": 1787698384.5668528,
+    "seen": 1787698683.703147,
+    "ast_hash": "5d20de64258443124e56f284b46393b3",
     "semantic_hash": ""
   }
 }

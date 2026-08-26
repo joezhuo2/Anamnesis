@@ -36,15 +36,18 @@ public class GameController : MonoBehaviour
     {
         SetTitle("Anamnesis");
         SetSubtitle("Conquer the waves");
-        Time.timeScale = 0f;
 
-        UIPanel.SetActive(false);
         started = false;
     }
 
     public void OnGameStart()
     {
         if (started) return;
+
+        started = true;
+
+        DisableTitle();
+        DisableSubtitle();
 
         UIPanel.SetActive(true);
     }

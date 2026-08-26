@@ -1,6 +1,7 @@
 ## Roadmap
 
 ### Pre [v0.3.0]
+- [v0.2.4] **Gamemode Selector Update**: `UnlimitedWaveButtonController` + `RegularWaveButtonController` buttons (under `buttonContainer`) to pick between unlimited and regular wave modes, each with a `TooltipTrigger`
 - [v0.2.3] **Unlimited Waves System**: new `UnlimitedWaveManager` (implemented, not wired up) with infinite scaling, boss waves, and shared settings inherited from `WaveManager`
 - [v0.2.2] **Skill Tree Connections Update**: bidirectional connections system with OR logic (prerequisites now work both ways, only one connected node needed)
 - [v0.2.1] **Tooltip Expansion Update**: added tooltips to player upgrades and attack rewards
