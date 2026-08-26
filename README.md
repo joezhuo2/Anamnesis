@@ -8,10 +8,10 @@
 
 </div>
 
----
-
-| [📖 README](./README.md) | [📜 CHANGELOG](./CHANGELOG.md) | [🗺️ ROADMAP](./ROADMAP.md) | [📝 TODO](./TODO.md) | [👏 CREDITS](./CREDITS.md) |
+| [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
 | :---: | :---: | :---: | :---: | :---: |
+
+---
 
 ## About
 

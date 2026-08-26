@@ -5,6 +5,11 @@ All *notable* changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.4_2] - 2026-08-25
+
+### Updated
+- the navbar thing
+
 ## [v0.2.4_1] - 2026-08-25
 
 ### Added
