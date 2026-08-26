@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EntityStatManager : MonoBehaviour
@@ -77,144 +78,13 @@ public class EntityStatManager : MonoBehaviour
     }
     public float GetStat(StatType type)
     {
-        float value = type switch
-        {
-            StatType.attack => s.attack,
-            StatType.atkPct => s.atkPct,
-            StatType.damagePct => s.damagePct,
-            StatType.physicalDmgPct => s.physicalDmgPct,
-            StatType.spellDmgPct => s.spellDmgPct,
-            StatType.critChance => s.critChance,
-            StatType.critDamage => s.critDamage,
-            StatType.aoePct => s.aoePct,
-            StatType.maxHp => s.maxHp,
-            StatType.hpPct => s.hpPct,
-            StatType.hpRegen => s.hpRegen,
-            StatType.hpRegPct => s.hpRegPct,
-            StatType.armor => s.armor,
-            StatType.armorPct => s.armorPct,
-            StatType.damageRes => s.damageRes,
-            StatType.physicalRes => s.physicalRes,
-            StatType.spellRes => s.spellRes,
-            StatType.dodgeChance => s.dodgeChance,
-            StatType.dodgeResPct => s.dodgeResPct,
-            StatType.moveSpeedPct => s.moveSpeedPct,
-            StatType.attackSpeedPct => s.attackSpeedPct,
-            StatType.defShred => s.defShred,
-            StatType.resPen => s.resPen,
-            StatType.maxStamina => s.maxStamina,
-            StatType.staminaRegen => s.staminaRegen,
-            StatType.stRegPct => s.stRegPct,
-            StatType.addPhysDmgPct => s.addPhysDmgPct,
-            StatType.addSplDmgPct => s.addSplDmgPct,
-            StatType.addTrueDmgPct => s.addTrueDmgPct,
-            StatType.currentHp => s.currentHp,
-            StatType.moveSpeed => s.moveSpeed,
-            StatType.EffMaxHp => s.EffMaxHp,
-            StatType.EffAtk => s.EffAtk,
-            StatType.EffHpReg => s.EffHpReg,
-            StatType.EffStReg => s.EffStReg,
-            StatType.EffSpd => s.FinalSpd,
-            StatType.EffArmor => s.EffArmor,
-            StatType.maxMana => s.maxMana,
-            StatType.SkillDmgPct => s.skillDmgPct,
-            StatType.BasicDmgPct => s.basicDmgPct,
-            StatType.UltDmgPct => s.ultDmgPct,
-            StatType.EffectRes => s.effectRes,
-            StatType.Intelligence => s.intelligence,
-            StatType.IntPct => s.intPct,
-            StatType.EffInt => s.EffInt,
-            StatType.ProjSpd => s.projSpd,
-            StatType.stCostPct => s.stCostPct,
-            StatType.dashCooldownRedPct => s.dashCooldownRedPct,
-            StatType.dashDistancePct => s.dashDistancePct,
-            StatType.dashStaminaCostRedPct => s.dashStaminaCostRedPct,
-            StatType.addDmgPct => s.addDmgPct,
-            StatType.kbRes => s.kbRes,
-            StatType.kbPct => s.kbPct,
-            StatType.ExpBonus => s.expBonus,
-            StatType.Stealing => s.stealing,
-            StatType.sePotPct => s.sePotPct,
-            StatType.seDurPct => s.seDurPct,
-            StatType.manaGainPct => s.manaGainPct,
-            StatType.seTickRatePct => s.seTickRatePct,
-            StatType.maxManaPct => s.maxManaPct,
-            StatType.maxStaminaPct => s.maxStaminaPct,
-            StatType.basicCdRedPct => s.basicCdRedPct,
-            StatType.skillCdRedPct => s.skillCdRedPct,
-            StatType.ultCdRedPct => s.ultCdRedPct,
-            StatType.EffMaxMana => s.EffMaxMana,
-            StatType.EffMaxStamina => s.EffMaxStamina,
-            _ => 0f,
-        };
-        return value;
+        return s == null ? 0f : s.GetValue(type);
     }
 
     public void AddStat(StatBuff b, bool isAdding = true)
     {
-        float factor = isAdding ? 1f : -1f;
-        float mod = b.value * factor;
-
-        switch (b.type)
-        {
-            case StatType.attack: s.attack += Mathf.RoundToInt(mod); break;
-            case StatType.atkPct: s.atkPct += mod; break;
-            case StatType.damagePct: s.damagePct += mod; break;
-            case StatType.physicalDmgPct: s.physicalDmgPct += mod; break;
-            case StatType.spellDmgPct: s.spellDmgPct += mod; break;
-            case StatType.critChance: s.critChance += mod; break;
-            case StatType.critDamage: s.critDamage += mod; break;
-            case StatType.aoePct: s.aoePct += mod; break;
-            case StatType.maxHp: s.maxHp += Mathf.RoundToInt(mod); break;
-            case StatType.hpPct: s.hpPct += mod; break;
-            case StatType.hpRegen: s.hpRegen += mod; break;
-            case StatType.hpRegPct: s.hpRegPct += mod; break;
-            case StatType.armor: s.armor += Mathf.RoundToInt(mod); break;
-            case StatType.armorPct: s.armorPct += mod; break;
-            case StatType.damageRes: s.damageRes += mod; break;
-            case StatType.physicalRes: s.physicalRes += mod; break;
-            case StatType.spellRes: s.spellRes += mod; break;
-            case StatType.dodgeChance: s.dodgeChance += mod; break;
-            case StatType.dodgeResPct: s.dodgeResPct += mod; break;
-            case StatType.moveSpeedPct: s.moveSpeedPct += mod; break;
-            case StatType.attackSpeedPct: s.attackSpeedPct += mod; break;
-            case StatType.defShred: s.defShred += Mathf.RoundToInt(mod); break;
-            case StatType.resPen: s.resPen += mod; break;
-            case StatType.maxStamina: s.maxStamina += Mathf.RoundToInt(mod); break;
-            case StatType.staminaRegen: s.staminaRegen += Mathf.RoundToInt(mod); break;
-            case StatType.stRegPct: s.stRegPct += mod; break;
-            case StatType.addPhysDmgPct: s.addPhysDmgPct += mod; break;
-            case StatType.addSplDmgPct: s.addSplDmgPct += mod; break;
-            case StatType.addTrueDmgPct: s.addTrueDmgPct += mod; break;
-            case StatType.moveSpeed: s.moveSpeed += mod; break;
-            case StatType.maxMana: s.maxMana += Mathf.RoundToInt(mod); break;
-            case StatType.SkillDmgPct: s.skillDmgPct += mod; break;
-            case StatType.BasicDmgPct: s.basicDmgPct += mod; break;
-            case StatType.UltDmgPct: s.ultDmgPct += mod; break;
-            case StatType.EffectRes: s.effectRes += mod; break;
-            case StatType.Intelligence: s.intelligence += Mathf.RoundToInt(mod); break;
-            case StatType.IntPct: s.intPct += mod; break;
-            case StatType.ProjSpd: s.projSpd += mod; break;
-            case StatType.stCostPct: s.stCostPct += mod; break;
-            case StatType.dashCooldownRedPct: s.dashCooldownRedPct += mod; break;
-            case StatType.dashDistancePct: s.dashDistancePct += mod; break;
-            case StatType.dashStaminaCostRedPct: s.dashStaminaCostRedPct += mod; break;
-            case StatType.addDmgPct: s.addDmgPct += mod; break;
-            case StatType.kbRes: s.kbRes += mod; break;
-            case StatType.kbPct: s.kbPct += mod; break;
-            case StatType.ExpBonus: s.expBonus += mod; break;
-            case StatType.Stealing: s.stealing += mod; break;
-            case StatType.sePotPct: s.sePotPct += mod; break;
-            case StatType.seDurPct: s.seDurPct += mod; break;
-            case StatType.manaGainPct: s.manaGainPct += mod; break;
-            case StatType.seTickRatePct: s.seTickRatePct += mod; break;
-            case StatType.maxManaPct: s.maxManaPct += mod; break;
-            case StatType.maxStaminaPct: s.maxStaminaPct += mod; break;
-            case StatType.basicCdRedPct: s.basicCdRedPct += mod; break;
-            case StatType.skillCdRedPct: s.skillCdRedPct += mod; break;
-            case StatType.ultCdRedPct: s.ultCdRedPct += mod; break;
-            default: break;
-
-        }
+        if (s == null || b.IsUnityNull()) return;
+        float mod = b.value * (isAdding ? 1f : -1f);
+        s.Apply(b.type, mod);
     }
 }

@@ -626,6 +626,7 @@ public class WaveManager : MonoBehaviour
 
     protected void UpdateRerollUI()
     {
+        CachePlayerStatManager();
 
         if (rerollText != null)
         {
@@ -635,7 +636,7 @@ public class WaveManager : MonoBehaviour
             }
             else
             {
-                if (cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
+                if (cpsm != null && cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
                     rerollText.text = $"{rerollGoldCost}g";
                 else
                     rerollText.text = "0";
@@ -645,7 +646,7 @@ public class WaveManager : MonoBehaviour
         bool canReroll = rerolls > 0;
         if (!canReroll)
         {
-            if (cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
+            if (cpsm != null && cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
                 canReroll = true;
         }
 
@@ -684,7 +685,7 @@ public class WaveManager : MonoBehaviour
 
         if (rerolls <= 0)
         {
-            if (cpsm.s is PlayerStats && cpsm.s.gold >= 200)
+            if (cpsm != null && cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
                 cpsm.s.gold -= rerollGoldCost;
             else return;
         }

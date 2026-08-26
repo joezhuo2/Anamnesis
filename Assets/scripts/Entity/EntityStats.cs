@@ -189,4 +189,142 @@ public class EntityStats : ScriptableObject
     public bool isAttacking;
     public bool canMove;
     public bool canGainHp;
+
+    public float GetValue(StatType type)
+    {
+        return type switch
+        {
+            StatType.attack => attack,
+            StatType.atkPct => atkPct,
+            StatType.damagePct => damagePct,
+            StatType.physicalDmgPct => physicalDmgPct,
+            StatType.spellDmgPct => spellDmgPct,
+            StatType.critChance => critChance,
+            StatType.critDamage => critDamage,
+            StatType.aoePct => aoePct,
+            StatType.maxHp => maxHp,
+            StatType.hpPct => hpPct,
+            StatType.hpRegen => hpRegen,
+            StatType.hpRegPct => hpRegPct,
+            StatType.armor => armor,
+            StatType.armorPct => armorPct,
+            StatType.damageRes => damageRes,
+            StatType.physicalRes => physicalRes,
+            StatType.spellRes => spellRes,
+            StatType.dodgeChance => dodgeChance,
+            StatType.dodgeResPct => dodgeResPct,
+            StatType.moveSpeedPct => moveSpeedPct,
+            StatType.attackSpeedPct => attackSpeedPct,
+            StatType.defShred => defShred,
+            StatType.resPen => resPen,
+            StatType.maxStamina => maxStamina,
+            StatType.staminaRegen => staminaRegen,
+            StatType.stRegPct => stRegPct,
+            StatType.addPhysDmgPct => addPhysDmgPct,
+            StatType.addSplDmgPct => addSplDmgPct,
+            StatType.addTrueDmgPct => addTrueDmgPct,
+            StatType.currentHp => currentHp,
+            StatType.moveSpeed => moveSpeed,
+            StatType.EffMaxHp => EffMaxHp,
+            StatType.EffAtk => EffAtk,
+            StatType.EffHpReg => EffHpReg,
+            StatType.EffStReg => EffStReg,
+            StatType.EffSpd => FinalSpd,
+            StatType.EffArmor => EffArmor,
+            StatType.maxMana => maxMana,
+            StatType.SkillDmgPct => skillDmgPct,
+            StatType.BasicDmgPct => basicDmgPct,
+            StatType.UltDmgPct => ultDmgPct,
+            StatType.EffectRes => effectRes,
+            StatType.Intelligence => intelligence,
+            StatType.IntPct => intPct,
+            StatType.EffInt => EffInt,
+            StatType.ProjSpd => projSpd,
+            StatType.stCostPct => stCostPct,
+            StatType.dashCooldownRedPct => dashCooldownRedPct,
+            StatType.dashDistancePct => dashDistancePct,
+            StatType.dashStaminaCostRedPct => dashStaminaCostRedPct,
+            StatType.addDmgPct => addDmgPct,
+            StatType.kbRes => kbRes,
+            StatType.kbPct => kbPct,
+            StatType.ExpBonus => expBonus,
+            StatType.Stealing => stealing,
+            StatType.sePotPct => sePotPct,
+            StatType.seDurPct => seDurPct,
+            StatType.manaGainPct => manaGainPct,
+            StatType.seTickRatePct => seTickRatePct,
+            StatType.maxManaPct => maxManaPct,
+            StatType.maxStaminaPct => maxStaminaPct,
+            StatType.basicCdRedPct => basicCdRedPct,
+            StatType.skillCdRedPct => skillCdRedPct,
+            StatType.ultCdRedPct => ultCdRedPct,
+            StatType.EffMaxMana => EffMaxMana,
+            StatType.EffMaxStamina => EffMaxStamina,
+            _ => 0f,
+        };
+    }
+
+    public void Apply(StatType type, float delta)
+    {
+        switch (type)
+        {
+            case StatType.attack: attack += Mathf.RoundToInt(delta); break;
+            case StatType.atkPct: atkPct += delta; break;
+            case StatType.damagePct: damagePct += delta; break;
+            case StatType.physicalDmgPct: physicalDmgPct += delta; break;
+            case StatType.spellDmgPct: spellDmgPct += delta; break;
+            case StatType.critChance: critChance += delta; break;
+            case StatType.critDamage: critDamage += delta; break;
+            case StatType.aoePct: aoePct += delta; break;
+            case StatType.maxHp: maxHp += Mathf.RoundToInt(delta); break;
+            case StatType.hpPct: hpPct += delta; break;
+            case StatType.hpRegen: hpRegen += delta; break;
+            case StatType.hpRegPct: hpRegPct += delta; break;
+            case StatType.armor: armor += Mathf.RoundToInt(delta); break;
+            case StatType.armorPct: armorPct += delta; break;
+            case StatType.damageRes: damageRes += delta; break;
+            case StatType.physicalRes: physicalRes += delta; break;
+            case StatType.spellRes: spellRes += delta; break;
+            case StatType.dodgeChance: dodgeChance += delta; break;
+            case StatType.dodgeResPct: dodgeResPct += delta; break;
+            case StatType.moveSpeedPct: moveSpeedPct += delta; break;
+            case StatType.attackSpeedPct: attackSpeedPct += delta; break;
+            case StatType.defShred: defShred += Mathf.RoundToInt(delta); break;
+            case StatType.resPen: resPen += delta; break;
+            case StatType.maxStamina: maxStamina += Mathf.RoundToInt(delta); break;
+            case StatType.staminaRegen: staminaRegen += Mathf.RoundToInt(delta); break;
+            case StatType.stRegPct: stRegPct += delta; break;
+            case StatType.addPhysDmgPct: addPhysDmgPct += delta; break;
+            case StatType.addSplDmgPct: addSplDmgPct += delta; break;
+            case StatType.addTrueDmgPct: addTrueDmgPct += delta; break;
+            case StatType.moveSpeed: moveSpeed += delta; break;
+            case StatType.maxMana: maxMana += Mathf.RoundToInt(delta); break;
+            case StatType.SkillDmgPct: skillDmgPct += delta; break;
+            case StatType.BasicDmgPct: basicDmgPct += delta; break;
+            case StatType.UltDmgPct: ultDmgPct += delta; break;
+            case StatType.EffectRes: effectRes += delta; break;
+            case StatType.Intelligence: intelligence += Mathf.RoundToInt(delta); break;
+            case StatType.IntPct: intPct += delta; break;
+            case StatType.ProjSpd: projSpd += delta; break;
+            case StatType.stCostPct: stCostPct += delta; break;
+            case StatType.dashCooldownRedPct: dashCooldownRedPct += delta; break;
+            case StatType.dashDistancePct: dashDistancePct += delta; break;
+            case StatType.dashStaminaCostRedPct: dashStaminaCostRedPct += delta; break;
+            case StatType.addDmgPct: addDmgPct += delta; break;
+            case StatType.kbRes: kbRes += delta; break;
+            case StatType.kbPct: kbPct += delta; break;
+            case StatType.ExpBonus: expBonus += delta; break;
+            case StatType.Stealing: stealing += delta; break;
+            case StatType.sePotPct: sePotPct += delta; break;
+            case StatType.seDurPct: seDurPct += delta; break;
+            case StatType.manaGainPct: manaGainPct += delta; break;
+            case StatType.seTickRatePct: seTickRatePct += delta; break;
+            case StatType.maxManaPct: maxManaPct += delta; break;
+            case StatType.maxStaminaPct: maxStaminaPct += delta; break;
+            case StatType.basicCdRedPct: basicCdRedPct += delta; break;
+            case StatType.skillCdRedPct: skillCdRedPct += delta; break;
+            case StatType.ultCdRedPct: ultCdRedPct += delta; break;
+            default: break;
+        }
+    }
 }

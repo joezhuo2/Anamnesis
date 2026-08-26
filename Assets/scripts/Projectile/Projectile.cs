@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -38,8 +37,9 @@ public class Projectile : MonoBehaviour {
     }
     private void OnDestroy()
     {
-        if (pd != null && pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null)
-            ownerObj.SendMessage("UnregisterOrbitingProjectile", this, SendMessageOptions.DontRequireReceiver);
+        if (pd != null && pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null &&
+            ownerObj.TryGetComponent<IOrbitRegister>(out var registrar))
+            registrar.UnregisterOrbitingProjectile(this);
     }
     private void Start()
     {
@@ -61,8 +61,11 @@ public class Projectile : MonoBehaviour {
             }
         }
 
-        if (pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null)
-            ownerObj.SendMessage("RegisterOrbitingProjectile", this, SendMessageOptions.DontRequireReceiver);
+        if (pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null &&
+            ownerObj.TryGetComponent<IOrbitRegister>(out var registrar))
+        {
+            registrar.RegisterOrbitingProjectile(this);
+        }
 
         StartCoroutine(DestroyProjectileAfterDelay(pd.lifetime));
     }
@@ -226,7 +229,7 @@ public class Projectile : MonoBehaviour {
         {
             if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
             {
-                bool searchForPlayer = ownerObj.GameObject().CompareTag("Enemy");
+                bool searchForPlayer = ownerObj.CompareTag("Enemy");
                 followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
             }
 

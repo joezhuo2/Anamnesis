@@ -5,6 +5,21 @@ All *notable* changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project roughly follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.5] - 2026-08-25
+
+### Added
+- `IOrbitRegister` to replace old orbit registering method
+- safety checks in wave manager
+
+### Changed
+- get/update stat values now live in entity stats, but can be called by entity stat manager
+
+### Removed
+- random visualscripting imports
+
+### Updated
+- cleaned up syntax in damage calculator
+- cleaned up search in projectile
 
 ## [v0.2.4_3] - 2026-08-25
 

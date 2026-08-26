@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityProjectileHandler : MonoBehaviour
+public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
 {
     [Tooltip("Maximum orbiting projectiles tracked. 0 = unlimited.")]
     public int maxOrbiting = 0;

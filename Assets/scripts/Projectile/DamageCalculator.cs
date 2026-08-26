@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public struct ProjectileDamageSnapshot
@@ -34,7 +33,7 @@ public static class DamageCalculator
         snapshot.scalingValue = esm.GetStat(pd.scalingStat);
         snapshot.specialMult = (pd.specialSclaing) switch
         {
-            SpecialScalingAttribute.Orbits => esm.GameObject().TryGetComponent<EntityProjectileHandler>(out var eph) ? 1f + (eph.OrbitCount * pd.specialMult) : 1f,
+            SpecialScalingAttribute.Orbits => source.TryGetComponent<EntityProjectileHandler>(out var eph) ? 1f + (eph.OrbitCount * pd.specialMult) : 1f,
             SpecialScalingAttribute.HpConsumed => CalculateHpConsumedMult(pd, esm),
             _ => 1f
         };
@@ -69,7 +68,7 @@ public static class DamageCalculator
             float finalMult = mult + (addMultPct * 0.01f);
 
             float damage = snapshot.scalingValue * snapshot.specialMult * dmgMult * finalMult * TypeBonus(type, snapshot) * AttackTypeBonus(pd.mainAttack.type, snapshot);
-            var (finalDamage, isCrit) = rollCrits ? RollCrits(damage, snapshot) : (damage, false);
+            var (finalDamage, isCrit) = rollCrits ? RollCrits(damage, snapshot.critChance, snapshot.critDamage) : (damage, false);
             dp.AddInstance(type, finalDamage, isCrit, default, owner);
         }
 
@@ -123,13 +122,13 @@ public static class DamageCalculator
         return (baseDamage, false);
     }
 
-    public static (float damage, bool isCrit) RollCrits(float baseDamage, ProjectileDamageSnapshot snapshot)
+    public static (float damage, bool isCrit) RollCrits(float baseDamage, float critChance, float critDamage)
     {
         float roll = Random.Range(0f, 1000f) / 10f;
-        if (roll <= snapshot.critChance)
+        if (roll <= critChance)
         {
-            float critDamage = baseDamage * (100f + snapshot.critDamage) * 0.01f;
-            return (critDamage, true);
+            float critDmg = baseDamage * (100f + critDamage) * 0.01f;
+            return (critDmg, true);
         }
         return (baseDamage, false);
     }
