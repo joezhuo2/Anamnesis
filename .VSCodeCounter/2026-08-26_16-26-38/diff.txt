@@ -1,0 +1,62 @@
+Date : 2026-08-26 16:26:38
+Directory : c:\Users\Joe\Anamnesis\Assets\scripts
+Total : 24 files,  -14 codes, -1 comments, 13 blanks, all -2 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         24 |        -14 |         -1 |         13 |         -2 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                         | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                            |         24 |        -14 |         -1 |         13 |         -2 |
+| Core                                                                                                         |          5 |         26 |          0 |          2 |         28 |
+| Entity                                                                                                       |          3 |         13 |          0 |         -5 |          8 |
+| Entity (Files)                                                                                               |          2 |         -1 |          0 |         -6 |         -7 |
+| Entity\Player                                                                                                |          1 |         14 |          0 |          1 |         15 |
+| Misc                                                                                                         |          1 |          1 |          0 |          2 |          3 |
+| Projectile                                                                                                   |          3 |          8 |          0 |          3 |         11 |
+| SkillTree                                                                                                    |          3 |         -6 |          0 |          4 |         -2 |
+| StatusEffect                                                                                                 |          3 |        -93 |          0 |        -18 |       -111 |
+| StatusEffect\StatusEffects                                                                                   |          3 |        -93 |          0 |        -18 |       -111 |
+| StatusEffect\StatusEffects\Deprecated                                                                        |          3 |        -93 |          0 |        -18 |       -111 |
+| StatusEffect\StatusEffects\Deprecated\ArmorReduction                                                         |          1 |        -30 |          0 |         -6 |        -36 |
+| StatusEffect\StatusEffects\Deprecated\Slow                                                                   |          1 |        -30 |          0 |         -6 |        -36 |
+| StatusEffect\StatusEffects\Deprecated\Weaken                                                                 |          1 |        -33 |          0 |         -6 |        -39 |
+| Wave                                                                                                         |          6 |         37 |         -1 |         25 |         61 |
++--------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                     | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Joe\Anamnesis\Assets\scripts\Core\ICurrencyHolder.cs                                                | C#       |          5 |          0 |          0 |          5 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Core\IDamageable.cs                                                    | C#       |          5 |          0 |          0 |          5 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Core\IResourcePool.cs                                                  | C#       |          5 |          0 |          0 |          5 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Core\IStatProvider.cs                                                  | C#       |          5 |          0 |          1 |          6 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Core\IUnlockEffect.cs                                                  | C#       |          6 |          0 |          1 |          7 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityStatManager.cs                                            | C#       |       -137 |          0 |         -8 |       -145 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\EntityStats.cs                                                  | C#       |        136 |          0 |          2 |        138 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Entity\Player\TooltipTrigger.cs                                        | C#       |         14 |          0 |          1 |         15 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Misc\GameController.cs                                                 | C#       |          1 |          0 |          2 |          3 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\DamageCalculator.cs                                         | C#       |         -1 |          0 |          1 |          0 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\IOrbitRegistrar.cs                                          | C#       |          6 |          0 |          1 |          7 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Projectile\Projectile.cs                                               | C#       |          3 |          0 |          1 |          4 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillNodeUI.cs                                               | C#       |          0 |          0 |          1 |          1 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreeDefinition.cs                                       | C#       |          0 |          0 |          1 |          1 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\SkillTree\SkillTreeLineRenderer.cs                                     | C#       |         -6 |          0 |          2 |         -4 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Deprecated\ArmorReduction\ArmorReduction.cs | C#       |        -30 |          0 |         -6 |        -36 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Deprecated\Slow\Slow.cs                     | C#       |        -30 |          0 |         -6 |        -36 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\StatusEffect\StatusEffects\Deprecated\Weaken\Weaken.cs                 | C#       |        -33 |          0 |         -6 |        -39 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\MilestoneReward.cs                                                | C#       |        -16 |          0 |         -1 |        -17 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\RegularWaveButtonController.cs                                    | C#       |         32 |          0 |          7 |         39 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\UnlimitedWaveButtonController.cs                                  | C#       |         24 |          0 |          6 |         30 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\UnlimitedWaveManager.cs                                           | C#       |        -63 |         -1 |        -12 |        -76 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\WaveManager.cs                                                    | C#       |         46 |          0 |         24 |         70 |
+| c:\Users\Joe\Anamnesis\Assets\scripts\Wave\WaveReward.cs                                                     | C#       |         14 |          0 |          1 |         15 |
+| Total                                                                                                        |          |        -14 |         -1 |         13 |         -2 |
++--------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
