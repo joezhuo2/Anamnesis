@@ -1,10 +1,4 @@
 {
-  ".VSCodeCounter/2026-08-18_09-03-23/results.json": {
-    "mtime": 1787058203.513615,
-    "seen": 1787538805.3413804,
-    "ast_hash": "42ed27cc64610a4506e12f7f511fa3d2",
-    "semantic_hash": ""
-  },
   ".VSCodeCounter/2026-08-18_09-03-45/results.json": {
     "mtime": 1787058225.328919,
     "seen": 1787538805.3413813,
@@ -24,9 +18,9 @@
     "semantic_hash": ""
   },
   ".vscode/settings.json": {
-    "mtime": 1779059404.1453888,
-    "seen": 1787538805.3413846,
-    "ast_hash": "3166794b3c255554461fd7b33919cd9d",
+    "mtime": 1787686538.7616665,
+    "seen": 1787698683.6916766,
+    "ast_hash": "205581733c8434517b8ef36776f90b78",
     "semantic_hash": ""
   },
   "Anamnesis.slnx": {
@@ -468,9 +462,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/TooltipTrigger.cs": {
-    "mtime": 1787665434.5455625,
-    "seen": 1787668943.0203514,
-    "ast_hash": "2d7746389fb48b5a18908173a558edce",
+    "mtime": 1787700794.8202665,
+    "seen": 1787707974.5502167,
+    "ast_hash": "a29185967fded09c67ab85f421e24fab",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/TooltipUI.cs": {
@@ -492,9 +486,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Misc/GameController.cs": {
-    "mtime": 1787594145.1765,
-    "seen": 1787595500.0084348,
-    "ast_hash": "a0170f600368509bbe66353e3047d8a0",
+    "mtime": 1787702811.330926,
+    "seen": 1787707974.5502212,
+    "ast_hash": "b290b7f0c2d44310c7d4aae6bbcb74ee",
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/AttackData.cs": {
@@ -714,9 +708,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1787665750.7665408,
-    "seen": 1787668943.020448,
-    "ast_hash": "726909d716d3aa768a3610294aa1670e",
+    "mtime": 1787706986.4631991,
+    "seen": 1787707974.5502603,
+    "ast_hash": "14e8250a72d4fae23230618d85769f08",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -753,42 +747,6 @@
     "mtime": 1782003075.5200875,
     "seen": 1787538805.3414924,
     "ast_hash": "eeb26e313b89cd9334b828428a4847ef",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/details.md": {
-    "mtime": 1787058203.61824,
-    "seen": 1787538805.3415048,
-    "ast_hash": "6b0910c1cbaefda6af1137248c9f0f8d",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/diff-details.md": {
-    "mtime": 1787058203.61824,
-    "seen": 1787538805.3415053,
-    "ast_hash": "4700bcb90cb790c809db1d1e149b67a6",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/diff.md": {
-    "mtime": 1787058203.6197672,
-    "seen": 1787538805.341506,
-    "ast_hash": "ccd9e8d40e6d939d0619c5c639ea4673",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/diff.txt": {
-    "mtime": 1787058203.5707366,
-    "seen": 1787538805.3415067,
-    "ast_hash": "8f49a22594c0bc6d0e9afb958f58f2da",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/results.md": {
-    "mtime": 1787058203.61824,
-    "seen": 1787538805.3415074,
-    "ast_hash": "6a44a732998ec5ccb7d29ed6592a7300",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-23/results.txt": {
-    "mtime": 1787058203.5549035,
-    "seen": 1787538805.3415082,
-    "ast_hash": "5516ef3a53b1af5d28fbe23aa5bc8a52",
     "semantic_hash": ""
   },
   ".VSCodeCounter/2026-08-18_09-03-45/details.md": {
@@ -882,9 +840,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787685997.304373,
-    "seen": 1787686006.2306602,
-    "ast_hash": "8e994e9c398aabef16c6e1ff920c478e",
+    "mtime": 1787706922.5367754,
+    "seen": 1787707974.5502985,
+    "ast_hash": "47401cb4d3ca2bae4366e2210be2d40e",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -894,21 +852,21 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1787675630.5106232,
-    "seen": 1787675918.538223,
-    "ast_hash": "a7b2103057806368eab99157bdcf77fb",
+    "mtime": 1787707890.1410341,
+    "seen": 1787707974.5503032,
+    "ast_hash": "9c20711ac319c54f8e49c8a807153770",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1787675702.6378536,
-    "seen": 1787675918.538224,
-    "ast_hash": "aebb3ebdeae90bc1e7c4a704630277b2",
+    "mtime": 1787702032.8229136,
+    "seen": 1787707974.550304,
+    "ast_hash": "b6768321bd9232cd2a21479116a5518b",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1787666259.8210213,
-    "seen": 1787668943.0205393,
-    "ast_hash": "70662ec79d46adb14c886bdf55d068ff",
+    "mtime": 1787707250.5280795,
+    "seen": 1787707974.5503054,
+    "ast_hash": "3d6307f6d509a1fa4740a5e3168167d3",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1890,9 +1848,9 @@
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
-    "mtime": 1787685462.8593175,
-    "seen": 1787686006.2306392,
-    "ast_hash": "1b4c06a3bfcd6b18ba369993690652f6",
+    "mtime": 1787699101.4702797,
+    "seen": 1787707974.55029,
+    "ast_hash": "e5071dfccfc32cc70e65f4dda603d4d6",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/MilestoneReward.cs": {
@@ -2043,6 +2001,72 @@
     "mtime": 1787680679.9003289,
     "seen": 1787686006.2306664,
     "ast_hash": "1bfd32d2de126712c9480258acaa6dbb",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/results.json": {
+    "mtime": 1787698384.5416906,
+    "seen": 1787698683.6914723,
+    "ast_hash": "9c3183ec80ed15f698a4b0ea57da7042",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Wave/UnlimitedWaveManager.cs": {
+    "mtime": 1787706985.9039528,
+    "seen": 1787707974.5502594,
+    "ast_hash": "347d0cd27c7df88ac0322827a8a5cdc0",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/details.md": {
+    "mtime": 1787698384.5887547,
+    "seen": 1787698683.7031395,
+    "ast_hash": "26f01f3cc79ec57ed040f85b942e81c4",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/diff-details.md": {
+    "mtime": 1787698384.5887547,
+    "seen": 1787698683.7031405,
+    "ast_hash": "c3f110ac2423e4fa21d4a428cd859a01",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/diff.md": {
+    "mtime": 1787698384.5887547,
+    "seen": 1787698683.7031422,
+    "ast_hash": "0a15e4ffe00e1204d444fd3f40fea4bf",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/diff.txt": {
+    "mtime": 1787698384.5715625,
+    "seen": 1787698683.703144,
+    "ast_hash": "5e202d5c7a632c3d30558a00d26ee162",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/results.md": {
+    "mtime": 1787698384.5887547,
+    "seen": 1787698683.7031457,
+    "ast_hash": "e3ba8bc8e8d7c5209a155462a3d6bb48",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-25_18-53-04/results.txt": {
+    "mtime": 1787698384.5668528,
+    "seen": 1787698683.703147,
+    "ast_hash": "5d20de64258443124e56f284b46393b3",
+    "semantic_hash": ""
+  },
+  ".vscode/mcp.json": {
+    "mtime": 1787686644.519535,
+    "seen": 1787707974.550144,
+    "ast_hash": "f2531efb82bb0a995ae22ffad9a61f90",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Wave/RegularWaveButtonController.cs": {
+    "mtime": 1787702993.2356694,
+    "seen": 1787707974.5502567,
+    "ast_hash": "d07bb597ca4e529d69fedaf75e51e9e1",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Wave/UnlimitedWaveButtonController.cs": {
+    "mtime": 1787706724.317278,
+    "seen": 1787707974.5502584,
+    "ast_hash": "f08e2766f18abdb0bf3f6192692fd6bc",
     "semantic_hash": ""
   }
 }

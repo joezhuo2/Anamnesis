@@ -10,6 +10,9 @@
 
 ---
 
+| [📖 README](./README.md) | [📜 CHANGELOG](./CHANGELOG.md) | [🗺️ ROADMAP](./ROADMAP.md) | [📝 TODO](./TODO.md) | [👏 CREDITS](./CREDITS.md) |
+| :---: | :---: | :---: | :---: | :---: |
+
 ## About
 
 Anamnesis is a top-down, wave-based action game currently in active development. Each wave throws escalating hordes of enemies at you while you weave together basic attacks, skills, and ultimates. Between waves you pick from randomized rewards — stat buffs, rare attacks, and powerful player upgrades — and spend skill points on a persistent skill tree.
