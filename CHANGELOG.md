@@ -5,6 +5,30 @@ All *notable* changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project *roughly* follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v0.2.7] - 2026-08-26 - Enemy Scaling Overhaul
+
+### Changed
+- **Enemy stat scaling changed from linear to exponential** - base stats now matter significantly
+- Attack scales at 5% per level (was +3 flat)
+- Max HP and health regen scales at 10% per level (was +12 flat)
+- Armor scales at 5% per level (was +4 flat)
+- All percentage stats no longer scale (they will be self-buffed)
+- Move speed, crit chance, and aoe % scale at 4% per level
+- Resistances scale at 3% per level
+- **Fixed levelOffset % 5 == 0 bug** - all stats now scale every level instead of only on levels divisible by 5
+
+### Updated
+- increased base spawning speed for unlimited wave mode
+
+### Fixed
+- mixed pools turning into normal pools on reroll
+- cosmic aftermiage not having an indicator
+- status effect indicators appear for normal enemies
+
+## [v0.2.6_1] - 2026-08-26
+
+### Rebalance
+
 ## [v0.2.6] - 2026-08-26 - Skill Tree Enhancement Update
 
 ### Added

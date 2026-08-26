@@ -261,8 +261,6 @@ public class WaveManager : MonoBehaviour
         else if (currentAnomaly != null && currentAnomaly.isActive) GameController.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
         else GameController.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
 
-        UpdateOccasionalWaveRewards(GetCurrentWave());
-
         yield return _waitForSeconds1_5;
 
         EndWave();
@@ -312,6 +310,8 @@ public class WaveManager : MonoBehaviour
 
         OpenRewardButtons();
 
+        UpdateOccasionalWaveRewards(GetCurrentWave());
+
         UpdateRerollUI();
 
         if (currentAnomaly != null) CleanupAnomaly();
@@ -329,6 +329,7 @@ public class WaveManager : MonoBehaviour
             activeBossBar = null;
         }
     }
+
     protected void UpdateOccasionalWaveRewards(int wave)
     {
         if (wave % 5 == 0)
@@ -336,14 +337,13 @@ public class WaveManager : MonoBehaviour
             CachePlayerSkillTree();
             if (cpst != null) cpst.skillPoints++;
             ActiveManager.rerolls++;
-            GameController.SetSubtitleForDuration("You gained 1 skill point and 1 reroll token!", 1f, 0.5f, 0.5f);
         }
         else if (Random.value < 0.5f)
         {
             ActiveManager.rerolls++;
-            GameController.SetSubtitleForDuration("You gained 1 reroll token!", 1f, 0.5f, 0.5f);
         }
     }
+
     protected void CleanupAnomaly()
     {
         if (currentAnomaly.isActive)
@@ -407,6 +407,7 @@ public class WaveManager : MonoBehaviour
         var available = availableAnomalies.FindAll(a => GetCurrentWave() >= a.minWave && GetCurrentWave() <= a.maxWave);
         if (available.Count == 0) return false;
 
+        OpenAnomalyButtons();
         PanelSetup();
         type = RewardType.Anomaly;
 
@@ -453,6 +454,7 @@ public class WaveManager : MonoBehaviour
     }
     protected void GenerateMixedPool()
     {
+        type = RewardType.Mixed;
         int rewardChoices = PoolPreSetup();
 
         for (int i = 0; i < rewardChoices; i++)
@@ -828,11 +830,13 @@ public class WaveManager : MonoBehaviour
 
         ResumeGameLoop();
     }
+
     protected void CloseRewardUI()
     {
         ClearRewardButtons();
         if (rewardPanel != null) rewardPanel.SetActive(false);
     }
+
     protected void CloseRewardButtons()
     {
         ClearRewardButtons();
@@ -841,12 +845,19 @@ public class WaveManager : MonoBehaviour
         if (skipButton != null) skipButton.gameObject.SetActive(false);
         if (corruptButton != null) corruptButton.gameObject.SetActive(false);
     }
-    public void OpenRewardButtons()
+
+    public void OpenAnomalyButtons()
     {
         if (rerollButton != null) rerollButton.gameObject.SetActive(true);
         if (skipButton != null) skipButton.gameObject.SetActive(true);
+    }
+
+    public void OpenRewardButtons()
+    {
+        OpenAnomalyButtons();
         if (corruptButton != null && GetCurrentWave() % 5 != 0 && type != RewardType.Milestone) corruptButton.gameObject.SetActive(true);
     }
+
     protected void ResumeGameLoop()
     {
         if (pendingStandardRewards)

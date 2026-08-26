@@ -10584,9 +10584,9 @@ MonoBehaviour:
   maxCurrentEnemies: 15
   baseMaxTotalEnemies: 1
   baseEnemyLevel: 1
-  minSpawnFrequency: 2
-  maxSpawnFrequency: 5
-  spawnSpeedIncreasePerWave: 0.03
+  minSpawnFrequency: 1
+  maxSpawnFrequency: 4
+  spawnSpeedIncreasePerWave: 0.05
   minRewardChoices: 2
   maxRewardChoices: 7
   bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}

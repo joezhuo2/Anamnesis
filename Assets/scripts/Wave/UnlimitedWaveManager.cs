@@ -152,7 +152,7 @@ public class UnlimitedWaveManager : WaveManager
                 bossBarScript.Setup($"[Lv. {level}] {bossName}", esm);
         }
 
-        if (statusEffectDisplayPrefab != null && enemy.TryGetComponent<StatusEffectManager>(out var sem))
+        if (statusEffectDisplayPrefab != null && enemy.TryGetComponent<StatusEffectManager>(out var sem) && lastBossWave == wave)
         {
             Transform spawnParent = statusEffectDisplayContainer != null ? statusEffectDisplayContainer : waveInfoPanel.transform.parent;
             sem.displayPrefab = statusEffectDisplayPrefab;
@@ -172,6 +172,7 @@ public class UnlimitedWaveManager : WaveManager
 
         if (w % milestoneInterval == 0) GenerateMilestoneRewards();
         else if (w % 5 == 0) GenerateMixedPool();
+        else if (Random.Range(0f, 100f) < 15f) GenerateMixedPool();
         else GenerateRewards();
     }
 

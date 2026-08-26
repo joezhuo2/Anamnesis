@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
   physicalDmgPct: 0
-  spellDmgPct: 3
+  spellDmgPct: 0
   attack: 5
   atkPct: 0
   intelligence: 0
@@ -35,29 +35,38 @@ MonoBehaviour:
   projSpd: 0
   stCostPct: 0
   kbPct: 0
-  currentHp: 1800
-  maxHp: 1800
-  hpPct: 100
-  hpRegen: 65
-  hpRegPct: 20
-  armor: 150
-  armorPct: 30
+  sePotPct: 0
+  manaGainPct: 0
+  basicCdRedPct: 0
+  skillCdRedPct: 0
+  ultCdRedPct: 0
+  currentHp: 800
+  maxHp: 800
+  hpPct: 0
+  hpRegen: 50
+  hpRegPct: 0
+  armor: 30
+  armorPct: 0
   damageRes: 30
-  dodgeChance: 0
-  dodgeResPct: 0
+  dodgeChance: 10
+  dodgeResPct: 80
   physicalRes: 20
   spellRes: 10
   hurtTime: 0.3
   effectRes: 25
   kbRes: 0
+  seDurPct: 0
+  seTickRatePct: 0
   moveSpeed: 0.6
   moveSpeedPct: 0
   currentStamina: 0
   maxStamina: 0
+  maxStaminaPct: 0
   staminaRegen: 0
   stRegPct: 0
   currentMana: 0
   maxMana: 0
+  maxManaPct: 0
   canGainMana: 0
   dashSpeedMult: 0
   dashCooldown: 0

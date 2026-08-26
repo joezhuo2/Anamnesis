@@ -17,7 +17,7 @@ MonoBehaviour:
   lifetime: 0.75
   numPierce: 50
   size: 1.5
-  physicalMult: 0.45
+  physicalMult: 1.1
   spellMult: 0
   trueMult: 0
   scalingStat: 31
@@ -25,6 +25,7 @@ MonoBehaviour:
   specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0

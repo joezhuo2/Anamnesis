@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Crab ES
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
-  physicalDmgPct: 5
+  physicalDmgPct: 0
   spellDmgPct: 0
-  attack: 3
-  atkPct: 15
+  attack: 7
+  atkPct: 0
   intelligence: 0
   intPct: 0
   attackSpeedPct: 0
-  critChance: 10
-  critDamage: 125
+  critChance: 40
+  critDamage: 80
   aoePct: 0
   defShred: 35
   resPen: 0
@@ -40,16 +40,16 @@ MonoBehaviour:
   basicCdRedPct: 0
   skillCdRedPct: 0
   ultCdRedPct: 0
-  currentHp: 60
-  maxHp: 60
+  currentHp: 80
+  maxHp: 80
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0
-  armor: 80
+  armor: 40
   armorPct: 0
   damageRes: 15
-  dodgeChance: 5
-  dodgeResPct: 20
+  dodgeChance: 0
+  dodgeResPct: 0
   physicalRes: 5
   spellRes: 5
   hurtTime: 0.3

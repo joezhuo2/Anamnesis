@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Bat Base Stats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   damagePct: 0
-  physicalDmgPct: 1
+  physicalDmgPct: 0
   spellDmgPct: 0
-  attack: 3
+  attack: 5
   atkPct: 0
   intelligence: 0
   intPct: 0
   attackSpeedPct: 0
-  critChance: 5
-  critDamage: 40
+  critChance: 20
+  critDamage: 50
   aoePct: 0
   defShred: 0
   resPen: 0
@@ -40,16 +40,16 @@ MonoBehaviour:
   basicCdRedPct: 0
   skillCdRedPct: 0
   ultCdRedPct: 0
-  currentHp: 110
-  maxHp: 110
+  currentHp: 130
+  maxHp: 130
   hpPct: 0
   hpRegen: 3
   hpRegPct: 0
   armor: 0
   armorPct: 0
   damageRes: 0
-  dodgeChance: 10
-  dodgeResPct: 30
+  dodgeChance: 20
+  dodgeResPct: 60
   physicalRes: 0
   spellRes: 0
   hurtTime: 0.5

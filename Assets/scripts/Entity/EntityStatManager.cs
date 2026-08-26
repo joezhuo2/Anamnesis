@@ -37,49 +37,34 @@ public class EntityStatManager : MonoBehaviour
     private void ScaleBaseStats(int currentLevel)
     {
         int levelOffset = currentLevel - 1;
+        if (levelOffset <= 0) return;
 
-        s.attack += 4 * levelOffset;
-        s.atkPct += 3f * levelOffset;
+        const float atkGrowth = 1.05f;
+        const float hpGrowth = 1.1f;
+        const float armorGrowth = 1.05f;
+        const float utilityGrowth = 1.04f;
 
-        s.maxHp += 12 * levelOffset;
-        s.hpPct += 8f * levelOffset;
+        float atkMult = Mathf.Pow(atkGrowth, levelOffset);
+        float hpMult = Mathf.Pow(hpGrowth, levelOffset);
+        float armorMult = Mathf.Pow(armorGrowth, levelOffset);
+        float utilMult = Mathf.Pow(utilityGrowth, levelOffset);
 
-        s.hpRegen = Mathf.RoundToInt(s.hpRegen * (1f + (0.02f * levelOffset)));
-        s.hpRegPct += levelOffset;
+        s.attack = Mathf.RoundToInt(s.attack * atkMult);
+        s.critDamage *= atkMult;
+        s.maxHp = Mathf.RoundToInt(s.maxHp * hpMult);
+        s.hpRegen = Mathf.RoundToInt(s.hpRegen * hpMult);
+        s.armor = Mathf.RoundToInt(s.armor * armorMult);
 
-        s.armor += 4 * levelOffset;
-        s.armorPct += 2f * levelOffset;
-
-        s.damagePct += levelOffset * 1.5f;
-
-        s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct * (1f + (0.03f * levelOffset)), -100f, 100f);
-
-        if (levelOffset % 5 == 0)
-        {
-            s.physicalDmgPct  += 0.6f * levelOffset; //3% per 5 lvs
-            s.spellDmgPct += 0.6f * levelOffset; // 3% per 5 lvs
-            s.aoePct += 2f * levelOffset; // 10% per 5 lvs
-
-            s.critChance = Mathf.Clamp(s.critChance * (1f + (0.03f * levelOffset)), 0f, 100f); // 1.15x per 5 lvs
-            s.critDamage += 2f * levelOffset; // 10% per 5 lvs
-
-            s.damageRes = Mathf.Clamp(s.damageRes + (0.4f * levelOffset), 0f, 50f); // 2% per 5 lvs (125)
-            s.physicalRes = Mathf.Clamp(s.physicalRes + (0.6f * levelOffset), -100f, 60f); // 3% per 5 lvs (100)
-            s.spellRes = Mathf.Clamp(s.spellRes + (0.6f * levelOffset), -100f, 60f); // 3% per 5 lvs (100)
-
-            s.dodgeChance = Mathf.Clamp(s.dodgeChance + (0.3f * levelOffset), 0f, 45f); // 1.5% per 5 lvs (150)
-            s.dodgeResPct = Mathf.Clamp(s.dodgeResPct + (0.5f * levelOffset), 0f, 60f); // 2.5% per 5 lvs (120)
-        }
+        s.aoePct *= utilMult;
+        s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct * utilMult, -100f, 100f);
+        s.critChance = Mathf.Clamp(s.critChance * utilMult, 0f, 100f);
     }
 
     private void OnDestroy()
     {
         if (s != null) Destroy(s);
     }
-    public float GetStat(StatType type)
-    {
-        return s == null ? 0f : s.GetValue(type);
-    }
+    public float GetStat(StatType type) => s == null ? 0f : s.GetValue(type);
 
     public void AddStat(StatBuff b, bool isAdding = true)
     {
