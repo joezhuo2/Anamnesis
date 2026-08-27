@@ -16,7 +16,7 @@ public class Reminiscence : PlayerUpgrade
             pah.PerformAttack(chosen, true, true, true);
         }
 
-        if (cooldownEffect != null && player.TryGetComponent<StatusEffectManager>(out var sem))
-            sem.AddEffectAfterDelay(cooldownEffect, player, 0.1f);
+        if (cooldownEffect != null && player.TryGetComponent<IStatusEffectReceiver>(out var sem))
+            sem.Apply(cooldownEffect, player);
     }
 }

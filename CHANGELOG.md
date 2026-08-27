@@ -7,10 +7,47 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## ⚠️ [v0.2.11] - 2026-08-26
+## ⚠️ [v0.2.12] - 2026-08-26
 
-### Updated
-- **`EntityHealth` Decoupling
+### Added
+- **`IStatusEffectReceiver` interface** — new core interface with `Apply(StatusEffect, GameObject, Vector2)`, `ClearAllEffects()`, `GetActiveFirstEffectOfType<T>()`, `GetActiveEffectsOfType<T>(List<T>)`, `RemoveEffectAfterDelay<T>(float)`, `RemoveEffect<T>()`
+- **`StatusEffect.location`** — replaced `projectile` field with `Vector2 location` for effect application position tracking
+
+### Changed
+- **`StatusEffectManager` implements `IStatusEffectReceiver`** — unified status effect application through `Apply()`; removed `AddEffectAfterDelay`, `AddEffect`, `GetEffect`, `RemoveEffect(StatusEffect)`; `projectile` param removed from effect runtime
+- **All status effect consumers migrated to `IStatusEffectReceiver`** — `EntityHealth`, `EntitySummonHandler`, `PlayerUpgrades` (Decoy, Reminiscence, SoulRendPU), `Projectile`, `Detonator`, `Pulled`
+- **`EntitySummonHandler` on-death effects** — now use `Apply()` instead of `AddEffectAfterDelay`
+- **`Projectile` effect application** — uses `Apply()` with location; removed delay coroutine
+- **`Detonator`** — uses `GetActiveEffectsOfType<DoT>()` and `RemoveEffect<DoT>()` via interface
+- **`Pulled`** — uses `location` for pull center; uses `RemoveEffect<Pulled>()` via interface
+- **`SoulRendPU`** — uses `GetActiveFirstEffectOfType<SoulRend>()` and `RemoveEffectAfterDelay<SoulRend>()` via interface
+
+### Removed
+- `StatusEffect.projectile` field (replaced by `location`)
+- `StatusEffectManager.AddEffectAfterDelay`, `AddEffectAfterDelayCoroutine`, `GetEffect`, `RemoveEffect(StatusEffect)` methods
+- Direct `StatusEffectManager` references throughout codebase (replaced with `IStatusEffectReceiver`)
+
+### Fixed
+- not being able to heal on attack hits
+
+## ⚠️ [v0.2.11] - 2026-08-26 
+
+### Added
+- **`IDamageable` interface** — new core interface with `TakeDamage(DamagePacket)`, `TriggerIFrames(float)`, `IsAlive` property, and `OnDeath` event
+- **`DamageType.Heal` and `DamageType.Consume`** — new damage types for healing and resource consumption
+- **`DamagePacket` enhancements** — added `source`, `bypassIFrames`, `sizeOverride` fields; updated `BuildDamagePacket` signatures to include bypass/size params
+
+### Changed
+- **`EntityHealth` implements `IDamageable`** — unified damage/heal/consume flow through `TakeDamage`; `Alive` → `IsAlive`; `TriggerIFrames` returns `Coroutine`; healing/consuming now use `DamagePacket`
+- **All damage consumers migrated to `IDamageable`** — `EntityProjectileHandler`, `EntitySummonHandler`, `PlayerAttackHandler`, `PlayerMovement`, `PlayerUpgrades` (AdditionalDamage, StellarSurge), `Projectile`, `DoT`, `Detonator`
+- **`PlayerAttackHandler` resource costs** — health/stamina/mana costs now use `DamagePacket` (Consume type) via `IDamageable.TakeDamage`
+- **`TooltipTrigger`** — updated preview damage packet call with new signature
+- **`StatusEffectManager`** — removed `[RequireComponent(typeof(IStatProvider))]`
+
+### Fixed
+- Dash iframes now correctly use `IDamageable.TriggerIFrames`
+- Summon death events use `IDamageable.OnDeath` event
+- Damage packet size override and iframe bypass properly propagated
 
 ## ⚠️ [v0.2.10] - 2026-08-26
 

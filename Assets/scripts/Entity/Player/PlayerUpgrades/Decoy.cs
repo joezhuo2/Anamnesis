@@ -45,8 +45,8 @@ public class Decoy : PlayerUpgrade
             if (dist < maxDist && e.TryGetComponent<EnemyMovement>(out var em)) em.SetTarget(decoy);
         }
 
-        if (cooldownEffect != null && player.TryGetComponent<StatusEffectManager>(out var sem))
-            sem.AddEffectAfterDelay(cooldownEffect, player, 0.1f);
+        if (cooldownEffect != null && player.TryGetComponent<IStatusEffectReceiver>(out var sem))
+            sem.Apply(cooldownEffect, player);
 
         if (lifetime > 0f)
             Object.Destroy(decoy, lifetime);

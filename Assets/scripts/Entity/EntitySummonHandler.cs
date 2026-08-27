@@ -97,12 +97,12 @@ public class EntitySummonHandler : MonoBehaviour
                 esm.AddStat(onDeathBuffs[i]);
         }
 
-        if (onDeathEffects.Count > 0 && TryGetComponent<StatusEffectManager>(out var sem))
+        if (onDeathEffects.Count > 0 && TryGetComponent<IStatusEffectReceiver>(out var sem))
         {
             for (int i = 0; i < onDeathEffects.Count; i++)
             {
                 if (onDeathEffects[i] != null)
-                    sem.AddEffectAfterDelay(onDeathEffects[i], gameObject, 0.1f);
+                    sem.Apply(onDeathEffects[i], gameObject);
             }
         }
     }

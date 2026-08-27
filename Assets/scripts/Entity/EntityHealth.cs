@@ -85,7 +85,6 @@ public class EntityHealth : MonoBehaviour, IDamageable
     public void TakeDamage(DamagePacket dp)
     {
         if (dp == null) return;
-        if (Immune && dp.bypassIFrames) return;
 
         foreach (var i in dp.instances)
         {
@@ -99,6 +98,8 @@ public class EntityHealth : MonoBehaviour, IDamageable
                 DamageType.Consume => (i.amount, 1f),
                 _ => (0f, 1f)
             };
+
+            if (Immune && !dp.bypassIFrames && dmg > 0) return;
 
             Color color = i.indicatorColor != default ? i.indicatorColor : i.type switch
             {
@@ -120,18 +121,17 @@ public class EntityHealth : MonoBehaviour, IDamageable
 
             if (dp.sizeOverride != 1f) sizeMult = dp.sizeOverride;
 
-            int appliedDmg = Mathf.RoundToInt(dmg);
-            if (appliedDmg > 0 && ChangeHealth(-appliedDmg, 0, true, sizeMult, color, dp.bypassIFrames, dp.source))
+            if (ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames, dp.source))
             {
                 if (dp.source.TryGetComponent<PlayerLevel>(out var pl))
                     pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
                 DropGold(dp.source);
             }
 
-            if (appliedDmg > 0 && !_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
+            if (!_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
             {
                 _isTriggeringOnDealDamage = true;
-                dealPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDealDamage, gameObject, appliedDmg);
+                dealPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDealDamage, gameObject, dmg);
                 _isTriggeringOnDealDamage = false;
             }
         }
@@ -139,12 +139,12 @@ public class EntityHealth : MonoBehaviour, IDamageable
         if (cpum != null) OnPlayerTakeDamage?.Invoke(this);
     }
 
-    public bool ChangeHealth(float amount, float pctAmt, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
+    public bool ChangeHealth(float amount, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
     {
-        int finalAmount = Mathf.RoundToInt(amount + (pctAmt * MaxHp));
+        int finalAmount = Mathf.RoundToInt(amount);
         if (finalAmount == 0) return false;
 
-        if (cpum != null && (amount < 0 || pctAmt < 0) && Immune && esm.GetStat(StatType.IsDashing) > 0f)
+        if (cpum != null && finalAmount < 0 && Immune && esm.GetStat(StatType.IsDashing) > 0f)
         {
             cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCounterDodge);
             return false;
@@ -240,7 +240,7 @@ public class EntityHealth : MonoBehaviour, IDamageable
             {
                 int intRegen = Mathf.FloorToInt(accumulatedRegen);
                 accumulatedRegen -= intRegen;
-                ChangeHealth(intRegen, 0, false);
+                ChangeHealth(intRegen, false);
 
                 if (cpum != null) cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnHealthRegen);
             }
@@ -255,7 +255,7 @@ public class EntityHealth : MonoBehaviour, IDamageable
 
         TrySplit();
 
-        if (TryGetComponent<StatusEffectManager>(out var sem))
+        if (TryGetComponent<IStatusEffectReceiver>(out var sem))
             sem.ClearAllEffects();
 
         if (healthBarInstance != null && healthBarTextInstance != null)

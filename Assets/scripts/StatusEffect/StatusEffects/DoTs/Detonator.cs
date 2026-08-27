@@ -10,7 +10,7 @@ public class Detonator : StatusEffect
 
     public override void OnApply()
     {
-        if (target.TryGetComponent<StatusEffectManager>(out var sem))
+        if (target.TryGetComponent<IStatusEffectReceiver>(out var sem))
         {
             List<DoT> dots = new();
             sem.GetActiveEffectsOfType<DoT>(dots);
@@ -26,7 +26,7 @@ public class Detonator : StatusEffect
                     DamagePacket dp = DamagePacket.BuildDamagePacket(dmg, dmgType, true, indicatorColor, source, true, 2f);
                     eh.TakeDamage(dp);
                 }
-                sem.RemoveEffect(dot);
+                sem.RemoveEffect<DoT>();
             }
         }
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatusEffectManager : MonoBehaviour
+public class StatusEffectManager : MonoBehaviour, IStatusEffectReceiver
 {
     public GameObject displayPrefab = null;
     public Transform displayContainer = null;
@@ -11,6 +11,7 @@ public class StatusEffectManager : MonoBehaviour
     private IStatProvider cesm;
 
     private void Awake() => cesm = GetComponent<IStatProvider>();
+
     public void GetActiveEffectsOfType<T>(List<T> results) where T : StatusEffect
     {
         results.Clear();
@@ -25,23 +26,7 @@ public class StatusEffectManager : MonoBehaviour
         return null;
     }
 
-    public StatusEffect GetEffect(StatusEffect se)
-    {
-        if (activeEffects.Contains(se)) return se;
-        return null;
-    }
-
-    public void AddEffectAfterDelay(StatusEffect se, GameObject source, float delay, GameObject projectile = null)
-        => StartCoroutine(AddEffectAfterDelayCoroutine(se, source, delay, projectile));
-
-    public IEnumerator AddEffectAfterDelayCoroutine(StatusEffect se, GameObject source, float delay, GameObject projectile = null)
-    {
-        if (se == null) yield break;
-        yield return new WaitForSeconds(delay);
-        AddEffect(se, source, projectile);
-    }
-
-    public void AddEffect(StatusEffect se, GameObject source, GameObject projectile = null)
+    public void Apply(StatusEffect se, GameObject source, Vector2 location = default)
     {
         if (se == null) return;
 
@@ -62,7 +47,7 @@ public class StatusEffectManager : MonoBehaviour
         StatusEffect runtimeEffect = Instantiate(se);
         runtimeEffect.target = gameObject;
         runtimeEffect.source = source;
-        runtimeEffect.projectile = projectile;
+        runtimeEffect.location = location;
         runtimeEffect.currentStacks = 1;
         runtimeEffect.currentTime = 0;
 
@@ -103,17 +88,11 @@ public class StatusEffectManager : MonoBehaviour
     }
 
     public void RemoveEffect<T>() where T : StatusEffect => RemoveStacks<T>(int.MaxValue);
-    public void RemoveEffect(StatusEffect se)
-    {
-        if (!activeEffects.Contains(se)) return;
 
-        se.currentStacks = 0;
-        se.OnExpire();
-        activeEffects.Remove(se);
-        Destroy(se);
-    }
+    public void RemoveEffectAfterDelay<T>(float delay) where T : StatusEffect
+        => StartCoroutine(RemoveEffectAfterDelayInternal<T>(delay));
 
-    public IEnumerator RemoveEffectAfterDelay<T>(float delay) where T : StatusEffect
+    public IEnumerator RemoveEffectAfterDelayInternal<T>(float delay) where T : StatusEffect
     {
         yield return new WaitForSeconds(delay);
         RemoveEffect<T>();

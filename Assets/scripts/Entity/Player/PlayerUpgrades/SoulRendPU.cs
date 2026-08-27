@@ -11,12 +11,12 @@ public class SoulRendPU : PlayerUpgrade
         var ps = ProjectileSpawner.Instance;
         if (projectilePrefab != null && ps != null)
         {
-            if (player.TryGetComponent<StatusEffectManager>(out var sem))
+            if (player.TryGetComponent<IStatusEffectReceiver>(out var sem))
             {
                 if (sem.GetActiveFirstEffectOfType<SoulRend>() != null && sem.GetActiveFirstEffectOfType<SoulRend>().currentStacks >= 50)
                 {
                     ps.StartCoroutine(ps.SpawnFromPattern(projectilePrefab, player));
-                    sem.StartCoroutine(sem.RemoveEffectAfterDelay<SoulRend>(0.3f));
+                    sem.RemoveEffectAfterDelay<SoulRend>(0.3f);
                 }
             }
         }

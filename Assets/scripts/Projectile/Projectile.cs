@@ -441,12 +441,12 @@ public class Projectile : MonoBehaviour {
 
         if (target == null) target = ownerObj;
 
-        if (target.TryGetComponent<StatusEffectManager>(out var sem))
+        if (target.TryGetComponent<IStatusEffectReceiver>(out var sem))
         {
             if (ed.chance <= 0f) return;
 
             if (Random.value <= ed.chance)
-                sem.AddEffectAfterDelay(ed.effect, ownerObj, 0.1f, gameObject);
+                sem.Apply(ed.effect, ownerObj);
         }
     }
 

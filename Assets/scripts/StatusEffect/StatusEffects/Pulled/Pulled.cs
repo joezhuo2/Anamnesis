@@ -15,7 +15,7 @@ public class Pulled : StatusEffect
 
     public override void OnApply()
     {
-        if (projectile != null) pullCenter = projectile.transform.position;
+        if (location != Vector2.zero) pullCenter = location;
         else if (source != null) pullCenter = source.transform.position;
 
         if (disableMovement && target != null && target.TryGetComponent<IStatProvider>(out var esm))
@@ -36,8 +36,8 @@ public class Pulled : StatusEffect
         if (dist <= deadZone) return;
         if (dist > fullSpeedRadius)
         {
-            if (target.TryGetComponent<StatusEffectManager>(out var sem))
-                sem.RemoveStacks<Pulled>(int.MaxValue);
+            if (target.TryGetComponent<IStatusEffectReceiver>(out var sem))
+                sem.RemoveEffect<Pulled>();
             return;
         }
 
