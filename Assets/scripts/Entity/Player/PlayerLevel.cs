@@ -11,11 +11,23 @@ public class PlayerLevel : MonoBehaviour
     {
         if (amount <= 0f || esm.GetStat(StatType.isAlive) <= 0f) return;
 
-        var xp = esm.GetStat(StatType.Xp);
-        var xpReq = esm.GetStat(StatType.XpReq);
-
         float finalAmt = amount * (1f + (esm.GetStat(StatType.ExpBonus) * 0.01f));
-        esm.AddStat(new(StatType.Xp, xp + finalAmt));
+
+        // Track XP locally so the level-up loop can consume it against a
+        // requirement that grows as the level rises.
+        float xp = esm.GetStat(StatType.Xp) + finalAmt;
+        float xpReq = esm.GetStat(StatType.XpReq);
+
+        while (xp >= xpReq)
+        {
+            xp -= xpReq;
+            LevelUp();
+            xpReq = esm.GetStat(StatType.XpReq);
+        }
+
+        // Write back only what actually changed so the stored XP reflects
+        // the remaining progress after any level-ups.
+        esm.AddStat(new(StatType.Xp, xp - esm.GetStat(StatType.Xp)));
 
         TextIndicatorSpawner.Instance.SpawnTextIndicator(
             Mathf.RoundToInt(finalAmt),
@@ -27,12 +39,6 @@ public class PlayerLevel : MonoBehaviour
             UnityEngine.Random.Range(0f, 0.2f),
             true
         );
-
-        while (xp >= xpReq)
-        {
-            esm.AddStat(new(StatType.Xp, xpReq), false);
-            LevelUp();
-        }
     }
 
     private void LevelUp()

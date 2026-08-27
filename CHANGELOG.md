@@ -7,6 +7,13 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.2.14_1] - 2024-08-27
+
+### Fixed
+- tooltip not updating when the player gets new stats (now updates whenever the player hovers over the tooltip)
+- special orbit scaling not working
+- level system not working and instead crashing the game
+
 ## ⚠️ [v0.2.14] - 2026-08-27
 ### Added
 - **`PlayerResourcePool`** — new unified resource management component implementing `IResourcePool`; consolidates stamina and mana gain/spend/regen logic into a single component (replaces separate `PlayerStamina` and `PlayerMana`)

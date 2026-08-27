@@ -48,9 +48,10 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 1
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
+  redirectCount: 0
   type: 2
   icon: {fileID: -1542465496953560609, guid: 044e0648c03a4e5478b90d5e1159ea57, type: 3}
   displayName: Nirvana

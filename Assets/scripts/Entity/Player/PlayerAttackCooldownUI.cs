@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlayerAttackCooldownUI : MonoBehaviour
+public class PlayerAttackCooldownUI : MonoBehaviour, IPointerEnterHandler
 {
     public Image cooldownImage;
     public Image iconImage;
@@ -11,6 +12,13 @@ public class PlayerAttackCooldownUI : MonoBehaviour
     private AttackData cad;
     private PlayerAttackHandler cpah;
     private IStatProvider cesm;
+
+    private ITooltipDisplay tooltipDisplay;
+    private string cachedTitle;
+    private string cachedSubtitle;
+    private Vector2 cachedOffset;
+
+    private static readonly Vector2 TooltipOffset = new(0, -100);
 
     public void Setup(PlayerAttackHandler pah, AttackType type, IStatProvider esm)
     {
@@ -22,11 +30,11 @@ public class PlayerAttackCooldownUI : MonoBehaviour
 
         if (cad != null && cad.icon != null && iconImage != null) iconImage.sprite = cad.icon;
 
-        if (TryGetComponent<ITooltipDisplay>(out var td))
-        {
-            var (tt, st, os) = GetAttackTooltip();
-            td.ShowTooltip(tt, st, os);
-        }
+        tooltipDisplay = GetComponent<ITooltipDisplay>();
+        cachedTitle = null;
+        cachedSubtitle = null;
+
+        RefreshTooltip();
 
         if (cooldownImage != null)
         {
@@ -37,6 +45,7 @@ public class PlayerAttackCooldownUI : MonoBehaviour
             cooldownImage.fillAmount = 0f;
         }
     }
+
     private void Update()
     {
         if (cpah == null || cad == null || !cpah.lastAttackTimes.ContainsKey(ctype)) return;
@@ -46,13 +55,28 @@ public class PlayerAttackCooldownUI : MonoBehaviour
         if (effCd <= 0f)
         {
             cooldownImage.fillAmount = 0f;
-            return;
         }
+        else
+        {
+            float timeElapsed = Time.time - cpah.lastAttackTimes[ctype];
+            float cooldownRemainingPct = 1f - (timeElapsed / effCd);
 
-        float timeElapsed = Time.time - cpah.lastAttackTimes[ctype];
-        float cooldownRemainingPct = 1f - (timeElapsed / effCd);
+            cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+        }
+    }
 
-        cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+    private void RefreshTooltip()
+    {
+        if (tooltipDisplay == null || cad == null) return;
+
+        var (tt, st, os) = GetAttackTooltip();
+
+        if (tt == cachedTitle && st == cachedSubtitle && os == cachedOffset) return;
+
+        cachedTitle = tt;
+        cachedSubtitle = st;
+        cachedOffset = os;
+        tooltipDisplay.ShowTooltip(tt, st, os);
     }
 
     private (string title, string subtitle, Vector2 offset) GetAttackTooltip()
@@ -98,6 +122,8 @@ public class PlayerAttackCooldownUI : MonoBehaviour
 
         if (dmgTypes.Count > 0) lines.Add($"Base: {string.Join(" ", dmgTypes)}");
 
-        return (cad.displayName, string.Join("\n", lines), new(0, -100));
+        return (cad.displayName, string.Join("\n", lines), TooltipOffset);
     }
+
+    public void OnPointerEnter(PointerEventData eventData) => RefreshTooltip();
 }

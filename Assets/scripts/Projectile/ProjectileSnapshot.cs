@@ -31,9 +31,10 @@ public static class ProjectileSnapshot
         if (!source.TryGetComponent<IStatProvider>(out var esm) || esm == null) return snapshot;
 
         snapshot.scalingValue = esm.GetStat(pd.scalingStat);
+        var orbitReg = source.TryGetComponent<IOrbitRegister>(out var reg) ? reg : source.GetComponentInParent<IOrbitRegister>() ?? source.GetComponentInChildren<IOrbitRegister>();
         snapshot.specialMult = (pd.specialSclaing) switch
         {
-            SpecialScalingAttribute.Orbits => source.TryGetComponent<IOrbitRegister>(out var eph) ? 1f + (eph.Count * pd.specialMult) : 1f,
+            SpecialScalingAttribute.Orbits => orbitReg != null ? 1f + (orbitReg.Count * pd.specialMult) : 1f,
             SpecialScalingAttribute.HpConsumed => DamageCalculator.CalculateHpConsumedMult(pd, esm),
             _ => 1f
         };
