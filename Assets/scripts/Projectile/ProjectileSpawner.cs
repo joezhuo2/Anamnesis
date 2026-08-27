@@ -156,10 +156,10 @@ public class ProjectileSpawner : MonoBehaviour
         Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
 
         Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
-        Vector2 dir = dirOverride ?? (source.CompareTag("Player") ? (mouse - spawnCenter).normalized : Vector2.right);
+        Vector2 dir = dirOverride ?? (source.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1 ? (mouse - spawnCenter).normalized : Vector2.right);
         float finalDist = distOverride ?? (ad != null ? ad.spawnDistance : 0f);
 
-        if (ad != null && !ad.fixedDistance && source.CompareTag("Player"))
+        if (ad != null && !ad.fixedDistance && TryGetComponent<ITeamMember>(out var itm2) && itm2.TeamID == 1)
         {
             float mouseDist = Vector2.Distance(spawnCenter, mouse);
             finalDist = Mathf.Min(mouseDist, finalDist);

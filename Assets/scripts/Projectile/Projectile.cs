@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -101,12 +102,10 @@ public class Projectile : MonoBehaviour, IOnHitEffect
         if (target == null || ownerObj == null || target == ownerObj) return;
         if (!target.TryGetComponent<IDamageable>(out var eh)) return;
 
-        bool targetIsPlayer = target?.CompareTag("Player") ?? true;
-        bool isPlayer = ownerObj?.CompareTag("Player") ?? false;
-        bool targetIsEnemy = target?.CompareTag("Enemy") ?? false;
-        bool isEnemy = ownerObj?.CompareTag("Enemy") ?? true;
+        var tid = target.TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
+        var sid = ownerObj.TryGetComponent<ITeamMember>(out var sitm) ? sitm.TeamID : 0;
 
-        if (targetIsPlayer == isPlayer || targetIsEnemy == isEnemy) return;
+        if (sid == tid) return;
 
         DamagePacket dp = DamagePacket.BuildDamagePacket(pd, damageSnapshot, true, ownerObj, false, 1f);
 
@@ -187,7 +186,7 @@ public class Projectile : MonoBehaviour, IOnHitEffect
     {
         if (ownerObj == null || pd == null) return;
 
-        if (ownerObj.CompareTag("Player") && dir == Vector2.zero)
+        if (ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1 && dir == Vector2.zero)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
             mouseWorldPos.z = 0f;
@@ -236,7 +235,7 @@ public class Projectile : MonoBehaviour, IOnHitEffect
         {
             if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
             {
-                bool searchForPlayer = ownerObj.CompareTag("Enemy");
+            bool searchForPlayer = ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 0;
                 followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
             }
 
@@ -362,7 +361,7 @@ public class Projectile : MonoBehaviour, IOnHitEffect
 
         foreach (Collider2D col in colliders)
         {
-            if (!col.CompareTag("Enemy")) continue;
+            if (!col.gameObject.TryGetComponent<ITeamMember>(out var itm) || itm.TeamID != 0) continue;
             if (hit.Contains(col.gameObject)) continue;
             if (col.gameObject == ownerObj) continue;
 
@@ -388,11 +387,11 @@ public class Projectile : MonoBehaviour, IOnHitEffect
         float minDist = range;
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range);
-        string targetTag = searchForPlayer ? "Player" : "Enemy";
+        int targetTeam = searchForPlayer ? 1 : 0;
 
         foreach (Collider2D col in colliders)
         {
-            if (!col.CompareTag(targetTag)) continue;
+            if (!col.gameObject.TryGetComponent<ITeamMember>(out var itm) || itm.TeamID != targetTeam) continue;
 
             if (hit.Contains(col.gameObject)) continue;
 

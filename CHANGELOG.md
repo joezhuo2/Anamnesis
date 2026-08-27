@@ -7,7 +7,12 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [v0.2.14_1] - 2024-08-27
+## ⚠️ [v0.2.15] - 2024-08-27
+
+### Added
+- **`ITeamMember` interface** - replaces `CompareTag` checks
+
+## ⚠️ [v0.2.14_1] - 2024-08-27
 
 ### Fixed
 - tooltip not updating when the player gets new stats (now updates whenever the player hovers over the tooltip)

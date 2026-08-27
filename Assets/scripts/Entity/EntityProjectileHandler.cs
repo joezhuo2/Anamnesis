@@ -136,7 +136,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
         Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 20f);
         foreach (Collider2D col in colliders)
         {
-            if (!col.CompareTag("Enemy")) continue;
+            if (col.gameObject.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 0) continue;
             if (col.gameObject == gameObject) continue;
 
             if (col.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.isAlive) == 1 && esm.GetStat(StatType.currentHp) <= 0)
