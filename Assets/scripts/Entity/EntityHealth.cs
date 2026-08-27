@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntityHealth : MonoBehaviour
+public class EntityHealth : MonoBehaviour, IDamageable
 {
     public static event Action<EntityHealth> OnPlayerTakeDamage;
 
@@ -27,7 +27,7 @@ public class EntityHealth : MonoBehaviour
     private PlayerUpgradeManager cpum;
     private IStatProvider esm;
     private Canvas cachedCanvas;
-    private bool Alive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
+    public bool IsAlive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
     private bool Immune => esm != null && esm.GetStat(StatType.isImmune) > 0f;
     private int CurHp => esm != null ? Mathf.RoundToInt(esm.GetStat(StatType.currentHp)) : 0;
     private int MaxHp => esm != null ? Mathf.RoundToInt(esm.GetStat(StatType.EffMaxHp)) : 0;
@@ -73,7 +73,7 @@ public class EntityHealth : MonoBehaviour
     }
     private void MoveHealthBar()
     {
-        if (healthBarInstance != null && mainCamera != null && Alive && healthBarTextInstance != null)
+        if (healthBarInstance != null && mainCamera != null && IsAlive && healthBarTextInstance != null)
         {
             Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position + healthBarOffset);
             healthBarInstance.transform.position = screenPos;
@@ -82,10 +82,10 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source, float sizeOverride = 0f)
+    public void TakeDamage(DamagePacket dp)
     {
         if (dp == null) return;
-        if (Immune && !bypassIFrames) return;
+        if (Immune && dp.bypassIFrames) return;
 
         foreach (var i in dp.instances)
         {
@@ -95,6 +95,8 @@ public class EntityHealth : MonoBehaviour
                 DamageType.Physical => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm),
                 DamageType.Spell => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm),
                 DamageType.DoT => (i.amount * (1f - (esm.GetStat(StatType.EffectRes) * 0.01f)), 1f),
+                DamageType.Heal => (-i.amount, 1f),
+                DamageType.Consume => (i.amount, 1f),
                 _ => (0f, 1f)
             };
 
@@ -115,14 +117,15 @@ public class EntityHealth : MonoBehaviour
 
                 sizeMult *= 1.5f;
             }
-            if (sizeOverride > 0f) sizeMult = sizeOverride;
+
+            if (dp.sizeOverride != 1f) sizeMult = dp.sizeOverride;
 
             int appliedDmg = Mathf.RoundToInt(dmg);
-            if (appliedDmg > 0 && ChangeHealth(-appliedDmg, 0, true, sizeMult, color, bypassIFrames, source))
+            if (appliedDmg > 0 && ChangeHealth(-appliedDmg, 0, true, sizeMult, color, dp.bypassIFrames, dp.source))
             {
-                if (source.TryGetComponent<PlayerLevel>(out var pl))
+                if (dp.source.TryGetComponent<PlayerLevel>(out var pl))
                     pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
-                DropGold(source);
+                DropGold(dp.source);
             }
 
             if (appliedDmg > 0 && !_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
@@ -185,10 +188,10 @@ public class EntityHealth : MonoBehaviour
         {
             animator.SetBool(IsHurtHash, true);
             StartCoroutine(HurtDelay(esm.GetStat(StatType.HurtTime)));
-            if (!bypassIFrames) StartCoroutine(TriggerIFrames(hurtIFrameDuration));
+            if (!bypassIFrames) TriggerIFramesCoroutine(hurtIFrameDuration);
         }
 
-        if (CurHp <= 0 && Alive)
+        if (CurHp <= 0 && IsAlive)
         {
             StartDeathSequence();
             return true;
@@ -219,7 +222,7 @@ public class EntityHealth : MonoBehaviour
 
     private void RegenHp()
     {
-        if (esm == null || !Alive || esm.GetStat(StatType.CanGainHp) != 1) return;
+        if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
         if (CurHp >= (int)MaxHp) return;
 
         regenTimer += Time.deltaTime;
@@ -261,7 +264,7 @@ public class EntityHealth : MonoBehaviour
             Destroy(healthBarTextInstance.gameObject);
         }
 
-        if (animator != null && !Alive)
+        if (animator != null && !IsAlive)
         {
             animator.SetBool(IsDeadHash, true);
             StartCoroutine(DeathDelay(1f));
@@ -315,7 +318,10 @@ public class EntityHealth : MonoBehaviour
         animator?.SetBool(IsHurtHash, false);
     }
 
-    public IEnumerator TriggerIFrames(float duration)
+    public void TriggerIFrames(float duration) => TriggerIFramesCoroutine(duration);
+    public Coroutine TriggerIFramesCoroutine(float duration) => StartCoroutine(TriggerIFramesInternal(duration));
+
+    private IEnumerator TriggerIFramesInternal(float duration)
     {
         esm.AddStat(new StatBuff(StatType.isImmune, 1f));
         yield return new WaitForSeconds(duration);

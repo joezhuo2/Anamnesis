@@ -117,8 +117,10 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
         float staminaGain = p.pd.mainAttack.staminaGainOnHit * 0.01f * mult;
         float manaGain = p.pd.mainAttack.manaGainOnHit * 0.01f * mult;
 
+        var dp = DamagePacket.BuildDamagePacket(hpGain, DamageType.Heal, false, Color.green, p.ownerObj, true, 1f);
+
         GameObject target = p.ownerObj;
-        if (target.TryGetComponent<EntityHealth>(out var eh)) eh.ChangeHealth(hpGain, 0f);
+        if (target.TryGetComponent<IDamageable>(out var eh)) eh.TakeDamage(dp);
         if (target.TryGetComponent<PlayerStamina>(out var ps)) ps.ChangeStamina(staminaGain);
         if (target.TryGetComponent<PlayerMana>(out var pm)) pm.ChangeMana(manaGain, 0f);
     }

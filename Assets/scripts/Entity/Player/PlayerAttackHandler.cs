@@ -15,7 +15,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
     private Animator a;
     private PlayerStamina ps;
-    private EntityHealth ph;
+    private IDamageable ph;
     private PlayerMana pm;
     private IStatProvider esm;
     private PlayerUpgradeManager pum;
@@ -28,7 +28,7 @@ public class PlayerAttackHandler : MonoBehaviour
         a = GetComponent<Animator>();
         esm = GetComponent<IStatProvider>();
         ps = GetComponent<PlayerStamina>();
-        ph = GetComponent<EntityHealth>();
+        ph = GetComponent<IDamageable>();
         pm = GetComponent<PlayerMana>();
         pum = GetComponent<PlayerUpgradeManager>();
 
@@ -172,15 +172,16 @@ public class PlayerAttackHandler : MonoBehaviour
 
         pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
 
-        var (totalHealthCost, totalStaminaCost, totalManaCost) = GetCosts(attack, esm);
+        var (hp, sp, mp) = GetCosts(attack, esm);
+        (hp, sp) = HandleHexCast(hp, sp);
 
-        (totalHealthCost, totalStaminaCost) = HandleHexCast(totalHealthCost, totalStaminaCost);
+        if (sp > esm.GetStat(StatType.CurrentStamina) || hp > esm.GetStat(StatType.currentHp) || mp > esm.GetStat(StatType.CurrentMana)) return false;
 
-        if (totalStaminaCost > esm.GetStat(StatType.CurrentStamina) || totalHealthCost > esm.GetStat(StatType.currentHp) || totalManaCost > esm.GetStat(StatType.CurrentMana)) return false;
+        var dp = DamagePacket.BuildDamagePacket(hp, DamageType.Consume, false, Color.red, gameObject, false, 1f);
+        if (ph != null) ph.TakeDamage(dp);
 
-        if (ps != null) ps.ChangeStamina(-totalStaminaCost);
-        if (ph != null) ph.ChangeHealth(-totalHealthCost, 0f, true);
-        if (pm != null) pm.ChangeMana(-totalManaCost, 0f);
+        if (ps != null) ps.ChangeStamina(-sp);
+        if (pm != null) pm.ChangeMana(-mp);
 
         return true;
     }

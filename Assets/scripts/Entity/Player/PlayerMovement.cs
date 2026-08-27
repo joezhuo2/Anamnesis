@@ -90,8 +90,8 @@ public class PlayerMovement : MonoBehaviour
         float dashSpeed = Spd * esm.GetStat(StatType.DashSpdMult);
         float dashDuration = dashSpeed > 0 ? esm.GetStat(StatType.EffDashDistance) / dashSpeed : 0.2f;
 
-        if (esm.GetStat(StatType.DashShouldApplyIFrame) > 0f && gameObject.TryGetComponent<EntityHealth>(out var eh))
-            eh.StartCoroutine(eh.TriggerIFrames(dashDuration + 0.2f));
+        if (esm.GetStat(StatType.DashShouldApplyIFrame) > 0f && gameObject.TryGetComponent<IDamageable>(out var eh))
+            eh.TriggerIFrames(dashDuration + 0.2f);
 
         StartCoroutine(DashRoutine(dashSpeed));
     }

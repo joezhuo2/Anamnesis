@@ -5,12 +5,19 @@ All *notable* changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project *roughly* follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v0.2.10] - 2026-08-26
+⚠️ Represents potentially unstable/low-tested version.
+
+## ⚠️ [v0.2.11] - 2026-08-26
+
+### Updated
+- **`EntityHealth` Decoupling
+
+## ⚠️ [v0.2.10] - 2026-08-26
 
 ### Changed
 - **Complete Decoupling** - `EntityStatManager` is no longer referenced, and replaced by `ICurrencyHolder` and `IStatProvider`
 
-## [v0.2.9] - 2026-08-26 - Stat System Refactor
+## ⚠️ [v0.2.9] - 2026-08-26 - Stat System Refactor
 
 ### Changed
 - **Complete stat system overhaul** — replaced direct field access (`esm.s.field`) with `GetStat(StatType)` and `AddStat(StatBuff)` across all entity scripts
@@ -30,7 +37,7 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 - Gold reroll button interactable state now correctly reflects `TrySpend` result
 - Status effect duration/resistance calculations now use `EffectRes` and `seDurPct` via `GetStat`
 
-## [v0.2.8_2] - 2026-08-26
+## ⚠️ [v0.2.8_2] - 2026-08-26
 
 ### Updated
 - folder structure in `README.md`

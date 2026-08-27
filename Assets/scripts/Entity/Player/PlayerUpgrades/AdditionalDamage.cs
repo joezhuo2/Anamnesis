@@ -10,7 +10,7 @@ public class AdditionalDamage : PlayerUpgrade
     {
         if (player == null || target == null || damageDealt <= 0f) return;
 
-        if (!target.TryGetComponent<EntityHealth>(out var targetHealth)) return;
+        if (!target.TryGetComponent<IDamageable>(out var id)) return;
 
         if (!player.TryGetComponent<IStatProvider>(out var _)) return;
 
@@ -25,8 +25,7 @@ public class AdditionalDamage : PlayerUpgrade
             _ => Color.white
         };
 
-        DamagePacket dp = DamagePacket.BuildDamagePacket(bonusDamage, type, false, indicatorColor, player);
-        if (dp.GetTotalDamage() > 0f)
-            targetHealth.TakeDamage(dp, true, player);
+        DamagePacket dp = DamagePacket.BuildDamagePacket(bonusDamage, type, false, indicatorColor, player, true, 1.25f);
+        if (dp.GetTotalDamage() > 0f) id.TakeDamage(dp);
     }
 }

@@ -11,7 +11,7 @@ public class DoT : StatusEffect
 
     public override void OnTick()
     {
-        if (source == null || target == null || !target.TryGetComponent<EntityHealth>(out var eh) || !source.TryGetComponent<IStatProvider>(out var ssm)) return;
+        if (source == null || target == null || !target.TryGetComponent<IDamageable>(out var eh) || !source.TryGetComponent<IStatProvider>(out var ssm)) return;
 
         float damage = dpt * 0.01f * ssm.GetStat(scalingStat) * currentStacks;
 
@@ -20,7 +20,7 @@ public class DoT : StatusEffect
         float resPen = ssm.GetStat(StatType.resPen);
         int defShred = Mathf.RoundToInt(ssm.GetStat(StatType.defShred));
 
-        DamagePacket damagePacket = DamagePacket.BuildDamagePacket(damage, damageType, globalDoTCanCrit || canCrit, indicatorColor, source);
-        eh.TakeDamage(damagePacket, true, source);
+        DamagePacket damagePacket = DamagePacket.BuildDamagePacket(damage, damageType, globalDoTCanCrit || canCrit, indicatorColor, source, true, 1f);
+        eh.TakeDamage(damagePacket);
     }
 }

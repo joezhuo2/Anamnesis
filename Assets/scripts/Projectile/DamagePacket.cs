@@ -4,6 +4,10 @@ using UnityEngine;
 public class DamagePacket
 {
     public List<DamageInstance> instances = new();
+    public GameObject source;
+    public bool bypassIFrames = false;
+    public float sizeOverride = 1f;
+
     public void AddInstance(DamageType type, float amount, bool isCrit, GameObject owner)
         => instances.Add(new DamageInstance(type, amount, isCrit, default, owner));
 
@@ -18,9 +22,9 @@ public class DamagePacket
         return total;
     }
 
-    public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits, GameObject owner)
+    public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits, GameObject owner, bool bypassIFrames, float sizeOverride)
     {
-        DamagePacket dp = new();
+        DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
         if (pd == null || !snapshot.isValid) return dp;
 
         void AddDamageIfValid(DamageType type, float mult)
@@ -45,9 +49,9 @@ public class DamagePacket
         return dp;
     }
 
-    public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, bool rollCrits, Color indicatorColor, GameObject owner)
+    public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, bool rollCrits, Color indicatorColor, GameObject owner, bool bypassIFrames, float sizeOverride)
     {
-        DamagePacket dp = new();
+        DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
         if (!owner.TryGetComponent<IStatProvider>(out var esm) || baseDamage <= 0f) return dp;
 
         var (finalDamage, isCrit) = rollCrits ? DamageCalculator.RollCrits(baseDamage, esm.GetStat(StatType.critChance), esm.GetStat(StatType.critDamage)) : (baseDamage, false);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum DamageType { Physical, Spell, DoT, True }
+public enum DamageType { Physical, Spell, DoT, True, Heal, Consume }
 
 public struct DamageInstance
 {

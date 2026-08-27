@@ -98,7 +98,7 @@ public class Projectile : MonoBehaviour {
     private void HandleHitEntity(GameObject target)
     {
         if (target == null || ownerObj == null || target == ownerObj) return;
-        if (!target.TryGetComponent<EntityHealth>(out var eh)) return;
+        if (!target.TryGetComponent<IDamageable>(out var eh)) return;
 
         bool targetIsPlayer = target?.CompareTag("Player") ?? true;
         bool isPlayer = ownerObj?.CompareTag("Player") ?? false;
@@ -107,11 +107,11 @@ public class Projectile : MonoBehaviour {
 
         if (targetIsPlayer == isPlayer || targetIsEnemy == isEnemy) return;
 
-        DamagePacket packet = DamagePacket.BuildDamagePacket(pd, damageSnapshot, true, ownerObj);
+        DamagePacket dp = DamagePacket.BuildDamagePacket(pd, damageSnapshot, true, ownerObj, false, 1f);
 
-        eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj);
+        eh.TakeDamage(dp);
 
-        if (pd.kbForce > 0f && eh.TryGetComponent<Rigidbody2D>(out var rb2d))
+        if (pd.kbForce > 0f && (eh as Component).TryGetComponent<Rigidbody2D>(out var rb2d))
         {
             Vector2 kbDir = (rb2d.transform.position - transform.position).normalized;
 
@@ -126,7 +126,7 @@ public class Projectile : MonoBehaviour {
                 rb2d.AddForce(kbDir * kbf, ForceMode2D.Impulse);
         }
 
-        var (hp, stamina, mana) = CalculateStatGains(ownerObj, pd.mainAttack, packet.GetTotalDamage());
+        var (hp, stamina, mana) = CalculateStatGains(ownerObj, pd.mainAttack, dp.GetTotalDamage());
         TriggerStatGains(hp, stamina, mana, ownerObj);
 
         pierced++;
@@ -484,7 +484,11 @@ public class Projectile : MonoBehaviour {
     {
         if (target == null) return;
         if (target.TryGetComponent<PlayerStamina>(out var ps)) ps.ChangeStamina(stamina);
-        if (target.TryGetComponent<EntityHealth>(out var eh)) eh.ChangeHealth(hp, 0f);
+        if (target.TryGetComponent<IDamageable>(out var eh))
+        {
+            var dp = DamagePacket.BuildDamagePacket(hp, DamageType.Heal, false, Color.green, target, true, 1f);
+            eh.TakeDamage(dp);
+        }
         if (target.TryGetComponent<PlayerMana>(out var pm)) pm.ChangeMana(mana, 0f);
     }
 }

@@ -46,7 +46,7 @@ public class EntitySummonHandler : MonoBehaviour
 
         InstantiateRuntimeScriptableObjects(summon);
 
-        if (summon.TryGetComponent<EntityHealth>(out var summonHealth))
+        if (summon.TryGetComponent<IDamageable>(out var summonHealth))
             summonHealth.OnDeath += OnSummonDeath;
 
         activeSummons.Add(summon);
@@ -86,7 +86,7 @@ public class EntitySummonHandler : MonoBehaviour
     {
         activeSummons.Remove(summon);
 
-        if (summon != null && summon.TryGetComponent<EntityHealth>(out var health))
+        if (summon != null && summon.TryGetComponent<IDamageable>(out var health))
             health.OnDeath -= OnSummonDeath;
 
         ApplyPerSummonBuffs(false);
@@ -158,7 +158,7 @@ public class EntitySummonHandler : MonoBehaviour
         {
             if (activeSummons[i] != null)
             {
-                if (activeSummons[i].TryGetComponent<EntityHealth>(out var health))
+                if (activeSummons[i].TryGetComponent<IDamageable>(out var health))
                     health.OnDeath -= OnSummonDeath;
                 ApplyPerSummonBuffs(false);
                 Destroy(activeSummons[i]);
