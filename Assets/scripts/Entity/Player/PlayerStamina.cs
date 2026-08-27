@@ -7,11 +7,11 @@ public class PlayerStamina : MonoBehaviour
     private readonly float ri = 0.2f;
     private readonly float frf = 5f;
     private float accumaltedRegen = 0f;
-    private EntityStatManager esm;
+    private IStatProvider esm;
 
     private void Start()
     {
-        esm = GetComponent<EntityStatManager>();
+        esm = GetComponent<IStatProvider>();
 
         if (esm != null) esm.AddStat(new(StatType.CanGainStamina, 1));
     }

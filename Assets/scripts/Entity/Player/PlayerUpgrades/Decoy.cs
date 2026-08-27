@@ -37,7 +37,7 @@ public class Decoy : PlayerUpgrade
 
         foreach (var e in enemies)
         {
-            if (!e.TryGetComponent<EntityStatManager>(out var esm)) return;
+            if (!e.TryGetComponent<IStatProvider>(out var esm)) return;
 
             float maxDist = esm.GetStat(StatType.DetectionRange);
             float dist = Vector2.Distance(decoy.transform.position, e.transform.position);

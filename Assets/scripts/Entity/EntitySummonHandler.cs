@@ -76,7 +76,7 @@ public class EntitySummonHandler : MonoBehaviour
     private void ApplyPerSummonBuffs(bool adding)
     {
         if (perSummonBuffs.Count == 0) return;
-        if (!TryGetComponent<EntityStatManager>(out var esm)) return;
+        if (!TryGetComponent<IStatProvider>(out var esm)) return;
 
         for (int i = 0; i < perSummonBuffs.Count; i++)
             esm.AddStat(perSummonBuffs[i], adding);
@@ -91,7 +91,7 @@ public class EntitySummonHandler : MonoBehaviour
 
         ApplyPerSummonBuffs(false);
 
-        if (onDeathBuffs.Count > 0 && TryGetComponent<EntityStatManager>(out var esm))
+        if (onDeathBuffs.Count > 0 && TryGetComponent<IStatProvider>(out var esm))
         {
             for (int i = 0; i < onDeathBuffs.Count; i++)
                 esm.AddStat(onDeathBuffs[i]);

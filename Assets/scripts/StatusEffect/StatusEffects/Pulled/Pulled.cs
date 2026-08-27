@@ -18,7 +18,7 @@ public class Pulled : StatusEffect
         if (projectile != null) pullCenter = projectile.transform.position;
         else if (source != null) pullCenter = source.transform.position;
 
-        if (disableMovement && target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (disableMovement && target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             wasMovementDisabled = esm.GetStat(StatType.CanMove) < 0.5f;
             esm.AddStat(new StatBuff(StatType.CanMove, -1f));
@@ -54,7 +54,7 @@ public class Pulled : StatusEffect
     public override void OnExpire()
     {
         if (disableMovement && !wasMovementDisabled && target != null
-            && target.TryGetComponent<EntityStatManager>(out var esm))
+            && target.TryGetComponent<IStatProvider>(out var esm))
         {
             esm.AddStat(new StatBuff(StatType.CanMove, 1f));
         }

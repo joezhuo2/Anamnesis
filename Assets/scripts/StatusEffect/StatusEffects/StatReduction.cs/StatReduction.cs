@@ -19,7 +19,7 @@ public class StatReduction : StatusEffect
     public override void OnExpire() => UndoCurrentDebuff();
     private void ApplyReduction()
     {
-        if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return;
+        if (target == null || !target.TryGetComponent<IStatProvider>(out var esm)) return;
 
         float redPct = Mathf.Clamp(redPerStack * 0.01f * currentStacks, minRed, maxRed);
 
@@ -31,7 +31,7 @@ public class StatReduction : StatusEffect
 
     private void UndoCurrentDebuff()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             if (currentActiveDebuff.HasValue)
             {

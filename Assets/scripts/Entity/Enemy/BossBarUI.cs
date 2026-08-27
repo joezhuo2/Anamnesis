@@ -11,9 +11,9 @@ public class BossBarUI : MonoBehaviour
     private int cMaxHp;
     private int cCurHp;
 
-    private EntityStatManager bsm;
+    private IStatProvider bsm;
 
-    public void Setup(string bossName, EntityStatManager esm)
+    public void Setup(string bossName, IStatProvider esm)
     {
         bossNameText.text = bossName;
         bsm = esm;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class DamageCalculator
 {
-    public static (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, EntityStatManager esm)
+    public static (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, IStatProvider esm)
     {
         float effRes = Mathf.Max(-100f, esm.GetStat(StatType.damageRes) - esm.GetStat(StatType.resPen));
         float resMult = 1f - (effRes * 0.01f);
@@ -67,7 +67,7 @@ public static class DamageCalculator
         return (baseDamage, false);
     }
 
-    public static float CalculateHpConsumedMult(ProjectileData pd, EntityStatManager esm)
+    public static float CalculateHpConsumedMult(ProjectileData pd, IStatProvider esm)
     {
         if (pd.mainAttack == null) return 1f;
 

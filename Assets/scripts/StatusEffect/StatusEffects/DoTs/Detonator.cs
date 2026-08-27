@@ -17,7 +17,7 @@ public class Detonator : StatusEffect
 
             foreach (var dot in dots)
             {
-                if (target.TryGetComponent<EntityHealth>(out var eh) && source.TryGetComponent<EntityStatManager>(out var ssm))
+                if (target.TryGetComponent<EntityHealth>(out var eh) && source.TryGetComponent<IStatProvider>(out var ssm))
                 {
                     float dotTickDmg = dot.dpt * 0.01f * ssm.GetStat(dot.scalingStat) * dot.currentStacks;
                     int ticksRemaining = Mathf.CeilToInt((dot.duration - dot.currentTime) / dot.tickInterval);
@@ -27,7 +27,7 @@ public class Detonator : StatusEffect
                     int defShred = Mathf.RoundToInt(ssm.GetStat(StatType.defShred));
 
                     DamagePacket damagePacket = DamagePacket.BuildDamagePacket(dmg, dmgType, true, indicatorColor, source);
-                    eh.TakeDamage(damagePacket, true, source, resPen, defShred, 3f);
+                    eh.TakeDamage(damagePacket, true, source, 2f);
                 }
                 sem.RemoveEffect(dot);
             }

@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class PlayerMana : MonoBehaviour
 {
-    private EntityStatManager esm;
+    private IStatProvider esm;
 
     private void Start()
     {
-        esm = GetComponent<EntityStatManager>();
+        esm = GetComponent<IStatProvider>();
 
         if (esm != null) esm.AddStat(new(StatType.CanGainMana, 1));
     }

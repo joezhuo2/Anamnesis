@@ -6,9 +6,9 @@ public class EnemyPhase : MonoBehaviour
     public PhaseBuff[] phaseBuffs;
     public int phase;
 
-    private EntityStatManager esm;
+    private IStatProvider esm;
 
-    private void Awake() => esm = GetComponent<EntityStatManager>();
+    private void Awake() => esm = GetComponent<IStatProvider>();
 
     public void UpdatePhase(int newPhase)
     {

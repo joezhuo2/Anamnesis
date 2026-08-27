@@ -5,9 +5,9 @@ public class PlayerDashCooldownUI : MonoBehaviour
 {
     public Image cooldownImage;
     private PlayerMovement cpm;
-    private EntityStatManager cesm;
+    private IStatProvider cesm;
 
-    public void Setup(PlayerMovement pm, EntityStatManager esm)
+    public void Setup(PlayerMovement pm, IStatProvider esm)
     {
         cpm = pm;
         cesm = esm;

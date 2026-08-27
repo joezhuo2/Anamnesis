@@ -65,7 +65,8 @@ public class WaveManager : MonoBehaviour
     protected GameController GameController => GameController.Instance;
     protected RewardType type = RewardType.Basic;
     protected GameObject activeBossBar;
-    protected EntityStatManager cpsm;
+    protected IStatProvider cpsm;
+    protected ICurrencyHolder cich;
     protected PlayerAttackHandler cpah;
     protected PlayerUpgradeManager cpum;
     protected PlayerSkillTree cpst;
@@ -271,7 +272,7 @@ public class WaveManager : MonoBehaviour
     {
         var enemy = EnemySpawner.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, spawnRadius, c.enemyLevel);
 
-        if (enemy.TryGetComponent<EntityStatManager>(out var esm) && currentAnomaly is StatModifierInstance statMod)
+        if (enemy.TryGetComponent<IStatProvider>(out var esm) && currentAnomaly is StatModifierInstance statMod)
             esm.AddStat(statMod.GetBuff());
 
         if (c.bossBarPrefab != null && activeBossBar == null)
@@ -630,7 +631,7 @@ public class WaveManager : MonoBehaviour
     {
         CachePlayerStatManager();
 
-        var canGoldReroll = cpsm != null && cpsm.CurrentAmount >= rerollGoldCost;
+        var canGoldReroll = cich != null && cich.CurrentAmount >= rerollGoldCost;
 
         if (rerollText != null)
         {
@@ -678,7 +679,7 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        if (rerolls <= 0 && !cpsm.TrySpend(rerollGoldCost)) return;
+        if (rerolls <= 0 && !cich.TrySpend(rerollGoldCost)) return;
         else ActiveManager.rerolls--;
 
         UpdateRerollUI();
@@ -873,8 +874,8 @@ public class WaveManager : MonoBehaviour
     public virtual int GetCurrentWave() => currentWaveIndex + currentSequence.waveOffset;
     protected void CachePlayerStatManager()
     {
-        if (cpsm == null)
-            cpsm = GameObject.FindWithTag("Player")?.GetComponent<EntityStatManager>();
+        cpsm ??= GameObject.FindWithTag("Player")?.GetComponent<IStatProvider>();
+        cich ??= GameObject.FindWithTag("Player")?.GetComponent<ICurrencyHolder>();
     }
     protected void CachePlayerSkillTree()
     {

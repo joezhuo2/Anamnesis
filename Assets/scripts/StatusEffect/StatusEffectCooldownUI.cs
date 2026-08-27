@@ -7,9 +7,9 @@ public class StatusEffectCooldownUI : MonoBehaviour
     public Image iconImage;
 
     private StatusEffect cse;
-    private EntityStatManager cesm;
+    private IStatProvider cesm;
 
-    public void Setup(StatusEffect se, EntityStatManager esm)
+    public void Setup(StatusEffect se, IStatProvider esm)
     {
         cse = se;
         cesm = esm;

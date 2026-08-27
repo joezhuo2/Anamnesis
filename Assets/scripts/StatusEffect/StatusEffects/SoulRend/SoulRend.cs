@@ -27,7 +27,7 @@ public class SoulRend : StatusEffect
     public override void OnExpire() => UndoAllBuffs();
     private void ApplyBuffs()
     {
-        if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return;
+        if (target == null || !target.TryGetComponent<IStatProvider>(out var esm)) return;
 
         int defShredMultiplier = currentStacks / 5;
         if (defShredMultiplier > 0)
@@ -78,7 +78,7 @@ public class SoulRend : StatusEffect
 
     private void UndoCurrentAtkBuff()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             if (currentActiveAtkBuff.HasValue) esm.AddStat(currentActiveAtkBuff.Value, false);
             currentActiveAtkBuff = null;
@@ -86,7 +86,7 @@ public class SoulRend : StatusEffect
     }
     private void UndoCurrentDefShredBuff()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             if (currentDefShredBuff.HasValue) esm.AddStat(currentDefShredBuff.Value, false);
             currentDefShredBuff = null;
@@ -94,7 +94,7 @@ public class SoulRend : StatusEffect
     }
     private void UndoCurrentResPenBuff()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             if (currentResPenBuff.HasValue) esm.AddStat(currentResPenBuff.Value, false);
             currentResPenBuff = null;
@@ -102,7 +102,7 @@ public class SoulRend : StatusEffect
     }
     private void UndoCurrentPhysDmgBuff()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             if (currentPhysDmgBuff.HasValue) esm.AddStat(currentPhysDmgBuff.Value, false);
             currentPhysDmgBuff = null;
@@ -110,7 +110,7 @@ public class SoulRend : StatusEffect
     }
     private void UndoCurrentCritDmgbuff()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             if (currentCritDmgbuff.HasValue) esm.AddStat(currentCritDmgbuff.Value, false);
             currentCritDmgbuff = null;
@@ -118,7 +118,7 @@ public class SoulRend : StatusEffect
     }
     private void UndoCurrentUltDmgBuff()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             if (currentUltDmgBuff.HasValue) esm.AddStat(currentUltDmgBuff.Value, false);
             currentUltDmgBuff = null;
@@ -126,7 +126,7 @@ public class SoulRend : StatusEffect
     }
     private void UndoAllBuffs()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             if (currentActiveAtkBuff.HasValue) esm.AddStat(currentActiveAtkBuff.Value, false);
             if (currentDefShredBuff.HasValue) esm.AddStat(currentDefShredBuff.Value, false);

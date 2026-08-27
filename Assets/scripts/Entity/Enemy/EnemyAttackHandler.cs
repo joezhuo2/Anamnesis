@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(EntityStatManager))]
+
 public class EnemyAttackHandler : MonoBehaviour
 {
     public Vector2 projSpawnOffset;

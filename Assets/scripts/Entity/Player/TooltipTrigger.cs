@@ -6,8 +6,8 @@ public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, Play
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
-    // private PlayerStats cps;
-    private EntityStatManager cesm;
+    private IStatProvider cesm;
+    private ICurrencyHolder cich;
     private StatusEffect cse;
     private SkillNodeDef snd;
     private PlayerUpgradeReward pur;
@@ -19,20 +19,21 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private string actionButtonTitle = "";
     private string actionButtonDescription = "";
 
-    public void SetupTooltipData(AttackData ad, EntityStatManager esm)
+    public void SetupTooltipData(AttackData ad, IStatProvider esm)
     {
         tooltipType = TooltipType.Attack;
         cad = ad;
         cesm = esm;
     }
 
-    public void SetupTooltipData(EntityStatManager esm)
+    public void SetupTooltipData(IStatProvider esm, ICurrencyHolder ich)
     {
         tooltipType = TooltipType.Resources;
         cesm = esm;
+        cich = ich;
     }
 
-    public void SetupTooltipData(StatusEffect se, EntityStatManager esm)
+    public void SetupTooltipData(StatusEffect se, IStatProvider esm)
     {
         tooltipType = TooltipType.StatusEffect;
         cse = se;
@@ -46,7 +47,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         skillTreeFailMessage = failMessage ?? "";
     }
 
-    public void SetupDashTooltipData(EntityStatManager esm)
+    public void SetupDashTooltipData(IStatProvider esm)
     {
         tooltipType = TooltipType.Dash;
         cesm = esm;
@@ -174,7 +175,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         if (resTypes.Count > 0) lines.Add($"Res: {string.Join(" ", resTypes)}");
 
-        if (cesm.CurrentAmount > 0) lines.Add($"Gold: {cesm.CurrentAmount}");
+        if (cich.CurrentAmount > 0) lines.Add($"Gold: {cich.CurrentAmount}");
 
         TooltipUI.Instance.ShowTooltip("Resources", string.Join("\n", lines), new(100, -100));
     }
@@ -183,13 +184,13 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (cad == null || cesm == null || tooltipType != TooltipType.Attack) return;
 
         var (sp, hp, mp) = PlayerAttackHandler.GetCosts(cad, cesm);
-        var (spg, hpg, mpg) = Projectile.CalculateStatGains(cesm.gameObject, cad);
+        var (spg, hpg, mpg) = Projectile.CalculateStatGains((cesm as Component).gameObject, cad);
         var effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
 
         float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
         if (cad.pd != null)
         {
-            var previewSnapshot = ProjectileSnapshot.CaptureSnapshot(cad.pd, cesm.gameObject);
+            var previewSnapshot = ProjectileSnapshot.CaptureSnapshot(cad.pd, (cesm as Component).gameObject);
             var previewPacket = DamagePacket.BuildDamagePacket(cad.pd, previewSnapshot, false, gameObject);
 
             foreach (var instance in previewPacket.instances)

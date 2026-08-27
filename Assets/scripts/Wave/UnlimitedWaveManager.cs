@@ -123,7 +123,7 @@ public class UnlimitedWaveManager : WaveManager
 
         var enemy = EnemySpawner.SpawnEnemy(prefab, spawnLocation, spawnRadius, level);
 
-        if (enemy.TryGetComponent<EntityStatManager>(out var esm) && currentAnomaly is StatModifierInstance statMod)
+        if (enemy.TryGetComponent<IStatProvider>(out var esm) && currentAnomaly is StatModifierInstance statMod)
             esm.AddStat(statMod.GetBuff());
 
         if (isBossWave && bossBarPrefab != null && activeBossBar == null)

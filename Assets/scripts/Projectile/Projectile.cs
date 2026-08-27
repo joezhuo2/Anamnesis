@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour {
     private void Start()
     {
         effSpd = ownerObj != null ?
-            ownerObj.TryGetComponent<EntityStatManager>(out var esm) ?
+            ownerObj.TryGetComponent<IStatProvider>(out var esm) ?
             pd.speed * (1f + (esm.GetStat(StatType.ProjSpd) * 0.01f)) :
             pd.speed : pd.speed;
 
@@ -82,7 +82,7 @@ public class Projectile : MonoBehaviour {
         if (pierced >= pd.numPierce) return;
         if (hit.Contains(other.gameObject)) return;
 
-        if (other.TryGetComponent<EntityStatManager>(out var statManager) && ownerObj != other.gameObject)
+        if (other.TryGetComponent<IStatProvider>(out var statManager) && ownerObj != other.gameObject)
             HandleHitEntity(other.gameObject);
     }
 
@@ -91,7 +91,7 @@ public class Projectile : MonoBehaviour {
         if (pierced >= pd.numPierce) return;
         if (hit.Contains(other.gameObject)) return;
 
-        if (other.TryGetComponent<EntityStatManager>(out var statManager) && ownerObj != other.gameObject)
+        if (other.TryGetComponent<IStatProvider>(out var statManager) && ownerObj != other.gameObject)
             HandleHitEntity(other.gameObject);
     }
 
@@ -109,13 +109,13 @@ public class Projectile : MonoBehaviour {
 
         DamagePacket packet = DamagePacket.BuildDamagePacket(pd, damageSnapshot, true, ownerObj);
 
-        eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj, damageSnapshot.resPen, damageSnapshot.defShred);
+        eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj);
 
         if (pd.kbForce > 0f && eh.TryGetComponent<Rigidbody2D>(out var rb2d))
         {
             Vector2 kbDir = (rb2d.transform.position - transform.position).normalized;
 
-            float kbf = ownerObj.TryGetComponent<EntityStatManager>(out var esm) ?
+            float kbf = ownerObj.TryGetComponent<IStatProvider>(out var esm) ?
                 pd.kbForce * (1f + (esm.GetStat(StatType.kbPct) * 0.01f)) : pd.kbForce;
 
             if (target.TryGetComponent<EnemyMovement>(out var em))
@@ -185,7 +185,7 @@ public class Projectile : MonoBehaviour {
 
     private void HandleSize()
     {
-        if (!ownerObj.TryGetComponent<EntityStatManager>(out var esm) && esm.GetStat(StatType.aoePct) == 0) return;
+        if (!ownerObj.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.aoePct) == 0) return;
 
         float sizeMult = pd.size + (esm.GetStat(StatType.aoePct) * 0.01f);
         transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
@@ -378,7 +378,7 @@ public class Projectile : MonoBehaviour {
             float dot = Vector2.Dot(dir.normalized, toEnemy);
             if (dot <= 0) continue;
 
-            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && esm.GetStat(StatType.isAlive) <= 0f && esm.GetStat(StatType.currentHp) <= 0) continue;
+            if (col.gameObject.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.isAlive) <= 0f && esm.GetStat(StatType.currentHp) <= 0) continue;
 
             float dist = Vector2.Distance(transform.position, col.transform.position);
             if (dist < closestDist)
@@ -404,7 +404,7 @@ public class Projectile : MonoBehaviour {
 
             if (hit.Contains(col.gameObject)) continue;
 
-            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && esm.GetStat(StatType.isAlive) <= 0f && esm.GetStat(StatType.currentHp) <= 0) continue;
+            if (col.gameObject.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.isAlive) <= 0f && esm.GetStat(StatType.currentHp) <= 0) continue;
 
             float dist = Vector2.Distance(transform.position, col.transform.position);
             if (dist < minDist)
@@ -459,7 +459,7 @@ public class Projectile : MonoBehaviour {
 
     public static (float hp, float stamina, float mana) CalculateStatGains(GameObject target, AttackData a, float totalDmg = 0f)
     {
-        if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return (0f, 0f, 0f);
+        if (target == null || !target.TryGetComponent<IStatProvider>(out var esm)) return (0f, 0f, 0f);
 
         float totalStamina = a.staminaGainOnHit;
         float totalHp = a.healthGainOnHit;

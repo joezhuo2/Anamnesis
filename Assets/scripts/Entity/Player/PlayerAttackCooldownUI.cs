@@ -9,9 +9,9 @@ public class PlayerAttackCooldownUI : MonoBehaviour
     private AttackType ctype;
     private AttackData cad;
     private PlayerAttackHandler cpah;
-    private EntityStatManager cesm;
+    private IStatProvider cesm;
 
-    public void Setup(PlayerAttackHandler pah, AttackType type, EntityStatManager esm)
+    public void Setup(PlayerAttackHandler pah, AttackType type, IStatProvider esm)
     {
         cpah = pah;
         ctype = type;

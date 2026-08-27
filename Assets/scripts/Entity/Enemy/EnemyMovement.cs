@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
 
     private readonly List<KnockbackHandler.AppliedForce> currentForces = new();
     private static readonly int SpeedHash = Animator.StringToHash("speed");
-    private EntityStatManager esm;
+    private IStatProvider esm;
     private Rigidbody2D rb;
     private Animator a;
     private bool wasMoving = false;
@@ -26,7 +26,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        esm = GetComponent<EntityStatManager>();
+        esm = GetComponent<IStatProvider>();
         a = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 

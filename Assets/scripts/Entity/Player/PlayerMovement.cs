@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 dashDir;
     [HideInInspector] public static int playerDir = 1; // 1 => facing right, -1 => facing left
     private PlayerUpgradeManager pum;
-    private EntityStatManager esm;
+    private IStatProvider esm;
     private bool Dashing => esm.GetStat(StatType.IsDashing) > 0f;
     private float Spd => esm.GetStat(StatType.EffSpd);
 
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        esm = GetComponent<EntityStatManager>();
+        esm = GetComponent<IStatProvider>();
         pum = GetComponent<PlayerUpgradeManager>();
 
         esm.AddStat(new StatBuff(StatType.CanMove, 1f));

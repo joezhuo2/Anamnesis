@@ -12,7 +12,7 @@ public class AdditionalDamage : PlayerUpgrade
 
         if (!target.TryGetComponent<EntityHealth>(out var targetHealth)) return;
 
-        if (!player.TryGetComponent<EntityStatManager>(out var esm)) return;
+        if (!player.TryGetComponent<IStatProvider>(out var _)) return;
 
         float bonusDamage = damageDealt * (pctAmt / 100f);
         if (bonusDamage <= 0f) return;

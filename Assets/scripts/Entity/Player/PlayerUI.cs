@@ -31,7 +31,8 @@ public class PlayerUI : MonoBehaviour
     private int lastMaxStamina = -1;
     private int lastLevel = -1;
     private float lastXp = -1;
-    private EntityStatManager esm;
+    private IStatProvider esm;
+    private ICurrencyHolder ich;
     private int CurMana => Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana));
     private int CurHp => Mathf.RoundToInt(esm.GetStat(StatType.currentHp));
     private int CurStamina => Mathf.RoundToInt(esm.GetStat(StatType.CurrentStamina));
@@ -45,9 +46,10 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
-        if (esm == null) esm = GetComponent<EntityStatManager>();
+        esm ??= GetComponent<IStatProvider>();
+        ich ??= GetComponent<ICurrencyHolder>();
         if (resourceHoverZone.TryGetComponent<TooltipTrigger>(out var trigger))
-            trigger.SetupTooltipData(esm);
+            trigger.SetupTooltipData(esm, ich);
         UpdateUI();
     }
     private void Update() => UpdateUI();

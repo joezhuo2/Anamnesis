@@ -16,7 +16,7 @@ public class StatBuffs : StatusEffect
     public override void OnExpire() => UndoCurrentBuffs();
     private void ApplyBuffs()
     {
-        if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return;
+        if (target == null || !target.TryGetComponent<IStatProvider>(out var esm)) return;
 
         foreach (var buff in buffs)
         {
@@ -27,7 +27,7 @@ public class StatBuffs : StatusEffect
     }
     private void UndoCurrentBuffs()
     {
-        if (target != null && target.TryGetComponent<EntityStatManager>(out var esm))
+        if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
         {
             foreach (var kvp in curActiveBuff)
                 esm.AddStat(kvp.Value, false);

@@ -48,7 +48,7 @@ public class DamagePacket
     public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, bool rollCrits, Color indicatorColor, GameObject owner)
     {
         DamagePacket dp = new();
-        if (!owner.TryGetComponent<EntityStatManager>(out var esm) || baseDamage <= 0f) return dp;
+        if (!owner.TryGetComponent<IStatProvider>(out var esm) || baseDamage <= 0f) return dp;
 
         var (finalDamage, isCrit) = rollCrits ? DamageCalculator.RollCrits(baseDamage, esm.GetStat(StatType.critChance), esm.GetStat(StatType.critDamage)) : (baseDamage, false);
         dp.AddInstance(type, finalDamage, isCrit, indicatorColor, owner);

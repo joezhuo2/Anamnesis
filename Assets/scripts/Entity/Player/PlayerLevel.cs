@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerLevel : MonoBehaviour
 {
-    private EntityStatManager esm;
+    private IStatProvider esm;
     private int cLv;
 
-    private void Start() => esm = GetComponent<EntityStatManager>();
+    private void Start() => esm = GetComponent<IStatProvider>();
 
     public void GainExp(float amount)
     {

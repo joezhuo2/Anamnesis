@@ -4,8 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(EntityStatManager))]
-[RequireComponent(typeof(Animator))]
 public class EntityHealth : MonoBehaviour
 {
     public static event Action<EntityHealth> OnPlayerTakeDamage;
@@ -27,7 +25,7 @@ public class EntityHealth : MonoBehaviour
     private TextMeshProUGUI healthBarTextInstance;
     private Camera mainCamera;
     private PlayerUpgradeManager cpum;
-    private EntityStatManager esm;
+    private IStatProvider esm;
     private Canvas cachedCanvas;
     private bool Alive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
     private bool Immune => esm != null && esm.GetStat(StatType.isImmune) > 0f;
@@ -36,7 +34,7 @@ public class EntityHealth : MonoBehaviour
 
     private void Start()
     {
-        esm = GetComponent<EntityStatManager>();
+        esm = GetComponent<IStatProvider>();
         animator = GetComponent<Animator>();
         mainCamera = Camera.main;
 
@@ -84,7 +82,7 @@ public class EntityHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source, float sourceResPen = float.NaN, int sourceDefShred = int.MinValue, float sizeOverride = 0f)
+    public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source, float sizeOverride = 0f)
     {
         if (dp == null) return;
         if (Immune && !bypassIFrames) return;
@@ -278,13 +276,13 @@ public class EntityHealth : MonoBehaviour
     {
         if (esm.GetStat(StatType.goldDrop) <= 0) return;
 
-        var p = target.TryGetComponent<EntityStatManager>(out var tsm);
+        var p = target.TryGetComponent<IStatProvider>(out var tsm);
 
         int gold = Mathf.RoundToInt(esm.GetStat(StatType.goldDrop) * UnityEngine.Random.Range(0.7f, 1.3f) * (1f + (tsm.GetStat(StatType.Stealing) * 0.01f)));
 
-        if (gold > 0)
+        if (gold > 0 && target.TryGetComponent<ICurrencyHolder>(out var ich))
         {
-            tsm.AddCurrency(gold);
+            ich.AddCurrency(gold);
 
             TextIndicatorSpawner tis = TextIndicatorSpawner.Instance;
             if (tis != null)

@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EntityStatManager))]
+[RequireComponent(typeof(IStatProvider))]
 public class StatusEffectManager : MonoBehaviour
 {
     public GameObject displayPrefab = null;
     public Transform displayContainer = null;
 
     [HideInInspector] public readonly List<StatusEffect> activeEffects = new();
-    private EntityStatManager cesm;
+    private IStatProvider cesm;
 
-    private void Awake() => cesm = GetComponent<EntityStatManager>();
+    private void Awake() => cesm = GetComponent<IStatProvider>();
     public void GetActiveEffectsOfType<T>(List<T> results) where T : StatusEffect
     {
         results.Clear();
@@ -67,7 +67,7 @@ public class StatusEffectManager : MonoBehaviour
         runtimeEffect.currentStacks = 1;
         runtimeEffect.currentTime = 0;
 
-        if (source != null && source.TryGetComponent<EntityStatManager>(out var sem))
+        if (source != null && source.TryGetComponent<IStatProvider>(out var sem))
         {
             if (sem.GetStat(StatType.seDurPct) != 0f)
                 runtimeEffect.duration *= 1f + (sem.GetStat(StatType.seDurPct) * 0.01f);

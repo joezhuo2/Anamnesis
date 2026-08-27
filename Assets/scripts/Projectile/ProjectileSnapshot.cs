@@ -28,7 +28,7 @@ public static class ProjectileSnapshot
     {
         ProjectileDamageSnapshot snapshot = new() { isValid = false };
         if (pd == null || source == null) return snapshot;
-        if (!source.TryGetComponent<EntityStatManager>(out var esm) || esm == null) return snapshot;
+        if (!source.TryGetComponent<IStatProvider>(out var esm) || esm == null) return snapshot;
 
         snapshot.scalingValue = esm.GetStat(pd.scalingStat);
         snapshot.specialMult = (pd.specialSclaing) switch

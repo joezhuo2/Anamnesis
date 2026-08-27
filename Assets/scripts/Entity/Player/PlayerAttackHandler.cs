@@ -5,13 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
-[RequireComponent(typeof(Animator))]
 
-[RequireComponent(typeof(EntityStatManager))]
-[RequireComponent(typeof(PlayerStamina))]
-[RequireComponent(typeof(EntityHealth))]
-[RequireComponent(typeof(PlayerMana))]
-[RequireComponent(typeof(PlayerUpgradeManager))]
 public class PlayerAttackHandler : MonoBehaviour
 {
     private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
@@ -23,7 +17,7 @@ public class PlayerAttackHandler : MonoBehaviour
     private PlayerStamina ps;
     private EntityHealth ph;
     private PlayerMana pm;
-    private EntityStatManager esm;
+    private IStatProvider esm;
     private PlayerUpgradeManager pum;
     private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
     [HideInInspector] public List<AttackData> attacks = new();
@@ -32,7 +26,7 @@ public class PlayerAttackHandler : MonoBehaviour
     private void Start()
     {
         a = GetComponent<Animator>();
-        esm = GetComponent<EntityStatManager>();
+        esm = GetComponent<IStatProvider>();
         ps = GetComponent<PlayerStamina>();
         ph = GetComponent<EntityHealth>();
         pm = GetComponent<PlayerMana>();
@@ -191,7 +185,7 @@ public class PlayerAttackHandler : MonoBehaviour
         return true;
     }
 
-    public static (int hp, int sp, int mp) GetCosts(AttackData attack, EntityStatManager esm)
+    public static (int hp, int sp, int mp) GetCosts(AttackData attack, IStatProvider esm)
     {
         if (attack == null || esm == null) return (0, 0, 0);
 
@@ -286,7 +280,7 @@ public class PlayerAttackHandler : MonoBehaviour
         lastAttackTimes[type] = newLastTime;
     }
 
-    public static float GetEffCd(AttackData attack, EntityStatManager esm)
+    public static float GetEffCd(AttackData attack, IStatProvider esm)
     {
         float cdrPct = attack.type switch
         {
