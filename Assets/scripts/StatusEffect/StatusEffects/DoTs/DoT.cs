@@ -17,7 +17,10 @@ public class DoT : StatusEffect
 
         bool globalDoTCanCrit = source.TryGetComponent<PlayerUpgradeManager>(out var pum) && pum.HasUpgradeOfType<Paradox>();
 
-        DamagePacket damagePacket = DamageCalculator.BuildDamagePacket(damage, damageType, ssm.s, globalDoTCanCrit || canCrit, indicatorColor, source);
-        eh.TakeDamage(damagePacket, true, source, ssm.s.resPen, ssm.s.defShred);
+        float resPen = ssm.GetStat(StatType.resPen);
+        int defShred = Mathf.RoundToInt(ssm.GetStat(StatType.defShred));
+
+        DamagePacket damagePacket = DamagePacket.BuildDamagePacket(damage, damageType, globalDoTCanCrit || canCrit, indicatorColor, source);
+        eh.TakeDamage(damagePacket, true, source, resPen, defShred);
     }
 }

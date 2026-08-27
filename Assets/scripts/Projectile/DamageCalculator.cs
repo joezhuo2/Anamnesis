@@ -1,93 +1,38 @@
 using UnityEngine;
 
-public struct ProjectileDamageSnapshot
-{
-    public float scalingValue;
-    public float specialMult;
-    public float damagePct;
-    public float addPhysDmgPct;
-    public float addSplDmgPct;
-    public float addTrueDmgPct;
-    public float physicalDmgPct;
-    public float spellDmgPct;
-    public float basicDmgPct;
-    public float skillDmgPct;
-    public float ultDmgPct;
-    public float addDmgPct;
-    public float critChance;
-    public float critDamage;
-    public int defShred;
-    public float resPen;
-    public bool isValid;
-    public GameObject owner;
-}
-
 public static class DamageCalculator
 {
-    public static ProjectileDamageSnapshot CaptureSnapshot(ProjectileData pd, GameObject source)
+    public static (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, EntityStatManager esm)
     {
-        ProjectileDamageSnapshot snapshot = new() { isValid = false };
-        if (pd == null || source == null) return snapshot;
-        if (!source.TryGetComponent<EntityStatManager>(out var esm) || esm.s == null) return snapshot;
+        float effRes = Mathf.Max(-100f, esm.GetStat(StatType.damageRes) - esm.GetStat(StatType.resPen));
+        float resMult = 1f - (effRes * 0.01f);
 
-        snapshot.scalingValue = esm.GetStat(pd.scalingStat);
-        snapshot.specialMult = (pd.specialSclaing) switch
+        float effArmor = Mathf.Max(0, esm.GetStat(StatType.armor) - esm.GetStat(StatType.defShred));
+        float armorMult = type == DamageType.Physical ? 1f - ((float)effArmor / (effArmor + 100f)) : 1f;
+
+        float typeMult = type switch
         {
-            SpecialScalingAttribute.Orbits => source.TryGetComponent<EntityProjectileHandler>(out var eph) ? 1f + (eph.OrbitCount * pd.specialMult) : 1f,
-            SpecialScalingAttribute.HpConsumed => CalculateHpConsumedMult(pd, esm),
+            DamageType.Physical => 1f - (esm.GetStat(StatType.physicalRes) * 0.01f),
+            DamageType.Spell => 1f - (esm.GetStat(StatType.spellRes) * 0.01f),
             _ => 1f
         };
-        snapshot.damagePct = esm.s.damagePct;
-        snapshot.addPhysDmgPct = esm.s.addPhysDmgPct;
-        snapshot.addSplDmgPct = esm.s.addSplDmgPct;
-        snapshot.addTrueDmgPct = esm.s.addTrueDmgPct;
-        snapshot.physicalDmgPct = esm.s.physicalDmgPct;
-        snapshot.spellDmgPct = esm.s.spellDmgPct;
-        snapshot.basicDmgPct = esm.s.basicDmgPct;
-        snapshot.skillDmgPct = esm.s.skillDmgPct;
-        snapshot.ultDmgPct = esm.s.ultDmgPct;
-        snapshot.critChance = esm.s.critChance;
-        snapshot.critDamage = esm.s.critDamage;
-        snapshot.defShred = esm.s.defShred;
-        snapshot.resPen = esm.s.resPen;
-        snapshot.addDmgPct = esm.s.addDmgPct;
-        snapshot.isValid = true;
-        snapshot.owner = source;
-        return snapshot;
-    }
 
-    public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits, GameObject owner)
-    {
-        DamagePacket dp = new();
-        if (pd == null || !snapshot.isValid) return dp;
+        float finalDamage = rawDamage * resMult * armorMult * typeMult;
+        float size = 1f;
 
-        void AddDamageIfValid(DamageType type, float mult)
+        float dc = esm.GetStat(StatType.dodgeChance) * 0.01f;
+        float dodgeMult = 1f - (esm.GetStat(StatType.dodgeResPct) * 0.01f);
+
+        if (UnityEngine.Random.Range(0f, 1f) < dc)
         {
-            float addMultPct = GetAdditionalScaling(snapshot, type);
-            float dmgMult = 1f + (snapshot.damagePct * 0.01f);
-            float finalMult = mult + (addMultPct * 0.01f);
-
-            float damage = snapshot.scalingValue * snapshot.specialMult * dmgMult * finalMult * TypeBonus(type, snapshot) * AttackTypeBonus(pd.mainAttack.type, snapshot);
-            var (finalDamage, isCrit) = rollCrits ? RollCrits(damage, snapshot.critChance, snapshot.critDamage) : (damage, false);
-            dp.AddInstance(type, finalDamage, isCrit, default, owner);
+            finalDamage *= dodgeMult;
+            size = 0.7f;
         }
 
-        AddDamageIfValid(DamageType.Physical, pd.physicalMult);
-        AddDamageIfValid(DamageType.Spell, pd.spellMult);
-        AddDamageIfValid(DamageType.True, pd.trueMult);
-
-        return dp;
+        return (finalDamage, size);
     }
-    public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, EntityStats stats, bool rollCrits, Color indicatorColor, GameObject owner)
-    {
-        DamagePacket dp = new();
-        if (stats == null || baseDamage <= 0f) return dp;
 
-        var (finalDamage, isCrit) = rollCrits ? RollCrits(baseDamage, stats) : (baseDamage, false);
-        dp.AddInstance(type, finalDamage, isCrit, indicatorColor, owner);
-        return dp;
-    }
-    private static float GetAdditionalScaling(ProjectileDamageSnapshot snapshot, DamageType type) => type switch
+    public static float GetAdditionalScaling(ProjectileDamageSnapshot snapshot, DamageType type) => type switch
     {
         DamageType.True => snapshot.addTrueDmgPct,
         DamageType.Physical => snapshot.addPhysDmgPct,
@@ -95,14 +40,14 @@ public static class DamageCalculator
         _ => 0f
     };
 
-    private static float TypeBonus(DamageType type, ProjectileDamageSnapshot snapshot) => type switch
+    public static float TypeBonus(DamageType type, ProjectileDamageSnapshot snapshot) => type switch
     {
         DamageType.Physical => 1f + (snapshot.physicalDmgPct * 0.01f),
         DamageType.Spell => 1f + (snapshot.spellDmgPct * 0.01f),
         _ => 1f
     };
 
-    private static float AttackTypeBonus(AttackType type, ProjectileDamageSnapshot snapshot) => type switch
+    public static float AttackTypeBonus(AttackType type, ProjectileDamageSnapshot snapshot) => type switch
     {
         AttackType.Basic => 1f + (snapshot.basicDmgPct * 0.01f),
         AttackType.Skill => 1f + (snapshot.skillDmgPct * 0.01f),
@@ -110,17 +55,6 @@ public static class DamageCalculator
         AttackType.Additional => 1f + (snapshot.addDmgPct * 0.01f),
         _ => 1f
     };
-
-    public static (float damage, bool isCrit) RollCrits(float baseDamage, EntityStats stats)
-    {
-        float roll = Random.Range(0f, 1000f) / 10f;
-        if (roll <= stats.critChance)
-        {
-            float critDamage = baseDamage * (100f + stats.critDamage) * 0.01f;
-            return (critDamage, true);
-        }
-        return (baseDamage, false);
-    }
 
     public static (float damage, bool isCrit) RollCrits(float baseDamage, float critChance, float critDamage)
     {
@@ -133,14 +67,14 @@ public static class DamageCalculator
         return (baseDamage, false);
     }
 
-    private static float CalculateHpConsumedMult(ProjectileData pd, EntityStatManager esm)
+    public static float CalculateHpConsumedMult(ProjectileData pd, EntityStatManager esm)
     {
         if (pd.mainAttack == null) return 1f;
 
-        float totalHealthCost = Mathf.Abs(pd.mainAttack.healthCost + (esm.s.EffMaxHp * (pd.mainAttack.healthCostPct * 0.01f)));
+        float totalHealthCost = Mathf.Abs(pd.mainAttack.healthCost + (esm.GetStat(StatType.EffMaxHp) * (pd.mainAttack.healthCostPct * 0.01f)));
         if (totalHealthCost <= 0f) return 1f;
 
-        float hpConsumedPct = (totalHealthCost / esm.s.EffMaxHp) * 100f;
+        float hpConsumedPct = (totalHealthCost / esm.GetStat(StatType.EffMaxHp)) * 100f;
         return 1f + (hpConsumedPct * pd.specialMult * 0.01f);
     }
 }

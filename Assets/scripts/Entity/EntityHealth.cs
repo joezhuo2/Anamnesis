@@ -18,11 +18,8 @@ public class EntityHealth : MonoBehaviour
     private const float regenInterval = 0.5f; // how often hp regens, in seconds
     private const float fullRegenFrequency = 5f; // time to heal full amount of hpRegen stat
     private const float hurtIFrameDuration = 0.2f; // time after taking damage where you cannot take more damage
-    private const float dodgeCooldown = 0.6f; // minimum time before dodges
     private float accumulatedRegen;
-    private float lastDodgeTime;
     private Animator animator;
-    private EntityStats es;
     public Slider healthBarPrefab;
     private Slider healthBarInstance;
     public Vector3 healthBarOffset = new(0, 0, 0);
@@ -32,23 +29,28 @@ public class EntityHealth : MonoBehaviour
     private PlayerUpgradeManager cpum;
     private EntityStatManager esm;
     private Canvas cachedCanvas;
+    private bool Alive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
+    private bool Immune => esm != null && esm.GetStat(StatType.isImmune) > 0f;
+    private int CurHp => esm != null ? Mathf.RoundToInt(esm.GetStat(StatType.currentHp)) : 0;
+    private int MaxHp => esm != null ? Mathf.RoundToInt(esm.GetStat(StatType.EffMaxHp)) : 0;
 
     private void Start()
     {
         esm = GetComponent<EntityStatManager>();
-        if (esm != null) es = esm.s;
         animator = GetComponent<Animator>();
-
         mainCamera = Camera.main;
 
         regenTimer = 0f;
         accumulatedRegen = 0f;
-        lastDodgeTime = -Mathf.Infinity;
+
+        esm.AddStat(new StatBuff(StatType.isAlive, 1f));
+        esm.AddStat(new StatBuff(StatType.CanGainHp, 1f));
 
         if (TryGetComponent<PlayerUpgradeManager>(out var pum)) cpum = pum;
 
         InitializeHealthBar();
     }
+
     private void InitializeHealthBar()
     {
         if (cachedCanvas == null)
@@ -58,13 +60,14 @@ public class EntityHealth : MonoBehaviour
         {
             healthBarInstance = Instantiate(healthBarPrefab, cachedCanvas.transform);
 
-            healthBarInstance.maxValue = es.EffMaxHp;
-            healthBarInstance.value = es.EffMaxHp;
+            healthBarInstance.maxValue = MaxHp;
+            healthBarInstance.value = MaxHp;
 
             healthBarTextInstance = Instantiate(healthBarTextPrefab, cachedCanvas.transform);
-            healthBarTextInstance.text = $"{es.currentHp}/{es.EffMaxHp}";
+            healthBarTextInstance.text = $"{CurHp}/{MaxHp}";
         }
     }
+
     private void Update()
     {
         RegenHp();
@@ -72,7 +75,7 @@ public class EntityHealth : MonoBehaviour
     }
     private void MoveHealthBar()
     {
-        if (healthBarInstance != null && mainCamera != null && es.isAlive && healthBarTextInstance != null)
+        if (healthBarInstance != null && mainCamera != null && Alive && healthBarTextInstance != null)
         {
             Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position + healthBarOffset);
             healthBarInstance.transform.position = screenPos;
@@ -84,30 +87,16 @@ public class EntityHealth : MonoBehaviour
     public void TakeDamage(DamagePacket dp, bool bypassIFrames, GameObject source, float sourceResPen = float.NaN, int sourceDefShred = int.MinValue, float sizeOverride = 0f)
     {
         if (dp == null) return;
-        if (esm.s.isImmune && !bypassIFrames) return;
-
-        float resPen = sourceResPen;
-        int defShred = sourceDefShred;
-
-        if ((float.IsNaN(resPen) || defShred == int.MinValue) &&
-            source != null && source.TryGetComponent<EntityStatManager>(out var sourceStats) &&
-            sourceStats.s != null)
-        {
-            if (float.IsNaN(resPen)) resPen = sourceStats.s.resPen;
-            if (defShred == int.MinValue) defShred = sourceStats.s.defShred;
-        }
-
-        if (float.IsNaN(resPen)) resPen = 0f;
-        if (defShred == int.MinValue) defShred = 0;
+        if (Immune && !bypassIFrames) return;
 
         foreach (var i in dp.instances)
         {
             var (dmg, sizeMult) = i.type switch
             {
                 DamageType.True => (i.amount, 1f),
-                DamageType.Physical => CalculateDamageTaken(i.type, i.amount, resPen, defShred),
-                DamageType.Spell => CalculateDamageTaken(i.type, i.amount, resPen, defShred),
-                DamageType.DoT => (i.amount * (1f - (esm.s.effectRes * 0.01f)), 1f),
+                DamageType.Physical => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm),
+                DamageType.Spell => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm),
+                DamageType.DoT => (i.amount * (1f - (esm.GetStat(StatType.EffectRes) * 0.01f)), 1f),
                 _ => (0f, 1f)
             };
 
@@ -134,7 +123,7 @@ public class EntityHealth : MonoBehaviour
             if (appliedDmg > 0 && ChangeHealth(-appliedDmg, 0, true, sizeMult, color, bypassIFrames, source))
             {
                 if (source.TryGetComponent<PlayerLevel>(out var pl))
-                    pl.GainExp(es.xpDrop * (Mathf.Pow(1.05f, es.level - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
+                    pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
                 DropGold(source);
             }
 
@@ -146,29 +135,33 @@ public class EntityHealth : MonoBehaviour
             }
         }
 
-        if (cpum != null)
-            OnPlayerTakeDamage?.Invoke(this);
+        if (cpum != null) OnPlayerTakeDamage?.Invoke(this);
     }
+
     public bool ChangeHealth(float amount, float pctAmt, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
     {
-        if ((amount < 0 || pctAmt < 0) && es.isImmune && es.isDashing && cpum != null)
+        int finalAmount = Mathf.RoundToInt(amount + (pctAmt * MaxHp));
+        if (finalAmount == 0) return false;
+
+        if (cpum != null && (amount < 0 || pctAmt < 0) && Immune && esm.GetStat(StatType.IsDashing) > 0f)
         {
             cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCounterDodge);
             return false;
         }
-        if (((amount < 0 || pctAmt < 0) && es.isImmune) || ((amount > 0 || pctAmt > 0) && !es.canGainHp) || (amount == 0 && pctAmt == 0)) return false;
+        if (finalAmount < 0 && Immune) return false;
+        if (finalAmount > 0 && (esm.GetStat(StatType.CanGainHp)) <= 0f) return false;
 
-        int finalAmount = Mathf.RoundToInt(amount + (pctAmt * es.EffMaxHp));
-        if (finalAmount == 0) return false;
 
-        if (finalAmount < 0 && es.currentHp > 0 && Mathf.Abs(finalAmount) >= es.currentHp * 3f)
+        if (finalAmount < 0 && CurHp > 0 && Mathf.Abs(finalAmount) >= CurHp * 3f)
         {
             if (source != null && source.TryGetComponent<PlayerUpgradeManager>(out var pum))
                 pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnOverkill);
         }
 
-        int newHp = Math.Min(es.currentHp + finalAmount, (int)es.EffMaxHp);
-        es.currentHp = Mathf.Max(0, newHp);
+        int newHp = Mathf.Max(0, Math.Min(CurHp + finalAmount, (int)MaxHp));
+        int targetChange = newHp - CurHp;
+        if (targetChange > finalAmount) targetChange = finalAmount;
+        esm.AddStat(new StatBuff(StatType.currentHp, finalAmount));
 
         UpdatePhase();
 
@@ -190,15 +183,14 @@ public class EntityHealth : MonoBehaviour
             );
         }
 
-        if (finalAmount < 0 && animator != null && es.currentHp > 0)
+        if (finalAmount < 0 && animator != null && CurHp > 0)
         {
             animator.SetBool(IsHurtHash, true);
-            StartCoroutine(HurtDelay(es.hurtTime));
-            if (!bypassIFrames)
-                StartCoroutine(TriggerIFrames(hurtIFrameDuration));
+            StartCoroutine(HurtDelay(esm.GetStat(StatType.HurtTime)));
+            if (!bypassIFrames) StartCoroutine(TriggerIFrames(hurtIFrameDuration));
         }
 
-        if (es.currentHp <= 0 && es.isAlive)
+        if (CurHp <= 0 && Alive)
         {
             StartDeathSequence();
             return true;
@@ -207,51 +199,30 @@ public class EntityHealth : MonoBehaviour
         {
             if (healthBarInstance != null && healthBarTextInstance != null)
             {
-                healthBarInstance.value = es.currentHp;
-                healthBarTextInstance.text = $"{es.currentHp}/{es.EffMaxHp}";
+                healthBarInstance.value = CurHp;
+                healthBarTextInstance.text = $"{CurHp}/{MaxHp}";
             }
         }
         return false;
     }
     private void UpdatePhase()
     {
-        if (es is not EnemyStats enemyStats || enemyStats.phaseThresholds == null) return;
+        if (!TryGetComponent<EnemyPhase>(out var ep)) return;
 
-        float hpPct = (float)es.currentHp / es.EffMaxHp * 100f;
+        float hpPct = (float)CurHp / MaxHp * 100f;
         int newPhase = 0;
-        for (int i = 0; i < enemyStats.phaseThresholds.Length; i++)
+        for (int i = 0; i < ep.phaseThresholds.Length; i++)
         {
-            if (hpPct <= enemyStats.phaseThresholds[i]) newPhase = i + 1;
+            if (hpPct <= ep.phaseThresholds[i]) newPhase = i + 1;
             else break;
         }
-        if (enemyStats.phase == newPhase) return;
-
-        int previousPhase = enemyStats.phase;
-        enemyStats.phase = newPhase;
-
-        if (enemyStats.phaseBuffs == null || esm == null) return;
-
-        if (newPhase > previousPhase)
-        {
-            foreach (var pb in enemyStats.phaseBuffs)
-            {
-                if (pb.phaseReq > previousPhase && pb.phaseReq <= newPhase)
-                    esm.AddStat(pb.buff);
-            }
-        }
-        else if (newPhase < previousPhase)
-        {
-            foreach (var pb in enemyStats.phaseBuffs)
-            {
-                if (pb.phaseReq > newPhase && pb.phaseReq <= previousPhase)
-                    esm.AddStat(pb.buff, false);
-            }
-        }
+        ep.UpdatePhase(newPhase);
     }
+
     private void RegenHp()
     {
-        if (es == null || !es.isAlive || !es.canGainHp) return;
-        if (es.currentHp >= (int)es.EffMaxHp) return;
+        if (esm == null || !Alive || esm.GetStat(StatType.CanGainHp) != 1) return;
+        if (CurHp >= (int)MaxHp) return;
 
         regenTimer += Time.deltaTime;
 
@@ -259,7 +230,7 @@ public class EntityHealth : MonoBehaviour
         {
             regenTimer -= regenInterval;
 
-            float hpPerSecond = es.EffHpReg / fullRegenFrequency;
+            float hpPerSecond = esm.GetStat(StatType.EffHpReg) / fullRegenFrequency;
             float hpPerTick = hpPerSecond * regenInterval;
 
             accumulatedRegen += hpPerTick;
@@ -277,7 +248,7 @@ public class EntityHealth : MonoBehaviour
 
     private void StartDeathSequence()
     {
-        es.isAlive = false;
+        esm.AddStat(new StatBuff(StatType.isAlive, -1));
 
         OnDeath?.Invoke(gameObject);
 
@@ -292,7 +263,7 @@ public class EntityHealth : MonoBehaviour
             Destroy(healthBarTextInstance.gameObject);
         }
 
-        if (animator != null && !es.isAlive)
+        if (animator != null && !Alive)
         {
             animator.SetBool(IsDeadHash, true);
             StartCoroutine(DeathDelay(1f));
@@ -305,16 +276,15 @@ public class EntityHealth : MonoBehaviour
 
     private void DropGold(GameObject target)
     {
-        if (es.goldDrop <= 0) return;
+        if (esm.GetStat(StatType.goldDrop) <= 0) return;
 
-        var playerStats = target.TryGetComponent<EntityStatManager>(out var esm) ? esm.s as PlayerStats : null;
-        if (playerStats == null) return;
+        var p = target.TryGetComponent<EntityStatManager>(out var tsm);
 
-        int gold = Mathf.RoundToInt(es.goldDrop * UnityEngine.Random.Range(0.7f, 1.3f) * (1f + (playerStats.stealing * 0.01f)));
+        int gold = Mathf.RoundToInt(esm.GetStat(StatType.goldDrop) * UnityEngine.Random.Range(0.7f, 1.3f) * (1f + (tsm.GetStat(StatType.Stealing) * 0.01f)));
 
         if (gold > 0)
         {
-            playerStats.gold += gold;
+            tsm.AddCurrency(gold);
 
             TextIndicatorSpawner tis = TextIndicatorSpawner.Instance;
             if (tis != null)
@@ -341,40 +311,6 @@ public class EntityHealth : MonoBehaviour
             splitting.Split();
     }
 
-    private (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, float sourceResPen, int sourceDefShred)
-    {
-        float effRes = Mathf.Max(-100f, es.damageRes - sourceResPen);
-        float resMult = 1f - (effRes * 0.01f);
-
-        float effArmor = Mathf.Max(0, es.EffArmor - sourceDefShred);
-        float armorMult = type == DamageType.Physical ? 1f - ((float)effArmor / (effArmor + 100f)) : 1f;
-
-        float typeMult = type switch
-        {
-            DamageType.Physical => 1f - (es.physicalRes * 0.01f),
-            DamageType.Spell => 1f - (es.spellRes * 0.01f),
-            _ => 1f
-        };
-
-        float finalDamage = rawDamage * resMult * armorMult * typeMult;
-        float size = 1f;
-
-        if (Time.time >= lastDodgeTime + dodgeCooldown)
-        {
-            float dc = es.dodgeChance * 0.01f;
-            float dodgeMult = 1f - (es.dodgeResPct * 0.01f);
-
-            if (UnityEngine.Random.Range(0f, 1f) < dc)
-            {
-                finalDamage *= dodgeMult;
-                size = 0.5f;
-                lastDodgeTime = Time.time;
-            }
-        }
-
-        return (finalDamage, size);
-    }
-
     private IEnumerator HurtDelay(float time)
     {
         yield return new WaitForSeconds(time);
@@ -383,9 +319,9 @@ public class EntityHealth : MonoBehaviour
 
     public IEnumerator TriggerIFrames(float duration)
     {
-        es.isImmune = true;
+        esm.AddStat(new StatBuff(StatType.isImmune, 1f));
         yield return new WaitForSeconds(duration);
-        es.isImmune = false;
+        esm.AddStat(new StatBuff(StatType.isImmune, -1f));
     }
 
     private IEnumerator DeathDelay(float delay)

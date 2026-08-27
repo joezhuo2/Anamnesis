@@ -18,8 +18,8 @@ public class BossBarUI : MonoBehaviour
         bossNameText.text = bossName;
         bsm = esm;
 
-        cMaxHp = bsm.s.EffMaxHp;
-        cCurHp = bsm.s.currentHp;
+        cMaxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
+        cCurHp = Mathf.RoundToInt(bsm.GetStat(StatType.currentHp));
 
         healthSlider.maxValue = cMaxHp;
         healthSlider.value = cMaxHp;
@@ -34,8 +34,8 @@ public class BossBarUI : MonoBehaviour
     {
         if (bsm == null) return;
 
-        int curHp = Mathf.Max(bsm.s.currentHp, 0);
-        int maxHp = bsm.s.EffMaxHp;
+        int curHp = Mathf.Max(Mathf.RoundToInt(bsm.GetStat(StatType.currentHp)), 0);
+        int maxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
         if (cCurHp == curHp && cMaxHp == maxHp) return;
 
         if (cCurHp != curHp) healthSlider.value = curHp;

@@ -279,17 +279,9 @@ public class PlayerSkillTree : MonoBehaviour
         if (!IsNodeUnlocked(node)) return (false, "Node not unlocked");
         if (node.isStartingNode) return (false, "Cannot undo starting node");
 
-        if (TryGetComponent<EntityStatManager>(out var esm))
-        {
-            int currentGold = Mathf.RoundToInt(esm.s.gold);
-            if (currentGold < node.undoCost) return (false, $"Not enough gold ({node.undoCost}g required)");
-        }
-        else
-        {
-            return (false, "EntityStatManager not found");
-        }
-
-        return (true, string.Empty);
+        if (TryGetComponent<EntityStatManager>(out var esm) && esm.CurrentAmount < node.undoCost)
+            return (false, $"Not enough gold ({node.undoCost}g required)");
+        else return (false, "No stat manager found");
     }
 
     public void UndoNode(SkillNodeDef node)
@@ -297,14 +289,15 @@ public class PlayerSkillTree : MonoBehaviour
         var (canUndo, _) = CanUndo(node);
         if (!canUndo) return;
 
+        if (TryGetComponent<EntityStatManager>(out var esm) && esm.TrySpend(node.undoCost))
+        {
+            skillPoints++;
+            unlockedNodes.Remove(node.nodeID);
+        }
+
         if (node.statBuffs != null && node.statBuffs.Count > 0) HandleStatDowngrades(node);
         if (node.attackUpgrades != null && node.attackUpgrades.Count > 0) HandleAttackDowngrades(node);
         if (node.playerUpgrades != null && node.playerUpgrades.Count > 0) HandlePlayerDowngrades(node);
-
-        if (TryGetComponent<EntityStatManager>(out var esm)) esm.s.gold -= node.undoCost;
-
-        skillPoints++;
-        unlockedNodes.Remove(node.nodeID);
     }
 
     private void HandleStatDowngrades(SkillNodeDef node)

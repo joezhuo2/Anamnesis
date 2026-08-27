@@ -4,15 +4,15 @@ using UnityEngine.UI;
 public class PlayerDashCooldownUI : MonoBehaviour
 {
     public Image cooldownImage;
-    private PlayerStats cps;
     private PlayerMovement cpm;
+    private EntityStatManager cesm;
 
-    public void Setup(PlayerMovement pm, PlayerStats ps)
+    public void Setup(PlayerMovement pm, EntityStatManager esm)
     {
         cpm = pm;
-        cps = ps;
+        cesm = esm;
 
-        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupDashTooltipData(cps);
+        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupDashTooltipData(cesm);
 
         if (cooldownImage != null)
         {
@@ -25,8 +25,8 @@ public class PlayerDashCooldownUI : MonoBehaviour
     }
     private void Update()
     {
-        if (cps == null || cpm == null || cooldownImage == null) return;
-        float cd = cps.dashCooldown;
+        if (cesm == null || cpm == null || cooldownImage == null) return;
+        float cd = cesm.GetStat(StatType.EffDashCooldown);
 
         if (cd <= 0f)
         {

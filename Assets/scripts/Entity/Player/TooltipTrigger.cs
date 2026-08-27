@@ -6,7 +6,7 @@ public enum TooltipType { Attack, Resources, StatusEffect, Dash, SkillTree, Play
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private AttackData cad;
-    private PlayerStats cps;
+    // private PlayerStats cps;
     private EntityStatManager cesm;
     private StatusEffect cse;
     private SkillNodeDef snd;
@@ -19,23 +19,23 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private string actionButtonTitle = "";
     private string actionButtonDescription = "";
 
-    public void SetupTooltipData(AttackData ad, PlayerStats ps, EntityStatManager esm)
+    public void SetupTooltipData(AttackData ad, EntityStatManager esm)
     {
         tooltipType = TooltipType.Attack;
         cad = ad;
-        cps = ps;
         cesm = esm;
     }
-    public void SetupTooltipData(PlayerStats ps)
+
+    public void SetupTooltipData(EntityStatManager esm)
     {
         tooltipType = TooltipType.Resources;
-        cps = ps;
+        cesm = esm;
     }
-    public void SetupTooltipData(StatusEffect se, PlayerStats ps, EntityStatManager esm)
+
+    public void SetupTooltipData(StatusEffect se, EntityStatManager esm)
     {
         tooltipType = TooltipType.StatusEffect;
         cse = se;
-        cps = ps;
         cesm = esm;
     }
 
@@ -45,37 +45,44 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         snd = node;
         skillTreeFailMessage = failMessage ?? "";
     }
-    public void SetupDashTooltipData(PlayerStats ps)
+
+    public void SetupDashTooltipData(EntityStatManager esm)
     {
         tooltipType = TooltipType.Dash;
-        cps = ps;
+        cesm = esm;
     }
+
     public void SetupTooltipData(PlayerUpgradeReward upgradeReward)
     {
         tooltipType = TooltipType.PlayerUpgrade;
         pur = upgradeReward;
     }
+
     public void SetupTooltipData(AttackReward attackReward)
     {
         tooltipType = TooltipType.AttackReward;
         ar = attackReward;
     }
+
     public void SetupTooltipData(GeneratedReward generatedReward)
     {
         tooltipType = TooltipType.StatReward;
         gr = generatedReward;
     }
+
     public void SetupTooltipData(MilestoneRewardData milestoneReward)
     {
         tooltipType = TooltipType.MilestoneReward;
         mrd = milestoneReward;
     }
+
     public void SetupTooltipData(string title, string description)
     {
         tooltipType = TooltipType.ActionButton;
         actionButtonTitle = title;
         actionButtonDescription = description;
     }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         switch (tooltipType)
@@ -105,11 +112,16 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private void ShowDashTooltip()
     {
         List<string> lines = new();
-        if (cps.dodgeChance != 0f) lines.Add($"Dodge: {cps.dodgeChance:F0}% (-{cps.dodgeResPct:F0}%)");
-        if (cps.FinalSpd != 0) lines.Add($"Speed: {cps.FinalSpd:F2} (+{cps.moveSpeedPct:F0}%)");
-        if (cps.EffDashCooldown != 0) lines.Add($"Dash Cooldown: {cps.EffDashCooldown:F1}s");
-        if (cps.EffDashDistance != 0) lines.Add($"Dash Distance: {cps.EffDashDistance:F1}");
-        if (cps.EffDashStaminaCost != 0) lines.Add($"Dash Stamina Cost: {cps.EffDashStaminaCost:F1}");
+        if (cesm.GetStat(StatType.dodgeChance) != 0f)
+            lines.Add($"Dodge: {cesm.GetStat(StatType.dodgeChance):F0}% (-{cesm.GetStat(StatType.dodgeResPct):F0}%)");
+        if (cesm.GetStat(StatType.EffSpd) != 0)
+            lines.Add($"Speed: {cesm.GetStat(StatType.EffSpd):F2} (+{cesm.GetStat(StatType.moveSpeedPct):F0}%)");
+        if (cesm.GetStat(StatType.EffDashCooldown) != 0)
+            lines.Add($"Dash Cooldown: {cesm.GetStat(StatType.EffDashCooldown):F1}s");
+        if (cesm.GetStat(StatType.EffDashDistance) != 0)
+            lines.Add($"Dash Distance: {cesm.GetStat(StatType.EffDashDistance):F1}");
+        if (cesm.GetStat(StatType.EffDashStaminaCost) != 0)
+            lines.Add($"Dash Stamina Cost: {cesm.GetStat(StatType.EffDashStaminaCost):F1}");
 
         TooltipUI.Instance.ShowTooltip("Movement", string.Join("\n", lines), new(100, 30));
     }
@@ -119,7 +131,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         List<string> lines = new();
         if (!string.IsNullOrEmpty(snd.desc)) lines.Add(snd.desc);
-        if (!string.IsNullOrEmpty(skillTreeFailMessage)) lines.Add($"<color=#FF4444>{skillTreeFailMessage}</color>");
+        if (!string.IsNullOrEmpty(skillTreeFailMessage))
+            lines.Add($"<color=#FF4444>{skillTreeFailMessage}</color>");
 
         if (!snd.isStartingNode)
         {
@@ -143,54 +156,41 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     private void ShowResourcesTooltip()
     {
-        float staminaPerSecond = cps.EffStReg / 5f;
-        float healthPerSecond = cps.EffHpReg / 5f;
+        float staminaPerSecond = cesm.GetStat(StatType.EffStReg) / 5f;
+        float healthPerSecond = cesm.GetStat(StatType.EffHpReg) / 5f;
 
         List<string> lines = new();
-        if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s (+{cps.stRegPct:F0}%)");
-        if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s (+{cps.hpRegPct:F0}%)");
-        if (cps.EffArmor != 0) lines.Add($"Armor: {cps.EffArmor} (+{cps.armorPct:F0}%) [-{cps.ArmorRes*100f:F1}%P]");
-        if (cps.EffAtk != 0) lines.Add($"Attack: {cps.EffAtk:F0} (+{cps.atkPct:F0}%)");
-        if (cps.EffInt != 0) lines.Add($"Int: {cps.EffInt:F0} (+{cps.intPct:F0}%)");
-        if (cps.effectRes != 0) lines.Add($"Effect Res: {cps.effectRes:F0}%");
+        if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s (+{cesm.GetStat(StatType.stRegPct):F0}%)");
+        if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s (+{cesm.GetStat(StatType.hpRegPct):F0}%)");
+        if (cesm.GetStat(StatType.EffArmor) != 0) lines.Add($"Armor: {cesm.GetStat(StatType.EffArmor)} (+{cesm.GetStat(StatType.armorPct):F0}%) [-{cesm.GetStat(StatType.ArmorRes)*100f:F1}%P]");
+        if (cesm.GetStat(StatType.EffAtk) != 0) lines.Add($"Attack: {cesm.GetStat(StatType.EffAtk):F0} (+{cesm.GetStat(StatType.atkPct):F0}%)");
+        if (cesm.GetStat(StatType.EffInt) != 0) lines.Add($"Int: {cesm.GetStat(StatType.EffInt):F0} (+{cesm.GetStat(StatType.IntPct):F0}%)");
+        if (cesm.GetStat(StatType.EffectRes) != 0) lines.Add($"Effect Res: {cesm.GetStat(StatType.EffectRes):F0}%");
 
         List<string> resTypes = new();
-        if (cps.damageRes != 0f) resTypes.Add($"{cps.damageRes:F1}%");
-        if (cps.physicalRes != 0f) resTypes.Add($"P:{cps.physicalRes:F1}%");
-        if (cps.spellRes != 0f) resTypes.Add($"S:{cps.spellRes:F1}%");
+        if (cesm.GetStat(StatType.damageRes) != 0f) resTypes.Add($"{cesm.GetStat(StatType.damageRes):F1}%");
+        if (cesm.GetStat(StatType.physicalRes) != 0f) resTypes.Add($"P:{cesm.GetStat(StatType.physicalRes):F1}%");
+        if (cesm.GetStat(StatType.spellRes) != 0f) resTypes.Add($"S:{cesm.GetStat(StatType.spellRes):F1}%");
 
         if (resTypes.Count > 0) lines.Add($"Res: {string.Join(" ", resTypes)}");
 
-        if (cps.gold > 0) lines.Add($"Gold: {cps.gold}");
+        if (cesm.CurrentAmount > 0) lines.Add($"Gold: {cesm.CurrentAmount}");
 
         TooltipUI.Instance.ShowTooltip("Resources", string.Join("\n", lines), new(100, -100));
     }
     private void ShowAttackTooltip()
     {
-        if (cad == null || cps == null || cesm == null || tooltipType != TooltipType.Attack) return;
+        if (cad == null || cesm == null || tooltipType != TooltipType.Attack) return;
 
-        float staminaCost = Mathf.Abs(cad.staminaCost + (cps.EffMaxStamina * (cad.staminaCostPct * 0.01f))) * (1f + (cps.stCostPct * 0.01f));
-        float staminaGain = Mathf.Abs(cad.staminaGainOnHit + (cps.EffMaxStamina * (cad.staminaPctGainOnHit * 0.01f)));
-        float manaCost = Mathf.Abs(cad.manaCost + (cps.EffMaxMana * (cad.manaCostPct * 0.01f)));
-        float manaGain = Mathf.Abs(cad.manaGainOnHit + (cps.EffMaxMana * (cad.manaPctGainOnHit * 0.01f)));
-        float hpCost = Mathf.Abs(cad.healthCost + (cps.EffMaxHp * (cad.healthCostPct * 0.01f)));
-        float hpGain = Mathf.Abs(cad.healthGainOnHit + (cps.EffMaxHp * (cad.healthPctGainOnHit * 0.01f)));
-
-        float cdRedPct = cad.type switch
-        {
-            AttackType.Basic => cps.basicCdRedPct,
-            AttackType.Skill => cps.skillCdRedPct,
-            AttackType.Ultimate => cps.ultCdRedPct,
-            _ => 0f
-        };
-
-        float cooldown = cad.cooldown * Mathf.Clamp(1f - (cps.attackSpeedPct * 0.01f), 0.3f, 10f) * Mathf.Clamp(1f - (cdRedPct * 0.01f), 0f, 0.9f);
+        var (sp, hp, mp) = PlayerAttackHandler.GetCosts(cad, cesm);
+        var (spg, hpg, mpg) = Projectile.CalculateStatGains(cesm.gameObject, cad);
+        var effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
 
         float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
         if (cad.pd != null)
         {
-            var previewSnapshot = DamageCalculator.CaptureSnapshot(cad.pd, cesm.gameObject);
-            var previewPacket = DamageCalculator.BuildDamagePacket(cad.pd, previewSnapshot, false, gameObject);
+            var previewSnapshot = ProjectileSnapshot.CaptureSnapshot(cad.pd, cesm.gameObject);
+            var previewPacket = DamagePacket.BuildDamagePacket(cad.pd, previewSnapshot, false, gameObject);
 
             foreach (var instance in previewPacket.instances)
             {
@@ -204,14 +204,15 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             }
         }
 
-        List<string> lines = new();
-        lines.Add($"{cad.type}");
-        if (cooldown != 0f) lines.Add($"Cooldown: {cooldown:F1}s");
-        if (hpCost != 0f || hpGain != 0f) lines.Add($"Health: -{hpCost:F0} +{cad.healthGainOnHit:F0} +{cad.healthPctGainOnHit:F1}%");
-        if (staminaCost != 0f || staminaGain != 0f) lines.Add($"Stamina: -{staminaCost:F0} +{cad.staminaGainOnHit:F0} +{cad.staminaPctGainOnHit:F1}%");
-        if (manaCost != 0f || manaGain != 0f) lines.Add($"Mana: -{manaCost:F0} +{cad.manaGainOnHit:F0} +{cad.manaPctGainOnHit:F1}%");
-        if (cps.critChance != 0f || cps.critDamage != 0f) lines.Add($"Crit: {cps.critChance:F1}% +{cps.critDamage:F1}%");
-        if (cps.defShred != 0f || cps.resPen != 0f) lines.Add($"Shred: {cps.defShred}A {cps.resPen}R");
+        List<string> lines = new() { $"{cad.type}" };
+        if (effCd != 0f) lines.Add($"Cooldown: {effCd:F1}s");
+        if (hp != 0f || hpg != 0f) lines.Add($"Health: -{hp:F0} +{hpg:F0} +{cad.healthPctGainOnHit:F1}%");
+        if (sp != 0f || spg != 0f) lines.Add($"Stamina: -{sp:F0} +{spg:F0} +{cad.staminaPctGainOnHit:F1}%");
+        if (mp != 0f || mpg != 0f) lines.Add($"Mana: -{mp:F0} +{mpg:F0} +{cad.manaPctGainOnHit:F1}%");
+        if (cesm.GetStat(StatType.critChance) != 0f || cesm.GetStat(StatType.critDamage) != 0f)
+            lines.Add($"Crit: {cesm.GetStat(StatType.critChance):F1}% +{cesm.GetStat(StatType.critDamage):F1}%");
+        if (cesm.GetStat(StatType.defShred) != 0f || cesm.GetStat(StatType.resPen) != 0f)
+            lines.Add($"Shred: {cesm.GetStat(StatType.defShred):F0}A {cesm.GetStat(StatType.resPen):F0}R");
 
         List<string> dmgTypes = new();
         if (basePhysDmg != 0f) dmgTypes.Add($"{basePhysDmg:F0}P");
@@ -244,9 +245,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (ar == null || ar.newAttack == null) return;
 
         var attack = ar.newAttack;
-        List<string> lines = new();
-
-        lines.Add($"Type: {attack.type} ({attack.pattern})");
+        List<string> lines = new() { $"Type: {attack.type} ({attack.pattern})" };
         if (attack.cooldown > 0f) lines.Add($"Cooldown: {attack.cooldown:F1}s");
 
         if (attack.staminaCost > 0f || attack.staminaCostPct > 0f) lines.Add($"Stamina Cost: {attack.staminaCost:F0} +{attack.staminaCostPct:F1}%");
@@ -282,11 +281,13 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (gr == null || gr.br == null || gr.rd == null) return;
 
-        List<string> lines = new();
-        lines.Add($"Rarity: {gr.rd.rarityName} (x{gr.rd.mult:F2})");
-        lines.Add($"Base Value: {gr.br.baseBuff.value:F2}");
-        lines.Add($"Final Value: {(gr.finalVal >= 0 ? "+" : "")}{gr.finalVal:F2}");
-        lines.Add($"Stat: {gr.br.baseBuff.ToString()}");
+        List<string> lines = new()
+        {
+            $"Rarity: {gr.rd.rarityName} (x{gr.rd.mult:F2})",
+            $"Base Value: {gr.br.baseBuff.value:F2}",
+            $"Final Value: {(gr.finalVal >= 0 ? "+" : "")}{gr.finalVal:F2}",
+            $"Stat: {gr.br.baseBuff.ToString()}"
+        };
 
         TooltipUI.Instance.ShowTooltip(gr.br.baseBuff.ToString(), string.Join("\n", lines), new(100, -100));
     }

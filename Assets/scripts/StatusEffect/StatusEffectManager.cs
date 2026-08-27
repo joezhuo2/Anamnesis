@@ -11,42 +11,37 @@ public class StatusEffectManager : MonoBehaviour
     [HideInInspector] public readonly List<StatusEffect> activeEffects = new();
     private EntityStatManager cesm;
 
-    private void Awake()
-    {
-        cesm = GetComponent<EntityStatManager>();
-    }
+    private void Awake() => cesm = GetComponent<EntityStatManager>();
     public void GetActiveEffectsOfType<T>(List<T> results) where T : StatusEffect
     {
         results.Clear();
         for (int i = 0; i < activeEffects.Count; i++)
-        {
-            if (activeEffects[i] is T)
-                results.Add(activeEffects[i] as T);
-        }
+            if (activeEffects[i] is T) results.Add(activeEffects[i] as T);
     }
+
     public T GetActiveFirstEffectOfType<T>() where T : StatusEffect
     {
         for (int i = 0; i < activeEffects.Count; i++)
-        {
             if (activeEffects[i] is T) return activeEffects[i] as T;
-        }
         return null;
     }
+
     public StatusEffect GetEffect(StatusEffect se)
     {
         if (activeEffects.Contains(se)) return se;
         return null;
     }
+
     public void AddEffectAfterDelay(StatusEffect se, GameObject source, float delay, GameObject projectile = null)
-    {
-        StartCoroutine(AddEffectAfterDelayCoroutine(se, source, delay, projectile));
-    }
+        => StartCoroutine(AddEffectAfterDelayCoroutine(se, source, delay, projectile));
+
     public IEnumerator AddEffectAfterDelayCoroutine(StatusEffect se, GameObject source, float delay, GameObject projectile = null)
     {
         if (se == null) yield break;
         yield return new WaitForSeconds(delay);
         AddEffect(se, source, projectile);
     }
+
     public void AddEffect(StatusEffect se, GameObject source, GameObject projectile = null)
     {
         if (se == null) return;
@@ -72,16 +67,15 @@ public class StatusEffectManager : MonoBehaviour
         runtimeEffect.currentStacks = 1;
         runtimeEffect.currentTime = 0;
 
-        if (source != null && source.TryGetComponent<EntityStatManager>(out var sourceEsm))
+        if (source != null && source.TryGetComponent<EntityStatManager>(out var sem))
         {
-            var sourceStats = sourceEsm.s;
-            if (sourceStats.seDurPct != 0f)
-                runtimeEffect.duration *= 1f + (sourceStats.seDurPct * 0.01f);
+            if (sem.GetStat(StatType.seDurPct) != 0f)
+                runtimeEffect.duration *= 1f + (sem.GetStat(StatType.seDurPct) * 0.01f);
 
-            if (sourceStats.seTickRatePct != 0f && runtimeEffect.tickInterval > 0f)
-                runtimeEffect.tickInterval = Mathf.Max(0.1f, runtimeEffect.tickInterval / (1f + (sourceStats.seTickRatePct * 0.01f)));
+            if (sem.GetStat(StatType.seTickRatePct) != 0f && runtimeEffect.tickInterval > 0f)
+                runtimeEffect.tickInterval = Mathf.Max(0.1f, runtimeEffect.tickInterval / (1f + (sem.GetStat(StatType.seTickRatePct) * 0.01f)));
 
-            runtimeEffect.potencyMultiplier = 1f + (sourceStats.sePotPct * 0.01f);
+            runtimeEffect.potencyMultiplier = 1f + (sem.GetStat(StatType.sePotPct) * 0.01f);
         }
 
         activeEffects.Add(runtimeEffect);
@@ -89,6 +83,7 @@ public class StatusEffectManager : MonoBehaviour
 
         CreateDisplayUI(runtimeEffect);
     }
+
     public void RemoveStacks<T>(int stacksToRemove) where T : StatusEffect
     {
         T existing = GetActiveFirstEffectOfType<T>();
@@ -107,6 +102,7 @@ public class StatusEffectManager : MonoBehaviour
             existing.OnStack();
         }
     }
+
     public void RemoveEffect<T>() where T : StatusEffect => RemoveStacks<T>(int.MaxValue);
     public void RemoveEffect(StatusEffect se)
     {
@@ -117,11 +113,13 @@ public class StatusEffectManager : MonoBehaviour
         activeEffects.Remove(se);
         Destroy(se);
     }
+
     public IEnumerator RemoveEffectAfterDelay<T>(float delay) where T : StatusEffect
     {
         yield return new WaitForSeconds(delay);
         RemoveEffect<T>();
     }
+
     public void ClearAllEffects()
     {
         for (int i = activeEffects.Count - 1; i >= 0; i--)
@@ -155,7 +153,7 @@ public class StatusEffectManager : MonoBehaviour
 
             e.currentTime += dt;
 
-            float effDur = e.isBuff ? e.duration : e.duration * (1f - (cesm.s.effectRes * 0.01f));
+            float effDur = e.isBuff ? e.duration : e.duration * (1f - (cesm.GetStat(StatType.EffectRes) * 0.01f));
 
             if (e != null && e.currentTime > effDur)
             {
@@ -181,9 +179,6 @@ public class StatusEffectManager : MonoBehaviour
         GameObject uiObj = Instantiate(displayPrefab, displayContainer);
 
         if (uiObj.TryGetComponent<StatusEffectCooldownUI>(out var secui))
-        {
-            PlayerStats ps = (cesm != null && cesm.s is PlayerStats) ? cesm.s as PlayerStats : null;
-            secui.Setup(se, ps, cesm);
-        }
+            secui.Setup(se, cesm);
     }
 }

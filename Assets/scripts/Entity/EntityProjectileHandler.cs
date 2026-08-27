@@ -134,7 +134,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
             if (!col.CompareTag("Enemy")) continue;
             if (col.gameObject == gameObject) continue;
 
-            if (col.TryGetComponent<EntityStatManager>(out var esm) && !esm.s.isAlive && esm.s.currentHp <= 0)
+            if (col.TryGetComponent<EntityStatManager>(out var esm) && esm.GetStat(StatType.isAlive) == 1 && esm.GetStat(StatType.currentHp) <= 0)
                 continue;
 
             float dist = Vector2.Distance(position, col.transform.position);

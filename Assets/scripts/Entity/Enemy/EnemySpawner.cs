@@ -7,10 +7,7 @@ public class EnemySpawner : MonoBehaviour
         Vector2 spawnPosition = location + (Random.insideUnitCircle * radius);
         GameObject enemy = Instantiate(prefab, spawnPosition, Quaternion.identity);
 
-        if (enemy.TryGetComponent<EntityStatManager>(out var statManager))
-        {
-            statManager.ScaleStatsToLevel(level);
-        }
+        if (enemy.TryGetComponent<EnemyStatManager>(out var esm)) esm.ScaleStatsToLevel(level);
 
         return enemy;
     }

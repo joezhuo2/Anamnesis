@@ -1,6 +1,7 @@
 ## Roadmap
 
 ### Pre [v0.3.0]
+- [v0.2.9] **Stat System Refactor**: complete overhaul — replaced direct field access (`esm.s.field`) with `GetStat(StatType)`/`AddStat(StatBuff)` across all entity, projectile, status effect, and wave scripts; centralized stat logic in `EntityStatManager`; removed `EntityGearManager`; updated `DamageCalculator`, `DamagePacket`, `EntityHealth`, `WaveManager` gold logic, `PlayerSkillTree` refunds, `TooltipTrigger`, `PlayerUI`
 - [v0.2.4] **Gamemode Selector Update**: `UnlimitedWaveButtonController` + `RegularWaveButtonController` buttons (under `buttonContainer`) to pick between unlimited and regular wave modes, each with a `TooltipTrigger`
 - [v0.2.3] **Unlimited Waves System**: new `UnlimitedWaveManager` (implemented, not wired up) with infinite scaling, boss waves, and shared settings inherited from `WaveManager`
 - [v0.2.2] **Skill Tree Connections Update**: bidirectional connections system with OR logic (prerequisites now work both ways, only one connected node needed)

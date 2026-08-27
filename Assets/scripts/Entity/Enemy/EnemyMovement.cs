@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
 
     private readonly List<KnockbackHandler.AppliedForce> currentForces = new();
     private static readonly int SpeedHash = Animator.StringToHash("speed");
-    [HideInInspector] public EnemyStats es;
+    private EntityStatManager esm;
     private Rigidbody2D rb;
     private Animator a;
     private bool wasMoving = false;
@@ -22,12 +22,15 @@ public class EnemyMovement : MonoBehaviour
     private Transform cTransform;
     private Vector3 cScale;
     private GameObject cachedPlayer;
+    public GameObject target;
 
     private void Start()
     {
-        es = GetComponent<EntityStatManager>()?.s as EnemyStats;
+        esm = GetComponent<EntityStatManager>();
         a = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        esm.AddStat(new StatBuff(StatType.CanMove, 1f));
 
         cTransform = transform;
         cScale = cTransform.localScale;
@@ -44,36 +47,40 @@ public class EnemyMovement : MonoBehaviour
 
         Vector2 velocity = GetKnockbackVelocity();
 
-        if (es.target != null && es.canMove && es.isAlive)
+        if (target != null && esm.GetStat(StatType.CanMove) > 0f && esm.GetStat(StatType.isAlive) > 0f)
             velocity += GetMovementVelocity();
 
         rb.linearVelocity = velocity;
         SetAnimator(velocity != Vector2.zero);
     }
-    private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, es.kbRes);
+    private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, esm.GetStat(StatType.kbRes));
 
     public void ApplyKnockback(Vector2 d, float f, float t) => KnockbackHandler.ApplyKnockback(currentForces, d, f, t);
-    public void SetTarget(GameObject target) => es.target = target;
+
+    public void SetTarget(GameObject target) => this.target = target;
+
     private Vector2 GetMovementVelocity()
     {
-        Vector2 dist = es.target.transform.position - cTransform.position;
+        if (target == null) return Vector2.zero;
+
+        Vector2 dist = target.transform.position - cTransform.position;
         float distMag = dist.magnitude;
 
-        if (distMag > 0 && distMag <= stoppingDistance)
-            return Vector2.zero;
+        if (distMag > 0 && distMag <= stoppingDistance) return Vector2.zero;
 
-        if (canDeaggro && distMag > es.detectionRange)
+        float detectionRange = esm.GetStat(StatType.DetectionRange);
+        if (canDeaggro && distMag > detectionRange)
         {
-            es.target = null;
+            target = null;
             return Vector2.zero;
         }
 
         Vector2 dir = dist.normalized;
         if (cardinalOnly)
         {
-            dir = Mathf.Abs(dir.x) > Mathf.Abs(dir.y)
-                        ? new Vector2(Mathf.Sign(dir.x), 0)
-                        : new Vector2(0, Mathf.Sign(dir.y));
+            dir = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ?
+                new Vector2(Mathf.Sign(dir.x), 0) :
+                new Vector2(0, Mathf.Sign(dir.y));
         }
 
         if (dir.x != 0)
@@ -89,7 +96,7 @@ public class EnemyMovement : MonoBehaviour
             }
         }
 
-        return dir * es.FinalSpd;
+        return dir * esm.GetStat(StatType.EffSpd);
     }
 
     private void SetAnimator(bool moving)
@@ -102,7 +109,7 @@ public class EnemyMovement : MonoBehaviour
     }
     private void UpdateTargeting()
     {
-        if (es.target != null) return;
+        if (target != null) return;
 
         if (Time.time < nextTargetCheckTime) return;
         nextTargetCheckTime = Time.time + targetCheckInterval;
@@ -110,7 +117,8 @@ public class EnemyMovement : MonoBehaviour
         if (cachedPlayer != null)
         {
             float dist = Vector2.Distance(transform.position, cachedPlayer.transform.position);
-            if (dist <= es.detectionRange) es.target = cachedPlayer;
+            float detectionRange = esm.GetStat(StatType.DetectionRange);
+            if (dist <= detectionRange) target = cachedPlayer;
         }
         else
         {
@@ -118,7 +126,8 @@ public class EnemyMovement : MonoBehaviour
             if (cachedPlayer != null)
             {
                 float dist = Vector2.Distance(transform.position, cachedPlayer.transform.position);
-                if (dist <= es.detectionRange) es.target = cachedPlayer;
+                float detectionRange = esm.GetStat(StatType.DetectionRange);
+                if (dist <= detectionRange) target = cachedPlayer;
             }
         }
     }

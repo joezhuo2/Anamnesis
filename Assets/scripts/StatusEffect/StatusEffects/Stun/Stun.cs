@@ -7,18 +7,18 @@ public class Stun : StatusEffect
     {
         if (target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            esm.s.canAttack = false;
-            esm.s.canMove = false;
-            esm.s.canDash = false;
+            esm.AddStat(new(StatType.CanAttack, -1f));
+            esm.AddStat(new(StatType.CanMove, -1f));
+            esm.AddStat(new(StatType.CanDash, -1f));
         }
     }
     public override void OnExpire()
     {
         if (target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            esm.s.canAttack = true;
-            esm.s.canMove = true;
-            esm.s.canDash = true;
+            esm.AddStat(new(StatType.CanAttack, 1f));
+            esm.AddStat(new(StatType.CanMove, 1f));
+            esm.AddStat(new(StatType.CanDash, 1f));
         }
     }
 }

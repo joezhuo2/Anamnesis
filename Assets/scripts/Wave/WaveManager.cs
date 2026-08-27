@@ -630,6 +630,8 @@ public class WaveManager : MonoBehaviour
     {
         CachePlayerStatManager();
 
+        var canGoldReroll = cpsm != null && cpsm.CurrentAmount >= rerollGoldCost;
+
         if (rerollText != null)
         {
             if (rerolls > 0)
@@ -638,21 +640,12 @@ public class WaveManager : MonoBehaviour
             }
             else
             {
-                if (cpsm != null && cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
-                    rerollText.text = $"{rerollGoldCost}g";
-                else
-                    rerollText.text = "0";
+                if (canGoldReroll) rerollText.text = $"{rerollGoldCost}g";
+                else rerollText.text = "0";
             }
         }
 
-        bool canReroll = rerolls > 0;
-        if (!canReroll)
-        {
-            if (cpsm != null && cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
-                canReroll = true;
-        }
-
-        if (rerollButton != null) rerollButton.interactable = canReroll;
+        if (rerollButton != null) rerollButton.interactable = rerolls > 0 || canGoldReroll;
     }
 
     protected void OnSkipButtonClicked()
@@ -685,16 +678,8 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        if (rerolls <= 0)
-        {
-            if (cpsm != null && cpsm.s is PlayerStats && cpsm.s.gold >= rerollGoldCost)
-                cpsm.s.gold -= rerollGoldCost;
-            else return;
-        }
-        else
-        {
-            ActiveManager.rerolls--;
-        }
+        if (rerolls <= 0 && !cpsm.TrySpend(rerollGoldCost)) return;
+        else ActiveManager.rerolls--;
 
         UpdateRerollUI();
 

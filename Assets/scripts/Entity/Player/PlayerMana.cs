@@ -3,23 +3,20 @@ using UnityEngine;
 
 public class PlayerMana : MonoBehaviour
 {
-    [HideInInspector] public PlayerStats p;
+    private EntityStatManager esm;
 
     private void Start()
     {
-        p = GetComponent<EntityStatManager>()?.s as PlayerStats;
+        esm = GetComponent<EntityStatManager>();
 
-        p.canGainMana = true;
+        if (esm != null) esm.AddStat(new(StatType.CanGainMana, 1));
     }
     public void ChangeMana(float amount, float pctAmt = 0)
     {
-        if ((amount > 0 || pctAmt > 0) && !p.canGainMana || p == null || !p.isAlive) return;
-        float manaGainMultiplier = 1f + (p.manaGainPct * 0.01f);
+        if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || (amount > 0 || pctAmt > 0) && esm.GetStat(StatType.CanGainMana) <= 0f) return;
+        float manaGainMultiplier = 1f + (esm.GetStat(StatType.manaGainPct) * 0.01f);
         float finalAmount = amount * manaGainMultiplier;
         float finalPctAmt = pctAmt * manaGainMultiplier;
-        p.currentMana = Math.Min(
-            Mathf.RoundToInt(p.currentMana + finalAmount + (finalPctAmt * 0.01f * p.EffMaxMana)),
-            Mathf.RoundToInt(p.EffMaxMana)
-        );
+        esm.AddStat(new(StatType.CurrentMana, finalAmount + (finalPctAmt * 0.01f * esm.GetStat(StatType.maxMana))));
     }
 }

@@ -1,16 +1,16 @@
 # Graph Report - Anamnesis  (2026-08-26)
 
 ## Corpus Check
-- 165 files · ~389,405 words
+- 168 files · ~386,811 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2415 nodes · 3413 edges · 284 communities (164 shown, 120 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 88 edges (avg confidence: 0.81)
+- 2420 nodes · 3386 edges · 282 communities (154 shown, 128 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 79 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `80ea26bc`
+- Built from commit: `9273a2fc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -25,11 +25,11 @@
 - TooltipTrigger
 - WaveManager
 - Anamnesis
-- AnomalyInstance
-- Changelog
+- .SetupTooltipData
+- [v0.2.8_2] - 2026-08-26
 - com.unity.test-framework
-- com.unity.modules.imgui
-- AttackData
+- com.unity.settings-manager
+- 2026-08-26_16-26-38/details.md
 - 2026-08-24_19-18-52/details.md
 - GAME.md
 - EnemyAttackHandler
@@ -37,87 +37,88 @@
 - dependencies
 - GameController
 - Player Upgrades
-- PlayerSkillTree
+- SkillNodeDef
 - TMP_TextInfoDebugTool
 - TMP_TextSelector_B
-- StatusEffect
+- StatusEffectManager
 - PlayerUpgrade
 - com.unity.modules.uielements
-- com.unity.modules.physics
+- StatusEffect
 - 2026-08-24_19-50-10/details.md
-- com.unity.2d.common
+- AttackReplacement
 - SoulRend
-- EntityGearManager
+- Array
 - EntityHealth
 - PlayerMovement
 - SkillNodeUI
 - PlayerStats
 - SkillTreePanZoom
-- com.unity.modules.jsonserialize
+- com.unity.mathematics
 - com.unity.2d.tilemap
 - SkillTreeUI
 - UnlimitedWaveManager
 - TextMeshProFloatingText
 - PlayerAttackHandler
 - EnemyMovement
-- .GetWeightedRandomRarity
+- SkewTextExample
 - .EndWave
 - TMP_TextSelector_A
 - EntityStats
-- EntityProjectileHandler
+- GearItem
 - SkillTreeLineRenderer
 - VertexJitter
 - dependencies
 - 2026-08-25_18-53-04/details.md
-- WaveSequence
+- com.unity.nuget.mono-cecil
 - [v0.1.13] - 2026-08-24 - Stats Extension Update
 - CameraController
-- 2026-08-18_09-03-45/details.md
+- ProjectileSpawner
 - PlayerUI
-- com.unity.modules.ui
+- com.unity.modules.imgui
 - README.md
-- ProjectileData
+- AttackData
 - SimpleScript
 - VertexShakeA
 - TextConsoleSimulator
 - VertexZoom
 - Planned Features
 - VertexShakeB
-- com.unity.modules.assetbundle
+- com.unity.modules.unitywebrequest
 - com.unity.ext.nunit
-- EffectData
-- .HandleHitEntity
+- com.unity.modules.subsystems
+- ProjectileData
 - Color
 - Benchmark01
 - Benchmark01_UGUI
 - EntityStatManager
-- com.unity.modules.audio
-- com.unity.modules.animation
+- StatBuffs
+- WaveSequence
 - com.unity.modules.terrain
 - ObjectSpin
 - TMP_TextEventCheck
 - com.unity.modules.imageconversion
 - float
 - UnityEngine.UI
-- DropdownSample
+- BossBarUI
 - TooltipUI
 - ShaderPropAnimator
-- DamagePacket
+- .HandleStatChanges
 - TMP_ExampleScript_01
-- com.unity.modules.director
-- [v0.0.4] - 2026-07-29
-- DamageType
-- com.unity.modules.particlesystem
-- com.unity.modules.unitywebrequest
+- [v0.1.0-PR2] - 2026-08-09
+- Pulled
+- ChatController
+- .GenerateMixedPool
+- com.unity.modules.animation
+- [v0.1.8] - 2026-08-18 - Content Update v3 - Part II
 - float
-- com.unity.modules.unitywebrequestaudio
-- com.unity.mathematics
+- AnomalyData
+- com.unity.modules.physics2d
 - StatReduction
 - Benchmark03
 - EnvMapAnimator
 - float
 - Decoy
-- com.unity.modules.subsystems
+- com.unity.modules.jsonserialize
 - [v0.0.23] - 2026-08-06
 - TeleType
 - .ApplyKnockback
@@ -129,15 +130,15 @@
 - .ResumeGameLoop
 - [v0.1.10_2] - 2026-08-23
 - [v0.2.0] - 2026-08-24 — Progression, Economy & Milestones Update (Release Summary)
-- ChatController
+- TMP_DigitValidator
 - SpawnProjectile
 - StellarSurge
-- List
+- EnemyStats
 - WarpTextExample
 - [v0.2.4] - 2026-08-25 - Gamemode Selector Update
 - [v0.1.9_1] - 2026-08-23
 - [v0.1.12] - 2026-08-24 - Milestone Rewards Update
-- .HandleStatChanges
+- UnityEvent
 - [v0.0.13] - 2026-07-31
 - MonoBehaviour
 - Reminiscence
@@ -154,37 +155,37 @@
 - [v0.2.5] - 2026-08-25
 - [v0.0.21] - 2026-08-05 — Knockback Update Part 2
 - [v0.0.9_1] - 2026-07-29
-- dependencies
+- com.unity.visualscripting
 - [v0.0.5] - 2026-07-29
 - [v0.0.2] - 2026-07-29
 - .TriggerUpgradeEffect
 - Updated
 - PlayerStamina
 - [v0.2.6] - 2026-08-26 - Skill Tree Enhancement Update
-- AttackReplacement
+- .GetWeightedRandomRarity
 - [v0.1.10] - 2026-08-23
 - StatBuff
 - IResourcePool
-- EnemyStats
+- [v0.0.9_2] - 2026-07-29
 - [v0.0.23_2] - 2026-08-06
 - [v0.1.12_1] - 2026-08-24
-- [v0.0.11] - 2026-07-30
+- DropdownSample
 - Entity
-- TextMeshSpawner
-- Item
+- Stun
+- ScriptableObject
 - [v0.1.8_2] - 2026-08-18
 - [v0.1.6_1] - 2026-08-15
 - com.unity.modules.androidjni
-- DoT
-- UnityEvent
-- [v0.1.0-PR3_1] - 2026-08-09
+- [v0.1.7_1] - 2026-08-18
+- Action
+- TextMeshProUGUI
 - [v0.2.1] - 2026-08-25
 - [v0.1.8_1] - 2026-08-18
-- [v0.1.0-PR3] - 2026-08-09
+- [v0.2.4_1] - 2026-08-25
 - [v0.0.17] - 2026-08-05
-- com.unity.collab-proxy
+- [v0.1.8_6] - 2026-08-22
 - [v0.2.7] - 2026-08-26 - Enemy Scaling Overhaul
-- PlayerDashCooldownUI
+- bool
 - [v0.0.22] - 2026-08-06
 - copilot-instructions.md
 - PointerEventData
@@ -243,41 +244,41 @@
 - [v0.1.3] - 2026-08-10
 - [v0.2.3] - 2026-08-25 - Unlimited Waves Update
 - [v0.1.8_5] - 2026-08-22
-- [v0.0.9] - 2026-07-29
+- [v0.1.7] - 2026-08-18
 - [v0.0.8_2] - 2026-07-29
-- com.unity.modules.screencapture
 - [v0.1.1] - 2026-08-09
-- [v0.0.7] - 2026-07-29
+- [v0.0.4] - 2026-07-29
+- [v0.0.10] - 2026-07-30
 - [v0.0.1_1] - 2026-07-29
-- com.unity.modules.unitywebrequesttexture
+- [v0.0.7] - 2026-07-29
 - IDamageable
-- ScriptableObject
-- [v0.0.16] - 2026-08-05 — Dash Update
+- [v0.1.8_3] - 2026-08-19
+- [v0.1.1_1] - 2026-08-09
 - TextMeshProUGUI
 - Transform
 - WaitForSeconds
-- [v0.2.6_1] - 2026-08-26
+- [v0.1.0] - 2026-08-09 — Release Summary
 - ICurrencyHolder
-- SkillNodeDef
+- [v0.0.7_1] - 2026-07-29
 - Vector2
-- bool
+- RewardButton
 - [v0.0.19] - 2026-08-05
 - float
-- GameObject
-- IEnumerator
-- int
+- [v0.2.8_1] - 2026-08-26
+- [v0.2.4_2] - 2026-08-25
+- Dictionary
 - StatType
 - [v0.0.1] - 2026-07-29 — Initial Release
 - [v0.2.8] - 2026-08-26
-- [v0.1.8_6] - 2026-08-22
-- [v0.1.7] - 2026-08-18
+- List
+- Action
 - [v0.1.0-PR1] - 2026-08-09 — Skill Tree Update
 - [v0.0.15] - 2026-08-04
-- [v0.0.6] - 2026-07-29
+- Image
 - [v0.0.3] - 2026-07-29
-- [v0.1.8_3] - 2026-08-19
-- [v0.2.4_3] - 2026-08-25
-- [v0.2.4_2] - 2026-08-25
+- TMP_Text
+- GameObject
+- IEnumerator
 - Image
 - PointerEventData
 - IReadOnlyList
@@ -289,58 +290,56 @@
 - string
 - AnomalyInstance
 - StatType
-- AttackReward
+- int
 - BaseReward
-- GeneratedReward
+- List
 - MilestoneReward
-- MilestoneRewardData
 - PlayerSkillTree
-- PlayerUpgradeReward
 
 ## God Nodes (most connected - your core abstractions)
-1. `Changelog` - 82 edges
-2. `WaveManager` - 78 edges
+1. `[v0.2.8_2] - 2026-08-26` - 86 edges
+2. `WaveManager` - 75 edges
 3. `Projectile` - 43 edges
 4. `AttackData` - 36 edges
 5. `StatusEffect` - 33 edges
 6. `SkillNodeDef` - 32 edges
 7. `PlayerAttackHandler` - 32 edges
 8. `TooltipTrigger` - 32 edges
-9. `EntityHealth` - 31 edges
+9. `EntityHealth` - 30 edges
 10. `PlayerSkillTree` - 28 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `StatBuff` --references--> `StatType`  [EXTRACTED]
-  Assets/scripts/Entity/StatBuff.cs → Assets/scripts/Entity/EntityStats.cs
-- `StatRoll` --references--> `StatType`  [EXTRACTED]
-  Assets/scripts/Items/Gear.cs → Assets/scripts/Entity/EntityStats.cs
-- `ProjectileData` --references--> `StatType`  [EXTRACTED]
-  Assets/scripts/Projectile/ProjectileData.cs → Assets/scripts/Entity/EntityStats.cs
-- `DoT` --references--> `StatType`  [EXTRACTED]
-  Assets/scripts/StatusEffect/StatusEffects/DoTs/DoT.cs → Assets/scripts/Entity/EntityStats.cs
-- `StatReduction` --references--> `StatType`  [EXTRACTED]
-  Assets/scripts/StatusEffect/StatusEffects/StatReduction.cs/StatReduction.cs → Assets/scripts/Entity/EntityStats.cs
+- `Projectile` --references--> `ProjectileDamageSnapshot`  [EXTRACTED]
+  Assets/scripts/Projectile/Projectile.cs → Assets/scripts/Projectile/DamageCalculator.cs
+- `Projectile` --references--> `ProjectileData`  [EXTRACTED]
+  Assets/scripts/Projectile/Projectile.cs → Assets/scripts/Projectile/ProjectileData.cs
+- `Decoy` --inherits--> `PlayerUpgrade`  [EXTRACTED]
+  Assets/scripts/Entity/Player/PlayerUpgrades/Decoy.cs → Assets/scripts/Entity/Player/PlayerUpgrade.cs
+- `Decoy` --references--> `StatusEffect`  [EXTRACTED]
+  Assets/scripts/Entity/Player/PlayerUpgrades/Decoy.cs → Assets/scripts/StatusEffect/StatusEffect.cs
+- `PlayerInputHandler` --references--> `PlayerAttackHandler`  [EXTRACTED]
+  Assets/scripts/Entity/Player/PlayerInputHandler.cs → Assets/scripts/Entity/Player/PlayerAttackHandler.cs
 
 ## Import Cycles
 - None detected.
 
-## Communities (284 total, 120 thin omitted)
+## Communities (282 total, 128 thin omitted)
 
 ### Community 0 - "Anamnesis.slnx"
 Cohesion: 0.02
 Nodes (90): Assembly-CSharp, PsdPlugin, ScriptablePacker, Unity.2D.Animation.Editor, Unity.2D.Animation.Runtime, Unity.2D.Aseprite.Common, Unity.2D.Aseprite.Editor, Unity.2D.Common.Editor (+82 more)
 
 ### Community 1 - "Projectile"
-Cohesion: 0.12
-Nodes (8): IOrbitRegister, bool, float, int, List, Rigidbody2D, Transform, Projectile
+Cohesion: 0.06
+Nodes (22): IEnumerator, int, List, Transform, Vector2, Vector3, EntityProjectileHandler, IOrbitRegister (+14 more)
 
 ### Community 2 - "@PlayerControls"
 Cohesion: 0.06
 Nodes (22): IEnumerator, List, IPlayerActions, IUIActions, PlayerActions, @PlayerControls, UIActions, CallbackContext (+14 more)
 
 ### Community 3 - ".BuildDamagePacket"
-Cohesion: 0.21
-Nodes (9): bool, Color, float, GameObject, int, DamageCalculator, ProjectileDamageSnapshot, damage (+1 more)
+Cohesion: 0.06
+Nodes (29): AdditionalDamage, float, GameObject, bool, Color, float, GameObject, int (+21 more)
 
 ### Community 4 - "TMP_FrameRateCounter"
 Cohesion: 0.07
@@ -355,36 +354,36 @@ Cohesion: 0.21
 Nodes (8): bool, float, GameObject, int, List, Quaternion, Vector2, EntitySummonHandler
 
 ### Community 7 - "TooltipTrigger"
-Cohesion: 0.08
-Nodes (25): PointerEventData, string, TooltipTrigger, TooltipType, Action, bool, Image, TMP_Text (+17 more)
+Cohesion: 0.17
+Nodes (4): PointerEventData, string, TooltipTrigger, TooltipType
 
 ### Community 8 - "WaveManager"
-Cohesion: 0.08
-Nodes (18): bool, float, GameObject, int, List, PlayerSkillTree, WaveManager, Button (+10 more)
+Cohesion: 0.11
+Nodes (15): bool, float, int, PlayerSkillTree, WaveManager, Button, Coroutine, EntityStatManager (+7 more)
 
 ### Community 9 - "Anamnesis"
 Cohesion: 0.15
 Nodes (13): About, Anamnesis, Changelog, Content, Controls, Core Loop, Features, Getting Started (+5 more)
 
-### Community 10 - "AnomalyInstance"
-Cohesion: 0.09
-Nodes (13): AnomalyData, AnomalyType, float, int, string, NoDamageTrialInstance, float, TimeTrialInstance (+5 more)
+### Community 10 - ".SetupTooltipData"
+Cohesion: 0.19
+Nodes (16): AttackReward, BaseReward, AttackData, Color, float, List, Sprite, StatBuff (+8 more)
 
-### Community 11 - "Changelog"
+### Community 11 - "[v0.2.8_2] - 2026-08-26"
 Cohesion: 0.05
-Nodes (44): Added, Added, Added, Added, Added, Added, Added, Added (+36 more)
+Nodes (44): Added, Added, Added, Added, Added, Changed, Changed, Changed (+36 more)
 
 ### Community 12 - "com.unity.test-framework"
-Cohesion: 0.08
-Nodes (26): com.unity.nuget.mono-cecil, com.unity.test-framework.performance, dependencies, dependencies, depth, source, url, version (+18 more)
+Cohesion: 0.11
+Nodes (18): com.unity.test-framework.performance, dependencies, depth, source, url, version, depth, dependencies (+10 more)
 
-### Community 13 - "com.unity.modules.imgui"
-Cohesion: 0.08
-Nodes (26): com.unity.settings-manager, com.unity.splines, dependencies, depth, source, url, version, dependencies (+18 more)
+### Community 13 - "com.unity.settings-manager"
+Cohesion: 0.10
+Nodes (20): com.unity.settings-manager, com.unity.splines, dependencies, depth, source, url, version, dependencies (+12 more)
 
-### Community 14 - "AttackData"
-Cohesion: 0.15
-Nodes (10): AttackData, bool, float, GameObject, HashSet, int, Sprite, string (+2 more)
+### Community 14 - "2026-08-26_16-26-38/details.md"
+Cohesion: 0.18
+Nodes (10): Details, Files, Diff Details, Files, Diff Summary, Directories, Languages, Directories (+2 more)
 
 ### Community 15 - "2026-08-24_19-18-52/details.md"
 Cohesion: 0.18
@@ -403,60 +402,56 @@ Cohesion: 0.15
 Nodes (10): Camera, Canvas, int, TMP_Text, TMP_TextEventHandler, CharacterSelectionEvent, LineSelectionEvent, LinkSelectionEvent (+2 more)
 
 ### Community 19 - "dependencies"
-Cohesion: 0.09
-Nodes (21): dependencies, depth, source, version, dependencies, depth, source, version (+13 more)
+Cohesion: 0.07
+Nodes (27): dependencies, depth, source, url, version, dependencies, depth, source (+19 more)
 
 ### Community 20 - "GameController"
-Cohesion: 0.14
+Cohesion: 0.15
 Nodes (9): bool, Color, Coroutine, GameObject, IEnumerator, TextMeshProUGUI, TMP_FontAsset, TMP_Text (+1 more)
 
 ### Community 21 - "Player Upgrades"
 Cohesion: 0.17
 Nodes (12): Decoy, Feedback Loop, Hex Cast, Hypercarry, Paradox, Player Upgrades, Reminiscence, Serenade (+4 more)
 
-### Community 22 - "PlayerSkillTree"
-Cohesion: 0.15
-Nodes (8): bool, canUnlock, Dictionary, HashSet, int, List, PlayerSkillTree, IReadOnlyDictionary
+### Community 22 - "SkillNodeDef"
+Cohesion: 0.10
+Nodes (16): bool, canUnlock, Dictionary, failMessage, HashSet, int, List, PlayerSkillTree (+8 more)
 
 ### Community 23 - "TMP_TextInfoDebugTool"
-Cohesion: 0.20
-Nodes (9): bool, Color, float, string, TMP_Text, Transform, Vector3, TMP_TextInfoDebugTool (+1 more)
+Cohesion: 0.15
+Nodes (10): IEnumerator, bool, Color, float, string, TMP_Text, Transform, Vector3 (+2 more)
 
 ### Community 24 - "TMP_TextSelector_B"
 Cohesion: 0.10
 Nodes (13): bool, Camera, Canvas, int, Object, PointerEventData, RectTransform, string (+5 more)
 
-### Community 25 - "StatusEffect"
-Cohesion: 0.05
-Nodes (21): bool, float, GameObject, int, Sprite, string, StatusEffect, GameObject (+13 more)
+### Community 25 - "StatusEffectManager"
+Cohesion: 0.16
+Nodes (5): GameObject, IEnumerator, List, Transform, StatusEffectManager
 
 ### Community 26 - "PlayerUpgrade"
 Cohesion: 0.22
 Nodes (6): float, string, PlayerUpgrade, TriggerCondition, HexCast, Paradox
 
 ### Community 27 - "com.unity.modules.uielements"
-Cohesion: 0.12
-Nodes (16): dependencies, depth, source, url, version, depth, source, version (+8 more)
+Cohesion: 0.06
+Nodes (34): com.unity.2d.common, dependencies, depth, source, url, version, depth, source (+26 more)
 
-### Community 28 - "com.unity.modules.physics"
-Cohesion: 0.08
-Nodes (27): dependencies, depth, source, version, dependencies, depth, source, version (+19 more)
+### Community 28 - "StatusEffect"
+Cohesion: 0.16
+Nodes (8): bool, float, GameObject, int, Sprite, string, StatusEffect, Info
 
 ### Community 29 - "2026-08-24_19-50-10/details.md"
 Cohesion: 0.18
 Nodes (10): Details, Files, Diff Details, Files, Diff Summary, Directories, Languages, Directories (+2 more)
 
-### Community 30 - "com.unity.2d.common"
-Cohesion: 0.11
-Nodes (18): com.unity.2d.common, depth, source, url, version, dependencies, depth, source (+10 more)
+### Community 30 - "AttackReplacement"
+Cohesion: 0.17
+Nodes (5): HashSet, AttackReplacement, AttackData, bool, StatusEffect
 
 ### Community 31 - "SoulRend"
 Cohesion: 0.14
 Nodes (4): GameObject, SoulRendPU, float, SoulRend
-
-### Community 32 - "EntityGearManager"
-Cohesion: 0.16
-Nodes (11): Array, Dictionary, List, EntityGearManager, float, int, List, EquipmentSlot (+3 more)
 
 ### Community 33 - "EntityHealth"
 Cohesion: 0.05
@@ -467,63 +462,63 @@ Cohesion: 0.14
 Nodes (9): Animator, float, GameObject, IEnumerator, int, List, Rigidbody2D, Vector2 (+1 more)
 
 ### Community 35 - "SkillNodeUI"
-Cohesion: 0.15
-Nodes (11): GameObject, PlayerSkillTree, SkillTreeManager, SkillNodeUI, canUnlock, failMessage, Image, IPointerClickHandler (+3 more)
+Cohesion: 0.12
+Nodes (12): GameObject, PlayerSkillTree, SkillTreeManager, SkillNodeUI, canUnlock, failMessage, GameObject, SkillTreeManager (+4 more)
 
 ### Community 36 - "PlayerStats"
-Cohesion: 0.18
-Nodes (4): Image, PlayerAttackCooldownUI, PlayerLevel, PlayerStats
+Cohesion: 0.20
+Nodes (4): Image, PlayerDashCooldownUI, PlayerLevel, PlayerStats
 
 ### Community 37 - "SkillTreePanZoom"
-Cohesion: 0.11
-Nodes (10): bool, float, RectTransform, Vector2, SkillTreePanZoom, AnimationCurve, float, IEnumerator (+2 more)
+Cohesion: 0.19
+Nodes (5): bool, float, RectTransform, Vector2, SkillTreePanZoom
 
-### Community 38 - "com.unity.modules.jsonserialize"
-Cohesion: 0.09
-Nodes (25): com.unity.burst, dependencies, depth, source, url, version, dependencies, depth (+17 more)
+### Community 38 - "com.unity.mathematics"
+Cohesion: 0.06
+Nodes (39): com.unity.burst, com.unity.collections, com.unity.mathematics, dependencies, depth, source, url, version (+31 more)
 
 ### Community 39 - "com.unity.2d.tilemap"
-Cohesion: 0.12
-Nodes (17): dependencies, depth, dependencies, depth, source, url, version, source (+9 more)
+Cohesion: 0.09
+Nodes (23): dependencies, depth, source, url, version, dependencies, depth, dependencies (+15 more)
 
 ### Community 40 - "SkillTreeUI"
-Cohesion: 0.15
-Nodes (8): GameObject, SkillTreeManager, bool, Dictionary, GameObject, IReadOnlyList, RectTransform, SkillTreeUI
+Cohesion: 0.21
+Nodes (6): bool, Dictionary, GameObject, IReadOnlyList, RectTransform, SkillTreeUI
 
 ### Community 41 - "UnlimitedWaveManager"
-Cohesion: 0.16
-Nodes (8): AnomalyInstance, bool, float, GameObject, IEnumerator, int, List, UnlimitedWaveManager
+Cohesion: 0.13
+Nodes (9): UnlimitedWaveButtonController, bool, float, UnlimitedWaveManager, GameObject, IEnumerator, int, List (+1 more)
 
 ### Community 42 - "TextMeshProFloatingText"
-Cohesion: 0.14
-Nodes (13): bool, Font, GameObject, IEnumerator, int, Quaternion, TextMesh, TextMeshPro (+5 more)
+Cohesion: 0.11
+Nodes (15): bool, int, Benchmark02, bool, Font, GameObject, int, Quaternion (+7 more)
 
 ### Community 43 - "PlayerAttackHandler"
-Cohesion: 0.14
-Nodes (9): AttackType, Animator, Dictionary, GameObject, IEnumerator, int, List, Transform (+1 more)
+Cohesion: 0.11
+Nodes (11): Image, PlayerAttackCooldownUI, AttackType, Animator, Dictionary, GameObject, IEnumerator, int (+3 more)
 
 ### Community 44 - "EnemyMovement"
 Cohesion: 0.13
 Nodes (12): Animator, bool, float, GameObject, int, List, Rigidbody2D, Transform (+4 more)
 
-### Community 46 - ".EndWave"
-Cohesion: 0.18
-Nodes (3): AnomalyInstance, IEnumerator, WaveData
+### Community 45 - "SkewTextExample"
+Cohesion: 0.27
+Nodes (5): AnimationCurve, float, IEnumerator, TMP_Text, SkewTextExample
 
 ### Community 47 - "TMP_TextSelector_A"
 Cohesion: 0.18
 Nodes (7): bool, Camera, int, PointerEventData, TextMeshPro, TMP_TextSelector_A, IPointerExitHandler
 
 ### Community 48 - "EntityStats"
-Cohesion: 0.18
+Cohesion: 0.17
 Nodes (8): StatType, bool, float, int, EntityStats, StatType, float, StatModifierInstance
 
-### Community 49 - "EntityProjectileHandler"
-Cohesion: 0.13
-Nodes (8): IEnumerator, int, List, Transform, Vector2, Vector3, EntityProjectileHandler, Vector2
+### Community 49 - "GearItem"
+Cohesion: 0.36
+Nodes (7): float, int, List, EquipmentSlot, GearItem, StatRoll, StatRollType
 
 ### Community 50 - "SkillTreeLineRenderer"
-Cohesion: 0.21
+Cohesion: 0.19
 Nodes (8): Color, float, List, SkillTreeManager, Sprite, SkillTreeLineRenderer, IReadOnlyList, RectTransform
 
 ### Community 51 - "VertexJitter"
@@ -538,9 +533,9 @@ Nodes (13): com.unity.modules.adaptiveperformance, com.unity.modules.ai, com.uni
 Cohesion: 0.18
 Nodes (10): Details, Files, Diff Details, Files, Diff Summary, Directories, Languages, Directories (+2 more)
 
-### Community 54 - "WaveSequence"
-Cohesion: 0.28
-Nodes (8): float, GameObject, int, List, string, Vector2, WaveData, WaveSequence
+### Community 54 - "com.unity.nuget.mono-cecil"
+Cohesion: 0.29
+Nodes (7): com.unity.nuget.mono-cecil, dependencies, depth, source, url, version, com.unity.nuget.mono-cecil
 
 ### Community 55 - "[v0.1.13] - 2026-08-24 - Stats Extension Update"
 Cohesion: 0.67
@@ -550,25 +545,25 @@ Nodes (3): Added, Updated, [v0.1.13] - 2026-08-24 - Stats Extension Update
 Cohesion: 0.17
 Nodes (8): bool, float, string, Transform, Vector3, CameraController, CameraModes, CameraModes
 
-### Community 57 - "2026-08-18_09-03-45/details.md"
-Cohesion: 0.18
-Nodes (10): Details, Files, Diff Details, Files, Diff Summary, Directories, Languages, Directories (+2 more)
+### Community 57 - "ProjectileSpawner"
+Cohesion: 0.59
+Nodes (4): GameObject, IEnumerator, Vector2, ProjectileSpawner
 
 ### Community 58 - "PlayerUI"
 Cohesion: 0.22
 Nodes (6): float, GameObject, int, Slider, TextMeshProUGUI, PlayerUI
 
-### Community 59 - "com.unity.modules.ui"
+### Community 59 - "com.unity.modules.imgui"
 Cohesion: 0.11
-Nodes (19): com.unity.modules.hierarchycore, dependencies, depth, source, version, dependencies, depth, source (+11 more)
+Nodes (20): com.unity.modules.hierarchycore, dependencies, depth, source, version, dependencies, depth, source (+12 more)
 
 ### Community 60 - "README.md"
-Cohesion: 0.22
-Nodes (5): Credits, Pre [v0.1.0] - Skill Tree Update, Pre [v0.2.0] - Content Expansion Update, Pre [v0.3.0], Roadmap
+Cohesion: 0.20
+Nodes (6): Changelog, Credits, Pre [v0.1.0] - Skill Tree Update, Pre [v0.2.0] - Content Expansion Update, Pre [v0.3.0], Roadmap
 
-### Community 61 - "ProjectileData"
-Cohesion: 0.45
-Nodes (7): int, List, ProjectileData, GameObject, IEnumerator, Vector2, ProjectileSpawner
+### Community 61 - "AttackData"
+Cohesion: 0.20
+Nodes (9): AttackData, bool, float, GameObject, int, Sprite, string, SummonCondition (+1 more)
 
 ### Community 62 - "SimpleScript"
 Cohesion: 0.29
@@ -594,41 +589,41 @@ Nodes (8): High Priority (To be done before 1 minor version), High Priority (To 
 Cohesion: 0.17
 Nodes (6): bool, float, IEnumerator, Object, TMP_Text, VertexShakeB
 
-### Community 68 - "com.unity.modules.assetbundle"
-Cohesion: 0.17
-Nodes (12): dependencies, depth, source, version, dependencies, depth, source, version (+4 more)
+### Community 68 - "com.unity.modules.unitywebrequest"
+Cohesion: 0.06
+Nodes (40): dependencies, depth, source, version, dependencies, depth, source, version (+32 more)
 
 ### Community 69 - "com.unity.ext.nunit"
 Cohesion: 0.15
 Nodes (13): com.unity.ext.nunit, dependencies, depth, source, version, dependencies, depth, source (+5 more)
 
-### Community 70 - "EffectData"
-Cohesion: 0.40
-Nodes (5): ApplyCondition, bool, float, EffectData, SpecialScalingAttribute
+### Community 70 - "com.unity.modules.subsystems"
+Cohesion: 0.18
+Nodes (11): com.unity.modules.subsystems, dependencies, depth, source, version, dependencies, depth, source (+3 more)
 
-### Community 71 - ".HandleHitEntity"
-Cohesion: 0.19
-Nodes (6): GameObject, IEnumerator, Collider2D, hp, mana, stamina
+### Community 71 - "ProjectileData"
+Cohesion: 0.33
+Nodes (8): ApplyCondition, bool, float, int, List, EffectData, ProjectileData, SpecialScalingAttribute
 
 ### Community 73 - "Benchmark01"
 Cohesion: 0.17
 Nodes (10): Font, IEnumerator, int, Material, string, TextContainer, TextMesh, TextMeshPro (+2 more)
 
 ### Community 74 - "Benchmark01_UGUI"
-Cohesion: 0.18
+Cohesion: 0.17
 Nodes (10): Canvas, Font, IEnumerator, int, Material, string, TextMeshProUGUI, TMP_FontAsset (+2 more)
 
 ### Community 75 - "EntityStatManager"
-Cohesion: 0.11
-Nodes (10): BossBarUI, Image, int, Slider, TextMeshProUGUI, List, EntityStatManager, Image (+2 more)
+Cohesion: 0.18
+Nodes (5): List, EntityStatManager, Image, StatusEffectCooldownUI, EntityStats
 
-### Community 76 - "com.unity.modules.audio"
+### Community 76 - "StatBuffs"
 Cohesion: 0.33
-Nodes (6): dependencies, depth, source, version, com.unity.modules.audio, com.unity.modules.audio
+Nodes (3): Dictionary, List, StatBuffs
 
-### Community 77 - "com.unity.modules.animation"
-Cohesion: 0.07
-Nodes (30): com.unity.collections, dependencies, depth, source, url, version, dependencies, depth (+22 more)
+### Community 77 - "WaveSequence"
+Cohesion: 0.28
+Nodes (8): float, GameObject, int, List, string, Vector2, WaveData, WaveSequence
 
 ### Community 78 - "com.unity.modules.terrain"
 Cohesion: 0.18
@@ -639,20 +634,16 @@ Cohesion: 0.18
 Nodes (8): float, int, Transform, Vector3, MotionType, ObjectSpin, Color32, MotionType
 
 ### Community 80 - "TMP_TextEventCheck"
-Cohesion: 0.20
+Cohesion: 0.18
 Nodes (3): TMP_Text, TMP_TextEventCheck, TMP_TextEventHandler
 
 ### Community 81 - "com.unity.modules.imageconversion"
-Cohesion: 0.18
-Nodes (11): dependencies, depth, source, version, dependencies, depth, source, version (+3 more)
+Cohesion: 0.10
+Nodes (21): dependencies, depth, source, version, dependencies, depth, source, version (+13 more)
 
-### Community 83 - "UnityEngine.UI"
-Cohesion: 0.12
-Nodes (6): RewardType, TMP_DigitValidator, TMP_PhoneNumberValidator, TMPro, TMP_InputValidator, UnityEngine.UI
-
-### Community 84 - "DropdownSample"
-Cohesion: 0.40
-Nodes (3): TextMeshProUGUI, DropdownSample, TMP_Dropdown
+### Community 84 - "BossBarUI"
+Cohesion: 0.25
+Nodes (5): BossBarUI, Image, int, Slider, TextMeshProUGUI
 
 ### Community 85 - "TooltipUI"
 Cohesion: 0.29
@@ -662,37 +653,37 @@ Nodes (4): RectTransform, TextMeshProUGUI, Vector2, TooltipUI
 Cohesion: 0.22
 Nodes (6): AnimationCurve, float, IEnumerator, Material, ShaderPropAnimator, Renderer
 
-### Community 87 - "DamagePacket"
-Cohesion: 0.17
-Nodes (7): AdditionalDamage, float, GameObject, Color, GameObject, List, DamagePacket
+### Community 87 - ".HandleStatChanges"
+Cohesion: 0.25
+Nodes (3): PlayerMana, finalHpCost, finalStaminaCost
 
 ### Community 88 - "TMP_ExampleScript_01"
 Cohesion: 0.22
 Nodes (7): bool, int, string, TMP_Text, objectType, TMP_ExampleScript_01, objectType
 
-### Community 89 - "com.unity.modules.director"
+### Community 89 - "[v0.1.0-PR2] - 2026-08-09"
+Cohesion: 0.67
+Nodes (3): Added, Fixed, [v0.1.0-PR2] - 2026-08-09
+
+### Community 90 - "Pulled"
+Cohesion: 0.25
+Nodes (4): bool, float, Vector2, Pulled
+
+### Community 91 - "ChatController"
+Cohesion: 0.25
+Nodes (4): ChatController, TMP_Text, Scrollbar, TMP_InputField
+
+### Community 93 - "com.unity.modules.animation"
+Cohesion: 0.09
+Nodes (24): dependencies, depth, source, version, dependencies, depth, source, version (+16 more)
+
+### Community 96 - "AnomalyData"
 Cohesion: 0.33
-Nodes (6): dependencies, depth, source, version, com.unity.modules.director, com.unity.modules.director
+Nodes (5): AnomalyData, AnomalyType, float, int, string
 
-### Community 91 - "DamageType"
-Cohesion: 0.18
-Nodes (9): bool, Color, float, GameObject, DamageInstance, DamageType, Color, float (+1 more)
-
-### Community 93 - "com.unity.modules.particlesystem"
-Cohesion: 0.17
-Nodes (12): dependencies, depth, source, version, dependencies, depth, source, url (+4 more)
-
-### Community 94 - "com.unity.modules.unitywebrequest"
-Cohesion: 0.18
-Nodes (11): dependencies, depth, source, version, dependencies, depth, source, version (+3 more)
-
-### Community 96 - "com.unity.modules.unitywebrequestaudio"
-Cohesion: 0.33
-Nodes (6): dependencies, depth, source, version, com.unity.modules.unitywebrequestaudio, com.unity.modules.unitywebrequestaudio
-
-### Community 97 - "com.unity.mathematics"
-Cohesion: 0.10
-Nodes (20): com.unity.mathematics, dependencies, depth, source, url, version, dependencies, depth (+12 more)
+### Community 97 - "com.unity.modules.physics2d"
+Cohesion: 0.15
+Nodes (13): dependencies, depth, source, url, version, dependencies, depth, source (+5 more)
 
 ### Community 99 - "Benchmark03"
 Cohesion: 0.25
@@ -706,9 +697,9 @@ Nodes (5): IEnumerator, Material, TMP_Text, Vector3, EnvMapAnimator
 Cohesion: 0.29
 Nodes (5): Color, float, GameObject, Vector3, Decoy
 
-### Community 103 - "com.unity.modules.subsystems"
-Cohesion: 0.18
-Nodes (11): com.unity.modules.subsystems, dependencies, depth, source, version, dependencies, depth, source (+3 more)
+### Community 103 - "com.unity.modules.jsonserialize"
+Cohesion: 0.06
+Nodes (38): dependencies, depth, source, version, dependencies, depth, source, version (+30 more)
 
 ### Community 104 - "[v0.0.23] - 2026-08-06"
 Cohesion: 0.67
@@ -750,9 +741,9 @@ Nodes (5): Added, Fixed, Rebalance, Update, [v0.1.10_2] - 2026-08-23
 Cohesion: 0.67
 Nodes (3): Highlights, Rebalance, [v0.2.0] - 2026-08-24 — Progression, Economy & Milestones Update (Release Summary)
 
-### Community 115 - "ChatController"
-Cohesion: 0.25
-Nodes (4): ChatController, TMP_Text, Scrollbar, TMP_InputField
+### Community 115 - "TMP_DigitValidator"
+Cohesion: 0.29
+Nodes (3): TMP_DigitValidator, TMP_PhoneNumberValidator, TMP_InputValidator
 
 ### Community 116 - "SpawnProjectile"
 Cohesion: 0.50
@@ -761,6 +752,10 @@ Nodes (3): GameObject, Vector2, SpawnProjectile
 ### Community 117 - "StellarSurge"
 Cohesion: 0.40
 Nodes (3): float, GameObject, StellarSurge
+
+### Community 118 - "EnemyStats"
+Cohesion: 0.47
+Nodes (5): float, GameObject, int, EnemyStats, PhaseBuff
 
 ### Community 119 - "WarpTextExample"
 Cohesion: 0.27
@@ -778,17 +773,17 @@ Nodes (5): Added, Fixed, Removed, Updated, [v0.1.9_1] - 2026-08-23
 Cohesion: 0.50
 Nodes (4): Added, Fixed, Rebalance, [v0.1.12] - 2026-08-24 - Milestone Rewards Update
 
-### Community 123 - ".HandleStatChanges"
-Cohesion: 0.25
-Nodes (3): PlayerMana, finalHpCost, finalStaminaCost
+### Community 123 - "UnityEvent"
+Cohesion: 0.33
+Nodes (6): CharacterSelectionEvent, LineSelectionEvent, LinkSelectionEvent, SpriteSelectionEvent, WordSelectionEvent, UnityEvent
 
 ### Community 124 - "[v0.0.13] - 2026-07-31"
 Cohesion: 0.50
 Nodes (4): Added, Changed, Fixed, [v0.0.13] - 2026-07-31
 
 ### Community 125 - "MonoBehaviour"
-Cohesion: 0.12
-Nodes (11): GameObject, Vector2, EnemySpawner, float, GameObject, int, EntitySplitting, int (+3 more)
+Cohesion: 0.18
+Nodes (8): GameObject, Vector2, EnemySpawner, float, GameObject, int, EntitySplitting, MonoBehaviour
 
 ### Community 127 - "[v0.1.6] - 2026-08-13 - The Titles Update"
 Cohesion: 0.40
@@ -819,8 +814,8 @@ Cohesion: 0.22
 Nodes (3): Dictionary, List, PlayerUpgradeManager
 
 ### Community 135 - "TMPro.Examples"
-Cohesion: 0.20
-Nodes (4): bool, int, Benchmark02, TMPro.Examples
+Cohesion: 0.13
+Nodes (7): int, Transform, Benchmark04, Font, int, TextMeshSpawner, TMPro.Examples
 
 ### Community 136 - "[v0.1.10_1] - 2026-08-23"
 Cohesion: 0.67
@@ -838,9 +833,9 @@ Nodes (3): Added, Changed, [v0.0.21] - 2026-08-05 — Knockback Update Part 2
 Cohesion: 0.67
 Nodes (3): Added, Changed, [v0.0.9_1] - 2026-07-29
 
-### Community 140 - "dependencies"
-Cohesion: 0.40
-Nodes (5): dependencies, depth, source, version, com.unity.modules.unitywebrequestwww
+### Community 140 - "com.unity.visualscripting"
+Cohesion: 0.33
+Nodes (6): dependencies, depth, source, url, version, com.unity.visualscripting
 
 ### Community 141 - "[v0.0.5] - 2026-07-29"
 Cohesion: 0.67
@@ -862,53 +857,33 @@ Nodes (3): Note, Updated, [v0.1.7_2] - 2026-08-18
 Cohesion: 0.67
 Nodes (3): Added, Rebalance, [v0.2.6] - 2026-08-26 - Skill Tree Enhancement Update
 
-### Community 147 - "AttackReplacement"
-Cohesion: 0.29
-Nodes (4): AttackReplacement, AttackData, bool, StatusEffect
-
 ### Community 149 - "StatBuff"
 Cohesion: 0.33
 Nodes (3): float, StatBuff, IEquatable
-
-### Community 151 - "EnemyStats"
-Cohesion: 0.47
-Nodes (5): float, GameObject, int, EnemyStats, PhaseBuff
 
 ### Community 153 - "[v0.1.12_1] - 2026-08-24"
 Cohesion: 0.67
 Nodes (3): Added, Rebalance, [v0.1.12_1] - 2026-08-24
 
+### Community 154 - "DropdownSample"
+Cohesion: 0.40
+Nodes (3): TextMeshProUGUI, DropdownSample, TMP_Dropdown
+
 ### Community 155 - "Entity"
 Cohesion: 0.33
 Nodes (3): Enemy, Entity, Player
 
-### Community 156 - "TextMeshSpawner"
-Cohesion: 0.33
-Nodes (3): Font, int, TextMeshSpawner
-
-### Community 157 - "Item"
-Cohesion: 0.50
-Nodes (4): Sprite, string, Item, ItemRarity
+### Community 157 - "ScriptableObject"
+Cohesion: 0.25
+Nodes (7): Sprite, string, Item, ItemRarity, List, SkillTreeDefinition, ScriptableObject
 
 ### Community 160 - "com.unity.modules.androidjni"
 Cohesion: 0.40
 Nodes (5): dependencies, depth, source, version, com.unity.modules.androidjni
 
-### Community 161 - "DoT"
-Cohesion: 0.33
-Nodes (4): bool, Color, float, DoT
-
-### Community 162 - "UnityEvent"
-Cohesion: 0.33
-Nodes (6): CharacterSelectionEvent, LineSelectionEvent, LinkSelectionEvent, SpriteSelectionEvent, WordSelectionEvent, UnityEvent
-
 ### Community 164 - "[v0.2.1] - 2026-08-25"
 Cohesion: 0.67
 Nodes (3): Added, Fixed, [v0.2.1] - 2026-08-25
-
-### Community 169 - "com.unity.collab-proxy"
-Cohesion: 0.33
-Nodes (6): dependencies, depth, source, url, version, com.unity.collab-proxy
 
 ### Community 170 - "[v0.2.7] - 2026-08-26 - Enemy Scaling Overhaul"
 Cohesion: 0.50
@@ -942,21 +917,9 @@ Nodes (3): Added, Changed, [v0.2.3] - 2026-08-25 - Unlimited Waves Update
 Cohesion: 0.67
 Nodes (3): Changed, Fixed, [v0.1.8_5] - 2026-08-22
 
-### Community 232 - "com.unity.modules.screencapture"
-Cohesion: 0.40
-Nodes (5): dependencies, depth, source, version, com.unity.modules.screencapture
-
-### Community 236 - "com.unity.modules.unitywebrequesttexture"
-Cohesion: 0.40
-Nodes (5): dependencies, depth, source, version, com.unity.modules.unitywebrequesttexture
-
-### Community 238 - "ScriptableObject"
-Cohesion: 0.50
-Nodes (3): List, SkillTreeDefinition, ScriptableObject
-
-### Community 245 - "SkillNodeDef"
-Cohesion: 0.17
-Nodes (8): failMessage, bool, int, List, Sprite, string, SkillNodeDef, canUndo
+### Community 247 - "RewardButton"
+Cohesion: 0.06
+Nodes (20): Action, AnomalyData, AnomalyInstance, AnomalyButtonUI, AnomalyInstance, NoDamageTrialInstance, float, TimeTrialInstance (+12 more)
 
 ### Community 248 - "[v0.0.19] - 2026-08-05"
 Cohesion: 0.67
@@ -971,24 +934,24 @@ Cohesion: 0.67
 Nodes (3): Removed, Updated, [v0.2.8] - 2026-08-26
 
 ## Knowledge Gaps
-- **664 isolated node(s):** `Project Context & Tools`, `Workflow`, `Code & Architecture`, `Output Format`, `Documentation` (+659 more)
+- **669 isolated node(s):** `Changelog`, `Updated`, `Removed`, `Changed`, `Updated` (+664 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **120 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **128 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `WaveManager` connect `WaveManager` to `RegularWaveButtonController`, `TooltipTrigger`, `UnlimitedWaveManager`, `.EndWave`, `.TriggerUpgradeEffect`, `.ResumeGameLoop`, `UnityEngine.UI`, `GameController`, `.GenerateMixedPool`, `MonoBehaviour`?**
-  _High betweenness centrality (0.063) - this node is a cross-community bridge._
-- **Why does `UnityEngine.UI` connect `UnityEngine.UI` to `Anamnesis.slnx`, `PlayerStats`, `RegularWaveButtonController`, `AnomalyInstance`, `PlayerAttackHandler`, `EntityStatManager`, `PlayerDashCooldownUI`, `ChatController`?**
+- **Why does `UnityEngine.UI` connect `UnityEngine.UI` to `Anamnesis.slnx`, `RegularWaveButtonController`, `UnlimitedWaveManager`, `Benchmark01_UGUI`, `EntityStatManager`, `PlayerAttackHandler`, `SkillTreeLineRenderer`, `BossBarUI`, `RewardButton`, `ChatController`?**
+  _High betweenness centrality (0.059) - this node is a cross-community bridge._
+- **Why does `WaveManager` connect `WaveManager` to `.SetupTooltipData`, `PlayerAttackHandler`, `.EndWave`, `.TriggerUpgradeEffect`, `.ResumeGameLoop`, `UnityEngine.UI`, `GameController`, `RewardButton`, `.GenerateMixedPool`, `MonoBehaviour`?**
   _High betweenness centrality (0.054) - this node is a cross-community bridge._
-- **Why does `StatusEffect` connect `StatusEffect` to `DoT`, `StatReduction`, `EffectData`, `Decoy`, `TooltipTrigger`, `EntityStatManager`, `ScriptableObject`, `DamageType`, `Reminiscence`, `SoulRend`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **What connects `Project Context & Tools`, `Workflow`, `Code & Architecture` to the rest of the system?**
-  _664 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `StatusEffect` connect `StatusEffect` to `StatReduction`, `.BuildDamagePacket`, `Decoy`, `ProjectileData`, `TooltipTrigger`, `.SetupTooltipData`, `EntityStatManager`, `StatBuffs`, `StatusEffectManager`, `Pulled`, `Stun`, `ScriptableObject`, `Reminiscence`, `SoulRend`?**
+  _High betweenness centrality (0.046) - this node is a cross-community bridge._
+- **What connects `Changelog`, `Updated`, `Removed` to the rest of the system?**
+  _669 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Anamnesis.slnx` be split into smaller, more focused modules?**
   _Cohesion score 0.02197802197802198 - nodes in this community are weakly interconnected._
 - **Should `Projectile` be split into smaller, more focused modules?**
-  _Cohesion score 0.1168091168091168 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.055299539170506916 - nodes in this community are weakly interconnected._
 - **Should `@PlayerControls` be split into smaller, more focused modules?**
   _Cohesion score 0.06262626262626263 - nodes in this community are weakly interconnected._

@@ -9,12 +9,13 @@ public class EnemyAttackHandler : MonoBehaviour
     public float globalCooldown;
 
     private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
-    private EnemyStats es;
     private float[] cooldowns;
     private Animator a;
     private bool isAttackingCoroutineRunning = false;
-    private List<int> availableIndexes = new();
+    private readonly List<int> availableIndexes = new();
     private float lastAttackEndTime;
+    private EnemyStatManager esm;
+    private GameObject Target => TryGetComponent<EnemyMovement>(out var em) ? em.target : null;
 
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class EnemyAttackHandler : MonoBehaviour
         for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].cooldown;
     }
 
-    private void Start() => es = GetComponent<EntityStatManager>().s as EnemyStats;
+    private void Start() => esm = GetComponent<EnemyStatManager>();
 
     private void OnDestroy()
     {
@@ -52,9 +53,9 @@ public class EnemyAttackHandler : MonoBehaviour
     }
     private void Update()
     {
-        if (!es.isAlive || Time.timeScale == 0f) return;
+        if (esm.GetStat(StatType.isAlive) != 1f|| Time.timeScale == 0f) return;
         UpdateCooldowns();
-        if (!es.isAttacking) TryAttack();
+        if (esm.GetStat(StatType.IsAttacking) != 1f) TryAttack();
     }
     private void UpdateCooldowns()
     {
@@ -62,7 +63,7 @@ public class EnemyAttackHandler : MonoBehaviour
     }
     private void TryAttack()
     {
-        if (attacks.Count == 0 || es.target == null) return;
+        if (attacks.Count == 0 || Target == null) return;
         if (globalCooldown > 0 && Time.time - lastAttackEndTime < globalCooldown) return;
 
         int chosen = ChooseAttackIndex();
@@ -74,7 +75,7 @@ public class EnemyAttackHandler : MonoBehaviour
 
     private int ChooseAttackIndex()
     {
-        float dist = (es.target.transform.position - transform.position).sqrMagnitude;
+        float dist = (Target.transform.position - transform.position).sqrMagnitude;
 
         availableIndexes.Clear();
 
@@ -84,11 +85,11 @@ public class EnemyAttackHandler : MonoBehaviour
 
             if (cooldowns[i] > 0f || dist > (a.maxRange * a.maxRange)) continue;
 
-            float hpPct = (float)es.currentHp / es.EffMaxHp;
+            float hpPct = (float)esm.GetStat(StatType.currentHp) / esm.GetStat(StatType.EffMaxHp);
 
             if (a.minHpPct > 0 && hpPct < a.minHpPct) continue;
             if (a.maxHpPct < 100f && hpPct > a.maxHpPct) continue;
-            if (a.phaseReq >= 0 && (es.phase != a.phaseReq)) continue;
+            if (a.phaseReq >= 0 && (TryGetComponent<EnemyPhase>(out var ep) && ep.phase < a.phaseReq)) continue;
 
             availableIndexes.Add(i);
         }
@@ -97,15 +98,16 @@ public class EnemyAttackHandler : MonoBehaviour
 
         return availableIndexes[Random.Range(0, availableIndexes.Count)];
     }
+
     private System.Collections.IEnumerator PerformAttack(AttackData attack, int index)
     {
-        if (!es.canAttack || !es.isAlive) yield return null;
+        if (esm.GetStat(StatType.CanAttack) <= 0f || esm.GetStat(StatType.isAlive) <= 0f) yield return null;
 
         float attackStartTime = Time.time;
 
         isAttackingCoroutineRunning = true;
-        es.isAttacking = true;
-        es.canMove = attack.canMoveDuringAttack;
+        esm.AddStat(new(StatType.IsAttacking, 1));
+        esm.AddStat(new(StatType.CanMove, attack.canMoveDuringAttack ? 1 : -1));
 
         if (a != null) a.SetInteger(AttackIndexHash, index);
 
@@ -115,10 +117,10 @@ public class EnemyAttackHandler : MonoBehaviour
         {
             if (attack.spawnDelay > 0) yield return new WaitForSeconds(attack.spawnDelay);
 
-            if (es.target != null)
+            if (Target != null)
             {
-                Vector2 dir = (es.target.transform.position - transform.position).normalized;
-                float dist = Vector2.Distance(es.target.transform.position, transform.position);
+                Vector2 dir = (Target.transform.position - transform.position).normalized;
+                float dist = Vector2.Distance(Target.transform.position, transform.position);
 
                 StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
                     attack.projectilePrefab,
@@ -145,8 +147,8 @@ public class EnemyAttackHandler : MonoBehaviour
         }
 
         isAttackingCoroutineRunning = false;
-        es.isAttacking = false;
-        es.canMove = true;
+        esm.AddStat(new(StatType.IsAttacking, -1));
+        esm.AddStat(new(StatType.CanMove, 1));
         lastAttackEndTime = Time.time;
         if (a != null) a.SetInteger(AttackIndexHash, -1);
 
@@ -160,8 +162,8 @@ public class EnemyAttackHandler : MonoBehaviour
 
         if (attack.fireOrbits)
         {
-            Vector2 dir = es.target != null
-                ? ((Vector2)es.target.transform.position - (Vector2)transform.position).normalized
+            Vector2 dir = Target != null
+                ? ((Vector2)Target.transform.position - (Vector2)transform.position).normalized
                 : Vector2.right;
             handler.ReleaseOrbits(dir, attack.redirectCount);
         }

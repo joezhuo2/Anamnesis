@@ -69,7 +69,34 @@ public enum StatType
     skillCdRedPct,
     ultCdRedPct,
     EffMaxMana,
-    EffMaxStamina,}
+    EffMaxStamina,
+    isImmune,
+    isAlive,
+    goldDrop,
+    CanGainHp,
+    XpDrop,
+    Level,
+    IsDashing,
+    HurtTime,
+    CurrentMana,
+    IsAttacking,
+    CurrentStamina,
+    CanMove,
+    XpReq,
+    Xp,
+    Gold,
+    DetectionRange,
+    CanDash,
+    CanAttack,
+    CanGainMana,
+    CanGainStamina,
+    DashSpdMult,
+    EffDashCooldown,
+    EffDashStaminaCost,
+    EffDashDistance,
+    DashShouldApplyIFrame,
+    ArmorRes
+}
 
 public class EntityStats : ScriptableObject
 {
@@ -77,10 +104,8 @@ public class EntityStats : ScriptableObject
     public float damagePct;
     public float physicalDmgPct;
     public float spellDmgPct;
-    public float EffAtk => attack * (1f + (atkPct * 0.01f));
     public int attack;
     public float atkPct;
-    public float EffInt => intelligence * (1f + (intPct * 0.01f)) * (Mathf.Max(1f, 1f + ((EffMaxMana - 100) * 0.01f)));
     public int intelligence;
     public float intPct;
     public float attackSpeedPct;
@@ -108,15 +133,11 @@ public class EntityStats : ScriptableObject
 
     [Header("Defense")]
     public int currentHp;
-    public float CurHpPct => (currentHp / EffMaxHp) * 100f;
     public int EffMaxHp => Mathf.RoundToInt(maxHp * (1f + (hpPct * 0.01f)));
     public int maxHp;
     public float hpPct;
-    public float EffHpReg => hpRegen * (1f + (hpRegPct * 0.01f));
     public float hpRegen;
     public float hpRegPct;
-    public float EffArmor => armor * (1f + (armorPct * 0.01f));
-    public float ArmorRes => EffArmor / (EffArmor + 100f);
     public int armor;
     public float armorPct;
     [Range(-100f, 100f)] public float damageRes;
@@ -132,16 +153,15 @@ public class EntityStats : ScriptableObject
     // critRes, healingPct
 
     [Header("Movement")]
-    public float FinalSpd => moveSpeed * (1f + (moveSpeedPct * 0.01f));
     public float moveSpeed;
     public float moveSpeedPct;
+    public float detectionRange;
 
     [Header("Stamina - Player Only")]
     public int currentStamina;
     public int maxStamina;
     public float maxStaminaPct;
     public float EffMaxStamina => Mathf.RoundToInt(maxStamina * (1f + (maxStaminaPct * 0.01f)));
-    public float EffStReg => staminaRegen * (1f + (stRegPct * 0.01f)) * (Mathf.Max(1f, 1f + ((EffMaxStamina - 100) * 0.01f)));
     public float staminaRegen;
     public float stRegPct;
 
@@ -156,21 +176,14 @@ public class EntityStats : ScriptableObject
     public float dashSpeedMult;
     public float dashCooldown;
     public float dashCooldownRedPct;
-    public float EffDashCooldown => Mathf.Max(0f, dashCooldown * (1f - (dashCooldownRedPct * 0.01f)));
     public float dashDistance;
     public float dashDistancePct;
-    public float EffDashDistance => Mathf.Max(0f, dashDistance * (1f + (dashDistancePct * 0.01f)));
     public int dashStaminaCost;
     public float dashStaminaCostRedPct;
-    public float EffDashStaminaCost => Mathf.Max(0f, dashStaminaCost * (1f - (dashStaminaCostRedPct * 0.01f)));
     public bool dashShouldApplyIFrame;
-    [HideInInspector] public bool isDashing;
-    [HideInInspector] public bool canDash;
-    [HideInInspector] public bool canGainStamina;
 
     [Header("Levelling")]
     public int level;
-    public float ExpReq => 100 * Mathf.Pow(1.3f, level - 1);
     public float exp;
     public float expBonus;
 
@@ -189,6 +202,9 @@ public class EntityStats : ScriptableObject
     public bool isAttacking;
     public bool canMove;
     public bool canGainHp;
+    public bool isDashing;
+    public bool canDash;
+    public bool canGainStamina;
 
     public float GetValue(StatType type)
     {
@@ -226,11 +242,11 @@ public class EntityStats : ScriptableObject
             StatType.currentHp => currentHp,
             StatType.moveSpeed => moveSpeed,
             StatType.EffMaxHp => EffMaxHp,
-            StatType.EffAtk => EffAtk,
-            StatType.EffHpReg => EffHpReg,
-            StatType.EffStReg => EffStReg,
-            StatType.EffSpd => FinalSpd,
-            StatType.EffArmor => EffArmor,
+            StatType.EffAtk => attack * (1f + (atkPct * 0.01f)),
+            StatType.EffHpReg => hpRegen * (1f + (hpRegPct * 0.01f)),
+            StatType.EffStReg => staminaRegen * (1f + (stRegPct * 0.01f)) * (Mathf.Max(1f, 1f + ((EffMaxStamina - 100) * 0.01f))),
+            StatType.EffSpd => moveSpeed * (1f + (moveSpeedPct * 0.01f)),
+            StatType.EffArmor => armor * (1f + (armorPct * 0.01f)),
             StatType.maxMana => maxMana,
             StatType.SkillDmgPct => skillDmgPct,
             StatType.BasicDmgPct => basicDmgPct,
@@ -238,7 +254,7 @@ public class EntityStats : ScriptableObject
             StatType.EffectRes => effectRes,
             StatType.Intelligence => intelligence,
             StatType.IntPct => intPct,
-            StatType.EffInt => EffInt,
+            StatType.EffInt => intelligence * (1f + (intPct * 0.01f)) * (Mathf.Max(1f, 1f + ((EffMaxMana - 100) * 0.01f))),
             StatType.ProjSpd => projSpd,
             StatType.stCostPct => stCostPct,
             StatType.dashCooldownRedPct => dashCooldownRedPct,
@@ -258,9 +274,34 @@ public class EntityStats : ScriptableObject
             StatType.basicCdRedPct => basicCdRedPct,
             StatType.skillCdRedPct => skillCdRedPct,
             StatType.ultCdRedPct => ultCdRedPct,
+            StatType.DetectionRange => detectionRange,
             StatType.EffMaxMana => EffMaxMana,
             StatType.EffMaxStamina => EffMaxStamina,
-            _ => 0f,
+            StatType.isImmune => isImmune ? 1f : 0f,
+            StatType.isAlive => isAlive ? 1f : 0f,
+            StatType.goldDrop => goldDrop,
+            StatType.CanGainHp => canGainHp ? 1f : 0f,
+            StatType.XpDrop => xpDrop,
+            StatType.Level => level,
+            StatType.IsDashing => isDashing ? 1f : 0f,
+            StatType.HurtTime => hurtTime,
+            StatType.CurrentMana => currentMana,
+            StatType.IsAttacking => isAttacking ? 1f : 0f,
+            StatType.CurrentStamina => currentStamina,
+            StatType.CanMove => canMove ? 1f : 0f,
+            StatType.XpReq => 100 * Mathf.Pow(1.3f, level - 1),
+            StatType.Xp => exp,
+            StatType.CanDash => canDash ? 1f : 0f,
+            StatType.CanAttack => canAttack ? 1f : 0f,
+            StatType.CanGainMana => canGainMana ? 1f : 0f,
+            StatType.CanGainStamina => canGainStamina ? 1f : 0f,
+            StatType.DashSpdMult => dashSpeedMult,
+            StatType.EffDashCooldown => Mathf.Max(0f, dashCooldown * (1f - (dashCooldownRedPct * 0.01f))),
+            StatType.EffDashStaminaCost => Mathf.Max(0f, dashStaminaCost * (1f - (dashStaminaCostRedPct * 0.01f))),
+            StatType.EffDashDistance => Mathf.Max(0f, dashDistance * (1f + (dashDistancePct * 0.01f))),
+            StatType.DashShouldApplyIFrame => dashShouldApplyIFrame ? 1f : 0f,
+            StatType.ArmorRes => moveSpeed * (1f + (moveSpeedPct * 0.01f)),
+            _ => 0f
         };
     }
 
@@ -324,6 +365,28 @@ public class EntityStats : ScriptableObject
             case StatType.basicCdRedPct: basicCdRedPct += delta; break;
             case StatType.skillCdRedPct: skillCdRedPct += delta; break;
             case StatType.ultCdRedPct: ultCdRedPct += delta; break;
+            case StatType.isImmune: isImmune = delta > 0; break;
+            case StatType.isAlive: isAlive = delta > 0; break;
+            case StatType.goldDrop: goldDrop += delta; break;
+            case StatType.CanGainHp: canGainHp = delta > 0; break;
+            case StatType.XpDrop: xpDrop += delta; break;
+            case StatType.Level: level += Mathf.RoundToInt(delta); break;
+            case StatType.IsDashing: isDashing = delta > 0; break;
+            case StatType.HurtTime: hurtTime += delta; break;
+            case StatType.CurrentMana: currentMana += Mathf.RoundToInt(delta); break;
+            case StatType.IsAttacking: isAttacking = delta > 0; break;
+            case StatType.CurrentStamina: currentStamina += Mathf.RoundToInt(delta); break;
+            case StatType.CanMove: canMove = delta > 0; break;
+            case StatType.Xp: exp += delta; break;
+            case StatType.Gold: gold += Mathf.RoundToInt(delta); break;
+            case StatType.DetectionRange: detectionRange += delta; break;
+            case StatType.CanDash: canDash = delta > 0; break;
+            case StatType.CanAttack: canAttack = delta > 0; break;
+            case StatType.CanGainMana: canGainMana = delta > 0; break;
+            case StatType.CanGainStamina: canGainStamina = delta > 0; break;
+            case StatType.DashSpdMult: dashSpeedMult += delta; break;
+            case StatType.DashShouldApplyIFrame: dashShouldApplyIFrame = delta > 0; break;
+            case StatType.currentHp: currentHp += Mathf.RoundToInt(delta); break;
             default: break;
         }
     }

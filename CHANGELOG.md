@@ -5,7 +5,27 @@ All *notable* changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project *roughly* follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [v0.2.8_2] - 2026-08-26
+## [v0.2.9] - 2026-08-26 - Stat System Refactor
+
+### Changed
+- **Complete stat system overhaul** — replaced direct field access (`esm.s.field`) with `GetStat(StatType)` and `AddStat(StatBuff)` across all entity scripts
+- `EntityStatManager` now centralizes stat retrieval/modification; `EntityStats` holds base values and computed getters
+- `DamageCalculator.BuildDamagePacket` and `DamagePacket` updated to use new stat API (removed `EntityStats` param, added `canCrit`, `resPen`, `defShred`)
+- Status effects (`DoT`, `Detonator`, `Stun`, `Pulled`) now use `GetStat`/`AddStat` for resistances, penetration, shred, and movement/attack/dash flags
+- Projectile system (`Projectile.cs`, `EntityProjectileHandler.cs`) migrated to new stat API
+- `WaveManager` gold reroll logic simplified using `TrySpend`/`CurrentAmount` on `ICurrencyHolder`
+- `PlayerSkillTree` node undo/refund uses `TrySpend` and `CurrentAmount`
+- `EntityHealth` major refactor (172 lines) — unified damage/heal flow with new stat system
+- `TooltipTrigger` and `PlayerUI` updated for new stat display
+
+### Removed
+- Direct `EntityStats` field access patterns throughout codebase (`esm.s.maxHp`, `esm.s.gold`, `esm.s.canMove`, etc.)
+
+### Fixed
+- Gold reroll button interactable state now correctly reflects `TrySpend` result
+- Status effect duration/resistance calculations now use `EffectRes` and `seDurPct` via `GetStat`
+
+## [v0.2.8_2] - 2026-08-26
 
 ### Updated
 - folder structure in `README.md`

@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class PlayerLevel : MonoBehaviour
 {
-    [HideInInspector] public PlayerStats p;
+    private EntityStatManager esm;
+    private int cLv;
 
-    private void Start()
-    {
-        p = GetComponent<EntityStatManager>()?.s as PlayerStats;
-    }
+    private void Start() => esm = GetComponent<EntityStatManager>();
 
     public void GainExp(float amount)
     {
-        if (amount <= 0f || !p.isAlive) return;
+        if (amount <= 0f || esm.GetStat(StatType.isAlive) <= 0f) return;
 
-        float finalAmt = amount * (1f + (p.expBonus * 0.01f));
-        p.exp += finalAmt;
+        var xp = esm.GetStat(StatType.Xp);
+        var xpReq = esm.GetStat(StatType.XpReq);
+
+        float finalAmt = amount * (1f + (esm.GetStat(StatType.ExpBonus) * 0.01f));
+        esm.AddStat(new(StatType.Xp, xp + finalAmt));
 
         TextIndicatorSpawner.Instance.SpawnTextIndicator(
             Mathf.RoundToInt(finalAmt),
@@ -27,24 +28,26 @@ public class PlayerLevel : MonoBehaviour
             true
         );
 
-        while (p.exp >= p.ExpReq)
+        while (xp >= xpReq)
         {
-            p.exp -= p.ExpReq;
+            esm.AddStat(new(StatType.Xp, xpReq), false);
             LevelUp();
         }
     }
+
     private void LevelUp()
     {
-        p.level++;
+        cLv = Mathf.RoundToInt(esm.GetStat(StatType.Level));
+        esm.AddStat(new(StatType.Level, 1));
 
         GetComponent<PlayerSkillTree>().skillPoints++;
 
-        p.maxHp += 3;
-        p.attack++;
-        p.intelligence++;
-        p.moveSpeed += 0.005f;
+        esm.AddStat(new(StatType.maxHp, 3));
+        esm.AddStat(new(StatType.attack, 1));
+        esm.AddStat(new(StatType.Intelligence, 1));
+        esm.AddStat(new(StatType.moveSpeed, 0.005f));
 
         GameController.Instance.SetTitleForDuration("Levelled Up!", 0.4f, 0.2f, 0.2f);
-        GameController.Instance.SetSubtitleForDuration($"{p.level - 1} → {p.level}", 0.4f, 0.2f, 0.2f);
+        GameController.Instance.SetSubtitleForDuration($"{cLv} → {Mathf.RoundToInt(esm.GetStat(StatType.Level))}", 0.4f, 0.2f, 0.2f);
     }
 }

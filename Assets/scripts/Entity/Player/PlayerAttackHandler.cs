@@ -19,7 +19,6 @@ public class PlayerAttackHandler : MonoBehaviour
     public GameObject cooldownPrefab;
     public Transform objContainer;
 
-    private PlayerStats p;
     private Animator a;
     private PlayerStamina ps;
     private EntityHealth ph;
@@ -34,23 +33,19 @@ public class PlayerAttackHandler : MonoBehaviour
     {
         a = GetComponent<Animator>();
         esm = GetComponent<EntityStatManager>();
-        p = GetComponent<EntityStatManager>()?.s as PlayerStats;
         ps = GetComponent<PlayerStamina>();
         ph = GetComponent<EntityHealth>();
         pm = GetComponent<PlayerMana>();
         pum = GetComponent<PlayerUpgradeManager>();
 
-        for (int i = 0; i < starting.Count; i++)
-            UpdateAttack(starting[i].type, starting[i]);
+        for (int i = 0; i < starting.Count; i++) UpdateAttack(starting[i].type, starting[i]);
     }
     private void OnDestroy()
     {
         if (attacks != null)
         {
             foreach (var attack in attacks)
-            {
                 if (attack != null) DestroyImmediate(attack, true);
-            }
             attacks.Clear();
         }
 
@@ -65,6 +60,7 @@ public class PlayerAttackHandler : MonoBehaviour
         }
         spawnedUIElements.Clear();
     }
+
     public bool HasAttack(AttackData a)
     {
         if (a == null || a.name == null) return false;
@@ -74,6 +70,7 @@ public class PlayerAttackHandler : MonoBehaviour
             if (attacks[i].name.Trim().Equals(n, StringComparison.OrdinalIgnoreCase)) return true;
         return false;
     }
+
     public AttackData FindAttackOfType(AttackType type)
     {
         for (int i = 0; i < attacks.Count; i++)
@@ -83,13 +80,14 @@ public class PlayerAttackHandler : MonoBehaviour
         }
         return null;
     }
+
     private void CreateButtonUI(AttackData attack)
     {
         GameObject uiObj = Instantiate(cooldownPrefab, objContainer);
         spawnedUIElements[attack.type] = uiObj;
 
         if (uiObj.TryGetComponent<PlayerAttackCooldownUI>(out var pacui))
-            pacui.Setup(this, p, attack.type, esm);
+            pacui.Setup(this, attack.type, esm);
 
         if (uiObj.TryGetComponent<Button>(out var b))
         {
@@ -97,9 +95,10 @@ public class PlayerAttackHandler : MonoBehaviour
             b.onClick.AddListener(() => PerformAttack(attackType));
         }
     }
+
     public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
     {
-        if (p == null || !p.isAlive || !p.canAttack || Time.timeScale == 0f) return;
+        if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f || Time.timeScale == 0f) return;
 
         AttackData selected = attacks.Find(atk => atk.type == type);
         if (selected == null) return;
@@ -107,15 +106,7 @@ public class PlayerAttackHandler : MonoBehaviour
         if (!bypassCooldown)
         {
             float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
-            float cdRedPct = type switch
-            {
-                AttackType.Basic => p.basicCdRedPct,
-                AttackType.Skill => p.skillCdRedPct,
-                AttackType.Ultimate => p.ultCdRedPct,
-                _ => 0f
-            };
-            float cooldown = selected.cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f) * Mathf.Clamp(1f - (cdRedPct * 0.01f), 0.1f, 0.9f);
-            if (Time.time - lastTime < cooldown) return;
+            if (Time.time - lastTime < GetEffCd(selected, esm)) return;
         }
 
         if (!noCost && !HandleStatChanges(selected)) return;
@@ -146,9 +137,10 @@ public class PlayerAttackHandler : MonoBehaviour
         };
 
         a.SetInteger(AttackIndexHash, attackIndex);
-        a.speed = Mathf.Max(0.1f, 1f + (p.attackSpeedPct * 0.01f));
+        a.speed = Mathf.Max(0.1f, 1f + (esm.GetStat(StatType.attackSpeedPct) * 0.01f));
         StartCoroutine(ResetAttackType(selected.animationLength));
     }
+
     private void HandleOrbitInteractions(AttackData attack)
     {
         if (attack == null) return;
@@ -159,6 +151,7 @@ public class PlayerAttackHandler : MonoBehaviour
         else if (attack.redirectOrbits) handler.RedirectOrbits(attack.redirectCount);
         else if (attack.explodeOrbits) handler.ExplodeOrbits(attack.redirectCount);
     }
+
     private void TriggerUpgradesOnAttack(AttackType type)
     {
         pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);
@@ -171,26 +164,25 @@ public class PlayerAttackHandler : MonoBehaviour
             default: break;
         }
     }
+
     public IEnumerator ResetAttackType(float delay)
     {
         yield return new WaitForSeconds(delay);
         a.SetInteger(AttackIndexHash, -1);
         a.speed = 1f;
     }
+
     public bool HandleStatChanges(AttackData attack)
     {
         if (attack == null) return false;
 
         pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
 
-        float totalStaminaCost = Mathf.Abs(attack.staminaCost + (p.EffMaxStamina * (attack.staminaCostPct* 0.01f))) * (1f + (p.stCostPct * 0.01f));
-        float totalHealthCost = Mathf.Abs(attack.healthCost + (p.EffMaxHp * (attack.healthCostPct * 0.01f)));
-        float totalManaCost = Mathf.Abs(attack.manaCost + (p.EffMaxMana * (attack.manaCostPct * 0.01f)));
+        var (totalHealthCost, totalStaminaCost, totalManaCost) = GetCosts(attack, esm);
 
         (totalHealthCost, totalStaminaCost) = HandleHexCast(totalHealthCost, totalStaminaCost);
 
-        if (totalStaminaCost > p.currentStamina || totalHealthCost > p.currentHp || totalManaCost > p.currentMana)
-            return false;
+        if (totalStaminaCost > esm.GetStat(StatType.CurrentStamina) || totalHealthCost > esm.GetStat(StatType.currentHp) || totalManaCost > esm.GetStat(StatType.CurrentMana)) return false;
 
         if (ps != null) ps.ChangeStamina(-totalStaminaCost);
         if (ph != null) ph.ChangeHealth(-totalHealthCost, 0f, true);
@@ -198,6 +190,18 @@ public class PlayerAttackHandler : MonoBehaviour
 
         return true;
     }
+
+    public static (int hp, int sp, int mp) GetCosts(AttackData attack, EntityStatManager esm)
+    {
+        if (attack == null || esm == null) return (0, 0, 0);
+
+        float totalStaminaCost = Mathf.Abs(attack.staminaCost + (esm.GetStat(StatType.EffMaxStamina) * (attack.staminaCostPct * 0.01f))) * (1f + (esm.GetStat(StatType.stCostPct) * 0.01f));
+        float totalHealthCost = Mathf.Abs(attack.healthCost + (esm.GetStat(StatType.EffMaxHp) * (attack.healthCostPct * 0.01f)));
+        float totalManaCost = Mathf.Abs(attack.manaCost + (esm.GetStat(StatType.EffMaxMana) * (attack.manaCostPct * 0.01f)));
+
+        return (Mathf.RoundToInt(totalHealthCost), Mathf.RoundToInt(totalStaminaCost), Mathf.RoundToInt(totalManaCost));
+    }
+
     public void UpdateAttack(AttackType type, AttackData newAttack)
     {
         if (newAttack == null) return;
@@ -241,39 +245,36 @@ public class PlayerAttackHandler : MonoBehaviour
             spawnedUIElements.Remove(type);
         }
     }
-    private (float finalHpCost, float finalStaminaCost) HandleHexCast(float hpCost, float staminaCost)
+
+    private (int finalHpCost, int finalStaminaCost) HandleHexCast(float hpCost, float staminaCost)
     {
-        if (!pum.HasUpgradeOfType<HexCast>() || p.currentStamina >= staminaCost)
-            return (hpCost, staminaCost);
+        if (!pum.HasUpgradeOfType<HexCast>() || esm.GetStat(StatType.CurrentStamina) >= staminaCost)
+            return (Mathf.RoundToInt(hpCost), Mathf.RoundToInt(staminaCost));
 
-        float missingStamina = staminaCost - p.currentStamina;
+        float missingStamina = staminaCost - esm.GetStat(StatType.CurrentStamina);
 
-        if (missingStamina >= p.currentHp) return (hpCost, staminaCost);
+        if (missingStamina >= esm.GetStat(StatType.currentHp))
+            return (Mathf.RoundToInt(hpCost), Mathf.RoundToInt(staminaCost));
 
-        float newStaminaCost = p.currentStamina;
+        float newStaminaCost = esm.GetStat(StatType.CurrentStamina);
         float newHpCost = hpCost + missingStamina;
 
-        return (newHpCost, newStaminaCost);
+        return (Mathf.RoundToInt(newHpCost), Mathf.RoundToInt(newStaminaCost));
     }
+
     public void AdvanceAllCooldowns(float pctAmt)
     {
         var keys = new List<AttackType>(lastAttackTimes.Keys);
         foreach (var type in keys) AdvanceCooldown(type, pctAmt);
     }
+
     public void AdvanceCooldown(AttackType type, float pctAmt)
     {
         if (!lastAttackTimes.ContainsKey(type)) return;
 
         float lastTime = lastAttackTimes[type];
-        float cooldown = attacks.Find(a => a.type == type)?.cooldown ?? 0f;
-        float cdRedPct = type switch
-        {
-            AttackType.Basic => p.basicCdRedPct,
-            AttackType.Skill => p.skillCdRedPct,
-            AttackType.Ultimate => p.ultCdRedPct,
-            _ => 0f
-        };
-        float effCd = cooldown * Mathf.Clamp(1f - (p.attackSpeedPct * 0.01f), 0.3f, 10f) * Mathf.Clamp(1f - (cdRedPct * 0.01f), 0.1f, 0.9f);
+
+        var effCd = GetEffCd(attacks.Find(a => a.type == type), esm);
 
         if (effCd <= 0f) return;
 
@@ -283,5 +284,19 @@ public class PlayerAttackHandler : MonoBehaviour
         float newLastTime = Time.time - ((1f - newCooldownRemainingPct) * effCd);
 
         lastAttackTimes[type] = newLastTime;
+    }
+
+    public static float GetEffCd(AttackData attack, EntityStatManager esm)
+    {
+        float cdrPct = attack.type switch
+        {
+            AttackType.Basic => esm.GetStat(StatType.basicCdRedPct),
+            AttackType.Skill => esm.GetStat(StatType.skillCdRedPct),
+            AttackType.Ultimate => esm.GetStat(StatType.ultCdRedPct),
+            _ => 0f
+        };
+        return attack.cooldown *
+            Mathf.Clamp(1f - (esm.GetStat(StatType.attackSpeedPct) * 0.01f), 0.3f, 10f) *
+            Mathf.Clamp(1f - (cdrPct * 0.01f), 0.1f, 0.9f);
     }
 }

@@ -12,7 +12,7 @@ public class AdditionalDamage : PlayerUpgrade
 
         if (!target.TryGetComponent<EntityHealth>(out var targetHealth)) return;
 
-        if (!player.TryGetComponent<EntityStatManager>(out var esm) || esm.s == null) return;
+        if (!player.TryGetComponent<EntityStatManager>(out var esm)) return;
 
         float bonusDamage = damageDealt * (pctAmt / 100f);
         if (bonusDamage <= 0f) return;
@@ -25,7 +25,7 @@ public class AdditionalDamage : PlayerUpgrade
             _ => Color.white
         };
 
-        DamagePacket dp = DamageCalculator.BuildDamagePacket(bonusDamage, type, esm.s, false, indicatorColor, player);
+        DamagePacket dp = DamagePacket.BuildDamagePacket(bonusDamage, type, false, indicatorColor, player);
         if (dp.GetTotalDamage() > 0f)
             targetHealth.TakeDamage(dp, true, player);
     }

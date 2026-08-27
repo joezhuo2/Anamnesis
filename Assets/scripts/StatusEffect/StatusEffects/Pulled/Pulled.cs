@@ -20,8 +20,8 @@ public class Pulled : StatusEffect
 
         if (disableMovement && target != null && target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            wasMovementDisabled = !esm.s.canMove;
-            esm.s.canMove = false;
+            wasMovementDisabled = esm.GetStat(StatType.CanMove) < 0.5f;
+            esm.AddStat(new StatBuff(StatType.CanMove, -1f));
         }
     }
 
@@ -56,7 +56,7 @@ public class Pulled : StatusEffect
         if (disableMovement && !wasMovementDisabled && target != null
             && target.TryGetComponent<EntityStatManager>(out var esm))
         {
-            esm.s.canMove = true;
+            esm.AddStat(new StatBuff(StatType.CanMove, 1f));
         }
     }
 }

@@ -35,17 +35,23 @@ public class Projectile : MonoBehaviour {
         hit = new();
         canTriggerAdd = true;
     }
+
     private void OnDestroy()
     {
         if (pd != null && pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null &&
             ownerObj.TryGetComponent<IOrbitRegister>(out var registrar))
             registrar.UnregisterOrbitingProjectile(this);
     }
+
     private void Start()
     {
-        effSpd = ownerObj != null ? ownerObj.TryGetComponent<EntityStatManager>(out var esm) ? pd.speed * (1f + (esm.s.projSpd * 0.01f)) : pd.speed : pd.speed;
+        effSpd = ownerObj != null ?
+            ownerObj.TryGetComponent<EntityStatManager>(out var esm) ?
+            pd.speed * (1f + (esm.GetStat(StatType.ProjSpd) * 0.01f)) :
+            pd.speed : pd.speed;
+
         pierced = 0;
-        damageSnapshot = DamageCalculator.CaptureSnapshot(pd, ownerObj);
+        damageSnapshot = ProjectileSnapshot.CaptureSnapshot(pd, ownerObj);
         HandleSize();
         HandleDirection();
         rb = GetComponent<Rigidbody2D>();
@@ -79,6 +85,7 @@ public class Projectile : MonoBehaviour {
         if (other.TryGetComponent<EntityStatManager>(out var statManager) && ownerObj != other.gameObject)
             HandleHitEntity(other.gameObject);
     }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (pierced >= pd.numPierce) return;
@@ -87,6 +94,7 @@ public class Projectile : MonoBehaviour {
         if (other.TryGetComponent<EntityStatManager>(out var statManager) && ownerObj != other.gameObject)
             HandleHitEntity(other.gameObject);
     }
+
     private void HandleHitEntity(GameObject target)
     {
         if (target == null || ownerObj == null || target == ownerObj) return;
@@ -99,7 +107,7 @@ public class Projectile : MonoBehaviour {
 
         if (targetIsPlayer == isPlayer || targetIsEnemy == isEnemy) return;
 
-        DamagePacket packet = DamageCalculator.BuildDamagePacket(pd, damageSnapshot, true, ownerObj);
+        DamagePacket packet = DamagePacket.BuildDamagePacket(pd, damageSnapshot, true, ownerObj);
 
         eh.TakeDamage(packet, pd.bypassIFrames || isPlayer, ownerObj, damageSnapshot.resPen, damageSnapshot.defShred);
 
@@ -107,7 +115,9 @@ public class Projectile : MonoBehaviour {
         {
             Vector2 kbDir = (rb2d.transform.position - transform.position).normalized;
 
-            float kbf = ownerObj.TryGetComponent<EntityStatManager>(out var esm) ? pd.kbForce * (1f + (esm.s.kbPct * 0.01f)) : pd.kbForce;
+            float kbf = ownerObj.TryGetComponent<EntityStatManager>(out var esm) ?
+                pd.kbForce * (1f + (esm.GetStat(StatType.kbPct) * 0.01f)) : pd.kbForce;
+
             if (target.TryGetComponent<EnemyMovement>(out var em))
                 em.ApplyKnockback(kbDir, kbf, pd.knockbackTime);
             else if (target.TryGetComponent<PlayerMovement>(out var pm))
@@ -150,6 +160,7 @@ public class Projectile : MonoBehaviour {
                 summonHandler.TrySummon(out _, target.transform.position);
         }
     }
+
     private IEnumerator DestroyProjectileAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -171,13 +182,15 @@ public class Projectile : MonoBehaviour {
 
         spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance));
     }
+
     private void HandleSize()
     {
-        if (!ownerObj.TryGetComponent<EntityStatManager>(out var esm) && esm.s.aoePct == 0) return;
+        if (!ownerObj.TryGetComponent<EntityStatManager>(out var esm) && esm.GetStat(StatType.aoePct) == 0) return;
 
-        float sizeMult = pd.size + (esm.s.aoePct * 0.01f);
+        float sizeMult = pd.size + (esm.GetStat(StatType.aoePct) * 0.01f);
         transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
     }
+
     private void HandleDirection()
     {
         if (ownerObj == null || pd == null) return;
@@ -195,6 +208,7 @@ public class Projectile : MonoBehaviour {
         float finalAngle = pd.randomDir ? Random.Range(0f, 360f) : pd.useTrueAngle ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
         transform.rotation = Quaternion.Euler(0f, 0f, finalAngle);
     }
+
     private void InitBoomerang()
     {
         if (pd.maxBoomerangDist > 0f)
@@ -205,6 +219,7 @@ public class Projectile : MonoBehaviour {
             boomerangDecel = (effSpd * effSpd) / (2f * pd.maxBoomerangDist);
         }
     }
+
     private void HandleMovement(bool start)
     {
         if (rb == null || ownerObj == null) return;
@@ -243,6 +258,7 @@ public class Projectile : MonoBehaviour {
 
         if (boomerangActive) UpdateBoomerang();
     }
+
     private void HandleFollowSourceMovement()
     {
         if (sourceRb == null)
@@ -254,6 +270,7 @@ public class Projectile : MonoBehaviour {
 
         rb.linearVelocity = sourceRb.linearVelocity;
     }
+
     private void UpdateBoomerang()
     {
         float dt = Time.fixedDeltaTime;
@@ -278,6 +295,7 @@ public class Projectile : MonoBehaviour {
             rb.linearVelocity = -dir.normalized * boomerangSpeed;
         }
     }
+
     private void FollowTarget()
     {
         if (followTarget == null) return;
@@ -289,6 +307,7 @@ public class Projectile : MonoBehaviour {
             rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, newDir * effSpd, 0.1f);
         }
     }
+
     private void HandleOrbitMovement()
     {
         if (orbitTarget == null || !orbitTarget.gameObject.activeInHierarchy)
@@ -340,6 +359,7 @@ public class Projectile : MonoBehaviour {
 
         rb.linearVelocity = orbitalVelocity + radialCorrection + (toDesired * 5f);
     }
+
     private Transform FindClosestEnemyInDirection()
     {
         Transform closest = null;
@@ -358,7 +378,7 @@ public class Projectile : MonoBehaviour {
             float dot = Vector2.Dot(dir.normalized, toEnemy);
             if (dot <= 0) continue;
 
-            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && !esm.s.isAlive && esm.s.currentHp <= 0) continue;
+            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && esm.GetStat(StatType.isAlive) <= 0f && esm.GetStat(StatType.currentHp) <= 0) continue;
 
             float dist = Vector2.Distance(transform.position, col.transform.position);
             if (dist < closestDist)
@@ -367,10 +387,9 @@ public class Projectile : MonoBehaviour {
                 closest = col.transform;
             }
         }
-
         return closest;
     }
-    private void SetTarget(Transform target) => followTarget = target;
+
     private Transform FindClosestTargetInRange(float range, bool searchForPlayer)
     {
         Transform closest = null;
@@ -385,7 +404,7 @@ public class Projectile : MonoBehaviour {
 
             if (hit.Contains(col.gameObject)) continue;
 
-            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && !esm.s.isAlive && esm.s.currentHp <= 0) continue;
+            if (col.gameObject.TryGetComponent<EntityStatManager>(out var esm) && esm.GetStat(StatType.isAlive) <= 0f && esm.GetStat(StatType.currentHp) <= 0) continue;
 
             float dist = Vector2.Distance(transform.position, col.transform.position);
             if (dist < minDist)
@@ -396,6 +415,7 @@ public class Projectile : MonoBehaviour {
         }
         return closest;
     }
+
     public void Launch(Vector2 direction)
     {
         orbitCancelled = true;
@@ -403,6 +423,7 @@ public class Projectile : MonoBehaviour {
         dir = direction.normalized;
         if (rb != null) rb.linearVelocity = dir * effSpd;
     }
+
     public void Explode()
     {
         if (pd.additionalAttack != null && pd.additionalAttack.projectilePrefab != null && ProjectileSpawner.Instance != null)
@@ -413,6 +434,7 @@ public class Projectile : MonoBehaviour {
         }
         Destroy(gameObject);
     }
+
     private void ApplyEffect(GameObject target, EffectData ed)
     {
         if (ed.effect == null) return;
@@ -427,12 +449,14 @@ public class Projectile : MonoBehaviour {
                 sem.AddEffectAfterDelay(ed.effect, ownerObj, 0.1f, gameObject);
         }
     }
+
     private System.Collections.IEnumerator RemoveFromHitHistory(GameObject target, float delay)
     {
         yield return new WaitForSeconds(delay);
         if (hit != null && target != null) hit.Remove(target);
         canTriggerAdd = true;
     }
+
     public static (float hp, float stamina, float mana) CalculateStatGains(GameObject target, AttackData a, float totalDmg = 0f)
     {
         if (target == null || !target.TryGetComponent<EntityStatManager>(out var esm)) return (0f, 0f, 0f);
@@ -449,12 +473,13 @@ public class Projectile : MonoBehaviour {
         }
         else if (totalDmg > 0f)
         {
-            totalStamina += a.staminaPctGainOnHit * 0.01f * esm.s.maxStamina;
-            totalHp += a.healthPctGainOnHit * 0.01f * esm.s.maxHp;
-            totalMana += a.manaPctGainOnHit * 0.01f * esm.s.maxMana;
+            totalStamina += a.staminaPctGainOnHit * 0.01f * esm.GetStat(StatType.EffMaxStamina);
+            totalHp += a.healthPctGainOnHit * 0.01f * esm.GetStat(StatType.EffMaxHp);
+            totalMana += a.manaPctGainOnHit * 0.01f * esm.GetStat(StatType.EffMaxMana);
         }
         return (totalHp, totalStamina, totalMana);
     }
+
     private void TriggerStatGains(float hp, float stamina, float mana, GameObject target)
     {
         if (target == null) return;

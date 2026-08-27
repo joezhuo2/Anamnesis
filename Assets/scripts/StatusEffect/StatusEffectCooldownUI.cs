@@ -7,18 +7,16 @@ public class StatusEffectCooldownUI : MonoBehaviour
     public Image iconImage;
 
     private StatusEffect cse;
-    private PlayerStats cps;
     private EntityStatManager cesm;
 
-    public void Setup(StatusEffect se, PlayerStats ps, EntityStatManager esm)
+    public void Setup(StatusEffect se, EntityStatManager esm)
     {
         cse = se;
-        cps = ps;
         cesm = esm;
 
         if (cse != null && cse.icon != null && iconImage != null) iconImage.sprite = cse.icon;
 
-        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupTooltipData(cse, cps, cesm);
+        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupTooltipData(cse, cesm);
 
         if (cooldownImage != null)
         {
@@ -31,13 +29,13 @@ public class StatusEffectCooldownUI : MonoBehaviour
     }
     private void Update()
     {
-        if (cse == null || !cesm.s.isAlive)
+        if (cse == null || cesm.GetStat(StatType.isAlive) <= 0f)
         {
             Destroy(gameObject);
             return;
         }
 
-        float effDur = cse.isBuff ? cse.duration : cse.duration * (1f - (cesm.s.effectRes * 0.01f));
+        float effDur = cse.isBuff ? cse.duration : cse.duration * (1f - (cesm.GetStat(StatType.EffectRes) * 0.01f));
 
         if (effDur <= 0f)
         {

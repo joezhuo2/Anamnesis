@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(PlayerStamina))]
 public class PlayerUI : MonoBehaviour
 {
     public GameObject resourceHoverZone;
@@ -32,23 +31,29 @@ public class PlayerUI : MonoBehaviour
     private int lastMaxStamina = -1;
     private int lastLevel = -1;
     private float lastXp = -1;
-    [HideInInspector] public PlayerStats p;
+    private EntityStatManager esm;
+    private int CurMana => Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana));
+    private int CurHp => Mathf.RoundToInt(esm.GetStat(StatType.currentHp));
+    private int CurStamina => Mathf.RoundToInt(esm.GetStat(StatType.CurrentStamina));
+    private int MaxMana => Mathf.RoundToInt(esm.GetStat(StatType.EffMaxMana));
+    private int MaxHp => Mathf.RoundToInt(esm.GetStat(StatType.EffMaxHp));
+    private int MaxStamina => Mathf.RoundToInt(esm.GetStat(StatType.EffMaxStamina));
+    private int Level => Mathf.RoundToInt(esm.GetStat(StatType.Level));
+    private int Xp => Mathf.RoundToInt(esm.GetStat(StatType.Xp));
+    private int XpReq => Mathf.RoundToInt(esm.GetStat(StatType.XpReq));
+    private bool Alive => Mathf.RoundToInt(esm.GetStat(StatType.isAlive)) > 0;
 
     private void Start()
     {
-        p = GetComponent<EntityStatManager>()?.s as PlayerStats;
-        UpdateUI();
-        if (p != null) Initialize(p);
-    }
-    public void Initialize(PlayerStats stats)
-    {
+        if (esm == null) esm = GetComponent<EntityStatManager>();
         if (resourceHoverZone.TryGetComponent<TooltipTrigger>(out var trigger))
-            trigger.SetupTooltipData(stats);
+            trigger.SetupTooltipData(esm);
+        UpdateUI();
     }
     private void Update() => UpdateUI();
     private void UpdateUI()
     {
-        if (p == null) return;
+        if (esm == null) return;
         UpdateManaBar();
         UpdateHealthBar();
         UpdateXpBar();
@@ -56,64 +61,61 @@ public class PlayerUI : MonoBehaviour
     }
     private void UpdateManaBar()
     {
-        if (p.currentMana == lastMana && p.EffMaxMana == lastMaxMana) return;
+        if (CurMana == lastMana && MaxMana == lastMaxMana) return;
 
-        manaBar.maxValue = p.EffMaxMana;
-        manaBar.value = p.currentMana;
+        manaBar.maxValue = MaxMana;
+        manaBar.value = CurMana;
+        manaText.text = $"{CurMana}/{MaxMana}";
 
-        manaText.text = $"{p.currentMana}/{p.EffMaxMana}";
-
-        lastMana = p.currentMana;
-        lastMaxMana = Mathf.RoundToInt(p.EffMaxMana);
+        lastMana = CurMana;
+        lastMaxMana = MaxMana;
     }
     private void UpdateHealthBar()
     {
-        if (!p.isAlive)
+        if (!Alive)
         {
             if (healthUI.value != 0)
             {
-                healthUI.maxValue = p.EffMaxHp;
+                healthUI.maxValue = MaxHp;
                 healthUI.value = 0;
-                healthText.text = $"0/{p.EffMaxHp}";
+                healthText.text = $"0/{MaxHp}";
             }
 
             lastHp = 0;
-            lastMaxHp = p.EffMaxHp;
+            lastMaxHp = MaxHp;
             return;
         }
 
-        if (p.currentHp == lastHp && p.EffMaxHp == lastMaxHp) return;
+        if (CurHp == lastHp && MaxHp == lastMaxHp) return;
 
-        healthUI.maxValue = p.EffMaxHp;
-        healthUI.value = p.currentHp;
-        healthText.text = $"{p.currentHp}/{p.EffMaxHp}";
+        healthUI.maxValue = MaxHp;
+        healthUI.value = CurHp;
+        healthText.text = $"{CurHp}/{MaxHp}";
 
-        lastHp = p.currentHp;
-        lastMaxHp = p.EffMaxHp;
+        lastHp = CurHp;
+        lastMaxHp = MaxHp;
     }
     private void UpdateStaminaBar()
     {
-        if (!p.isAlive) return;
+        if (!Alive || (CurStamina == lastStamina && MaxStamina == lastMaxStamina)) return;
 
-        if (p.currentStamina == lastStamina && p.EffMaxStamina == lastMaxStamina) return;
+        staminaUI.maxValue = MaxStamina;
+        staminaUI.value = CurStamina;
+        staminaText.text = $"{CurStamina}/{MaxStamina}";
 
-        staminaUI.maxValue = p.EffMaxStamina;
-        staminaUI.value = p.currentStamina;
-        staminaText.text = $"{p.currentStamina}/{p.EffMaxStamina}";
-
-        lastStamina = p.currentStamina;
-        lastMaxStamina = Mathf.RoundToInt(p.EffMaxStamina);
+        lastStamina = CurStamina;
+        lastMaxStamina = MaxStamina;
     }
     private void UpdateXpBar()
     {
-        if (p.level == lastLevel && p.exp == lastXp) return;
+        if (!Alive || (Level == lastLevel && Mathf.Abs(Xp - lastXp) < 0.01f)) return;
 
-        xpBar.maxValue = p.ExpReq;
-        xpBar.value = p.exp;
-        levelText.text = $"Lv.{p.level}";
-        xpText.text = $"{p.exp:F0}/{p.ExpReq:F0}";
+        xpBar.maxValue = XpReq;
+        xpBar.value = Xp;
+        levelText.text = $"Lv.{Level}";
+        xpText.text = $"{Xp:F0}/{XpReq:F0}";
 
-        lastLevel = p.level;
-        lastXp = p.exp;
+        lastLevel = Level;
+        lastXp = Xp;
     }
 }
