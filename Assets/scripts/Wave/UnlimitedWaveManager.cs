@@ -5,42 +5,26 @@ using UnityEngine;
 public class UnlimitedWaveManager : WaveManager
 {
     [Header("Wave Scaling")]
-    [Tooltip("Center point enemies spawn around.")]
     public Vector2 spawnLocation;
-    [Tooltip("Max enemies alive at once.")]
     public int maxCurrentEnemies = 10;
-    [Tooltip("Base max total enemies for wave 1. Increases by 1-2 randomly every wave.")]
     public int baseMaxTotalEnemies = 20;
-    [Tooltip("Base enemy level for wave 1. Increases by 1 every wave.")]
     public int baseEnemyLevel = 1;
-    [Tooltip("Base min spawn frequency (seconds between spawns).")]
     public float minSpawnFrequency = 1f;
-    [Tooltip("Base max spawn frequency (seconds between spawns).")]
     public float maxSpawnFrequency = 3f;
-    [Tooltip("Spawn frequency reduction per wave (spawns get faster).")]
     public float spawnSpeedIncreasePerWave = 0.05f;
-    [Tooltip("Min reward choices offered after a wave.")]
     public int minRewardChoices = 2;
-    [Tooltip("Max reward choices offered after a wave.")]
     public int maxRewardChoices = 4;
 
     [Header("Boss Settings")]
-    [Tooltip("Boss bar prefab used for ALL bosses.")]
     public GameObject bossBarPrefab;
-    [Tooltip("Status effect display prefab used for ALL bosses.")]
     public GameObject statusEffectDisplayPrefab;
-    [Tooltip("All bosses that CAN spawn during any boss wave (randomly selected).")]
-    public List<GameObject> bossPrefabs = new();
-    [Tooltip("Chance (%) any regular wave turns into a boss wave.")]
-    public float bossWaveChance = 10f;
-    [Tooltip("Additional chance (%) a regular wave turns into a boss wave if the previous wave was NOT a boss wave.")]
-    public float bossWaveChanceIfPreviousNotBoss = 20f;
-    [Tooltip("Minimum number of waves between boss waves.")]
+    public float bossWaveChance = 5f;
+    public float bossWaveChanceIfPreviousNotBoss = 10f;
     public int minWavesBetweenBossWaves = 5;
 
-    [Header("Enemy Pool")]
-    [Tooltip("All enemies that CAN spawn during any wave (randomly selected).")]
+    [Header("Enemy Pools")]
     public List<GameObject> enemyPrefabs = new();
+    public List<GameObject> bossPrefabs = new();
 
     private int lastBossWave;
     private bool isBossWave = false;

@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 3468433735762079231}
   - component: {fileID: 7412551375653873677}
   - component: {fileID: 5476031562053923492}
-  - component: {fileID: 5810120444494419227}
   - component: {fileID: 8195867897408456428}
   - component: {fileID: 467692590264923639}
   - component: {fileID: 5756017289614474316}
   - component: {fileID: 500516171016585450}
   - component: {fileID: 375165746433560564}
   - component: {fileID: 404276272350105028}
+  - component: {fileID: 8131594440183024660}
   m_Layer: 0
   m_Name: Cultist Clone
   m_TagString: Enemy
@@ -107,21 +107,6 @@ MonoBehaviour:
   stoppingDistance: 4
   flipRotation: 0
   es: {fileID: 0}
---- !u!114 &5810120444494419227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7457594691964507130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4274b1e4542f000428bc3b26c85b915a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityStatManager
-  baseStats: {fileID: 11400000, guid: 4609b008718f9ec419d3201206862ec8, type: 2}
-  s: {fileID: 0}
-  currentBuffs: []
 --- !u!114 &8195867897408456428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,3 +262,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.25, y: 0.32}
   m_Direction: 0
+--- !u!114 &8131594440183024660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7457594691964507130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5931b0066360d094fb7acef0229eda9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStatManager
+  baseStats: {fileID: 11400000, guid: 4609b008718f9ec419d3201206862ec8, type: 2}
+  s: {fileID: 0}
+  currentBuffs: []

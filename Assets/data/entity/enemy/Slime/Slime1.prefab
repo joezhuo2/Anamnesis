@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 673731369249322081}
   - component: {fileID: 55484610694463375}
   - component: {fileID: 6590206884124114573}
-  - component: {fileID: 871356776485315989}
   - component: {fileID: 7853728701400887008}
   - component: {fileID: 1197405272322073483}
   - component: {fileID: 6406472304282653773}
@@ -19,6 +18,7 @@ GameObject:
   - component: {fileID: 7587272326778900899}
   - component: {fileID: 1151520529542700502}
   - component: {fileID: 2355546210048023216}
+  - component: {fileID: 2558213821666094439}
   m_Layer: 0
   m_Name: Slime1
   m_TagString: Enemy
@@ -80,21 +80,6 @@ MonoBehaviour:
   stoppingDistance: 0.85
   flipRotation: 0
   es: {fileID: 0}
---- !u!114 &871356776485315989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1470929175521350649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4274b1e4542f000428bc3b26c85b915a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityStatManager
-  baseStats: {fileID: 11400000, guid: 9c58e2e0cf903214dbe4e53206c8370c, type: 2}
-  s: {fileID: 0}
-  currentBuffs: []
 --- !u!114 &7853728701400887008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,3 +259,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.0047532916, y: -0.020597469}
   m_Radius: 0.09923714
+--- !u!114 &2558213821666094439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470929175521350649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5931b0066360d094fb7acef0229eda9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStatManager
+  baseStats: {fileID: 11400000, guid: 9c58e2e0cf903214dbe4e53206c8370c, type: 2}
+  s: {fileID: 0}
+  currentBuffs: []

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class RegularWaveButtonController : MonoBehaviour
 {
-    [Tooltip("The base WaveManager to start. If empty, found in the scene (excludes UnlimitedWaveManager).")]
     public WaveManager waveManager;
 
     private void Start()
@@ -14,11 +13,8 @@ public class RegularWaveButtonController : MonoBehaviour
 
         GetComponent<Button>().onClick.AddListener(OnClick);
 
-        var tt = gameObject.AddComponent<TooltipTrigger>();
-        tt.SetupTooltipData(
-            "Regular Waves",
-            "Play the standard wave sequence.\nWaves follow the configured sequence with fixed enemy counts, levels, and rewards."
-        );
+        if (gameObject.TryGetComponent<TooltipTrigger>(out var tt))
+            tt.SetupTooltipData("Regular Waves", "Play the standard wave sequence.\nWaves follow the configured sequence with fixed enemy counts, levels, and rewards.");
     }
 
     private void OnClick()

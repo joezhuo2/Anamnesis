@@ -20,7 +20,6 @@ public class RewardButton : MonoBehaviour
     private MilestoneRewardData milestoneRewardData;
     private RewardType type = RewardType.Basic;
     private bool isCorrupted;
-
     private Action<GeneratedReward> onStatClaimedCallback;
     private Action<AttackReward> onAttackClaimedCallback;
     private Action<PlayerUpgradeReward> onPlayerUpgradeClaimedCallback;
@@ -54,6 +53,7 @@ public class RewardButton : MonoBehaviour
 
         LinkButtonComponent();
     }
+
     public void CorruptButton(string statChangeLine, float corruptMult)
     {
         if (isCorrupted) return;
@@ -77,6 +77,7 @@ public class RewardButton : MonoBehaviour
 
         LinkButtonComponent();
     }
+
     public void Setup(AttackReward attackReward, Action<AttackReward> claimCallback)
     {
         attackRewardData = attackReward;
@@ -96,6 +97,7 @@ public class RewardButton : MonoBehaviour
 
         LinkButtonComponent();
     }
+
     public void Setup(PlayerUpgradeReward upgradeReward, Action<PlayerUpgradeReward> claimCallback)
     {
         playerUpgradeRewardData = upgradeReward;
@@ -115,6 +117,7 @@ public class RewardButton : MonoBehaviour
 
         LinkButtonComponent();
     }
+
     public void Setup(MilestoneRewardData milestoneReward, Action<MilestoneRewardData> claimCallback)
     {
         milestoneRewardData = milestoneReward;
@@ -133,6 +136,7 @@ public class RewardButton : MonoBehaviour
 
         LinkButtonComponent();
     }
+
     private void LinkButtonComponent()
     {
         if (TryGetComponent<Button>(out var btn))
@@ -141,6 +145,7 @@ public class RewardButton : MonoBehaviour
             btn.onClick.AddListener(HandleClick);
         }
     }
+
     private void HandleClick()
     {
         switch (type)

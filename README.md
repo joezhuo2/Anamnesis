@@ -89,7 +89,6 @@ Each enemies have their own stats, attack sets, movement patterns, behavior, and
 - **Rendering:** Universal Render Pipeline (2D)
 - **Input:** New Input System (`PlayerControls.inputactions`)
 - **UI:** uGUI + TextMeshPro
-- **Versioning:** [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) + [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## Project Structure
 
@@ -97,29 +96,28 @@ Each enemies have their own stats, attack sets, movement patterns, behavior, and
 Assets/
 ├── New.unity                  # Main game scene (WaveManager, SkillTree, Player UI)
 ├── data/                      # ScriptableObject data (attacks, entities, waves, skill tree)
-│   ├── attacks/               # Player & enemy AttackData
-│   ├── entity/                # Enemy stats, attacks & data
+│   ├── entity/                # Enemy/Player base stats, attacks, animation data, assets, and prefabs
 │   ├── images/                # Images assets
-│   ├── PlayerUpgrade/         # Upgrade ScriptableObjects
-│   ├── prefabs/               # Player, enemies, UI prefabs
-│   ├── SkillTree/             # Skill tree definition & node assets
+│   ├── PlayerData/            # Player attacks, upgrades, skill tree data, controls
+│   ├── prefabs/               # UI element prefabs
 │   └── WaveData/              # Wave sequences
 └── scripts/
-    ├── Entity/                # Player, Enemy, stats, health, levelling, summoning, gear, XP
-    ├── Projectile/            # Projectiles, damage calculator, attack data
+    ├── Core/                  # Interfaces
+    ├── Entity/                # Player, Enemy, stats, health, levelling, summoning, XP
+    ├── Items/                 # items, gear
+    ├── Misc/                  # Game Controller
+    ├── Projectile/            # Projectiles/Attack data, damage calculator
     ├── StatusEffect/          # Status effect system & implementations
     ├── SkillTree/             # Skill tree manager, UI, pan/zoom
-    ├── Wave/                  # WaveManager, UnlimitedWaveManager, rewards, anomalies, enemy spawner
-    ├── Items/                 # Item & gear definitions
-    ├── Misc/                  # GameController, other misc files
     ├── TextIndicator/         # Floating damage numbers, XP/Gold indicators
+    ├── Wave/                  # WaveManager, UnlimitedWaveManager, rewards, anomalies, enemy spawner
 ```
 
 ## Getting Started
 
 1. Open the project in **Unity 6000.4.6f1** (or newer).
 2. Open the main scene: `Assets/New.unity`.
-3. Press **Play**.
+3. Press **Play** or **File > Build and Run (`Ctrl + B`)**
 
 > **Note:** The build settings must include `Assets/New.unity` — `Assets/data/Scenes/SampleScene.unity` is an empty placeholder scene.
 

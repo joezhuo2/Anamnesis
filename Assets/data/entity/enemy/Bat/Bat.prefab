@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 4137244325977209336}
   - component: {fileID: 3089255320807675699}
   - component: {fileID: 3113327606595006097}
-  - component: {fileID: 6910201490480554212}
   - component: {fileID: 4889124339367801314}
   - component: {fileID: 2743646851270103200}
   - component: {fileID: 6413299819044753431}
   - component: {fileID: 7904150509549217220}
   - component: {fileID: 8199857906729673876}
   - component: {fileID: 6293544737005535111}
+  - component: {fileID: 702269876702384385}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Enemy
@@ -107,21 +107,6 @@ MonoBehaviour:
   stoppingDistance: 3
   flipRotation: 1
   es: {fileID: 0}
---- !u!114 &6910201490480554212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8832260180589784993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4274b1e4542f000428bc3b26c85b915a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityStatManager
-  baseStats: {fileID: 11400000, guid: 04d738412cef07445bf4eb4a0b9ef024, type: 2}
-  s: {fileID: 0}
-  currentBuffs: []
 --- !u!114 &4889124339367801314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,3 +261,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.12, y: 0.24}
   m_Direction: 0
+--- !u!114 &702269876702384385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8832260180589784993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5931b0066360d094fb7acef0229eda9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStatManager
+  baseStats: {fileID: 11400000, guid: 04d738412cef07445bf4eb4a0b9ef024, type: 2}
+  s: {fileID: 0}
+  currentBuffs: []

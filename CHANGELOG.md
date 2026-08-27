@@ -5,7 +5,19 @@ All *notable* changes to Anamnesis are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project *roughly* follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [v0.2.8_1] - 2026-08-26
+# [v0.2.8_2] - 2026-08-26
+
+### Updated
+- folder structure in `README.md`
+- folder structure in `data/entity/player`
+
+### Removed
+- unlimited wave manager tooltips that area already self explanatory
+
+### Changed
+- split `EntityStatManager` into `EntityStatManager` and `EnemyStatManager` (one used for players, the other used for scaling enemies to their level)
+
+## [v0.2.8_1] - 2026-08-26
 
 ### Updated
 - cleaned up folder structure for wave/anomaly system

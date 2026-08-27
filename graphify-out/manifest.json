@@ -1,10 +1,4 @@
 {
-  ".VSCodeCounter/2026-08-18_09-03-45/results.json": {
-    "mtime": 1787058225.328919,
-    "seen": 1787538805.3413813,
-    "ast_hash": "804c9a0dd4e0dd3a730593ee499df837",
-    "semantic_hash": ""
-  },
   ".vscode/extensions.json": {
     "mtime": 1778631386.525541,
     "seen": 1787538805.3413825,
@@ -647,18 +641,6 @@
     "ast_hash": "15edf035a66e4e07c9fb4df04305803d",
     "semantic_hash": ""
   },
-  "Assets/scripts/Wave/AnomalyButtonUI.cs": {
-    "mtime": 1786370967.3123915,
-    "seen": 1787538805.3414838,
-    "ast_hash": "dfd6df061a8f9e869805ca8a2dc1f858",
-    "semantic_hash": ""
-  },
-  "Assets/scripts/Wave/AnomalyInstance.cs": {
-    "mtime": 1786370421.4126718,
-    "seen": 1787538805.3414843,
-    "ast_hash": "31d4270b77278588594020011455b78f",
-    "semantic_hash": ""
-  },
   "Assets/scripts/Wave/Anomaly/AnomalyData.cs": {
     "mtime": 1787437202.5193956,
     "seen": 1787538805.341485,
@@ -731,42 +713,6 @@
     "ast_hash": "eeb26e313b89cd9334b828428a4847ef",
     "semantic_hash": ""
   },
-  ".VSCodeCounter/2026-08-18_09-03-45/details.md": {
-    "mtime": 1787058225.424888,
-    "seen": 1787538805.3415089,
-    "ast_hash": "ee38e6eeacd209f3455f81fe059222a4",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-45/diff-details.md": {
-    "mtime": 1787058225.424888,
-    "seen": 1787538805.3415093,
-    "ast_hash": "6eea9714a6b7ef5383b0bdb08bf71b7c",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-45/diff.md": {
-    "mtime": 1787058225.424888,
-    "seen": 1787538805.3415098,
-    "ast_hash": "79105254a1aa1de36a255fba86c27824",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-45/diff.txt": {
-    "mtime": 1787058225.3760135,
-    "seen": 1787538805.3415108,
-    "ast_hash": "6b65e51a0576bf43833d680d7210b4e0",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-45/results.md": {
-    "mtime": 1787058225.424888,
-    "seen": 1787538805.3415112,
-    "ast_hash": "c13600deaad660a0325fc2709bb7a3cb",
-    "semantic_hash": ""
-  },
-  ".VSCodeCounter/2026-08-18_09-03-45/results.txt": {
-    "mtime": 1787058225.3602667,
-    "seen": 1787538805.3415117,
-    "ast_hash": "9a9edaed3c1730c8296b10cd72807858",
-    "semantic_hash": ""
-  },
   "Assets/TextMesh Pro/Examples & Extras/Fonts/Anton OFL.txt": {
     "mtime": 1721760928.0,
     "seen": 1787538805.3415124,
@@ -822,9 +768,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787775916.7812994,
-    "seen": 1787775918.1734047,
-    "ast_hash": "93a488b5c179fd710d0e7674700b39fc",
+    "mtime": 1787776294.715711,
+    "seen": 1787776317.470416,
+    "ast_hash": "339e6b821b5fa630b2f3de88262eefc6",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -1869,6 +1815,60 @@
     "mtime": 1782002438.7432632,
     "seen": 1787775918.1735628,
     "ast_hash": "72eaae712421928169b0543d45931700",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-26_16-26-38/results.json": {
+    "mtime": 1787775998.3937802,
+    "seen": 1787776317.47017,
+    "ast_hash": "49cc7bad4fed51f50b847c3265e75bb2",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Wave/Anomaly/AnomalyButtonUI.cs": {
+    "mtime": 1786370967.3123915,
+    "seen": 1787776317.470341,
+    "ast_hash": "dfd6df061a8f9e869805ca8a2dc1f858",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Wave/Anomaly/AnomalyInstance.cs": {
+    "mtime": 1786370421.4126718,
+    "seen": 1787776317.470345,
+    "ast_hash": "31d4270b77278588594020011455b78f",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-26_16-26-38/details.md": {
+    "mtime": 1787775998.442865,
+    "seen": 1787776317.4703922,
+    "ast_hash": "ce1d8c5c643a9b62b2bbc54b20df2f57",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-26_16-26-38/diff-details.md": {
+    "mtime": 1787775998.442865,
+    "seen": 1787776317.4703937,
+    "ast_hash": "8da0ced76203ea44e91252eb7adab957",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-26_16-26-38/diff.md": {
+    "mtime": 1787775998.4423513,
+    "seen": 1787776317.470395,
+    "ast_hash": "d45a4bdfa5fe67a954f02365952d160e",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-26_16-26-38/diff.txt": {
+    "mtime": 1787775998.4174767,
+    "seen": 1787776317.4703965,
+    "ast_hash": "2ccf4f67d1a59416fe7f76be0134e55c",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-26_16-26-38/results.md": {
+    "mtime": 1787775998.4398468,
+    "seen": 1787776317.4703972,
+    "ast_hash": "d90a47bc05c625717ea951eb805443c5",
+    "semantic_hash": ""
+  },
+  ".VSCodeCounter/2026-08-26_16-26-38/results.txt": {
+    "mtime": 1787775998.4077559,
+    "seen": 1787776317.4703982,
+    "ast_hash": "f10971cdbfcfc4e1821627143be02497",
     "semantic_hash": ""
   }
 }

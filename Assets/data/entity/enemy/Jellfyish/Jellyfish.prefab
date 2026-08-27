@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 6118871866762876679}
   - component: {fileID: 6480515763280770374}
   - component: {fileID: 6849299906001362288}
-  - component: {fileID: 1425416703680794250}
   - component: {fileID: 2647219220679175777}
   - component: {fileID: 6410795369213658342}
   - component: {fileID: 7472551075778246445}
   - component: {fileID: 5829994579436369889}
   - component: {fileID: 1488387932906524054}
   - component: {fileID: 767143972672191967}
+  - component: {fileID: 5265354297847661027}
   m_Layer: 0
   m_Name: Jellyfish
   m_TagString: Enemy
@@ -107,21 +107,6 @@ MonoBehaviour:
   stoppingDistance: 3
   flipRotation: 0
   es: {fileID: 0}
---- !u!114 &1425416703680794250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4826314347224335878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4274b1e4542f000428bc3b26c85b915a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityStatManager
-  baseStats: {fileID: 11400000, guid: 911a3b273806c4d45981183f1dcc7267, type: 2}
-  s: {fileID: 0}
-  currentBuffs: []
 --- !u!114 &2647219220679175777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,3 +262,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.16, y: 1.89}
   m_Direction: 0
+--- !u!114 &5265354297847661027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826314347224335878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5931b0066360d094fb7acef0229eda9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStatManager
+  baseStats: {fileID: 11400000, guid: 911a3b273806c4d45981183f1dcc7267, type: 2}
+  s: {fileID: 0}
+  currentBuffs: []
