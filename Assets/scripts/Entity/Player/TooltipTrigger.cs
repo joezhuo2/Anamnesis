@@ -19,7 +19,11 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerExit(PointerEventData eventData) => HideTooltip();
     private void OnDisable() => HideTooltip();
-    public void HideTooltip() => TooltipUI.Instance?.HideTooltip();
+    public void HideTooltip()
+    {
+        if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
+    }
+
 
     public void ShowTooltip(string title, string description, Vector2 offset = default)
     {

@@ -237,38 +237,9 @@ public class PlayerSkillTree : MonoBehaviour
         skillPoints--;
         unlockedNodes.Add(node.nodeID);
 
-        if (node.statBuffs != null && node.statBuffs.Count > 0) HandleStatUpgrades(node);
-        if (node.attackUpgrades != null && node.attackUpgrades.Count > 0) HandleAttackUpgrades(node);
-        if (node.playerUpgrades != null && node.playerUpgrades.Count > 0) HandlePlayerUpgrades(node);
+        node.Apply(gameObject);
 
         if (node.isStartingNode) choseStarting = true;
-    }
-
-    private void HandleStatUpgrades(SkillNodeDef node)
-    {
-        if (TryGetComponent<IStatProvider>(out var esm))
-        {
-            foreach (var sb in node.statBuffs)
-                esm.AddStat(sb);
-        }
-    }
-
-    private void HandlePlayerUpgrades(SkillNodeDef node)
-    {
-        if (TryGetComponent<PlayerUpgradeManager>(out var pum))
-        {
-            foreach (var pu in node.playerUpgrades)
-                if (pu != null) pum.AddUpgrade(pu);
-        }
-    }
-
-    private void HandleAttackUpgrades(SkillNodeDef node)
-    {
-        if (TryGetComponent<PlayerAttackHandler>(out var pah))
-        {
-            foreach (var ad in node.attackUpgrades)
-                if (ad != null) pah.UpdateAttack(ad.type, ad);
-        }
     }
 
     public bool IsNodeUnlocked(SkillNodeDef node) => node != null && unlockedNodes.Contains(node.nodeID);
@@ -295,35 +266,6 @@ public class PlayerSkillTree : MonoBehaviour
             unlockedNodes.Remove(node.nodeID);
         }
 
-        if (node.statBuffs != null && node.statBuffs.Count > 0) HandleStatDowngrades(node);
-        if (node.attackUpgrades != null && node.attackUpgrades.Count > 0) HandleAttackDowngrades(node);
-        if (node.playerUpgrades != null && node.playerUpgrades.Count > 0) HandlePlayerDowngrades(node);
-    }
-
-    private void HandleStatDowngrades(SkillNodeDef node)
-    {
-        if (TryGetComponent<IStatProvider>(out var esm))
-        {
-            foreach (var sb in node.statBuffs)
-                esm.AddStat(sb, false);
-        }
-    }
-
-    private void HandlePlayerDowngrades(SkillNodeDef node)
-    {
-        if (TryGetComponent<PlayerUpgradeManager>(out var pum))
-        {
-            foreach (var pu in node.playerUpgrades)
-                if (pu != null) pum.RemoveUpgrade(pu);
-        }
-    }
-
-    private void HandleAttackDowngrades(SkillNodeDef node)
-    {
-        if (TryGetComponent<PlayerAttackHandler>(out var pah))
-        {
-            foreach (var ad in node.attackUpgrades)
-                if (ad != null) pah.RemoveAttack(ad.type);
-        }
+        node.Remove(gameObject);
     }
 }

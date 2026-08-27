@@ -1,10 +1,8 @@
 # Planned Features 
 
-### TOP-PRIORITY
-- implement `IUnlockEffect` and `IDamageable`
-
 ### Bug Fixes
 - re-add phase based buffs using the new system
+- Nirvana does NOT deal additional damage based on orbits
 
 ### High Priority (To be done before 1 minor version)
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)

@@ -8,7 +8,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
     public int maxOrbiting = 0;
 
     private readonly List<Projectile> orbitingProjectiles = new();
-    public int OrbitCount => orbitingProjectiles.Count;
+    public int Count => orbitingProjectiles.Count;
 
     private void OnDestroy()
     {
@@ -18,7 +18,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
     {
         if (p == null || orbitingProjectiles.Contains(p)) return;
 
-        if (maxOrbiting > 0 && OrbitCount >= maxOrbiting)
+        if (maxOrbiting > 0 && Count >= maxOrbiting)
         {
             Projectile oldest = orbitingProjectiles[0];
             orbitingProjectiles.RemoveAt(0);
@@ -34,7 +34,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
     }
     public void ReleaseOrbits(int count = 0)
     {
-        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -49,7 +49,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
     }
     public void ReleaseOrbits(Vector2 dir, int count = 0)
     {
-        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -59,7 +59,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
     }
     public int AbsorbOrbits(int count = 0, float absorbPct = 0f)
     {
-        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -74,7 +74,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
     }
     public void RedirectOrbits(int count = 0)
     {
-        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p == null || p.gameObject == null)
@@ -94,7 +94,7 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
     }
     public void ExplodeOrbits(int count = 0)
     {
-        for (int i = count == 0 ? OrbitCount - 1 : Mathf.Min(count, OrbitCount) - 1; i >= 0; i--)
+        for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
         {
             Projectile p = orbitingProjectiles[i];
             if (p != null && p.gameObject != null)
@@ -121,8 +121,11 @@ public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
 
         GameObject target = p.ownerObj;
         if (target.TryGetComponent<IDamageable>(out var eh)) eh.TakeDamage(dp);
-        if (target.TryGetComponent<PlayerStamina>(out var ps)) ps.ChangeStamina(staminaGain);
-        if (target.TryGetComponent<PlayerMana>(out var pm)) pm.ChangeMana(manaGain, 0f);
+        if (target.TryGetComponent<IResourcePool>(out var pr))
+        {
+            pr.TryGain(ResourceType.Stamina, staminaGain);
+            pr.TryGain(ResourceType.Mana, manaGain);
+        }
     }
 
     private Transform FindNearestEnemy(Vector3 position)

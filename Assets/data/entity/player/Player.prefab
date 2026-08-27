@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2371918612439620772}
   - component: {fileID: 5785723864334582991}
   - component: {fileID: 2579762779137621173}
-  - component: {fileID: 6894810865904181621}
   - component: {fileID: 1007672301134630272}
   - component: {fileID: 5936995857291776566}
   - component: {fileID: 16536631209803568}
@@ -23,10 +22,11 @@ GameObject:
   - component: {fileID: 2568840281435561533}
   - component: {fileID: 2893894284926741989}
   - component: {fileID: 1726361680750030776}
-  - component: {fileID: 3447477917751336636}
   - component: {fileID: 3457835495158011687}
   - component: {fileID: 7841187529158470171}
   - component: {fileID: 2744953083866278850}
+  - component: {fileID: 7259569603030329541}
+  - component: {fileID: 7609316332093073887}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -113,21 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   dashCooldownUI: {fileID: 0}
   moveInput: {x: 0, y: 0}
-  p: {fileID: 0}
   lastDashTime: 0
---- !u!114 &6894810865904181621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918496070430617166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae8c5d50a664de24db33f4e3d74467e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStamina
-  p: {fileID: 0}
 --- !u!114 &1007672301134630272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityStatManager
   baseStats: {fileID: 11400000, guid: 485a8dcab24670648a8bbef9afd4ccaf, type: 2}
-  s: {fileID: 0}
   currentBuffs: []
 --- !u!114 &5936995857291776566
 MonoBehaviour:
@@ -180,7 +165,9 @@ MonoBehaviour:
   healthText: {fileID: 0}
   staminaUI: {fileID: 0}
   staminaText: {fileID: 0}
-  p: {fileID: 0}
+  xpBar: {fileID: 0}
+  levelText: {fileID: 0}
+  xpText: {fileID: 0}
 --- !u!114 &868355344943116544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,19 +331,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.016730398, y: -0.03316924}
   m_Size: {x: 0.09533471, y: 0.12348783}
   m_Direction: 0
---- !u!114 &3447477917751336636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918496070430617166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83ad5954020e6ec439a15aedda530c57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMana
-  p: {fileID: 0}
 --- !u!114 &3457835495158011687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +364,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityProjectileHandler
   maxOrbiting: 0
-  orbitGainPct: 50
 --- !u!114 &2744953083866278850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +378,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillTree
   definition: {fileID: 11400000, guid: 47d7e3fd465d2c548af54867800ed8ff, type: 2}
   skillPoints: 1
+  choseStarting: 0
+--- !u!114 &7259569603030329541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918496070430617166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50df12457a73a574284ceaed77073e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerResourcePool
+--- !u!114 &7609316332093073887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918496070430617166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06325d2fa10838848bff40b7a6b0fb01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLevel
 --- !u!1 &3977842000929726646
 GameObject:
   m_ObjectHideFlags: 0

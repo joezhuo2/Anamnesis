@@ -6,7 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(RectTransform))]
-public class Projectile : MonoBehaviour {
+public class Projectile : MonoBehaviour, IOnHitEffect
+{
     public ProjectileData pd;
 
     [HideInInspector] public GameObject ownerObj;
@@ -39,8 +40,8 @@ public class Projectile : MonoBehaviour {
     private void OnDestroy()
     {
         if (pd != null && pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null &&
-            ownerObj.TryGetComponent<IOrbitRegister>(out var registrar))
-            registrar.UnregisterOrbitingProjectile(this);
+            ownerObj.TryGetComponent<IOrbitRegister>(out var ior))
+            ior.UnregisterOrbitingProjectile(this);
     }
 
     private void Start()
@@ -68,9 +69,9 @@ public class Projectile : MonoBehaviour {
         }
 
         if (pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null &&
-            ownerObj.TryGetComponent<IOrbitRegister>(out var registrar))
+            ownerObj.TryGetComponent<IOrbitRegister>(out var iog))
         {
-            registrar.RegisterOrbitingProjectile(this);
+            iog.RegisterOrbitingProjectile(this);
         }
 
         StartCoroutine(DestroyProjectileAfterDelay(pd.lifetime));
@@ -118,10 +119,8 @@ public class Projectile : MonoBehaviour {
             float kbf = ownerObj.TryGetComponent<IStatProvider>(out var esm) ?
                 pd.kbForce * (1f + (esm.GetStat(StatType.kbPct) * 0.01f)) : pd.kbForce;
 
-            if (target.TryGetComponent<EnemyMovement>(out var em))
-                em.ApplyKnockback(kbDir, kbf, pd.knockbackTime);
-            else if (target.TryGetComponent<PlayerMovement>(out var pm))
-                pm.ApplyKnockback(kbDir, kbf, pd.knockbackTime);
+            if (target.TryGetComponent<IKnockbackable>(out var kb))
+                kb.ApplyKnockback(kbDir, kbf, pd.knockbackTime);
             else if (rb2d.bodyType == RigidbodyType2D.Dynamic)
                 rb2d.AddForce(kbDir * kbf, ForceMode2D.Impulse);
         }
@@ -132,8 +131,7 @@ public class Projectile : MonoBehaviour {
         pierced++;
         hit.Add(target);
 
-        if (ownerObj.TryGetComponent<PlayerUpgradeManager>(out var pum))
-            pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnProjectileHit, target.transform.position);
+        OnHit(ownerObj, target, transform.position);
 
         if (pd.timeBeforeSameEnemy > 0f) StartCoroutine(RemoveFromHitHistory(target, pd.timeBeforeSameEnemy));
 
@@ -152,12 +150,6 @@ public class Projectile : MonoBehaviour {
                     else if (ownerObj != target) ApplyEffect(target, ed);
                 }
             }
-        }
-
-        if (pd.mainAttack != null && pd.mainAttack.summonChance > 0f && pd.mainAttack.summonCondition == SummonCondition.OnHit && Random.value <= pd.mainAttack.summonChance)
-        {
-            if (ownerObj.TryGetComponent<EntitySummonHandler>(out var summonHandler))
-                summonHandler.TrySummon(out _, target.transform.position);
         }
     }
 
@@ -483,12 +475,28 @@ public class Projectile : MonoBehaviour {
     private void TriggerStatGains(float hp, float stamina, float mana, GameObject target)
     {
         if (target == null) return;
-        if (target.TryGetComponent<PlayerStamina>(out var ps)) ps.ChangeStamina(stamina);
+        if (target.TryGetComponent<IResourcePool>(out var rp))
+        {
+            rp.TryGain(ResourceType.Stamina, stamina);
+            rp.TryGain(ResourceType.Mana, mana);
+        }
+
         if (target.TryGetComponent<IDamageable>(out var eh))
         {
             var dp = DamagePacket.BuildDamagePacket(hp, DamageType.Heal, false, Color.green, target, true, 1f);
             eh.TakeDamage(dp);
         }
-        if (target.TryGetComponent<PlayerMana>(out var pm)) pm.ChangeMana(mana, 0f);
+    }
+
+    public void OnHit(GameObject projectileOwner, GameObject target, Vector3 hitPosition)
+    {
+        if (projectileOwner.TryGetComponent<PlayerUpgradeManager>(out var pum))
+            pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnProjectileHit, hitPosition);
+
+        if (pd.mainAttack != null && pd.mainAttack.summonChance > 0f && pd.mainAttack.summonCondition == SummonCondition.OnHit && Random.value <= pd.mainAttack.summonChance)
+        {
+            if (ownerObj.TryGetComponent<EntitySummonHandler>(out var summonHandler))
+                summonHandler.TrySummon(out _, target.transform.position);
+        }
     }
 }

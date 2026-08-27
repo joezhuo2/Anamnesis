@@ -7,7 +7,49 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [v0.2.13] - 2026-08-27
+## ⚠️ [v0.2.14] - 2026-08-27
+### Added
+- **`PlayerResourcePool`** — new unified resource management component implementing `IResourcePool`; consolidates stamina and mana gain/spend/regen logic into a single component (replaces separate `PlayerStamina` and `PlayerMana`)
+- **`IKnockbackable` interface** — new core interface with `ApplyKnockback(Vector2 direction, float force, float duration)` for unified knockback handling on players and enemies
+- **`IUnlockEffect` interface** - new core interface for unified skill node unlock effects through `Apply` and `Remove` 
+
+### Changed
+- **`IResourcePool`** — `Gain` → `TryGain` returning `bool` for consistency with `TrySpend`; removed `Health` from `ResourceType` enum (health now handled via `IDamageable`)
+- **`Player`** — requires `PlayerResourcePool` instead of `PlayerStamina`; resource costs/gains now route through `IResourcePool`
+- **`PlayerAttackHandler`** — uses `IResourcePool.TrySpend` for stamina/mana costs; removed direct `PlayerStamina`/`PlayerMana` references
+- **`PlayerMovement`** — implements `IKnockbackable` for knockback handling
+- **`EnemyMovement`** — implements `IKnockbackable`; removed `Unity.Mathematics` dependency
+- **`EntityProjectileHandler`** — uses `IResourcePool.TryGain` for stamina/mana gains on projectile hits
+- **`Projectile`** — knockback now uses `IKnockbackable` interface; stat gains use `IResourcePool.TryGain`
+- **`GainMana` upgrade** — uses `IResourcePool.TryGain(ResourceType.Mana, amount)` instead of `PlayerMana.ChangeMana`
+- **`TooltipUI`** — added null-safety checks in `ShowTooltip`/`HideTooltip`
+- **`SkillNodeDef`** — now implements `IUnlockEffect`
+- **`PlayerSkillTree`** — now calls the `Apply` or `Remove` methods from the selected `SkillNodeDef` instead of handling upgrade/remove logic
+
+### Removed
+- **`PlayerStamina`** — entire component removed; logic migrated to `PlayerResourcePool`
+- **`PlayerMana`** — entire component removed; logic migrated to `PlayerResourcePool`
+- **`ResourceType.Health`** — health no longer treated as a spendable/gainable resource
+
+## ⚠️ [v0.2.13] - 2026-08-27 
+### Added
+- **`ITooltipDisplay` interface** — new core interface with `ShowTooltip(string title, string subtitle, Vector2 offset)` and `HideTooltip()` for unified tooltip display
+- **Tooltip methods on UI components** — `GetSkillTreeTooltip()`, `GetStatusEffectTooltip()`, `GetAttackTooltip()`, `GetDashTooltip()`, `GetStatRewardTooltip()`, `GetAttackRewardTooltip()`, `GetPlayerUpgradeTooltip()`, `GetMilestoneRewardTooltip()` returning `(title, subtitle, offset)` tuples
+
+### Changed
+- **Complete tooltip system migration** — replaced `TooltipTrigger` with `ITooltipDisplay` across all UI components:
+  - `PlayerAttackCooldownUI`, `PlayerDashCooldownUI`, `PlayerUI` — attack/dash/skill tooltips via `GetAttackTooltip()`/`GetDashTooltip()`/`GetSkillTooltip()`
+  - `SkillNodeUI` — skill tree node tooltips with unlock/undo info via `GetSkillTreeTooltip()`
+  - `StatusEffectCooldownUI` — status effect tooltips via `GetStatusEffectTooltip()`
+  - `RegularWaveButtonController`, `UnlimitedWaveButtonController` — gamemode button tooltips
+  - `RewardButton` — comprehensive tooltips for all reward types (stat, attack, player upgrade, milestone)
+  - `WaveManager` — action button tooltips (reroll, corrupt, skip) using `ITooltipDisplay`
+- **`RewardButton` refactor** — renamed fields (`statRewardData`→`gr`, `attackRewardData`→`ar`, `playerUpgradeRewardData`→`pur`, `milestoneRewardData`→`mrd`); added dedicated tooltip methods per reward type with detailed stat/attack/upgrade info
+- **`TooltipTrigger`** — simplified to implement `ITooltipDisplay`; removed old `SetupTooltipData` overloads
+
+### Removed
+- Direct `TooltipTrigger` references and `SetupTooltipData` calls throughout codebase
+- `TooltipTrigger` component from `SkillNodeUI` (replaced with `ITooltipDisplay`)
 
 ## ⚠️ [v0.2.12] - 2026-08-26
 

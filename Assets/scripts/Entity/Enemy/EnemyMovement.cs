@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : MonoBehaviour, IKnockbackable
 {
     public bool cardinalOnly = true;
     public bool canDeaggro = true;

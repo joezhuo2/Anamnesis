@@ -14,9 +14,8 @@ public class PlayerAttackHandler : MonoBehaviour
     public Transform objContainer;
 
     private Animator a;
-    private PlayerStamina ps;
+    private IResourcePool pr;
     private IDamageable ph;
-    private PlayerMana pm;
     private IStatProvider esm;
     private PlayerUpgradeManager pum;
     private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
@@ -28,8 +27,7 @@ public class PlayerAttackHandler : MonoBehaviour
         a = GetComponent<Animator>();
         esm = GetComponent<IStatProvider>();
         ph = GetComponent<IDamageable>();
-        ps = GetComponent<PlayerStamina>();
-        pm = GetComponent<PlayerMana>();
+        pr = GetComponent<IResourcePool>();
         pum = GetComponent<PlayerUpgradeManager>();
 
         for (int i = 0; i < starting.Count; i++) UpdateAttack(starting[i].type, starting[i]);
@@ -180,8 +178,8 @@ public class PlayerAttackHandler : MonoBehaviour
         var dp = DamagePacket.BuildDamagePacket(hp, DamageType.Consume, false, Color.red, gameObject, false, 1f);
         if (ph != null) ph.TakeDamage(dp);
 
-        if (ps != null) ps.ChangeStamina(-sp);
-        if (pm != null) pm.ChangeMana(-mp);
+        if (pr != null) pr.TrySpend(ResourceType.Stamina, sp);
+        if (pr != null) pr.TrySpend(ResourceType.Mana, mp);
 
         return true;
     }

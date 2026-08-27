@@ -33,7 +33,7 @@ public static class ProjectileSnapshot
         snapshot.scalingValue = esm.GetStat(pd.scalingStat);
         snapshot.specialMult = (pd.specialSclaing) switch
         {
-            SpecialScalingAttribute.Orbits => source.TryGetComponent<EntityProjectileHandler>(out var eph) ? 1f + (eph.OrbitCount * pd.specialMult) : 1f,
+            SpecialScalingAttribute.Orbits => source.TryGetComponent<IOrbitRegister>(out var eph) ? 1f + (eph.Count * pd.specialMult) : 1f,
             SpecialScalingAttribute.HpConsumed => DamageCalculator.CalculateHpConsumedMult(pd, esm),
             _ => 1f
         };

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum ResourceType { Health, Stamina, Mana }
+public enum ResourceType { Stamina, Mana }
 public enum StatType
 {
     damagePct,

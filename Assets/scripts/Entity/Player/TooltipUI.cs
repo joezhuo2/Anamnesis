@@ -29,6 +29,7 @@ public class TooltipUI : MonoBehaviour
 
     public void ShowTooltip(string title, string description, Vector2 os)
     {
+        if (gameObject == null) return;
         gameObject.SetActive(true);
 
         offset = os;
@@ -36,7 +37,7 @@ public class TooltipUI : MonoBehaviour
         descriptionText.text = description;
     }
 
-    public void HideTooltip() => gameObject.SetActive(false);
+    public void HideTooltip() => gameObject?.SetActive(false);
     private void CacheRectTransform()
     {
         if (crt == null) crt = GetComponent<RectTransform>();

@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IOnHitEffect
 {
-    void OnHit(GameObject target, Vector3 hitPosition);
+    void OnHit(GameObject projectileOwner, GameObject target, Vector3 hitPosition);
 }
