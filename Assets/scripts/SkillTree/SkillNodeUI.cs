@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,7 +11,6 @@ public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public GameObject lockedOverlay;
     public GameObject unlockedCheckmark;
     public GameObject availableGlow;
-    public TooltipTrigger tooltipTrigger;
 
     [HideInInspector] public SkillNodeDef node;
     private SkillTreeManager manager;
@@ -54,13 +54,17 @@ public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         if (manager == null || node == null) return;
 
-        var (_, failMessage) = manager.CanUnlock(node);
-        if (tooltipTrigger != null) tooltipTrigger.SetupTooltipData(node, failMessage);
+        if (TryGetComponent<ITooltipDisplay>(out var td))
+        {
+            var (tt, st, os) = GetSkillTreeTooltip();
+            td.ShowTooltip(tt, st, os);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (tooltipTrigger != null) tooltipTrigger.OnPointerExit(eventData);
+        if (TryGetComponent<ITooltipDisplay>(out var td))
+            td.HideTooltip();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -100,5 +104,30 @@ public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 if (treeUI != null) treeUI.OnNodeStateChanged(node);
             }
         }
+    }
+
+    private (string title, string subtitle, Vector2 offset) GetSkillTreeTooltip()
+    {
+        if (node == null) return ("", "", Vector2.zero);
+
+        List<string> lines = new();
+        if (!string.IsNullOrEmpty(node.desc)) lines.Add(node.desc);
+
+        var (_, failMessage) = manager.CanUnlock(node);
+        if (!string.IsNullOrEmpty(failMessage))
+            lines.Add($"<color=#FF4444>{failMessage}</color>");
+
+        if (!node.isStartingNode)
+        {
+            var playerSkillTree = FindAnyObjectByType<PlayerSkillTree>();
+            if (playerSkillTree != null && playerSkillTree.IsNodeUnlocked(node))
+            {
+                var (canUndo, _) = playerSkillTree.CanUndo(node);
+                if (canUndo) lines.Add($"<color=#FFD700>Left-click to undo ({node.undoCost}g)</color>");
+                else lines.Add($"<color=#888888>Undo cost: {node.undoCost}g (insufficient gold)</color>");
+            }
+        }
+
+        return(node.nodeName, string.Join("\n", lines), new(100, -100));
     }
 }

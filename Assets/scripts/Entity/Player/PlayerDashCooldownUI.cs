@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +13,13 @@ public class PlayerDashCooldownUI : MonoBehaviour
         cpm = pm;
         cesm = esm;
 
-        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupDashTooltipData(cesm);
+        if (TryGetComponent<ITooltipDisplay>(out var td))
+        {
+            var (tt, st, os) = GetDashTooltip();
+            td.ShowTooltip(tt, st, os);
+        }
 
-        if (cooldownImage != null)
+            if (cooldownImage != null)
         {
             Color orig = cooldownImage.color;
             orig.a = 0.9f;
@@ -38,5 +43,22 @@ public class PlayerDashCooldownUI : MonoBehaviour
         float cooldownRemainingPct = 1f - (timeElapsed / cd);
 
         cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+    }
+
+    private (string title, string subtitle, Vector2 offset) GetDashTooltip()
+    {
+        List<string> lines = new();
+        if (cesm.GetStat(StatType.dodgeChance) != 0f)
+            lines.Add($"Dodge: {cesm.GetStat(StatType.dodgeChance):F0}% (-{cesm.GetStat(StatType.dodgeResPct):F0}%)");
+        if (cesm.GetStat(StatType.EffSpd) != 0)
+            lines.Add($"Speed: {cesm.GetStat(StatType.EffSpd):F2} (+{cesm.GetStat(StatType.moveSpeedPct):F0}%)");
+        if (cesm.GetStat(StatType.EffDashCooldown) != 0)
+            lines.Add($"Dash Cooldown: {cesm.GetStat(StatType.EffDashCooldown):F1}s");
+        if (cesm.GetStat(StatType.EffDashDistance) != 0)
+            lines.Add($"Dash Distance: {cesm.GetStat(StatType.EffDashDistance):F1}");
+        if (cesm.GetStat(StatType.EffDashStaminaCost) != 0)
+            lines.Add($"Dash Stamina Cost: {cesm.GetStat(StatType.EffDashStaminaCost):F1}");
+
+        return("Movement", string.Join("\n", lines), new(100, 30));
     }
 }

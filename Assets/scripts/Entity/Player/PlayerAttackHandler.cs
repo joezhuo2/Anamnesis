@@ -27,8 +27,8 @@ public class PlayerAttackHandler : MonoBehaviour
     {
         a = GetComponent<Animator>();
         esm = GetComponent<IStatProvider>();
-        ps = GetComponent<PlayerStamina>();
         ph = GetComponent<IDamageable>();
+        ps = GetComponent<PlayerStamina>();
         pm = GetComponent<PlayerMana>();
         pum = GetComponent<PlayerUpgradeManager>();
 

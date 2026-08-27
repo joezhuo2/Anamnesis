@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,11 @@ public class PlayerAttackCooldownUI : MonoBehaviour
 
         if (cad != null && cad.icon != null && iconImage != null) iconImage.sprite = cad.icon;
 
-        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupTooltipData(cad, cesm);
+        if (TryGetComponent<ITooltipDisplay>(out var td))
+        {
+            var (tt, st, os) = GetAttackTooltip();
+            td.ShowTooltip(tt, st, os);
+        }
 
         if (cooldownImage != null)
         {
@@ -48,5 +53,51 @@ public class PlayerAttackCooldownUI : MonoBehaviour
         float cooldownRemainingPct = 1f - (timeElapsed / effCd);
 
         cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+    }
+
+    private (string title, string subtitle, Vector2 offset) GetAttackTooltip()
+    {
+        if (cad == null || cesm == null) return ("", "", Vector2.zero);
+
+        var (sp, hp, mp) = PlayerAttackHandler.GetCosts(cad, cesm);
+        var (spg, hpg, mpg) = Projectile.CalculateStatGains((cesm as Component).gameObject, cad);
+        var effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
+
+        float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
+        if (cad.pd != null)
+        {
+            var previewSnapshot = ProjectileSnapshot.CaptureSnapshot(cad.pd, (cesm as Component).gameObject);
+            var previewPacket = DamagePacket.BuildDamagePacket(cad.pd, previewSnapshot, false, (cesm as Component).gameObject, false, 1f);
+
+            foreach (var instance in previewPacket.instances)
+            {
+                switch (instance.type)
+                {
+                    case DamageType.Physical: basePhysDmg += instance.amount; break;
+                    case DamageType.Spell: baseSplDmg += instance.amount; break;
+                    case DamageType.True: trueDmg += instance.amount; break;
+                    default: break;
+                }
+            }
+        }
+
+        List<string> lines = new() { $"{cad.type}" };
+        if (effCd != 0f) lines.Add($"Cooldown: {effCd:F1}s");
+        if (hp != 0f || hpg != 0f) lines.Add($"Health: -{hp:F0} +{hpg:F0} +{cad.healthPctGainOnHit:F1}%");
+        if (sp != 0f || spg != 0f) lines.Add($"Stamina: -{sp:F0} +{spg:F0} +{cad.staminaPctGainOnHit:F1}%");
+        if (mp != 0f || mpg != 0f) lines.Add($"Mana: -{mp:F0} +{mpg:F0} +{cad.manaPctGainOnHit:F1}%");
+        if (cesm.GetStat(StatType.critChance) != 0f || cesm.GetStat(StatType.critDamage) != 0f)
+            lines.Add($"Crit: {cesm.GetStat(StatType.critChance):F1}% +{cesm.GetStat(StatType.critDamage):F1}%");
+        if (cesm.GetStat(StatType.defShred) != 0f || cesm.GetStat(StatType.resPen) != 0f)
+            lines.Add($"Shred: {cesm.GetStat(StatType.defShred):F0}A {cesm.GetStat(StatType.resPen):F0}R");
+
+        List<string> dmgTypes = new();
+        if (basePhysDmg != 0f) dmgTypes.Add($"{basePhysDmg:F0}P");
+        if (baseSplDmg != 0f) dmgTypes.Add($"{baseSplDmg:F0}S");
+        if (trueDmg != 0f) dmgTypes.Add($"{trueDmg:F0}T");
+
+        if (dmgTypes.Count > 0) lines.Add($"Base: {string.Join(" ", dmgTypes)}");
+
+        return (cad.displayName, string.Join("\n", lines), new(0, -100));
     }
 }

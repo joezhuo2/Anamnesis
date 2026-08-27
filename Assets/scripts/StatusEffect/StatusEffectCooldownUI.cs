@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,9 +17,13 @@ public class StatusEffectCooldownUI : MonoBehaviour
 
         if (cse != null && cse.icon != null && iconImage != null) iconImage.sprite = cse.icon;
 
-        if (TryGetComponent<TooltipTrigger>(out var trigger)) trigger.SetupTooltipData(cse, cesm);
+        if (TryGetComponent<ITooltipDisplay>(out var td))
+        {
+            var (tt, st, os) = GetStatusEffectTooltip();
+            td.ShowTooltip(tt, st, os);
+        }
 
-        if (cooldownImage != null)
+            if (cooldownImage != null)
         {
             Color orig = cooldownImage.color;
             orig.a = 0.7f;
@@ -47,5 +52,15 @@ public class StatusEffectCooldownUI : MonoBehaviour
         float cooldownRemainingPct = 1f - (timeElapsed / effDur);
 
         cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+    }
+
+    public (string title, string subtitle, Vector2 offset) GetStatusEffectTooltip()
+    {
+        List<string> lines = new();
+        if (!string.IsNullOrEmpty(cse.desc)) lines.Add(cse.desc);
+
+        string name = cse.effName + ((cse.maxStacks > 1) ? $"[{cse.currentStacks}]" : "");
+
+        return(name, string.Join("\n", lines), new(100, -100));
     }
 }

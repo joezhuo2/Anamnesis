@@ -13,8 +13,8 @@ public class RegularWaveButtonController : MonoBehaviour
 
         GetComponent<Button>().onClick.AddListener(OnClick);
 
-        if (gameObject.TryGetComponent<TooltipTrigger>(out var tt))
-            tt.SetupTooltipData("Regular Waves", "Play the standard wave sequence.\nWaves follow the configured sequence with fixed enemy counts, levels, and rewards.");
+        if (gameObject.TryGetComponent<ITooltipDisplay>(out var tt))
+            tt.ShowTooltip("Regular Waves", "Play the standard wave sequence.\nWaves follow the configured sequence with fixed enemy counts, levels, and rewards.");
     }
 
     private void OnClick()

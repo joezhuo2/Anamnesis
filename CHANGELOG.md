@@ -7,6 +7,8 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.2.13] - 2026-08-27
+
 ## ⚠️ [v0.2.12] - 2026-08-26
 
 ### Added

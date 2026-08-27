@@ -13,7 +13,7 @@ public class EnemyAttackHandler : MonoBehaviour
     private bool isAttackingCoroutineRunning = false;
     private readonly List<int> availableIndexes = new();
     private float lastAttackEndTime;
-    private EnemyStatManager esm;
+    private IStatProvider esm;
     private GameObject Target => TryGetComponent<EnemyMovement>(out var em) ? em.target : null;
 
     private void Awake()
@@ -39,7 +39,7 @@ public class EnemyAttackHandler : MonoBehaviour
         for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].cooldown;
     }
 
-    private void Start() => esm = GetComponent<EnemyStatManager>();
+    private void Start() => esm = GetComponent<IStatProvider>();
 
     private void OnDestroy()
     {

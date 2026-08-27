@@ -102,21 +102,12 @@ public class WaveManager : MonoBehaviour
 
     private void SetupActionButtonTooltips()
     {
-        if (rerollButton != null)
-        {
-            var tt = rerollButton.gameObject.AddComponent<TooltipTrigger>();
-            tt.SetupTooltipData("Reroll", $"Rerolls all reward choices.\nCost: 1 reroll token or {rerollGoldCost} gold if none are available.");
-        }
-        if (corruptButton != null)
-        {
-            var tt = corruptButton.gameObject.AddComponent<TooltipTrigger>();
-            tt.SetupTooltipData("Corrupt", "Chance to corrupt any rewards massively increase or decrease their values.\nCan only be used once per wave and removes all other options.");
-        }
-        if (nextWaveButton != null)
-        {
-            var tt = nextWaveButton.gameObject.AddComponent<TooltipTrigger>();
-            tt.SetupTooltipData("Skip", "Skip rewards and start the next wave immediately.");
-        }
+        if (rerollButton != null && rerollButton.TryGetComponent<ITooltipDisplay>(out var td))
+            td.ShowTooltip("Reroll", $"Rerolls all reward choices.\nCost: 1 reroll token or {rerollGoldCost} gold if none are available.");
+        if (corruptButton != null && corruptButton.TryGetComponent<ITooltipDisplay>(out var td2))
+            td2.ShowTooltip("Corrupt", "Chance to corrupt any rewards massively increase or decrease their values.\nCan only be used once per wave and removes all other options.");
+        if (nextWaveButton != null && nextWaveButton.TryGetComponent<ITooltipDisplay>(out var td3))
+            td3.ShowTooltip("Skip", "Skip rewards and start the next wave immediately.");
     }
 
     private void OnDestroy()
@@ -711,7 +702,7 @@ public class WaveManager : MonoBehaviour
             if (Random.value > (corruptChance * 0.01f)) continue;
 
             float corruptMult = (Random.value < (corruptPositiveChance * 0.01f) ? 1f : -1f) * (1f + (Random.Range(1, maxCorruptBoost) * 0.01f));
-            GeneratedReward gr = rb.TryGetComponent<RewardButton>(out var grb) ? grb.statRewardData : null;
+            GeneratedReward gr = rb.TryGetComponent<RewardButton>(out var grb) ? grb.gr : null;
 
             if (gr == null) continue;
 
