@@ -276,9 +276,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityProjectileHandler.cs": {
-    "mtime": 1787843346.6910808,
-    "seen": 1787844012.2165344,
-    "ast_hash": "624e8f1a57ebab2f219eb4960428acb4",
+    "mtime": 1787846748.0652325,
+    "seen": 1787847373.2016804,
+    "ast_hash": "5ccfdef32d182b7842dc5eb99fcc98f3",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntitySplitting.cs": {
@@ -288,9 +288,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityStatManager.cs": {
-    "mtime": 1787794392.8757782,
-    "seen": 1787795544.5446494,
-    "ast_hash": "56386689dcd13be309ac1afa2fec4f34",
+    "mtime": 1787846656.8725102,
+    "seen": 1787847373.2016828,
+    "ast_hash": "c17670b8fa4588930109350457a97622",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityStats.cs": {
@@ -498,9 +498,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/Projectile.cs": {
-    "mtime": 1787843003.0776348,
-    "seen": 1787844012.2166011,
-    "ast_hash": "f7b0bc8aec62b782845267f5172efadf",
+    "mtime": 1787847014.7210226,
+    "seen": 1787847373.2017217,
+    "ast_hash": "a6019442f56c14abfca16c6d7af2e093",
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/ProjectileData.cs": {
@@ -510,9 +510,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/ProjectileSpawner.cs": {
-    "mtime": 1787066388.1807935,
-    "seen": 1787538805.3414674,
-    "ast_hash": "23758fb0c9894aa9282ac1a018be3b19",
+    "mtime": 1787847072.2789414,
+    "seen": 1787847373.2017252,
+    "ast_hash": "d0467de0c531f869c98d34b21b598ab4",
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/PlayerSkillTree.cs": {
@@ -762,9 +762,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787845881.1691232,
-    "seen": 1787845895.4213755,
-    "ast_hash": "1be54682201f01722039b89f8bc5d5cf",
+    "mtime": 1787846642.4156334,
+    "seen": 1787847373.2017968,
+    "ast_hash": "26af9d62daa4c47b29c7e35121a9a4c6",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -1428,8 +1428,8 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Core/IDamageable.cs": {
-    "mtime": 1787798754.7220936,
-    "seen": 1787799132.2379034,
+    "mtime": 1787847298.7812004,
+    "seen": 1787847373.2016556,
     "ast_hash": "efc57689981311f43e1e0a21de9e7f73",
     "semantic_hash": ""
   },

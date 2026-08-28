@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public interface IOrbitRegister
+namespace Namespace
 {
-    void RegisterOrbitingProjectile(Projectile p);
-    void UnregisterOrbitingProjectile(Projectile p);
-    int Count { get; }
+    public interface IOrbitRegister
+    {
+        void RegisterOrbitingProjectile(Projectile p);
+        void UnregisterOrbitingProjectile(Projectile p);
+        int Count { get; }
+    }
 }

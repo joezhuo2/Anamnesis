@@ -318,9 +318,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerAttackCooldownUI.cs": {
-    "mtime": 1787837215.8569353,
-    "seen": 1787839572.8972006,
-    "ast_hash": "848ff7632fce04d362dfddc909510619",
+    "mtime": 1787845423.2975469,
+    "seen": 1787845895.4212236,
+    "ast_hash": "1944c8c88b8b5a4b44e0035f9c8c3876",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerAttackHandler.cs": {
@@ -348,9 +348,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerLevel.cs": {
-    "mtime": 1787794634.0370443,
-    "seen": 1787795544.5446668,
-    "ast_hash": "930f97b50cc131fddd375d7731354852",
+    "mtime": 1787845681.023885,
+    "seen": 1787845895.4212325,
+    "ast_hash": "b7dc30e116d140bf34b7d7adf84f80b5",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerMana.cs": {
@@ -762,9 +762,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1787843921.5211768,
-    "seen": 1787844012.2167218,
-    "ast_hash": "eeaac33116c43f68c2c795e445d35596",
+    "mtime": 1787845881.1691232,
+    "seen": 1787845895.4213755,
+    "ast_hash": "1be54682201f01722039b89f8bc5d5cf",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -786,9 +786,9 @@
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1787843994.1212842,
-    "seen": 1787844012.2167318,
-    "ast_hash": "ce46fda1fa640c7142925469e8d08880",
+    "mtime": 1787845876.28951,
+    "seen": 1787845895.421384,
+    "ast_hash": "fbc54a889e80f07e87bb48675e5712c6",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1230,9 +1230,9 @@
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
-    "mtime": 1787770906.23196,
-    "seen": 1787775918.1733892,
-    "ast_hash": "3ceedc7a3566fbe67ed12aeaa703cc4f",
+    "mtime": 1787845773.3004024,
+    "seen": 1787845895.4213612,
+    "ast_hash": "b75ed72a2b1f786d62cd892005096c68",
     "semantic_hash": ""
   },
   ".VSCodeCounter/2026-08-24_19-18-52/results.json": {
@@ -1878,9 +1878,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/ProjectileSnapshot.cs": {
-    "mtime": 1787842296.3514073,
-    "seen": 1787844012.2166045,
-    "ast_hash": "b7f60d25178fd0a2cdce44e728bd683f",
+    "mtime": 1787845576.3052008,
+    "seen": 1787845895.421273,
+    "ast_hash": "518664a7af4dc904a42625d70b237e22",
     "semantic_hash": ""
   },
   "diff_output.txt": {

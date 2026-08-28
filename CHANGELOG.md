@@ -7,6 +7,12 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.2.15_1] - 2026-08-27
+
+### Removed
+- code counter
+- unused recovery assets
+
 ## ⚠️ [v0.2.15] - 2024-08-27
 
 ### Added

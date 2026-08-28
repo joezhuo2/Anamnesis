@@ -114,3 +114,9 @@ InitTestScene*.unity*
 
 ## output folders from build processes
 /Output/
+
+## code counter
+/.VSCodeCounter/
+
+## recovery assets
+/Assets/_Recovery/
