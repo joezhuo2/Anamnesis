@@ -1,45 +1,49 @@
+using CrystalFlux.EntitySystem;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(RectTransform))]
-public class TooltipUI : MonoBehaviour
+namespace CrystalFlux.UISystem
 {
-    public static TooltipUI Instance { get; private set; }
-
-    public TextMeshProUGUI titleText;
-    public TextMeshProUGUI descriptionText;
-    public Vector2 offset;
-
-    private RectTransform crt;
-
-    private void Awake()
+    [RequireComponent(typeof(RectTransform))]
+    public class TooltipUI : MonoBehaviour
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        public static TooltipUI Instance { get; private set; }
 
-        CacheRectTransform();
-        HideTooltip();
-    }
+        public TextMeshProUGUI titleText;
+        public TextMeshProUGUI descriptionText;
+        public Vector2 offset;
 
-    private void Update()
-    {
-        CacheRectTransform();
-        crt.position = PlayerInputHandler.mousePos + offset;
-    }
+        private RectTransform crt;
 
-    public void ShowTooltip(string title, string description, Vector2 os)
-    {
-        if (gameObject == null) return;
-        gameObject.SetActive(true);
+        private void Awake()
+        {
+            if (Instance == null) Instance = this;
+            else Destroy(gameObject);
 
-        offset = os;
-        titleText.text = title;
-        descriptionText.text = description;
-    }
+            CacheRectTransform();
+            HideTooltip();
+        }
 
-    public void HideTooltip() => gameObject?.SetActive(false);
-    private void CacheRectTransform()
-    {
-        if (crt == null) crt = GetComponent<RectTransform>();
+        private void Update()
+        {
+            CacheRectTransform();
+            crt.position = PlayerInputHandler.mousePos + offset;
+        }
+
+        public void ShowTooltip(string title, string description, Vector2 os)
+        {
+            if (gameObject == null) return;
+            gameObject.SetActive(true);
+
+            offset = os;
+            titleText.text = title;
+            descriptionText.text = description;
+        }
+
+        public void HideTooltip() => gameObject?.SetActive(false);
+        private void CacheRectTransform()
+        {
+            if (crt == null) crt = GetComponent<RectTransform>();
+        }
     }
 }

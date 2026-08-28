@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public interface ITooltipDisplay
+namespace CrystalFlux.UISystem
 {
-    void ShowTooltip(string title, string description, Vector2 offset = default);
-    void HideTooltip();
+    public interface ITooltipDisplay
+    {
+        void ShowTooltip(string title, string description, Vector2 offset = default);
+        void HideTooltip();
+    }
 }

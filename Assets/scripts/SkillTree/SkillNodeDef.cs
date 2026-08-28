@@ -1,97 +1,103 @@
 using System.Collections.Generic;
+using CrystalFlux.Core;
+using CrystalFlux.EntitySystem;
+using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Node", menuName = "Skill Tree/Node")]
-public class SkillNodeDef : ScriptableObject, IUnlockEffect
+namespace CrystalFlux.SkillTree
 {
-    [Header("Visuals")]
-    public string nodeName;
-    [TextArea(3, 5)] public string desc;
-    public string nodeID;
-    public Sprite icon;
-    public int cost = 1;
-
-    [Header("Requirements")]
-    public bool isStartingNode;
-    public List<SkillNodeDef> prerequisites;
-    public List<SkillNodeDef> incompatibleNodes;
-    public List<AttackData> requiredAttacks;
-    public List<PlayerUpgrade> requiredPlayerUpgrades;
-
-    [Header("Upgrades")]
-    public List<StatBuff> statBuffs;
-    public List<AttackData> attackUpgrades;
-    public List<PlayerUpgrade> playerUpgrades;
-
-    [Header("Costs")]
-    [Tooltip("Gold cost to undo this node (refunds skill point)")]
-    public int undoCost = 50;
-
-    public void Apply(GameObject target)
+    [CreateAssetMenu(fileName = "Node", menuName = "Skill Tree/Node")]
+    public class SkillNodeDef : ScriptableObject
     {
-        if (statBuffs != null && statBuffs.Count > 0) HandleStatUpgrades(target);
-        if (attackUpgrades != null && attackUpgrades.Count > 0) HandleAttackUpgrades(target);
-        if (playerUpgrades != null && playerUpgrades.Count > 0) HandlePlayerUpgrades(target);
-    }
+        [Header("Visuals")]
+        public string nodeName;
+        [TextArea(3, 5)] public string desc;
+        public string nodeID;
+        public Sprite icon;
+        public int cost = 1;
 
-    public void Remove(GameObject target)
-    {
-        if (statBuffs != null && statBuffs.Count > 0) HandleStatDowngrades(target);
-        if (attackUpgrades != null && attackUpgrades.Count > 0) HandleAttackDowngrades(target);
-        if (playerUpgrades != null && playerUpgrades.Count > 0) HandlePlayerDowngrades(target);
-    }
+        [Header("Requirements")]
+        public bool isStartingNode;
+        public List<SkillNodeDef> prerequisites;
+        public List<SkillNodeDef> incompatibleNodes;
+        public List<AttackData> requiredAttacks;
+        public List<PlayerUpgrade> requiredPlayerUpgrades;
 
-    private void HandleStatUpgrades(GameObject target)
-    {
-        if (target.TryGetComponent<IStatProvider>(out var esm))
+        [Header("Upgrades")]
+        public List<StatBuff> statBuffs;
+        public List<AttackData> attackUpgrades;
+        public List<PlayerUpgrade> playerUpgrades;
+
+        [Header("Costs")]
+        [Tooltip("Gold cost to undo this node (refunds skill point)")]
+        public int undoCost = 50;
+
+        public void Apply(GameObject target)
         {
-            foreach (var sb in statBuffs)
-                esm.AddStat(sb);
+            if (statBuffs != null && statBuffs.Count > 0) HandleStatUpgrades(target);
+            if (attackUpgrades != null && attackUpgrades.Count > 0) HandleAttackUpgrades(target);
+            if (playerUpgrades != null && playerUpgrades.Count > 0) HandlePlayerUpgrades(target);
         }
-    }
 
-    private void HandlePlayerUpgrades(GameObject target)
-    {
-        if (target.TryGetComponent<PlayerUpgradeManager>(out var pum))
+        public void Remove(GameObject target)
         {
-            foreach (var pu in playerUpgrades)
-                if (pu != null) pum.AddUpgrade(pu);
+            if (statBuffs != null && statBuffs.Count > 0) HandleStatDowngrades(target);
+            if (attackUpgrades != null && attackUpgrades.Count > 0) HandleAttackDowngrades(target);
+            if (playerUpgrades != null && playerUpgrades.Count > 0) HandlePlayerDowngrades(target);
         }
-    }
 
-    private void HandleAttackUpgrades(GameObject target)
-    {
-        if (target.TryGetComponent<PlayerAttackHandler>(out var pah))
+        private void HandleStatUpgrades(GameObject target)
         {
-            foreach (var ad in attackUpgrades)
-                if (ad != null) pah.UpdateAttack(ad.type, ad);
+            if (target.TryGetComponent<IStatProvider>(out var esm))
+            {
+                foreach (var sb in statBuffs)
+                    esm.AddStat(sb);
+            }
         }
-    }
 
-    private void HandleStatDowngrades(GameObject target)
-    {
-        if (target.TryGetComponent<IStatProvider>(out var esm))
+        private void HandlePlayerUpgrades(GameObject target)
         {
-            foreach (var sb in statBuffs)
-                esm.AddStat(sb, false);
+            if (target.TryGetComponent<PlayerUpgradeManager>(out var pum))
+            {
+                foreach (var pu in playerUpgrades)
+                    if (pu != null) pum.AddUpgrade(pu);
+            }
         }
-    }
 
-    private void HandlePlayerDowngrades(GameObject target)
-    {
-        if (target.TryGetComponent<PlayerUpgradeManager>(out var pum))
+        private void HandleAttackUpgrades(GameObject target)
         {
-            foreach (var pu in playerUpgrades)
-                if (pu != null) pum.RemoveUpgrade(pu);
+            if (target.TryGetComponent<PlayerAttackHandler>(out var pah))
+            {
+                foreach (var ad in attackUpgrades)
+                    if (ad != null) pah.UpdateAttack(ad.type, ad);
+            }
         }
-    }
 
-    private void HandleAttackDowngrades(GameObject target)
-    {
-        if (target.TryGetComponent<PlayerAttackHandler>(out var pah))
+        private void HandleStatDowngrades(GameObject target)
         {
-            foreach (var ad in attackUpgrades)
-                if (ad != null) pah.RemoveAttack(ad.type);
+            if (target.TryGetComponent<IStatProvider>(out var esm))
+            {
+                foreach (var sb in statBuffs)
+                    esm.AddStat(sb, false);
+            }
+        }
+
+        private void HandlePlayerDowngrades(GameObject target)
+        {
+            if (target.TryGetComponent<PlayerUpgradeManager>(out var pum))
+            {
+                foreach (var pu in playerUpgrades)
+                    if (pu != null) pum.RemoveUpgrade(pu);
+            }
+        }
+
+        private void HandleAttackDowngrades(GameObject target)
+        {
+            if (target.TryGetComponent<PlayerAttackHandler>(out var pah))
+            {
+                foreach (var ad in attackUpgrades)
+                    if (ad != null) pah.RemoveAttack(ad.type);
+            }
         }
     }
 }

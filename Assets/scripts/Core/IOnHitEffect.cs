@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IOnHitEffect
+namespace CrystalFlux.ProjectileSystem
 {
-    void OnHit(GameObject projectileOwner, GameObject target, Vector3 hitPosition);
+    public interface IOnHitEffect
+    {
+        void OnHit(GameObject projectileOwner, GameObject target, Vector3 hitPosition);
+    }
 }

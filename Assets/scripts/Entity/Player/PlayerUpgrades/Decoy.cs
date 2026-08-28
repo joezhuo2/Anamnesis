@@ -1,3 +1,6 @@
+using CrystalFlux.Core;
+using CrystalFlux.EntitySystem;
+using CrystalFlux.StatusEffectSystem;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade/Decoy")]

@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class EntitySplitting : MonoBehaviour
+namespace CrystalFlux.EntitySystem
 {
-    public GameObject prefab;
-    public int splitLevel;
-    public float splitChance = 1f;
-    public int minSplits;
-    public int maxSplits;
-    public float splitRadius;
-
-    public void Split()
+    public class EntitySplitting : MonoBehaviour
     {
-        if (Random.value < splitChance * 0.01f)
+        public GameObject prefab;
+        public int splitLevel;
+        public float splitChance = 1f;
+        public int minSplits;
+        public int maxSplits;
+        public float splitRadius;
+
+        public void Split()
         {
-            int numSplits = Random.Range(minSplits, maxSplits + 1);
-            for (int i = 0; i < numSplits; i++)
-                EnemySpawner.SpawnEnemy(prefab, (Vector2)transform.position, splitRadius, splitLevel);
+            if (Random.value < splitChance * 0.01f)
+            {
+                int numSplits = Random.Range(minSplits, maxSplits + 1);
+                for (int i = 0; i < numSplits; i++)
+                    EnemySpawner.SpawnEnemy(prefab, (Vector2)transform.position, splitRadius, splitLevel);
+            }
         }
     }
 }

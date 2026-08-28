@@ -1,4 +1,7 @@
 using UnityEngine;
+using CrystalFlux.EntitySystem;
+using CrystalFlux.Core;
+using CrystalFlux.ProjectileSystem;
 
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade/AdditionalDamage")]
 public class AdditionalDamage : PlayerUpgrade

@@ -1,61 +1,65 @@
 using System.Collections.Generic;
+using CrystalFlux.Core;
 using UnityEngine;
 
-public class DamagePacket
+namespace CrystalFlux.ProjectileSystem
 {
-    public List<DamageInstance> instances = new();
-    public GameObject source;
-    public bool bypassIFrames = false;
-    public float sizeOverride = 1f;
-
-    public void AddInstance(DamageType type, float amount, bool isCrit, GameObject owner)
-        => instances.Add(new DamageInstance(type, amount, isCrit, default, owner));
-
-    public void AddInstance(DamageType type, float amount, bool isCrit, Color indicatorColor, GameObject owner)
-        => instances.Add(new DamageInstance(type, amount, isCrit, indicatorColor, owner));
-
-    public float GetTotalDamage()
+    public class DamagePacket
     {
-        float total = 0f;
-        foreach (var i in instances)
-            total += i.amount;
-        return total;
-    }
+        public List<DamageInstance> instances = new();
+        public GameObject source;
+        public bool bypassIFrames = false;
+        public float sizeOverride = 1f;
 
-    public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits, GameObject owner, bool bypassIFrames, float sizeOverride)
-    {
-        DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
-        if (pd == null || !snapshot.isValid) return dp;
+        public void AddInstance(DamageType type, float amount, bool isCrit, GameObject owner)
+            => instances.Add(new DamageInstance(type, amount, isCrit, default, owner));
 
-        void AddDamageIfValid(DamageType type, float mult)
+        public void AddInstance(DamageType type, float amount, bool isCrit, Color indicatorColor, GameObject owner)
+            => instances.Add(new DamageInstance(type, amount, isCrit, indicatorColor, owner));
+
+        public float GetTotalDamage()
         {
-            float addMultPct = DamageCalculator.GetAdditionalScaling(snapshot, type);
-            float dmgMult = 1f + (snapshot.damagePct * 0.01f);
-            float finalMult = mult + (addMultPct * 0.01f);
-
-            float damage = snapshot.scalingValue *
-                snapshot.specialMult *
-                dmgMult * finalMult *
-                DamageCalculator.TypeBonus(type, snapshot) *
-                DamageCalculator.AttackTypeBonus(pd.mainAttack.type, snapshot);
-            var (finalDamage, isCrit) = rollCrits ? DamageCalculator.RollCrits(damage, snapshot.critChance, snapshot.critDamage) : (damage, false);
-            dp.AddInstance(type, finalDamage, isCrit, default, owner);
+            float total = 0f;
+            foreach (var i in instances)
+                total += i.amount;
+            return total;
         }
 
-        AddDamageIfValid(DamageType.Physical, pd.physicalMult);
-        AddDamageIfValid(DamageType.Spell, pd.spellMult);
-        AddDamageIfValid(DamageType.True, pd.trueMult);
+        public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits, GameObject owner, bool bypassIFrames, float sizeOverride)
+        {
+            DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
+            if (pd == null || !snapshot.isValid) return dp;
 
-        return dp;
-    }
+            void AddDamageIfValid(DamageType type, float mult)
+            {
+                float addMultPct = DamageCalculator.GetAdditionalScaling(snapshot, type);
+                float dmgMult = 1f + (snapshot.damagePct * 0.01f);
+                float finalMult = mult + (addMultPct * 0.01f);
 
-    public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, bool rollCrits, Color indicatorColor, GameObject owner, bool bypassIFrames, float sizeOverride)
-    {
-        DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
-        if (!owner.TryGetComponent<IStatProvider>(out var esm) || baseDamage <= 0f) return dp;
+                float damage = snapshot.scalingValue *
+                    snapshot.specialMult *
+                    dmgMult * finalMult *
+                    DamageCalculator.TypeBonus(type, snapshot) *
+                    DamageCalculator.AttackTypeBonus(pd.mainAttack.type, snapshot);
+                var (finalDamage, isCrit) = rollCrits ? DamageCalculator.RollCrits(damage, snapshot.critChance, snapshot.critDamage) : (damage, false);
+                dp.AddInstance(type, finalDamage, isCrit, default, owner);
+            }
 
-        var (finalDamage, isCrit) = rollCrits ? DamageCalculator.RollCrits(baseDamage, esm.GetStat(StatType.critChance), esm.GetStat(StatType.critDamage)) : (baseDamage, false);
-        dp.AddInstance(type, finalDamage, isCrit, indicatorColor, owner);
-        return dp;
+            AddDamageIfValid(DamageType.Physical, pd.physicalMult);
+            AddDamageIfValid(DamageType.Spell, pd.spellMult);
+            AddDamageIfValid(DamageType.True, pd.trueMult);
+
+            return dp;
+        }
+
+        public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, bool rollCrits, Color indicatorColor, GameObject owner, bool bypassIFrames, float sizeOverride)
+        {
+            DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
+            if (!owner.TryGetComponent<IStatProvider>(out var esm) || baseDamage <= 0f) return dp;
+
+            var (finalDamage, isCrit) = rollCrits ? DamageCalculator.RollCrits(baseDamage, esm.GetStat(StatType.critChance), esm.GetStat(StatType.critDamage)) : (baseDamage, false);
+            dp.AddInstance(type, finalDamage, isCrit, indicatorColor, owner);
+            return dp;
+        }
     }
 }

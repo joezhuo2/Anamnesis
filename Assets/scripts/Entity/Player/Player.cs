@@ -1,3 +1,5 @@
+using CrystalFlux.EntitySystem;
+using CrystalFlux.SkillTree;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]

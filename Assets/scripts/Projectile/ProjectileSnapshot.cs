@@ -1,60 +1,64 @@
 using UnityEngine;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.Core;
 
-public struct ProjectileDamageSnapshot
+namespace CrystalFlux.ProjectileSystem
 {
-    public float scalingValue;
-    public float specialMult;
-    public float damagePct;
-    public float addPhysDmgPct;
-    public float addSplDmgPct;
-    public float addTrueDmgPct;
-    public float physicalDmgPct;
-    public float spellDmgPct;
-    public float basicDmgPct;
-    public float skillDmgPct;
-    public float ultDmgPct;
-    public float addDmgPct;
-    public float critChance;
-    public float critDamage;
-    public int defShred;
-    public float resPen;
-    public bool isValid;
-    public GameObject owner;
-}
-
-public static class ProjectileSnapshot
-{
-    public static ProjectileDamageSnapshot CaptureSnapshot(ProjectileData pd, GameObject source)
+    public struct ProjectileDamageSnapshot
     {
-        ProjectileDamageSnapshot snapshot = new() { isValid = false };
-        if (pd == null || source == null) return snapshot;
-        if (!source.TryGetComponent<IStatProvider>(out var esm) || esm == null) return snapshot;
+        public float scalingValue;
+        public float specialMult;
+        public float damagePct;
+        public float addPhysDmgPct;
+        public float addSplDmgPct;
+        public float addTrueDmgPct;
+        public float physicalDmgPct;
+        public float spellDmgPct;
+        public float basicDmgPct;
+        public float skillDmgPct;
+        public float ultDmgPct;
+        public float addDmgPct;
+        public float critChance;
+        public float critDamage;
+        public int defShred;
+        public float resPen;
+        public bool isValid;
+        public GameObject owner;
+    }
 
-        snapshot.scalingValue = esm.GetStat(pd.scalingStat);
-        var orbitReg = source.TryGetComponent<IOrbitRegister>(out var reg) ? reg : source.GetComponentInParent<IOrbitRegister>() ?? source.GetComponentInChildren<IOrbitRegister>();
-        snapshot.specialMult = (pd.specialSclaing) switch
+    public static class ProjectileSnapshot
+    {
+        public static ProjectileDamageSnapshot CaptureSnapshot(ProjectileData pd, GameObject source)
         {
-            SpecialScalingAttribute.Orbits => orbitReg != null ? 1f + (orbitReg.Count * pd.specialMult) : 1f,
-            SpecialScalingAttribute.HpConsumed => DamageCalculator.CalculateHpConsumedMult(pd, esm),
-            _ => 1f
-        };
-        snapshot.damagePct = esm.GetStat(StatType.damagePct);
-        snapshot.addPhysDmgPct = esm.GetStat(StatType.addPhysDmgPct);
-        snapshot.addSplDmgPct = esm.GetStat(StatType.addSplDmgPct);
-        snapshot.addTrueDmgPct = esm.GetStat(StatType.addTrueDmgPct);
-        snapshot.physicalDmgPct = esm.GetStat(StatType.physicalDmgPct);
-        snapshot.spellDmgPct = esm.GetStat(StatType.spellDmgPct);
-        snapshot.basicDmgPct = esm.GetStat(StatType.BasicDmgPct);
-        snapshot.skillDmgPct = esm.GetStat(StatType.SkillDmgPct);
-        snapshot.ultDmgPct = esm.GetStat(StatType.UltDmgPct);
-        snapshot.critChance = esm.GetStat(StatType.critChance);
-        snapshot.critDamage = esm.GetStat(StatType.critDamage);
-        snapshot.defShred = Mathf.RoundToInt(esm.GetStat(StatType.defShred));
-        snapshot.resPen = esm.GetStat(StatType.resPen);
-        snapshot.addDmgPct = esm.GetStat(StatType.addDmgPct);
-        snapshot.isValid = true;
-        snapshot.owner = source;
-        return snapshot;
+            ProjectileDamageSnapshot snapshot = new() { isValid = false };
+            if (pd == null || source == null) return snapshot;
+            if (!source.TryGetComponent<IStatProvider>(out var esm) || esm == null) return snapshot;
+
+            snapshot.scalingValue = esm.GetStat(pd.scalingStat);
+            var orbitReg = source.TryGetComponent<IOrbitRegister>(out var reg) ? reg : source.GetComponentInParent<IOrbitRegister>() ?? source.GetComponentInChildren<IOrbitRegister>();
+            snapshot.specialMult = (pd.specialSclaing) switch
+            {
+                SpecialScalingAttribute.Orbits => orbitReg != null ? 1f + (orbitReg.Count * pd.specialMult) : 1f,
+                SpecialScalingAttribute.HpConsumed => DamageCalculator.CalculateHpConsumedMult(pd, esm),
+                _ => 1f
+            };
+            snapshot.damagePct = esm.GetStat(StatType.damagePct);
+            snapshot.addPhysDmgPct = esm.GetStat(StatType.addPhysDmgPct);
+            snapshot.addSplDmgPct = esm.GetStat(StatType.addSplDmgPct);
+            snapshot.addTrueDmgPct = esm.GetStat(StatType.addTrueDmgPct);
+            snapshot.physicalDmgPct = esm.GetStat(StatType.physicalDmgPct);
+            snapshot.spellDmgPct = esm.GetStat(StatType.spellDmgPct);
+            snapshot.basicDmgPct = esm.GetStat(StatType.BasicDmgPct);
+            snapshot.skillDmgPct = esm.GetStat(StatType.SkillDmgPct);
+            snapshot.ultDmgPct = esm.GetStat(StatType.UltDmgPct);
+            snapshot.critChance = esm.GetStat(StatType.critChance);
+            snapshot.critDamage = esm.GetStat(StatType.critDamage);
+            snapshot.defShred = Mathf.RoundToInt(esm.GetStat(StatType.defShred));
+            snapshot.resPen = esm.GetStat(StatType.resPen);
+            snapshot.addDmgPct = esm.GetStat(StatType.addDmgPct);
+            snapshot.isValid = true;
+            snapshot.owner = source;
+            return snapshot;
+        }
     }
 }

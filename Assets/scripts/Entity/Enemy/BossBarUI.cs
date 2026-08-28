@@ -1,52 +1,56 @@
+using CrystalFlux.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossBarUI : MonoBehaviour
+namespace CrystalFlux.EntitySystem
 {
-    public TextMeshProUGUI bossNameText;
-    public TextMeshProUGUI bossHPText;
-    public Slider healthSlider;
-    public Image fillImage;
-    private int cMaxHp;
-    private int cCurHp;
-
-    private IStatProvider bsm;
-
-    public void Setup(string bossName, IStatProvider esm)
+    public class BossBarUI : MonoBehaviour
     {
-        bossNameText.text = bossName;
-        bsm = esm;
+        public TextMeshProUGUI bossNameText;
+        public TextMeshProUGUI bossHPText;
+        public Slider healthSlider;
+        public Image fillImage;
+        private int cMaxHp;
+        private int cCurHp;
 
-        cMaxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
-        cCurHp = Mathf.RoundToInt(bsm.GetStat(StatType.currentHp));
+        private IStatProvider bsm;
 
-        healthSlider.maxValue = cMaxHp;
-        healthSlider.value = cMaxHp;
+        public void Setup(string bossName, IStatProvider esm)
+        {
+            bossNameText.text = bossName;
+            bsm = esm;
 
-        if (fillImage != null && cMaxHp > 0)
-            fillImage.fillAmount = (float)cCurHp / cMaxHp;
+            cMaxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
+            cCurHp = Mathf.RoundToInt(bsm.GetStat(StatType.currentHp));
 
-        bossHPText.text = $"{cCurHp}/{cMaxHp}";
-    }
+            healthSlider.maxValue = cMaxHp;
+            healthSlider.value = cMaxHp;
 
-    private void Update()
-    {
-        if (bsm == null) return;
+            if (fillImage != null && cMaxHp > 0)
+                fillImage.fillAmount = (float)cCurHp / cMaxHp;
 
-        int curHp = Mathf.Max(Mathf.RoundToInt(bsm.GetStat(StatType.currentHp)), 0);
-        int maxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
-        if (cCurHp == curHp && cMaxHp == maxHp) return;
+            bossHPText.text = $"{cCurHp}/{cMaxHp}";
+        }
 
-        if (cCurHp != curHp) healthSlider.value = curHp;
-        if (cMaxHp != maxHp) healthSlider.maxValue = maxHp;
+        private void Update()
+        {
+            if (bsm == null) return;
 
-        if (fillImage != null && cMaxHp > 0)
-            fillImage.fillAmount = (float)curHp / maxHp;
+            int curHp = Mathf.Max(Mathf.RoundToInt(bsm.GetStat(StatType.currentHp)), 0);
+            int maxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
+            if (cCurHp == curHp && cMaxHp == maxHp) return;
 
-        bossHPText.text = $"{curHp}/{maxHp}";
+            if (cCurHp != curHp) healthSlider.value = curHp;
+            if (cMaxHp != maxHp) healthSlider.maxValue = maxHp;
 
-        cCurHp = curHp;
-        cMaxHp = maxHp;
+            if (fillImage != null && cMaxHp > 0)
+                fillImage.fillAmount = (float)curHp / maxHp;
+
+            bossHPText.text = $"{curHp}/{maxHp}";
+
+            cCurHp = curHp;
+            cMaxHp = maxHp;
+        }
     }
 }

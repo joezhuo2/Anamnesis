@@ -1,3 +1,4 @@
+using CrystalFlux.EntitySystem;
 using UnityEngine;
 
 public class NoDamageTrialInstance : AnomalyInstance

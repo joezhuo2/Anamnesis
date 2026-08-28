@@ -1,10 +1,14 @@
 using System;
+using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
-public interface IDamageable
+namespace CrystalFlux.EntitySystem
 {
-    void TakeDamage(DamagePacket packet);
-    void TriggerIFrames(float duration);
-    bool IsAlive { get; }
-    event Action<GameObject> OnDeath;
+    public interface IDamageable
+    {
+        void TakeDamage(DamagePacket packet);
+        void TriggerIFrames(float duration);
+        bool IsAlive { get; }
+        event Action<GameObject> OnDeath;
+    }
 }

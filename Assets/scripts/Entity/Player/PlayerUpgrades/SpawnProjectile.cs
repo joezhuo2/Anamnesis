@@ -1,3 +1,5 @@
+using CrystalFlux.EntitySystem;
+using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade/SpawnProjectile")]

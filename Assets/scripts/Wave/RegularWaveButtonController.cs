@@ -1,37 +1,41 @@
+using CrystalFlux.UISystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class RegularWaveButtonController : MonoBehaviour
+namespace CrystalFlux.WaveSystem
 {
-    public WaveManager waveManager;
-
-    private void Start()
+    [RequireComponent(typeof(Button))]
+    public class RegularWaveButtonController : MonoBehaviour
     {
-        if (waveManager == null)
-            waveManager = FindBaseWaveManager();
+        public WaveManager waveManager;
 
-        GetComponent<Button>().onClick.AddListener(OnClick);
+        private void Start()
+        {
+            if (waveManager == null)
+                waveManager = FindBaseWaveManager();
 
-        if (gameObject.TryGetComponent<ITooltipDisplay>(out var tt))
-            tt.ShowTooltip("Regular Waves", "Play the standard wave sequence.\nWaves follow the configured sequence with fixed enemy counts, levels, and rewards.");
-    }
+            GetComponent<Button>().onClick.AddListener(OnClick);
 
-    private void OnClick()
-    {
-        if (waveManager == null) return;
+            if (gameObject.TryGetComponent<ITooltipDisplay>(out var tt))
+                tt.ShowTooltip("Regular Waves", "Play the standard wave sequence.\nWaves follow the configured sequence with fixed enemy counts, levels, and rewards.");
+        }
 
-        waveManager.CloseAllButtons();
-        waveManager.StartNextWave();
+        private void OnClick()
+        {
+            if (waveManager == null) return;
 
-        IAnnouncer.Current?.DisableSubtitle();
-        IAnnouncer.Current?.DisableTitle();
-    }
+            waveManager.CloseAllButtons();
+            waveManager.StartNextWave();
 
-    private WaveManager FindBaseWaveManager()
-    {
-        foreach (var wm in FindObjectsByType<WaveManager>(FindObjectsInactive.Include))
-            if (wm.GetType() == typeof(WaveManager)) return wm;
-        return null;
+            IAnnouncer.Current?.DisableSubtitle();
+            IAnnouncer.Current?.DisableTitle();
+        }
+
+        private WaveManager FindBaseWaveManager()
+        {
+            foreach (var wm in FindObjectsByType<WaveManager>(FindObjectsInactive.Include))
+                if (wm.GetType() == typeof(WaveManager)) return wm;
+            return null;
+        }
     }
 }

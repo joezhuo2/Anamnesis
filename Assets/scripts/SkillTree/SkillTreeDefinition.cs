@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SkillTreeDefinition", menuName = "Skill Tree/Definition")]
-public class SkillTreeDefinition : ScriptableObject
+namespace CrystalFlux.SkillTree
 {
-    public List<SkillNodeDef> allNodes = new();
+    [CreateAssetMenu(fileName = "SkillTreeDefinition", menuName = "Skill Tree/Definition")]
+    public class SkillTreeDefinition : ScriptableObject
+    {
+        public List<SkillNodeDef> allNodes = new();
+    }
 }

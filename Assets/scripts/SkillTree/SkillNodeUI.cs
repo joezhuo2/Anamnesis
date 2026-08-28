@@ -1,133 +1,137 @@
 using System.Collections.Generic;
+using CrystalFlux.UISystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+namespace CrystalFlux.SkillTree
 {
-    [Header("UI References")]
-    public Image backgroundImage;
-    public Image iconImage;
-    public GameObject lockedOverlay;
-    public GameObject unlockedCheckmark;
-    public GameObject availableGlow;
-
-    [HideInInspector] public SkillNodeDef node;
-    private SkillTreeManager manager;
-    private PlayerSkillTree playerSkillTree;
-
-    public void Initialize(SkillNodeDef node, SkillTreeManager manager)
+    public class SkillNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
-        this.node = node;
-        this.manager = manager ?? FindAnyObjectByType<SkillTreeManager>();
-        this.playerSkillTree = manager?.player?.GetComponent<PlayerSkillTree>() ?? FindAnyObjectByType<PlayerSkillTree>();
+        [Header("UI References")]
+        public Image backgroundImage;
+        public Image iconImage;
+        public GameObject lockedOverlay;
+        public GameObject unlockedCheckmark;
+        public GameObject availableGlow;
 
-        if (backgroundImage != null) backgroundImage.raycastTarget = true;
+        [HideInInspector] public SkillNodeDef node;
+        private SkillTreeManager manager;
+        private PlayerSkillTree playerSkillTree;
 
-        RefreshVisuals();
-    }
-
-    public void RefreshVisuals()
-    {
-        if (node == null || manager == null) return;
-        if (playerSkillTree == null)
-            playerSkillTree = manager?.player?.GetComponent<PlayerSkillTree>()  ?? FindAnyObjectByType<PlayerSkillTree>();
-
-        if (backgroundImage != null) backgroundImage.raycastTarget = true;
-
-        bool unlocked = manager.IsNodeUnlocked(node);
-        var (canUnlock, _) = manager.CanUnlock(node);
-
-        if (lockedOverlay != null) lockedOverlay.SetActive(!unlocked && !canUnlock);
-        if (unlockedCheckmark != null) unlockedCheckmark.SetActive(unlocked);
-        if (availableGlow != null) availableGlow.SetActive(!unlocked && canUnlock);
-        if (iconImage != null && node.icon != null) iconImage.sprite = node.icon;
-
-        if (backgroundImage != null)
+        public void Initialize(SkillNodeDef node, SkillTreeManager manager)
         {
-            if (unlocked) backgroundImage.color = new Color(0.2f, 0.6f, 0.2f, 0.8f);
-            else if (canUnlock) backgroundImage.color = new Color(0.8f, 0.7f, 0.1f, 0.8f);
-            else backgroundImage.color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
+            this.node = node;
+            this.manager = manager ?? FindAnyObjectByType<SkillTreeManager>();
+            this.playerSkillTree = manager?.player?.GetComponent<PlayerSkillTree>() ?? FindAnyObjectByType<PlayerSkillTree>();
+
+            if (backgroundImage != null) backgroundImage.raycastTarget = true;
+
+            RefreshVisuals();
         }
-    }
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (manager == null || node == null) return;
 
-        if (TryGetComponent<ITooltipDisplay>(out var td))
+        public void RefreshVisuals()
         {
-            var (tt, st, os) = GetSkillTreeTooltip();
-            td.ShowTooltip(tt, st, os);
-        }
-    }
+            if (node == null || manager == null) return;
+            if (playerSkillTree == null)
+                playerSkillTree = manager?.player?.GetComponent<PlayerSkillTree>()  ?? FindAnyObjectByType<PlayerSkillTree>();
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (TryGetComponent<ITooltipDisplay>(out var td))
-            td.HideTooltip();
-    }
+            if (backgroundImage != null) backgroundImage.raycastTarget = true;
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (manager == null || node == null || manager.tree == null) return;
-
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
             bool unlocked = manager.IsNodeUnlocked(node);
-            if (unlocked && !node.isStartingNode) UndoNode();
-            else UnlockNode();
-        }
-    }
+            var (canUnlock, _) = manager.CanUnlock(node);
 
-    private void UnlockNode()
-    {
-        var (canUnlock, _) = manager.CanUnlock(node);
-        if (canUnlock)
-        {
-            manager.UnlockNode(node);
+            if (lockedOverlay != null) lockedOverlay.SetActive(!unlocked && !canUnlock);
+            if (unlockedCheckmark != null) unlockedCheckmark.SetActive(unlocked);
+            if (availableGlow != null) availableGlow.SetActive(!unlocked && canUnlock);
+            if (iconImage != null && node.icon != null) iconImage.sprite = node.icon;
 
-            var treeUI = GetComponentInParent<SkillTreeUI>();
-            if (treeUI != null) treeUI.OnNodeStateChanged(node);
-        }
-    }
-
-    private void UndoNode()
-    {
-        if (manager.tree != null)
-        {
-            var (canUndo, _) = manager.tree.CanUndo(node);
-            if (canUndo)
+            if (backgroundImage != null)
             {
-                manager.tree.UndoNode(node);
+                if (unlocked) backgroundImage.color = new Color(0.2f, 0.6f, 0.2f, 0.8f);
+                else if (canUnlock) backgroundImage.color = new Color(0.8f, 0.7f, 0.1f, 0.8f);
+                else backgroundImage.color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
+            }
+        }
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (manager == null || node == null) return;
+
+            if (TryGetComponent<ITooltipDisplay>(out var td))
+            {
+                var (tt, st, os) = GetSkillTreeTooltip();
+                td.ShowTooltip(tt, st, os);
+            }
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (TryGetComponent<ITooltipDisplay>(out var td))
+                td.HideTooltip();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (manager == null || node == null || manager.tree == null) return;
+
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                bool unlocked = manager.IsNodeUnlocked(node);
+                if (unlocked && !node.isStartingNode) UndoNode();
+                else UnlockNode();
+            }
+        }
+
+        private void UnlockNode()
+        {
+            var (canUnlock, _) = manager.CanUnlock(node);
+            if (canUnlock)
+            {
+                manager.UnlockNode(node);
 
                 var treeUI = GetComponentInParent<SkillTreeUI>();
                 if (treeUI != null) treeUI.OnNodeStateChanged(node);
             }
         }
-    }
 
-    private (string title, string subtitle, Vector2 offset) GetSkillTreeTooltip()
-    {
-        if (node == null) return ("", "", Vector2.zero);
-
-        List<string> lines = new();
-        if (!string.IsNullOrEmpty(node.desc)) lines.Add(node.desc);
-
-        var (_, failMessage) = manager.CanUnlock(node);
-        if (!string.IsNullOrEmpty(failMessage))
-            lines.Add($"<color=#FF4444>{failMessage}</color>");
-
-        if (!node.isStartingNode)
+        private void UndoNode()
         {
-            var playerSkillTree = FindAnyObjectByType<PlayerSkillTree>();
-            if (playerSkillTree != null && playerSkillTree.IsNodeUnlocked(node))
+            if (manager.tree != null)
             {
-                var (canUndo, _) = playerSkillTree.CanUndo(node);
-                if (canUndo) lines.Add($"<color=#FFD700>Left-click to undo ({node.undoCost}g)</color>");
-                else lines.Add($"<color=#888888>Undo cost: {node.undoCost}g (insufficient gold)</color>");
+                var (canUndo, _) = manager.tree.CanUndo(node);
+                if (canUndo)
+                {
+                    manager.tree.UndoNode(node);
+
+                    var treeUI = GetComponentInParent<SkillTreeUI>();
+                    if (treeUI != null) treeUI.OnNodeStateChanged(node);
+                }
             }
         }
 
-        return(node.nodeName, string.Join("\n", lines), new(100, -100));
+        private (string title, string subtitle, Vector2 offset) GetSkillTreeTooltip()
+        {
+            if (node == null) return ("", "", Vector2.zero);
+
+            List<string> lines = new();
+            if (!string.IsNullOrEmpty(node.desc)) lines.Add(node.desc);
+
+            var (_, failMessage) = manager.CanUnlock(node);
+            if (!string.IsNullOrEmpty(failMessage))
+                lines.Add($"<color=#FF4444>{failMessage}</color>");
+
+            if (!node.isStartingNode)
+            {
+                var playerSkillTree = FindAnyObjectByType<PlayerSkillTree>();
+                if (playerSkillTree != null && playerSkillTree.IsNodeUnlocked(node))
+                {
+                    var (canUndo, _) = playerSkillTree.CanUndo(node);
+                    if (canUndo) lines.Add($"<color=#FFD700>Left-click to undo ({node.undoCost}g)</color>");
+                    else lines.Add($"<color=#888888>Undo cost: {node.undoCost}g (insufficient gold)</color>");
+                }
+            }
+
+            return(node.nodeName, string.Join("\n", lines), new(100, -100));
+        }
     }
 }

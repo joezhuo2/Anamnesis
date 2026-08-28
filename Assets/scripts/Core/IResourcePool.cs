@@ -1,5 +1,10 @@
-public interface IResourcePool 
+using CrystalFlux.Core;
+
+namespace CrystalFlux.EntitySystem
 {
-    bool TrySpend(ResourceType type, float amount);
-    bool TryGain(ResourceType type, float amount);
+    public interface IResourcePool
+    {
+        bool TrySpend(ResourceType type, float amount);
+        bool TryGain(ResourceType type, float amount);
+    }
 }

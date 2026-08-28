@@ -1,3 +1,5 @@
+using CrystalFlux.Core;
+using CrystalFlux.EntitySystem;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade/GainMana")]

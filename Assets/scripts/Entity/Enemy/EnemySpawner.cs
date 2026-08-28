@@ -1,14 +1,18 @@
+using CrystalFlux.Core;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+namespace CrystalFlux.EntitySystem
 {
-    public static GameObject SpawnEnemy(GameObject prefab, Vector2 location, float radius, int level)
+    public class EnemySpawner : MonoBehaviour
     {
-        Vector2 spawnPosition = location + (Random.insideUnitCircle * radius);
-        GameObject enemy = Instantiate(prefab, spawnPosition, Quaternion.identity);
+        public static GameObject SpawnEnemy(GameObject prefab, Vector2 location, float radius, int level)
+        {
+            Vector2 spawnPosition = location + (Random.insideUnitCircle * radius);
+            GameObject enemy = Instantiate(prefab, spawnPosition, Quaternion.identity);
 
-        if (enemy.TryGetComponent<EnemyStatManager>(out var esm)) esm.ScaleStatsToLevel(level);
+            if (enemy.TryGetComponent<EnemyStatManager>(out var esm)) esm.ScaleStatsToLevel(level);
 
-        return enemy;
+            return enemy;
+        }
     }
 }

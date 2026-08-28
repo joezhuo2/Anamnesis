@@ -1,62 +1,66 @@
+using CrystalFlux.Core;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "se_pulled", menuName = "Status Effects/Debuff/Pulled")]
-public class Pulled : StatusEffect
+namespace CrystalFlux.StatusEffectSystem
 {
-    [Header("Pull Settings")]
-    [Tooltip("Base pull speed in units/sec")] public float pullSpeed = 5f;
-    [Tooltip("Additional pull speed per extra stack")] public float pullSpeedPerStack = 2f;
-    [Tooltip("Distance at which pull reaches full speed")] public float fullSpeedRadius = 5f;
-    [Tooltip("Minimum distance before stopping pull")] public float deadZone = 0.1f;
-    [Tooltip("Disable entity movement while pulled")] public bool disableMovement = false;
-
-    [HideInInspector] public Vector2 pullCenter;
-    private bool wasMovementDisabled;
-
-    public override void OnApply()
+    [CreateAssetMenu(fileName = "se_pulled", menuName = "Status Effects/Debuff/Pulled")]
+    public class Pulled : StatusEffect
     {
-        if (location != Vector2.zero) pullCenter = location;
-        else if (source != null) pullCenter = source.transform.position;
+        [Header("Pull Settings")]
+        [Tooltip("Base pull speed in units/sec")] public float pullSpeed = 5f;
+        [Tooltip("Additional pull speed per extra stack")] public float pullSpeedPerStack = 2f;
+        [Tooltip("Distance at which pull reaches full speed")] public float fullSpeedRadius = 5f;
+        [Tooltip("Minimum distance before stopping pull")] public float deadZone = 0.1f;
+        [Tooltip("Disable entity movement while pulled")] public bool disableMovement = false;
 
-        if (disableMovement && target != null && target.TryGetComponent<IStatProvider>(out var esm))
+        [HideInInspector] public Vector2 pullCenter;
+        private bool wasMovementDisabled;
+
+        public override void OnApply()
         {
-            wasMovementDisabled = esm.GetStat(StatType.CanMove) < 0.5f;
-            esm.AddStat(new StatBuff(StatType.CanMove, -1f));
-        }
-    }
+            if (location != Vector2.zero) pullCenter = location;
+            else if (source != null) pullCenter = source.transform.position;
 
-    public override void OnTick()
-    {
-        if (target == null) return;
-
-        Vector2 targetPos = target.transform.position;
-        Vector2 dir = pullCenter - targetPos;
-        float dist = dir.magnitude;
-
-        if (dist <= deadZone) return;
-        if (dist > fullSpeedRadius)
-        {
-            if (target.TryGetComponent<IStatusEffectReceiver>(out var sem))
-                sem.RemoveEffect<Pulled>();
-            return;
+            if (disableMovement && target != null && target.TryGetComponent<IStatProvider>(out var esm))
+            {
+                wasMovementDisabled = esm.GetStat(StatType.CanMove) < 0.5f;
+                esm.AddStat(new StatBuff(StatType.CanMove, -1f));
+            }
         }
 
-        float distFactor = Mathf.Clamp01(dist / fullSpeedRadius);
-        float effectiveSpeed = (pullSpeed + (pullSpeedPerStack * (currentStacks - 1))) * distFactor;
-
-        Vector2 move = effectiveSpeed * tickInterval * dir.normalized;
-
-        if (move.magnitude > dist) move = dir;
-
-        target.transform.position = targetPos + move;
-    }
-
-    public override void OnExpire()
-    {
-        if (disableMovement && !wasMovementDisabled && target != null
-            && target.TryGetComponent<IStatProvider>(out var esm))
+        public override void OnTick()
         {
-            esm.AddStat(new StatBuff(StatType.CanMove, 1f));
+            if (target == null) return;
+
+            Vector2 targetPos = target.transform.position;
+            Vector2 dir = pullCenter - targetPos;
+            float dist = dir.magnitude;
+
+            if (dist <= deadZone) return;
+            if (dist > fullSpeedRadius)
+            {
+                if (target.TryGetComponent<IStatusEffectReceiver>(out var sem))
+                    sem.RemoveEffect<Pulled>();
+                return;
+            }
+
+            float distFactor = Mathf.Clamp01(dist / fullSpeedRadius);
+            float effectiveSpeed = (pullSpeed + (pullSpeedPerStack * (currentStacks - 1))) * distFactor;
+
+            Vector2 move = effectiveSpeed * tickInterval * dir.normalized;
+
+            if (move.magnitude > dist) move = dir;
+
+            target.transform.position = targetPos + move;
+        }
+
+        public override void OnExpire()
+        {
+            if (disableMovement && !wasMovementDisabled && target != null
+                && target.TryGetComponent<IStatProvider>(out var esm))
+            {
+                esm.AddStat(new StatBuff(StatType.CanMove, 1f));
+            }
         }
     }
 }

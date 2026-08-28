@@ -1,38 +1,42 @@
 using System.Collections.Generic;
+using CrystalFlux.Core;
 using UnityEngine;
 
-public enum StatRollType
+namespace CrystalFlux.ItemSystem
 {
-    GuaranteedStatAndRoll,
-    GuaranteedStatRandomRoll,
-    PureRandomStatAndRoll
-}
+    public enum StatRollType
+    {
+        GuaranteedStatAndRoll,
+        GuaranteedStatRandomRoll,
+        PureRandomStatAndRoll
+    }
 
-[System.Serializable]
-public struct StatRoll
-{
-    public StatRollType rollType;
-    public StatType statType;
-    public float maxRoll;
-    public float minRoll;
-}
+    [System.Serializable]
+    public struct StatRoll
+    {
+        public StatRollType rollType;
+        public StatType statType;
+        public float maxRoll;
+        public float minRoll;
+    }
 
-public enum EquipmentSlot
-{
-    Head,
-    Chest,
-    Legs,
-    Feet,
-    Weapon,
-    Offhand
-}
+    public enum EquipmentSlot
+    {
+        Head,
+        Chest,
+        Legs,
+        Feet,
+        Weapon,
+        Offhand
+    }
 
-public class GearItem : Item
-{
-    public int level;
-    public EquipmentSlot slot;
-    public StatRoll potentialBaseRoll;
-    public StatBuff baseRoll;
-    public List<StatRoll> potentialRolls;
-    public List<StatBuff> rolls;
+    public class GearItem : Item
+    {
+        public int level;
+        public EquipmentSlot slot;
+        public StatRoll potentialBaseRoll;
+        public StatBuff baseRoll;
+        public List<StatRoll> potentialRolls;
+        public List<StatBuff> rolls;
+    }
 }

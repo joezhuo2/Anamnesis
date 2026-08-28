@@ -1,3 +1,4 @@
+using CrystalFlux.Core;
 using UnityEngine;
 
 public class StatModifierInstance : AnomalyInstance

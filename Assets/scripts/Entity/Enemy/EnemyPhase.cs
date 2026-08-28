@@ -1,46 +1,50 @@
+using CrystalFlux.Core;
 using UnityEngine;
 
-public class EnemyPhase : MonoBehaviour
+namespace CrystalFlux.EntitySystem
 {
-    public float[] phaseThresholds = null;
-    public PhaseBuff[] phaseBuffs;
-    public int phase;
-
-    private IStatProvider esm;
-
-    private void Awake() => esm = GetComponent<IStatProvider>();
-
-    public void UpdatePhase(int newPhase)
+    public class EnemyPhase : MonoBehaviour
     {
-        if (phase == newPhase) return;
+        public float[] phaseThresholds = null;
+        public PhaseBuff[] phaseBuffs;
+        public int phase;
 
-        int previousPhase = phase;
-        phase = newPhase;
+        private IStatProvider esm;
 
-        if (phaseBuffs == null || esm == null) return;
+        private void Awake() => esm = GetComponent<IStatProvider>();
 
-        if (newPhase > previousPhase)
+        public void UpdatePhase(int newPhase)
         {
-            foreach (var pb in phaseBuffs)
+            if (phase == newPhase) return;
+
+            int previousPhase = phase;
+            phase = newPhase;
+
+            if (phaseBuffs == null || esm == null) return;
+
+            if (newPhase > previousPhase)
             {
-                if (pb.phaseReq > previousPhase && pb.phaseReq <= newPhase)
-                    esm.AddStat(pb.buff);
+                foreach (var pb in phaseBuffs)
+                {
+                    if (pb.phaseReq > previousPhase && pb.phaseReq <= newPhase)
+                        esm.AddStat(pb.buff);
+                }
             }
-        }
-        else if (newPhase < previousPhase)
-        {
-            foreach (var pb in phaseBuffs)
+            else if (newPhase < previousPhase)
             {
-                if (pb.phaseReq > newPhase && pb.phaseReq <= previousPhase)
-                    esm.AddStat(pb.buff, false);
+                foreach (var pb in phaseBuffs)
+                {
+                    if (pb.phaseReq > newPhase && pb.phaseReq <= previousPhase)
+                        esm.AddStat(pb.buff, false);
+                }
             }
         }
     }
-}
 
-[System.Serializable]
-public struct PhaseBuff
-{
-    public StatBuff buff;
-    public int phaseReq;
+    [System.Serializable]
+    public struct PhaseBuff
+    {
+        public StatBuff buff;
+        public int phaseReq;
+    }
 }

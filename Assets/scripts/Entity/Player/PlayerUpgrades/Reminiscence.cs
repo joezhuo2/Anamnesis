@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using CrystalFlux.EntitySystem;
+using CrystalFlux.ProjectileSystem;
+using CrystalFlux.StatusEffectSystem;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade/Reminiscence")]

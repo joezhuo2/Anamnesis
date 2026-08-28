@@ -1,29 +1,33 @@
+using CrystalFlux.UISystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class UnlimitedWaveButtonController : MonoBehaviour
+namespace CrystalFlux.WaveSystem
 {
-    public UnlimitedWaveManager unlimitedWaveManager;
-
-    private void Start()
+    [RequireComponent(typeof(Button))]
+    public class UnlimitedWaveButtonController : MonoBehaviour
     {
-        if (unlimitedWaveManager == null) unlimitedWaveManager = FindAnyObjectByType<UnlimitedWaveManager>();
+        public UnlimitedWaveManager unlimitedWaveManager;
 
-        GetComponent<Button>().onClick.AddListener(OnClick);
+        private void Start()
+        {
+            if (unlimitedWaveManager == null) unlimitedWaveManager = FindAnyObjectByType<UnlimitedWaveManager>();
 
-        if (gameObject.TryGetComponent<ITooltipDisplay>(out var tt))
-            tt.ShowTooltip("Unlimited Waves", "Endless waves with no sequence cap.\nEnemies scale infinitely, with faster spawns and periodic boss waves.\nRewards keep coming every wave.");
-    }
+            GetComponent<Button>().onClick.AddListener(OnClick);
 
-    private void OnClick()
-    {
-        if (unlimitedWaveManager == null) return;
+            if (gameObject.TryGetComponent<ITooltipDisplay>(out var tt))
+                tt.ShowTooltip("Unlimited Waves", "Endless waves with no sequence cap.\nEnemies scale infinitely, with faster spawns and periodic boss waves.\nRewards keep coming every wave.");
+        }
 
-        unlimitedWaveManager.CloseAllButtons();
-        unlimitedWaveManager.StartNextWave();
+        private void OnClick()
+        {
+            if (unlimitedWaveManager == null) return;
 
-        IAnnouncer.Current?.DisableSubtitle();
-        IAnnouncer.Current?.DisableTitle();
+            unlimitedWaveManager.CloseAllButtons();
+            unlimitedWaveManager.StartNextWave();
+
+            IAnnouncer.Current?.DisableSubtitle();
+            IAnnouncer.Current?.DisableTitle();
+        }
     }
 }

@@ -1,4 +1,7 @@
-public interface ITeamMember
+namespace CrystalFlux.EntitySystem
 {
-    int TeamID { get; }
+    public interface ITeamMember
+    {
+        int TeamID { get; }
+    }
 }

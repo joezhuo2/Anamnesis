@@ -1,3 +1,4 @@
+using CrystalFlux.Core;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Playerstats", menuName = "Data/Playerstats")]
@@ -10,8 +11,4 @@ public class PlayerStats : EntityStats
     // public int dexterity;
     // public int intellegence;
     // public int vitality;
-
-    // [Header("Levelling")]
-    // public int currentXp;
-    // public int xpBonus;
 }

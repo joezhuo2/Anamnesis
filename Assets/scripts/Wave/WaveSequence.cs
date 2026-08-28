@@ -1,27 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ws", menuName = "Data/Wave Sequence")]
-public class WaveSequence : ScriptableObject
+namespace CrystalFlux.WaveSystem
 {
-    public Vector2 spawnLocation;
-    public WaveSequence nextSequence;
-    public List<WaveData> waves = new();
-    public int waveOffset = 0;
-}
+    [CreateAssetMenu(fileName = "ws", menuName = "Data/Wave Sequence")]
+    public class WaveSequence : ScriptableObject
+    {
+        public Vector2 spawnLocation;
+        public WaveSequence nextSequence;
+        public List<WaveData> waves = new();
+        public int waveOffset = 0;
+    }
 
-[System.Serializable]
-public class WaveData
-{
-    public GameObject enemyPrefab;
-    public int maxTotalEnemies;
-    public int maxCurrentEnemies;
-    public int enemyLevel;
-    public float minSpawnFrequency;
-    public float maxSpawnFrequency;
-    public int minRewardChoices;
-    public int maxRewardChoices;
-    public GameObject bossBarPrefab;
-    public string bossBarName;
-    public GameObject statusEffectDisplayPrefab;
+    [System.Serializable]
+    public class WaveData
+    {
+        public GameObject enemyPrefab;
+        public int maxTotalEnemies;
+        public int maxCurrentEnemies;
+        public int enemyLevel;
+        public float minSpawnFrequency;
+        public float maxSpawnFrequency;
+        public int minRewardChoices;
+        public int maxRewardChoices;
+        public GameObject bossBarPrefab;
+        public string bossBarName;
+        public GameObject statusEffectDisplayPrefab;
+    }
 }

@@ -7,7 +7,12 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [v0.2.16] - 2026-08-27
+## ⚠️ [v0.2.17] - 2026-08-28
+
+### Added
+- **Namespaces** - most classes now use namespaces from one of the following: `CrystalFlux.Core`, `CrystalFlux.EntitySystem`, `CrystalFlux.ProjectileSystem`, `CrystalFlux.StatusEffectSystem`, `CrystalFlux.WaveSystem`, and `CrystalFlux.UISystem`.
+
+## ⚠️ [v0.2.16] - 2026-08-27
 
 ### Added
 - **`IAnnouncer` interface** — new core interface for unified title/subtitle announcements (`SetTitleForDuration`, `SetSubtitleForDuration`)
@@ -26,7 +31,7 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 - **Skill tree refund** — now refunds `node.cost` skill points instead of fixed 1
 - **Wave reward skill points** — now uses `AddSkillPoints(1)` via interface
 
-## [v0.2.15_1] - 2026-08-27
+## ⚠️ [v0.2.15_1] - 2026-08-27
 
 ### Removed
 - code counter

@@ -1,3 +1,4 @@
+using CrystalFlux.EntitySystem;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
