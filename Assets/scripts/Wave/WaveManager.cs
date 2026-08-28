@@ -62,14 +62,14 @@ public class WaveManager : MonoBehaviour
     public float anomalyChance = 15;
     public float anomalyGlobalMinWave = 10;
 
-    protected GameController GameController => GameController.Instance;
+    protected IAnnouncer GameController => IAnnouncer.Current ?? null;
     protected RewardType type = RewardType.Basic;
     protected GameObject activeBossBar;
     protected IStatProvider cpsm;
     protected ICurrencyHolder cich;
     protected PlayerAttackHandler cpah;
     protected PlayerUpgradeManager cpum;
-    protected PlayerSkillTree cpst;
+    protected ISkillPointHolder cpst;
     protected readonly List<AttackReward> availableRarePool = new();
     protected readonly List<PlayerUpgradeReward> availableTreasurePool = new();
     protected int currentWaveIndex = 0;
@@ -152,8 +152,8 @@ public class WaveManager : MonoBehaviour
             if (tt.timeRemaining <= 0f)
             {
                 anomalyInfoText.text = "Time's Up! Anomaly Failed";
-                GameController.SetTitleForDuration("Anomaly Failed", 2f, 0.5f, 0.5f);
-                GameController.SetSubtitleForDuration("Time's Up!", 2f, 0.5f, 0.5f);
+                GameController?.SetTitleForDuration("Anomaly Failed", 2f, 0.5f, 0.5f);
+                GameController?.SetSubtitleForDuration("Time's Up!", 2f, 0.5f, 0.5f);
                 return;
             }
             anomalyInfoText.text = $"Time Remaining: {tt.timeRemaining:F1}s";
@@ -241,9 +241,9 @@ public class WaveManager : MonoBehaviour
             yield return _waitForSeconds0_5;
         }
 
-        if (activeBossBar != null) GameController.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
-        else if (currentAnomaly != null && currentAnomaly.isActive) GameController.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
-        else GameController.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
+        if (activeBossBar != null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
+        else if (currentAnomaly != null && currentAnomaly.isActive) GameController?.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
+        else GameController?.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
 
         yield return _waitForSeconds1_5;
         EndWave();
@@ -318,7 +318,7 @@ public class WaveManager : MonoBehaviour
         if (wave % 5 == 0)
         {
             CachePlayerSkillTree();
-            if (cpst != null) cpst.skillPoints++;
+            if (cpst != null) cpst.AddSkillPoints(1);
             ActiveManager.rerolls++;
         }
         else if (Random.value < 0.5f)
@@ -356,9 +356,9 @@ public class WaveManager : MonoBehaviour
         additionalQuality += Random.Range(0.1f, 0.3f);
 
         CachePlayerSkillTree();
-        if (cpst != null) cpst.skillPoints++;
+        if (cpst != null) cpst.AddSkillPoints(1);
 
-        GameController.SetSubtitleForDuration($"You gained 1 skill point and {c} reroll tokens!", 1f, 0.5f, 0.5f);
+        GameController?.SetSubtitleForDuration($"You gained 1 skill point and {c} reroll tokens!", 1f, 0.5f, 0.5f);
 
         type = RewardType.Mixed;
         PanelSetup();

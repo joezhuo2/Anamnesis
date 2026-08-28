@@ -7,6 +7,25 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.2.16] - 2026-08-27
+
+### Added
+- **`IAnnouncer` interface** — new core interface for unified title/subtitle announcements (`SetTitleForDuration`, `SetSubtitleForDuration`)
+- **`ISkillPointHolder` interface** — new core interface for skill point management (`SkillPoints`, `AddSkillPoints`, `TrySpend`)
+- **`SkillNodeDef.cost`** — per-node skill point cost (default 1) replacing fixed cost
+
+### Changed
+- **`GameController`** — now implements `IAnnouncer`; announcements route through `IAnnouncer.Current` instead of singleton
+- **`PlayerSkillTree`** — implements `ISkillPointHolder`; `skillPoints` field → `SkillPoints` property; unlock cost now uses `node.cost`; added `AddSkillPoints`/`TrySpend` methods
+- **`WaveManager`** — references `IAnnouncer` instead of `GameController`; uses `ISkillPointHolder` for skill point rewards; null-conditional calls for announcements
+- **`PlayerLevel`** — uses `IAnnouncer.Current` for level-up announcements
+- **`PlayerInputHandler`** — removed `PlayerSkillTree` reference and skill tree toggle logic (moved to UI layer)
+- **`PlayerAttackCooldownUI`** — added null-safety check for `cooldownImage`
+
+### Fixed
+- **Skill tree refund** — now refunds `node.cost` skill points instead of fixed 1
+- **Wave reward skill points** — now uses `AddSkillPoints(1)` via interface
+
 ## [v0.2.15_1] - 2026-08-27
 
 ### Removed

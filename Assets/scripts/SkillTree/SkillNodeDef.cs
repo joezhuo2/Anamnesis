@@ -9,6 +9,7 @@ public class SkillNodeDef : ScriptableObject, IUnlockEffect
     [TextArea(3, 5)] public string desc;
     public string nodeID;
     public Sprite icon;
+    public int cost = 1;
 
     [Header("Requirements")]
     public bool isStartingNode;

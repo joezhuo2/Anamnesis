@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 2744953083866278850}
   - component: {fileID: 7259569603030329541}
   - component: {fileID: 7609316332093073887}
+  - component: {fileID: 896384207242531735}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -181,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81519075fdaa4e84eab1c3641decb37f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputHandler
-  pst: {fileID: 0}
 --- !u!114 &3978305546849488184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSkillTree
   definition: {fileID: 11400000, guid: 47d7e3fd465d2c548af54867800ed8ff, type: 2}
-  skillPoints: 1
   choseStarting: 0
 --- !u!114 &7259569603030329541
 MonoBehaviour:
@@ -404,6 +403,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06325d2fa10838848bff40b7a6b0fb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLevel
+--- !u!114 &896384207242531735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918496070430617166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4753e5e9ccde67e44b3a3b9b7910dd64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillTreeInputToggle
 --- !u!1 &3977842000929726646
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerSkillTree : MonoBehaviour
+public class PlayerSkillTree : MonoBehaviour, ISkillPointHolder
 {
     public SkillTreeDefinition definition;
-    public int skillPoints;
+    public int SkillPoints { get; private set;}
 
     [HideInInspector] public readonly List<SkillNodeDef> runtimeNodes = new();
     [HideInInspector] public bool choseStarting;
@@ -142,7 +142,7 @@ public class PlayerSkillTree : MonoBehaviour
         if (node == null) return (false, "Node is null");
         if (unlockedNodes.Contains(node.nodeID)) return (false, "Node already unlocked");
         if (node.isStartingNode && choseStarting) return (false, "Starting node already chosen");
-        if (skillPoints < 1) return (false, "Not enough skill points");
+        if (SkillPoints < node.cost) return (false, "Not enough skill points");
 
         if (!node.isStartingNode)
         {
@@ -234,7 +234,7 @@ public class PlayerSkillTree : MonoBehaviour
         var (canUnlock, _) = CanUnlock(node);
         if (!canUnlock) return;
 
-        skillPoints--;
+        TrySpend(node.cost);
         unlockedNodes.Add(node.nodeID);
 
         node.Apply(gameObject);
@@ -262,10 +262,19 @@ public class PlayerSkillTree : MonoBehaviour
 
         if (TryGetComponent<ICurrencyHolder>(out var esm) && esm.TrySpend(node.undoCost))
         {
-            skillPoints++;
+            AddSkillPoints(node.cost);
             unlockedNodes.Remove(node.nodeID);
         }
 
         node.Remove(gameObject);
+    }
+
+    public void AddSkillPoints(int amount) => SkillPoints += amount;
+
+    public bool TrySpend(int amount)
+    {
+        if (SkillPoints < amount) return false;
+        SkillPoints -= amount;
+        return true;
     }
 }

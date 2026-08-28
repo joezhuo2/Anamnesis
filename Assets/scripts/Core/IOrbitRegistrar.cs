@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Namespace
+namespace CrystalFlux.ProjectileSystem
 {
     public interface IOrbitRegister
     {

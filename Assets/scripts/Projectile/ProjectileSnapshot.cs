@@ -1,4 +1,5 @@
 using UnityEngine;
+using CrystalFlux.ProjectileSystem;
 
 public struct ProjectileDamageSnapshot
 {

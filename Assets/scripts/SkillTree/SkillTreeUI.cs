@@ -62,7 +62,6 @@ public class SkillTreeUI : MonoBehaviour
         var idList = new List<string>();
         foreach (var n in runtimeNodes) idList.Add(n != null ? n.nodeID : "<null>");
 
-        int matched = 0;
         foreach (var nodeUI in existingNodeUIs)
         {
             var node = FindMatchingRuntimeNode(nodeUI, runtimeNodes);
@@ -70,7 +69,6 @@ public class SkillTreeUI : MonoBehaviour
             {
                 nodeUI.Initialize(node, manager);
                 nodeUIMap[node] = nodeUI;
-                matched++;
             }
         }
 

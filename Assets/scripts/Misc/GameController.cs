@@ -2,22 +2,18 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviour, IAnnouncer
 {
-    public static GameController Instance { get; private set; }
     public TextMeshProUGUI title;
     public TextMeshProUGUI subtitle;
     public GameObject UIPanel;
 
     private Coroutine titleRoutine;
     private Coroutine subtitleRoutine;
-    private bool started = false;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-
+        IAnnouncer.Current = this;
         SetupEventSystem();
     }
 
@@ -34,22 +30,9 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        SetTitle("Anamnesis");
-        SetSubtitle("Conquer the waves");
-
-        started = false;
-    }
-
-    public void OnGameStart()
-    {
-        if (started) return;
-
-        started = true;
-
-        DisableTitle();
-        DisableSubtitle();
-
         UIPanel.SetActive(true);
+        SetTitleForDuration("Anamnesis", 8f, 1f, 1f);
+        SetSubtitleForDuration("Conquer the waves", 8f, 1f, 1f);
     }
 
     public void SetTitle(string text)
@@ -101,32 +84,16 @@ public class GameController : MonoBehaviour
         text.gameObject.SetActive(true);
         text.text = newText;
 
-        if (font != null)
-        {
-            text.font = font;
-        }
-
+        if (font != null) text.font = font;
         text.color = color;
 
-        if (fadeInTime > 0f)
-        {
-            yield return FadeRoutine(text, 0f, 1f, fadeInTime);
-        }
-        else
-        {
-            SetAlpha(text, 1f);
-        }
+        if (fadeInTime > 0f)  yield return FadeRoutine(text, 0f, 1f, fadeInTime); 
+        else SetAlpha(text, 1f);
 
         yield return new WaitForSeconds(duration);
 
-        if (fadeOutTime > 0f)
-        {
-            yield return FadeRoutine(text, 1f, 0f, fadeOutTime);
-        }
-        else
-        {
-            SetAlpha(text, 0f);
-        }
+        if (fadeOutTime > 0f) yield return FadeRoutine(text, 1f, 0f, fadeOutTime);
+        else SetAlpha(text, 0f);
     }
 
     private IEnumerator FadeRoutine(TMP_Text text, float from, float to, float time)

@@ -102,15 +102,15 @@ Assets/
 │   ├── prefabs/               # UI element prefabs
 │   └── WaveData/              # Wave sequences
 └── scripts/
-    ├── Core/                  # Interfaces (ICurrencyHolder, IDamageable, IUnlockEffect)
+    ├── Core/                  # Interfaces (ICurrencyHolder, IDamageable, IUnlockEffect, IAnnouncer, ISkillPointHolder)
     ├── Entity/                # Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
     ├── Items/                 # Items/Gear system
-    ├── Misc/                  # Game Controller
+    ├── Misc/                  # Game Controller (implements IAnnouncer)
     ├── Projectile/            # Projectiles/Attack data, damage calculator, damage packet
     ├── StatusEffect/          # Status effect system & implementations (DoTs, Stun, Pulled, buffs)
-    ├── SkillTree/             # Skill tree manager, UI, pan/zoom, bidirectional connections
+    ├── SkillTree/             # Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
     ├── TextIndicator/         # Floating damage numbers, XP/Gold indicators
     └── Wave/                  # WaveManager, UnlimitedWaveManager, rewards, anomalies, enemy spawner
 ```

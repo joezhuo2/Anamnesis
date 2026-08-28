@@ -52,6 +52,8 @@ public class PlayerAttackCooldownUI : MonoBehaviour, IPointerEnterHandler
 
         float effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
 
+        if (cooldownImage == null) return;
+
         if (effCd <= 0f)
         {
             cooldownImage.fillAmount = 0f;

@@ -20,8 +20,10 @@ public class UnlimitedWaveButtonController : MonoBehaviour
     {
         if (unlimitedWaveManager == null) return;
 
-        GameController.Instance.OnGameStart();
         unlimitedWaveManager.CloseAllButtons();
         unlimitedWaveManager.StartNextWave();
+
+        IAnnouncer.Current?.DisableSubtitle();
+        IAnnouncer.Current?.DisableTitle();
     }
 }

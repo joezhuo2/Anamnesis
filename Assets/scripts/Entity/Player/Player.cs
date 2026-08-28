@@ -7,4 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputHandler))]
 [RequireComponent(typeof(PlayerUpgradeManager))]
 [RequireComponent(typeof(PlayerLevel))]
+[RequireComponent(typeof(PlayerSkillTree))]
+[RequireComponent(typeof(SkillTreeInputToggle))]
 public class Player : Entity {}

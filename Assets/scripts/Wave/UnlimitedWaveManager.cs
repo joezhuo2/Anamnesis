@@ -97,9 +97,9 @@ public class UnlimitedWaveManager : WaveManager
             yield return _waitForSeconds0_5;
         }
 
-        if (activeBossBar != null) GameController.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
-        else if (currentAnomaly != null && currentAnomaly.isActive) GameController.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
-        else GameController.SetTitleForDuration($"Wave {wave} Complete", 0.5f, 0.25f, 0.25f);
+        if (activeBossBar != null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
+        else if (currentAnomaly != null && currentAnomaly.isActive) GameController?.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
+        else GameController?.SetTitleForDuration($"Wave {wave} Complete", 0.5f, 0.25f, 0.25f);
 
         yield return _waitForSeconds1_5;
 

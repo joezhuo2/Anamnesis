@@ -98,6 +98,12 @@ InitTestScene*.unity*
 # /Assets/AddressableAssetsData/OSX/addressables_content_state.bin
 /[Aa]ssets/AddressableAssetsData/*/*.bin*
 
+# Project-specific ignores
+AGENTS.md
+CLAUDE.md
+.claudeignore
+repomix-output.xml
+
 # Visual Scripting auto-generated files
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
@@ -120,3 +126,6 @@ InitTestScene*.unity*
 
 ## recovery assets
 /Assets/_Recovery/
+
+## github copilot
+/.github/

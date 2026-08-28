@@ -21,9 +21,11 @@ public class RegularWaveButtonController : MonoBehaviour
     {
         if (waveManager == null) return;
 
-        GameController.Instance.OnGameStart();
         waveManager.CloseAllButtons();
         waveManager.StartNextWave();
+
+        IAnnouncer.Current?.DisableSubtitle();
+        IAnnouncer.Current?.DisableTitle();
     }
 
     private WaveManager FindBaseWaveManager()
