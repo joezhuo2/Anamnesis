@@ -3,10 +3,6 @@
     "rootNamespace": "CrystalFlux.WaveSystem",
     "references": [
         "CrystalFlux.Core",
-        "CrystalFlux.Entity",
-        "CrystalFlux.Projectile",
-        "CrystalFlux.StatusEffect",
-        "CrystalFlux.SkillTree",
         "Unity.TextMeshPro",
         "UnityEngine.UI"
     ],

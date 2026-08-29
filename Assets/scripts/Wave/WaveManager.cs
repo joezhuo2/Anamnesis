@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
-using CrystalFlux.EntitySystem;
-using CrystalFlux.SkillTree;
-using CrystalFlux.StatusEffectSystem;
-using CrystalFlux.UISystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -74,8 +70,8 @@ namespace CrystalFlux.WaveSystem
         protected GameObject activeBossBar;
         protected IStatProvider cpsm;
         protected ICurrencyHolder cich;
-        protected PlayerAttackHandler cpah;
-        protected PlayerUpgradeManager cpum;
+        protected IAttackHandler cpah;
+        protected IUpgradeHolder cpum;
         protected ISkillPointHolder cpst;
         protected readonly List<AttackReward> availableRarePool = new();
         protected readonly List<PlayerUpgradeReward> availableTreasurePool = new();
@@ -268,7 +264,8 @@ namespace CrystalFlux.WaveSystem
 
         protected void SpawnEnemy(WaveData c)
         {
-            var enemy = EnemySpawner.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, spawnRadius, c.enemyLevel);
+            var enemy = EnemySpawning.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, spawnRadius, c.enemyLevel);
+            if (enemy == null) return;
 
             if (enemy.TryGetComponent<IStatProvider>(out var esm) && currentAnomaly is StatModifierInstance statMod)
                 esm.AddStat(statMod.GetBuff());
@@ -278,15 +275,15 @@ namespace CrystalFlux.WaveSystem
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
                 activeBossBar = Instantiate(c.bossBarPrefab, spawnParent);
 
-                if (activeBossBar.TryGetComponent<BossBarUI>(out var bossBarScript))
+                if (activeBossBar.TryGetComponent<IBossBar>(out var bossBarScript))
                     bossBarScript.Setup(c.bossBarName, esm);
             }
 
-            if (c.statusEffectDisplayPrefab != null && enemy.TryGetComponent<StatusEffectManager>(out var sem))
+            if (c.statusEffectDisplayPrefab != null && enemy.TryGetComponent<IStatusEffectReceiver>(out var sem))
             {
                 Transform spawnParent = statusEffectDisplayContainer != null ? statusEffectDisplayContainer : waveInfoPanel.transform.parent;
-                sem.displayPrefab = c.statusEffectDisplayPrefab;
-                sem.displayContainer = spawnParent;
+                sem.DisplayPrefab = c.statusEffectDisplayPrefab;
+                sem.DisplayContainer = spawnParent;
             }
 
             totalSpawned++;
@@ -789,7 +786,7 @@ namespace CrystalFlux.WaveSystem
         {
             CloseRewardUI();
 
-            if (cpah == null) cpah = GameObject.FindWithTag("Player")?.GetComponent<PlayerAttackHandler>();
+            if (cpah == null) cpah = GameObject.FindWithTag("Player")?.GetComponent<IAttackHandler>();
             if (cpah != null) cpah.UpdateAttack(chosenAttack.type, chosenAttack.newAttack);
             if (availableRarePool.Contains(chosenAttack)) availableRarePool.Remove(chosenAttack);
 
@@ -799,7 +796,7 @@ namespace CrystalFlux.WaveSystem
         {
             CloseRewardUI();
 
-            if (cpum == null) cpum = GameObject.FindWithTag("Player")?.GetComponent<PlayerUpgradeManager>();
+            if (cpum == null) cpum = GameObject.FindWithTag("Player")?.GetComponent<IUpgradeHolder>();
             if (cpum != null) cpum.AddUpgrade(chosenUpgrade.upgrade);
             if (availableTreasurePool.Contains(chosenUpgrade)) availableTreasurePool.Remove(chosenUpgrade);
 
@@ -878,7 +875,7 @@ namespace CrystalFlux.WaveSystem
         protected void CachePlayerSkillTree()
         {
             if (cpst == null)
-                cpst = GameObject.FindWithTag("Player")?.GetComponent<PlayerSkillTree>();
+                cpst = GameObject.FindWithTag("Player")?.GetComponent<ISkillPointHolder>();
         }
         protected string BuildChangeLine(StatType type, float finalVal)
         {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CrystalFlux.Core;
 using UnityEngine;
 
@@ -34,5 +35,12 @@ namespace CrystalFlux.EntitySystem
         public virtual void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter = null) {}
         public virtual void TriggerUpgradeEffect(GameObject player, GameObject target, float damageDealt) {}
         public virtual void OnUnlock(GameObject player) {}
+        public override void GetTooltipLines(List<string> lines)
+        {
+            lines.Add($"Trigger: {string.Join(", ", conditions)}");
+            if (chance < 1f) lines.Add($"Chance: {chance * 100:F0}%");
+            if (cooldown > 0f) lines.Add($"Cooldown: {cooldown:F1}s");
+            if (delay > 0f) lines.Add($"Delay: {delay:F1}s");
+        }
     }
 }

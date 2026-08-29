@@ -13,6 +13,8 @@
 ### Medium Priority (To be done before 2 minor versions)
 - [ ] Rename `EntityStats`/`PlayerStats`/`EnemyStats` from `namespace CrystalFlux.Core` to `.EntitySystem` — they compile into `CrystalFlux.Entity` now, so the namespace is misleading (touches every consumer, so worth its own commit)
 - [ ] Finish the assembly split: give `Items` and `Misc` their own asmdefs so nothing meaningful is left in `Assembly-CSharp`
+- [ ] Extract `Projectile`, `StatusEffect`, `SkillTree`, and `Wave` into their own packages alongside `CrystalFlux-Core` — all four already reference `Core` and nothing else
+- [ ] `Entity` is the last assembly with cross-system references (`Projectile`, `StatusEffect`, `SkillTree`, `TextIndicator`); decide whether it stays the composition root or gets decoupled too
 - [ ] Elite/Champion enemy variants with unique modifiers (extra hp, faster)
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves

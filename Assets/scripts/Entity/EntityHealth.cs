@@ -11,7 +11,7 @@ namespace CrystalFlux.EntitySystem
 {
     public class EntityHealth : MonoBehaviour, IDamageable
     {
-        public static event Action<EntityHealth> OnPlayerTakeDamage;
+
 
         public event Action<GameObject> OnDeath;
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
@@ -141,7 +141,7 @@ namespace CrystalFlux.EntitySystem
                 }
             }
 
-            if (cpum != null) OnPlayerTakeDamage?.Invoke(this);
+            if (cpum != null) PlayerEvents.RaisePlayerTakeDamage(this);
         }
 
         public bool ChangeHealth(float amount, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)

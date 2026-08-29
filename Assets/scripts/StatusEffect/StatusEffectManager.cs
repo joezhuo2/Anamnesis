@@ -10,6 +10,9 @@ namespace CrystalFlux.StatusEffectSystem
         public GameObject displayPrefab = null;
         public Transform displayContainer = null;
 
+        GameObject IStatusEffectReceiver.DisplayPrefab { set => displayPrefab = value; }
+        Transform IStatusEffectReceiver.DisplayContainer { set => displayContainer = value; }
+
         [HideInInspector] public readonly List<StatusEffect> activeEffects = new();
         private IStatProvider cesm;
 

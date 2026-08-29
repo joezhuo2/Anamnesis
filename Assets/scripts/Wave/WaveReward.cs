@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
-using CrystalFlux.EntitySystem;
-using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
 namespace CrystalFlux.WaveSystem
@@ -37,7 +35,7 @@ namespace CrystalFlux.WaveSystem
     [System.Serializable]
     public class AttackReward
     {
-        public AttackData newAttack;
+        public AttackAsset newAttack;
         public AttackType type;
         public Sprite icon;
         public string attackName;
@@ -47,7 +45,7 @@ namespace CrystalFlux.WaveSystem
     [System.Serializable]
     public class PlayerUpgradeReward
     {
-        public PlayerUpgrade upgrade;
+        public UpgradeAsset upgrade;
         public Sprite icon;
         public string upgradeName;
         [TextArea] public string desc;

@@ -1,4 +1,4 @@
-using CrystalFlux.EntitySystem;
+using CrystalFlux.Core;
 using UnityEngine;
 
 public class NoDamageTrialInstance : AnomalyInstance
@@ -8,16 +8,16 @@ public class NoDamageTrialInstance : AnomalyInstance
     public override void StartAnomaly()
     {
         base.StartAnomaly();
-        EntityHealth.OnPlayerTakeDamage += OnPlayerDamaged;
+        PlayerEvents.OnPlayerTakeDamage += OnPlayerDamaged;
     }
 
     public override void Cleanup()
     {
-        EntityHealth.OnPlayerTakeDamage -= OnPlayerDamaged;
+        PlayerEvents.OnPlayerTakeDamage -= OnPlayerDamaged;
         base.Cleanup();
     }
 
-    private void OnPlayerDamaged(EntityHealth eh)
+    private void OnPlayerDamaged(IDamageable player)
     {
         if (isActive) FailAnomaly();
     }

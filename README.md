@@ -103,7 +103,6 @@ Assets/
 │   ├── prefabs/               # UI element prefabs
 │   └── WaveData/              # Wave sequences
 └── scripts/
-    ├── Core/                  # [asmdef] Contracts only: interfaces (IStatProvider, IDamageable, IResourcePool, IStatusEffectReceiver, IAttackHandler, IUpgradeHolder, ITooltipDisplay, IUnlockEffect, IAnnouncer, ...), asset bases (AttackAsset, UpgradeAsset, EffectAsset), and shared value types (DamagePacket, StatType, StatBuff, InputState, DamageRoll)
     ├── Entity/                # [asmdef] Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
@@ -113,26 +112,56 @@ Assets/
     ├── StatusEffect/          # [asmdef] Status effect system & implementations (DoTs, Stun, Pulled, buffs)
     ├── SkillTree/             # [asmdef] Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
     ├── TextIndicator/         # [asmdef] Floating damage numbers, XP/Gold indicators
-    └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies, enemy spawner
+    └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies
 ```
+
+`Core` is no longer in this repo. It lives in
+[joezhuo2/CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) and Unity
+imports it automatically from the git URL in `Packages/manifest.json`:
+
+```json
+"com.crystalflux.core": "https://github.com/joezhuo2/CrystalFlux-Core.git"
+```
+
+It holds contracts only — interfaces (`IStatProvider`, `IDamageable`, `IResourcePool`,
+`IStatusEffectReceiver`, `IAttackHandler`, `IUpgradeHolder`, `ISkillPointHolder`,
+`IBossBar`, `ITooltipDisplay`, `IUnlockEffect`, `IAnnouncer`, …), asset bases
+(`AttackAsset`, `UpgradeAsset`, `EffectAsset`), shared value types (`DamagePacket`,
+`StatType`, `StatBuff`, `InputState`, `DamageRoll`), and the `EnemySpawning` /
+`PlayerEvents` hooks. Everything in it sits in the `CrystalFlux.Core` namespace.
 
 ### Assembly Boundaries
 
 Each `[asmdef]` folder compiles to its own assembly, so cross-system dependencies are enforced by the compiler rather than by convention:
 
 ```
-Core ──┬─ TextIndicator ─┐
-       ├─ Projectile ────┤
-       ├─ StatusEffect ──┼─→ Entity ──→ Wave
-       └─ SkillTree ─────┘
+                  ┌─ Projectile
+                  ├─ StatusEffect
+Core (package) ───┼─ SkillTree
+                  ├─ Wave
+                  └─ Entity ──→ Projectile, StatusEffect, SkillTree, TextIndicator
+
+TextIndicator ── (references nothing; TextMeshPro only)
 ```
 
-- **`Core` references nothing.** It holds only contracts — interfaces, abstract `ScriptableObject` bases, and shared value types.
-- **`Projectile`, `StatusEffect`, and `SkillTree` reference `Core` and nothing else** — including each other. Adding a cross-reference between them is a compile error, which is the point.
-- **`Entity`** composes the leaf systems; **`Wave`** orchestrates on top of `Entity`.
+- **`Core` references nothing.** It holds only contracts — interfaces, abstract `ScriptableObject` bases, and shared value types — and ships as its own package.
+- **`Projectile`, `StatusEffect`, `SkillTree`, and `Wave` reference `Core` and nothing else** — including each other. Adding a cross-reference between them is a compile error, which is the point.
+- **`Entity`** is the only assembly that composes the leaf systems, so it is the only one with more than one reference.
+- **`TextIndicator`** is self-contained and references no `CrystalFlux` assembly at all — floating numbers need only TextMeshPro.
 - `Items` and `Misc` remain in `Assembly-CSharp`, which auto-references every assembly above.
 
 Types shared across a boundary live in `Core` as an abstract base (`AttackAsset`, `UpgradeAsset`, `EffectAsset`) rather than an interface, because Unity cannot serialize interface-typed asset fields. Concrete data (`AttackData`, `PlayerUpgrade`, `StatusEffect`) stays in its own assembly.
+
+`Wave` orchestrates the run but never names a concrete system type. Where it used to
+reach for `PlayerAttackHandler`, `PlayerUpgradeManager`, `PlayerSkillTree`,
+`StatusEffectManager`, or `BossBarUI`, it now talks to the `Core` interface each of
+those already implements. Two static entry points it depended on became `Core` hooks
+the owning system registers or raises — `EnemySpawning` (registered by `EnemySpawner`
+at load) and `PlayerEvents.OnPlayerTakeDamage` (raised by `EntityHealth`).
+
+Reward tooltips work the same way: rather than `RewardButton` reading two dozen fields
+off `AttackData` and `PlayerUpgrade`, `AttackAsset` and `UpgradeAsset` declare an
+abstract `GetTooltipLines`, and each system describes its own data.
 
 > **Moving a `[SerializeReference]` type between assemblies breaks existing assets.** Unity stores a literal `{class, ns, asm}` triplet, so add `[MovedFrom(sourceAssembly: "...")]` when relocating one — see `UnlockEffect` and `NodeRequirement`.
 

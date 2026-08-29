@@ -7,6 +7,28 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.2] - 2026-08-29 — Core Extracted to a Package, Wave Decoupled
+
+`v0.3.1` enforced the assembly boundaries; this release moves `Core` out of the repo entirely and cuts the last system that still reached across one. `Wave` now compiles against `CrystalFlux.Core` alone, which means every system except `Entity` depends on contracts and nothing else.
+
+### Added
+- **`com.crystalflux.core` package** — `Assets/scripts/Core` is gone; Unity imports the contracts from [joezhuo2/CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) via the git URL in `Packages/manifest.json`. The package ships `.meta` files carrying the original GUIDs, so nothing re-imported as a new asset
+- **`IBossBar`** — `Core` contract for `BossBarUI`, whose `Setup(string, IStatProvider)` already spoke only in `Core` types
+- **`EnemySpawning`** — `Core` spawn hook. `EnemySpawner` registers itself through `[RuntimeInitializeOnLoadMethod]`, so `Wave` can spawn without naming the spawner. Spawn sites now null-check, since an unregistered hook returns `null`
+- **`PlayerEvents.OnPlayerTakeDamage`** — relocated from `EntityHealth`'s own `static event`, typed over `IDamageable`. `NoDamageTrialInstance` subscribes here now
+- **`AttackAsset.GetTooltipLines` / `UpgradeAsset.GetTooltipLines`** — abstract description hooks. `RewardButton` was reading ~24 concrete fields off `AttackData` and `PlayerUpgrade` (and its nested `ProjectileData`) to format tooltips; each system now describes its own data instead of exporting its stat schema
+
+### Changed
+- **`Wave` references only `Core`** (plus TextMeshPro and uGUI) — down from `Core`, `Entity`, `Projectile`, `StatusEffect`, and `SkillTree`. Its concrete references were swapped for the `Core` interfaces those classes already implemented: `PlayerAttackHandler`→`IAttackHandler`, `PlayerUpgradeManager`→`IUpgradeHolder`, `PlayerSkillTree`→`ISkillPointHolder`, `StatusEffectManager`→`IStatusEffectReceiver`, `BossBarUI`→`IBossBar`
+- **`WaveReward`** — `newAttack` and `upgrade` widened from `AttackData`/`PlayerUpgrade` to their `Core` bases `AttackAsset`/`UpgradeAsset`. Widening to a base keeps existing serialized asset references intact
+- **`IStatusEffectReceiver`** — gained `DisplayPrefab` / `DisplayContainer` setters, replacing direct writes to `StatusEffectManager`'s public fields
+- **`Core` is a single namespace** — everything the package ships is in `CrystalFlux.Core`. The old per-system namespaces it used to contribute (`CrystalFlux.EntitySystem`, `.ProjectileSystem`, `.StatusEffectSystem`, `.UISystem`) no longer exist there
+
+### Fixed
+- **Dead `using` directives after the move** — 13 across 10 files. The old local `Core` assembly also declared `CrystalFlux.EntitySystem`, `.ProjectileSystem`, `.StatusEffectSystem`, and `.UISystem`, so assemblies referencing only `Core` were resolving those imports through `Core`'s contribution to them. Folding the package into one namespace left them pointing nowhere
+- **Package `.meta` coverage** — `package.json`, `README.md`, and `CHANGELOG.md` shipped without `.meta` files, so Unity logged "has no meta file, but it's in an immutable folder" for each on import
+
+
 ## [v0.3.1] - 2026-08-29 — Compiler-Enforced Assembly Boundaries
 
 The interface-driven decoupling from `v0.3.0` was convention-only — nothing stopped a system from reaching into another. This release splits the codebase into seven assemblies so those boundaries are enforced by the compiler: `Projectile`, `StatusEffect`, and `SkillTree` can now reference **only** `Core`, and an illegal dependency fails the build instead of accumulating silently.
