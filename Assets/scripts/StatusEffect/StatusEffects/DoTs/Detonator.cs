@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
-using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
 namespace CrystalFlux.StatusEffectSystem
@@ -28,7 +27,7 @@ namespace CrystalFlux.StatusEffectSystem
                         int ticksRemaining = Mathf.CeilToInt((dot.duration - dot.currentTime) / dot.tickInterval);
                         float dmg = dmgMult * dotTickDmg * ticksRemaining;
 
-                        DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(dmg, dmgType, true, indicatorColor, source, true, 2f);
+                        DamagePacket dp = DamageRoll.Build(dmg, dmgType, true, indicatorColor, source, true, 2f);
                         eh.TakeDamage(dp);
                     }
                     sem.RemoveEffect<DoT>();

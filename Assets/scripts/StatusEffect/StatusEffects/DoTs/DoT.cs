@@ -1,6 +1,5 @@
 using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
-using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
 namespace CrystalFlux.StatusEffectSystem
@@ -20,12 +19,9 @@ namespace CrystalFlux.StatusEffectSystem
 
             float damage = dpt * 0.01f * ssm.GetStat(scalingStat) * currentStacks;
 
-            bool globalDoTCanCrit = source.TryGetComponent<PlayerUpgradeManager>(out var pum) && pum.HasUpgradeOfType<Paradox>();
+            bool globalDoTCanCrit = ssm.GetStat(StatType.globalDoTCanCrit) > 0f;
 
-            float resPen = ssm.GetStat(StatType.resPen);
-            int defShred = Mathf.RoundToInt(ssm.GetStat(StatType.defShred));
-
-            DamagePacket damagePacket = DamagePacketBuilder.BuildDamagePacket(damage, damageType, globalDoTCanCrit || canCrit, indicatorColor, source, true, 1f);
+            DamagePacket damagePacket = DamageRoll.Build(damage, damageType, globalDoTCanCrit || canCrit, indicatorColor, source, true, 1f);
             eh.TakeDamage(damagePacket);
         }
     }

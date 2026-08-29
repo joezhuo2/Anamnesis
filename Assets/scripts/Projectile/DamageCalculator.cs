@@ -60,15 +60,7 @@ namespace CrystalFlux.ProjectileSystem
         };
 
         public static (float damage, bool isCrit) RollCrits(float baseDamage, float critChance, float critDamage)
-        {
-            float roll = Random.Range(0f, 1000f) / 10f;
-            if (roll <= critChance)
-            {
-                float critDmg = baseDamage * (100f + critDamage) * 0.01f;
-                return (critDmg, true);
-            }
-            return (baseDamage, false);
-        }
+            => DamageRoll.RollCrits(baseDamage, critChance, critDamage);
 
         public static float CalculateHpConsumedMult(ProjectileData pd, IStatProvider esm)
         {

@@ -1,13 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using CrystalFlux.Core;
+using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class PlayerUpgradeManager : MonoBehaviour, IOnHitEffect
+    public class PlayerUpgradeManager : MonoBehaviour, IOnHitEffect, IUpgradeHolder
     {
+        bool IUpgradeHolder.HasUpgrade(UpgradeAsset pu) => HasUpgrade(pu as PlayerUpgrade);
+        void IUpgradeHolder.AddUpgrade(UpgradeAsset pu) => AddUpgrade(pu as PlayerUpgrade);
+        void IUpgradeHolder.RemoveUpgrade(UpgradeAsset pu) => RemoveUpgrade(pu as PlayerUpgrade);
+
         public static PlayerUpgradeManager Instance { get; private set; }
         public List<PlayerUpgrade> activeUpgrades = new();
         private readonly Dictionary<PlayerUpgrade, float> lastTriggerTimes = new();

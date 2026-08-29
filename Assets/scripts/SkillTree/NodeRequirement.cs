@@ -4,14 +4,16 @@ using System;
 using UnityEngine;
 using CrystalFlux.ProjectileSystem;
 using CrystalFlux.EntitySystem;
+using UnityEngine.Scripting.APIUpdating;
 
 namespace CrystalFlux.SkillTree
 {
     [Serializable]
+    [MovedFrom(true, sourceAssembly: "Assembly-CSharp")]
     public class NodeRequirement : IUnlockRequirement
     {
-        public List<AttackData> requiredAttacks = new();
-        public List<PlayerUpgrade> requiredAwakenings = new();
+        public List<AttackAsset> requiredAttacks = new();
+        public List<UpgradeAsset> requiredAwakenings = new();
 
         public bool Has(GameObject target)
         {
@@ -19,7 +21,7 @@ namespace CrystalFlux.SkillTree
 
             if (requiredAttacks.Count > 0)
             {
-                if (!target.TryGetComponent<PlayerAttackHandler>(out var pah)) return false;
+                if (!target.TryGetComponent<IAttackHandler>(out var pah)) return false;
                 foreach (var a in requiredAttacks)
                 {
                     if (a == null) continue;
@@ -29,7 +31,7 @@ namespace CrystalFlux.SkillTree
 
             if (requiredAwakenings.Count > 0)
             {
-                if (!target.TryGetComponent<PlayerUpgradeManager>(out var pum)) return false;
+                if (!target.TryGetComponent<IUpgradeHolder>(out var pum)) return false;
                 foreach (var u in requiredAwakenings)
                 {
                     if (u == null) continue;

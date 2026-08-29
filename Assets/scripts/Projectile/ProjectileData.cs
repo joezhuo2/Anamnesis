@@ -69,7 +69,7 @@ namespace CrystalFlux.ProjectileSystem
     [System.Serializable]
     public struct EffectData
     {
-        public StatusEffect effect;
+        public EffectAsset effect;
         public bool selfApply;
         public ApplyCondition applyCondition;
         [Range(0, 1)] public float chance;

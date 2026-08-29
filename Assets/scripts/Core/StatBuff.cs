@@ -15,12 +15,6 @@ namespace CrystalFlux.Core
             this.value = value;
         }
 
-        // public void Apply(GameObject target)
-        // {
-        //     if (target.TryGetComponent<IStatProvider>(out var isp))
-        //         isp.AddStat(new(type, value));
-        // }
-
         public readonly bool Equals(StatBuff other)
             => type == other.type && Mathf.Approximately(value, other.value);
 

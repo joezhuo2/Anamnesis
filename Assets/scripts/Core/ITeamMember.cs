@@ -1,4 +1,4 @@
-namespace CrystalFlux.EntitySystem
+namespace CrystalFlux.Core
 {
     public interface ITeamMember
     {

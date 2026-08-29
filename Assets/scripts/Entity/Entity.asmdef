@@ -1,0 +1,23 @@
+{
+    "name": "CrystalFlux.Entity",
+    "rootNamespace": "CrystalFlux.EntitySystem",
+    "references": [
+        "CrystalFlux.Core",
+        "CrystalFlux.TextIndicator",
+        "CrystalFlux.Projectile",
+        "CrystalFlux.StatusEffect",
+        "CrystalFlux.SkillTree",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

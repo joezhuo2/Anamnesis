@@ -1,0 +1,22 @@
+{
+    "name": "CrystalFlux.Wave",
+    "rootNamespace": "CrystalFlux.WaveSystem",
+    "references": [
+        "CrystalFlux.Core",
+        "CrystalFlux.Entity",
+        "CrystalFlux.Projectile",
+        "CrystalFlux.StatusEffect",
+        "CrystalFlux.SkillTree",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

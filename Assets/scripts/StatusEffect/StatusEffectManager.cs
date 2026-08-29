@@ -15,23 +15,23 @@ namespace CrystalFlux.StatusEffectSystem
 
         private void Awake() => cesm = GetComponent<IStatProvider>();
 
-        public void GetActiveEffectsOfType<T>(List<T> results) where T : StatusEffect
+        public void GetActiveEffectsOfType<T>(List<T> results) where T : EffectAsset
         {
             results.Clear();
             for (int i = 0; i < activeEffects.Count; i++)
                 if (activeEffects[i] is T) results.Add(activeEffects[i] as T);
         }
 
-        public T GetActiveFirstEffectOfType<T>() where T : StatusEffect
+        public T GetActiveFirstEffectOfType<T>() where T : EffectAsset
         {
             for (int i = 0; i < activeEffects.Count; i++)
                 if (activeEffects[i] is T) return activeEffects[i] as T;
             return null;
         }
 
-        public void Apply(StatusEffect se, GameObject source, Vector2 location = default)
+        public void Apply(EffectAsset effect, GameObject source, Vector2 location = default)
         {
-            if (se == null) return;
+            if (effect is not StatusEffect se) return;
 
             StatusEffect existing = activeEffects.Find(
                 e => e.GetType() == se.GetType() ||
@@ -71,9 +71,9 @@ namespace CrystalFlux.StatusEffectSystem
             CreateDisplayUI(runtimeEffect);
         }
 
-        public void RemoveStacks<T>(int stacksToRemove) where T : StatusEffect
+        public void RemoveStacks<T>(int stacksToRemove) where T : EffectAsset
         {
-            T existing = GetActiveFirstEffectOfType<T>();
+            StatusEffect existing = GetActiveFirstEffectOfType<T>() as StatusEffect;
             if (existing == null) return;
 
             existing.currentStacks = Mathf.Max(0, existing.currentStacks - stacksToRemove);
@@ -90,12 +90,12 @@ namespace CrystalFlux.StatusEffectSystem
             }
         }
 
-        public void RemoveEffect<T>() where T : StatusEffect => RemoveStacks<T>(int.MaxValue);
+        public void RemoveEffect<T>() where T : EffectAsset => RemoveStacks<T>(int.MaxValue);
 
-        public void RemoveEffectAfterDelay<T>(float delay) where T : StatusEffect
+        public void RemoveEffectAfterDelay<T>(float delay) where T : EffectAsset
             => StartCoroutine(RemoveEffectAfterDelayInternal<T>(delay));
 
-        public IEnumerator RemoveEffectAfterDelayInternal<T>(float delay) where T : StatusEffect
+        public IEnumerator RemoveEffectAfterDelayInternal<T>(float delay) where T : EffectAsset
         {
             yield return new WaitForSeconds(delay);
             RemoveEffect<T>();

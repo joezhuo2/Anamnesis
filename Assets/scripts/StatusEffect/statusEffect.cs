@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CrystalFlux.StatusEffectSystem
 {
-    public abstract class StatusEffect : ScriptableObject
+    public abstract class StatusEffect : EffectAsset
     {
         [Header("Basic")]
         [HideInInspector] public float currentTime;
