@@ -200,7 +200,7 @@ namespace CrystalFlux.ProjectileSystem
 
             if (ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1 && dir == Vector2.zero)
             {
-                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(InputState.mousePos);
                 mouseWorldPos.z = 0f;
 
                 dir = (mouseWorldPos - transform.position).normalized;

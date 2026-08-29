@@ -8,8 +8,13 @@ using UnityEngine.UI;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class PlayerAttackHandler : MonoBehaviour
+    public class PlayerAttackHandler : MonoBehaviour, IAttackHandler
     {
+        bool IAttackHandler.HasAttack(AttackAsset a) => HasAttack(a as AttackData);
+        AttackAsset IAttackHandler.FindAttackOfType(AttackType type) => FindAttackOfType(type);
+        void IAttackHandler.UpdateAttack(AttackType type, AttackAsset newAttack) => UpdateAttack(type, newAttack as AttackData);
+        void IAttackHandler.RemoveAttack(AttackType type) => RemoveAttack(type);
+
         private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
         public List<AttackData> starting = new();
         public GameObject cooldownPrefab;

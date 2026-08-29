@@ -7,6 +7,36 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.1] - 2026-08-29 — Compiler-Enforced Assembly Boundaries
+
+The interface-driven decoupling from `v0.3.0` was convention-only — nothing stopped a system from reaching into another. This release splits the codebase into seven assemblies so those boundaries are enforced by the compiler: `Projectile`, `StatusEffect`, and `SkillTree` can now reference **only** `Core`, and an illegal dependency fails the build instead of accumulating silently.
+
+### Added
+- **Assembly definitions** — `CrystalFlux.Core`, `.Projectile`, `.StatusEffect`, `.SkillTree`, `.Entity`, `.Wave`, `.TextIndicator`. Dependency graph (verified from compiled assembly metadata):
+  ```
+  Core ──┬─ TextIndicator ─┐
+         ├─ Projectile ────┤
+         ├─ StatusEffect ──┼─→ Entity ──→ Wave
+         └─ SkillTree ─────┘
+  ```
+- **Cross-assembly asset contracts** — `AttackAsset`, `UpgradeAsset`, and `EffectAsset`: thin abstract `ScriptableObject` bases in `Core` that `AttackData`, `PlayerUpgrade`, and `StatusEffect` derive from. Unity cannot serialize interface-typed asset fields, so a shared base is what lets `List<AttackData>` cross a boundary without breaking existing asset references — the concrete types keep their assemblies and GUIDs
+- **`IAttackHandler` / `IUpgradeHolder`** — `Core` interfaces for `PlayerAttackHandler` and `PlayerUpgradeManager`, implemented explicitly so existing Entity call sites keep their concrete signatures
+- **`InputState`** — `Core` holder for the shared mouse position, replacing `PlayerInputHandler.mousePos`. The assembly split exposed that `Projectile` was reading this `public static` field directly out of `Entity`
+- **`DamageRoll`** — `Core` home for `RollCrits` and flat damage-packet assembly, so `StatusEffect` no longer needs `Projectile` to deal damage
+
+### Changed
+- **`Core` is now contracts only** — gained `AttackType`, `SummonCondition`, `ResourceType`, `StatType`, `StatBuff`, `InputState`, `DamageRoll`, and the new asset bases; `IDamageable` / `IKnockbackable` / `IResourcePool` / `IStatusEffectReceiver` returned to it. Namespaces were deliberately left unchanged (e.g. `AttackAsset` stays in `CrystalFlux.ProjectileSystem`), so only assembly membership moved and no `using` directives churned
+- **`IStatusEffectReceiver`** — retyped over `EffectAsset`; `StatusEffectManager`'s generic constraints relaxed to match, narrowing to `StatusEffect` internally
+- **`DamagePacketBuilder` / `DamageCalculator`** — flat-damage and crit-roll paths now delegate to `Core.DamageRoll`
+- **`Paradox`** — the `DoT` crit check moved from `HasUpgradeOfType<Paradox>()` to the `StatType.globalDoTCanCrit` stat (previously declared but never wired), since `StatusEffect` can no longer name concrete upgrades. `EntityStats` now backs the stat and `Paradox.OnUnlock` grants it
+- **`SkillTreeInputToggle`** — moved to `Entity/Player/` so it can still reach the generated `PlayerControls`
+
+### Fixed
+- **Skill tree node deserialization** — added `[MovedFrom(sourceAssembly: "Assembly-CSharp")]` to `UnlockEffect` and `NodeRequirement`. `[SerializeReference]` records a literal `{class, ns, asm}` triplet, so moving these types into `CrystalFlux.SkillTree` orphaned the reference in all 104 node assets ("Missing types referenced from component SkillNodeDef")
+- **Duplicate `SummonCondition`** — the enum existed in both `Core` and `EntitySummonHandler`, producing `Operator '==' cannot be applied to 'SummonCondition' and 'SummonCondition'`
+- **`EntityStatManager.AddStat`** — dropped a dead `IsUnityNull()` guard on `StatBuff`; the extension takes `object`, so the struct boxed and the check was always `false`
+
+
 ## [v0.3.0] - 2026-08-29 — System Refactor & QoL Update (Release Summary)
 
 This release covers the full development arc from `v0.2.0` through `v0.2.19`. Over this period Anamnesis went through a major architectural refactor — nearly every combat, stat, resource, and UI system was decoupled from concrete components onto small interfaces — while the skill tree nearly doubled, two gamemodes were wired into a selector, enemy scaling was reworked, and new attacks shipped.

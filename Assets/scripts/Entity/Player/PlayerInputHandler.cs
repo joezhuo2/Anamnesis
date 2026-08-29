@@ -1,3 +1,4 @@
+using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ namespace CrystalFlux.EntitySystem
         private PlayerControls controls;
         private PlayerMovement pm;
         private PlayerAttackHandler pah;
-        public static Vector2 mousePos;
 
         private void Awake()
         {
@@ -20,7 +20,7 @@ namespace CrystalFlux.EntitySystem
         {
             controls.Player.Enable();
 
-            mousePos = controls.Player.MousePosition.ReadValue<Vector2>();
+            InputState.mousePos = controls.Player.MousePosition.ReadValue<Vector2>();
 
             controls.Player.Move.performed += ctx => pm.moveInput = ctx.ReadValue<Vector2>();
             controls.Player.Move.canceled += _ => pm.moveInput = Vector2.zero;
@@ -31,7 +31,7 @@ namespace CrystalFlux.EntitySystem
             controls.Player.Ultimate.performed += _ => pah.PerformAttack(AttackType.Ultimate);
             controls.Player.Technique.performed += _ => pah.PerformAttack(AttackType.Technique);
         }
-        private void Update() => mousePos = controls.Player.MousePosition.ReadValue<Vector2>();
+        private void Update() => InputState.mousePos = controls.Player.MousePosition.ReadValue<Vector2>();
         private void OnDisable() => controls.Player.Disable();
     }
 }

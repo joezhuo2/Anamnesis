@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using CrystalFlux.EntitySystem;
 using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
@@ -9,18 +7,18 @@ namespace CrystalFlux.StatusEffectSystem
 
     public class AttackReplacement : StatusEffect
     {
-        public AttackData replacement;
-        private AttackData originalAttack = null;
+        public AttackAsset replacement;
+        private AttackAsset originalAttack = null;
         private bool setAttack = false;
 
         public override void OnApply()
         {
             if (target == null || replacement == null) return;
-            if (!target.TryGetComponent<PlayerAttackHandler>(out var pah)) return;
+            if (!target.TryGetComponent<IAttackHandler>(out var pah)) return;
 
             setAttack = true;
 
-            AttackData original = pah.FindAttackOfType(replacement.type);
+            AttackAsset original = pah.FindAttackOfType(replacement.type);
             if (original != null)
             {
                 originalAttack = Instantiate(original);
@@ -33,7 +31,7 @@ namespace CrystalFlux.StatusEffectSystem
         public override void OnExpire()
         {
             if (!setAttack || replacement == null || target == null) return;
-            if (!target.TryGetComponent<PlayerAttackHandler>(out var pah)) return;
+            if (!target.TryGetComponent<IAttackHandler>(out var pah)) return;
 
             pah.UpdateAttack(replacement.type, originalAttack);
         }

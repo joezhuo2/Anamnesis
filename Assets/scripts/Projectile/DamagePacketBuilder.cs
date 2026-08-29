@@ -34,13 +34,6 @@ namespace CrystalFlux.ProjectileSystem
         }
 
         public static DamagePacket BuildDamagePacket(float baseDamage, DamageType type, bool rollCrits, Color indicatorColor, GameObject owner, bool bypassIFrames, float sizeOverride)
-        {
-            DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
-            if (!owner.TryGetComponent<IStatProvider>(out var esm) || baseDamage <= 0f) return dp;
-
-            var (finalDamage, isCrit) = rollCrits ? DamageCalculator.RollCrits(baseDamage, esm.GetStat(StatType.critChance), esm.GetStat(StatType.critDamage)) : (baseDamage, false);
-            dp.AddInstance(type, finalDamage, isCrit, indicatorColor, owner);
-            return dp;
-        }
+            => DamageRoll.Build(baseDamage, type, rollCrits, indicatorColor, owner, bypassIFrames, sizeOverride);
     }
 }

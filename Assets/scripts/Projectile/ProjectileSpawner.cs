@@ -1,5 +1,5 @@
 using System.Collections;
-using CrystalFlux.EntitySystem;
+using CrystalFlux.Core;
 using UnityEngine;
 namespace CrystalFlux.ProjectileSystem
 {
@@ -155,7 +155,7 @@ namespace CrystalFlux.ProjectileSystem
             float? distOverride = null
         )
         {
-            Vector2 mouse = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
+            Vector2 mouse = Camera.main.ScreenToWorldPoint(InputState.mousePos);
 
             Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
             Vector2 dir = dirOverride ?? (source.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1 ? (mouse - spawnCenter).normalized : Vector2.right);

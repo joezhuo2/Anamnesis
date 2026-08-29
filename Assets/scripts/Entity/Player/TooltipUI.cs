@@ -1,3 +1,4 @@
+using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
 using TMPro;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace CrystalFlux.UISystem
         private void Update()
         {
             CacheRectTransform();
-            crt.position = PlayerInputHandler.mousePos + offset;
+            crt.position = InputState.mousePos + offset;
         }
 
         public void ShowTooltip(string title, string description, Vector2 os)

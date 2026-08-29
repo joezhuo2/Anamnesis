@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using CrystalFlux.EntitySystem;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CrystalFlux.Core
@@ -43,7 +42,7 @@ namespace CrystalFlux.Core
 
         public void AddStat(StatBuff b, bool isAdding = true)
         {
-            if (s == null || b.IsUnityNull()) return;
+            if (s == null) return;
             float mod = b.value * (isAdding ? 1f : -1f);
             s.Apply(b.type, mod);
         }

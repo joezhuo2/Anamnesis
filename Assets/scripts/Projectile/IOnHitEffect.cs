@@ -1,7 +1,6 @@
-using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
-namespace CrystalFlux.Core
+namespace CrystalFlux.ProjectileSystem
 {
     public interface IOnHitEffect
     {

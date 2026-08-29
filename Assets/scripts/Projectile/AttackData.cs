@@ -5,10 +5,8 @@ using UnityEngine;
 
 namespace CrystalFlux.ProjectileSystem
 {
-    public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
-
-    [CreateAssetMenu(fileName = "ad", menuName = "Data/Attack")] 
-    public class AttackData : ScriptableObject
+    [CreateAssetMenu(fileName = "ad", menuName = "Data/Attack")]
+    public class AttackData : AttackAsset
     {
         [Header("Basic")]
         public float cooldown;
@@ -86,15 +84,14 @@ namespace CrystalFlux.ProjectileSystem
         public int redirectCount;
 
         [Header("Misc - Player Only")]
-        public AttackType type;
         public Sprite icon;
         public string displayName;
 
         [System.NonSerialized] private bool isRuntimeCopy;
-        public bool IsRuntimeCopy => isRuntimeCopy;
+        public override bool IsRuntimeCopy => isRuntimeCopy;
 
         public void InitializeRuntimeCopy() => DeepClone();
-        public void DeepClone()
+        public override void DeepClone()
         {
             var visited = new HashSet<AttackData>();
             DeepCloneInternal(visited);

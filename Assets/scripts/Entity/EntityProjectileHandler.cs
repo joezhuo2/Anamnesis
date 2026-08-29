@@ -43,7 +43,7 @@ namespace CrystalFlux.EntitySystem
                 Projectile p = orbitingProjectiles[i];
                 if (p != null && p.gameObject != null)
                 {
-                    Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(PlayerInputHandler.mousePos);
+                    Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(InputState.mousePos);
                     mouseWorld.z = 0f;
                     Vector2 dir = ((Vector2)mouseWorld - (Vector2)p.gameObject.transform.position).normalized;
                     p.Launch(dir.normalized);

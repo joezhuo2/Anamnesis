@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace CrystalFlux.EntitySystem
 {
-    public enum SummonCondition { None, OnHit, OnCast }
     public class EntitySummonHandler : MonoBehaviour, ISummonTrigger
     {
         [Header("Summon Settings")]

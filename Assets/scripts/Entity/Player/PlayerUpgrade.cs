@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CrystalFlux.EntitySystem
 {
-    public abstract class PlayerUpgrade : ScriptableObject
+    public abstract class PlayerUpgrade : UpgradeAsset
     {
         public enum TriggerCondition
         {
@@ -26,7 +26,6 @@ namespace CrystalFlux.EntitySystem
             OnTargetRecievedHit,
             OnDealDamage
         }
-        public string upgradeName;
         public TriggerCondition[] conditions;
         public float chance;
         public float cooldown;

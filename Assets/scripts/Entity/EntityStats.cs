@@ -2,104 +2,6 @@ using UnityEngine;
 
 namespace CrystalFlux.Core
 {
-    public enum ResourceType { Stamina, Mana }
-    public enum StatType
-    {
-        damagePct,
-        attack,
-        atkPct,
-        attackSpeedPct,
-        physicalDmgPct,
-        spellDmgPct,
-        critChance,
-        critDamage,
-        aoePct,
-        defShred,
-        resPen,
-        currentHp,
-        maxHp,
-        hpPct,
-        hpRegen,
-        hpRegPct,
-        armor,
-        armorPct,
-        damageRes,
-        dodgeChance,
-        dodgeResPct,
-        physicalRes,
-        spellRes,
-        moveSpeed,
-        moveSpeedPct,
-        maxStamina,
-        staminaRegen,
-        stRegPct,
-        addPhysDmgPct,
-        addSplDmgPct,
-        EffMaxHp,
-        EffAtk,
-        EffHpReg,
-        EffStReg,
-        EffSpd,
-        EffArmor,
-        maxMana,
-        globalDoTCanCrit,
-        UltDmgPct,
-        SkillDmgPct,
-        BasicDmgPct,
-        EffectRes,
-        Intelligence,
-        IntPct,
-        EffInt,
-        ProjSpd,
-        addTrueDmgPct,
-        stCostPct,
-        dashCooldownRedPct,
-        dashDistancePct,
-        dashStaminaCostRedPct,
-        addDmgPct,
-        kbRes,
-        kbPct,
-        ExpBonus,
-        Stealing,
-        sePotPct,
-        seDurPct,
-        manaGainPct,
-        seTickRatePct,
-        maxManaPct,
-        maxStaminaPct,
-        basicCdRedPct,
-        skillCdRedPct,
-        ultCdRedPct,
-        EffMaxMana,
-        EffMaxStamina,
-        isImmune,
-        isAlive,
-        goldDrop,
-        CanGainHp,
-        XpDrop,
-        Level,
-        IsDashing,
-        HurtTime,
-        CurrentMana,
-        IsAttacking,
-        CurrentStamina,
-        CanMove,
-        XpReq,
-        Xp,
-        Gold,
-        DetectionRange,
-        CanDash,
-        CanAttack,
-        CanGainMana,
-        CanGainStamina,
-        DashSpdMult,
-        EffDashCooldown,
-        EffDashStaminaCost,
-        EffDashDistance,
-        DashShouldApplyIFrame,
-        ArmorRes
-    }
-
     public class EntityStats : ScriptableObject
     {
         [Header("Offense")]
@@ -207,6 +109,7 @@ namespace CrystalFlux.Core
         public bool isDashing;
         public bool canDash;
         public bool canGainStamina;
+        [HideInInspector] public bool globalDoTCanCrit;
 
         public float GetValue(StatType type)
         {
@@ -281,6 +184,7 @@ namespace CrystalFlux.Core
                 StatType.EffMaxStamina => EffMaxStamina,
                 StatType.isImmune => isImmune ? 1f : 0f,
                 StatType.isAlive => isAlive ? 1f : 0f,
+                StatType.globalDoTCanCrit => globalDoTCanCrit ? 1f : 0f,
                 StatType.goldDrop => goldDrop,
                 StatType.CanGainHp => canGainHp ? 1f : 0f,
                 StatType.XpDrop => xpDrop,
@@ -369,6 +273,7 @@ namespace CrystalFlux.Core
                 case StatType.ultCdRedPct: ultCdRedPct += delta; break;
                 case StatType.isImmune: isImmune = delta > 0; break;
                 case StatType.isAlive: isAlive = delta > 0; break;
+                case StatType.globalDoTCanCrit: globalDoTCanCrit = delta > 0; break;
                 case StatType.goldDrop: goldDrop += delta; break;
                 case StatType.CanGainHp: canGainHp = delta > 0; break;
                 case StatType.XpDrop: xpDrop += delta; break;

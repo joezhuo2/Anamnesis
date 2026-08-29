@@ -103,18 +103,38 @@ Assets/
 │   ├── prefabs/               # UI element prefabs
 │   └── WaveData/              # Wave sequences
 └── scripts/
-    ├── Core/                  # Interfaces (ICurrencyHolder, IStatProvider, IDamageable, IResourcePool, IStatusEffectReceiver, ITooltipDisplay, IUnlockEffect, IUnlockRequirement, IAnnouncer, ISkillPointHolder, IOnHitEffect) & DamagePacket
-    ├── Entity/                # Player, Enemy, stats, health, levelling, summoning, XP
+    ├── Core/                  # [asmdef] Contracts only: interfaces (IStatProvider, IDamageable, IResourcePool, IStatusEffectReceiver, IAttackHandler, IUpgradeHolder, ITooltipDisplay, IUnlockEffect, IAnnouncer, ...), asset bases (AttackAsset, UpgradeAsset, EffectAsset), and shared value types (DamagePacket, StatType, StatBuff, InputState, DamageRoll)
+    ├── Entity/                # [asmdef] Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
-    ├── Items/                 # Items/Gear system
-    ├── Misc/                  # Game Controller (implements IAnnouncer)
-    ├── Projectile/            # Projectiles/Attack data and the damage calculator
-    ├── StatusEffect/          # Status effect system & implementations (DoTs, Stun, Pulled, buffs)
-    ├── SkillTree/             # Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
-    ├── TextIndicator/         # Floating damage numbers, XP/Gold indicators
-    └── Wave/                  # WaveManager, UnlimitedWaveManager, rewards, anomalies, enemy spawner
+    ├── Items/                 # Items/Gear system (Assembly-CSharp)
+    ├── Misc/                  # Game Controller (implements IAnnouncer) (Assembly-CSharp)
+    ├── Projectile/            # [asmdef] Projectiles/Attack data and the damage calculator
+    ├── StatusEffect/          # [asmdef] Status effect system & implementations (DoTs, Stun, Pulled, buffs)
+    ├── SkillTree/             # [asmdef] Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
+    ├── TextIndicator/         # [asmdef] Floating damage numbers, XP/Gold indicators
+    └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies, enemy spawner
 ```
+
+### Assembly Boundaries
+
+Each `[asmdef]` folder compiles to its own assembly, so cross-system dependencies are enforced by the compiler rather than by convention:
+
+```
+Core ──┬─ TextIndicator ─┐
+       ├─ Projectile ────┤
+       ├─ StatusEffect ──┼─→ Entity ──→ Wave
+       └─ SkillTree ─────┘
+```
+
+- **`Core` references nothing.** It holds only contracts — interfaces, abstract `ScriptableObject` bases, and shared value types.
+- **`Projectile`, `StatusEffect`, and `SkillTree` reference `Core` and nothing else** — including each other. Adding a cross-reference between them is a compile error, which is the point.
+- **`Entity`** composes the leaf systems; **`Wave`** orchestrates on top of `Entity`.
+- `Items` and `Misc` remain in `Assembly-CSharp`, which auto-references every assembly above.
+
+Types shared across a boundary live in `Core` as an abstract base (`AttackAsset`, `UpgradeAsset`, `EffectAsset`) rather than an interface, because Unity cannot serialize interface-typed asset fields. Concrete data (`AttackData`, `PlayerUpgrade`, `StatusEffect`) stays in its own assembly.
+
+> **Moving a `[SerializeReference]` type between assemblies breaks existing assets.** Unity stores a literal `{class, ns, asm}` triplet, so add `[MovedFrom(sourceAssembly: "...")]` when relocating one — see `UnlockEffect` and `NodeRequirement`.
 
 ## Getting Started
 
