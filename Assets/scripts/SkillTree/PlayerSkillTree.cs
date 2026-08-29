@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using CrystalFlux.Core;
-using CrystalFlux.EntitySystem;
-using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
 namespace CrystalFlux.SkillTree
@@ -24,25 +22,13 @@ namespace CrystalFlux.SkillTree
             GenerateRuntimeNodes();
         }
 
+        private void Start() => SkillPoints++;
+
         private void CleanupNodes()
         {
             foreach (var node in runtimeNodes)
             {
                 if (node == null) continue;
-
-                if (node.playerUpgrades != null)
-                {
-                    foreach (var pu in node.playerUpgrades)
-                        if (pu != null) DestroyImmediate(pu, true);
-                    node.playerUpgrades.Clear();
-                }
-
-                if (node.attackUpgrades != null)
-                {
-                    foreach (var ad in node.attackUpgrades)
-                        if (ad != null) DestroyImmediate(ad, true);
-                    node.attackUpgrades.Clear();
-                }
 
                 DestroyImmediate(node, true);
             }
@@ -68,28 +54,6 @@ namespace CrystalFlux.SkillTree
             {
                 if (n == null) continue;
                 SkillNodeDef runtimeNode = Instantiate(n);
-
-                if (n.playerUpgrades != null && n.playerUpgrades.Count > 0)
-                {
-                    runtimeNode.playerUpgrades.Clear();
-                    foreach (var pu in n.playerUpgrades)
-                    {
-                        if (pu == null) continue;
-                        runtimeNode.playerUpgrades.Add(Instantiate(pu));
-                    }
-                }
-
-                if (n.attackUpgrades != null && n.attackUpgrades.Count > 0)
-                {
-                    runtimeNode.attackUpgrades.Clear();
-                    foreach (var ad in n.attackUpgrades)
-                    {
-                        if (ad == null) continue;
-                        AttackData rad = Instantiate(ad);
-                        rad.DeepClone();
-                        runtimeNode.attackUpgrades.Add(rad);
-                    }
-                }
 
                 runtimeNodes.Add(runtimeNode);
                 runtimeNodeMap[n] = runtimeNode;
@@ -215,20 +179,13 @@ namespace CrystalFlux.SkillTree
                     if (unlockedNodes.Contains(n.nodeID)) return (false, $"Incompatible node unlocked: {n.nodeName}");
             }
 
-            if (node.requiredAttacks != null && node.requiredAttacks.Count > 0)
+            if (node.requirements != null)
             {
-                if (!TryGetComponent<PlayerAttackHandler>(out var pah)) return (false, "Player attack handler not found");
-
-                foreach (var a in node.requiredAttacks)
-                    if (!pah.HasAttack(a)) return (false, $"Missing required attack: {a.displayName}");
-            }
-
-            if (node.requiredPlayerUpgrades != null && node.requiredPlayerUpgrades.Count > 0)
-            {
-                if (!TryGetComponent<PlayerUpgradeManager>(out var pum)) return (false, "Player upgrade manager not found");
-                if (pum.activeUpgrades == null || pum.activeUpgrades.Count == 0) return (false, "Missing required player upgrades: No active upgrades found");
-                foreach (var p in node.requiredPlayerUpgrades)
-                    if (!pum.HasUpgrade(p)) return (false, $"Missing required player upgrade: {p.upgradeName}");
+                foreach (var req in node.requirements)
+                {
+                    if (req == null) continue;
+                    if (!req.Has(gameObject)) return (false, $"Requirement not met: {req.GetType().Name}");
+                }
             }
 
             return (true, string.Empty);
@@ -242,7 +199,7 @@ namespace CrystalFlux.SkillTree
             TrySpend(node.cost);
             unlockedNodes.Add(node.nodeID);
 
-            node.Apply(gameObject);
+            ApplyNodeEffects(node);
 
             if (node.isStartingNode) choseStarting = true;
         }
@@ -255,9 +212,10 @@ namespace CrystalFlux.SkillTree
             if (!IsNodeUnlocked(node)) return (false, "Node not unlocked");
             if (node.isStartingNode) return (false, "Cannot undo starting node");
 
-            if (TryGetComponent<ICurrencyHolder>(out var esm) && esm.CurrentAmount < node.undoCost)
-                return (false, $"Not enough gold ({node.undoCost}g required)");
-            else return (false, "No stat manager found");
+            if (!TryGetComponent<ICurrencyHolder>(out var esm)) return (false, "No stat manager found");
+            if (esm.CurrentAmount < node.undoCost) return (false, $"Not enough gold ({node.undoCost}g required)");
+
+            return (true, string.Empty);
         }
 
         public void UndoNode(SkillNodeDef node)
@@ -269,9 +227,22 @@ namespace CrystalFlux.SkillTree
             {
                 AddSkillPoints(node.cost);
                 unlockedNodes.Remove(node.nodeID);
+                RemoveNodeEffects(node);
             }
+        }
 
-            node.Remove(gameObject);
+        private void ApplyNodeEffects(SkillNodeDef node)
+        {
+            if (node.unlockEffects != null)
+                foreach (var effect in node.unlockEffects)
+                    if (effect != null) effect.Apply(gameObject);
+        }
+
+        private void RemoveNodeEffects(SkillNodeDef node)
+        {
+            if (node.unlockEffects != null)
+                foreach (var effect in node.unlockEffects)
+                    if (effect != null) effect.Remove(gameObject);
         }
 
         public void AddSkillPoints(int amount) => SkillPoints += amount;

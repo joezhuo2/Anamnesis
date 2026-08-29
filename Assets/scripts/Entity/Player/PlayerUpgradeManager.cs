@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (pu == null) return false;
             for (int i = 0; i < activeUpgrades.Count; i++)
-                if (activeUpgrades[i].upgradeName == pu.name) return true;
+                if (activeUpgrades[i].name.Trim().Equals(pu.name.Trim(), StringComparison.OrdinalIgnoreCase)) return true;
             return false;
         }
         public PlayerUpgrade GetPlayerUpgradeOfType<T>() where T : PlayerUpgrade
@@ -65,7 +66,7 @@ namespace CrystalFlux.EntitySystem
                 {
                     if (c == condition)
                     {
-                        if (Random.Range(0f, 100f) > u.chance) continue;
+                        if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
                         lastTriggerTimes[u] = now;
                         if (u.delay > 0) StartCoroutine(TriggerWithDelay(u));
                         else u.TriggerUpgradeEffect(gameObject);
@@ -89,7 +90,7 @@ namespace CrystalFlux.EntitySystem
                 {
                     if (c == condition)
                     {
-                        if (Random.Range(0f, 100f) > u.chance) continue;
+                        if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
                         lastTriggerTimes[u] = now;
                         if (u.delay > 0) StartCoroutine(TriggerWithDelay(u));
                         else u.TriggerUpgradeEffect(gameObject, spawnCenter);
@@ -113,7 +114,7 @@ namespace CrystalFlux.EntitySystem
                 {
                     if (c == condition)
                     {
-                        if (Random.Range(0f, 100f) > u.chance) continue;
+                        if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
                         lastTriggerTimes[u] = now;
                         if (u.delay > 0) StartCoroutine(TriggerWithDelay(u, target, damageDealt));
                         else u.TriggerUpgradeEffect(gameObject, target, damageDealt);

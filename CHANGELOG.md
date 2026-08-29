@@ -7,6 +7,29 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## ⚠️ [v0.2.18] - 2026-08-28
+
+### Added
+- **`IUnlockRequirement` interface** — new core interface with `Has(GameObject target)` for unified skill node unlock requirements
+- **`UnlockEffects`** — new serializable `IUnlockEffect` wrappers (`StatBuffEffect`, `PlayerUpgradeEffect`, `AttackUpgradeEffect`) for `[SerializeReference]` lists on `SkillNodeDef`
+- **`TypeSelectorAttribute` / `TypeSelectorDrawer`** — inspector dropdown for null `[SerializeReference]` elements on `SkillNodeDef.requirements`/`unlockEffects`, so added elements can be assigned a concrete implementation (e.g. `UnlockEffect`) and configured
+- **`AttackData.IsRuntimeCopy`** — non-serialized flag set during `DeepClone`, exposing whether an instance is a runtime copy
+- **`PlayerUpgrade` / `AttackData`** — now implement `IUnlockEffect` and `IUnlockRequirement`; `Apply`/`Remove`/`Has` route through `PlayerUpgradeManager`/`PlayerAttackHandler`
+
+### Changed
+- **`SkillNodeDef`** — replaced `requiredAttacks`/`requiredPlayerUpgrades` with `[SerializeReference] List<IUnlockRequirement> requirements`; replaced `attackUpgrades`/`playerUpgrades` with `[SerializeReference] List<IUnlockEffect> unlockEffects`; removed `Apply`/`Remove` and all upgrade/downgrade handling (logic now lives on the effects); `statBuffs` deprecated (TODO: remove); `cost`/`undoCost` regrouped under a Costs header with tooltips
+- **`PlayerSkillTree`** — `CanUnlock` validates `node.requirements` via `Has()`; `UnlockNode`/`UndoNode` iterate `node.unlockEffects`; removed manual deep-instantiation of node attack/player upgrades in `GenerateRuntimeNodes`/`CleanupNodes`
+- **`IUnlockEffect`** — wrapped in `CrystalFlux.Core` namespace
+
+### Fixed
+- **Original asset destruction** — `PlayerAttackHandler` (`UpdateAttack`/`RemoveAttack`/`OnDestroy`), `EnemyAttackHandler` (`OnDestroy`), and `AttackReplacement` (`OnDestroy`) now only destroy `AttackData` marked `IsRuntimeCopy`, so source assets are never destroyed at runtime
+- **`PlayerUpgradeManager.HasUpgrade`** — name comparison now trims and ignores case, fixing requirement checks failing on name mismatches
+- **`PlayerSkillTree.CanUndo`** — always returned false (fallthrough returned "No stat manager found" even on success); now returns true when the player can afford the undo cost
+- **`PlayerSkillTree.UndoNode`** — effects were removed even when the gold refund failed; removal now only happens on a successful undo
+- **`PlayerSkillTree.CanUnlock`** — null-guarded `node.requirements` (all existing node assets deserialize it as null, crashing every check)
+- **`NodeRequirement.Has`** — requirements silently passed when the target lacked `PlayerAttackHandler`/`PlayerUpgradeManager`; now fail, with null-entry guards
+- **Legacy `statBuffs`** — still applied on unlock/undo until assets are migrated to `unlockEffects` (all 60+ existing node assets store buffs in the deprecated field)
+
 ## ⚠️ [v0.2.17] - 2026-08-28
 
 ### Added

@@ -20,12 +20,14 @@ MonoBehaviour:
   prerequisites:
   - {fileID: 11400000, guid: b8c74f629d4dd7546bc9ee683e02ae03, type: 2}
   - {fileID: 11400000, guid: 87094eedbeeb718448a4041ada69e2c7, type: 2}
-  requiredAttacks: []
-  requiredPlayerUpgrades: []
   incompatibleNodes: []
+  requirements: []
   statBuffs:
   - type: 15
     value: 3
-  attackUpgrades: []
-  playerUpgrades: []
+  unlockEffects: []
+  cost: 1
   undoCost: 50
+  references:
+    version: 2
+    RefIds: []

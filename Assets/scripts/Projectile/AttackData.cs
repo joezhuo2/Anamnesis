@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace CrystalFlux.ProjectileSystem
 {
     public enum AttackType { Basic, Skill, Ultimate, Technique, Additional }
 
-    [CreateAssetMenu(fileName = "ad", menuName = "Data/Attack")]
+    [CreateAssetMenu(fileName = "ad", menuName = "Data/Attack")] 
     public class AttackData : ScriptableObject
     {
         [Header("Basic")]
@@ -89,6 +90,9 @@ namespace CrystalFlux.ProjectileSystem
         public Sprite icon;
         public string displayName;
 
+        [System.NonSerialized] private bool isRuntimeCopy;
+        public bool IsRuntimeCopy => isRuntimeCopy;
+
         public void InitializeRuntimeCopy() => DeepClone();
         public void DeepClone()
         {
@@ -98,6 +102,7 @@ namespace CrystalFlux.ProjectileSystem
 
         private void DeepCloneInternal(HashSet<AttackData> visited)
         {
+            isRuntimeCopy = true;
             if (!visited.Add(this)) return;
 
             if (pd != null)
@@ -141,6 +146,7 @@ namespace CrystalFlux.ProjectileSystem
 
         private void OnDestroy()
         {
+            if (!isRuntimeCopy) return;
             if (pd != null) Destroy(pd);
             if (nextAttack != null) Destroy(nextAttack);
         }

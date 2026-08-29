@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public interface IUnlockEffect
+namespace CrystalFlux.Core
 {
-    void Apply(GameObject target);
-    void Remove(GameObject target);
+    public interface IUnlockEffect
+    {
+        void Apply(GameObject target);
+        void Remove(GameObject target);
+    }
 }

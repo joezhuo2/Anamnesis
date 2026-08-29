@@ -39,7 +39,7 @@ namespace CrystalFlux.EntitySystem
             if (attacks != null)
             {
                 foreach (var attack in attacks)
-                    if (attack != null) DestroyImmediate(attack, true);
+                    if (attack != null && attack.IsRuntimeCopy) DestroyImmediate(attack, true);
                 attacks.Clear();
             }
 
@@ -205,7 +205,7 @@ namespace CrystalFlux.EntitySystem
             if (current != null)
             {
                 attacks.Remove(current);
-                Destroy(current);
+                if (current.IsRuntimeCopy) Destroy(current);
             }
 
             AttackData runtimeAttackCopy = Instantiate(newAttack);
@@ -231,7 +231,7 @@ namespace CrystalFlux.EntitySystem
             if (current != null)
             {
                 attacks.Remove(current);
-                Destroy(current);
+                if (current.IsRuntimeCopy) Destroy(current);
             }
 
             if (spawnedUIElements.ContainsKey(type))

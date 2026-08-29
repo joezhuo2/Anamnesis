@@ -50,7 +50,7 @@ namespace CrystalFlux.EntitySystem
             if (attacks != null)
             {
                 foreach (var attack in attacks)
-                    if (attack != null) DestroyImmediate(attack, true);
+                    if (attack != null && attack.IsRuntimeCopy) DestroyImmediate(attack, true);
                 attacks.Clear();
             }
         }

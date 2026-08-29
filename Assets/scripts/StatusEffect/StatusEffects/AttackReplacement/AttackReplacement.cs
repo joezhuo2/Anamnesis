@@ -40,7 +40,7 @@ namespace CrystalFlux.StatusEffectSystem
 
         private void OnDestroy()
         {
-            if (originalAttack != null)
+            if (originalAttack != null && originalAttack.IsRuntimeCopy)
                 Destroy(originalAttack);
         }
     }

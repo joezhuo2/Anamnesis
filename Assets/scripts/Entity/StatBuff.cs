@@ -1,11 +1,10 @@
 using System;
-using CrystalFlux.EntitySystem;
 using UnityEngine;
 
 namespace CrystalFlux.Core
 {
     [System.Serializable]
-    public struct StatBuff : IEquatable<StatBuff>, IUnlockEffect
+    public struct StatBuff : IEquatable<StatBuff>
     {
         public StatType type;
         public float value;
@@ -16,11 +15,11 @@ namespace CrystalFlux.Core
             this.value = value;
         }
 
-        public void Apply(GameObject target)
-        {
-            if (target.TryGetComponent<IStatProvider>(out var isp))
-                isp.AddStat(new(type, value));
-        }
+        // public void Apply(GameObject target)
+        // {
+        //     if (target.TryGetComponent<IStatProvider>(out var isp))
+        //         isp.AddStat(new(type, value));
+        // }
 
         public readonly bool Equals(StatBuff other)
             => type == other.type && Mathf.Approximately(value, other.value);

@@ -2,6 +2,7 @@
 
 ### Bug Fixes
 - re-add phase based buffs using the new system
+- migrate ALL 104 NODES: `SkillNodeDef.statBuffs` to `StatBuffEffect` entries in `unlockEffects` (marked TODO: Remove)
 
 ### High Priority (To be done before 1 minor version)
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)

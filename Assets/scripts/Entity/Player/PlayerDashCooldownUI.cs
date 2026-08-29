@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.UISystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class PlayerDashCooldownUI : MonoBehaviour
+    public class PlayerDashCooldownUI : MonoBehaviour, IPointerEnterHandler
     {
         public Image cooldownImage;
         private PlayerMovement cpm;
@@ -17,13 +18,7 @@ namespace CrystalFlux.EntitySystem
             cpm = pm;
             cesm = esm;
 
-            if (TryGetComponent<ITooltipDisplay>(out var td))
-            {
-                var (tt, st, os) = GetDashTooltip();
-                td.ShowTooltip(tt, st, os);
-            }
-
-                if (cooldownImage != null)
+            if (cooldownImage != null)
             {
                 Color orig = cooldownImage.color;
                 orig.a = 0.9f;
@@ -31,7 +26,10 @@ namespace CrystalFlux.EntitySystem
 
                 cooldownImage.fillAmount = 0f;
             }
+
+            ShowTooltip();
         }
+
         private void Update()
         {
             if (cesm == null || cpm == null || cooldownImage == null) return;
@@ -47,6 +45,15 @@ namespace CrystalFlux.EntitySystem
             float cooldownRemainingPct = 1f - (timeElapsed / cd);
 
             cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+        }
+
+        private void ShowTooltip()
+        {
+            if (TryGetComponent<ITooltipDisplay>(out var td))
+            {
+                var (tt, st, os) = GetDashTooltip();
+                td.ShowTooltip(tt, st, os);
+            }
         }
 
         private (string title, string subtitle, Vector2 offset) GetDashTooltip()
@@ -65,5 +72,7 @@ namespace CrystalFlux.EntitySystem
 
             return("Movement", string.Join("\n", lines), new(100, 30));
         }
+
+        public void OnPointerEnter(PointerEventData eventData) => ShowTooltip();
     }
 }
