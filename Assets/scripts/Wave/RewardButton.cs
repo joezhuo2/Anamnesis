@@ -4,6 +4,7 @@ using CrystalFlux.UISystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using CrystalFlux.Core;
 
 namespace CrystalFlux.WaveSystem
 {

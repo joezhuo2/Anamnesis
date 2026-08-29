@@ -2,6 +2,7 @@ using CrystalFlux.EntitySystem;
 using CrystalFlux.ProjectileSystem;
 using CrystalFlux.StatusEffectSystem;
 using UnityEngine;
+using CrystalFlux.Core;
 
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade/SoulRend")]
 public class SoulRendPU : PlayerUpgrade

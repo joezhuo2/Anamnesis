@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
-using CrystalFlux.EntitySystem;
-using CrystalFlux.StatusEffectSystem;
 using UnityEngine;
 
 namespace CrystalFlux.ProjectileSystem

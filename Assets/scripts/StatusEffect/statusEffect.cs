@@ -1,4 +1,5 @@
 using UnityEngine;
+using CrystalFlux.Core;
 
 namespace CrystalFlux.StatusEffectSystem
 {

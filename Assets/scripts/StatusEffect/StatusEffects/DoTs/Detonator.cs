@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
-using CrystalFlux.EntitySystem;
 using UnityEngine;
 
 namespace CrystalFlux.StatusEffectSystem

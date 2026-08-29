@@ -1,6 +1,7 @@
 using CrystalFlux.EntitySystem;
 using CrystalFlux.ProjectileSystem;
 using UnityEngine;
+using CrystalFlux.Core;
 
 public enum CooldownAdvanceType { All, Basic, Skill, Ult }
 

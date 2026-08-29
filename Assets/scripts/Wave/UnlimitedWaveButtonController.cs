@@ -1,6 +1,7 @@
 using CrystalFlux.UISystem;
 using UnityEngine;
 using UnityEngine.UI;
+using CrystalFlux.Core;
 
 namespace CrystalFlux.WaveSystem
 {
