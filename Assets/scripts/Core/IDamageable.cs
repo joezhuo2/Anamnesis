@@ -1,5 +1,5 @@
 using System;
-using CrystalFlux.ProjectileSystem;
+using CrystalFlux.Core;
 using UnityEngine;
 
 namespace CrystalFlux.EntitySystem

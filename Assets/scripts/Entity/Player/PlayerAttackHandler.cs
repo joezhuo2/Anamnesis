@@ -177,7 +177,7 @@ namespace CrystalFlux.EntitySystem
 
             if (sp > esm.GetStat(StatType.CurrentStamina) || hp > esm.GetStat(StatType.currentHp) || mp > esm.GetStat(StatType.CurrentMana)) return false;
 
-            var dp = DamagePacket.BuildDamagePacket(hp, DamageType.Consume, false, Color.red, gameObject, false, 1f);
+            var dp = DamagePacketBuilder.BuildDamagePacket(hp, DamageType.Consume, false, Color.red, gameObject, false, 1f);
             if (ph != null) ph.TakeDamage(dp);
 
             if (pr != null) pr.TrySpend(ResourceType.Stamina, sp);

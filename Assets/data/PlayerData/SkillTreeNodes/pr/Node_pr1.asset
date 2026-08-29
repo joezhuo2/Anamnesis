@@ -21,12 +21,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4267f2b863301ba4299498d19e020203, type: 2}
   - {fileID: 11400000, guid: ce4e060e988bfc843a0b606b531f5d08, type: 2}
   - {fileID: 11400000, guid: 8d4d0c7f7f6fe7847a7904f30de19a53, type: 2}
-  requiredAttacks: []
-  requiredPlayerUpgrades: []
   incompatibleNodes: []
-  statBuffs:
-  - type: 21
-    value: 1
-  attackUpgrades: []
-  playerUpgrades: []
+  requirements: []
+  statBuffs: []
+  unlockEffects:
+  - rid: 678176144140534088
+  cost: 1
   undoCost: 50
+  references:
+    version: 2
+    RefIds:
+    - rid: 678176144140534088
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: Assembly-CSharp}
+      data:
+        buffs:
+        - type: 21
+          value: 1
+        attacks: []
+        awakenings: []

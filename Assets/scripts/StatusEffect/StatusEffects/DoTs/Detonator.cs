@@ -28,7 +28,7 @@ namespace CrystalFlux.StatusEffectSystem
                         int ticksRemaining = Mathf.CeilToInt((dot.duration - dot.currentTime) / dot.tickInterval);
                         float dmg = dmgMult * dotTickDmg * ticksRemaining;
 
-                        DamagePacket dp = DamagePacket.BuildDamagePacket(dmg, dmgType, true, indicatorColor, source, true, 2f);
+                        DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(dmg, dmgType, true, indicatorColor, source, true, 2f);
                         eh.TakeDamage(dp);
                     }
                     sem.RemoveEffect<DoT>();

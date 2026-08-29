@@ -22,12 +22,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87094eedbeeb718448a4041ada69e2c7, type: 2}
   incompatibleNodes: []
   requirements: []
-  statBuffs:
-  - type: 15
-    value: 3
-  unlockEffects: []
+  statBuffs: []
+  unlockEffects:
+  - rid: 678176144140534059
   cost: 1
   undoCost: 50
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 678176144140534059
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: Assembly-CSharp}
+      data:
+        buffs:
+        - type: 15
+          value: 3
+        attacks: []
+        awakenings: []

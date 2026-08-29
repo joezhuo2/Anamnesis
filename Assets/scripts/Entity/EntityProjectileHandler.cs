@@ -121,7 +121,7 @@ namespace CrystalFlux.EntitySystem
             float staminaGain = p.pd.mainAttack.staminaGainOnHit * 0.01f * mult;
             float manaGain = p.pd.mainAttack.manaGainOnHit * 0.01f * mult;
 
-            var dp = DamagePacket.BuildDamagePacket(hpGain, DamageType.Heal, false, Color.green, p.ownerObj, true, 1f);
+            var dp = DamagePacketBuilder.BuildDamagePacket(hpGain, DamageType.Heal, false, Color.green, p.ownerObj, true, 1f);
 
             GameObject target = p.ownerObj;
             if (target.TryGetComponent<IDamageable>(out var eh)) eh.TakeDamage(dp);

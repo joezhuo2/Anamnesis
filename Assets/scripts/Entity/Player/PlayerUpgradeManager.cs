@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CrystalFlux.Core;
 using UnityEngine;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class PlayerUpgradeManager : MonoBehaviour
+    public class PlayerUpgradeManager : MonoBehaviour, IOnHitEffect
     {
         public static PlayerUpgradeManager Instance { get; private set; }
         public List<PlayerUpgrade> activeUpgrades = new();
@@ -132,6 +133,12 @@ namespace CrystalFlux.EntitySystem
         {
             yield return new WaitForSeconds(u.delay);
             u.TriggerUpgradeEffect(gameObject, target, damageDealt);
+        }
+
+        public void OnHit(GameObject projectileOwner, GameObject _, Vector3 hitPosition)
+        {
+            if (projectileOwner.TryGetComponent<PlayerUpgradeManager>(out var pum))
+                pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnProjectileHit, hitPosition);
         }
     }
 }

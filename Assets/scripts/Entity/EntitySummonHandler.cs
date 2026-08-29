@@ -7,7 +7,7 @@ using UnityEngine;
 namespace CrystalFlux.EntitySystem
 {
     public enum SummonCondition { None, OnHit, OnCast }
-    public class EntitySummonHandler : MonoBehaviour
+    public class EntitySummonHandler : MonoBehaviour, ISummonTrigger
     {
         [Header("Summon Settings")]
         [Tooltip("Prefab to summon. Should have an Entity component (Player/Enemy) with its own handlers.")]
@@ -186,5 +186,7 @@ namespace CrystalFlux.EntitySystem
             CleanupNullSummons();
             return activeSummons.Count;
         }
+
+        public bool TrySummon(Vector2 position) => TrySummon(out _, position);
     }
 }

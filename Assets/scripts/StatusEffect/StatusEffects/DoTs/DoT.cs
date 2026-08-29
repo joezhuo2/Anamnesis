@@ -25,7 +25,7 @@ namespace CrystalFlux.StatusEffectSystem
             float resPen = ssm.GetStat(StatType.resPen);
             int defShred = Mathf.RoundToInt(ssm.GetStat(StatType.defShred));
 
-            DamagePacket damagePacket = DamagePacket.BuildDamagePacket(damage, damageType, globalDoTCanCrit || canCrit, indicatorColor, source, true, 1f);
+            DamagePacket damagePacket = DamagePacketBuilder.BuildDamagePacket(damage, damageType, globalDoTCanCrit || canCrit, indicatorColor, source, true, 1f);
             eh.TakeDamage(damagePacket);
         }
     }

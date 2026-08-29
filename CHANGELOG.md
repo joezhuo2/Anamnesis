@@ -7,6 +7,23 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.2.19] - 2026-08-29
+
+### Added
+- **`ISummonTrigger` interface** — new interface with `TrySummon(Vector2 position)`; `EntitySummonHandler` implements it, decoupling summon-on-hit from the concrete handler type
+- **`DamagePacketBuilder`** — new static class extracting the `BuildDamagePacket` methods from `DamagePacket`, which is now a pure data container
+- **`IStatusEffectReceiver.RemoveStacks`** — interface now declares `RemoveStacks<T>(int)`, matching the existing `StatusEffectManager` implementation
+
+### Changed
+- **`DamagePacket` / `DamageInstance` / `DamageType`** — moved from `CrystalFlux.ProjectileSystem` to `CrystalFlux.Core` (files relocated `Assets/scripts/Projectile/` → `Assets/scripts/Core/`)
+- **`IOnHitEffect`** — moved from `CrystalFlux.ProjectileSystem` to `CrystalFlux.Core`
+- **`Projectile`** — no longer implements `IOnHitEffect`; hits now notify ALL `IOnHitEffect` components on the owner, so any owner component can react to projectile hits
+- **`PlayerUpgradeManager`** — now implements `IOnHitEffect`, triggering `OnProjectileHit` upgrades through the shared on-hit pipeline
+- **Summon-on-hit** — routed through `ISummonTrigger` instead of a direct `EntitySummonHandler` reference
+
+### Updated
+- **All 104 skill node assets** — `statBuffs` converted to `UnlockEffect` entries in `unlockEffects` (buffs / attacks / awakenings); `statBuffs` is now empty on every node (field still on `SkillNodeDef`, marked TODO: Remove)
+
 ## [v0.2.18_1] - 2026-08-28
 
 ## Updated

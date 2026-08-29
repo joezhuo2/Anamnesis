@@ -28,7 +28,7 @@ public class AdditionalDamage : PlayerUpgrade
             _ => Color.white
         };
 
-        DamagePacket dp = DamagePacket.BuildDamagePacket(bonusDamage, type, false, indicatorColor, player, true, 1.25f);
+        DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(bonusDamage, type, false, indicatorColor, player, true, 1.25f);
         if (dp.GetTotalDamage() > 0f) id.TakeDamage(dp);
     }
 }

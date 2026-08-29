@@ -7,7 +7,7 @@
 ### High Priority (To be done before 1 minor version)
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)
 - [ ] skill tree 'capstone' nodes - upgrading existing Awakenings/Attacks (currently none) and/or introducing new ones
-- [ ] Wave 60 boss and enemies, and Boss Rush Extension (v0.3.0 Content Update)
+- [ ] Wave 60 boss and enemies, and Boss Rush Extension (v0.4.0 Content Update)
 
 ### Medium Priority (To be done before 2 minor versions)
 - [ ] Elite/Champion enemy variants with unique modifiers (extra hp, faster)

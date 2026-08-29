@@ -11,7 +11,7 @@ public class StellarSurge : PlayerUpgrade
     {
         if (!player.TryGetComponent<IDamageable>(out var id)) return;
 
-        var dp = DamagePacket.BuildDamagePacket(
+        var dp = DamagePacketBuilder.BuildDamagePacket(
             hpPct * 0.01f * player.GetComponent<IStatProvider>().GetStat(StatType.EffMaxHp),
             DamageType.Heal, false, Color.teal, player, true, 1f
         );

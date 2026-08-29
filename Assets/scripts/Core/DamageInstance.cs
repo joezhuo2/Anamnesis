@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CrystalFlux.ProjectileSystem
+namespace CrystalFlux.Core
 {
     public enum DamageType { Physical, Spell, DoT, True, Heal, Consume }
 
@@ -12,7 +12,7 @@ namespace CrystalFlux.ProjectileSystem
         public Color indicatorColor;
         public GameObject owner;
 
-        public DamageInstance(DamageType type, float amount, bool isCrit, Color indicatorColor, GameObject owner)
+        public DamageInstance(DamageType type, float amount, bool isCrit = false, Color indicatorColor = default, GameObject owner = null)
         {
             this.type = type;
             this.amount = amount;

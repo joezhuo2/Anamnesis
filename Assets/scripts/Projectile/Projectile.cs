@@ -11,7 +11,7 @@ namespace CrystalFlux.ProjectileSystem
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(RectTransform))]
-    public class Projectile : MonoBehaviour, IOnHitEffect
+    public class Projectile : MonoBehaviour
     {
         public ProjectileData pd;
 
@@ -111,7 +111,7 @@ namespace CrystalFlux.ProjectileSystem
 
             if (sid == tid) return;
 
-            DamagePacket dp = DamagePacket.BuildDamagePacket(pd, damageSnapshot, true, ownerObj, false, 1f);
+            DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(pd, damageSnapshot, true, ownerObj, false, 1f);
 
             eh.TakeDamage(dp);
 
@@ -134,7 +134,15 @@ namespace CrystalFlux.ProjectileSystem
             pierced++;
             hit.Add(target);
 
-            OnHit(ownerObj, target, transform.position);
+            foreach (var e in ownerObj.GetComponents<IOnHitEffect>())
+                e.OnHit(ownerObj, target, transform.position);
+            
+            if (pd.mainAttack != null && pd.mainAttack.summonCondition == SummonCondition.OnHit && Random.value <= pd.mainAttack.summonChance)
+            {
+                if (ownerObj.TryGetComponent<ISummonTrigger>(out var ist))
+                    ist.TrySummon(target.transform.position);
+            }
+
 
             if (pd.timeBeforeSameEnemy > 0f) StartCoroutine(RemoveFromHitHistory(target, pd.timeBeforeSameEnemy));
 
@@ -486,20 +494,8 @@ namespace CrystalFlux.ProjectileSystem
 
             if (target.TryGetComponent<IDamageable>(out var eh))
             {
-                var dp = DamagePacket.BuildDamagePacket(hp, DamageType.Heal, false, Color.green, target, true, 1f);
+                var dp = DamagePacketBuilder.BuildDamagePacket(hp, DamageType.Heal, false, Color.green, target, true, 1f);
                 eh.TakeDamage(dp);
-            }
-        }
-
-        public void OnHit(GameObject projectileOwner, GameObject target, Vector3 hitPosition)
-        {
-            if (projectileOwner.TryGetComponent<PlayerUpgradeManager>(out var pum))
-                pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnProjectileHit, hitPosition);
-
-            if (pd.mainAttack != null && pd.mainAttack.summonChance > 0f && pd.mainAttack.summonCondition == SummonCondition.OnHit && Random.value <= pd.mainAttack.summonChance)
-            {
-                if (ownerObj.TryGetComponent<EntitySummonHandler>(out var summonHandler))
-                    summonHandler.TrySummon(out _, target.transform.position);
             }
         }
     }
