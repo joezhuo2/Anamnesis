@@ -7,6 +7,27 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.0] - 2026-08-29 — System Refactor & QoL Update (Release Summary)
+
+This release covers the full development arc from `v0.2.0` through `v0.2.19`. Over this period Anamnesis went through a major architectural refactor — nearly every combat, stat, resource, and UI system was decoupled from concrete components onto small interfaces — while the skill tree nearly doubled, two gamemodes were wired into a selector, enemy scaling was reworked, and new attacks shipped.
+
+### Highlights
+
+- **Interface-driven decoupling (`v0.2.9`–`v0.2.19`)** — the core systems were steadily refactored off direct component references onto focused interfaces:
+  - **`IStatProvider` / `ICurrencyHolder`** — `EntityStatManager` is no longer referenced directly anywhere (v0.2.10)
+  - **`IDamageable`** — unified take-damage / heal / consume pipeline via `DamagePacket`, adding `DamageType.Heal` / `DamageType.Consume`, `bypassIFrames`, and `sizeOverride` (v0.2.11)
+  - **`IStatusEffectReceiver`** — status effect application centralized through the `StatusEffectManager` (v0.2.12)
+  - **`ITooltipDisplay`** — the entire tooltip system migrated off `TooltipTrigger` onto UI components (v0.2.13)
+  - **`IResourcePool` / `IKnockbackable` / `IUnlockEffect`** — plus the unified `PlayerResourcePool` replacing separate `PlayerStamina`/`PlayerMana` (v0.2.14)
+  - **`ITeamMember`**, **`IAnnouncer`**, **`ISkillPointHolder`**, **`IUnlockRequirement`**, **`ISummonTrigger`**, **`IOnHitEffect`** — remaining concrete references replaced across the codebase (v0.2.15–v0.2.19)
+- **Namespaces (`v0.2.17`)** — most classes now live in `CrystalFlux.Core`, `.EntitySystem`, `.ProjectileSystem`, `.StatusEffectSystem`, `.WaveSystem`, and `.UISystem`
+- **Skill tree overhaul (`v0.2.2`, `v0.2.6`, `v0.2.18`)** — nodes grew from 78 → 104; strict AND-based prerequisites became a bidirectional OR connections system; per-node skill-point costs added. The headline change reworked `SkillNodeDef` onto scriptable data: `[SerializeReference] List<IUnlockEffect> unlockEffects` (`StatBuffEffect`/`PlayerUpgradeEffect`/`AttackUpgradeEffect`) and `List<IUnlockRequirement> requirements`, with a custom `TypeSelector` inspector — all 104 node assets now store their effects as data, and unlock/undo logic lives on the effects themselves
+- **Unlimited Waves gamemode (`v0.2.3`–`v0.2.4`)** — new `UnlimitedWaveManager` (infinite scaling, faster spawns, periodic boss waves, mixed/milestone reward flow) plus a gamemode selector with `RegularWaveButtonController` / `UnlimitedWaveButtonController`, and tooltip support for the corrupt/reroll/skip action buttons
+- **Enemy scaling rework (`v0.2.7`)** — linear → exponential per-level scaling (ATK 5%, HP/regen 10%, armor 5%, move/crit/aoe 4%, resistances 3% per level) so base stats matter; fixed the `levelOffset % 5 == 0` bug that only scaled on every 5th level
+- **Stat system overhaul (`v0.2.5`–`v0.2.9`)** — get/set routed through `GetStat(StatType)` / `AddStat(StatBuff)` on `EntityStatManager`; split into player/enemy stat managers (enemies scale to level); new status-effect, resource, and per-attack CDR stats added
+- **New attacks & content (`v0.2.1`)** — Ignition Flash (DoT basic that debuffs enemies) and Lifeforce (HP-scaling spell nuke); subtitle feedback when gaining skill points / reroll tokens
+- **Robustness & pooling (`v0.2.11`–`v0.2.19`)** — `AttackData.IsRuntimeCopy` so runtime-upgrade copies are never confused with source assets (original ScriptableObjects are never destroyed); skill-tree undo cost/refund and requirement checks fixed; reward buttons fully reset on pooling; crash-level fixes (level system, `PoolPreSetup` on unlimited mode)
+
 ## [v0.2.19] - 2026-08-29
 
 ### Added

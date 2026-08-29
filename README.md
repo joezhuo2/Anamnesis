@@ -19,7 +19,7 @@ Anamnesis is a top-down, wave-based action game currently in active development.
 
 At the start of each run you pick a **gamemode**: **Regular** waves follow the standard escalating sequence, while **Unlimited** waves scale infinitely with faster spawns, periodic boss waves, and endless rewards.
 
-The game is built entirely with **ScriptableObject-driven data** (attacks, status effects, upgrades, skill tree nodes), so most content is data-authored and tuned in the Unity inspector.
+The game is built entirely with **ScriptableObject-driven data** (attacks, status effects, upgrades, skill tree nodes), so most content is data-authored and tuned in the Unity inspector. Under the hood, the combat, stat, resource, and UI systems are **decoupled onto small interfaces** (`IDamageable`, `IResourcePool`, `IStatusEffectReceiver`, `ITooltipDisplay`, and more) so systems compose without hard dependencies on concrete components.
 
 ## Core Loop
 
@@ -103,13 +103,13 @@ Assets/
 │   ├── prefabs/               # UI element prefabs
 │   └── WaveData/              # Wave sequences
 └── scripts/
-    ├── Core/                  # Interfaces (ICurrencyHolder, IDamageable, IUnlockEffect, IUnlockRequirement, IAnnouncer, ISkillPointHolder)
+    ├── Core/                  # Interfaces (ICurrencyHolder, IStatProvider, IDamageable, IResourcePool, IStatusEffectReceiver, ITooltipDisplay, IUnlockEffect, IUnlockRequirement, IAnnouncer, ISkillPointHolder, IOnHitEffect) & DamagePacket
     ├── Entity/                # Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
     ├── Items/                 # Items/Gear system
     ├── Misc/                  # Game Controller (implements IAnnouncer)
-    ├── Projectile/            # Projectiles/Attack data, damage calculator, damage packet
+    ├── Projectile/            # Projectiles/Attack data and the damage calculator
     ├── StatusEffect/          # Status effect system & implementations (DoTs, Stun, Pulled, buffs)
     ├── SkillTree/             # Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
     ├── TextIndicator/         # Floating damage numbers, XP/Gold indicators
