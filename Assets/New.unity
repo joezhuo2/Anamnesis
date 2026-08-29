@@ -18265,7 +18265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f26e69fbb5fd346b604945d488cd12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.EntitySystem.PlayerResourceUI
-  resourceHoverZone: {fileID: 0}
+  resourceHoverZone: {fileID: 2084233291}
 --- !u!224 &2090623861 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 07fa7cd552b75dd4b84071cd8c9fed7e, type: 3}
@@ -18615,6 +18615,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 16536631209803568, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
+      propertyPath: pui
+      value: 
+      objectReference: {fileID: 2084233296}
     - target: {fileID: 16536631209803568, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: xpBar
       value: 

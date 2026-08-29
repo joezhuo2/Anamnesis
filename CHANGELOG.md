@@ -7,6 +7,12 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.2.18_1] - 2026-08-28
+
+## Updated
+- scene assets to use the new files
+- 1 skill node with the new system (to test, it works)
+
 ## ⚠️ [v0.2.18] - 2026-08-28
 
 ### Added
