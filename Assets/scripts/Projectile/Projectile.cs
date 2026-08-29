@@ -186,10 +186,11 @@ namespace CrystalFlux.ProjectileSystem
 
         private void HandleSize()
         {
-            if (!ownerObj.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.aoePct) == 0) return;
+            if (ownerObj == null || pd == null) return;
+            if (!ownerObj.TryGetComponent<IStatProvider>(out var esm)) return;
 
             float sizeMult = pd.size + (esm.GetStat(StatType.aoePct) * 0.01f);
-            transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
+            transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), Vector2.zero);
         }
 
         private void HandleDirection()

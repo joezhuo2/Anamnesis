@@ -2,8 +2,6 @@
 
 ### Bug Fixes
 - re-add phase based buffs using the new system
-- migrate ALL 104 NODES: `SkillNodeDef.statBuffs` to `StatBuffEffect` entries in `unlockEffects` (marked TODO: Remove)
-- `Paradox` grants `globalDoTCanCrit` via `OnUnlock`, which only fires from `PlayerUpgradeManager.AddUpgrade()` — upgrades pre-assigned in the inspector never receive it, and `RemoveUpgrade()` has no teardown so the stat is never revoked. Either seed `OnUnlock` on startup or add symmetric removal
 
 ### High Priority (To be done before 1 minor version)
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)
@@ -11,10 +9,6 @@
 - [ ] Wave 60 boss and enemies, and Boss Rush Extension (v0.4.0 Content Update)
 
 ### Medium Priority (To be done before 2 minor versions)
-- [ ] Rename `EntityStats`/`PlayerStats`/`EnemyStats` from `namespace CrystalFlux.Core` to `.EntitySystem` — they compile into `CrystalFlux.Entity` now, so the namespace is misleading (touches every consumer, so worth its own commit)
-- [ ] Finish the assembly split: give `Items` and `Misc` their own asmdefs so nothing meaningful is left in `Assembly-CSharp`
-- [ ] Extract `Projectile`, `StatusEffect`, `SkillTree`, and `Wave` into their own packages alongside `CrystalFlux-Core` — all four already reference `Core` and nothing else
-- [ ] `Entity` is the last assembly with cross-system references (`Projectile`, `StatusEffect`, `SkillTree`, `TextIndicator`); decide whether it stays the composition root or gets decoupled too
 - [ ] Elite/Champion enemy variants with unique modifiers (extra hp, faster)
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves

@@ -10,4 +10,9 @@ public class Paradox : PlayerUpgrade
         if (player != null && player.TryGetComponent<IStatProvider>(out var isp))
             isp.AddStat(new StatBuff(StatType.globalDoTCanCrit, 1f));
     }
+    public override void OnRemove(GameObject player)
+    {
+        if (player != null && player.TryGetComponent<IStatProvider>(out var isp))
+            isp.AddStat(new StatBuff(StatType.globalDoTCanCrit, -1f));
+    }
 }

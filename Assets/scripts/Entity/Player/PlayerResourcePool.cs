@@ -20,7 +20,11 @@ namespace CrystalFlux.EntitySystem
             if (esm != null) esm.AddStat(new(StatType.CanGainStamina, 1));
         }
 
-        public void Update() => RegenStamina();
+        public void Update()
+        {
+            if (Time.timeScale == 0f) return;
+            RegenStamina();
+        }
 
         public bool TryGain(ResourceType type, float amount)
         {

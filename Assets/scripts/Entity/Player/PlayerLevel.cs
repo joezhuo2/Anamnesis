@@ -30,16 +30,20 @@ namespace CrystalFlux.EntitySystem
 
             esm.AddStat(new(StatType.Xp, xp - esm.GetStat(StatType.Xp)));
 
-            TextIndicatorSpawner.Instance.SpawnTextIndicator(
-                Mathf.RoundToInt(finalAmt),
-                transform.position,
-                Color.magenta,
-                0.7f + UnityEngine.Random.Range(0f, 0.15f),
-                UnityEngine.Random.Range(0.5f, 0.7f),
-                UnityEngine.Random.Range(0.8f, 1.2f),
-                UnityEngine.Random.Range(0f, 0.2f),
-                true
-            );
+            TextIndicatorSpawner tis = TextIndicatorSpawner.Instance;
+            if (tis != null)
+            {
+                tis.SpawnTextIndicator(
+                    Mathf.RoundToInt(finalAmt),
+                    transform.position,
+                    Color.magenta,
+                    0.7f + UnityEngine.Random.Range(0f, 0.15f),
+                    UnityEngine.Random.Range(0.5f, 0.7f),
+                    UnityEngine.Random.Range(0.8f, 1.2f),
+                    UnityEngine.Random.Range(0f, 0.2f),
+                    true
+                );
+            }
         }
 
         private void LevelUp()
@@ -47,7 +51,7 @@ namespace CrystalFlux.EntitySystem
             cLv = Mathf.RoundToInt(esm.GetStat(StatType.Level));
             esm.AddStat(new(StatType.Level, 1));
 
-            GetComponent<ISkillPointHolder>().AddSkillPoints(1);
+            if (TryGetComponent<ISkillPointHolder>(out var sph)) sph.AddSkillPoints(1);
 
             esm.AddStat(new(StatType.maxHp, 3));
             esm.AddStat(new(StatType.attack, 1));

@@ -674,8 +674,10 @@ namespace CrystalFlux.WaveSystem
                 return;
             }
 
-            if (rerolls <= 0 && !cich.TrySpend(rerollGoldCost)) return;
-            else ActiveManager.rerolls--;
+            CachePlayerStatManager();
+            if (rerolls > 0)
+                rerolls--;
+            else if (cich == null || !cich.TrySpend(rerollGoldCost)) return;
 
             UpdateRerollUI();
 
@@ -700,6 +702,9 @@ namespace CrystalFlux.WaveSystem
                 ActiveManager.OnCorruptButtonClicked();
                 return;
             }
+
+            CachePlayerStatManager();
+            if (cpsm == null) return;
 
             foreach (GameObject rb in activeRewardButtons)
             {
@@ -901,6 +906,8 @@ namespace CrystalFlux.WaveSystem
                 StatType.maxMana => StatType.EffMaxMana,
                 _ => type,
             };
+
+            if (cpsm == null) return "";
 
             float before = cpsm.GetStat(effType);
             cpsm.AddStat(new StatBuff(type, finalVal));

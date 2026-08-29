@@ -238,6 +238,7 @@ namespace CrystalFlux.EntitySystem
                 attacks.Remove(current);
                 if (current.IsRuntimeCopy) Destroy(current);
             }
+            lastAttackTimes.Remove(type);
 
             if (spawnedUIElements.ContainsKey(type))
             {
@@ -288,6 +289,8 @@ namespace CrystalFlux.EntitySystem
 
         public static float GetEffCd(AttackData attack, IStatProvider esm)
         {
+            if (attack == null || esm == null) return 0f;
+
             float cdrPct = attack.type switch
             {
                 AttackType.Basic => esm.GetStat(StatType.basicCdRedPct),

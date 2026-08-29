@@ -26,6 +26,11 @@ namespace CrystalFlux.EntitySystem
             }
             Instance = this;
         }
+        private void Start()
+        {
+            foreach (var u in activeUpgrades)
+                if (u != null) u.OnUnlock(gameObject);
+        }
         public bool HasUpgradeOfType<T>() where T : PlayerUpgrade
         {
             for (int i = 0; i < activeUpgrades.Count; i++)
@@ -56,6 +61,7 @@ namespace CrystalFlux.EntitySystem
             if (pu == null || !activeUpgrades.Contains(pu)) return;
             activeUpgrades.Remove(pu);
             lastTriggerTimes.Remove(pu);
+            pu.OnRemove(gameObject);
         }
         public void TriggerUpgrades(PlayerUpgrade.TriggerCondition condition)
         {

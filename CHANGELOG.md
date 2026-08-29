@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.2_1] - 2026-08-29
+
+### Fixed
+- **Overhealing no longer exceeds Max HP** — `EntityHealth.ChangeHealth` computed a clamped `targetChange` but then applied the raw `finalAmount` to `currentHp`, so any heal past full permanently inflated the stat (health bar read `120/100`) and stalled regeneration. The stat is now clamped to `MaxHp` when healing, matching the `PlayerResourcePool` idiom
+- **`Projectile.HandleSize` no longer throws when the owner has no `IStatProvider`** — the condition `!TryGetComponent(...) && esm.GetStat(aoePct)` dereferenced a null `esm` whenever the owner lacked a stat manager, firing an NRE from `Start()` on every such projectile. It now null-guards `ownerObj`/`pd` and early-returns, keeping the base size
+- **`DamagePacketBuilder` no longer throws on projectiles with no `mainAttack`** — `ProjectileData.mainAttack` is optional (e.g. pure `SpawnProjectile` upgrades), but its `.type` was dereferenced unconditionally, crashing the damage pipeline on hit. The attack-type bonus is now computed once and skipped (multiplier `1`) when `mainAttack` is null
+- **Gold reroll no longer decrements token counter** — `WaveManager.OnRerollButtonClicked` spent a reroll token (`rerolls--`) even when the player paid gold (`cich.TrySpend`). Now only decrements when a free token is actually used; also null-guards `cich`/`cpsm` in reroll and corrupt flows
+- **`PlayerUpgrade.chance` tooltip now matches authoring scale** — tooltip read `chance` as 0–1 (`chance*100%`) but trigger used 0–100; now both are 0–100, matching all authored upgrade assets (`Paradox: 0`, `StellarSurge: 20`, `Supersonic: 100`)
+- **Cooldown NRE after attack removed** — `PlayerAttackHandler.RemoveAttack` now clears `lastAttackTimes` for the removed type, and `GetEffCd` null-guards its inputs
+- **Input subscription leaks fixed** — `PlayerInputHandler` and `SkillTreeInputToggle` now unsubscribe individual callbacks in `OnDisable` and dispose `controls` in `OnDestroy`
+- **Pause-safe regen loops** — `PlayerResourcePool.Update`, `PlayerMovement.FixedUpdate`, and `EntityHealth.RegenHp` now early-return when `Time.timeScale == 0f`, matching the project convention followed by other AI/player loops
+- **Decoy upgrade no longer aborts on one bad enemy** — `Decoy.TriggerUpgradeEffect` changed `return` to `continue`; `PlayerLevel` now null-guards `TextIndicatorSpawner.Instance` and `ISkillPointHolder`
+- **`StatReduction` now works on `Eff*` stats** — added missing `Apply` cases in `EntityStats` for `EffAtk`, `EffMaxHp`, `EffHpReg`, `EffStReg`, `EffSpd`, `EffInt`, `EffMaxStamina`, `EffMaxMana`, `EffArmor`, they instead reduce the base stat.
+- **`ArmorRes` now computes physical mitigation** — was a copy-paste of `EffSpd` (move speed); now returns `EffArmor / (EffArmor + 100)` matching `DamageCalculator`
+- **`Paradox.globalDoTCanCrit` wired for inspector upgrades** — added `OnRemove` hook + `Start()` seeding of `OnUnlock` for pre-assigned upgrades; symmetric revocation on removal
+
 ## [v0.3.2] - 2026-08-29 — Core Extracted to a Package, Wave Decoupled
 
 `v0.3.1` enforced the assembly boundaries; this release moves `Core` out of the repo entirely and cuts the last system that still reached across one. `Wave` now compiles against `CrystalFlux.Core` alone, which means every system except `Entity` depends on contracts and nothing else.

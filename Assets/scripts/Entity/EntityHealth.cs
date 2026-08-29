@@ -164,10 +164,9 @@ namespace CrystalFlux.EntitySystem
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnOverkill);
             }
 
-            int newHp = Mathf.Max(0, Math.Min(CurHp + finalAmount, (int)MaxHp));
-            int targetChange = newHp - CurHp;
-            if (targetChange > finalAmount) targetChange = finalAmount;
-            esm.AddStat(new StatBuff(StatType.currentHp, finalAmount));
+            int targetChange = finalAmount;
+            if (targetChange > 0) targetChange = Mathf.Min(targetChange, MaxHp - CurHp);
+            esm.AddStat(new StatBuff(StatType.currentHp, targetChange));
 
             UpdatePhase();
 
@@ -227,6 +226,7 @@ namespace CrystalFlux.EntitySystem
 
         private void RegenHp()
         {
+            if (Time.timeScale == 0f) return;
             if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
             if (CurHp >= (int)MaxHp) return;
 
