@@ -66,6 +66,24 @@
   - Scaling: EffAtk
   - Effect: 100% chance on hit (applies -20% damage resistance)
 
+## Autopilot
+- Type: Additional
+- Cooldown: 0s (upgrade-spawned)
+- Pattern: Single (1 count)
+- Animation: 1s
+- Health: +15 (on hit, based on damage dealt)
+- Stamina: +10 (on hit, based on damage dealt)
+- Projectile:
+  - Speed: 12
+  - Lifetime: 6s
+  - Pierce: 1 (destroys on max pierce)
+  - Size: 2
+  - Damage: 295% Phys
+  - Scaling: EffArmor
+  - Movement: Spiral (spacing 2)
+  - Homing: 1.5 range
+  - Knockback: 8 force
+
 ## Blaze
 - Type: Basic
 - Cooldown: 26s
@@ -470,6 +488,28 @@
   - Additional: 15% chance on hit to create Warp Rift
   - Knockback: 2 force
 
+## Warp (Capstone)
+- Type: Skill
+- Cooldown: 9s
+- Pattern: Circle (2-4 count)
+- Spawn: 0 dist (fixed)
+- Animation: 1s
+- Stamina: -40 +1
+- Mana: -60 -20%
+- Mana: +2 +2%
+- Projectile:
+  - Speed: 1.4
+  - Lifetime: 10s
+  - Pierce: 3000
+  - Size: 3
+  - Damage: 60% Spell
+  - Scaling: EffInt
+  - Time Before Same Enemy: 1.5s
+  - Orbit: radius 1.25, orbits self, CCW
+  - Additional: 25% chance on hit to create Warp Rift
+  - Knockback: 2 force
+- Unlocked by: Warp capstone skill node (requires Warp, 1 skill point)
+
 ## Warp Rift
 - Type: Additional
 - Cooldown: 0s (follow-up)
@@ -557,6 +597,15 @@
 - Advance Type: All
 - Description: Advance all cooldowns by 15% of their cooldown when dashing.
 
+## Autopilot
+- Type: SpawnProjectile
+- Conditions: OnTakeDamage
+- Chance: 100%
+- Cooldown: 3s
+- Delay: 0.25s
+- Projectile: Autopilot projectile
+- Description: Taking damage spawns a projectile that homes in on nearby enemies and heals the player.
+
 ## Decoy
 - Type: Decoy
 - Conditions: OnDash
@@ -606,12 +655,12 @@
 ## Serenade
 - Type: AdditionalDamage
 - Conditions: OnDealDamage
-- Chance: 50%
+- Chance: 40%
 - Cooldown: 0s
 - Delay: 0s
-- Percent Amount: 12%
+- Percent Amount: 24%
 - Damage Type: True
-- Description: 50% chance to deal 12% additional True damage on all damage instances
+- Description: 40% chance to deal 24% additional True damage on all damage instances
 
 ## Soul Rend
 - Type: SoulRendPU

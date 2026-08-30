@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
-using CrystalFlux.StatusEffectSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -116,6 +115,9 @@ namespace CrystalFlux.EntitySystem
 
                 if (i.owner.TryGetComponent<PlayerUpgradeManager>(out var pum) && pum != null)
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTargetRecievedHit);
+
+                if (cpum != null && dmg > 0)
+                    cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeDamage);
 
                 if (i.isCrit)
                 {

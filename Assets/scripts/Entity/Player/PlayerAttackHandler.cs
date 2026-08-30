@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
@@ -60,13 +60,28 @@ namespace CrystalFlux.EntitySystem
             spawnedUIElements.Clear();
         }
 
+        // Runtime copies are Instantiate()d, so their name gains a "(Clone)" suffix (nested clones stack it).
+        // Requirement checks compare against the source asset name, so strip the suffix before comparing.
+        public static string NormalizeAttackName(string n)
+        {
+            if (string.IsNullOrEmpty(n)) return string.Empty;
+            n = n.Trim();
+            while (n.EndsWith("(Clone)", StringComparison.Ordinal))
+                n = n.Substring(0, n.Length - 7).TrimEnd();
+            return n;
+        }
+
         public bool HasAttack(AttackData a)
         {
-            if (a == null || a.name == null) return false;
-            string n = a.name.Trim();
+            if (a == null) return false;
+            string n = NormalizeAttackName(a.name);
+            if (n.Length == 0) return false;
 
             for (int i = 0; i < attacks.Count; i++)
-                if (attacks[i].name.Trim().Equals(n, StringComparison.OrdinalIgnoreCase)) return true;
+            {
+                if (attacks[i] == null) continue;
+                if (NormalizeAttackName(attacks[i].name).Equals(n, StringComparison.OrdinalIgnoreCase)) return true;
+            }
             return false;
         }
 
@@ -214,6 +229,7 @@ namespace CrystalFlux.EntitySystem
             }
 
             AttackData runtimeAttackCopy = Instantiate(newAttack);
+            runtimeAttackCopy.name = NormalizeAttackName(newAttack.name);
             runtimeAttackCopy.type = type;
             runtimeAttackCopy.InitializeRuntimeCopy();
 

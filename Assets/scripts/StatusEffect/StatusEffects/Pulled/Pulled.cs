@@ -12,13 +12,15 @@ namespace CrystalFlux.StatusEffectSystem
         [Tooltip("Distance at which pull reaches full speed")] public float fullSpeedRadius = 5f;
         [Tooltip("Minimum distance before stopping pull")] public float deadZone = 0.1f;
         [Tooltip("Disable entity movement while pulled")] public bool disableMovement = false;
+        public bool pullToSource = false;
 
         [HideInInspector] public Vector2 pullCenter;
         private bool wasMovementDisabled;
 
         public override void OnApply()
         {
-            if (location != Vector2.zero) pullCenter = location;
+            if (pullToSource && source != null) pullCenter = source.transform.position;
+            else if (location != Vector2.zero) pullCenter = location;
             else if (source != null) pullCenter = source.transform.position;
 
             if (disableMovement && target != null && target.TryGetComponent<IStatProvider>(out var esm))

@@ -74,7 +74,7 @@ namespace CrystalFlux.WaveSystem
             };
             descriptionText.text = string.Join("\n", descLines);
 
-            borderHighlight.color = Color.darkRed;
+            borderHighlight.color = corruptMult < 0f ? Color.darkRed : Color.darkGreen;
 
             isCorrupted = true;
 

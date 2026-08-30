@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CrystalFlux.Core;
 using UnityEngine;
 
@@ -14,8 +14,11 @@ namespace CrystalFlux.ProjectileSystem
         [Header("Basic")]
         public AttackData mainAttack;
         public float lifetime;
-        public int numPierce = 1;
         public float size = 1f;
+
+        [Header("Piercing")]
+        public int numPierce = 1;
+        public bool destroyOnMaxPierce = false;
 
         [Header("Movement")]
         [Tooltip("Overrides the straight-line movement along the direction the spawner's pattern assigns. Default = follow that pattern direction. A non-Default type authored on the projectile prefab also survives an attack swapping in its own ProjectileData")]
@@ -49,6 +52,7 @@ namespace CrystalFlux.ProjectileSystem
         public float angleOverride;
         public bool useTrueAngle;
         public bool bypassIFrames;
+        [Tooltip("If true, the projectile travels in a random direction instead of its spawn/aim direction")]
         public bool randomDir;
 
         [Header("Additional Attacks")]

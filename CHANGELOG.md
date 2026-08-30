@@ -7,6 +7,36 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.3_2] - 2026-08-30
+
+### Added
+- **Autopilot** — new treasure-pool Awakening (`PlayerUpgrade/Autopilot.asset`, a `SpawnProjectile` upgrade) that fires a homing projectile when the player takes damage. 100% chance, 3s cooldown, 0.25s delay. The projectile spirals outward at speed 12 (`spiralSpacing` 2), lives 6s, is size 2, pierces once and then destroys itself, homes onto targets within 1.5, deals 295% Physical scaling off `EffArmor`, and knocks back with 8 force. Its `AttackData` returns 15 health and 10 stamina on hit (both `basedOnDmgDealt`), so the upgrade doubles as armor-build sustain. Registered in the `treasurePool` of both the regular and the Unlimited reward manager in `New.unity`, with its own prefab, controller, clip and `Bullet 24x24 Part 9A Free` sprite sheet under `Attacks/Treasure Pool/Autopilot/`
+- **Warp capstone skill node** — `SkillTreeNodes/_Capstone/Node_warp.asset` (+ node prefab, placed in `New.unity` under the skill tree canvas at `(-359.3, 293.3)`) is the first *capstone* node: it requires the player to already own **Warp** (`NodeRequirement.requiredAttacks`), hangs off `Node_mm3` as its prerequisite, costs 1 skill point / 50g to refund, and its `UnlockEffect` swaps the owned attack for the upgraded **Warp AA**. Added to `SkillTreeDefinition.asset`, bringing the tree to 105 nodes
+- **Warp AA** — upgraded Warp attack set under `Attacks/SkillTree/Warp/` (own prefab, controller, clip, `AttackData`, `ProjectileData`). Against base Warp: projectile speed `0.8` → `1.4`, size `2` → `3`, Warp Rift proc chance `15%` → `25%`, and, as the trade-off the node description promises, stamina cost `15` → `40` and mana cost `50 / 15%` → `60 / 20%`. On-hit returns shift from `+3` mana to `+1` stamina and `+2 / +2%` mana
+- **`destroyOnMaxPierce` on `ProjectileData`** — when set, a projectile that has spent its pierce budget destroys itself on its next trigger contact instead of lingering as an inert collider for the rest of its lifetime. `numPierce` moved out of `Basic` into a new `Piercing` header alongside it
+- **`pullToSource` on `Pulled`** — forces the pull center onto the source's transform even when the effect was authored with an explicit `location`. Previously `location` always won and the source was only the fallback
+- **`PlayerAttackHandler.NormalizeAttackName(string)`** — public static helper that trims and strips stacked `(Clone)` suffixes off an attack name
+
+### Changed
+- **`randomDir` now randomizes travel, not just facing** — `Projectile.HandleDirection` folded the random angle into `finalAngle`, which only set `transform.rotation`; `dir` kept the spawn/aim direction, so a "random direction" projectile flew straight at the target while pointing elsewhere. The random branch now runs first, derives `dir` from the rolled angle, applies `rotationOffset` to the rotation, and returns early
+- **Corrupted rewards colour by sign** — `RewardButton.CorruptButton` picks `Color.darkGreen` when `corruptMult >= 0` and `Color.darkRed` otherwise (was unconditionally dark red, even for beneficial corruptions)
+- **Serenade** — `pctAmt` `16` → `24` (additional True damage per proc; chance stays 40%)
+- **Aphelion resprite** — sprite sheet swapped from `Bullet 24x24 Part 9B Free` to `Bullet 24x24 Part 5B Free` (the 9B sheet is deleted). `Aphelion Clip` retimed across its 8 frames, stop time `0.51666665` → `0.76666665`, and the prefab's sprite draw size `0.24 × 0.24` → `0.2 × 0.21`
+- **Starting attacks moved to `Assets/data/PlayerData/Attacks/Base/`** — `Cyclone Cleave` and `Lacerate` relocated wholesale (assets byte-identical, GUIDs preserved), separating starting kit from the reward pools
+- **Skill-tree rejection message no longer leaks internals** — `PlayerSkillTree` returns `Requirement not met` instead of `Requirement not met: {req.GetType().Name}`
+- **Player prefab instance in `New.unity`** carries an `activeUpgrades` override with Autopilot in slot 0 and array size `0` — the reference is wired but the array is empty, so nothing is granted at runtime (editor test wiring)
+- `graphify-out/` regenerated against the current source
+- **`TODO.md` Content Updates split into `Major` / `Minor`** — gear, shop/chest, and the elemental damage / affinity / reaction line items grouped under `Major` alongside a new **Finish Gear/Item system** entry; the rest stay under `Minor`. The standalone Rune/Enchantment item is dropped (folded into the gear work). Docs also record the first capstone node against the Pre-v0.4.0 capstone checklist item
+
+### Fixed
+- **`OnTakeDamage` upgrade trigger never fired** — the `PlayerUpgrade.TriggerCondition` member existed but no system raised it, so any upgrade authored against it was inert. `EntityHealth.TakeDamage` now triggers it on the victim's own `PlayerUpgradeManager` whenever the resolved damage is positive. Autopilot is the first upgrade to use it
+- **`HasAttack` missed runtime copies** — equipped attacks are `Instantiate`d, so their names carry a `(Clone)` suffix (nested clones stack it) while requirement checks compare against the source asset name; the comparison only trimmed whitespace, so a node gated on an owned attack (such as the new Warp capstone) could never match. Both sides now go through `NormalizeAttackName`, null entries in the list are skipped, and `UpdateAttack` writes the normalized name onto the runtime copy it creates
+
+### Removed
+- **`statBuffs` from `SkillNodeDef`** — the legacy `List<StatBuff>` field marked `// TODO: Remove`, superseded by `[SerializeReference] unlockEffects`
+- Unused `using CrystalFlux.StatusEffectSystem;` in `EntityHealth` and `using CrystalFlux.ProjectileSystem;` in `PlayerUpgradeManager`
+- Stale comment in `Projectile` describing the prefab-movement override that the code below it already documents
+
 ## [v0.3.3_1] - 2026-08-30
 
 ### Added

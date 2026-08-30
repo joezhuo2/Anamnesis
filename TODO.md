@@ -5,7 +5,7 @@
 - [ ] map borders
 - [ ] Tilemaps
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)
-- [ ] skill tree 'capstone' nodes - upgrading existing Awakenings/Attacks (currently none) and/or introducing new ones
+- [ ] skill tree 'capstone' nodes - upgrading existing Awakenings/Attacks (Warp done) and/or introducing new ones
 - [ ] Wave 60 boss and enemies, and Boss Rush Extension
 - [ ] Pause menu with resume/restart/home/quit, settings/controls menu
 
@@ -25,24 +25,27 @@
 - [ ] Difficulty selector
 
 # Content Updates
+### Major
+- [ ] Finish Gear/Item system
+- [ ] Chests or loot drops from elites/bosses with guaranteed rare rewards
+- [ ] Shop/merchant between waves to spend currency on items or stat boosts
+- [ ] Elemental Damage/Defense system
+- [ ] Elemental affinities/weaknesses
+- [ ] Elemental reactions
+- [ ] Crafting/enchanting system for gear
+- [ ] Set bonuses for equipping matching gear pieces
+
+## Minor
 - [ ] portals
 - [ ] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
 - [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
 - [ ] More status effects (lifesteal, thorns)
 - [ ] Combo/synergy bonuses for stacking related rewards 
-- [ ] Chests or loot drops from elites/bosses with guaranteed rare rewards
-- [ ] Shop/merchant between waves to spend currency on items or stat boosts
 - [ ] Passive stat synergies between different build types (e.g. armor scaling with hp) (player upgrades)
-- [ ] Elemental Damage/Defense system
-- [ ] Crafting/enchanting system for gear
-- [ ] Set bonuses for equipping matching gear pieces
-- [ ] Elemental affinities/weaknesses
 - [ ] Consumables (potions, bombs, temporary buffs) with hotkeys
 - [ ] Environmental hazards on maps (spikes, lava, traps)
 - [ ] Alternate movement options
-- [ ] Rune/Enchantment system — socketable modifiers that attach to attacks or upgrades
 - [ ] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses
-- [ ] Elemental reactions
 - [ ] Daily/weekly challenge modifiers with seeded runs
 
 # QoL Updates

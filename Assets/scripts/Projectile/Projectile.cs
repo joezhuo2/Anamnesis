@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using UnityEngine;
@@ -43,8 +43,6 @@ namespace CrystalFlux.ProjectileSystem
         private float prefabWaveFreq;
         private float prefabSpiralSpacing;
 
-        // Movement authored on the prefab's own ProjectileData wins over the straight-line default the
-        // spawner's pattern imposes through dir. MovementType.Default means "accept the pattern default".
         private bool UsePrefabMove => prefabMoveType != MovementType.Default;
         private MovementType MoveType => UsePrefabMove ? prefabMoveType : pd.movementType;
         private float WaveAmp => UsePrefabMove ? prefabWaveAmp : pd.waveAmplitude;
@@ -111,6 +109,7 @@ namespace CrystalFlux.ProjectileSystem
         private void FixedUpdate() => HandleMovement(false);
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (pierced >= pd.numPierce && pd.destroyOnMaxPierce) Destroy(gameObject);
             if (pierced >= pd.numPierce) return;
             if (hit.Contains(other.gameObject)) return;
 
@@ -225,6 +224,14 @@ namespace CrystalFlux.ProjectileSystem
         {
             if (ownerObj == null || pd == null) return;
 
+            if (pd.randomDir)
+            {
+                float randAngle = Random.Range(0f, 360f);
+                dir = new Vector2(Mathf.Cos(randAngle * Mathf.Deg2Rad), Mathf.Sin(randAngle * Mathf.Deg2Rad));
+                transform.rotation = Quaternion.Euler(0f, 0f, randAngle + pd.rotationOffset);
+                return;
+            }
+
             if (ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1 && dir == Vector2.zero)
             {
                 Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(InputState.mousePos);
@@ -235,7 +242,7 @@ namespace CrystalFlux.ProjectileSystem
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             Vector2 trueAngle = new(Mathf.Cos(pd.angleOverride * Mathf.Deg2Rad), Mathf.Sin(pd.angleOverride * Mathf.Deg2Rad));
-            float finalAngle = pd.randomDir ? Random.Range(0f, 360f) : pd.useTrueAngle ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
+            float finalAngle = pd.useTrueAngle ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
             transform.rotation = Quaternion.Euler(0f, 0f, finalAngle);
         }
 

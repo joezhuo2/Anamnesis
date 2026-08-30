@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives under **Pre [v0.4.0]**.
 
 ### Pre [v0.4.0]
+- [v0.3.3_2] **Capstone skill nodes**: first capstone node (Warp) — a node gated on owning an attack that swaps it for an upgraded variant; plus the Autopilot Awakening and a working `OnTakeDamage` upgrade trigger
 - [v0.3.3] **Projectile movement patterns**: `MovementType` (`Wave` / `Spiral`) on `ProjectileData` giving projectiles authored flight paths that coexist with homing, plus five screen-wide converging-line spawn patterns (`TopDown`, `LeftRight`, `Diagonal`, `DiagonalReverse`, `FullX`)
 - [v0.3.2] **Core as a package**: `Assets/scripts/Core` extracted to [joezhuo2/CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core), imported by Unity from its git URL; `Wave` decoupled onto `Core` alone via `IBossBar`, `EnemySpawning`, `PlayerEvents`, and the `GetTooltipLines` hooks
 

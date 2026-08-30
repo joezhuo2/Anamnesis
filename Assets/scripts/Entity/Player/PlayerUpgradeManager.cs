@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 using CrystalFlux.Core;
 
