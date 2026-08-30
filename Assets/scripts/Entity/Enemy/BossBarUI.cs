@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class BossBarUI : MonoBehaviour
+    public class BossBarUI : MonoBehaviour, IBossBar
     {
         public TextMeshProUGUI bossNameText;
         public TextMeshProUGUI bossHPText;

@@ -1,5 +1,5 @@
-using CrystalFlux.ProjectileSystem;
 using UnityEngine;
+using CrystalFlux.Core;
 
 namespace CrystalFlux.StatusEffectSystem
 {

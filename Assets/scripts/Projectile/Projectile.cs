@@ -1,8 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
-using CrystalFlux.EntitySystem;
-using CrystalFlux.StatusEffectSystem;
 using UnityEngine;
 
 namespace CrystalFlux.ProjectileSystem
@@ -35,11 +33,37 @@ namespace CrystalFlux.ProjectileSystem
         private bool orbitCancelled;
         private bool canTriggerAdd;
         private Rigidbody2D sourceRb;
+        private Vector2 patternOrigin;
+        private float patternTime;
+        private float patternBaseAngle;
+        private float spiralTheta;
+        private bool patternSuspended;
+        private MovementType prefabMoveType;
+        private float prefabWaveAmp;
+        private float prefabWaveFreq;
+        private float prefabSpiralSpacing;
+
+        private bool UsePrefabMove => prefabMoveType != MovementType.Default;
+        private MovementType MoveType => UsePrefabMove ? prefabMoveType : pd.movementType;
+        private float WaveAmp => UsePrefabMove ? prefabWaveAmp : pd.waveAmplitude;
+        private float WaveFreq => UsePrefabMove ? prefabWaveFreq : pd.waveFrequency;
+        private float SpiralSpacing => UsePrefabMove ? prefabSpiralSpacing : pd.spiralSpacing;
 
         private void Awake()
         {
             hit = new();
             canTriggerAdd = true;
+            CachePrefabMovement();
+        }
+
+        private void CachePrefabMovement()
+        {
+            if (pd == null) { prefabMoveType = MovementType.Default; return; }
+
+            prefabMoveType = pd.movementType;
+            prefabWaveAmp = pd.waveAmplitude;
+            prefabWaveFreq = pd.waveFrequency;
+            prefabSpiralSpacing = pd.spiralSpacing;
         }
 
         private void OnDestroy()
@@ -85,6 +109,7 @@ namespace CrystalFlux.ProjectileSystem
         private void FixedUpdate() => HandleMovement(false);
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (pierced >= pd.numPierce && pd.destroyOnMaxPierce) Destroy(gameObject);
             if (pierced >= pd.numPierce) return;
             if (hit.Contains(other.gameObject)) return;
 
@@ -188,15 +213,24 @@ namespace CrystalFlux.ProjectileSystem
 
         private void HandleSize()
         {
-            if (!ownerObj.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.aoePct) == 0) return;
+            if (ownerObj == null || pd == null) return;
+            if (!ownerObj.TryGetComponent<IStatProvider>(out var esm)) return;
 
             float sizeMult = pd.size + (esm.GetStat(StatType.aoePct) * 0.01f);
-            transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), new Vector2(0, 0));
+            transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), Vector2.zero);
         }
 
         private void HandleDirection()
         {
             if (ownerObj == null || pd == null) return;
+
+            if (pd.randomDir)
+            {
+                float randAngle = Random.Range(0f, 360f);
+                dir = new Vector2(Mathf.Cos(randAngle * Mathf.Deg2Rad), Mathf.Sin(randAngle * Mathf.Deg2Rad));
+                transform.rotation = Quaternion.Euler(0f, 0f, randAngle + pd.rotationOffset);
+                return;
+            }
 
             if (ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1 && dir == Vector2.zero)
             {
@@ -208,7 +242,7 @@ namespace CrystalFlux.ProjectileSystem
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             Vector2 trueAngle = new(Mathf.Cos(pd.angleOverride * Mathf.Deg2Rad), Mathf.Sin(pd.angleOverride * Mathf.Deg2Rad));
-            float finalAngle = pd.randomDir ? Random.Range(0f, 360f) : pd.useTrueAngle ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
+            float finalAngle = pd.useTrueAngle ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
             transform.rotation = Quaternion.Euler(0f, 0f, finalAngle);
         }
 
@@ -219,13 +253,13 @@ namespace CrystalFlux.ProjectileSystem
                 boomerangActive = true;
                 boomerangReturning = false;
                 boomerangSpeed = effSpd;
-                boomerangDecel = (effSpd * effSpd) / (2f * pd.maxBoomerangDist);
+                boomerangDecel = effSpd * effSpd / (2f * pd.maxBoomerangDist);
             }
         }
 
         private void HandleMovement(bool start)
         {
-            if (rb == null || ownerObj == null) return;
+            if (rb == null || ownerObj == null || pd == null) return;
 
             if (pd.followSource)
             {
@@ -235,6 +269,12 @@ namespace CrystalFlux.ProjectileSystem
 
             if (effSpd <= 0) return;
 
+            if (MoveType != MovementType.Default)
+            {
+                HandlePatternMovement(start);
+                return;
+            }
+
             if (pd.orbitRadius > 0 && !orbitCancelled)
             {
                 HandleOrbitMovement();
@@ -243,23 +283,24 @@ namespace CrystalFlux.ProjectileSystem
 
             if (start) rb.linearVelocity = dir.normalized * effSpd;
 
-            if (pd.followDistance > 0)
-            {
-                if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
-                {
-                bool searchForPlayer = ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 0;
-                    followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
-                }
-
-                if (followTarget != null)
-                {
-                    boomerangActive = false;
-                    FollowTarget();
-                    return;
-                }
-            }
+            if (pd.followDistance > 0 && TryHome()) return;
 
             if (boomerangActive) UpdateBoomerang();
+        }
+
+        private bool TryHome()
+        {
+            if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
+            {
+                bool searchForPlayer = ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 0;
+                followTarget = FindClosestTargetInRange(pd.followDistance, searchForPlayer);
+            }
+
+            if (followTarget == null) return false;
+
+            boomerangActive = false;
+            FollowTarget();
+            return true;
         }
 
         private void HandleFollowSourceMovement()
@@ -272,6 +313,67 @@ namespace CrystalFlux.ProjectileSystem
             }
 
             rb.linearVelocity = sourceRb.linearVelocity;
+        }
+
+        private void HandlePatternMovement(bool start)
+        {
+            if (start)
+            {
+                ResetPattern();
+                return;
+            }
+
+            if (pd.followDistance > 0 && TryHome())
+            {
+                patternSuspended = true;
+                return;
+            }
+
+            if (patternSuspended)
+            {
+                patternSuspended = false;
+                if (rb.linearVelocity.sqrMagnitude > 0.0001f) dir = rb.linearVelocity.normalized;
+                ResetPattern();
+            }
+
+            float dt = Time.fixedDeltaTime;
+            if (dt <= 0f) return;
+
+            patternTime += dt;
+
+            Vector2 target = MoveType == MovementType.Wave ? GetWavePosition() : GetSpiralPosition(dt);
+            rb.linearVelocity = (target - (Vector2)transform.position) / dt;
+        }
+
+        private void ResetPattern()
+        {
+            patternOrigin = transform.position;
+            patternTime = 0f;
+            spiralTheta = 0f;
+            patternSuspended = false;
+            patternBaseAngle = dir != Vector2.zero ? Mathf.Atan2(dir.y, dir.x) : 0f;
+        }
+
+        private Vector2 GetWavePosition()
+        {
+            Vector2 fwd = dir.normalized;
+            Vector2 perp = Vector2.Perpendicular(fwd);
+            float offset = WaveAmp * Mathf.Sin(2f * Mathf.PI * WaveFreq * patternTime);
+
+            return patternOrigin + (fwd * (effSpd * patternTime)) + (perp * offset);
+        }
+
+        private Vector2 GetSpiralPosition(float dt)
+        {
+            float b = Mathf.Max(SpiralSpacing, 0.01f) / (2f * Mathf.PI);
+            float r = b * spiralTheta;
+
+            spiralTheta += effSpd * dt / Mathf.Sqrt((r * r) + (b * b));
+
+            float sign = pd.rotateClockwise ? -1f : 1f;
+            float angle = patternBaseAngle + (sign * spiralTheta);
+
+            return patternOrigin + (new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * (b * spiralTheta));
         }
 
         private void UpdateBoomerang()
@@ -424,6 +526,7 @@ namespace CrystalFlux.ProjectileSystem
             orbitCancelled = true;
             orbitTarget = null;
             dir = direction.normalized;
+            if (pd != null && MoveType != MovementType.Default) ResetPattern();
             if (rb != null) rb.linearVelocity = dir * effSpd;
         }
 

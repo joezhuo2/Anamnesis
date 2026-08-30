@@ -43,6 +43,8 @@ namespace CrystalFlux.EntitySystem
 
         private void FixedUpdate()
         {
+            if (Time.timeScale == 0f) return;
+
             if (esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanMove) <= 0f)
             {
                 rb.linearVelocity = Vector2.zero;

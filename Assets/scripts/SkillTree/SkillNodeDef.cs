@@ -20,7 +20,6 @@ namespace CrystalFlux.SkillTree
         [SerializeReference, TypeSelector] public List<IUnlockRequirement> requirements;
 
         [Header("Upgrades")]
-        public List<StatBuff> statBuffs; // TODO: Remove
         [SerializeReference, TypeSelector] public List<IUnlockEffect> unlockEffects;
 
         [Header("Costs")]

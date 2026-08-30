@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
-using CrystalFlux.StatusEffectSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ namespace CrystalFlux.EntitySystem
 {
     public class EntityHealth : MonoBehaviour, IDamageable
     {
-        public static event Action<EntityHealth> OnPlayerTakeDamage;
+
 
         public event Action<GameObject> OnDeath;
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
@@ -117,6 +116,12 @@ namespace CrystalFlux.EntitySystem
                 if (i.owner.TryGetComponent<PlayerUpgradeManager>(out var pum) && pum != null)
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTargetRecievedHit);
 
+                if (cpum != null && dmg > 0)
+                    cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeDamage);
+
+                if (cpum != null && dmg > 0 && IsEnemyHit(dp, i))
+                    cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeHit);
+
                 if (i.isCrit)
                 {
                     if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit);
@@ -131,6 +136,9 @@ namespace CrystalFlux.EntitySystem
                     if (dp.source.TryGetComponent<PlayerLevel>(out var pl))
                         pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
                     DropGold(dp.source);
+
+                    if (dp.source != null && dp.source != gameObject && dp.source.TryGetComponent<PlayerUpgradeManager>(out var killPum))
+                        killPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnKill);
                 }
 
                 if (!_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
@@ -141,7 +149,18 @@ namespace CrystalFlux.EntitySystem
                 }
             }
 
-            if (cpum != null) OnPlayerTakeDamage?.Invoke(this);
+            if (cpum != null) PlayerEvents.RaisePlayerTakeDamage(this);
+        }
+
+        private bool IsEnemyHit(DamagePacket dp, DamageInstance i)
+        {
+            if (dp.bypassIFrames) return false;
+            if (i.type != DamageType.Physical && i.type != DamageType.Spell && i.type != DamageType.True) return false;
+            if (i.owner == null || i.owner == gameObject) return false;
+
+            int ownTeam = TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
+            int atkTeam = i.owner.TryGetComponent<ITeamMember>(out var oitm) ? oitm.TeamID : 0;
+            return ownTeam != atkTeam;
         }
 
         public bool ChangeHealth(float amount, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
@@ -164,10 +183,9 @@ namespace CrystalFlux.EntitySystem
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnOverkill);
             }
 
-            int newHp = Mathf.Max(0, Math.Min(CurHp + finalAmount, (int)MaxHp));
-            int targetChange = newHp - CurHp;
-            if (targetChange > finalAmount) targetChange = finalAmount;
-            esm.AddStat(new StatBuff(StatType.currentHp, finalAmount));
+            int targetChange = finalAmount;
+            if (targetChange > 0) targetChange = Mathf.Min(targetChange, MaxHp - CurHp);
+            esm.AddStat(new StatBuff(StatType.currentHp, targetChange));
 
             UpdatePhase();
 
@@ -227,6 +245,7 @@ namespace CrystalFlux.EntitySystem
 
         private void RegenHp()
         {
+            if (Time.timeScale == 0f) return;
             if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
             if (CurHp >= (int)MaxHp) return;
 
@@ -255,6 +274,8 @@ namespace CrystalFlux.EntitySystem
         private void StartDeathSequence()
         {
             esm.AddStat(new StatBuff(StatType.isAlive, -1));
+
+            if (cpum != null) cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDeath);
 
             OnDeath?.Invoke(gameObject);
 

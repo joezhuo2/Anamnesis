@@ -7,20 +7,27 @@ namespace CrystalFlux.EntitySystem
     public class PlayerResourcePool : MonoBehaviour, IResourcePool
     {
         private IStatProvider esm;
+        private PlayerUpgradeManager pum;
         private float regenTimer = 0f;
         private readonly float ri = 0.2f;
         private readonly float frf = 5f;
         private float accumaltedRegen = 0f;
+        private bool isTriggeringOnManaRegen;
 
         private void Start()
         {
             esm = GetComponent<IStatProvider>();
+            pum = GetComponent<PlayerUpgradeManager>();
 
             if (esm != null) esm.AddStat(new(StatType.CanGainMana, 1));
             if (esm != null) esm.AddStat(new(StatType.CanGainStamina, 1));
         }
 
-        public void Update() => RegenStamina();
+        public void Update()
+        {
+            if (Time.timeScale == 0f) return;
+            RegenStamina();
+        }
 
         public bool TryGain(ResourceType type, float amount)
         {
@@ -59,6 +66,14 @@ namespace CrystalFlux.EntitySystem
             if (amount > 0) targetChange = Mathf.RoundToInt(targetChange * (1f + (esm.GetStat(StatType.manaGainPct) * 0.01f)));
 
             esm.AddStat(new(StatType.CurrentMana, targetChange));
+
+            if (pum != null && amount > 0f && targetChange > 0 && !isTriggeringOnManaRegen)
+            {
+                isTriggeringOnManaRegen = true;
+                pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnManaRegen);
+                isTriggeringOnManaRegen = false;
+            }
+
             return true;
         }
 
@@ -97,6 +112,8 @@ namespace CrystalFlux.EntitySystem
                     int intRegen = Mathf.FloorToInt(accumaltedRegen);
                     accumaltedRegen -= intRegen;
                     TryGain(ResourceType.Stamina, intRegen);
+
+                    if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnStaminaRegen);
                 }
                 regenTimer -= ri;
             }

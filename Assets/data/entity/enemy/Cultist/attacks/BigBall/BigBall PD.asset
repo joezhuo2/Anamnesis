@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: BigBall PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 47a3fbab105cdc94880bd388d1ccc6d1, type: 2}
-  speed: 1.5
-  lifetime: 6
+  lifetime: 12
   numPierce: 3000
   size: 8
+  movementType: 2
+  speed: 5
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 2
   physicalMult: 0
   spellMult: 0.35
   trueMult: 0

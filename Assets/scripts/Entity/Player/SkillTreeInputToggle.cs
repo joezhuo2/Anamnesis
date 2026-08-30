@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CrystalFlux.SkillTree
 {
@@ -11,10 +12,17 @@ namespace CrystalFlux.SkillTree
         private void OnEnable()
         {
             controls.UI.Enable();
-            controls.UI.ToggleSkillTree.performed += _ => ToggleSkillTree();
+            controls.UI.ToggleSkillTree.performed += OnToggleSkillTree;
         }
 
-        private void OnDisable() => controls.UI.Disable();
+        private void OnDisable()
+        {
+            controls.UI.ToggleSkillTree.performed -= OnToggleSkillTree;
+            controls.UI.Disable();
+        }
+        private void OnDestroy() => controls?.Dispose();
+
+        private void OnToggleSkillTree(InputAction.CallbackContext ctx) => ToggleSkillTree();
 
         private void ToggleSkillTree()
         {

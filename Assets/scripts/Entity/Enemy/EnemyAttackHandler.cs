@@ -104,7 +104,7 @@ namespace CrystalFlux.EntitySystem
 
         private System.Collections.IEnumerator PerformAttack(AttackData attack, int index)
         {
-            if (esm.GetStat(StatType.CanAttack) <= 0f || esm.GetStat(StatType.isAlive) <= 0f) yield return null;
+            if (esm.GetStat(StatType.CanAttack) <= 0f || esm.GetStat(StatType.isAlive) <= 0f) yield break;
 
             float attackStartTime = Time.time;
 

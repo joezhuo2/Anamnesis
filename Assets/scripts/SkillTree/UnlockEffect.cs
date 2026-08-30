@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using CrystalFlux.Core;
 using System;
 using UnityEngine;
-using CrystalFlux.ProjectileSystem;
-using CrystalFlux.EntitySystem;
 using UnityEngine.Scripting.APIUpdating;
 
 namespace CrystalFlux.SkillTree

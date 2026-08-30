@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using CrystalFlux.UISystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using CrystalFlux.Core;
 
 namespace CrystalFlux.WaveSystem
 {
@@ -74,7 +74,7 @@ namespace CrystalFlux.WaveSystem
             };
             descriptionText.text = string.Join("\n", descLines);
 
-            borderHighlight.color = Color.darkRed;
+            borderHighlight.color = corruptMult < 0f ? Color.darkRed : Color.darkGreen;
 
             isCorrupted = true;
 
@@ -227,35 +227,8 @@ namespace CrystalFlux.WaveSystem
             if (ar == null || ar.newAttack == null) return ("", "", Vector2.zero);
 
             var attack = ar.newAttack;
-            List<string> lines = new() { $"Type: {attack.type} ({attack.pattern})" };
-            if (attack.cooldown > 0f) lines.Add($"Cooldown: {attack.cooldown:F1}s");
-
-            if (attack.staminaCost > 0f || attack.staminaCostPct > 0f) lines.Add($"Stamina Cost: {attack.staminaCost:F0} +{attack.staminaCostPct:F1}%");
-            if (attack.manaCost > 0f || attack.manaCostPct > 0f) lines.Add($"Mana Cost: {attack.manaCost:F0} +{attack.manaCostPct:F1}%");
-            if (attack.healthCost > 0f || attack.healthCostPct > 0f) lines.Add($"Health Cost: {attack.healthCost:F0} +{attack.healthCostPct:F1}%");
-
-            if (attack.healthGainOnHit > 0f || attack.healthPctGainOnHit > 0f) lines.Add($"Health Gain: {attack.healthGainOnHit:F0} +{attack.healthPctGainOnHit:F1}%");
-            if (attack.staminaGainOnHit > 0f || attack.staminaPctGainOnHit > 0f) lines.Add($"Stamina Gain: {attack.staminaGainOnHit:F0} +{attack.staminaPctGainOnHit:F1}%");
-            if (attack.manaGainOnHit > 0f || attack.manaPctGainOnHit > 0f) lines.Add($"Mana Gain: {attack.manaGainOnHit:F0} +{attack.manaPctGainOnHit:F1}%");
-
-            if (attack.explodeOrbits) lines.Add($"Explodes all orbiting projectiles");
-            if (attack.fireOrbits) lines.Add($"Fires all orbiting projectiles");
-            if (attack.absorbOrbitPct > 0f) lines.Add($"Absorbs all orbiting projectiles ({attack.absorbOrbitPct:F1}% stat returns)");
-            if (attack.redirectOrbits && attack.redirectCount > 0) lines.Add($"Redirects {attack.redirectCount} orbiting projectiles to nearest enemy");
-
-            if (attack.pd != null)
-            {
-                List<string> dmgTypes = new();
-                if (attack.pd.speed > 0f) lines.Add($"Speed: {attack.pd.speed:F1}");
-                if (attack.pd.physicalMult > 0f) dmgTypes.Add($"{attack.pd.physicalMult:F0}P");
-                if (attack.pd.spellMult > 0f) dmgTypes.Add($"{attack.pd.spellMult:F0}S");
-                if (attack.pd.trueMult > 0f) dmgTypes.Add($"{attack.pd.trueMult:F0}T");
-                if (dmgTypes.Count > 0) lines.Add($"Damage: {string.Join(" ", dmgTypes)}");
-                if (attack.pd.followDistance > 0f) lines.Add($"Homing Distance: {attack.pd.followDistance:F1}");
-                if (attack.pd.maxBoomerangDist > 0f) lines.Add($"Boomerang Distance: {attack.pd.maxBoomerangDist:F1}");
-                if (attack.pd.orbitSelf) lines.Add($"Orbits Owner at a radius of {attack.pd.orbitRadius:F1}-{attack.pd.orbitRadius + attack.pd.randOrbRadOffset:F1}");
-                if (attack.pd.kbForce > 0f) lines.Add($"Knockback: {attack.pd.kbForce:F1} for {attack.pd.knockbackTime:F2}s");
-            }
+            List<string> lines = new();
+            attack.GetTooltipLines(lines);
 
             return (ar.attackName, string.Join("\n", lines), new(100, -100));
         }
@@ -269,10 +242,7 @@ namespace CrystalFlux.WaveSystem
 
             if (!string.IsNullOrEmpty(pur.desc)) lines.Add(pur.desc);
 
-            lines.Add($"Trigger: {string.Join(", ", upgrade.conditions)}");
-            if (upgrade.chance < 1f) lines.Add($"Chance: {upgrade.chance * 100:F0}%");
-            if (upgrade.cooldown > 0f) lines.Add($"Cooldown: {upgrade.cooldown:F1}s");
-            if (upgrade.delay > 0f) lines.Add($"Delay: {upgrade.delay:F1}s");
+            upgrade.GetTooltipLines(lines);
 
             return (pur.upgradeName, string.Join("\n", lines), new(100, -100));
         }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
-using CrystalFlux.EntitySystem;
 using UnityEngine;
 
 namespace CrystalFlux.ProjectileSystem
@@ -146,6 +145,38 @@ namespace CrystalFlux.ProjectileSystem
             if (!isRuntimeCopy) return;
             if (pd != null) Destroy(pd);
             if (nextAttack != null) Destroy(nextAttack);
+        }
+        public override void GetTooltipLines(List<string> lines)
+        {
+            lines.Add($"Type: {type} ({pattern})");
+            if (cooldown > 0f) lines.Add($"Cooldown: {cooldown:F1}s");
+
+            if (staminaCost > 0f || staminaCostPct > 0f) lines.Add($"Stamina Cost: {staminaCost:F0} +{staminaCostPct:F1}%");
+            if (manaCost > 0f || manaCostPct > 0f) lines.Add($"Mana Cost: {manaCost:F0} +{manaCostPct:F1}%");
+            if (healthCost > 0f || healthCostPct > 0f) lines.Add($"Health Cost: {healthCost:F0} +{healthCostPct:F1}%");
+
+            if (healthGainOnHit > 0f || healthPctGainOnHit > 0f) lines.Add($"Health Gain: {healthGainOnHit:F0} +{healthPctGainOnHit:F1}%");
+            if (staminaGainOnHit > 0f || staminaPctGainOnHit > 0f) lines.Add($"Stamina Gain: {staminaGainOnHit:F0} +{staminaPctGainOnHit:F1}%");
+            if (manaGainOnHit > 0f || manaPctGainOnHit > 0f) lines.Add($"Mana Gain: {manaGainOnHit:F0} +{manaPctGainOnHit:F1}%");
+
+            if (explodeOrbits) lines.Add($"Explodes all orbiting projectiles");
+            if (fireOrbits) lines.Add($"Fires all orbiting projectiles");
+            if (absorbOrbitPct > 0f) lines.Add($"Absorbs all orbiting projectiles ({absorbOrbitPct:F1}% stat returns)");
+            if (redirectOrbits && redirectCount > 0) lines.Add($"Redirects {redirectCount} orbiting projectiles to nearest enemy");
+
+            if (pd != null)
+            {
+                List<string> dmgTypes = new();
+                if (pd.speed > 0f) lines.Add($"Speed: {pd.speed:F1}");
+                if (pd.physicalMult > 0f) dmgTypes.Add($"{pd.physicalMult:F0}P");
+                if (pd.spellMult > 0f) dmgTypes.Add($"{pd.spellMult:F0}S");
+                if (pd.trueMult > 0f) dmgTypes.Add($"{pd.trueMult:F0}T");
+                if (dmgTypes.Count > 0) lines.Add($"Damage: {string.Join(" ", dmgTypes)}");
+                if (pd.followDistance > 0f) lines.Add($"Homing Distance: {pd.followDistance:F1}");
+                if (pd.maxBoomerangDist > 0f) lines.Add($"Boomerang Distance: {pd.maxBoomerangDist:F1}");
+                if (pd.orbitSelf) lines.Add($"Orbits Owner at a radius of {pd.orbitRadius:F1}-{pd.orbitRadius + pd.randOrbRadOffset:F1}");
+                if (pd.kbForce > 0f) lines.Add($"Knockback: {pd.kbForce:F1} for {pd.knockbackTime:F2}s");
+            }
         }
     }
 }

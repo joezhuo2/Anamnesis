@@ -206,7 +206,7 @@ namespace CrystalFlux.Core
                 StatType.EffDashStaminaCost => Mathf.Max(0f, dashStaminaCost * (1f - (dashStaminaCostRedPct * 0.01f))),
                 StatType.EffDashDistance => Mathf.Max(0f, dashDistance * (1f + (dashDistancePct * 0.01f))),
                 StatType.DashShouldApplyIFrame => dashShouldApplyIFrame ? 1f : 0f,
-                StatType.ArmorRes => moveSpeed * (1f + (moveSpeedPct * 0.01f)),
+                StatType.ArmorRes => (armor * (1f + (armorPct * 0.01f))) / ((armor * (1f + (armorPct * 0.01f))) + 100f),
                 _ => 0f
             };
         }
@@ -294,6 +294,15 @@ namespace CrystalFlux.Core
                 case StatType.DashSpdMult: dashSpeedMult += delta; break;
                 case StatType.DashShouldApplyIFrame: dashShouldApplyIFrame = delta > 0; break;
                 case StatType.currentHp: currentHp += Mathf.RoundToInt(delta); break;
+                case StatType.EffAtk: attack += Mathf.RoundToInt(delta); break;
+                case StatType.EffMaxHp: maxHp += Mathf.RoundToInt(delta); break;
+                case StatType.EffHpReg: hpRegen += delta; break;
+                case StatType.EffStReg: staminaRegen += Mathf.RoundToInt(delta); break;
+                case StatType.EffSpd: moveSpeed += delta; break;
+                case StatType.EffInt: intelligence += Mathf.RoundToInt(delta); break;
+                case StatType.EffMaxStamina: maxStamina += Mathf.RoundToInt(delta); break;
+                case StatType.EffMaxMana: maxMana += Mathf.RoundToInt(delta); break;
+                case StatType.EffArmor: armor += Mathf.RoundToInt(delta); break;
                 default: break;
             }
         }

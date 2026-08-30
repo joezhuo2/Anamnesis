@@ -34,16 +34,16 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 ## Features
 
 - **Gamemode selector** — choose between **Regular** and **Unlimited** waves at the start of each run via dedicated buttons (with tooltips). Player actions are enabled in the lobby.
-- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward/anomaly button panels that update dynamically.
+- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward/anomaly button panels that update dynamically. A live **wave progress indicator** (`Wave 7 (12/30)`) tracks kills against the wave total, and clearing a wave announces the rerolls and skill points it granted in a single subtitle.
 - **Unlimited waves** — an endless mode that scales infinitely: enemy level and max total enemies rise each wave, spawns speed up, boss waves appear periodically, and rewards never stop. Reuses all shared `WaveManager` settings (reroll cost, rewards, corruption, milestones, anomalies) with no reconfiguration.
 - **Enemy splitting** — enemies can split into more enemies on death with configurable split count, health scaling, and behavior settings.
 - **Enemy phases** — bosses (and any configured enemy) transition through phases as their HP drops below thresholds (e.g. 70% / 40%), granting phase stat buffs and unlocking stronger phase-gated attacks.
 - **Global enemy spawner** — centralized spawning system for consistent enemy management.
 - **Anomaly system** — randomized run modifiers with configurable frequency, counts, and reward bonuses (e.g., *Time Trial*, *No Damage*, *Stat Modifier*).
-- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage, spread barrage), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, orbit interactions (fire, absorb, redirect, explode), **follow-source** option for projectiles, and on-hit **additional attacks** that chain into multi-stage combos (e.g. Blaze → Blaze Spark, Exodus → Exodus Wave → Exodus Core, Lifeforce → Shard → Burst).
+- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage, spread barrage, and the screen-wide converging lines: top-down, left-right, diagonal, diagonal reverse, full X), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, **wave** and **spiral** flight paths, orbit interactions (fire, absorb, redirect, explode), **follow-source** option for projectiles, and on-hit **additional attacks** that chain into multi-stage combos (e.g. Blaze → Blaze Spark, Exodus → Exodus Wave → Exodus Core, Lifeforce → Shard → Burst).
 - **Status effects** — stackable DoTs, stuns, stat buffs/reductions, attack replacement, and more, with cooldown UI.
-- **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects (on attack, on crit, on hit, on dash, on deal damage, …) with chance/cooldown/delay.
-- **Skill tree** — interactive pan/zoom tree with a **bidirectional connections system** (OR logic), incompatible nodes, tooltips, connector lines, and a skill-point currency. Nodes connect via the `prerequisites` field; unlocking works both ways (A→B means unlock A if B unlocked OR unlock B if A unlocked) and only **one** connected node needs to be unlocked. Left-click unlocked nodes to refund using **gold** (default 50g, configurable per node).
+- **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects with chance/cooldown/delay, driven by 22 trigger conditions (on attack, on crit, on hit, on dash, on kill, on level up, on projectile spawn, …). See [Awakening trigger conditions](#awakening-trigger-conditions).
+- **Skill tree** — interactive pan/zoom tree with a **bidirectional connections system** (OR logic), incompatible nodes, tooltips, connector lines, and a skill-point currency. Nodes connect via the `prerequisites` field; unlocking works both ways (A→B means unlock A if B unlocked OR unlock B if A unlocked) and only **one** connected node needs to be unlocked. Left-click unlocked nodes to refund using **gold** (default 50g, configurable per node). **Capstone nodes** gate behind owning a specific attack and upgrade it in place (e.g. the Warp capstone swaps Warp for a faster, larger version with a higher rift chance and a steeper resource cost).
 - **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%).
 - **Milestone rewards** — every 25 waves (25, 50, 75, 100...), choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks (e.g., *Glass Cannon*: +40% Damage / -40% Max Health). Each stat has ±15% variance for replayability.
 - **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays.
@@ -72,7 +72,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Basic Attacks**: Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash
 - **Skill**: Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Supernova, Lifeforce
 - **Ultimate**: Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus
-- **Awakenings**: Reminiscence, Serenace, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Cosmic Afterimage, Hypercarry
+- **Awakenings**: Reminiscence, Serenace, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Cosmic Afterimage, Hypercarry, Autopilot
 
 **Enemies** — 
 - **Regular Enemies**: Bat, Crab, and Slime
@@ -83,6 +83,47 @@ Each enemies have their own stats, attack sets, movement patterns, behavior, and
 **Status effects** — DoTs, Stun, Stat Buffs, Stat Reductions (Slow, Weaken, etc.), Attack Enhancements,and more.
 
 **Player upgrades** — Additional Damage, Cooldown Advance, Decoy, Gain Mana, Hex Cast, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge.
+
+### Awakening trigger conditions
+
+Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a chance, cooldown and
+delay. `PlayerUpgradeManager` rolls the chance and checks the cooldown once per condition match, then
+calls one of the `TriggerUpgradeEffect` overloads — so an upgrade only responds to a condition if it
+overrides the overload that condition dispatches to.
+
+| Condition | Fires when | Overload |
+| --- | --- | --- |
+| `OnAttack` | Any attack is performed | `(player)` |
+| `OnBasicAttack` | A Basic attack is performed | `(player)` |
+| `OnSkillAttack` | A Skill attack is performed | `(player)` |
+| `OnUltAttack` | An Ultimate attack is performed | `(player)` |
+| `OnCalculateAttackCost` | An attack's resource costs are about to be paid | `(player)` |
+| `OnSpawnProjectile` | A projectile the player owns is spawned, once per projectile | `(player, spawnCenter)` |
+| `OnProjectileHit` | A projectile the player owns hits a target | `(player, hitPosition)` |
+| `OnDealDamage` | A damage instance the player owns lands | `(player, target, damageDealt)` |
+| `OnTargetRecievedHit` | A target takes damage from the player | `(player)` |
+| `OnCrit` | A critical damage instance the player owns lands | `(player)` |
+| `OnOverkill` | The player's killing blow is at least 3× the target's remaining HP | `(player)` |
+| `OnKill` | An entity dies to damage the player dealt | `(player)` |
+| `OnTakeDamage` | The player takes any damage — direct hits, DoT ticks and health costs alike | `(player)` |
+| `OnTakeHit` | The player is hit directly by an enemy. Excludes DoT ticks, health costs (`Consume`), heals, and any packet that bypasses i-frames | `(player)` |
+| `OnCounterDodge` | The player is hit while immune and dashing | `(player)` |
+| `OnStartDash` | A dash begins | `(player)` |
+| `OnEndDash` | A dash ends | `(player)` |
+| `OnHealthRegen` | Passive health regen ticks for at least 1 HP | `(player)` |
+| `OnStaminaRegen` | Passive stamina regen ticks for at least 1 stamina | `(player)` |
+| `OnManaRegen` | The player actually gains mana. There is no passive mana regen tick, so this covers every mana gain | `(player)` |
+| `OnLevelUp` | The player gains a level. A single XP pickup that crosses several thresholds fires once per level | `(player)` |
+| `OnDeath` | The player dies, before the death sequence tears the object down. An upgrade whose `delay` outlasts the death animation is cut off | `(player)` |
+
+Two conditions are reentrancy-guarded so an upgrade cannot feed itself in a loop: `OnSpawnProjectile`
+(an upgrade that spawns projectiles) and `OnManaRegen` (an upgrade that grants mana). The guard only
+covers the immediate call, so an upgrade with a non-zero `delay` that re-triggers its own condition
+still needs a cooldown to stay bounded.
+
+Note that a non-zero `delay` on a `(player, spawnCenter)` condition drops the position: the delayed
+path calls the plain `(player)` overload. Position-sensitive upgrades on `OnSpawnProjectile` and
+`OnProjectileHit` should leave `delay` at 0.
 
 ## Tech Stack
 
@@ -103,7 +144,6 @@ Assets/
 │   ├── prefabs/               # UI element prefabs
 │   └── WaveData/              # Wave sequences
 └── scripts/
-    ├── Core/                  # [asmdef] Contracts only: interfaces (IStatProvider, IDamageable, IResourcePool, IStatusEffectReceiver, IAttackHandler, IUpgradeHolder, ITooltipDisplay, IUnlockEffect, IAnnouncer, ...), asset bases (AttackAsset, UpgradeAsset, EffectAsset), and shared value types (DamagePacket, StatType, StatBuff, InputState, DamageRoll)
     ├── Entity/                # [asmdef] Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
@@ -113,26 +153,56 @@ Assets/
     ├── StatusEffect/          # [asmdef] Status effect system & implementations (DoTs, Stun, Pulled, buffs)
     ├── SkillTree/             # [asmdef] Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
     ├── TextIndicator/         # [asmdef] Floating damage numbers, XP/Gold indicators
-    └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies, enemy spawner
+    └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies
 ```
+
+`Core` is no longer in this repo. It lives in
+[joezhuo2/CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) and Unity
+imports it automatically from the git URL in `Packages/manifest.json`:
+
+```json
+"com.crystalflux.core": "https://github.com/joezhuo2/CrystalFlux-Core.git"
+```
+
+It holds contracts only — interfaces (`IStatProvider`, `IDamageable`, `IResourcePool`,
+`IStatusEffectReceiver`, `IAttackHandler`, `IUpgradeHolder`, `ISkillPointHolder`,
+`IBossBar`, `ITooltipDisplay`, `IUnlockEffect`, `IAnnouncer`, …), asset bases
+(`AttackAsset`, `UpgradeAsset`, `EffectAsset`), shared value types (`DamagePacket`,
+`StatType`, `StatBuff`, `InputState`, `DamageRoll`), and the `EnemySpawning` /
+`PlayerEvents` hooks. Everything in it sits in the `CrystalFlux.Core` namespace.
 
 ### Assembly Boundaries
 
 Each `[asmdef]` folder compiles to its own assembly, so cross-system dependencies are enforced by the compiler rather than by convention:
 
 ```
-Core ──┬─ TextIndicator ─┐
-       ├─ Projectile ────┤
-       ├─ StatusEffect ──┼─→ Entity ──→ Wave
-       └─ SkillTree ─────┘
+                  ┌─ Projectile
+                  ├─ StatusEffect
+Core (package) ───┼─ SkillTree
+                  ├─ Wave
+                  └─ Entity ──→ Projectile, StatusEffect, SkillTree, TextIndicator
+
+TextIndicator ── (references nothing; TextMeshPro only)
 ```
 
-- **`Core` references nothing.** It holds only contracts — interfaces, abstract `ScriptableObject` bases, and shared value types.
-- **`Projectile`, `StatusEffect`, and `SkillTree` reference `Core` and nothing else** — including each other. Adding a cross-reference between them is a compile error, which is the point.
-- **`Entity`** composes the leaf systems; **`Wave`** orchestrates on top of `Entity`.
+- **`Core` references nothing.** It holds only contracts — interfaces, abstract `ScriptableObject` bases, and shared value types — and ships as its own package.
+- **`Projectile`, `StatusEffect`, `SkillTree`, and `Wave` reference `Core` and nothing else** — including each other. Adding a cross-reference between them is a compile error, which is the point.
+- **`Entity`** is the only assembly that composes the leaf systems, so it is the only one with more than one reference.
+- **`TextIndicator`** is self-contained and references no `CrystalFlux` assembly at all — floating numbers need only TextMeshPro.
 - `Items` and `Misc` remain in `Assembly-CSharp`, which auto-references every assembly above.
 
 Types shared across a boundary live in `Core` as an abstract base (`AttackAsset`, `UpgradeAsset`, `EffectAsset`) rather than an interface, because Unity cannot serialize interface-typed asset fields. Concrete data (`AttackData`, `PlayerUpgrade`, `StatusEffect`) stays in its own assembly.
+
+`Wave` orchestrates the run but never names a concrete system type. Where it used to
+reach for `PlayerAttackHandler`, `PlayerUpgradeManager`, `PlayerSkillTree`,
+`StatusEffectManager`, or `BossBarUI`, it now talks to the `Core` interface each of
+those already implements. Two static entry points it depended on became `Core` hooks
+the owning system registers or raises — `EnemySpawning` (registered by `EnemySpawner`
+at load) and `PlayerEvents.OnPlayerTakeDamage` (raised by `EntityHealth`).
+
+Reward tooltips work the same way: rather than `RewardButton` reading two dozen fields
+off `AttackData` and `PlayerUpgrade`, `AttackAsset` and `UpgradeAsset` declare an
+abstract `GetTooltipLines`, and each system describes its own data.
 
 > **Moving a `[SerializeReference]` type between assemblies breaks existing assets.** Unity stores a literal `{class, ns, asm}` triplet, so add `[MovedFrom(sourceAssembly: "...")]` when relocating one — see `UnlockEffect` and `NodeRequirement`.
 

@@ -184,7 +184,7 @@ namespace CrystalFlux.SkillTree
                 foreach (var req in node.requirements)
                 {
                     if (req == null) continue;
-                    if (!req.Has(gameObject)) return (false, $"Requirement not met: {req.GetType().Name}");
+                    if (!req.Has(gameObject)) return (false, $"Requirement not met");
                 }
             }
 

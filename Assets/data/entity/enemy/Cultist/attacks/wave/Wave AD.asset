@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Wave AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 8
+  type: 0
+  cooldown: 4
   projectilePrefab: {fileID: 2784415723355054935, guid: 890c9a37309f600418cbf8cf773218b6, type: 3}
   pd: {fileID: 11400000, guid: c0506fc3e46d7ef44bcbfa75f20d5457, type: 2}
   pattern: 0
@@ -30,7 +31,7 @@ MonoBehaviour:
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100
-  phaseReq: 1
+  phaseReq: -1
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
@@ -52,6 +53,5 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 0
   icon: {fileID: 0}
   displayName: 

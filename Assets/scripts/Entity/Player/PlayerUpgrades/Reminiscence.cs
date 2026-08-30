@@ -3,6 +3,7 @@ using CrystalFlux.EntitySystem;
 using CrystalFlux.ProjectileSystem;
 using CrystalFlux.StatusEffectSystem;
 using UnityEngine;
+using CrystalFlux.Core;
 
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade/Reminiscence")]
 public class Reminiscence : PlayerUpgrade
