@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Ball PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: ad5933620eca8994dbf987d01e1707c8, type: 2}
-  speed: 3
   lifetime: 3
   numPierce: 4
   size: 3
+  movementType: 0
+  speed: 4
+  waveAmplitude: 0.25
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
   spellMult: 0.6
   trueMult: 0
@@ -24,7 +28,7 @@ MonoBehaviour:
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0
-  followDistance: 1
+  followDistance: 0
   followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0

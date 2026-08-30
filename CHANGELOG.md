@@ -7,6 +7,29 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.3] - 2026-08-30 — Projectile Movement Patterns & Screen-Wide Spawn Lines
+
+Projectiles gain authored flight paths independent of their spawn pattern, and the spawner gains five screen-wide line patterns for bullet-hell style attacks.
+
+### Added
+- **`MovementType` on `ProjectileData`** — new `Default` / `Wave` / `Spiral` enum under a dedicated `Movement` header (which `speed` moved into). `Default` keeps the existing orbit / homing / boomerang behavior; the other two drive a parametric path
+  - **Wave** — travels along its launch direction while oscillating sideways. `waveAmplitude` is the peak sideways offset in world units, `waveFrequency` is full sine cycles per second
+  - **Spiral** — travels an Archimedean spiral outward from its spawn point. `spiralSpacing` is the world-unit gap between consecutive rings; the existing `rotateClockwise` flag picks the winding direction. The angular step is computed from arc length, so travel speed stays constant as the radius grows
+- **`Projectile.HandlePatternMovement`** — pattern projectiles integrate position analytically (`patternOrigin` plus elapsed `patternTime`) and drive the rigidbody by setting `linearVelocity` to the delta over `Time.fixedDeltaTime`, so they still collide through the physics system rather than teleporting. The path is re-anchored in `Launch`, so pooled instances never inherit a previous flight
+- **Homing coexists with patterns** — a pattern projectile with `followDistance > 0` suspends its path while it holds a target. When that target dies or leaves range, the path re-anchors to the current position and heading (`patternSuspended`) so it resumes forward instead of snapping back toward the spawn point
+- **Five spawn patterns for screen-wide lines** — `TopDown`, `LeftRight`, `Diagonal`, `DiagonalReverse`, and `FullX` on `ProjectilePattern`, all built on a shared `SpawnOpposingLines` helper. Each fires two opposing walls of projectiles that converge on the origin (`FullX` fires four, both diagonals): `projectileCount + Random(0, randomCount)` projectiles per side, distributed across `spread` world units perpendicular to travel, jittered by `randomSpread`, offset back by `spread / 2` along their travel direction, and staggered by the usual `minDelay`–`maxDelay` wait
+
+### Changed
+- **`Projectile.HandleMovement`** — homing extracted to `TryHome()`, which returns whether a target was acquired and followed. Removes a nesting level and lets the pattern path reuse the same acquisition logic instead of duplicating it
+- **Cultist Attack Overhaul** - now uses many of the new attack types - go find them out
+
+### Fixed
+- **`StatusEffectManager` no longer throws without an `IStatProvider`** — `cesm` is only assigned if a sibling component implements the interface, but `Update` dereferenced it unconditionally to read `EffectRes`. Effect resistance now falls back to `0` when absent, and `Awake` logs an error naming the GameObject instead of failing silently at the first tick
+- **Status effects are cleared on destroy** — `StatusEffectManager.OnDestroy` calls `ClearAllEffects()`, so an entity destroyed mid-effect tears down its display objects and effect state instead of leaking them
+- **`StatusEffectCooldownUI` null-guards its stat provider and image** — the same missing-`IStatProvider` case threw from `Update` on both the `isAlive` check and the `EffectRes` duration scale; `cooldownImage` is also null-checked before it is written
+- status effect tooltips not updating after stacking
+- health and stamina cost calculations on attacks being reversed
+
 ## [v0.3.2_1] - 2026-08-29
 
 ### Fixed

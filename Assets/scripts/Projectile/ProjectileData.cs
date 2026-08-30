@@ -6,16 +6,27 @@ namespace CrystalFlux.ProjectileSystem
 {
     public enum ApplyCondition { OnHit, OnCast }
     public enum SpecialScalingAttribute { None, Orbits, HpConsumed }
+    public enum MovementType { Default, Wave, Spiral }
 
     [CreateAssetMenu(fileName = "projectile_data", menuName = "Data/Projectile")]
     public class ProjectileData : ScriptableObject
     {
         [Header("Basic")]
         public AttackData mainAttack;
-        public float speed;
         public float lifetime;
         public int numPierce = 1;
         public float size = 1f;
+
+        [Header("Movement")]
+        [Tooltip("Overrides the straight-line movement along the direction the spawner's pattern assigns. Default = follow that pattern direction. A non-Default type authored on the projectile prefab also survives an attack swapping in its own ProjectileData")]
+        public MovementType movementType;
+        public float speed;
+        [Tooltip("Wave only: peak sideways offset from the straight-line path, in world units")]
+        public float waveAmplitude = 1f;
+        [Tooltip("Wave only: full sine cycles per second")]
+        public float waveFrequency = 1f;
+        [Tooltip("Spiral only: world-unit gap between consecutive rings of the spiral")]
+        public float spiralSpacing = 1f;
 
         [Header("Damage Multipliers")]
         public float physicalMult;

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: BigBall AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 16
+  type: 0
+  cooldown: 6
   projectilePrefab: {fileID: 6586564722604528216, guid: afc3cbdbd7f963a488f357952b3fba4f, type: 3}
   pd: {fileID: 11400000, guid: a943b5551455f494b8f9888599b1c403, type: 2}
   pattern: 0
@@ -52,6 +53,5 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 0
   icon: {fileID: 0}
   displayName: 

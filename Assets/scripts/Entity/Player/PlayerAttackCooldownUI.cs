@@ -90,7 +90,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (cad == null || cesm == null) return ("", "", Vector2.zero);
 
-            var (sp, hp, mp) = PlayerAttackHandler.GetCosts(cad, cesm);
+            var (hp, sp, mp) = PlayerAttackHandler.GetCosts(cad, cesm);
             var (spg, hpg, mpg) = Projectile.CalculateStatGains((cesm as Component).gameObject, cad);
             var effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
 

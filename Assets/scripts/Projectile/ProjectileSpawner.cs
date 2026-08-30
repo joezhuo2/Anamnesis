@@ -3,7 +3,7 @@ using CrystalFlux.Core;
 using UnityEngine;
 namespace CrystalFlux.ProjectileSystem
 {
-    public enum ProjectilePattern { Single, Spread, Circle, Barrage, SpreadBarrage }
+    public enum ProjectilePattern { Single, Spread, Circle, Barrage, SpreadBarrage, TopDown, LeftRight, Diagonal, DiagonalReverse, FullX }
 
     public class ProjectileSpawner : MonoBehaviour
     {
@@ -38,7 +38,7 @@ namespace CrystalFlux.ProjectileSystem
                 p.dir = dir;
                 p.pierced = 0;
                 p.ownerObj = sourceObj;
-                p.pd = pdOverride;
+                if (pdOverride != null) p.pd = pdOverride;
             }
 
             return proj;
@@ -112,6 +112,48 @@ namespace CrystalFlux.ProjectileSystem
             {
                 Vector2 randomOffset = Random.insideUnitCircle * ad.spread;
                 Vector2 spawnPos = origin + randomOffset;
+
+                SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd);
+                yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
+            }
+        }
+
+        public IEnumerator SpawnTopDown(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, Vector2.down);
+
+        public IEnumerator SpawnLeftRight(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, Vector2.right);
+
+        public IEnumerator SpawnDiagonal(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, new Vector2(1f, 1f));
+
+        public IEnumerator SpawnDiagonalReverse(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, new Vector2(1f, -1f));
+
+        public IEnumerator SpawnFullX(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, new Vector2(1f, 1f), new Vector2(1f, -1f));
+
+        private IEnumerator SpawnOpposingLines(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, params Vector2[] travelDirs)
+        {
+            if (travelDirs == null || travelDirs.Length == 0) yield break;
+
+            int perSide = Mathf.Max(1, ad.projectileCount + Random.Range(0, ad.randomCount + 1));
+            float halfExtent = ad.spread / 2f;
+            int lineCount = travelDirs.Length * 2;
+
+            for (int i = 0; i < perSide * lineCount; i++)
+            {
+                int slot = i / lineCount;
+                int line = i % lineCount;
+
+                Vector2 travel = travelDirs[line / 2].normalized;
+                float sideSign = line % 2 == 0 ? 1f : -1f;
+
+                float offset = (perSide == 1 ? 0f : (slot / (float)(perSide - 1)) - 0.5f) * ad.spread;
+                if (ad.randomSpread > 0f) offset += Random.Range(-ad.randomSpread / 2f, ad.randomSpread / 2f);
+
+                Vector2 dir = travel * sideSign;
+                Vector2 spawnPos = origin + (Vector2.Perpendicular(travel) * offset) - (dir * halfExtent);
 
                 SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd);
                 yield return new WaitForSeconds(Random.Range(ad.minDelay, ad.maxDelay));
@@ -194,6 +236,21 @@ namespace CrystalFlux.ProjectileSystem
                     break;
                 case ProjectilePattern.SpreadBarrage:
                     yield return SpawnSpreadBarrage(prefab, pd, ad, spawnPos, dir, finalDist, source);
+                    break;
+                case ProjectilePattern.TopDown:
+                    yield return SpawnTopDown(prefab, pd, ad, spawnPos, source);
+                    break;
+                case ProjectilePattern.LeftRight:
+                    yield return SpawnLeftRight(prefab, pd, ad, spawnPos, source);
+                    break;
+                case ProjectilePattern.Diagonal:
+                    yield return SpawnDiagonal(prefab, pd, ad, spawnPos, source);
+                    break;
+                case ProjectilePattern.DiagonalReverse:
+                    yield return SpawnDiagonalReverse(prefab, pd, ad, spawnPos, source);
+                    break;
+                case ProjectilePattern.FullX:
+                    yield return SpawnFullX(prefab, pd, ad, spawnPos, source);
                     break;
                 default: break;
             }

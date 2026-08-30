@@ -16,7 +16,14 @@ namespace CrystalFlux.StatusEffectSystem
         [HideInInspector] public readonly List<StatusEffect> activeEffects = new();
         private IStatProvider cesm;
 
-        private void Awake() => cesm = GetComponent<IStatProvider>();
+        private void Awake()
+        {
+            cesm = GetComponent<IStatProvider>();
+            if (cesm == null)
+                Debug.LogError($"StatusEffectManager on '{name}' requires a component implementing IStatProvider on the same GameObject. Effect resistance and stat-scaled durations will be ignored.", this);
+        }
+
+        private void OnDestroy() => ClearAllEffects();
 
         public void GetActiveEffectsOfType<T>(List<T> results) where T : EffectAsset
         {
@@ -137,7 +144,8 @@ namespace CrystalFlux.StatusEffectSystem
 
                 e.currentTime += dt;
 
-                float effDur = e.isBuff ? e.duration : e.duration * (1f - (cesm.GetStat(StatType.EffectRes) * 0.01f));
+                float effRes = cesm != null ? cesm.GetStat(StatType.EffectRes) : 0f;
+                float effDur = e.isBuff ? e.duration : e.duration * (1f - (effRes * 0.01f));
 
                 if (e != null && e.currentTime > effDur)
                 {
