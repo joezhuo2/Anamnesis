@@ -25,7 +25,11 @@ namespace CrystalFlux.EntitySystem
             OnProjectileHit,
             OnCrit,
             OnTargetRecievedHit,
-            OnDealDamage
+            OnDealDamage,
+            OnManaRegen,
+            OnKill,
+            OnLevelUp,
+            OnSpawnProjectile
         }
         public TriggerCondition[] conditions;
         public float chance;

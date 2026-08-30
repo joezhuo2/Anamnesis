@@ -8,6 +8,9 @@ namespace CrystalFlux.ProjectileSystem
     public class ProjectileSpawner : MonoBehaviour
     {
         public static ProjectileSpawner Instance;
+
+        public static event System.Action<GameObject, GameObject, Vector2> ProjectileSpawned;
+
         void Awake()
         {
             if (Instance == null) Instance = this;
@@ -40,6 +43,8 @@ namespace CrystalFlux.ProjectileSystem
                 p.ownerObj = sourceObj;
                 if (pdOverride != null) p.pd = pdOverride;
             }
+
+            ProjectileSpawned?.Invoke(sourceObj, proj, spawnPos);
 
             return proj;
         }

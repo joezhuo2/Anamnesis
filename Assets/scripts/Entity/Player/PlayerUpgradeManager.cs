@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CrystalFlux.Core;
+using CrystalFlux.ProjectileSystem;
 
 namespace CrystalFlux.EntitySystem
 {
@@ -15,6 +16,7 @@ namespace CrystalFlux.EntitySystem
         public static PlayerUpgradeManager Instance { get; private set; }
         public List<PlayerUpgrade> activeUpgrades = new();
         private readonly Dictionary<PlayerUpgrade, float> lastTriggerTimes = new();
+        private bool isTriggeringOnSpawnProjectile;
 
         private void Awake()
         {
@@ -24,6 +26,17 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
             Instance = this;
+        }
+        private void OnEnable() => ProjectileSpawner.ProjectileSpawned += HandleProjectileSpawned;
+        private void OnDisable() => ProjectileSpawner.ProjectileSpawned -= HandleProjectileSpawned;
+
+        private void HandleProjectileSpawned(GameObject sourceObj, GameObject projectile, Vector2 spawnPos)
+        {
+            if (sourceObj != gameObject || isTriggeringOnSpawnProjectile) return;
+
+            isTriggeringOnSpawnProjectile = true;
+            TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnSpawnProjectile, spawnPos);
+            isTriggeringOnSpawnProjectile = false;
         }
         private void Start()
         {

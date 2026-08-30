@@ -119,6 +119,9 @@ namespace CrystalFlux.EntitySystem
                 if (cpum != null && dmg > 0)
                     cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeDamage);
 
+                if (cpum != null && dmg > 0 && IsEnemyHit(dp, i))
+                    cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeHit);
+
                 if (i.isCrit)
                 {
                     if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit);
@@ -133,6 +136,9 @@ namespace CrystalFlux.EntitySystem
                     if (dp.source.TryGetComponent<PlayerLevel>(out var pl))
                         pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
                     DropGold(dp.source);
+
+                    if (dp.source != null && dp.source != gameObject && dp.source.TryGetComponent<PlayerUpgradeManager>(out var killPum))
+                        killPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnKill);
                 }
 
                 if (!_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
@@ -144,6 +150,17 @@ namespace CrystalFlux.EntitySystem
             }
 
             if (cpum != null) PlayerEvents.RaisePlayerTakeDamage(this);
+        }
+
+        private bool IsEnemyHit(DamagePacket dp, DamageInstance i)
+        {
+            if (dp.bypassIFrames) return false;
+            if (i.type != DamageType.Physical && i.type != DamageType.Spell && i.type != DamageType.True) return false;
+            if (i.owner == null || i.owner == gameObject) return false;
+
+            int ownTeam = TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
+            int atkTeam = i.owner.TryGetComponent<ITeamMember>(out var oitm) ? oitm.TeamID : 0;
+            return ownTeam != atkTeam;
         }
 
         public bool ChangeHealth(float amount, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
@@ -257,6 +274,8 @@ namespace CrystalFlux.EntitySystem
         private void StartDeathSequence()
         {
             esm.AddStat(new StatBuff(StatType.isAlive, -1));
+
+            if (cpum != null) cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDeath);
 
             OnDeath?.Invoke(gameObject);
 

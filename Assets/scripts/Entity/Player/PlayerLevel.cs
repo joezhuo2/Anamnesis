@@ -8,9 +8,14 @@ namespace CrystalFlux.EntitySystem
     public class PlayerLevel : MonoBehaviour
     {
         private IStatProvider esm;
+        private PlayerUpgradeManager pum;
         private int cLv;
 
-        private void Start() => esm = GetComponent<IStatProvider>();
+        private void Start()
+        {
+            esm = GetComponent<IStatProvider>();
+            pum = GetComponent<PlayerUpgradeManager>();
+        }
 
         public void GainExp(float amount)
         {
@@ -57,6 +62,8 @@ namespace CrystalFlux.EntitySystem
             esm.AddStat(new(StatType.attack, 1));
             esm.AddStat(new(StatType.Intelligence, 1));
             esm.AddStat(new(StatType.moveSpeed, 0.005f));
+
+            if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnLevelUp);
 
             IAnnouncer.Current?.SetTitleForDuration("Levelled Up!", 0.4f, 0.2f, 0.2f);
             IAnnouncer.Current?.SetSubtitleForDuration($"{cLv} → {Mathf.RoundToInt(esm.GetStat(StatType.Level))}", 0.4f, 0.2f, 0.2f);

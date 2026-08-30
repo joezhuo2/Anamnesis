@@ -7,6 +7,27 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.4] - 2026-08-30
+
+### Added
+- **Seven `PlayerUpgrade.TriggerCondition` values are now wired up.** They existed on the enum but nothing ever raised them, so any Awakening authored against one was inert. Each now has exactly one firing site:
+  - **`OnTakeHit`** — `EntityHealth.TakeDamage`, alongside the existing `OnTakeDamage`. Deliberately narrower than `OnTakeDamage`: it fires only for a direct hit from a hostile entity. A new `IsEnemyHit` helper rejects the instance unless the damage type is `Physical`, `Spell` or `True` (so DoT ticks, heals and `Consume` health costs are out), the packet does **not** set `bypassIFrames` (which is what a DoT tick and every self-inflicted sustain packet sets), the instance owner is neither null nor the victim itself, and the owner's `ITeamMember.TeamID` differs from the victim's
+  - **`OnKill`** — `EntityHealth.TakeDamage`, in the branch that already handles XP and gold when `ChangeHealth` reports the victim died. Fires on the killer's `PlayerUpgradeManager`, and skips the case where the packet source is the victim, so bleeding out on an attack's own health cost is not counted as a kill
+  - **`OnDeath`** — `EntityHealth.StartDeathSequence`, immediately after `isAlive` drops and before the health bar, status effects and GameObject are torn down. An upgrade whose `delay` outlasts the 1s death animation is cut off with the object
+  - **`OnStaminaRegen`** — `PlayerResourcePool.RegenStamina`, on each tick that actually credits at least 1 stamina. Mirrors how `OnHealthRegen` fires from `EntityHealth.RegenHp`
+  - **`OnManaRegen`** — `PlayerResourcePool.ChangeMana`, on any gain that actually lands (`amount > 0` and a non-zero applied change). There is no passive mana regen loop and no mana-regen stat, so unlike health and stamina this covers every mana gain rather than a periodic tick
+  - **`OnLevelUp`** — `PlayerLevel.LevelUp`. Because `GainExp` loops while the XP pool clears the requirement, one large XP pickup that crosses several thresholds fires the trigger once per level
+  - **`OnSpawnProjectile`** — raised once per projectile that reaches the scene, and dispatched through the `(player, spawnCenter)` overload with the projectile's spawn position, matching `OnProjectileHit`
+- **`ProjectileSpawner.ProjectileSpawned`** — static `Action<GameObject, GameObject, Vector2>` raised at the end of `SpawnProjectile` with the source, the spawned projectile and its spawn position. Static rather than instance-scoped so listeners do not have to race `Instance` during `Awake`. This is how `OnSpawnProjectile` crosses the assembly boundary: `CrystalFlux.Projectile` cannot see `PlayerUpgradeManager`, and `CrystalFlux.Core` is an external package, so the notification travels the one direction the asmdefs already allow — `CrystalFlux.Entity` subscribing to `CrystalFlux.Projectile`
+- **README gained an `Awakening trigger conditions` table** documenting all 22 conditions, what raises each one, and which `TriggerUpgradeEffect` overload it dispatches to — an upgrade that overrides the wrong overload silently does nothing, which was previously undocumented
+
+### Changed
+- **`PlayerUpgradeManager` subscribes to projectile spawns** in `OnEnable`/`OnDisable` and filters the event down to projectiles the player itself owns
+- **`PlayerResourcePool` and `PlayerLevel` now cache a `PlayerUpgradeManager`** in `Start`, the same pattern `EntityHealth` already used for `cpum`. Both stay null-safe on entities without one
+
+### Fixed
+- **Reentrancy guards on the two self-feeding triggers.** An `OnSpawnProjectile` upgrade that spawns a projectile, or an `OnManaRegen` upgrade that grants mana, would otherwise re-enter its own trigger without bound. Both follow the existing `_isTriggeringOnDealDamage` pattern. The guard covers the immediate call only — an upgrade with a non-zero `delay` that re-triggers its own condition still needs a cooldown, and this is called out in the README
+
 ## [v0.3.3_2] - 2026-08-30
 
 ### Added
