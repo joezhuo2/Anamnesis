@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AdditionalDamage
   upgradeName: Serenade
   conditions: 11000000
-  chance: 50
+  chance: 40
   cooldown: 0
   delay: 0
-  pctAmt: 12
+  pctAmt: 16
   type: 3

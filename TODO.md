@@ -1,14 +1,15 @@
 # Planned Features 
 
-### Bug Fixes
-- re-add phase based buffs using the new system
-
-### High Priority (To be done before 1 minor version)
+## Pre [v0.4.0] Checklist
+- [ ] re-add phase based buffs using the new system
+- [ ] map borders
+- [ ] Tilemaps
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)
 - [ ] skill tree 'capstone' nodes - upgrading existing Awakenings/Attacks (currently none) and/or introducing new ones
-- [ ] Wave 60 boss and enemies, and Boss Rush Extension (v0.4.0 Content Update)
+- [ ] Wave 60 boss and enemies, and Boss Rush Extension
+- [ ] Pause menu with resume/restart/home/quit, settings/controls menu
 
-### Medium Priority (To be done before 2 minor versions)
+## Pre [v0.5.0] Checklist
 - [ ] Elite/Champion enemy variants with unique modifiers (extra hp, faster)
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves
@@ -16,8 +17,14 @@
 - [ ] Player summons
 - [ ] Anamolies update (change spawning behavior)
 - [ ] Player new "signature" that charges via a new special resource instead of a cooldown
+- [ ] stats menu
+- [ ] settings menu overhaul: volume control, enemy health bar toggle, damage number toggle/size change 
+- [ ] Data saving
+- [ ] Title/header for reward menu
+- [ ] Audio
+- [ ] Difficulty selector
 
-### Low Priority
+# Content Updates
 - [ ] portals
 - [ ] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
 - [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
@@ -39,24 +46,10 @@
 - [ ] Daily/weekly challenge modifiers with seeded runs
 
 # QoL Updates
-
-### High Priority (To be done before 1 minor version)
-- [ ] Pause menu with resume/restart/home/quit, settings/controls/stats menu
-- [ ] Data saving
-- [ ] [MINOR] Title/header for reward menu
-
-### Medium Priority (to be done before 2 minor versions)
-- [ ] map borders
-- [ ] Audio, Tilemaps & polish
-- [ ] wave progress indicator
-- [ ] Difficulty selector
-
-### Low Priority
 - [ ] Scrollable Tooltips
 - [ ] Full attack stats display 
 - [ ] Status Effect vfx
 - [ ] Screen shake and hit-stop feedback on attacks
-- [ ] settings menu overhaul: volume control, enemy health bar toggle, damage number toggle/size change 
 - [ ] Auto-pause when window loses focus (single-player)
 - [ ] Screen-edge indicators for off-screen enemies, boss cursor
 - [ ] Build Guide menu 

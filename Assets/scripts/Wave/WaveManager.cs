@@ -77,11 +77,17 @@ namespace CrystalFlux.WaveSystem
         protected readonly List<PlayerUpgradeReward> availableTreasurePool = new();
         protected int currentWaveIndex = 0;
         protected int totalSpawned = 0;
+        protected int enemiesKilled = 0;
+        protected int waveMaxTotalEnemies = 0;
         protected readonly List<GameObject> currentEnemies = new();
         protected bool isWaveActive = false;
         protected Coroutine spawnCoroutine;
         protected bool pendingStandardRewards = false;
         protected float additionalQuality = 0f;
+        protected int pendingOccasionalRerolls = -1;
+        protected int pendingOccasionalSkillPoints = 0;
+        protected int pendingAnomalyRerolls = -1;
+        protected int pendingAnomalySkillPoints = 0;
         protected readonly List<GameObject> activeRewardButtons = new();
         protected readonly List<GameObject> inactiveRewardButtonPool = new();
         protected static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
@@ -212,8 +218,11 @@ namespace CrystalFlux.WaveSystem
             isWaveActive = true;
             currentWaveIndex++;
 
+            enemiesKilled = 0;
+            waveMaxTotalEnemies = currentWave.maxTotalEnemies;
+
             waveInfoPanel.SetActive(true);
-            waveText.text = $"Wave {GetCurrentWave()}";
+            UpdateWaveText();
 
             HandleWave(currentWave);
         }
@@ -228,9 +237,9 @@ namespace CrystalFlux.WaveSystem
         {
             while (totalSpawned < c.maxTotalEnemies)
             {
+                CleanEnemyList();
                 if (currentEnemies.Count >= c.maxCurrentEnemies)
                 {
-                    CleanEnemyList();
                     yield return null;
                     continue;
                 }
@@ -247,6 +256,8 @@ namespace CrystalFlux.WaveSystem
             if (activeBossBar != null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
             else if (currentAnomaly != null && currentAnomaly.isActive) GameController?.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
             else GameController?.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
+
+            RollAndAnnounceWaveRewards();
 
             yield return _waitForSeconds1_5;
             EndWave();
@@ -290,15 +301,25 @@ namespace CrystalFlux.WaveSystem
             currentEnemies.Add(enemy);
         }
 
-        protected void CleanEnemyList() => currentEnemies.RemoveAll(enemy => enemy == null);
+        protected void CleanEnemyList()
+        {
+            int removed = currentEnemies.RemoveAll(enemy => enemy == null);
+            if (removed <= 0) return;
+
+            enemiesKilled += removed;
+            UpdateWaveText();
+        }
+
+        protected void UpdateWaveText()
+        {
+            if (waveText != null) waveText.text = $"Wave {GetCurrentWave()} ({enemiesKilled}/{waveMaxTotalEnemies})";
+        }
         protected void EndWave()
         {
             WaveCleanup();
 
             OpenRewardButtons();
-
             UpdateOccasionalWaveRewards(GetCurrentWave());
-
             UpdateRerollUI();
 
             if (currentAnomaly != null) CleanupAnomaly();
@@ -319,16 +340,55 @@ namespace CrystalFlux.WaveSystem
 
         protected void UpdateOccasionalWaveRewards(int wave)
         {
-            if (wave % 5 == 0)
+            if (pendingOccasionalRerolls < 0) RollOccasionalWaveRewards(wave);
+
+            if (pendingOccasionalSkillPoints > 0)
             {
                 CachePlayerSkillTree();
-                if (cpst != null) cpst.AddSkillPoints(1);
-                ActiveManager.rerolls++;
+                if (cpst != null) cpst.AddSkillPoints(pendingOccasionalSkillPoints);
             }
-            else if (Random.value < 0.5f)
+            ActiveManager.rerolls += pendingOccasionalRerolls;
+
+            pendingOccasionalRerolls = -1;
+            pendingOccasionalSkillPoints = 0;
+        }
+
+        private void RollOccasionalWaveRewards(int wave)
+        {
+            if (wave % 5 == 0)
             {
-                ActiveManager.rerolls++;
+                pendingOccasionalRerolls = 1;
+                pendingOccasionalSkillPoints = 1;
             }
+            else
+            {
+                pendingOccasionalRerolls = Random.value < 0.5f ? 1 : 0;
+                pendingOccasionalSkillPoints = 0;
+            }
+        }
+
+        protected void RollAndAnnounceWaveRewards()
+        {
+            int wave = GetCurrentWave();
+            RollOccasionalWaveRewards(wave);
+
+            bool anomalyCompleted = currentAnomaly != null && currentAnomaly.isActive;
+            pendingAnomalyRerolls = anomalyCompleted ? Random.Range(1, 4) : 0;
+            pendingAnomalySkillPoints = anomalyCompleted ? 1 : 0;
+
+            int rerollGain = pendingOccasionalRerolls + pendingAnomalyRerolls;
+            int skillPointGain = pendingOccasionalSkillPoints + pendingAnomalySkillPoints;
+            if (rerollGain <= 0 && skillPointGain <= 0) return;
+
+            string msg = "";
+            if (rerollGain > 0) msg = $"+{rerollGain} Reroll{(rerollGain > 1 ? "s" : "")}";
+            if (skillPointGain > 0)
+            {
+                if (msg.Length > 0) msg += ", ";
+                msg += $"+{skillPointGain} Skill Point{(skillPointGain > 1 ? "s" : "")}";
+            }
+
+            GameController?.SetSubtitleForDuration(msg, 0.5f, 0.25f, 0.25f);
         }
 
         protected void CleanupAnomaly()
@@ -353,16 +413,18 @@ namespace CrystalFlux.WaveSystem
 
             pendingStandardRewards = true;
 
-            int c = Random.Range(1, 4);
+            int c = pendingAnomalyRerolls >= 0 ? pendingAnomalyRerolls : Random.Range(1, 4);
+            int sp = pendingAnomalyRerolls >= 0 ? pendingAnomalySkillPoints : 1;
+            pendingAnomalyRerolls = -1;
+            pendingAnomalySkillPoints = 0;
+
             rerolls += c;
             UpdateRerollUI();
 
             additionalQuality += Random.Range(0.1f, 0.3f);
 
             CachePlayerSkillTree();
-            if (cpst != null) cpst.AddSkillPoints(1);
-
-            GameController?.SetSubtitleForDuration($"You gained 1 skill point and {c} reroll tokens!", 1f, 0.5f, 0.5f);
+            if (cpst != null && sp > 0) cpst.AddSkillPoints(sp);
 
             type = RewardType.Mixed;
             PanelSetup();

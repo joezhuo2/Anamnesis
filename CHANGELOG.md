@@ -7,6 +7,31 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.3_1] - 2026-08-30
+
+### Added
+- **Wave progress indicator** — the wave label now reads `Wave {n} ({killed}/{total})` instead of just `Wave {n}`. `WaveManager.CleanEnemyList` returns the number of entries it removed and folds that into a new `enemiesKilled` counter, so the count advances as corpses are reaped rather than needing a separate death hook. `enemiesKilled` and `waveMaxTotalEnemies` reset in `BeginWave` (both `WaveManager` and `UnlimitedWaveManager`), and all label writes go through the shared `UpdateWaveText()`, which null-guards `waveText`
+- **End-of-wave reward announcement** — new `RollAndAnnounceWaveRewards()` runs when the last enemy of a wave dies, before the 1.5s wind-down. It rolls the occasional wave rewards and the anomaly-completion rewards up front, sums them, and announces the total as a single subtitle (`+2 Rerolls, +1 Skill Point`, correctly singular/plural) via `GameController.SetSubtitleForDuration`. Nothing is announced when the wave grants neither
+- **Reward panel title in Unlimited mode** — `UnlimitedWaveManager.TriggerStandardRewards` sets the `GameController` title to `Choose Wave Reward` when the standard reward panel opens
+
+### Changed
+- **Wave rewards are rolled once, then applied** — the roll and the grant were previously the same step, so announcing early would have double-rolled. Occasional rewards moved into `RollOccasionalWaveRewards(wave)` writing `pendingOccasionalRerolls` / `pendingOccasionalSkillPoints`; `UpdateOccasionalWaveRewards` now only spends those pending values (rolling lazily if `RollAndAnnounceWaveRewards` never ran) and resets them afterward. `HandleAnomalyRewards` does the same with `pendingAnomalyRerolls` / `pendingAnomalySkillPoints`, falling back to its own `Random.Range(1, 4)` roll when there is no pending value
+- **`HandleAnomalyRewards` no longer announces on its own** — its `You gained 1 skill point and {c} reroll tokens!` subtitle is superseded by the combined end-of-wave announcement, so the two no longer compete for the subtitle slot. It also skips `AddSkillPoints` when the pending skill-point count is `0`
+- **Spawn loop reaps dead enemies every tick** — `CleanEnemyList()` moved above the `currentEnemies.Count >= maxCurrent` check in both spawn routines (was only called inside the "at capacity" branch). Dead entries are now cleared before the capacity test, so a freed slot is refilled on the same frame instead of one frame later — and the progress counter updates continuously rather than only while the spawner is saturated
+- **Boss Rush order** — `BossRush.asset` now runs Lich → Jellyfish → Cultist (was Cultist → Lich → Jellyfish), putting the reworked Cultist attack set last
+- **Wave label layout** (`New.unity`) — font size 36 → 30 and width 200 → 250 so the `(killed/total)` suffix fits without wrapping
+- **`TODO.md` restructured** — priority buckets (`High` / `Medium` / `Low`) replaced with milestone checklists: **Pre [v0.4.0]**, **Pre [v0.5.0]**, and **Content Updates**. Existing items redistributed; pause menu, map borders, and tilemaps pulled forward into the v0.4.0 list
+
+### Fixed
+- **Unlimited waves showed a stale enemy count** — `UnlimitedWaveManager.BeginWave` never seeded the per-wave counters, so the new progress label would have carried the previous wave's totals
+
+### Removed
+- **Unused `using CrystalFlux.UISystem;` in `GameController`**
+
+### Credits
+- **tiopalada** — [Tiny RPG - Mana Soul GUI](https://tiopalada.itch.io/tiny-rpg-mana-soul-gui) added to `CREDITS.md`
+- `Packages/packages-lock.json` — `CrystalFlux-Core` git dependency hash bumped
+
 ## [v0.3.3] - 2026-08-30 — Projectile Movement Patterns & Screen-Wide Spawn Lines
 
 Projectiles gain authored flight paths independent of their spawn pattern, and the spawner gains five screen-wide line patterns for bullet-hell style attacks.
