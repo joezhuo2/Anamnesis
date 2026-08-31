@@ -73,5 +73,7 @@
 - [ ] Confirmation dialog before corrupting a reward
 
 ## Notes
-- EntityHealth.TakeDamage now defers the hurt i-frame trigger until after every DamageInstance in a packet is processed, so a multi-type projectile (e.g. Physical + Spell + True) applies all of its instances instead of only the first. Nested TakeDamage calls (upgrade reflect/thorns) merge their pending i-frames into the outer packet.
-- GAME.md was re-synced against the assets, and the six data problems that sync turned up are fixed. See the v0.3.7 changelog entry.
+
+- `Overheat`'s description reads "reduces attack by 6%" but the asset serializes `atkPct: -8` — either the text or the value needs to change.
+- `Slow 6 15 5` is authored but no projectile references it yet; Blizzard applies the older `Slow 5 3 15`.
+- Docs for v0.3.8 are written (CHANGELOG, ROADMAP, README, GAME.md). `ProjectSettings.bundleVersion` is still `1.0` and has never tracked the changelog version.

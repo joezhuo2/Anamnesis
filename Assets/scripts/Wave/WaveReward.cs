@@ -40,6 +40,7 @@ namespace CrystalFlux.WaveSystem
         public Sprite icon;
         public string attackName;
         [TextArea] public string desc;
+        public int minWave = -1;
     }
 
     [System.Serializable]
@@ -49,6 +50,7 @@ namespace CrystalFlux.WaveSystem
         public Sprite icon;
         public string upgradeName;
         [TextArea] public string desc;
+        public int minWave = -1;
     }
 
     [System.Serializable]

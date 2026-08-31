@@ -25,7 +25,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 
 1. **Pick a gamemode** — choose **Regular** waves (standard escalating sequence) or **Unlimited** waves (infinite scaling, faster spawns, periodic boss waves, endless rewards).
 2. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters. Enemies can even **split** into more enemies on death, and extra spawns occur every 10 waves. Enemies scale exponentially.
-3. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward. Reroll with **gold** (200g) when out of rerolls.
+3. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some rare attacks and Awakenings are gated behind a minimum wave, so late-game options only start appearing once the run is deep enough. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward. Reroll with **gold** (200g) when out of rerolls.
 4. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, *Stat Modifier*, and more) that add risk for greater reward.
 5. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run. Gain skill points from levelling up, occasionally on wave clears and every 5 waves. Refund nodes using gold (default 50g).
 6. **Level Up & Earn Gold** — collect experience from enemies to level up, gaining stat boosts and skill points along the way. Enemies drop XP (common enemies drop less, bosses drop more with 15% variance). **Enemies also drop gold (15% variance), increased by the Stealing stat.**
@@ -34,7 +34,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 ## Features
 
 - **Gamemode selector** — choose between **Regular** and **Unlimited** waves at the start of each run via dedicated buttons (with tooltips). Player actions are enabled in the lobby.
-- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, boss bars, and reward/anomaly button panels that update dynamically. A live **wave progress indicator** (`Wave 7 (12/30)`) tracks kills against the wave total, and clearing a wave announces the rerolls and skill points it granted in a single subtitle.
+- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, single-enemy boss waves, boss bars, and reward/anomaly button panels that update dynamically. A live **wave progress indicator** (`Wave 7 (12/30)`) tracks kills against the wave total, and clearing a wave announces the rerolls and skill points it granted in a single subtitle.
 - **Unlimited waves** — an endless mode that scales infinitely: enemy level and max total enemies rise each wave, spawns speed up, boss waves appear periodically, and rewards never stop. Reuses all shared `WaveManager` settings (reroll cost, rewards, corruption, milestones, anomalies) with no reconfiguration.
 - **Enemy splitting** — enemies can split into more enemies on death with configurable split count, health scaling, and behavior settings.
 - **Enemy phases** — bosses (and any configured enemy) transition through phases as their HP drops below thresholds (e.g. 70% / 40%), granting phase stat buffs and unlocking stronger phase-gated attacks.
@@ -45,6 +45,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects with chance/cooldown/delay, driven by 22 trigger conditions (on attack, on crit, on hit, on dash, on kill, on level up, on projectile spawn, …). See [Awakening trigger conditions](#awakening-trigger-conditions).
 - **Skill tree** — interactive pan/zoom tree with a **bidirectional connections system** (OR logic), incompatible nodes, tooltips, connector lines, and a skill-point currency. Nodes connect via the `prerequisites` field; unlocking works both ways (A→B means unlock A if B unlocked OR unlock B if A unlocked) and only **one** connected node needs to be unlocked. Left-click unlocked nodes to refund using **gold** (default 50g, configurable per node). **Capstone nodes** gate behind owning a specific attack or Awakening and upgrade it in place.
 - **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%).
+- **Wave-gated content** — enemies, rare attacks, and Awakenings each carry a `minWave` and only enter their pools once the run reaches it, so early waves draw from a smaller, gentler set.
 - **Milestone rewards** — every 25 waves (25, 50, 75, 100...), choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks (e.g., *Glass Cannon*: +40% Damage / -40% Max Health). Each stat has ±15% variance for replayability.
 - **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays.
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
@@ -72,13 +73,13 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Basic Attacks**: Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash
 - **Skill**: Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Supernova, Lifeforce
 - **Ultimate**: Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria
-- **Awakenings**: Reminiscence, Serenace, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Cosmic Afterimage, Hypercarry, Autopilot
+- **Awakenings**: Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Cosmic Afterimage, Hypercarry, Autopilot
 
 **Enemies** — 
-- **Regular Enemies**: Bat, Crab, and Slime
+- **Regular Enemies**: Bat, Crab, Slime, Slime (Frost), and Slime (Magma)
 - **Bosses**: Cultist (clone summoning), Jellyfish, Lich
 
-Each enemies have their own stats, attack sets, movement patterns, behavior, and inflict unique status effects. Some even have unique behaviour such as summons, and more to come! 
+Each enemies have their own stats, attack sets, movement patterns, behavior, and inflict unique status effects. Some even have unique behaviour such as summons, and more to come! In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, and Slime (Frost) from 20.
 
 **Status effects** — DoTs, Stun, Stat Buffs, Stat Reductions (Slow, Weaken, etc.), Attack Enhancements,and more.
 

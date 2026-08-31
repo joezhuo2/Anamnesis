@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
+  m_Name: Blizzard PD
+  m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
+  mainAttack: {fileID: 11400000, guid: b3ed3095e700666429b7d921fc194d05, type: 2}
+  lifetime: 12
+  size: 2
+  numPierce: 3000
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 1.2
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 0
+  spellMult: 0
+  trueMult: 0.18
+  scalingStat: 31
+  specialMult: 1
+  specialSclaing: 0
+  timeBeforeSameEnemy: 1
+  followDistance: 0
+  followSource: 0
+  rotationOffset: 0
+  maxBoomerangDist: 0
+  angleOverride: 0
+  useTrueAngle: 0
+  bypassIFrames: 0
+  randomDir: 0
+  additionalAttack: {fileID: 0}
+  additionalChance: 0
+  addAttackRequiresHit: 1
+  additionalFollowsMouse: 0
+  effects:
+  - effect: {fileID: 11400000, guid: 250277c2dfedd4246aedf91ddab8d9f4, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 0.65
+  - effect: {fileID: 11400000, guid: 398b713c60e88bf4f8c34005481b424a, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 0.15
+  orbitRadius: 1
+  randOrbRadOffset: 1.5
+  orbitSelf: 1
+  rotateClockwise: 1
+  kbForce: 0
+  knockbackTime: 0.15

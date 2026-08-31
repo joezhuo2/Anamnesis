@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9891d8e133ce19e4280b96c8ab869ded, type: 3}
-  m_Name: Vulnerable 4 30
+  m_Name: Vulnerable 6 30
   m_EditorClassIdentifier: Assembly-CSharp::StatBuffs
   currentTime: 0
-  duration: 4
+  duration: 6
   tickInterval: 0
   isBuff: 0
   icon: {fileID: -5906973516983679737, guid: 1a422c5f5436e5042861653928334be7, type: 3}

@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace CrystalFlux.WaveSystem
 {
+    [System.Serializable]
+    public struct EnemySpawnInfo
+    {
+        public GameObject prefab;
+        public int minWave;
+    }
+
     public class UnlimitedWaveManager : WaveManager
     {
         [Header("Wave Scaling")]
@@ -26,7 +33,7 @@ namespace CrystalFlux.WaveSystem
         public int minWavesBetweenBossWaves = 5;
 
         [Header("Enemy Pools")]
-        public List<GameObject> enemyPrefabs = new();
+        public List<EnemySpawnInfo> enemyPrefabs = new();
         public List<GameObject> bossPrefabs = new();
 
         private int lastBossWave;
@@ -64,7 +71,7 @@ namespace CrystalFlux.WaveSystem
             if (wave > 1) maxTotalEnemies += Random.Range(1, 3);
 
             enemiesKilled = 0;
-            waveMaxTotalEnemies = maxTotalEnemies;
+            waveMaxTotalEnemies = isBossWave ? 1 : maxTotalEnemies;
 
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
@@ -81,9 +88,9 @@ namespace CrystalFlux.WaveSystem
         private IEnumerator WaveSpawnRoutine()
         {
             int wave = GetCurrentWave();
-            int maxCurrent = maxCurrentEnemies;
+            int maxCurrent = isBossWave ? 1 : maxCurrentEnemies;
 
-            while (totalSpawned < maxTotalEnemies)
+            while (totalSpawned < waveMaxTotalEnemies)
             {
                 CleanEnemyList();
                 if (currentEnemies.Count >= maxCurrent)
@@ -116,8 +123,14 @@ namespace CrystalFlux.WaveSystem
 
         private void SpawnEnemies()
         {
+            if (isBossWave)
+            {
+                SpawnEnemy();
+                return;
+            }
+
             int wave = GetCurrentWave();
-            int spawnCount = Mathf.RoundToInt(wave / 10) + 1;
+            int spawnCount = Mathf.Min(Mathf.RoundToInt(wave / 10) + 1, waveMaxTotalEnemies - totalSpawned);
             for (int i = 0; i < spawnCount; i++) SpawnEnemy();
         }
 
@@ -203,7 +216,13 @@ namespace CrystalFlux.WaveSystem
         private GameObject GetRandomEnemy()
         {
             if (enemyPrefabs == null || enemyPrefabs.Count == 0) return null;
-            return enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+            List<GameObject> available = new();
+            for (int i = 0; i < enemyPrefabs.Count; i++)
+            {
+                if (enemyPrefabs[i].minWave <= currentWaveIndex)
+                    available.Add(enemyPrefabs[i].prefab);
+            }
+            return available.Count > 0 ? available[Random.Range(0, available.Count)] : null;
         }
 
         private GameObject GetRandomBoss()

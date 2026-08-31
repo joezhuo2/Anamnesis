@@ -54,7 +54,8 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
 # Rare Pool
 
 Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are present in
-`WaveManager.rarePool`.
+`WaveManager.rarePool`. Entries marked with an unlock wave carry a `minWave` on their
+`AttackReward` and cannot be rolled before that wave; the rest are available from wave 1.
 
 ## Aphelion
 - Asset: `Aphelion AD`
@@ -191,6 +192,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Exodus
 - Asset: `Exodus A AD`
+- Unlocks: wave 20
 - Type: Ultimate
 - Cooldown: 90s
 - Pattern: Single (1 count)
@@ -319,6 +321,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Luminaria
 - Asset: `Luminaria AD`
+- Unlocks: wave 20
 - Type: Ultimate
 - Cooldown: 18s
 - Pattern: Single (1 count)
@@ -380,6 +383,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Nirvana
 - Asset: `Nirvana A AD`
+- Unlocks: wave 20
 - Type: Ultimate
 - Cooldown: 24s
 - Pattern: Single (1 count)
@@ -400,6 +404,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Revelation
 - Asset: `Revelation AD`
+- Unlocks: wave 20
 - Type: Ultimate
 - Cooldown: 16s
 - Pattern: Single (1 count)
@@ -418,6 +423,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Shattered Singularity
 - Asset: `Shattered Singularity A AD`
+- Unlocks: wave 20
 - Type: Ultimate
 - Cooldown: 12s
 - Pattern: Single (1 count)
@@ -453,6 +459,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Solar Collapse
 - Asset: `Solar Collapse AD`
+- Unlocks: wave 20
 - Type: Ultimate
 - Cooldown: 14s
 - Pattern: Single (1 count)
@@ -474,6 +481,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Starfury
 - Asset: `Starfury AD`
+- Unlocks: wave 20
 - Type: Ultimate
 - Cooldown: 6s
 - Pattern: Single (1 count)
@@ -634,13 +642,13 @@ player upgrades rather than attacks the player selects.
 - Pattern: Circle (3 count)
 - Spawn: 0 dist
 - Animation: 1s
-- Gains on hit: Stamina +4, Health +6
+- Gains on hit: Stamina +2, Health +3%
 - Projectile:
   - Speed: 6
   - Lifetime: 6s
   - Pierce: 1 (destroys on max pierce)
   - Size: 2
-  - Damage: 295% Phys
+  - Damage: 335% Phys
   - Scaling: EffArmor
   - Movement: Spiral (spacing 2)
   - Homing: 0.5 follow distance
@@ -659,7 +667,7 @@ player upgrades rather than attacks the player selects.
   - Lifetime: 1.5s
   - Pierce: 4
   - Size: 2
-  - Damage: 15% Spell, 8% True
+  - Damage: 15% Spell, 4% True
   - Scaling: EffInt
   - Knockback: none
 
@@ -719,10 +727,12 @@ player upgrades rather than attacks the player selects.
 # Player Upgrades
 
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded` are present
-in `WaveManager.treasurePool`.
+in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 ## Hypercarry
 - Asset: `DashAdvance`
+- Unlocks: wave 35
 - Type: CooldownAdvance
 - Conditions: OnStartDash
 - Chance: 100%
@@ -798,6 +808,7 @@ in `WaveManager.treasurePool`.
 
 ## Paradox
 - Asset: `Paradox`
+- Unlocks: wave 35
 - Type: Paradox
 - Conditions: none
 - Chance: 0%
@@ -808,6 +819,7 @@ in `WaveManager.treasurePool`.
 
 ## Reminiscence
 - Asset: `Reminiscence`
+- Unlocks: wave 35
 - Type: Reminiscence
 - Conditions: OnCrit
 - Chance: 25%
@@ -819,6 +831,7 @@ in `WaveManager.treasurePool`.
 
 ## Serenade
 - Asset: `Serenade`
+- Unlocks: wave 35
 - Type: AdditionalDamage
 - Conditions: OnDealDamage
 - Chance: 35%
@@ -830,6 +843,7 @@ in `WaveManager.treasurePool`.
 
 ## Soul Rend
 - Asset: `SoulRendPU`
+- Unlocks: wave 35
 - Type: SoulRendPU
 - Conditions: OnUltAttack
 - Chance: 100%
@@ -894,8 +908,10 @@ Folder: `Assets/data/StatusEffect`.
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
 | `DotDetonator 0.5 2` | Detonator | (unnamed) | 0.5s | - | 1 | Detonates DoTs for 250% as True |
+| `Freeze 2` | Stun | Frozen | 2s | - | 1 | Cannot move or attack |
 | `Heartburn` | StatBuffs | Heartburn | 8s | - | 10 | +6% damagePct, +20% critDamage, +15% stCostPct, -12% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
+| `Overheat` | StatBuffs | Overheat | 7s | - | 5 | -8% atkPct, -12% stRegPct per stack |
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |
 | `Pulled 0.6 1 1.5 5 0.1` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 5 (+2/stack), 1.5 radius |
 | `Pulled 0.75 1 1.4 2 1.5` | Pulled | Possessed | 0.75s | 0.016s | 1 | Pull speed 1.4 (+2/stack), 1.5 radius |
@@ -903,12 +919,13 @@ Folder: `Assets/data/StatusEffect`.
 | `Reminiscence Cooldown` | Info | Reminiscence Cooldown | 4s | - | 1 | Cooldown marker |
 | `Slow 3 8 10` | StatReduction | Slow | 3s | - | 8 | -10% moveSpeed per stack |
 | `Slow 5 3 15` | StatReduction | Slow | 5s | - | 3 | -15% moveSpeed per stack |
+| `Slow 6 15 5` | StatReduction | Slow | 6s | - | 15 | -5% moveSpeed per stack (unreferenced) |
 | `Slow 8 2 30` | StatReduction | Slow | 8s | - | 2 | -30% moveSpeed per stack |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
 | `Stun 6` | Stun | Stun | 6s | - | 1 | Cannot move or attack |
 | `Supersonic Cooldown` | Info | Supersonic Cooldown | 3s | - | 1 | Cooldown marker |
-| `Vulnerable 4 30` | StatBuffs | Vulnerable | 4s | - | 1 | -30% damageRes |
+| `Vulnerable 6 30` | StatBuffs | Vulnerable | 6s | - | 1 | -30% damageRes |
 | `Vulnerable 6 3 8` | StatBuffs | Vulnerable | 6s | - | 3 | -8% damageRes per stack |
 | `Vulnerable 6 6 5` | StatReduction | Afflicted | 6s | - | 6 | -5% maxHp per stack |
 | `Vulnerable 8 2 20` | StatBuffs | Vulnerable | 8s | - | 2 | -20% damageRes per stack |
@@ -916,4 +933,7 @@ Folder: `Assets/data/StatusEffect`.
 
 Used by enemies rather than the player: `Crumbling 6 10 4` (Crab), `Poison 2 0.5 1 20 Atk`
 (Slime), `Slow 8 2 30` (Lich), `Stun 6` (Cultist), `Vulnerable 6 6 5` (Bat Mark),
-`Stun 2` (also used by BallSpam).
+`Stun 2` (also used by BallSpam), `Slow 5 3 15` and `Freeze 2` (Slime (Frost)'s Blizzard),
+`Overheat` (Slime (Magma)'s Eruption).
+
+`Slow 6 15 5` is authored but not referenced by any projectile yet.

@@ -10,6 +10,7 @@ namespace CrystalFlux.EntitySystem
 {
     public class EntityHealth : MonoBehaviour, IDamageable
     {
+        public float deathAnimTime = 1f;
 
         public event Action<GameObject> OnDeath;
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
@@ -46,34 +47,115 @@ namespace CrystalFlux.EntitySystem
             regenTimer = 0f;
             accumulatedRegen = 0f;
 
+            if (esm == null)
+            {
+                Debug.LogError($"EntityHealth on '{name}' found no IStatProvider.", this);
+                return;
+            }
+
             esm.AddStat(new StatBuff(StatType.isAlive, 1f));
             esm.AddStat(new StatBuff(StatType.CanGainHp, 1f));
 
             if (TryGetComponent<PlayerUpgradeManager>(out var pum)) cpum = pum;
-
-            InitializeHealthBar();
         }
 
+        public const string HealthBarCanvasName = "HealthBarCanvas";
+        private const int healthBarSortingOrder = -1;
         private static Canvas sharedCanvas;
+        private bool barRetired;
+        private int barCurHp = int.MinValue;
+        private int barMaxHp = int.MinValue;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => sharedCanvas = null;
+
+        private static Canvas ResolveHealthBarCanvas()
+        {
+            if (sharedCanvas != null && sharedCanvas.isActiveAndEnabled) return sharedCanvas;
+
+            sharedCanvas = null;
+
+            var canvases = FindObjectsByType<Canvas>(FindObjectsInactive.Exclude);
+            foreach (var c in canvases)
+            {
+                if (c == null || !c.isActiveAndEnabled) continue;
+                if (c.name != HealthBarCanvasName) continue;
+                if (c.renderMode == RenderMode.WorldSpace) continue;
+
+                sharedCanvas = c.rootCanvas != null ? c.rootCanvas : c;
+                return sharedCanvas;
+            }
+
+            var go = new GameObject(HealthBarCanvasName, typeof(Canvas), typeof(CanvasScaler));
+            var created = go.GetComponent<Canvas>();
+            created.renderMode = RenderMode.ScreenSpaceOverlay;
+            created.sortingOrder = healthBarSortingOrder;
+
+            CopyScalerSettings(go.GetComponent<CanvasScaler>(), canvases);
+
+            sharedCanvas = created;
+            return sharedCanvas;
+        }
+
+        private static void CopyScalerSettings(CanvasScaler dst, Canvas[] canvases)
+        {
+            if (dst == null) return;
+
+            dst.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+            dst.scaleFactor = 1f;
+
+            foreach (var c in canvases)
+            {
+                if (c == null || c.renderMode == RenderMode.WorldSpace) continue;
+                if (!c.TryGetComponent<CanvasScaler>(out var src)) continue;
+
+                dst.uiScaleMode = src.uiScaleMode;
+                dst.scaleFactor = src.scaleFactor;
+                dst.referenceResolution = src.referenceResolution;
+                dst.screenMatchMode = src.screenMatchMode;
+                dst.matchWidthOrHeight = src.matchWidthOrHeight;
+                dst.referencePixelsPerUnit = src.referencePixelsPerUnit;
+                return;
+            }
+        }
 
         private void InitializeHealthBar()
         {
-            if (healthBarPrefab == null) return;
+            if (healthBarPrefab == null || barRetired) return;
 
-            if (sharedCanvas == null) sharedCanvas = FindAnyObjectByType<Canvas>();
-            cachedCanvas = sharedCanvas;
+            cachedCanvas = ResolveHealthBarCanvas();
 
             if (cachedCanvas == null) return;
 
             healthBarInstance = Instantiate(healthBarPrefab, cachedCanvas.transform);
+            healthBarInstance.transform.SetAsLastSibling();
 
-            healthBarInstance.maxValue = MaxHp;
-            healthBarInstance.value = CurHp;
+            if (healthBarTextPrefab != null)
+            {
+                healthBarTextInstance = Instantiate(healthBarTextPrefab, cachedCanvas.transform);
+                healthBarTextInstance.transform.SetAsLastSibling();
+            }
 
-            if (healthBarTextPrefab == null) return;
+            barCurHp = int.MinValue;
+            barMaxHp = int.MinValue;
+            RefreshHealthBar();
+        }
 
-            healthBarTextInstance = Instantiate(healthBarTextPrefab, cachedCanvas.transform);
-            healthBarTextInstance.text = $"{CurHp}/{MaxHp}";
+        private void RefreshHealthBar()
+        {
+            if (healthBarInstance == null) return;
+
+            int cur = CurHp;
+            int max = MaxHp;
+            if (cur == barCurHp && max == barMaxHp) return;
+
+            barCurHp = cur;
+            barMaxHp = max;
+
+            healthBarInstance.maxValue = max;
+            healthBarInstance.value = cur;
+
+            if (healthBarTextInstance != null) healthBarTextInstance.text = $"{cur}/{max}";
         }
 
         private void Update()
@@ -83,13 +165,47 @@ namespace CrystalFlux.EntitySystem
         }
         private void MoveHealthBar()
         {
-            if (healthBarInstance == null || mainCamera == null || !IsAlive) return;
+            if (mainCamera == null) mainCamera = Camera.main;
+            if (mainCamera == null || !IsAlive) return;
+
+            if (healthBarInstance == null || cachedCanvas == null || !cachedCanvas.isActiveAndEnabled)
+            {
+                if (healthBarInstance != null) Destroy(healthBarInstance.gameObject);
+                if (healthBarTextInstance != null) Destroy(healthBarTextInstance.gameObject);
+                healthBarInstance = null;
+                healthBarTextInstance = null;
+
+                InitializeHealthBar();
+                if (healthBarInstance == null) return;
+            }
+
+            RefreshHealthBar();
 
             Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position + healthBarOffset);
+            bool visible = screenPos.z > 0f;
+
+            if (healthBarInstance.gameObject.activeSelf != visible)
+                healthBarInstance.gameObject.SetActive(visible);
+
+            if (healthBarTextInstance != null && healthBarTextInstance.gameObject.activeSelf != visible)
+                healthBarTextInstance.gameObject.SetActive(visible);
+
+            if (!visible) return;
+
+            screenPos.z = 0f;
             healthBarInstance.transform.position = screenPos;
 
             if (healthBarTextInstance != null)
                 healthBarTextInstance.transform.position = screenPos + healthBarOffset;
+        }
+
+        private void OnDestroy()
+        {
+            barRetired = true;
+            if (healthBarInstance != null) Destroy(healthBarInstance.gameObject);
+            if (healthBarTextInstance != null) Destroy(healthBarTextInstance.gameObject);
+            healthBarInstance = null;
+            healthBarTextInstance = null;
         }
 
         public void TakeDamage(DamagePacket dp)
@@ -250,8 +366,7 @@ namespace CrystalFlux.EntitySystem
             }
             else
             {
-                if (healthBarInstance != null) healthBarInstance.value = CurHp;
-                if (healthBarTextInstance != null) healthBarTextInstance.text = $"{CurHp}/{MaxHp}";
+                RefreshHealthBar();
             }
             return false;
         }
@@ -310,13 +425,16 @@ namespace CrystalFlux.EntitySystem
             if (TryGetComponent<IStatusEffectReceiver>(out var sem))
                 sem.ClearAllEffects();
 
+            barRetired = true;
             if (healthBarInstance != null) Destroy(healthBarInstance.gameObject);
             if (healthBarTextInstance != null) Destroy(healthBarTextInstance.gameObject);
+            healthBarInstance = null;
+            healthBarTextInstance = null;
 
-            if (animator != null && !IsAlive)
+            if (animator != null && !IsAlive && deathAnimTime > 0f)
             {
                 animator.SetBool(IsDeadHash, true);
-                StartCoroutine(DeathDelay(1f));
+                StartCoroutine(DeathDelay(deathAnimTime));
             }
             else
             {

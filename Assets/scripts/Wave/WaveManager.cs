@@ -221,7 +221,7 @@ namespace CrystalFlux.WaveSystem
             currentWaveIndex++;
 
             enemiesKilled = 0;
-            waveMaxTotalEnemies = currentWave.maxTotalEnemies;
+            waveMaxTotalEnemies = IsBossWave(currentWave) ? 1 : currentWave.maxTotalEnemies;
 
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
@@ -235,12 +235,16 @@ namespace CrystalFlux.WaveSystem
             spawnCoroutine = StartCoroutine(WaveSpawnRoutine(c));
         }
 
+        protected static bool IsBossWave(WaveData c) => c != null && c.bossBarPrefab != null;
+
         protected IEnumerator WaveSpawnRoutine(WaveData c)
         {
-            while (totalSpawned < c.maxTotalEnemies)
+            int maxCurrent = IsBossWave(c) ? 1 : c.maxCurrentEnemies;
+
+            while (totalSpawned < waveMaxTotalEnemies)
             {
                 CleanEnemyList();
-                if (currentEnemies.Count >= c.maxCurrentEnemies)
+                if (currentEnemies.Count >= maxCurrent)
                 {
                     yield return null;
                     continue;
@@ -267,12 +271,14 @@ namespace CrystalFlux.WaveSystem
 
         protected void SpawnEnemies(WaveData c)
         {
-            if (c.maxTotalEnemies == 1 || c.maxCurrentEnemies == 1)
+            if (IsBossWave(c) || c.maxTotalEnemies == 1 || c.maxCurrentEnemies == 1)
             {
                 SpawnEnemy(c);
                 return;
             }
-            for (int i = 0; i < Mathf.RoundToInt(GetCurrentWave() / 10) + 1; i++) SpawnEnemy(c);
+
+            int spawnCount = Mathf.Min(Mathf.RoundToInt(GetCurrentWave() / 10) + 1, waveMaxTotalEnemies - totalSpawned);
+            for (int i = 0; i < spawnCount; i++) SpawnEnemy(c);
         }
 
         protected void SpawnEnemy(WaveData c)
@@ -457,7 +463,24 @@ namespace CrystalFlux.WaveSystem
             float roll = Random.Range(0f, 100f);
             if (roll > anomalyChance) return false;
 
-            var available = availableAnomalies.FindAll(a => GetCurrentWave() >= a.minWave && GetCurrentWave() <= a.maxWave);
+            return GenerateAnomalyChoices();
+        }
+        protected bool HasAnomalyChoices()
+        {
+            if (availableAnomalies == null || availableAnomalies.Count == 0) return false;
+            if (anomalyPrefab == null) return false;
+            if (minAnomalyCount <= 0 || maxAnomalyCount <= 0) return false;
+
+            int w = GetCurrentWave();
+            return availableAnomalies.Exists(a => a != null && w >= a.minWave && w <= a.maxWave);
+        }
+        protected bool GenerateAnomalyChoices()
+        {
+            if (availableAnomalies == null || availableAnomalies.Count == 0) return false;
+            if (anomalyPrefab == null) return false;
+            if (minAnomalyCount <= 0 || maxAnomalyCount <= 0) return false;
+
+            var available = availableAnomalies.FindAll(a => a != null && GetCurrentWave() >= a.minWave && GetCurrentWave() <= a.maxWave);
             if (available.Count == 0) return false;
 
             type = RewardType.Anomaly;
@@ -531,15 +554,15 @@ namespace CrystalFlux.WaveSystem
                 }
                 else if (poolRoll < 90f)
                 {
-                    if (availableRarePool.Count == 0) continue;
-                    AttackReward buff = availableRarePool[Random.Range(0, availableRarePool.Count)];
+                    AttackReward buff = PickRareReward();
+                    if (buff == null) continue;
                     GameObject btnObj = GetOrCreateRewardButton();
                     if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(buff, OnAttackRewardClaimed);
                 }
                 else
                 {
-                    if (availableTreasurePool.Count == 0) continue;
-                    PlayerUpgradeReward buff = availableTreasurePool[Random.Range(0, availableTreasurePool.Count)];
+                    PlayerUpgradeReward buff = PickTreasureReward();
+                    if (buff == null) continue;
                     GameObject btnObj = GetOrCreateRewardButton();
                     if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(buff, OnPlayerUpgradeRewardClaimed);
                 }
@@ -554,9 +577,9 @@ namespace CrystalFlux.WaveSystem
 
             for (int i = 0; i < rewardChoices; i++)
             {
-                if (availableRarePool.Count == 0) break;
+                AttackReward buff = PickRareReward();
 
-                AttackReward buff = availableRarePool[Random.Range(0, availableRarePool.Count)];
+                if (buff == null) break;
 
                 GameObject btnObj = GetOrCreateRewardButton();
 
@@ -571,15 +594,49 @@ namespace CrystalFlux.WaveSystem
 
             for (int i = 0; i < rewardChoices; i++)
             {
-                if (availableTreasurePool.Count == 0) break;
+                PlayerUpgradeReward buff = PickTreasureReward();
 
-                PlayerUpgradeReward buff = availableTreasurePool[Random.Range(0, availableTreasurePool.Count)];
+                if (buff == null) break;
 
                 GameObject btnObj = GetOrCreateRewardButton();
 
                 if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
                     rewardButton.Setup(buff, OnPlayerUpgradeRewardClaimed);
             }
+        }
+        protected AttackReward PickRareReward()
+        {
+            int wave = GetCurrentWave();
+            AttackReward chosen = null;
+            int eligible = 0;
+
+            for (int i = 0; i < availableRarePool.Count; i++)
+            {
+                AttackReward candidate = availableRarePool[i];
+                if (candidate == null || candidate.minWave > wave) continue;
+
+                eligible++;
+                if (Random.Range(0, eligible) == 0) chosen = candidate;
+            }
+
+            return chosen;
+        }
+        protected PlayerUpgradeReward PickTreasureReward()
+        {
+            int wave = GetCurrentWave();
+            PlayerUpgradeReward chosen = null;
+            int eligible = 0;
+
+            for (int i = 0; i < availableTreasurePool.Count; i++)
+            {
+                PlayerUpgradeReward candidate = availableTreasurePool[i];
+                if (candidate == null || candidate.minWave > wave) continue;
+
+                eligible++;
+                if (Random.Range(0, eligible) == 0) chosen = candidate;
+            }
+
+            return chosen;
         }
         protected void GenerateMilestoneRewards()
         {
@@ -753,6 +810,9 @@ namespace CrystalFlux.WaveSystem
             }
 
             CachePlayerStatManager();
+
+            if (type == RewardType.Anomaly && !HasAnomalyChoices()) return;
+
             if (rerolls > 0)
                 rerolls--;
             else if (cich == null || !cich.TrySpend(rerollGoldCost)) return;
@@ -763,7 +823,7 @@ namespace CrystalFlux.WaveSystem
 
             switch (type)
             {
-                case RewardType.Anomaly: RollAndGenerateAnomaly(); break;
+                case RewardType.Anomaly: GenerateAnomalyChoices(); break;
                 case RewardType.Basic: GenerateRewards(); break;
                 case RewardType.Rare: GenerateRarePool(); break;
                 case RewardType.Treasure: GenerateTreasurePool(); break;

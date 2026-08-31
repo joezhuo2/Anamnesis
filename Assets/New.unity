@@ -4930,143 +4930,173 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Astral Nova
     desc: Ranged Gen Spl Slow
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: a5e26884cd5205647beae0358e00234c, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Stellar Maelstrom
     desc: Spam Single Phys Weaken
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 2f0953e0a32bb9e4cbd8ced71255642f, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Shattered Singularity
     desc: Burst AOE Spl
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
     type: 0
     icon: {fileID: 0}
     attackName: Blood Pact
     desc: Hp AOE True Bleed
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Solar Collapse
     desc: AOE True DoT Slow
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Supernova
     desc: AOE True Armor Gen
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 858bea3437e936045a1653e89167977e, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Starfury
     desc: AOE True Speed
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: bd91f00154d86a04397a66652a8a79fa, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Nebula
     desc: AOE DoT True Crit Dmg
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 0824ad99600b79844a6e35ce04f50c4b, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Revelation
     desc: AOE DoT Spl Atk Detonate
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Meteor Shower
     desc: AOE Spam Spl
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 64ed8dbedf1b5784abeea70a41c5077f, type: 2}
     type: 0
     icon: {fileID: 0}
     attackName: Aphelion
     desc: Orbit Spl
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 5476f691af2c85c4a8f8e8344c5a487a, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Nirvana
     desc: Orbit Spl
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Warp
     desc: Orbit Spl Add
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: e57b60953797705408d98a079d85adec, type: 2}
     type: 0
     icon: {fileID: 0}
     attackName: Blaze
     desc: Atk Stamina Heavy Add
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 8959ad3f839fa7a408b96be097ed75a7, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Exodus
     desc: Ult Atk Int Def AOE Add
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 8afff44b5a5dbe947a9f4bdcc9dfce62, type: 2}
     type: 0
     icon: {fileID: 0}
     attackName: Ignition Flash
     desc: Basic DoT Atk Debuff
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 32739481cac91ff4f90db8596af86b20, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Lifeforce
     desc: Skill Hp Burst
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 81a447ab5f2d83c42810a5bc93d575fd, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Luminaria
     desc: Ult Buff Hpr
+    minWave: 20
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
     upgradeName: Hex Cast
     desc: Attacks may use health instead of stamina
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: d442c0a382ce7cf4cb0853a33c9f1319, type: 2}
     icon: {fileID: 0}
     upgradeName: Stellar Surge
     desc: Chance to additionally heal whenever hp naturally regens.
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: faa3c8d59698bdb4089d810a53b1862e, type: 2}
     icon: {fileID: 0}
     upgradeName: Starlit Reflexes
     desc: Counter dodges restore mana for every projectile.
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: 2526bf077c7fad54d9e0fc1db17b765f, type: 2}
     icon: {fileID: 0}
     upgradeName: Paradox
     desc: Allows DoTs to deal critical damage.
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: 8dff3a6c6a1703f40a9e58f59dfc2ac7, type: 2}
     icon: {fileID: 0}
     upgradeName: Soul Rend
     desc: Basic and Skill grant Soul Rend on hit
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: 40cb68c5693492e4f85d3ab4c17534c3, type: 2}
     icon: {fileID: 0}
     upgradeName: Reminiscence
     desc: Attacks may additionally perform an available attack at no cost. (4s cooldown)
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: 1bb0ed8e066ed0043a3ee4a9b47f53a7, type: 2}
     icon: {fileID: 0}
     upgradeName: Cosmic Afterimage
     desc: Dashing leaves behind a projection of yourself that distracts enemies for
       4s. (6s cooldown)
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
     icon: {fileID: 0}
     upgradeName: Feedback Loop
     desc: Projectiles have a 70% chance to create shrapnel on hit (0.3s cooldown).
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: c6ec0bc05c27887429bd26fce6360948, type: 2}
     icon: {fileID: 0}
     upgradeName: Serenade
     desc: When dealing damage, there is a 50% chance to deal an additional 12% of
       damage dealt as true damage.
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: f78bf5eb68d43ed459aeb5f8392495a1, type: 2}
     icon: {fileID: 0}
     upgradeName: Hypercarry
-    desc: Dashing advances all cooldowns by 15%.
+    desc: Dashing advances all cooldowns by 12%.
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
     icon: {fileID: 0}
     upgradeName: Supersonic
     desc: Dashing leaves 3 rippling echoes.
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: 7b2d3c8a1b997e641985c551f65b361e, type: 2}
     icon: {fileID: 0}
     upgradeName: Autopilot
     desc: Taking damage spawns a projectile that homes in on nearby enemies and heals
       the player.
+    minWave: -1
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -10309,143 +10339,173 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Astral Nova
     desc: Ranged Gen Spl Slow
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: a5e26884cd5205647beae0358e00234c, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Stellar Maelstrom
     desc: Spam Single Phys Weaken
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 2f0953e0a32bb9e4cbd8ced71255642f, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Shattered Singularity
     desc: Burst AOE Spl
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
     type: 0
     icon: {fileID: 0}
     attackName: Blood Pact
     desc: Hp AOE True Bleed
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Solar Collapse
     desc: AOE True DoT Slow
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Supernova
     desc: AOE True Armor Gen
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 858bea3437e936045a1653e89167977e, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Starfury
     desc: AOE True Speed
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: bd91f00154d86a04397a66652a8a79fa, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Nebula
     desc: AOE DoT True Crit Dmg
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 0824ad99600b79844a6e35ce04f50c4b, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Revelation
     desc: AOE DoT Spl Atk Detonate
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Meteor Shower
     desc: AOE Spam Spl
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 64ed8dbedf1b5784abeea70a41c5077f, type: 2}
     type: 0
     icon: {fileID: 0}
     attackName: Aphelion
     desc: Orbit Spl
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 5476f691af2c85c4a8f8e8344c5a487a, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Nirvana
     desc: Orbit Spl
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Warp
     desc: Orbit Spl Add
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: e57b60953797705408d98a079d85adec, type: 2}
     type: 0
     icon: {fileID: 0}
     attackName: Blaze
     desc: Atk Stamina Heavy Add
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 8959ad3f839fa7a408b96be097ed75a7, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Exodus
     desc: Ult Atk Int Def AOE Add
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 8afff44b5a5dbe947a9f4bdcc9dfce62, type: 2}
     type: 0
     icon: {fileID: 0}
     attackName: Ignition Flash
     desc: Basic DoT Atk Debuff
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 32739481cac91ff4f90db8596af86b20, type: 2}
     type: 1
     icon: {fileID: 0}
     attackName: Lifeforce
     desc: Skill Hp Burst
+    minWave: -1
   - newAttack: {fileID: 11400000, guid: 81a447ab5f2d83c42810a5bc93d575fd, type: 2}
     type: 2
     icon: {fileID: 0}
     attackName: Luminaria
     desc: Ult Buff Hpr
+    minWave: 20
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
     upgradeName: Hex Cast
     desc: Attacks may use health instead of stamina
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: d442c0a382ce7cf4cb0853a33c9f1319, type: 2}
     icon: {fileID: 0}
     upgradeName: Stellar Surge
     desc: Chance to additionally heal whenever hp naturally regens.
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: faa3c8d59698bdb4089d810a53b1862e, type: 2}
     icon: {fileID: 0}
     upgradeName: Starlit Reflexes
     desc: Counter dodges restore mana for every projectile.
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: 2526bf077c7fad54d9e0fc1db17b765f, type: 2}
     icon: {fileID: 0}
     upgradeName: Paradox
     desc: Allows DoTs to deal critical damage.
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: 8dff3a6c6a1703f40a9e58f59dfc2ac7, type: 2}
     icon: {fileID: 0}
     upgradeName: Soul Rend
     desc: Basic and Skill grant Soul Rend on hit
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: 40cb68c5693492e4f85d3ab4c17534c3, type: 2}
     icon: {fileID: 0}
     upgradeName: Reminiscence
     desc: Attacks may additionally perform an available attack at no cost. (4s cooldown)
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: 1bb0ed8e066ed0043a3ee4a9b47f53a7, type: 2}
     icon: {fileID: 0}
     upgradeName: Cosmic Afterimage
     desc: Dashing leaves behind a projection of yourself that distracts enemies for
       4s. (6s cooldown)
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
     icon: {fileID: 0}
     upgradeName: Feedback Loop
     desc: Projectiles have a 70% chance to create shrapnel on hit (0.3s cooldown).
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: c6ec0bc05c27887429bd26fce6360948, type: 2}
     icon: {fileID: 0}
     upgradeName: Serenade
     desc: When dealing damage, there is a 50% chance to deal an additional 12% of
       damage dealt as true damage.
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: f78bf5eb68d43ed459aeb5f8392495a1, type: 2}
     icon: {fileID: 0}
     upgradeName: Hypercarry
-    desc: Dashing advances all cooldowns by 15%.
+    desc: Dashing advances all cooldowns by 12%.
+    minWave: 35
   - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
     icon: {fileID: 0}
     upgradeName: Supersonic
     desc: Dashing leaves 3 rippling echoes.
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: 7b2d3c8a1b997e641985c551f65b361e, type: 2}
     icon: {fileID: 0}
     upgradeName: Autopilot
     desc: Taking damage spawns a projectile that homes in on nearby enemies and heals
       the player.
+    minWave: -1
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -10809,7 +10869,7 @@ MonoBehaviour:
   baseMaxTotalEnemies: 1
   baseEnemyLevel: 1
   minSpawnFrequency: 1
-  maxSpawnFrequency: 4
+  maxSpawnFrequency: 3
   spawnSpeedIncreasePerWave: 0.05
   minRewardChoices: 2
   maxRewardChoices: 7
@@ -10817,11 +10877,18 @@ MonoBehaviour:
   statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
   bossWaveChance: 10
   bossWaveChanceIfPreviousNotBoss: 7
-  minWavesBetweenBossWaves: 6
+  minWavesBetweenBossWaves: 4
   enemyPrefabs:
-  - {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
-  - {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-  - {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+  - prefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    minWave: 10
+  - prefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    minWave: 20
+  - prefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+    minWave: 0
+  - prefab: {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
+    minWave: 5
+  - prefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
+    minWave: 15
   bossPrefabs:
   - {fileID: 7457594691964507130, guid: 24bacf361cba81f488717cc41f41440e, type: 3}
   - {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}

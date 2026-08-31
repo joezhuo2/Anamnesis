@@ -24,7 +24,7 @@ MonoBehaviour:
   spiralSpacing: 1
   physicalMult: 0
   spellMult: 0.15
-  trueMult: 0.08
+  trueMult: 0.04
   scalingStat: 44
   specialMult: 1
   specialSclaing: 0

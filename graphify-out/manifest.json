@@ -270,9 +270,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityHealth.cs": {
-    "mtime": 1788142777.8240788,
-    "seen": 1788143852.8782551,
-    "ast_hash": "3735ed73d1bfaa117840e0f8ad7223b5",
+    "mtime": 1788177867.149073,
+    "seen": 1788181032.3891685,
+    "ast_hash": "835d176471d18ab8b62428d3fdaff37c",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityProjectileHandler.cs": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1788142291.0115025,
-    "seen": 1788143852.8783534,
-    "ast_hash": "15a49070922ec5973fd5cd023b146329",
+    "mtime": 1788176844.0790565,
+    "seen": 1788181032.389258,
+    "ast_hash": "e584472a25218f18c3f608fe7752e0cb",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788143814.7536197,
-    "seen": 1788143852.8783774,
-    "ast_hash": "808f7970e52feeff45874c15c04c3aa7",
+    "mtime": 1788180981.8857903,
+    "seen": 1788181032.3892806,
+    "ast_hash": "74b804918d1521a4ac113e3dca05045e",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -708,15 +708,15 @@
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1788143698.1802478,
-    "seen": 1788143852.8783846,
-    "ast_hash": "8ce0de1e01dcde84ecb1cd5c585f65da",
+    "mtime": 1788180965.6989758,
+    "seen": 1788181032.3892868,
+    "ast_hash": "7ba5b31d872f0eaa3bf545c675bc5dc8",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1788143718.2862232,
-    "seen": 1788143852.8783858,
-    "ast_hash": "e3d2b0504b831c6d24bee761afd18fec",
+    "mtime": 1788180965.6998007,
+    "seen": 1788181032.389288,
+    "ast_hash": "6c70265523218fdce1bef2b1808bf31b",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1182,9 +1182,9 @@
     "semantic_hash": ""
   },
   "GAME.md": {
-    "mtime": 1788143709.4291506,
-    "seen": 1788143852.878381,
-    "ast_hash": "ede504053a5b35b639bddf6c0e6126a2",
+    "mtime": 1788180899.6820767,
+    "seen": 1788181032.3892837,
+    "ast_hash": "c951a1ed0b74319fe5f03b791ddfad47",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/UnlimitedWaveManager.cs": {
@@ -1797,6 +1797,12 @@
     "mtime": 1788139454.844376,
     "seen": 1788143852.8783636,
     "ast_hash": "ee6488cfecabc62b91176b1e04399b26",
+    "semantic_hash": ""
+  },
+  "Assets/data/StatusEffect/scratch_attacks.txt": {
+    "mtime": 1788178412.49354,
+    "seen": 1788181032.3892791,
+    "ast_hash": "ead57621012c3e53763fb9e67374dcdf",
     "semantic_hash": ""
   }
 }

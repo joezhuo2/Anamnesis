@@ -7,6 +7,38 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.8] - 2026-08-31
+
+### Added
+- **Two new slime variants**, each with its own attack, animator, sprites and stat asset under `Assets/data/entity/enemy/`:
+  - **Slime (Frost)** — `Slime_frost.prefab` / `slime frost base`. 80 HP, 4 attack, 15% crit chance, 30% crit damage, 60 armor, 30% `damageRes`, 5% `physicalRes`, 15% `spellRes`, 35 `effectRes`, 55 `kbRes`, 0.7 move speed, 9 detection range, 16 XP and 6 gold on death. Its attack **Blizzard** (`Blizzard AD`) is a 5s-cooldown Circle of 2 (+3 random) projectiles at 6 range with a 0.35s spawn delay: a slow-drifting (speed 1.2) 12s field of size 2 with effectively unlimited pierce, re-hitting the same target at most once per second, dealing **18% True** scaled off `EffAtk` and applying `Slow 5 3 15` at **65%** and the new `Freeze 2` at **15%**
+  - **Slime (Magma)** — `Slime_magma.prefab` / `slime magma base`. 45 HP, 9 attack, 25% crit chance, 70% crit damage, 60 armor, 15% `damageRes`, 15% `physicalRes`, 5% `spellRes`, 20 `effectRes`, 40 `kbRes`, 0.55 move speed, 5 detection range, 18 XP and 7 gold on death. Its attack **Eruption** (`Eruption AD`) is a 4s-cooldown Circle of 4 (+3 random) projectiles at 3 range with 45° random spread and a 0.65s spawn delay: 0.5s bursts of speed 4, size 2, 4 pierce, dealing **70% Physical + 15% True** scaled off `EffAtk` and applying the new `Overheat` at **85%**
+- **Three status effects** in `Assets/data/StatusEffect/`:
+  - `Freeze 2` — `Stun`, 2s, single stack, shown as *Frozen*. Applied by Blizzard
+  - `Overheat` — `StatBuffs`, 7s, up to 5 stacks, **-8% `atkPct`** and **-12% `stRegPct`** per stack. Applied by Eruption
+  - `Slow 6 15 5` — `StatReduction`, 6s, up to 15 stacks, **-5% `moveSpeed`** per stack, capped at 90% reduction. Authored but not yet referenced by any projectile
+- **Wave gating on rewards.** `AttackReward` and `PlayerUpgradeReward` carry a `minWave` (default `-1`, always eligible), and the rare and treasure pools now draw only from entries whose `minWave` is at or below the current wave. Seven rare-pool attacks are gated to **wave 20** — Shattered Singularity, Solar Collapse, Starfury, Revelation, Nirvana, Exodus and Luminaria — and five Awakenings to **wave 35** — Paradox, Soul Rend, Reminiscence, Serenade and Dash Advance. Everything else stays available from wave 1
+- **Wave gating on enemies.** `UnlimitedWaveManager.enemyPrefabs` is now a `List<EnemySpawnInfo>` pairing each prefab with a `minWave`, and `GetRandomEnemy` picks only from the prefabs unlocked at the current wave: Slime at 0, Crab at 5, Slime (Magma) at 10, Bat at 15, Slime (Frost) at 20. An empty eligible set returns `null` rather than indexing the list
+- **`EntityHealth.deathAnimTime`** — the death-animation delay is serialized per entity instead of the hardcoded 1s, and a value of `0` skips the animated death path entirely
+
+### Changed
+- **Enemy health bars resolve their own canvas.** `EntityHealth` previously grabbed whatever `FindAnyObjectByType<Canvas>()` returned first, which could be a world-space or unrelated canvas. It now looks for a screen-space canvas named `HealthBarCanvas` and, failing that, creates one at sorting order `-1`, copying its `CanvasScaler` settings from an existing screen-space canvas so bar sizing matches the rest of the UI. The bar is created lazily on the first `Update` rather than in `Start`, and is rebuilt if its canvas is destroyed or disabled mid-run
+- **Boss waves spawn exactly one enemy.** `IsBossWave` (a wave carrying a `bossBarPrefab`) clamps both `waveMaxTotalEnemies` and the concurrent-enemy cap to 1 in `WaveManager` and `UnlimitedWaveManager`, and the multi-spawn burst is skipped on boss waves. Previously a boss wave used the wave's normal caps and could spawn the boss prefab several times
+- **Unlimited-mode boss pacing** — `maxSpawnFrequency` `4` → `3`, `minWavesBetweenBossWaves` `6` → `4`
+- **Tuning:**
+  - **Autopilot** — `physicalMult` `2.95` → `3.35`; on-hit gains changed from a flat `staminaGainOnHit: 4` / `healthGainOnHit: 6` to `staminaGainOnHit: 2` and `healthPctGainOnHit: 3`, so its healing scales with max HP
+  - **Feedback Loop** — `trueMult` `0.08` → `0.04`
+  - **Slime** — `EnemyMovement.stoppingDistance` `0.85` → `1.2`
+- **`Vulnerable 4 30` renamed to `Vulnerable 6 30`**, duration `4` → `6`s. The `.meta` GUID is unchanged, so the Decoy expiry burst still resolves it
+- **Dash Advance's reward description** now reads *"Dashing advances all cooldowns by 12%."*, matching the `amt` `15` → `12` change made in v0.3.7
+
+### Fixed
+- **Wave spawn bursts could overshoot the wave's enemy budget.** `SpawnEnemies` spawned `wave / 10 + 1` enemies without checking how many the wave had left, so a wave capped at 3 could spawn 4 or more. The burst count is now clamped to `waveMaxTotalEnemies - totalSpawned`. `UnlimitedWaveManager.HandleWave` also looped against the raw `maxTotalEnemies` field instead of the per-wave `waveMaxTotalEnemies`, which is what the boss-wave clamp writes to
+- **Rerolling an anomaly could consume the reroll and return nothing.** The reroll routed back through `RollAndGenerateAnomaly`, which re-rolls `anomalyChance` and re-checks the active-anomaly guard, so a paid reroll could legitimately produce an empty menu. Choice generation is split out into `GenerateAnomalyChoices`, which the reroll now calls directly, and a new `HasAnomalyChoices` check refuses the reroll — before spending a reroll charge or gold — when no anomaly is eligible for the current wave
+- **Reward generation silently produced fewer buttons than requested.** The mixed, rare and treasure pool generators indexed their lists directly and `continue`d or `break`ed on an empty pool. Selection moved into `PickRareReward` / `PickTreasureReward`, which walk the pool once with reservoir sampling, skip `null` entries and honour `minWave`, returning `null` only when nothing is eligible
+- **Health bars leaked and drifted.** A bar is now destroyed with its owner in `OnDestroy`, a `barRetired` flag stops a dead or destroyed entity from re-creating one, the shared canvas reference is cleared on `SubsystemRegistration` so it does not survive a domain-reload-disabled play session, and a bar whose owner is behind the camera (`screenPos.z <= 0`) is hidden instead of being drawn at a mirrored screen position. Bar value and text are refreshed through a single `RefreshHealthBar` that early-outs when neither current nor max HP changed
+- **`EntityHealth` no longer null-references when no `IStatProvider` is present.** `Start` logs an error naming the offending object and returns instead of throwing on the first `AddStat`
+
 ## [v0.3.7] - 2026-08-31
 
 ### Changed
