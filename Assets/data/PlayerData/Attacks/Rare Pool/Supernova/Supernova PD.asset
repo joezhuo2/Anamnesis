@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Supernova PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
-  speed: 0
   lifetime: 0.75
-  numPierce: 9
   size: 4
+  numPierce: 9
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 1.9
   spellMult: 0
   trueMult: 0.3
@@ -25,6 +30,7 @@ MonoBehaviour:
   specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
@@ -36,7 +42,7 @@ MonoBehaviour:
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects:
-  - effect: {fileID: 11400000, guid: e6076c0291862a842aa9b9e05e87f1e5, type: 2}
+  - effect: {fileID: 11400000, guid: dad8799fba37a7c46b048d50c38fea72, type: 2}
     selfApply: 0
     applyCondition: 0
     chance: 0.4

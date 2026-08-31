@@ -7,6 +7,31 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.7] - 2026-08-31
+
+### Changed
+- **Occasional skill points can drop on any wave.** `RollOccasionalWaveRewards` hardcoded `pendingOccasionalSkillPoints` to `0` on every non-milestone wave, so the only skill point the wave-reward roll ever granted was the guaranteed one on each fifth wave. Non-milestone waves now roll it at **50%**, matching the reroll roll beside it
+- **`GAME.md` re-synced against the assets.** It is now a generated-style reference over `Assets/data/PlayerData/` and the `WaveManager` reward pools serialized in `Assets/New.unity`, split into Starting Attacks, Rare Pool (18), Skill Tree Attacks, Treasure Pool Attacks, Player Upgrades and Status Effects. Each entry names its `AttackData`/`ProjectileData` asset, states damage multipliers as percentages, and uses the exact `StatType` enum name for scaling. Costs and on-hit gains are now separated (they were previously merged into one signed list), several scaling stats that had drifted from the assets are corrected, and follow-up forms are filed under their real names — `Blaze Soul` is documented as the `Cosmic Blaze` replacement attack, and `Autopilot` moved out of the rare pool
+- **Tuning:**
+  - **Cyclone Cleave** — `numPierce` `6` → `8`, `physicalMult` `5.4` → `5.65`, and a new `spellMult` `1.25`
+  - **Aphelion** — cooldown `1.6` → `2.2`s
+  - **Blood Pact** — `healthCost` `14` → `11`, `healthCostPct` `11` → `7`
+  - **Stellar Maelstrom** — `staminaCost` `40` → `30`, `staminaCostPct` `44` → `24`, `manaCost` `18` → `14`, `manaCostPct` `52` → `42`
+  - **Warp** — `projectileCount` and `randomCount` `2` → `3`, `staminaCost` `40` → `15`, `manaCost` `60` → `50`, `manaCostPct` `20` → `15`. `Node_warp` now reads *"Increases Warp's speed, size, count, and chance to spawn a rift"* — the capstone no longer raises the attack's cost
+  - **Feedback Loop** — new `trueMult` `0.08` alongside its `0.15` spell multiplier
+  - **Dash Advance** — `amt` `15` → `12`
+  - **Serenade** — `chance` `40` → `35`
+
+### Fixed
+- **A multi-instance damage packet applied only its first instance.** `EntityHealth.TakeDamage` walks each `DamageInstance` in the packet through `ChangeHealth`, which triggers hurt i-frames on any damaging hit; the i-frames then blocked every later instance in the *same* packet, so a projectile authored with Physical + Spell + True damage landed only its Physical portion. The trigger is now deferred: instances are processed with the hurt i-frame suppressed, and a single i-frame window is opened once the packet is finished. Nested `TakeDamage` calls (reflect and thorns Awakenings re-entering during a packet) merge their pending trigger into the outer packet rather than opening a window mid-packet
+- Six authoring bugs turned up while re-syncing `GAME.md`, all corrected in the assets:
+  - **`Supernova PD` pointed at a deleted status effect** (guid `e6076c0291862a842aa9b9e05e87f1e5`), so its 40% on-hit effect never applied. It now references `Weaken 5 10 4` — **-10% attack per stack**, 4 stacks, 5s
+  - **`Starlit Reflexes` serialized `pctAmt: 6`** next to `amount: 10`, but `GainMana` only reads `amount`, so the 6% max-mana portion was inert. The percentage is dropped and the flat amount is raised `10` → `18`
+  - **`Lifeforce PD` had `specialMult: 0.5` with `specialSclaing: None`**, so the multiplier did nothing. `specialSclaing` is now `HpConsumed`, which is what the attack's `30 +40%` max-HP cost was written for — Lifeforce scales with the health it spends
+  - **`Supersonic Cooldown` was referenced by nothing.** `Supersonic PD` now applies it to the caster at 100% on cast, so the 3s marker actually lands
+  - **`Exodus C` was inconsistent with its siblings.** `Exodus C AD` is typed `Additional` rather than `Technique`, matching `Exodus B AD`, and `Exodus C PD` scales off `critDamage` instead of `resPen`
+  - **`Ignotion Flash` renamed to `Ignition Flash`** — the folder and its `AD`, `PD`, prefab, clip and controller assets. Every `.meta` GUID is unchanged, so the rare-pool entry and prefab references still resolve
+
 ## [v0.3.6] - 2026-08-30
 
 ### Added

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
@@ -15,6 +15,8 @@ namespace CrystalFlux.EntitySystem
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
         private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
         private bool _isTriggeringOnDealDamage;
+        private bool _suppressHurtIFrames;
+        private bool _pendingHurtIFrames;
         private float regenTimer;
         private const float regenInterval = 0.5f;
         private const float fullRegenFrequency = 5f;
@@ -94,6 +96,13 @@ namespace CrystalFlux.EntitySystem
         {
             if (dp == null) return;
 
+            bool prevSuppress = _suppressHurtIFrames;
+            bool prevPending = _pendingHurtIFrames;
+            _suppressHurtIFrames = true;
+            _pendingHurtIFrames = false;
+
+            try
+            {
             foreach (var i in dp.instances)
             {
                 IStatProvider atk = i.owner != null && i.owner.TryGetComponent<IStatProvider>(out var osm) ? osm : null;
@@ -157,6 +166,14 @@ namespace CrystalFlux.EntitySystem
                     _isTriggeringOnDealDamage = false;
                 }
             }
+            }
+            finally
+            {
+                bool fireIFrames = _pendingHurtIFrames;
+                _suppressHurtIFrames = prevSuppress;
+                _pendingHurtIFrames = prevPending || (prevSuppress && fireIFrames);
+                if (fireIFrames && !prevSuppress) TriggerIFramesCoroutine(hurtIFrameDuration);
+            }
 
             if (cpum != null) PlayerEvents.RaisePlayerTakeDamage(this);
         }
@@ -219,7 +236,11 @@ namespace CrystalFlux.EntitySystem
             {
                 animator.SetBool(IsHurtHash, true);
                 StartCoroutine(HurtDelay(esm.GetStat(StatType.HurtTime)));
-                if (!bypassIFrames) TriggerIFramesCoroutine(hurtIFrameDuration);
+                if (!bypassIFrames)
+                {
+                    if (_suppressHurtIFrames) _pendingHurtIFrames = true;
+                    else TriggerIFramesCoroutine(hurtIFrameDuration);
+                }
             }
 
             if (CurHp <= 0 && IsAlive)

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Ignotion Flash AD
+  m_Name: Ignition Flash AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   cooldown: 2.8
   projectilePrefab: {fileID: 2526318109841838836, guid: df1608f3ed2783c49b1f29f88fbb49ad, type: 3}

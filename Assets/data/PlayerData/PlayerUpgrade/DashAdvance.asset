@@ -17,5 +17,5 @@ MonoBehaviour:
   chance: 100
   cooldown: 0
   delay: 0
-  amt: 15
+  amt: 12
   type: 0

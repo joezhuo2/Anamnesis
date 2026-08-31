@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7033277607219442889}
   - component: {fileID: 7603369570647089988}
   m_Layer: 0
-  m_Name: Ignotion Flash
+  m_Name: Ignition Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

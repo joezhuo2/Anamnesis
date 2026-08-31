@@ -46,6 +46,10 @@ MonoBehaviour:
     selfApply: 0
     applyCondition: 0
     chance: 0.6
+  - effect: {fileID: 11400000, guid: ee78caa1051a4214181a98b3c884ba0a, type: 2}
+    selfApply: 1
+    applyCondition: 1
+    chance: 1
   orbitRadius: 0
   randOrbRadOffset: 0
   orbitSelf: 0

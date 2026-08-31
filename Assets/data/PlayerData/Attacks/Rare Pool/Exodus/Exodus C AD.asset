@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Exodus C AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  type: 4
   cooldown: 0
   projectilePrefab: {fileID: 4118402350444324707, guid: a21a3b97a7a9d4e4e8568db607485dab, type: 3}
   pd: {fileID: 11400000, guid: 76fd81c249d38f54d8f527e74694c9a9, type: 2}
@@ -48,10 +49,9 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 3
   icon: {fileID: 0}
   displayName: 

@@ -367,7 +367,7 @@ namespace CrystalFlux.WaveSystem
             else
             {
                 pendingOccasionalRerolls = Random.value < 0.5f ? 1 : 0;
-                pendingOccasionalSkillPoints = 0;
+                pendingOccasionalSkillPoints = Random.value < 0.5f ? 1 : 0;
             }
         }
 

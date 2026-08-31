@@ -21,8 +21,8 @@ MonoBehaviour:
   spawnDistance: 0
   fixedDistance: 1
   animationLength: 1
-  projectileCount: 2
-  randomCount: 2
+  projectileCount: 3
+  randomCount: 3
   spread: 0
   randomSpread: 0
   minDelay: 0
@@ -33,12 +33,12 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 40
+  staminaCost: 15
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 60
-  manaCostPct: 20
+  manaCost: 50
+  manaCostPct: 15
   basedOnDmgDealt: 1
   staminaGainOnHit: 1
   staminaPctGainOnHit: 0

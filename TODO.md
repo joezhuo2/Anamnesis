@@ -10,9 +10,9 @@
 - [ ] Pause menu with resume/restart/home/quit, settings/controls menu
 
 ## Pre [v0.5.0] Checklist
-- [ ] Elite/Champion enemy variants with unique modifiers (extra hp, faster)
+- [ ] Elite/Champion enemy variants with unique modifiers (extra hp, faster, new ai)
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
-- [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves
+- [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves (ascension system)
 - [ ] Corrupt button (part 2) - can turn normal rewards into new type of special rewards (very rare)
 - [ ] Player summons
 - [ ] Anamolies update (change spawning behavior)
@@ -23,6 +23,8 @@
 - [ ] Title/header for reward menu
 - [ ] Audio
 - [ ] Difficulty selector
+- [ ] starting builds
+- [ ] certain upgrades have requirements before being added to the pool
 
 # Content Updates
 ### Major
@@ -69,3 +71,7 @@
 - [ ] Screenshot mode that hides the HUD
 - [ ] FPS counter & performance stats toggle
 - [ ] Confirmation dialog before corrupting a reward
+
+## Notes
+- EntityHealth.TakeDamage now defers the hurt i-frame trigger until after every DamageInstance in a packet is processed, so a multi-type projectile (e.g. Physical + Spell + True) applies all of its instances instead of only the first. Nested TakeDamage calls (upgrade reflect/thorns) merge their pending i-frames into the outer packet.
+- GAME.md was re-synced against the assets, and the six data problems that sync turned up are fixed. See the v0.3.7 changelog entry.

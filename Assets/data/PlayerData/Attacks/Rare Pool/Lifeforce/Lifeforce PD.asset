@@ -13,16 +13,21 @@ MonoBehaviour:
   m_Name: Lifeforce PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 32739481cac91ff4f90db8596af86b20, type: 2}
-  speed: 0
   lifetime: 0.75
-  numPierce: 5
   size: 2.25
+  numPierce: 5
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
   spellMult: 0.9
   trueMult: 0
   scalingStat: 30
   specialMult: 0.5
-  specialSclaing: 0
+  specialSclaing: 2
   timeBeforeSameEnemy: 0
   followDistance: 0
   followSource: 0

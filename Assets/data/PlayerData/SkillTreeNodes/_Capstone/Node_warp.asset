@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Node_warp
   m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
   nodeName: Warp
-  desc: Increases Warp's speed, size, and chance to spawn a rift, but also increases
-    its cost.
+  desc: Increases Warp's speed, size, count, and chance to spawn a rift.
   nodeID: warp
   icon: {fileID: -523499465, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0

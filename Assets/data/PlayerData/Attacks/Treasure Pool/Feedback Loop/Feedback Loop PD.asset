@@ -13,13 +13,18 @@ MonoBehaviour:
   m_Name: Feedback Loop PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: f1593c0c133dfd7488959be27935583c, type: 2}
-  speed: 16
   lifetime: 1.5
-  numPierce: 4
   size: 2
+  numPierce: 4
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 16
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
   spellMult: 0.15
-  trueMult: 0
+  trueMult: 0.08
   scalingStat: 44
   specialMult: 1
   specialSclaing: 0
