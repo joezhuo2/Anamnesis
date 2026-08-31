@@ -40,9 +40,9 @@ MonoBehaviour:
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 10
+  staminaGainOnHit: 4
   staminaPctGainOnHit: 0
-  healthGainOnHit: 15
+  healthGainOnHit: 6
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0

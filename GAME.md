@@ -71,17 +71,17 @@
 - Cooldown: 0s (upgrade-spawned)
 - Pattern: Circle (3 count)
 - Animation: 1s
-- Health: +15 (on hit, based on damage dealt)
-- Stamina: +10 (on hit, based on damage dealt)
+- Health: +6 (on hit, based on damage dealt)
+- Stamina: +4 (on hit, based on damage dealt)
 - Projectile:
-  - Speed: 12
+  - Speed: 6
   - Lifetime: 6s
   - Pierce: 1 (destroys on max pierce)
   - Size: 2
   - Damage: 295% Phys
   - Scaling: EffArmor
   - Movement: Spiral (spacing 2)
-  - Homing: 1.5 range
+  - Homing: 0.5 range
   - Knockback: 8 force
 
 ## Blaze
@@ -619,8 +619,9 @@
   - Lifetime: 1s
   - Pierce: 3000
   - Size: 1.5
-  - Damage: 85% True
+  - Damage: 110% True
   - Scaling: MoveSpeedPct
+  - Effects: 60% (Slow, reduces speed by 15% per stack. Max 3 stacks, 5s duration)
   - Knockback: 4 force
 
 # Player Upgrades
@@ -757,7 +758,7 @@ Soul Rend:
 - Type: SpawnProjectile
 - Conditions: OnDash
 - Chance: 100%
-- Cooldown: 3s
+- Cooldown: 1s
 - Delay: 0s
 - Projectile: Supersonic projectile
-- Description: Spawns a Supersonic projectile on dashing. 3s cooldown.
+- Description: Spawns a Supersonic projectile on dashing. 1s cooldown.

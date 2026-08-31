@@ -11,6 +11,8 @@ public class AnomalyInstance
         amd = data;
     }
 
+    public virtual string Description => amd != null ? amd.desc : "";
+
     public virtual void StartAnomaly()
     {
         isActive = true;

@@ -34,9 +34,9 @@ namespace CrystalFlux.EntitySystem
         public TriggerCondition[] conditions;
         public float chance;
         public float cooldown;
-        public float delay; [Tooltip("delay after triggering before effect activates")]
+        [Tooltip("delay after triggering before effect activates")] public float delay;
         public virtual void TriggerUpgradeEffect(GameObject player) {}
-        public virtual void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter = null) {}
+        public virtual void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter) {}
         public virtual void TriggerUpgradeEffect(GameObject player, GameObject target, float damageDealt) {}
         public virtual void OnUnlock(GameObject player) {}
         public virtual void OnRemove(GameObject player) {}

@@ -23,7 +23,23 @@ namespace CrystalFlux.StatusEffectSystem
                 Debug.LogError($"StatusEffectManager on '{name}' requires a component implementing IStatProvider on the same GameObject. Effect resistance and stat-scaled durations will be ignored.", this);
         }
 
-        private void OnDestroy() => ClearAllEffects();
+        private bool isQuitting;
+
+        private void OnApplicationQuit() => isQuitting = true;
+
+        private void OnDestroy()
+        {
+            if (isQuitting)
+            {
+                for (int i = activeEffects.Count - 1; i >= 0; i--)
+                    if (activeEffects[i] != null) Destroy(activeEffects[i]);
+
+                activeEffects.Clear();
+                return;
+            }
+
+            ClearAllEffects();
+        }
 
         public void GetActiveEffectsOfType<T>(List<T> results) where T : EffectAsset
         {

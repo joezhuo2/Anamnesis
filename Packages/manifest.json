@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.crystalflux.core": "https://github.com/joezhuo2/CrystalFlux-Core.git",
+    "com.crystalflux.core": "https://github.com/joezhuo2/CrystalFlux-Core.git#4aaca3687fefc2828a14dfea2ddf4e4b57d34ef7",
     "com.unity.2d.animation": "14.0.3",
     "com.unity.2d.aseprite": "4.0.1",
     "com.unity.2d.psdimporter": "13.0.2",

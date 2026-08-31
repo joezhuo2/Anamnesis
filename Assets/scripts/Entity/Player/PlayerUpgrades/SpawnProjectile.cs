@@ -12,7 +12,7 @@ public class SpawnProjectile : PlayerUpgrade
         if (projectilePrefab != null && ps != null)
             ps.StartCoroutine(ps.SpawnFromPattern(projectilePrefab, player));
     }
-    public override void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter = null)
+    public override void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter)
     {
         var ps = ProjectileSpawner.Instance;
         if (projectilePrefab != null && ps != null && spawnCenter.HasValue)

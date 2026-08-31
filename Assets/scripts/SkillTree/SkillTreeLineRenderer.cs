@@ -19,75 +19,58 @@ namespace CrystalFlux.SkillTree
         private readonly List<Image> activeLines = new();
         private SkillTreeManager manager;
         private static Sprite defaultSprite;
+        private readonly Dictionary<SkillNodeDef, RectTransform> nodeUIMap = new();
+        private readonly HashSet<string> drawnConnections = new();
+        private int usedLines;
 
         void Awake() => manager = FindAnyObjectByType<SkillTreeManager>();
 
         public void Redraw(IReadOnlyList<SkillNodeDef> nodes)
         {
-            foreach (var line in activeLines)
-                if (line != null) Destroy(line.gameObject);
-
-            activeLines.Clear();
+            usedLines = 0;
 
             if (manager == null) manager = FindAnyObjectByType<SkillTreeManager>();
-            if (nodes == null) return;
 
-            RectTransform parent = GetLineParent();
-            if (parent == null) return;
+            RectTransform parent = nodes == null ? null : GetLineParent();
+            if (parent == null)
+            {
+                HideUnusedLines();
+                return;
+            }
 
-            var nodeUIMap = new Dictionary<SkillNodeDef, RectTransform>();
-            var nodeUIs = FindObjectsByType<SkillNodeUI>();
-
-            foreach (var nodeUI in nodeUIs)
+            nodeUIMap.Clear();
+            foreach (var nodeUI in FindObjectsByType<SkillNodeUI>(FindObjectsInactive.Include))
             {
                 if (nodeUI != null && nodeUI.node != null && nodeUI.transform is RectTransform rt)
                     nodeUIMap[nodeUI.node] = rt;
             }
 
-            var drawnConnections = new HashSet<string>();
+            drawnConnections.Clear();
 
             foreach (var node in nodes)
             {
-                if (node == null) continue;
+                if (node == null || node.prerequisites == null) continue;
 
-                if (node.prerequisites != null)
+                foreach (var prereq in node.prerequisites)
                 {
-                    foreach (var prereq in node.prerequisites)
+                    if (prereq == null) continue;
+                    if (!drawnConnections.Add(GetConnectionKey(prereq.nodeID, node.nodeID))) continue;
+
+                    if (nodeUIMap.TryGetValue(prereq, out var fromRect) &&
+                        nodeUIMap.TryGetValue(node, out var toRect))
                     {
-                        if (prereq == null) continue;
-
-                        string connectionKey = GetConnectionKey(prereq.nodeID, node.nodeID);
-                        if (drawnConnections.Contains(connectionKey)) continue;
-                        drawnConnections.Add(connectionKey);
-
-                        if (nodeUIMap.TryGetValue(prereq, out var fromRect) &&
-                            nodeUIMap.TryGetValue(node, out var toRect))
-                        {
-                            DrawLine(parent, fromRect, toRect, GetLineColor(node, prereq));
-                        }
-                    }
-                }
-
-                foreach (var otherNode in nodes)
-                {
-                    if (otherNode == null || otherNode == node || otherNode.prerequisites == null) continue;
-
-                    foreach (var prereq in otherNode.prerequisites)
-                    {
-                        if (prereq == null || prereq.nodeID != node.nodeID) continue;
-
-                        string connectionKey = GetConnectionKey(node.nodeID, otherNode.nodeID);
-                        if (drawnConnections.Contains(connectionKey)) continue;
-                        drawnConnections.Add(connectionKey);
-
-                        if (nodeUIMap.TryGetValue(node, out var fromRect) &&
-                            nodeUIMap.TryGetValue(otherNode, out var toRect))
-                        {
-                            DrawLine(parent, fromRect, toRect, GetLineColor(otherNode, node));
-                        }
+                        DrawLine(parent, fromRect, toRect, GetLineColor(node, prereq));
                     }
                 }
             }
+
+            HideUnusedLines();
+        }
+
+        private void HideUnusedLines()
+        {
+            for (int i = usedLines; i < activeLines.Count; i++)
+                if (activeLines[i] != null) activeLines[i].gameObject.SetActive(false);
         }
 
         private static string GetConnectionKey(string nodeA, string nodeB)
@@ -104,8 +87,6 @@ namespace CrystalFlux.SkillTree
             return transform as RectTransform;
         }
 
-        // Connections are undirected at runtime (CanUnlock walks prerequisites both ways),
-        // so the line color must consider both endpoints, not just the child.
         private Color GetLineColor(SkillNodeDef node, SkillNodeDef prereq)
         {
             if (manager == null) return lockedColor;
@@ -133,12 +114,9 @@ namespace CrystalFlux.SkillTree
             float dist = dir.magnitude;
             if (dist < 0.01f) return;
 
-            var go = new GameObject("SkillTreeLine", typeof(RectTransform), typeof(Image));
-            var rt = (RectTransform)go.transform;
-            rt.SetParent(parent, false);
-            rt.SetAsFirstSibling();
+            Image image = AcquireLine(parent);
+            var rt = (RectTransform)image.transform;
 
-            var image = go.GetComponent<Image>();
             image.sprite = lineSprite != null ? lineSprite : GetDefaultSprite();
             image.color = color;
             image.raycastTarget = false;
@@ -148,8 +126,39 @@ namespace CrystalFlux.SkillTree
             rt.sizeDelta = new Vector2(dist, lineWidth);
             rt.localPosition = new Vector3((fromLocal.x + toLocal.x) * 0.5f, (fromLocal.y + toLocal.y) * 0.5f, 0f);
             rt.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+        }
 
+        private Image AcquireLine(RectTransform parent)
+        {
+            while (usedLines < activeLines.Count && activeLines[usedLines] == null)
+                activeLines.RemoveAt(usedLines);
+
+            if (usedLines < activeLines.Count)
+            {
+                Image existing = activeLines[usedLines++];
+                if (existing.transform.parent != parent) existing.transform.SetParent(parent, false);
+                existing.gameObject.SetActive(true);
+                existing.rectTransform.SetAsFirstSibling();
+                return existing;
+            }
+
+            var go = new GameObject("SkillTreeLine", typeof(RectTransform), typeof(Image));
+            var rt = (RectTransform)go.transform;
+            rt.SetParent(parent, false);
+            rt.SetAsFirstSibling();
+
+            Image image = go.GetComponent<Image>();
             activeLines.Add(image);
+            usedLines++;
+            return image;
+        }
+
+        private void OnDestroy()
+        {
+            activeLines.Clear();
+            nodeUIMap.Clear();
+            drawnConnections.Clear();
+            defaultSprite = null;
         }
 
         private static Sprite GetDefaultSprite()

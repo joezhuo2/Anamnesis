@@ -16,6 +16,9 @@ namespace CrystalFlux.ProjectileSystem
             void AddDamageIfValid(DamageType type, float mult)
             {
                 float addMultPct = DamageCalculator.GetAdditionalScaling(snapshot, type);
+
+                if (mult == 0f && addMultPct == 0f) return;
+
                 float dmgMult = 1f + (snapshot.damagePct * 0.01f);
                 float finalMult = mult + (addMultPct * 0.01f);
 

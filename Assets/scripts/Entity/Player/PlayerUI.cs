@@ -65,13 +65,22 @@ namespace CrystalFlux.EntitySystem
             UpdateStaminaBar();
         }
 
+        private static void SetBar(Slider bar, TextMeshProUGUI label, int value, int max)
+        {
+            if (bar != null)
+            {
+                bar.maxValue = max;
+                bar.value = value;
+            }
+
+            if (label != null) label.text = $"{value}/{max}";
+        }
+
         private void UpdateManaBar()
         {
             if (CurMana == lastMana && MaxMana == lastMaxMana) return;
 
-            manaBar.maxValue = MaxMana;
-            manaBar.value = CurMana;
-            manaText.text = $"{CurMana}/{MaxMana}";
+            SetBar(manaBar, manaText, CurMana, MaxMana);
 
             lastMana = CurMana;
             lastMaxMana = MaxMana;
@@ -80,12 +89,8 @@ namespace CrystalFlux.EntitySystem
         {
             if (!Alive)
             {
-                if (healthUI.value != 0)
-                {
-                    healthUI.maxValue = MaxHp;
-                    healthUI.value = 0;
-                    healthText.text = $"0/{MaxHp}";
-                }
+                if (healthUI == null || healthUI.value != 0)
+                    SetBar(healthUI, healthText, 0, MaxHp);
 
                 lastHp = 0;
                 lastMaxHp = MaxHp;
@@ -94,9 +99,7 @@ namespace CrystalFlux.EntitySystem
 
             if (CurHp == lastHp && MaxHp == lastMaxHp) return;
 
-            healthUI.maxValue = MaxHp;
-            healthUI.value = CurHp;
-            healthText.text = $"{CurHp}/{MaxHp}";
+            SetBar(healthUI, healthText, CurHp, MaxHp);
 
             lastHp = CurHp;
             lastMaxHp = MaxHp;
@@ -105,9 +108,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (!Alive || (CurStamina == lastStamina && MaxStamina == lastMaxStamina)) return;
 
-            staminaUI.maxValue = MaxStamina;
-            staminaUI.value = CurStamina;
-            staminaText.text = $"{CurStamina}/{MaxStamina}";
+            SetBar(staminaUI, staminaText, CurStamina, MaxStamina);
 
             lastStamina = CurStamina;
             lastMaxStamina = MaxStamina;
@@ -116,10 +117,14 @@ namespace CrystalFlux.EntitySystem
         {
             if (!Alive || (Level == lastLevel && Mathf.Abs(Xp - lastXp) < 0.01f)) return;
 
-            xpBar.maxValue = XpReq;
-            xpBar.value = Xp;
-            levelText.text = $"Lv.{Level}";
-            xpText.text = $"{Xp:F0}/{XpReq:F0}";
+            if (xpBar != null)
+            {
+                xpBar.maxValue = XpReq;
+                xpBar.value = Xp;
+            }
+
+            if (levelText != null) levelText.text = $"Lv.{Level}";
+            if (xpText != null) xpText.text = $"{Xp:F0}/{XpReq:F0}";
 
             lastLevel = Level;
             lastXp = Xp;

@@ -15,21 +15,17 @@ public class StatModifierInstance : AnomalyInstance
         StatType.moveSpeedPct
     };
 
+    private string description;
+
     public StatModifierInstance(AnomalyData data) : base(data)
     {
         selectedStat = CommonStats[Random.Range(0, CommonStats.Length)];
         boostAmount = Mathf.Round(Random.Range(data.anomalyMinVal, data.anomalyMaxVal));
 
-        UpdateDescription();
+        description = $"All enemies in the wave gain +{boostAmount}% {GetStatDisplayName(selectedStat)}";
     }
 
-    private void UpdateDescription()
-    {
-        if (amd == null) return;
-
-        string statName = GetStatDisplayName(selectedStat);
-        amd.desc = $"All enemies in the wave gain +{boostAmount}% {statName}";
-    }
+    public override string Description => description;
 
     private string GetStatDisplayName(StatType type)
     {

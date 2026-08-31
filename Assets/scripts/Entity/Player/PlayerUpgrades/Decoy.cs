@@ -18,7 +18,7 @@ public class Decoy : PlayerUpgrade
     {
         if (player == null) return;
 
-        GameObject decoy = new("Decoy") { tag = "Player" };
+        GameObject decoy = new("Decoy");
         decoy.transform.SetPositionAndRotation(player.transform.position + spawnOffset, player.transform.rotation);
         decoy.transform.localScale = player.transform.localScale;
 
@@ -39,16 +39,17 @@ public class Decoy : PlayerUpgrade
 
         decoyRenderer.color = tint;
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        var enemies = EnemyMovement.Active;
 
-        foreach (var e in enemies)
+        for (int i = 0; i < enemies.Count; i++)
         {
-            if (!e.TryGetComponent<IStatProvider>(out var esm)) continue;
+            EnemyMovement em = enemies[i];
+            if (em == null || !em.TryGetComponent<IStatProvider>(out var esm)) continue;
 
             float maxDist = esm.GetStat(StatType.DetectionRange);
-            float dist = Vector2.Distance(decoy.transform.position, e.transform.position);
+            float dist = Vector2.Distance(decoy.transform.position, em.transform.position);
 
-            if (dist < maxDist && e.TryGetComponent<EnemyMovement>(out var em)) em.SetTarget(decoy);
+            if (dist < maxDist) em.SetTarget(decoy);
         }
 
         if (cooldownEffect != null && player.TryGetComponent<IStatusEffectReceiver>(out var sem))

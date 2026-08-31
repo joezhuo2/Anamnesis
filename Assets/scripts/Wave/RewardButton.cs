@@ -40,12 +40,12 @@ namespace CrystalFlux.WaveSystem
                 reward.GetDescription(),
                 statChangeLine
             };
-            descriptionText.text = string.Join("\n", descLines);
+            if (descriptionText != null) descriptionText.text = string.Join("\n", descLines);
 
             if (reward.rd != null)
             {
                 if (borderHighlight != null) borderHighlight.color = reward.rd.displayColor;
-                titleText.text = reward.br.baseBuff.ToString();
+                if (titleText != null) titleText.text = reward.br.baseBuff.ToString();
             }
 
             if (iconImage != null && reward.br.icon != null)
@@ -72,9 +72,9 @@ namespace CrystalFlux.WaveSystem
                 statChangeLine,
                 $"Corrupted: {corruptMult:F2}x"
             };
-            descriptionText.text = string.Join("\n", descLines);
+            if (descriptionText != null) descriptionText.text = string.Join("\n", descLines);
 
-            borderHighlight.color = corruptMult < 0f ? Color.darkRed : Color.darkGreen;
+            if (borderHighlight != null) borderHighlight.color = corruptMult < 0f ? Color.darkRed : Color.darkGreen;
 
             isCorrupted = true;
 
@@ -93,8 +93,8 @@ namespace CrystalFlux.WaveSystem
             onAttackClaimedCallback = claimCallback;
             type = RewardType.Rare;
 
-            titleText.text = attackReward.attackName;
-            descriptionText.text = attackReward.desc;
+            if (titleText != null) titleText.text = attackReward.attackName;
+            if (descriptionText != null) descriptionText.text = attackReward.desc;
 
             if (borderHighlight != null) borderHighlight.color = Color.red;
 
@@ -116,8 +116,8 @@ namespace CrystalFlux.WaveSystem
             onPlayerUpgradeClaimedCallback = claimCallback;
             type = RewardType.Treasure;
 
-            titleText.text = upgradeReward.upgradeName;
-            descriptionText.text = upgradeReward.desc;
+            if (titleText != null) titleText.text = upgradeReward.upgradeName;
+            if (descriptionText != null) descriptionText.text = upgradeReward.desc;
 
             if (borderHighlight != null) borderHighlight.color = Color.purple;
 
@@ -139,8 +139,8 @@ namespace CrystalFlux.WaveSystem
             onMilestoneClaimedCallback = claimCallback;
             type = RewardType.Milestone;
 
-            titleText.text = milestoneReward.rewardName;
-            descriptionText.text = milestoneReward.GetDescription();
+            if (titleText != null) titleText.text = milestoneReward.rewardName;
+            if (descriptionText != null) descriptionText.text = milestoneReward.GetDescription();
 
             if (borderHighlight != null) borderHighlight.color = Color.teal;
 

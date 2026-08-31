@@ -18,19 +18,28 @@ namespace CrystalFlux.EntitySystem
 
         public void Setup(string bossName, IStatProvider esm)
         {
-            bossNameText.text = bossName;
+            if (bossNameText != null) bossNameText.text = bossName;
             bsm = esm;
+
+            if (bsm == null)
+            {
+                Debug.LogError($"BossBarUI '{name}' was set up without a stat provider.", this);
+                return;
+            }
 
             cMaxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
             cCurHp = Mathf.RoundToInt(bsm.GetStat(StatType.currentHp));
 
-            healthSlider.maxValue = cMaxHp;
-            healthSlider.value = cMaxHp;
+            if (healthSlider != null)
+            {
+                healthSlider.maxValue = cMaxHp;
+                healthSlider.value = cCurHp;
+            }
 
             if (fillImage != null && cMaxHp > 0)
                 fillImage.fillAmount = (float)cCurHp / cMaxHp;
 
-            bossHPText.text = $"{cCurHp}/{cMaxHp}";
+            if (bossHPText != null) bossHPText.text = $"{cCurHp}/{cMaxHp}";
         }
 
         private void Update()
@@ -41,13 +50,16 @@ namespace CrystalFlux.EntitySystem
             int maxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
             if (cCurHp == curHp && cMaxHp == maxHp) return;
 
-            if (cCurHp != curHp) healthSlider.value = curHp;
-            if (cMaxHp != maxHp) healthSlider.maxValue = maxHp;
+            if (healthSlider != null)
+            {
+                if (cMaxHp != maxHp) healthSlider.maxValue = maxHp;
+                if (cCurHp != curHp) healthSlider.value = curHp;
+            }
 
-            if (fillImage != null && cMaxHp > 0)
+            if (fillImage != null && maxHp > 0)
                 fillImage.fillAmount = (float)curHp / maxHp;
 
-            bossHPText.text = $"{curHp}/{maxHp}";
+            if (bossHPText != null) bossHPText.text = $"{curHp}/{maxHp}";
 
             cCurHp = curHp;
             cMaxHp = maxHp;

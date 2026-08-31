@@ -99,10 +99,11 @@ InitTestScene*.unity*
 /[Aa]ssets/AddressableAssetsData/*/*.bin*
 
 # Project-specific ignores
-AGENTS.md
-CLAUDE.md
-.claudeignore
 repomix-output.xml
+diff_output.txt
+
+## graphify generated output (graph, report, AST cache)
+/graphify-out/
 
 # Visual Scripting auto-generated files
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
@@ -114,9 +115,6 @@ repomix-output.xml
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 #############################################################################
-/Anamnesis.slnx
-.gitattributes
-/Packages
 
 ## output folders from build processes
 /Output/
@@ -126,6 +124,3 @@ repomix-output.xml
 
 ## recovery assets
 /Assets/_Recovery/
-
-## github copilot
-/.github/

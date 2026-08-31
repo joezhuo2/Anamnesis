@@ -27,7 +27,6 @@ namespace CrystalFlux.UISystem
             if (TooltipUI.Instance != null) TooltipUI.Instance.HideTooltip();
         }
 
-
         public void ShowTooltip(string title, string description, Vector2 offset = default)
         {
             this.title = title;

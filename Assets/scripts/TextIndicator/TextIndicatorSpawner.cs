@@ -16,12 +16,29 @@ namespace CrystalFlux.Core
 
         void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             Instance = this;
             InitializePool();
         }
 
+        private void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
+        }
+
         private void InitializePool()
         {
+            if (prefab == null || canvas == null)
+            {
+                Debug.LogError($"TextIndicatorSpawner on '{name}' needs both a prefab and a canvas assigned.", this);
+                return;
+            }
+
             for (int i = 0; i < initialPoolSize; i++)
             {
                 var indicator = Instantiate(prefab, canvas.transform);
@@ -31,7 +48,15 @@ namespace CrystalFlux.Core
         }
 
         public void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false, bool isGold = false)
-            => StartCoroutine(SpawnAfterDelay(damage, sourcePos, color, scale, lifetime, floatSpeed, delay, xpWrapperText, isGold));
+        {
+            if (delay <= 0f)
+            {
+                SpawnTextIndicator(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText, isGold);
+                return;
+            }
+
+            StartCoroutine(SpawnAfterDelay(damage, sourcePos, color, scale, lifetime, floatSpeed, delay, xpWrapperText, isGold));
+        }
 
         private IEnumerator SpawnAfterDelay(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false, bool isGold = false)
         {
@@ -41,6 +66,8 @@ namespace CrystalFlux.Core
 
         private void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false, bool isGold = false)
         {
+            if (prefab == null || canvas == null) return;
+
             TextIndicator indicator;
 
             if (_pool.Count > 0)

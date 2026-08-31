@@ -13,13 +13,18 @@ MonoBehaviour:
   m_Name: Supersonic PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 875b8effd80e1cf418e1558599cc29b5, type: 2}
-  speed: 9
   lifetime: 1
-  numPierce: 3000
   size: 1.5
+  numPierce: 3000
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 9
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
   spellMult: 0
-  trueMult: 0.85
+  trueMult: 1.1
   scalingStat: 24
   specialMult: 1
   specialSclaing: 0
@@ -36,7 +41,11 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
-  effects: []
+  effects:
+  - effect: {fileID: 11400000, guid: 250277c2dfedd4246aedf91ddab8d9f4, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 0.6
   orbitRadius: 0
   randOrbRadOffset: 0
   orbitSelf: 0

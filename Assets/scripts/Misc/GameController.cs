@@ -18,6 +18,11 @@ public class GameController : MonoBehaviour, IAnnouncer
         SetupEventSystem();
     }
 
+    private void OnDestroy()
+    {
+        if (ReferenceEquals(IAnnouncer.Current, this)) IAnnouncer.Current = null;
+    }
+
     private void SetupEventSystem()
     {
         if (FindAnyObjectByType<UnityEngine.EventSystems.EventSystem>() == null)
@@ -31,7 +36,7 @@ public class GameController : MonoBehaviour, IAnnouncer
 
     private void Start()
     {
-        UIPanel.SetActive(true);
+        if (UIPanel != null) UIPanel.SetActive(true);
         SetTitleForDuration("Anamnesis", 8f, 1f, 1f);
         SetSubtitleForDuration("Conquer the waves", 8f, 1f, 1f);
     }
@@ -88,7 +93,7 @@ public class GameController : MonoBehaviour, IAnnouncer
         if (font != null) text.font = font;
         text.color = color;
 
-        if (fadeInTime > 0f)  yield return FadeRoutine(text, 0f, 1f, fadeInTime); 
+        if (fadeInTime > 0f)  yield return FadeRoutine(text, 0f, 1f, fadeInTime);
         else SetAlpha(text, 1f);
 
         yield return new WaitForSeconds(duration);

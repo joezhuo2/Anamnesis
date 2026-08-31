@@ -44,7 +44,7 @@ namespace CrystalFlux.EntitySystem
             if (attacks != null)
             {
                 foreach (var attack in attacks)
-                    if (attack != null && attack.IsRuntimeCopy) DestroyImmediate(attack, true);
+                    if (attack != null && attack.IsRuntimeCopy) Destroy(attack);
                 attacks.Clear();
             }
 
@@ -60,8 +60,6 @@ namespace CrystalFlux.EntitySystem
             spawnedUIElements.Clear();
         }
 
-        // Runtime copies are Instantiate()d, so their name gains a "(Clone)" suffix (nested clones stack it).
-        // Requirement checks compare against the source asset name, so strip the suffix before comparing.
         public static string NormalizeAttackName(string n)
         {
             if (string.IsNullOrEmpty(n)) return string.Empty;
@@ -89,7 +87,7 @@ namespace CrystalFlux.EntitySystem
         {
             for (int i = 0; i < attacks.Count; i++)
             {
-                if (attacks[i].type == type)
+                if (attacks[i] != null && attacks[i].type == type)
                     return attacks[i];
             }
             return null;
@@ -168,6 +166,8 @@ namespace CrystalFlux.EntitySystem
 
         private void TriggerUpgradesOnAttack(AttackType type)
         {
+            if (pum == null) return;
+
             pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);
 
             switch (type)
@@ -190,7 +190,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (attack == null) return false;
 
-            pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
+            if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
 
             var (hp, sp, mp) = GetCosts(attack, esm);
             (hp, sp) = HandleHexCast(hp, sp);
@@ -235,7 +235,7 @@ namespace CrystalFlux.EntitySystem
 
             attacks.Add(runtimeAttackCopy);
 
-            if (pum.HasUpgradeOfType<SoulRendPU>() && (type == AttackType.Basic || type == AttackType.Skill))
+            if (pum != null && pum.HasUpgradeOfType<SoulRendPU>() && (type == AttackType.Basic || type == AttackType.Skill))
                 pum.GetPlayerUpgradeOfType<SoulRendPU>().OnUnlock(gameObject);
 
             if (spawnedUIElements.ContainsKey(type))
@@ -265,7 +265,7 @@ namespace CrystalFlux.EntitySystem
 
         private (int finalHpCost, int finalStaminaCost) HandleHexCast(float hpCost, float staminaCost)
         {
-            if (!pum.HasUpgradeOfType<HexCast>() || esm.GetStat(StatType.CurrentStamina) >= staminaCost)
+            if (pum == null || !pum.HasUpgradeOfType<HexCast>() || esm.GetStat(StatType.CurrentStamina) >= staminaCost)
                 return (Mathf.RoundToInt(hpCost), Mathf.RoundToInt(staminaCost));
 
             float missingStamina = staminaCost - esm.GetStat(StatType.CurrentStamina);
@@ -314,9 +314,10 @@ namespace CrystalFlux.EntitySystem
                 AttackType.Ultimate => esm.GetStat(StatType.ultCdRedPct),
                 _ => 0f
             };
+
             return attack.cooldown *
                 Mathf.Clamp(1f - (esm.GetStat(StatType.attackSpeedPct) * 0.01f), 0.3f, 10f) *
-                Mathf.Clamp(1f - (cdrPct * 0.01f), 0.1f, 0.9f);
+                Mathf.Clamp(1f - (cdrPct * 0.01f), 0.1f, 1f);
         }
     }
 }

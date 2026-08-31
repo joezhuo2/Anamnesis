@@ -24,10 +24,12 @@ namespace CrystalFlux.SkillTree
 
         private void OnToggleSkillTree(InputAction.CallbackContext ctx) => ToggleSkillTree();
 
+        private SkillTreeUI cachedUI;
+
         private void ToggleSkillTree()
         {
-            var skillTreeUI = FindAnyObjectByType<SkillTreeUI>(FindObjectsInactive.Include);
-            if (skillTreeUI != null) skillTreeUI.Toggle(gameObject);
+            if (cachedUI == null) cachedUI = FindAnyObjectByType<SkillTreeUI>(FindObjectsInactive.Include);
+            if (cachedUI != null) cachedUI.Toggle(gameObject);
         }
     }
 }

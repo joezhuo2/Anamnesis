@@ -11,10 +11,18 @@ namespace CrystalFlux.ProjectileSystem
 
         public static event System.Action<GameObject, GameObject, Vector2> ProjectileSpawned;
 
+        private static Camera cachedMainCam;
+        private static Camera MainCam => cachedMainCam != null ? cachedMainCam : cachedMainCam = Camera.main;
+
         void Awake()
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
         }
 
         public GameObject SpawnProjectile(
@@ -51,7 +59,7 @@ namespace CrystalFlux.ProjectileSystem
 
         public IEnumerator SpawnCircle(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 center, float radius, GameObject sourceObj = null)
         {
-            int finalCount = ad.projectileCount + Random.Range(0, ad.randomCount + 1);
+            int finalCount = Mathf.Max(1, ad.projectileCount + Random.Range(0, ad.randomCount + 1));
             float startAngle = ad.spread + Random.Range(-ad.randomSpread / 2f, ad.randomSpread / 2f);
 
             for (int i = 0; i < finalCount; i++)
@@ -202,13 +210,19 @@ namespace CrystalFlux.ProjectileSystem
             float? distOverride = null
         )
         {
-            Vector2 mouse = Camera.main.ScreenToWorldPoint(InputState.mousePos);
+            if (source == null && center == null) yield break;
+
+            bool aimsAtMouse = source != null && source.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1;
 
             Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
-            Vector2 dir = dirOverride ?? (source.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1 ? (mouse - spawnCenter).normalized : Vector2.right);
+
+            Vector2 mouse = spawnCenter;
+            if (aimsAtMouse && MainCam != null) mouse = MainCam.ScreenToWorldPoint(InputState.mousePos);
+
+            Vector2 dir = dirOverride ?? (aimsAtMouse ? (mouse - spawnCenter).normalized : Vector2.right);
             float finalDist = distOverride ?? (ad != null ? ad.spawnDistance : 0f);
 
-            if (ad != null && !ad.fixedDistance && source.TryGetComponent<ITeamMember>(out var itm2) && itm2.TeamID == 1)
+            if (ad != null && !ad.fixedDistance && aimsAtMouse)
             {
                 float mouseDist = Vector2.Distance(spawnCenter, mouse);
                 finalDist = Mathf.Min(mouseDist, finalDist);

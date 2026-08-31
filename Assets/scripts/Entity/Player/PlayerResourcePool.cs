@@ -55,7 +55,6 @@ namespace CrystalFlux.EntitySystem
             if (amount > 0 && esm.GetStat(StatType.CanGainMana) <= 0f) return false;
             if (esm.GetStat(StatType.CurrentMana) + amount < 0f) return false;
 
-
             int newMana = Math.Min(
                 Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana) + amount),
                 Mathf.RoundToInt(esm.GetStat(StatType.EffMaxMana))
@@ -95,7 +94,7 @@ namespace CrystalFlux.EntitySystem
 
         public void RegenStamina()
         {
-            if (esm == null || esm.GetStat(StatType.isAlive) <= 0f) return; 
+            if (esm == null || esm.GetStat(StatType.isAlive) <= 0f) return;
             if (esm.GetStat(StatType.CurrentStamina) >= esm.GetStat(StatType.EffMaxStamina)) return;
             if (esm.GetStat(StatType.CanGainStamina) <= 0f || esm.GetStat(StatType.EffStReg) == 0) return;
 

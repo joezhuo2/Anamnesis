@@ -8,7 +8,7 @@ namespace CrystalFlux.StatusEffectSystem
     {
         public override void OnApply()
         {
-            if (target.TryGetComponent<IStatProvider>(out var esm))
+            if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
             {
                 esm.AddStat(new(StatType.CanAttack, -1f));
                 esm.AddStat(new(StatType.CanMove, -1f));
@@ -17,7 +17,7 @@ namespace CrystalFlux.StatusEffectSystem
         }
         public override void OnExpire()
         {
-            if (target.TryGetComponent<IStatProvider>(out var esm))
+            if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
             {
                 esm.AddStat(new(StatType.CanAttack, 1f));
                 esm.AddStat(new(StatType.CanMove, 1f));

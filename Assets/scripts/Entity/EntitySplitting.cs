@@ -6,14 +6,15 @@ namespace CrystalFlux.EntitySystem
     {
         public GameObject prefab;
         public int splitLevel;
-        public float splitChance = 1f;
+        [Tooltip("Chance (0-1) to split on death, matching summonChance and EffectData.chance. 0 = never.")]
+        [Range(0f, 1f)] public float splitChance = 1f;
         public int minSplits;
         public int maxSplits;
         public float splitRadius;
 
         public void Split()
         {
-            if (Random.value < splitChance * 0.01f)
+            if (Random.value <= splitChance)
             {
                 int numSplits = Random.Range(minSplits, maxSplits + 1);
                 for (int i = 0; i < numSplits; i++)

@@ -5,7 +5,7 @@
 - [ ] map borders
 - [ ] Tilemaps
 - [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)
-- [ ] skill tree 'capstone' nodes - upgrading existing Awakenings/Attacks (Warp done) and/or introducing new ones
+- [ ] skill tree 'capstone' nodes - upgrading existing Awakenings/Attacks (Warp, Cosmic Superimposition done) and/or introducing new ones
 - [ ] Wave 60 boss and enemies, and Boss Rush Extension
 - [ ] Pause menu with resume/restart/home/quit, settings/controls menu
 

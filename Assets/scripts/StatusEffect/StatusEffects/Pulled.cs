@@ -15,7 +15,7 @@ namespace CrystalFlux.StatusEffectSystem
         public bool pullToSource = false;
 
         [HideInInspector] public Vector2 pullCenter;
-        private bool wasMovementDisabled;
+        private bool heldMovement;
 
         public override void OnApply()
         {
@@ -25,7 +25,7 @@ namespace CrystalFlux.StatusEffectSystem
 
             if (disableMovement && target != null && target.TryGetComponent<IStatProvider>(out var esm))
             {
-                wasMovementDisabled = esm.GetStat(StatType.CanMove) < 0.5f;
+                heldMovement = true;
                 esm.AddStat(new StatBuff(StatType.CanMove, -1f));
             }
         }
@@ -58,9 +58,9 @@ namespace CrystalFlux.StatusEffectSystem
 
         public override void OnExpire()
         {
-            if (disableMovement && !wasMovementDisabled && target != null
-                && target.TryGetComponent<IStatProvider>(out var esm))
+            if (heldMovement && target != null && target.TryGetComponent<IStatProvider>(out var esm))
             {
+                heldMovement = false;
                 esm.AddStat(new StatBuff(StatType.CanMove, 1f));
             }
         }

@@ -17,7 +17,7 @@ namespace CrystalFlux.EntitySystem
         [HideInInspector] public float lastDashTime;
         private float dashTravelled;
         private Vector2 dashDir;
-        [HideInInspector] public static int playerDir = 1; // 1 => facing right, -1 => facing left
+        [HideInInspector] public static int playerDir = 1;
         private PlayerUpgradeManager pum;
         private IStatProvider esm;
         private bool Dashing => esm.GetStat(StatType.IsDashing) > 0f;
@@ -36,6 +36,8 @@ namespace CrystalFlux.EntitySystem
             esm.AddStat(new StatBuff(StatType.IsDashing, 0f));
 
             lastDashTime = -Mathf.Infinity;
+
+            playerDir = transform.localScale.x < 0f ? -1 : 1;
 
             if (dashCooldownUI != null && dashCooldownUI.TryGetComponent<PlayerDashCooldownUI>(out var pdcui))
                 pdcui.Setup(this, esm);
@@ -60,7 +62,6 @@ namespace CrystalFlux.EntitySystem
 
             float inputMag = moveInput.magnitude;
 
-
             if (!Dashing && ((moveInput.x > 0 && transform.localScale.x < 0) || (moveInput.x < 0 && transform.localScale.x > 0)))
             {
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
@@ -71,9 +72,10 @@ namespace CrystalFlux.EntitySystem
             animator.SetFloat(SpeedHash, inputMag);
         }
 
-        private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, esm.GetStat(StatType.kbRes));
+        private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, Time.fixedDeltaTime);
 
-        public void ApplyKnockback(Vector2 d, float f, float t) => KnockbackHandler.ApplyKnockback(currentForces, d, f, t);
+        public void ApplyKnockback(Vector2 d, float f, float t)
+            => KnockbackHandler.ApplyKnockback(currentForces, d, f, t, esm.GetStat(StatType.kbRes));
 
         public void TryStartDash()
         {
@@ -102,7 +104,15 @@ namespace CrystalFlux.EntitySystem
         }
         private System.Collections.IEnumerator DashRoutine(float dashSpeed)
         {
-            while (dashTravelled < esm.GetStat(StatType.EffDashDistance))
+            float distance = esm.GetStat(StatType.EffDashDistance);
+
+            if (dashSpeed <= 0f || distance <= 0f)
+            {
+                EndDash();
+                yield break;
+            }
+
+            while (dashTravelled < distance)
             {
                 dashTravelled += dashSpeed * Time.fixedDeltaTime;
                 yield return new WaitForFixedUpdate();

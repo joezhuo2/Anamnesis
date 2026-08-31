@@ -14,11 +14,14 @@ namespace CrystalFlux.SkillTree
         [HideInInspector] public bool choseStarting;
         private readonly HashSet<string> unlockedNodes = new();
         private List<SkillNodeDef> allNodes = new();
+        private readonly Dictionary<string, SkillNodeDef> nodesById = new();
+        private readonly Dictionary<string, List<SkillNodeDef>> neighbours = new();
+        private static readonly List<SkillNodeDef> EmptyNodes = new();
 
         private void Awake()
         {
             if (definition != null && definition.allNodes != null)
-                allNodes = definition.allNodes;
+                allNodes = new List<SkillNodeDef>(definition.allNodes);
             GenerateRuntimeNodes();
         }
 
@@ -30,7 +33,7 @@ namespace CrystalFlux.SkillTree
             {
                 if (node == null) continue;
 
-                DestroyImmediate(node, true);
+                Destroy(node);
             }
             runtimeNodes.Clear();
         }
@@ -60,8 +63,51 @@ namespace CrystalFlux.SkillTree
             }
 
             UpdateRuntimeNodeRequirements(runtimeNodeMap);
+            BuildAdjacency();
             RestoreUnlockedNodes();
         }
+
+        private void BuildAdjacency()
+        {
+            nodesById.Clear();
+            neighbours.Clear();
+
+            foreach (var n in runtimeNodes)
+            {
+                if (n == null || string.IsNullOrEmpty(n.nodeID)) continue;
+
+                nodesById[n.nodeID] = n;
+                if (!neighbours.ContainsKey(n.nodeID)) neighbours[n.nodeID] = new List<SkillNodeDef>();
+            }
+
+            foreach (var n in runtimeNodes)
+            {
+                if (n == null || n.prerequisites == null || string.IsNullOrEmpty(n.nodeID)) continue;
+
+                foreach (var prereq in n.prerequisites)
+                {
+                    if (prereq == null || string.IsNullOrEmpty(prereq.nodeID)) continue;
+                    if (prereq.nodeID == n.nodeID) continue;
+
+                    Link(n.nodeID, prereq);
+                    Link(prereq.nodeID, n);
+                }
+            }
+        }
+
+        private void Link(string id, SkillNodeDef other)
+        {
+            if (!neighbours.TryGetValue(id, out var list))
+            {
+                list = new List<SkillNodeDef>();
+                neighbours[id] = list;
+            }
+
+            if (!list.Contains(other)) list.Add(other);
+        }
+
+        private List<SkillNodeDef> Neighbours(string id)
+            => id != null && neighbours.TryGetValue(id, out var list) ? list : EmptyNodes;
 
         private void UpdateRuntimeNodeRequirements(Dictionary<SkillNodeDef, SkillNodeDef> runtimeNodeMap)
         {
@@ -115,68 +161,34 @@ namespace CrystalFlux.SkillTree
 
             if (!node.isStartingNode)
             {
+                var connected = Neighbours(node.nodeID);
+
+                if (connected.Count == 0) return (false, "Node has no connections");
 
                 bool hasUnlockedConnection = false;
-                string missingConnectionMsg = "No connected nodes unlocked";
-
-                if (node.prerequisites != null && node.prerequisites.Count > 0)
+                foreach (var nb in connected)
                 {
-                    foreach (var prereq in node.prerequisites)
+                    if (nb != null && unlockedNodes.Contains(nb.nodeID))
                     {
-                        if (prereq != null && unlockedNodes.Contains(prereq.nodeID))
-                        {
-                            hasUnlockedConnection = true;
-                            break;
-                        }
-                    }
-                    if (!hasUnlockedConnection)
-                    {
-                        var prereqNames = node.prerequisites.Where(p => p != null).Select(p => p.nodeName);
-                        missingConnectionMsg = $"Requires one of: {string.Join(", ", prereqNames)}";
+                        hasUnlockedConnection = true;
+                        break;
                     }
                 }
 
                 if (!hasUnlockedConnection)
                 {
-                    foreach (var otherNode in runtimeNodes)
-                    {
-                        if (otherNode == null || otherNode == node) continue;
-                        if (otherNode.prerequisites != null)
-                        {
-                            foreach (var prereq in otherNode.prerequisites)
-                            {
-                                if (prereq != null && prereq.nodeID == node.nodeID && unlockedNodes.Contains(otherNode.nodeID))
-                                {
-                                    hasUnlockedConnection = true;
-                                    break;
-                                }
-                            }
-                            if (hasUnlockedConnection) break;
-                        }
-                    }
-                    if (!hasUnlockedConnection)
-                    {
-                        var reverseConnections = runtimeNodes
-                            .Where(n => n != null && n != node && n.prerequisites != null && n.prerequisites.Any(p => p != null && p.nodeID == node.nodeID))
-                            .Select(n => n.nodeName)
-                            .ToList();
-                        if (reverseConnections.Count > 0)
-                            missingConnectionMsg = $"Requires one of: {string.Join(", ", reverseConnections)}";
-                    }
+                    var names = connected.Where(n => n != null).Select(n => n.nodeName);
+                    return (false, $"Requires one of: {string.Join(", ", names)}");
                 }
-
-                bool hasAnyConnection = (node.prerequisites != null && node.prerequisites.Count > 0) ||
-                    runtimeNodes.Any(n => n != null && n != node && n.prerequisites != null && n.prerequisites.Any(p => p != null && p.nodeID == node.nodeID));
-
-                if (!hasAnyConnection) return (false, "Node has no connections");
-
-                if (!hasUnlockedConnection) return (false, missingConnectionMsg);
             }
 
             if (node.incompatibleNodes != null && node.incompatibleNodes.Count > 0)
             {
                 foreach (var n in node.incompatibleNodes)
+                {
+                    if (n == null) continue;
                     if (unlockedNodes.Contains(n.nodeID)) return (false, $"Incompatible node unlocked: {n.nodeName}");
+                }
             }
 
             if (node.requirements != null)
@@ -214,8 +226,42 @@ namespace CrystalFlux.SkillTree
 
             if (!TryGetComponent<ICurrencyHolder>(out var esm)) return (false, "No stat manager found");
             if (esm.CurrentAmount < node.undoCost) return (false, $"Not enough gold ({node.undoCost}g required)");
+            if (WouldStrandDependents(node)) return (false, "Other unlocked nodes depend on this one");
 
             return (true, string.Empty);
+        }
+
+        private bool WouldStrandDependents(SkillNodeDef removed)
+        {
+            var reachable = new HashSet<string>();
+            var pending = new Queue<string>();
+
+            foreach (var rn in runtimeNodes)
+            {
+                if (rn == null || !rn.isStartingNode) continue;
+                if (rn.nodeID == removed.nodeID || !unlockedNodes.Contains(rn.nodeID)) continue;
+
+                if (reachable.Add(rn.nodeID)) pending.Enqueue(rn.nodeID);
+            }
+
+            while (pending.Count > 0)
+            {
+                foreach (var nb in Neighbours(pending.Dequeue()))
+                {
+                    if (nb == null || nb.nodeID == removed.nodeID) continue;
+                    if (!unlockedNodes.Contains(nb.nodeID)) continue;
+
+                    if (reachable.Add(nb.nodeID)) pending.Enqueue(nb.nodeID);
+                }
+            }
+
+            foreach (var id in unlockedNodes)
+            {
+                if (id == removed.nodeID) continue;
+                if (!reachable.Contains(id)) return true;
+            }
+
+            return false;
         }
 
         public void UndoNode(SkillNodeDef node)

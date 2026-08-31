@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CrystalFlux.EntitySystem;
 using CrystalFlux.ProjectileSystem;
 using CrystalFlux.StatusEffectSystem;
@@ -27,11 +28,10 @@ public class SoulRendPU : PlayerUpgrade
     }
     public override void OnUnlock(GameObject player)
     {
+        if (soulRend == null) return;
+
         if (player.TryGetComponent<PlayerAttackHandler>(out var pah))
         {
-            AttackData basic = pah.FindAttackOfType(AttackType.Basic);
-            AttackData skill = pah.FindAttackOfType(AttackType.Skill);
-
             EffectData soulRendEffect = new EffectData
             {
                 effect = soulRend,
@@ -40,17 +40,20 @@ public class SoulRendPU : PlayerUpgrade
                 chance = 1f
             };
 
-            if (basic != null && basic.pd != null)
-            {
-                var bpd = basic.pd;
-                bpd.effects.Add(soulRendEffect);
-            }
-
-            if (skill != null && skill.pd != null)
-            {
-                var spd = skill.pd;
-                spd.effects.Add(soulRendEffect);
-            }
+            AddOnce(pah.FindAttackOfType(AttackType.Basic), soulRendEffect);
+            AddOnce(pah.FindAttackOfType(AttackType.Skill), soulRendEffect);
         }
+    }
+
+    private void AddOnce(AttackData attack, EffectData ed)
+    {
+        if (attack == null || attack.pd == null) return;
+
+        attack.pd.effects ??= new List<EffectData>();
+
+        foreach (var existing in attack.pd.effects)
+            if (existing.effect == ed.effect) return;
+
+        attack.pd.effects.Add(ed);
     }
 }

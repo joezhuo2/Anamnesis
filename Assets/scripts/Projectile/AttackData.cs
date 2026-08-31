@@ -143,7 +143,20 @@ namespace CrystalFlux.ProjectileSystem
         private void OnDestroy()
         {
             if (!isRuntimeCopy) return;
-            if (pd != null) Destroy(pd);
+
+            if (pd != null)
+            {
+                if (pd.effects != null)
+                {
+                    foreach (var ef in pd.effects)
+                        if (ef.effect != null) Destroy(ef.effect);
+                }
+
+                if (pd.additionalAttack != null && pd.additionalAttack != this) Destroy(pd.additionalAttack);
+
+                Destroy(pd);
+            }
+
             if (nextAttack != null) Destroy(nextAttack);
         }
         public override void GetTooltipLines(List<string> lines)

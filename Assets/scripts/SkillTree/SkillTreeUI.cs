@@ -14,6 +14,7 @@ namespace CrystalFlux.SkillTree
 
         private readonly Dictionary<SkillNodeDef, SkillNodeUI> nodeUIMap = new();
         private bool isOpen;
+        private float timeScaleBeforeOpen = 1f;
 
         void Awake()
         {
@@ -21,13 +22,10 @@ namespace CrystalFlux.SkillTree
             if (panZoom == null) panZoom = FindAnyObjectByType<SkillTreePanZoom>();
             if (lineRenderer == null) lineRenderer = FindAnyObjectByType<SkillTreeLineRenderer>();
             if (nodeContainer == null) nodeContainer = transform.Find("NodesContainer")?.GetComponent<RectTransform>();
-            gameObject.SetActive(false);
-        }
 
-        void Start()
-        {
-            if (manager != null && manager.tree != null)
-                BuildTree();
+            if (manager != null && manager.tree != null) BuildTree();
+
+            gameObject.SetActive(false);
         }
 
         public void Toggle(GameObject player)
@@ -41,13 +39,14 @@ namespace CrystalFlux.SkillTree
 
             if (isOpen)
             {
+                timeScaleBeforeOpen = Time.timeScale;
                 Time.timeScale = 0f;
 
                 BuildTree();
             }
             else
             {
-                Time.timeScale = 1f;
+                Time.timeScale = timeScaleBeforeOpen;
             }
         }
 
@@ -101,7 +100,8 @@ namespace CrystalFlux.SkillTree
             foreach (var nUI in nodeUIMap.Values)
                 if (nUI != null) nUI.RefreshVisuals();
 
-            if (lineRenderer != null) lineRenderer.Redraw(manager.tree.runtimeNodes);
+            if (lineRenderer != null && manager != null && manager.tree != null)
+                lineRenderer.Redraw(manager.tree.runtimeNodes);
         }
     }
 }

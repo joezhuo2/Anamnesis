@@ -43,7 +43,6 @@
   <Project Path="Unity.Splines.Editor.csproj" />
   <Project Path="Unity.PerformanceTesting.csproj" />
   <Project Path="Unity.2D.Tilemap.Extras.Editor.csproj" />
-  <Project Path="CrystalFlux.StatusEffect.csproj" />
   <Project Path="CrystalFlux.Core.csproj" />
   <Project Path="Unity.TextMeshPro.csproj" />
   <Project Path="Unity.TextMeshPro.Editor.csproj" />
@@ -68,6 +67,7 @@
   <Project Path="Unity.InputSystem.ForUI.csproj" />
   <Project Path="CrystalFlux.SkillTree.csproj" />
   <Project Path="Unity.Collections.CodeGen.csproj" />
+  <Project Path="CrystalFlux.StatusEffect.csproj" />
   <Project Path="Unity.2D.Tilemap.Extras.csproj" />
   <Project Path="Unity.2D.Animation.Runtime.csproj" />
   <Project Path="Unity.Mathematics.Editor.csproj" />

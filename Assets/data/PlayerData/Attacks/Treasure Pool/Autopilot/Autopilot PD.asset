@@ -18,7 +18,7 @@ MonoBehaviour:
   numPierce: 1
   destroyOnMaxPierce: 1
   movementType: 2
-  speed: 12
+  speed: 6
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 2
@@ -29,7 +29,7 @@ MonoBehaviour:
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0
-  followDistance: 1.5
+  followDistance: 0.5
   followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0

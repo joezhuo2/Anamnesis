@@ -121,6 +121,8 @@ namespace CrystalFlux.WaveSystem
 
         private void OnDestroy()
         {
+            if (ActiveManager == this) ActiveManager = null;
+
             if (currentAnomaly != null)
             {
                 currentAnomaly.Cleanup();
@@ -143,7 +145,7 @@ namespace CrystalFlux.WaveSystem
                     {
                         case AnomalyType.TimeTrial: UpdateAnomalyTimeInfo(); break;
                         case AnomalyType.NoDamage: anomalyInfoText.text = "No Damage Anomaly Active"; break;
-                        case AnomalyType.StatModifier: anomalyInfoText.text = currentAnomaly.amd.desc; break;
+                        case AnomalyType.StatModifier: anomalyInfoText.text = currentAnomaly.Description; break;
                         default: break;
                     }
                 }
@@ -278,10 +280,12 @@ namespace CrystalFlux.WaveSystem
             var enemy = EnemySpawning.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, spawnRadius, c.enemyLevel);
             if (enemy == null) return;
 
-            if (enemy.TryGetComponent<IStatProvider>(out var esm) && currentAnomaly is StatModifierInstance statMod)
+            bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
+
+            if (hasStats && currentAnomaly is StatModifierInstance statMod)
                 esm.AddStat(statMod.GetBuff());
 
-            if (c.bossBarPrefab != null && activeBossBar == null)
+            if (hasStats && c.bossBarPrefab != null && activeBossBar == null)
             {
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
                 activeBossBar = Instantiate(c.bossBarPrefab, spawnParent);
@@ -347,7 +351,7 @@ namespace CrystalFlux.WaveSystem
                 CachePlayerSkillTree();
                 if (cpst != null) cpst.AddSkillPoints(pendingOccasionalSkillPoints);
             }
-            ActiveManager.rerolls += pendingOccasionalRerolls;
+            rerolls += pendingOccasionalRerolls;
 
             pendingOccasionalRerolls = -1;
             pendingOccasionalSkillPoints = 0;
@@ -456,9 +460,9 @@ namespace CrystalFlux.WaveSystem
             var available = availableAnomalies.FindAll(a => GetCurrentWave() >= a.minWave && GetCurrentWave() <= a.maxWave);
             if (available.Count == 0) return false;
 
+            type = RewardType.Anomaly;
             OpenAnomalyButtons();
             PanelSetup();
-            type = RewardType.Anomaly;
 
             int choices = Random.Range(minAnomalyCount, maxAnomalyCount + 1);
 
@@ -515,7 +519,7 @@ namespace CrystalFlux.WaveSystem
                     if (mixedPool.Count == 0 || rarityData.Count == 0) continue;
 
                     BaseReward randomBuff = GetWeightedRandomMixedBuff();
-                    RarityData chosenRarity = WaveQuality.GetWeightedRandomRarity(GetCurrentWave(), rarityData);
+                    RarityData chosenRarity = WaveQuality.GetWeightedRandomRarity(GetCurrentWave(), rarityData, additionalQuality);
                     GeneratedReward generated = new() { br = randomBuff, rd = chosenRarity };
 
                     GameObject btnObj = GetOrCreateRewardButton();
@@ -540,6 +544,8 @@ namespace CrystalFlux.WaveSystem
                     if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(buff, OnPlayerUpgradeRewardClaimed);
                 }
             }
+
+            additionalQuality = 0f;
         }
         protected void GenerateRarePool()
         {
@@ -681,7 +687,17 @@ namespace CrystalFlux.WaveSystem
             if (rewardPanel != null) rewardPanel.SetActive(true);
             ClearRewardButtons();
 
+            UpdateCorruptButton();
+
             Time.timeScale = 0f;
+        }
+
+        private void UpdateCorruptButton()
+        {
+            if (corruptButton == null) return;
+
+            bool allowed = type != RewardType.Anomaly && type != RewardType.Milestone && GetCurrentWave() % 5 != 0;
+            corruptButton.gameObject.SetActive(allowed);
         }
 
         protected void UpdateRerollUI()
@@ -784,9 +800,9 @@ namespace CrystalFlux.WaveSystem
                 if (rb.TryGetComponent<RewardButton>(out var nrb)) nrb.CorruptButton(changeLine, corruptMult);
             }
 
-            rerollButton.gameObject.SetActive(false);
-            corruptButton.gameObject.SetActive(false);
-            skipButton.gameObject.SetActive(false);
+            if (rerollButton != null) rerollButton.gameObject.SetActive(false);
+            if (corruptButton != null) corruptButton.gameObject.SetActive(false);
+            if (skipButton != null) skipButton.gameObject.SetActive(false);
         }
 
         protected virtual void OnAnomalyButtonClicked(AnomalyInstance instance)
@@ -800,10 +816,7 @@ namespace CrystalFlux.WaveSystem
                 currentAnomaly.StartAnomaly();
             }
 
-            WaveData currentWave = currentSequence.waves[currentWaveIndex];
-
             BeginWave();
-            HandleWave(currentWave);
         }
 
         protected BaseReward GetWeightedRandomBuff()
@@ -891,11 +904,7 @@ namespace CrystalFlux.WaveSystem
             if (skipButton != null) skipButton.gameObject.SetActive(true);
         }
 
-        public void OpenRewardButtons()
-        {
-            OpenAnomalyButtons();
-            if (corruptButton != null && GetCurrentWave() % 5 != 0 && type != RewardType.Milestone) corruptButton.gameObject.SetActive(true);
-        }
+        public void OpenRewardButtons() => OpenAnomalyButtons();
 
         protected void ResumeGameLoop()
         {

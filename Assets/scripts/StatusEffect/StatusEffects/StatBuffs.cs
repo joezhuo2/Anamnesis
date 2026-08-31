@@ -8,7 +8,8 @@ namespace CrystalFlux.StatusEffectSystem
     public class StatBuffs : StatusEffect
     {
         public List<StatBuff> buffs = new();
-        public Dictionary<StatBuff, StatBuff> curActiveBuff = new();
+
+        private readonly List<StatBuff> curActiveBuff = new();
 
         public override void OnApply() => ApplyBuffs();
         public override void OnStack()
@@ -25,17 +26,18 @@ namespace CrystalFlux.StatusEffectSystem
             {
                 var b = new StatBuff(buff.type, buff.value * currentStacks);
                 esm.AddStat(b, true);
-                curActiveBuff[buff] = b;
+                curActiveBuff.Add(b);
             }
         }
         private void UndoCurrentBuffs()
         {
             if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
             {
-                foreach (var kvp in curActiveBuff)
-                    esm.AddStat(kvp.Value, false);
-                curActiveBuff.Clear();
+                foreach (var b in curActiveBuff)
+                    esm.AddStat(b, false);
             }
+
+            curActiveBuff.Clear();
         }
     }
 }

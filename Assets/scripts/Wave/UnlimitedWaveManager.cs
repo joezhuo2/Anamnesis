@@ -132,10 +132,12 @@ namespace CrystalFlux.WaveSystem
             var enemy = EnemySpawning.SpawnEnemy(prefab, spawnLocation, spawnRadius, level);
             if (enemy == null) return;
 
-            if (enemy.TryGetComponent<IStatProvider>(out var esm) && currentAnomaly is StatModifierInstance statMod)
+            bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
+
+            if (hasStats && currentAnomaly is StatModifierInstance statMod)
                 esm.AddStat(statMod.GetBuff());
 
-            if (isBossWave && bossBarPrefab != null && activeBossBar == null)
+            if (hasStats && isBossWave && bossBarPrefab != null && activeBossBar == null)
             {
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
                 activeBossBar = Instantiate(bossBarPrefab, spawnParent);
@@ -160,7 +162,6 @@ namespace CrystalFlux.WaveSystem
         {
             pendingStandardRewards = false;
             if (currentAnomaly != null) currentAnomaly.Cleanup();
-            
             GameController?.SetTitle("Choose Wave Reward");
 
             currentAnomaly = null;
@@ -194,7 +195,7 @@ namespace CrystalFlux.WaveSystem
             if (wave - lastBossWave < minWavesBetweenBossWaves) return false;
 
             float chance = bossWaveChance;
-            if (wave - lastBossWave > 1) chance += bossWaveChanceIfPreviousNotBoss;
+            if (lastBossWave != wave - 1) chance += bossWaveChanceIfPreviousNotBoss;
 
             return Random.Range(0f, 100f) < chance;
         }

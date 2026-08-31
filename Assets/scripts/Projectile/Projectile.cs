@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using UnityEngine;
@@ -75,10 +75,16 @@ namespace CrystalFlux.ProjectileSystem
 
         private void Start()
         {
-            effSpd = ownerObj != null ?
-                ownerObj.TryGetComponent<IStatProvider>(out var esm) ?
-                pd.speed * (1f + (esm.GetStat(StatType.ProjSpd) * 0.01f)) :
-                pd.speed : pd.speed;
+            if (pd == null)
+            {
+                Debug.LogError($"Projectile '{name}' has no ProjectileData assigned.", this);
+                Destroy(gameObject);
+                return;
+            }
+
+            effSpd = ownerObj != null && ownerObj.TryGetComponent<IStatProvider>(out var esm)
+                ? pd.speed * (1f + (esm.GetStat(StatType.ProjSpd) * 0.01f))
+                : pd.speed;
 
             pierced = 0;
             damageSnapshot = ProjectileSnapshot.CaptureSnapshot(pd, ownerObj);
@@ -161,13 +167,11 @@ namespace CrystalFlux.ProjectileSystem
 
             foreach (var e in ownerObj.GetComponents<IOnHitEffect>())
                 e.OnHit(ownerObj, target, transform.position);
-            
             if (pd.mainAttack != null && pd.mainAttack.summonCondition == SummonCondition.OnHit && Random.value <= pd.mainAttack.summonChance)
             {
                 if (ownerObj.TryGetComponent<ISummonTrigger>(out var ist))
                     ist.TrySummon(target.transform.position);
             }
-
 
             if (pd.timeBeforeSameEnemy > 0f) StartCoroutine(RemoveFromHitHistory(target, pd.timeBeforeSameEnemy));
 
@@ -234,10 +238,14 @@ namespace CrystalFlux.ProjectileSystem
 
             if (ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1 && dir == Vector2.zero)
             {
-                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(InputState.mousePos);
-                mouseWorldPos.z = 0f;
+                Camera cam = MainCam;
+                if (cam != null)
+                {
+                    Vector3 mouseWorldPos = cam.ScreenToWorldPoint(InputState.mousePos);
+                    mouseWorldPos.z = 0f;
 
-                dir = (mouseWorldPos - transform.position).normalized;
+                    dir = (mouseWorldPos - transform.position).normalized;
+                }
             }
 
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -465,17 +473,38 @@ namespace CrystalFlux.ProjectileSystem
             rb.linearVelocity = orbitalVelocity + radialCorrection + (toDesired * 5f);
         }
 
+        private static readonly List<Collider2D> OverlapBuffer = new();
+        private static Camera cachedMainCam;
+        private static Camera MainCam => cachedMainCam != null ? cachedMainCam : cachedMainCam = Camera.main;
+
+        private static int OverlapCircle(Vector2 position, float radius)
+        {
+            ContactFilter2D filter = default;
+            filter.useTriggers = Physics2D.queriesHitTriggers;
+
+            return Physics2D.OverlapCircle(position, radius, filter, OverlapBuffer);
+        }
+
+        private static bool IsDead(GameObject go)
+            => go.TryGetComponent<IStatProvider>(out var esm)
+               && (esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.currentHp) <= 0f);
+
+        private int OwnTeam()
+            => ownerObj != null && ownerObj.TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
+
         private Transform FindClosestEnemyInDirection()
         {
             Transform closest = null;
             float closestDist = float.MaxValue;
 
+            int targetTeam = OwnTeam() == 0 ? 1 : 0;
             float searchRadius = effSpd * pd.lifetime;
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, searchRadius);
+            int count = OverlapCircle(transform.position, searchRadius);
 
-            foreach (Collider2D col in colliders)
+            for (int i = 0; i < count; i++)
             {
-                if (!col.gameObject.TryGetComponent<ITeamMember>(out var itm) || itm.TeamID != 0) continue;
+                Collider2D col = OverlapBuffer[i];
+                if (!col.gameObject.TryGetComponent<ITeamMember>(out var itm) || itm.TeamID != targetTeam) continue;
                 if (hit.Contains(col.gameObject)) continue;
                 if (col.gameObject == ownerObj) continue;
 
@@ -483,7 +512,7 @@ namespace CrystalFlux.ProjectileSystem
                 float dot = Vector2.Dot(dir.normalized, toEnemy);
                 if (dot <= 0) continue;
 
-                if (col.gameObject.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.isAlive) <= 0f && esm.GetStat(StatType.currentHp) <= 0) continue;
+                if (IsDead(col.gameObject)) continue;
 
                 float dist = Vector2.Distance(transform.position, col.transform.position);
                 if (dist < closestDist)
@@ -500,16 +529,17 @@ namespace CrystalFlux.ProjectileSystem
             Transform closest = null;
             float minDist = range;
 
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, range);
+            int count = OverlapCircle(transform.position, range);
             int targetTeam = searchForPlayer ? 1 : 0;
 
-            foreach (Collider2D col in colliders)
+            for (int i = 0; i < count; i++)
             {
+                Collider2D col = OverlapBuffer[i];
                 if (!col.gameObject.TryGetComponent<ITeamMember>(out var itm) || itm.TeamID != targetTeam) continue;
 
                 if (hit.Contains(col.gameObject)) continue;
 
-                if (col.gameObject.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.isAlive) <= 0f && esm.GetStat(StatType.currentHp) <= 0) continue;
+                if (IsDead(col.gameObject)) continue;
 
                 float dist = Vector2.Distance(transform.position, col.transform.position);
                 if (dist < minDist)

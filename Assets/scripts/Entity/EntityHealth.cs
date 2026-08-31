@@ -11,15 +11,14 @@ namespace CrystalFlux.EntitySystem
     public class EntityHealth : MonoBehaviour, IDamageable
     {
 
-
         public event Action<GameObject> OnDeath;
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
         private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
-        private static bool _isTriggeringOnDealDamage;
+        private bool _isTriggeringOnDealDamage;
         private float regenTimer;
-        private const float regenInterval = 0.5f; // how often hp regens, in seconds
-        private const float fullRegenFrequency = 5f; // time to heal full amount of hpRegen stat
-        private const float hurtIFrameDuration = 0.2f; // time after taking damage where you cannot take more damage
+        private const float regenInterval = 0.5f;
+        private const float fullRegenFrequency = 5f;
+        private const float hurtIFrameDuration = 0.2f;
         private float accumulatedRegen;
         private Animator animator;
         public Slider healthBarPrefab;
@@ -53,21 +52,26 @@ namespace CrystalFlux.EntitySystem
             InitializeHealthBar();
         }
 
+        private static Canvas sharedCanvas;
+
         private void InitializeHealthBar()
         {
-            if (cachedCanvas == null)
-                cachedCanvas = FindAnyObjectByType<Canvas>();
+            if (healthBarPrefab == null) return;
 
-            if (healthBarPrefab != null && cachedCanvas != null)
-            {
-                healthBarInstance = Instantiate(healthBarPrefab, cachedCanvas.transform);
+            if (sharedCanvas == null) sharedCanvas = FindAnyObjectByType<Canvas>();
+            cachedCanvas = sharedCanvas;
 
-                healthBarInstance.maxValue = MaxHp;
-                healthBarInstance.value = MaxHp;
+            if (cachedCanvas == null) return;
 
-                healthBarTextInstance = Instantiate(healthBarTextPrefab, cachedCanvas.transform);
-                healthBarTextInstance.text = $"{CurHp}/{MaxHp}";
-            }
+            healthBarInstance = Instantiate(healthBarPrefab, cachedCanvas.transform);
+
+            healthBarInstance.maxValue = MaxHp;
+            healthBarInstance.value = CurHp;
+
+            if (healthBarTextPrefab == null) return;
+
+            healthBarTextInstance = Instantiate(healthBarTextPrefab, cachedCanvas.transform);
+            healthBarTextInstance.text = $"{CurHp}/{MaxHp}";
         }
 
         private void Update()
@@ -77,13 +81,13 @@ namespace CrystalFlux.EntitySystem
         }
         private void MoveHealthBar()
         {
-            if (healthBarInstance != null && mainCamera != null && IsAlive && healthBarTextInstance != null)
-            {
-                Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position + healthBarOffset);
-                healthBarInstance.transform.position = screenPos;
+            if (healthBarInstance == null || mainCamera == null || !IsAlive) return;
 
+            Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position + healthBarOffset);
+            healthBarInstance.transform.position = screenPos;
+
+            if (healthBarTextInstance != null)
                 healthBarTextInstance.transform.position = screenPos + healthBarOffset;
-            }
         }
 
         public void TakeDamage(DamagePacket dp)
@@ -92,18 +96,20 @@ namespace CrystalFlux.EntitySystem
 
             foreach (var i in dp.instances)
             {
+                IStatProvider atk = i.owner != null && i.owner.TryGetComponent<IStatProvider>(out var osm) ? osm : null;
+
                 var (dmg, sizeMult) = i.type switch
                 {
                     DamageType.True => (i.amount, 1f),
-                    DamageType.Physical => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm),
-                    DamageType.Spell => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm),
+                    DamageType.Physical => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm, atk),
+                    DamageType.Spell => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm, atk),
                     DamageType.DoT => (i.amount * (1f - (esm.GetStat(StatType.EffectRes) * 0.01f)), 1f),
                     DamageType.Heal => (-i.amount, 1f),
                     DamageType.Consume => (i.amount, 1f),
                     _ => (0f, 1f)
                 };
 
-                if (Immune && !dp.bypassIFrames && dmg > 0) return;
+                if (Immune && !dp.bypassIFrames && dmg > 0) continue;
 
                 Color color = i.indicatorColor != default ? i.indicatorColor : i.type switch
                 {
@@ -113,7 +119,10 @@ namespace CrystalFlux.EntitySystem
                     _ => Color.white
                 };
 
-                if (i.owner.TryGetComponent<PlayerUpgradeManager>(out var pum) && pum != null)
+                PlayerUpgradeManager pum = null;
+                if (i.owner != null) i.owner.TryGetComponent(out pum);
+
+                if (pum != null)
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTargetRecievedHit);
 
                 if (cpum != null && dmg > 0)
@@ -133,7 +142,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames, dp.source))
                 {
-                    if (dp.source.TryGetComponent<PlayerLevel>(out var pl))
+                    if (dp.source != null && dp.source.TryGetComponent<PlayerLevel>(out var pl))
                         pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
                     DropGold(dp.source);
 
@@ -141,10 +150,10 @@ namespace CrystalFlux.EntitySystem
                         killPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnKill);
                 }
 
-                if (!_isTriggeringOnDealDamage && i.owner.TryGetComponent<PlayerUpgradeManager>(out var dealPum) && dealPum != null)
+                if (!_isTriggeringOnDealDamage && pum != null)
                 {
                     _isTriggeringOnDealDamage = true;
-                    dealPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDealDamage, gameObject, dmg);
+                    pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDealDamage, gameObject, dmg);
                     _isTriggeringOnDealDamage = false;
                 }
             }
@@ -175,7 +184,6 @@ namespace CrystalFlux.EntitySystem
             }
             if (finalAmount < 0 && Immune) return false;
             if (finalAmount > 0 && (esm.GetStat(StatType.CanGainHp)) <= 0f) return false;
-
 
             if (finalAmount < 0 && CurHp > 0 && Mathf.Abs(finalAmount) >= CurHp * 3f)
             {
@@ -221,11 +229,8 @@ namespace CrystalFlux.EntitySystem
             }
             else
             {
-                if (healthBarInstance != null && healthBarTextInstance != null)
-                {
-                    healthBarInstance.value = CurHp;
-                    healthBarTextInstance.text = $"{CurHp}/{MaxHp}";
-                }
+                if (healthBarInstance != null) healthBarInstance.value = CurHp;
+                if (healthBarTextInstance != null) healthBarTextInstance.text = $"{CurHp}/{MaxHp}";
             }
             return false;
         }
@@ -284,11 +289,8 @@ namespace CrystalFlux.EntitySystem
             if (TryGetComponent<IStatusEffectReceiver>(out var sem))
                 sem.ClearAllEffects();
 
-            if (healthBarInstance != null && healthBarTextInstance != null)
-            {
-                Destroy(healthBarInstance.gameObject);
-                Destroy(healthBarTextInstance.gameObject);
-            }
+            if (healthBarInstance != null) Destroy(healthBarInstance.gameObject);
+            if (healthBarTextInstance != null) Destroy(healthBarTextInstance.gameObject);
 
             if (animator != null && !IsAlive)
             {
@@ -303,11 +305,12 @@ namespace CrystalFlux.EntitySystem
 
         private void DropGold(GameObject target)
         {
+            if (target == null) return;
             if (esm.GetStat(StatType.goldDrop) <= 0) return;
 
-            var p = target.TryGetComponent<IStatProvider>(out var tsm);
+            float stealing = target.TryGetComponent<IStatProvider>(out var tsm) ? tsm.GetStat(StatType.Stealing) : 0f;
 
-            int gold = Mathf.RoundToInt(esm.GetStat(StatType.goldDrop) * UnityEngine.Random.Range(0.7f, 1.3f) * (1f + (tsm.GetStat(StatType.Stealing) * 0.01f)));
+            int gold = Mathf.RoundToInt(esm.GetStat(StatType.goldDrop) * UnityEngine.Random.Range(0.7f, 1.3f) * (1f + (stealing * 0.01f)));
 
             if (gold > 0 && target.TryGetComponent<ICurrencyHolder>(out var ich))
             {

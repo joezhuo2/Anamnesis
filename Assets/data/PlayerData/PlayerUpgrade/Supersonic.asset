@@ -15,6 +15,6 @@ MonoBehaviour:
   upgradeName: Supersonic
   conditions: 07000000
   chance: 100
-  cooldown: 3
+  cooldown: 1
   delay: 0
   projectilePrefab: {fileID: 4259335642319083824, guid: 7b19538c3daf2f04f80ef865345d91eb, type: 3}

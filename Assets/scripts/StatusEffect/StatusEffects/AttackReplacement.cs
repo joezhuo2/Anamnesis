@@ -33,7 +33,10 @@ namespace CrystalFlux.StatusEffectSystem
             if (!setAttack || replacement == null || target == null) return;
             if (!target.TryGetComponent<IAttackHandler>(out var pah)) return;
 
-            pah.UpdateAttack(replacement.type, originalAttack);
+            setAttack = false;
+
+            if (originalAttack != null) pah.UpdateAttack(replacement.type, originalAttack);
+            else pah.RemoveAttack(replacement.type);
         }
 
         private void OnDestroy()

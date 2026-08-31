@@ -142,6 +142,7 @@ Assets/
 │   ├── images/                # Images assets
 │   ├── PlayerData/            # Player attacks, upgrades, skill tree data, controls
 │   ├── prefabs/               # UI element prefabs
+│   ├── StatusEffect/          # Authored status effect assets (DoTs, stuns, buffs, debuffs)
 │   └── WaveData/              # Wave sequences
 └── scripts/
     ├── Entity/                # [asmdef] Player, Enemy, stats, health, levelling, summoning, XP
@@ -150,7 +151,7 @@ Assets/
     ├── Items/                 # Items/Gear system (Assembly-CSharp)
     ├── Misc/                  # Game Controller (implements IAnnouncer) (Assembly-CSharp)
     ├── Projectile/            # [asmdef] Projectiles/Attack data and the damage calculator
-    ├── StatusEffect/          # [asmdef] Status effect system & implementations (DoTs, Stun, Pulled, buffs)
+    ├── StatusEffect/          # [asmdef] Status effect system & implementations (DoTs, Stun, Pulled, buffs) — data lives in data/StatusEffect/
     ├── SkillTree/             # [asmdef] Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
     ├── TextIndicator/         # [asmdef] Floating damage numbers, XP/Gold indicators
     └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies

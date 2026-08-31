@@ -21,6 +21,8 @@ namespace CrystalFlux.EntitySystem
 
         private (string title, string subtitle, Vector2 offset) GetResourcesTooltip()
         {
+            if (esm == null) return ("Resources", "", new(100, -100));
+
             float staminaPerSecond = esm.GetStat(StatType.EffStReg) / 5f;
             float healthPerSecond = esm.GetStat(StatType.EffHpReg) / 5f;
 
@@ -38,14 +40,13 @@ namespace CrystalFlux.EntitySystem
             if (esm.GetStat(StatType.spellRes) != 0f) resTypes.Add($"S:{esm.GetStat(StatType.spellRes):F1}%");
 
             if (resTypes.Count > 0) lines.Add($"Res: {string.Join(" ", resTypes)}");
-            if (ich.CurrentAmount > 0) lines.Add($"Gold: {ich.CurrentAmount}");
+            if (ich != null && ich.CurrentAmount > 0) lines.Add($"Gold: {ich.CurrentAmount}");
 
             return ("Resources", string.Join("\n", lines), new(100, -100));
         }
-        
         private void ShowTooltip()
         {
-            if (resourceHoverZone.TryGetComponent<ITooltipDisplay>(out var td))
+            if (resourceHoverZone != null && resourceHoverZone.TryGetComponent<ITooltipDisplay>(out var td))
             {
                 var (tt, st, os) = GetResourcesTooltip();
                 td.ShowTooltip(tt, st, os);

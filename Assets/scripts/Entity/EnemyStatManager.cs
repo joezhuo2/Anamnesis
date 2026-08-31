@@ -2,17 +2,19 @@ using UnityEngine;
 
 namespace CrystalFlux.Core
 {
-    public class EnemyStatManager : EntityStatManager, IStatProvider
+    public class EnemyStatManager : EntityStatManager
     {
-        private void Awake()
+        protected override void Awake()
         {
-            if (baseStats != null) s = Instantiate(baseStats);
+            base.Awake();
 
             if (s != null && s.level > 1) ScaleBaseStats(s.level);
         }
 
         public void ScaleStatsToLevel(int targetLevel)
         {
+            if (s == null) return;
+
             s.level = targetLevel;
 
             if (s.level > 1) ScaleBaseStats(s.level);
@@ -35,7 +37,7 @@ namespace CrystalFlux.Core
             s.attack = Mathf.RoundToInt(s.attack * atkMult);
             s.critDamage *= atkMult;
             s.maxHp = Mathf.RoundToInt(s.maxHp * hpMult);
-            s.hpRegen = Mathf.RoundToInt(s.hpRegen * hpMult);
+            s.hpRegen *= hpMult;
             s.armor = Mathf.RoundToInt(s.armor * armorMult);
 
             s.aoePct *= utilMult;

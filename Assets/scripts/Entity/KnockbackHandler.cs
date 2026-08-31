@@ -12,7 +12,7 @@ namespace CrystalFlux.EntitySystem
             public Vector2 dir;
         }
 
-        public static Vector2 UpdateForces(List<AppliedForce> forces, float kbRes)
+        public static Vector2 UpdateForces(List<AppliedForce> forces, float dt)
         {
             if (forces.Count == 0) return Vector2.zero;
 
@@ -21,7 +21,7 @@ namespace CrystalFlux.EntitySystem
             for (int i = forces.Count - 1; i >= 0; i--)
             {
                 var f = forces[i];
-                float timeRemaining = f.time - Time.deltaTime;
+                float timeRemaining = f.time - dt;
 
                 if (timeRemaining <= 0f)
                 {
@@ -29,15 +29,19 @@ namespace CrystalFlux.EntitySystem
                     continue;
                 }
 
-                float kbf = f.force * (1f - (kbRes * 0.01f));
-                forces[i] = new AppliedForce { dir = f.dir, force = kbf, time = timeRemaining };
-                totalForce += f.dir * kbf;
+                forces[i] = new AppliedForce { dir = f.dir, force = f.force, time = timeRemaining };
+                totalForce += f.dir * f.force;
             }
 
             return totalForce;
         }
 
-        public static void ApplyKnockback(List<AppliedForce> forces, Vector2 direction, float force, float duration)
-            => forces.Add(new AppliedForce { dir = direction, force = force, time = duration });
+        public static void ApplyKnockback(List<AppliedForce> forces, Vector2 direction, float force, float duration, float kbRes = 0f)
+            => forces.Add(new AppliedForce
+            {
+                dir = direction,
+                force = force * Mathf.Max(0f, 1f - (kbRes * 0.01f)),
+                time = duration
+            });
     }
 }

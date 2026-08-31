@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CrystalFlux.ProjectileSystem;
@@ -14,10 +13,39 @@ namespace CrystalFlux.EntitySystem
         private readonly List<Projectile> orbitingProjectiles = new();
         public int Count => orbitingProjectiles.Count;
 
-        private void OnDestroy()
+        private Camera mainCam;
+        private Camera MainCam => mainCam != null ? mainCam : mainCam = Camera.main;
+
+        private void OnDestroy() => orbitingProjectiles.Clear();
+
+        private readonly List<Projectile> takeBuffer = new();
+        private static readonly List<Collider2D> overlapBuffer = new();
+
+        private static int OverlapCircle(Vector2 position, float radius)
         {
-            if (gameObject.activeInHierarchy) StartCoroutine(ClearOrbitsAfterDelay(0.1f));
+            ContactFilter2D filter = default;
+            filter.useTriggers = Physics2D.queriesHitTriggers;
+
+            return Physics2D.OverlapCircle(position, radius, filter, overlapBuffer);
         }
+
+        private List<Projectile> TakeOrbits(int count)
+        {
+            var taken = takeBuffer;
+            taken.Clear();
+
+            int wanted = count <= 0 ? orbitingProjectiles.Count : Mathf.Min(count, orbitingProjectiles.Count);
+
+            for (int i = orbitingProjectiles.Count - 1; i >= 0 && taken.Count < wanted; i--)
+            {
+                Projectile p = orbitingProjectiles[i];
+                orbitingProjectiles.RemoveAt(i);
+                if (p != null && p.gameObject != null) taken.Add(p);
+            }
+
+            return taken;
+        }
+
         public void RegisterOrbitingProjectile(Projectile p)
         {
             if (p == null || orbitingProjectiles.Contains(p)) return;
@@ -38,78 +66,46 @@ namespace CrystalFlux.EntitySystem
         }
         public void ReleaseOrbits(int count = 0)
         {
-            for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
-            {
-                Projectile p = orbitingProjectiles[i];
-                if (p != null && p.gameObject != null)
-                {
-                    Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(InputState.mousePos);
-                    mouseWorld.z = 0f;
-                    Vector2 dir = ((Vector2)mouseWorld - (Vector2)p.gameObject.transform.position).normalized;
-                    p.Launch(dir.normalized);
-                }
-            }
-            StartCoroutine(ClearOrbitsAfterDelay(0.1f));
+            Camera cam = MainCam;
+            if (cam == null) return;
+
+            Vector3 mouseWorld = cam.ScreenToWorldPoint(InputState.mousePos);
+            mouseWorld.z = 0f;
+
+            foreach (var p in TakeOrbits(count))
+                p.Launch(((Vector2)mouseWorld - (Vector2)p.transform.position).normalized);
         }
         public void ReleaseOrbits(Vector2 dir, int count = 0)
         {
-            for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
-            {
-                Projectile p = orbitingProjectiles[i];
-                if (p != null && p.gameObject != null)
-                    p.Launch(dir.normalized);
-            }
-            StartCoroutine(ClearOrbitsAfterDelay(0.1f));
+            foreach (var p in TakeOrbits(count))
+                p.Launch(dir.normalized);
         }
         public int AbsorbOrbits(int count = 0, float absorbPct = 0f)
         {
-            for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
-            {
-                Projectile p = orbitingProjectiles[i];
-                if (p != null && p.gameObject != null)
-                {
-                    TriggerStatGain(p, absorbPct * 0.01f);
+            var absorbed = TakeOrbits(count);
+            int n = absorbed.Count;
 
-                    Destroy(p.gameObject);
-                }
+            foreach (var p in absorbed)
+            {
+                TriggerStatGain(p, absorbPct * 0.01f);
+                Destroy(p.gameObject);
             }
-            StartCoroutine(ClearOrbitsAfterDelay(0.1f));
-            return count;
+
+            return n;
         }
         public void RedirectOrbits(int count = 0)
         {
-            for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
+            foreach (var p in TakeOrbits(count))
             {
-                Projectile p = orbitingProjectiles[i];
-                if (p == null || p.gameObject == null)
-                {
-                    orbitingProjectiles.RemoveAt(i);
-                    continue;
-                }
-
                 Transform target = FindNearestEnemy(p.transform.position);
                 if (target != null)
-                {
-                    Vector2 dir = ((Vector2)target.position - (Vector2)p.transform.position).normalized;
-                    p.Launch(dir);
-                }
+                    p.Launch(((Vector2)target.position - (Vector2)p.transform.position).normalized);
             }
-            StartCoroutine(ClearOrbitsAfterDelay(0.1f));
         }
         public void ExplodeOrbits(int count = 0)
         {
-            for (int i = count == 0 ? Count - 1 : Mathf.Min(count, Count) - 1; i >= 0; i--)
-            {
-                Projectile p = orbitingProjectiles[i];
-                if (p != null && p.gameObject != null)
-                    p.Explode();
-            }
-            StartCoroutine(ClearOrbitsAfterDelay(0.1f));
-        }
-        private IEnumerator ClearOrbitsAfterDelay(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            orbitingProjectiles.Clear();
+            foreach (var p in TakeOrbits(count))
+                p.Explode();
         }
         private void TriggerStatGain(Projectile p, float mult = 1f)
         {
@@ -137,13 +133,17 @@ namespace CrystalFlux.EntitySystem
             Transform closest = null;
             float closestDist = float.MaxValue;
 
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(position, 20f);
-            foreach (Collider2D col in colliders)
+            int ownTeam = TryGetComponent<ITeamMember>(out var self) ? self.TeamID : 0;
+            int count = OverlapCircle(position, 20f);
+
+            for (int i = 0; i < count; i++)
             {
-                if (col.gameObject.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 0) continue;
+                Collider2D col = overlapBuffer[i];
+                if (!col.gameObject.TryGetComponent<ITeamMember>(out var itm) || itm.TeamID == ownTeam) continue;
                 if (col.gameObject == gameObject) continue;
 
-                if (col.TryGetComponent<IStatProvider>(out var esm) && esm.GetStat(StatType.isAlive) == 1 && esm.GetStat(StatType.currentHp) <= 0)
+                if (col.TryGetComponent<IStatProvider>(out var esm)
+                    && (esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.currentHp) <= 0f))
                     continue;
 
                 float dist = Vector2.Distance(position, col.transform.position);

@@ -21,10 +21,10 @@ public class AnomalyButtonUI : MonoBehaviour
         b.onClick.RemoveAllListeners();
         b.onClick.AddListener(OnClick);
 
-        if (instance != null && instance.amd == null) return;
+        if (instance == null || instance.amd == null) return;
 
         if (titleText != null) titleText.text = instance.amd.anomalyName;
-        if (descText != null) descText.text = instance.amd.desc;
+        if (descText != null) descText.text = instance.Description;
     }
 
     public void OnClick() => onSelectedCallback?.Invoke(cachedInstance);

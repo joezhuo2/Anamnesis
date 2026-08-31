@@ -8,11 +8,11 @@ namespace CrystalFlux.StatusEffectSystem
     {
         [Header("Increase per stack")]
         public float addPerStack = 1f;
-        public float defShredAmt = 5f; // every 5
-        public float respenAmt = 2f; // every 10
-        public float physDmgPct = 10f; // every 20
-        public float critDmgAmt = 20f; // every 25
-        public float ultDmgAmt = 100f; // every 50
+        public float defShredAmt = 5f;
+        public float respenAmt = 2f;
+        public float physDmgPct = 10f;
+        public float critDmgAmt = 20f;
+        public float ultDmgAmt = 100f;
 
         private StatBuff? currentActiveAtkBuff = null;
         private StatBuff? currentDefShredBuff = null;

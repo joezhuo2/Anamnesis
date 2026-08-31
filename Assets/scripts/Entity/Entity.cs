@@ -9,5 +9,5 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(StatusEffectManager))]
 [RequireComponent(typeof(EntityHealth))]
-[RequireComponent(typeof(IStatProvider))]
+[RequireComponent(typeof(EntityStatManager))]
 public class Entity : MonoBehaviour {}

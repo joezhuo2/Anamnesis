@@ -18,11 +18,21 @@ namespace CrystalFlux.UISystem
 
         private void Awake()
         {
-            if (Instance == null) Instance = this;
-            else Destroy(gameObject);
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
 
             CacheRectTransform();
             HideTooltip();
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
         }
 
         private void Update()
@@ -33,15 +43,14 @@ namespace CrystalFlux.UISystem
 
         public void ShowTooltip(string title, string description, Vector2 os)
         {
-            if (gameObject == null) return;
             gameObject.SetActive(true);
 
             offset = os;
-            titleText.text = title;
-            descriptionText.text = description;
+            if (titleText != null) titleText.text = title;
+            if (descriptionText != null) descriptionText.text = description;
         }
 
-        public void HideTooltip() => gameObject?.SetActive(false);
+        public void HideTooltip() => gameObject.SetActive(false);
         private void CacheRectTransform()
         {
             if (crt == null) crt = GetComponent<RectTransform>();

@@ -9,15 +9,23 @@ using CrystalFlux.Core;
 public class Reminiscence : PlayerUpgrade
 {
     public StatusEffect cooldownEffect = null;
+
+    private bool isCasting;
+
     public override void TriggerUpgradeEffect(GameObject player)
     {
+        if (isCasting) return;
+
         if (player.TryGetComponent<PlayerAttackHandler>(out var pah))
         {
             List<AttackType> availableTypes = pah.attacks.ConvertAll(atk => atk.type);
             if (availableTypes.Count == 0) return;
 
             AttackType chosen = availableTypes[Random.Range(0, availableTypes.Count)];
-            pah.PerformAttack(chosen, true, true, true);
+
+            isCasting = true;
+            try { pah.PerformAttack(chosen, true, true, true); }
+            finally { isCasting = false; }
         }
 
         if (cooldownEffect != null && player.TryGetComponent<IStatusEffectReceiver>(out var sem))

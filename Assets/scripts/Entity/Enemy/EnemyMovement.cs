@@ -26,6 +26,12 @@ namespace CrystalFlux.EntitySystem
         private GameObject cachedPlayer;
         public GameObject target;
 
+        private static readonly List<EnemyMovement> active = new();
+        public static IReadOnlyList<EnemyMovement> Active => active;
+
+        private void OnEnable() => active.Add(this);
+        private void OnDisable() => active.Remove(this);
+
         private void Start()
         {
             esm = GetComponent<IStatProvider>();
@@ -55,9 +61,10 @@ namespace CrystalFlux.EntitySystem
             rb.linearVelocity = velocity;
             SetAnimator(velocity != Vector2.zero);
         }
-        private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, esm.GetStat(StatType.kbRes));
+        private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, Time.deltaTime);
 
-        public void ApplyKnockback(Vector2 d, float f, float t) => KnockbackHandler.ApplyKnockback(currentForces, d, f, t);
+        public void ApplyKnockback(Vector2 d, float f, float t)
+            => KnockbackHandler.ApplyKnockback(currentForces, d, f, t, esm.GetStat(StatType.kbRes));
 
         public void SetTarget(GameObject target) => this.target = target;
 

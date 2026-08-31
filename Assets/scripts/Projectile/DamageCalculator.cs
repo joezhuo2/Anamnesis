@@ -5,7 +5,7 @@ namespace CrystalFlux.ProjectileSystem
 {
     public static class DamageCalculator
     {
-        public static (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, IStatProvider esm)
+        public static (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, IStatProvider esm, IStatProvider atk = null)
         {
             float typeRes = type switch
             {
@@ -14,15 +14,16 @@ namespace CrystalFlux.ProjectileSystem
                 _ => 0f
             };
 
-            // Res pen eats the combined pool (damageRes + type res); overflow drives res negative for bonus damage.
-            float effRes = Mathf.Max(-100f, esm.GetStat(StatType.damageRes) + typeRes - esm.GetStat(StatType.resPen));
+            float resPen = atk != null ? atk.GetStat(StatType.resPen) : 0f;
+            float defShred = atk != null ? atk.GetStat(StatType.defShred) : 0f;
+
+            float effRes = Mathf.Max(-100f, esm.GetStat(StatType.damageRes) + typeRes - resPen);
             float resMult = 1f - (effRes * 0.01f);
 
-            // Armor may go negative from shred overflow; negative side mirrors the diminishing curve, capped at 2x.
-            float effArmor = esm.GetStat(StatType.armor) - esm.GetStat(StatType.defShred);
+            float effArmor = esm.GetStat(StatType.EffArmor) - defShred;
             float armorMult = 1f;
             if (type == DamageType.Physical)
-                armorMult = effArmor >= 0f ? 100f / (effArmor + 100f) : 2f - (100f / (100f - effArmor));
+                armorMult = effArmor >= 0f ? 100f / (effArmor + 100f) : 3f - (100f / (100f - effArmor));
 
             float finalDamage = rawDamage * resMult * armorMult;
             float size = 1f;

@@ -90,15 +90,18 @@ namespace CrystalFlux.EntitySystem
         {
             if (cad == null || cesm == null) return ("", "", Vector2.zero);
 
+            GameObject owner = cesm is Component c ? c.gameObject : null;
+            if (owner == null) return ("", "", Vector2.zero);
+
             var (hp, sp, mp) = PlayerAttackHandler.GetCosts(cad, cesm);
-            var (spg, hpg, mpg) = Projectile.CalculateStatGains((cesm as Component).gameObject, cad);
+            var (hpg, spg, mpg) = Projectile.CalculateStatGains(owner, cad);
             var effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
 
             float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
             if (cad.pd != null)
             {
-                var previewSnapshot = ProjectileSnapshot.CaptureSnapshot(cad.pd, (cesm as Component).gameObject);
-                var previewPacket = DamagePacketBuilder.BuildDamagePacket(cad.pd, previewSnapshot, false, (cesm as Component).gameObject, false, 1f);
+                var previewSnapshot = ProjectileSnapshot.CaptureSnapshot(cad.pd, owner);
+                var previewPacket = DamagePacketBuilder.BuildDamagePacket(cad.pd, previewSnapshot, false, owner, false, 1f);
 
                 foreach (var instance in previewPacket.instances)
                 {

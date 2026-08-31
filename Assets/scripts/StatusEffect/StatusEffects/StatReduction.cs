@@ -20,13 +20,30 @@ namespace CrystalFlux.StatusEffectSystem
             ApplyReduction();
         }
         public override void OnExpire() => UndoCurrentDebuff();
+        private static StatType ToBaseStat(StatType t) => t switch
+        {
+            StatType.EffAtk => StatType.attack,
+            StatType.EffMaxHp => StatType.maxHp,
+            StatType.EffArmor => StatType.armor,
+            StatType.EffSpd => StatType.moveSpeed,
+            StatType.EffInt => StatType.Intelligence,
+            StatType.EffHpReg => StatType.hpRegen,
+            StatType.EffStReg => StatType.staminaRegen,
+            StatType.EffMaxMana => StatType.maxMana,
+            StatType.EffMaxStamina => StatType.maxStamina,
+            _ => t
+        };
+
         private void ApplyReduction()
         {
             if (target == null || !target.TryGetComponent<IStatProvider>(out var esm)) return;
 
             float redPct = Mathf.Clamp(redPerStack * 0.01f * currentStacks, minRed, maxRed);
 
-            StatBuff newDebuff = new(statType, redPct * esm.GetStat(scalingStat));
+            StatType writeStat = ToBaseStat(statType);
+            float basis = esm.GetStat(ToBaseStat(scalingStat));
+
+            StatBuff newDebuff = new(writeStat, redPct * basis);
             currentActiveDebuff = newDebuff;
 
             esm.AddStat(newDebuff, false);

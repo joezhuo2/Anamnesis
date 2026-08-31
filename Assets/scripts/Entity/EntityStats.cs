@@ -33,7 +33,6 @@ namespace CrystalFlux.Core
         public float basicCdRedPct;
         public float skillCdRedPct;
         public float ultCdRedPct;
-        // lifeStealPct, effectChance
 
         [Header("Defense")]
         public int currentHp;
@@ -54,7 +53,6 @@ namespace CrystalFlux.Core
         public float kbRes;
         public float seDurPct;
         public float seTickRatePct;
-        // critRes, healingPct
 
         [Header("Movement")]
         public float moveSpeed;
@@ -186,6 +184,7 @@ namespace CrystalFlux.Core
                 StatType.isAlive => isAlive ? 1f : 0f,
                 StatType.globalDoTCanCrit => globalDoTCanCrit ? 1f : 0f,
                 StatType.goldDrop => goldDrop,
+                StatType.Gold => gold,
                 StatType.CanGainHp => canGainHp ? 1f : 0f,
                 StatType.XpDrop => xpDrop,
                 StatType.Level => level,
@@ -239,7 +238,7 @@ namespace CrystalFlux.Core
                 case StatType.defShred: defShred += Mathf.RoundToInt(delta); break;
                 case StatType.resPen: resPen += delta; break;
                 case StatType.maxStamina: maxStamina += Mathf.RoundToInt(delta); break;
-                case StatType.staminaRegen: staminaRegen += Mathf.RoundToInt(delta); break;
+                case StatType.staminaRegen: staminaRegen += delta; break;
                 case StatType.stRegPct: stRegPct += delta; break;
                 case StatType.addPhysDmgPct: addPhysDmgPct += delta; break;
                 case StatType.addSplDmgPct: addSplDmgPct += delta; break;
@@ -297,7 +296,7 @@ namespace CrystalFlux.Core
                 case StatType.EffAtk: attack += Mathf.RoundToInt(delta); break;
                 case StatType.EffMaxHp: maxHp += Mathf.RoundToInt(delta); break;
                 case StatType.EffHpReg: hpRegen += delta; break;
-                case StatType.EffStReg: staminaRegen += Mathf.RoundToInt(delta); break;
+                case StatType.EffStReg: staminaRegen += delta; break;
                 case StatType.EffSpd: moveSpeed += delta; break;
                 case StatType.EffInt: intelligence += Mathf.RoundToInt(delta); break;
                 case StatType.EffMaxStamina: maxStamina += Mathf.RoundToInt(delta); break;

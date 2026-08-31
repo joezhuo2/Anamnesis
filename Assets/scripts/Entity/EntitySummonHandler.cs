@@ -58,7 +58,7 @@ namespace CrystalFlux.EntitySystem
 
             ApplyPerSummonBuffs(true);
 
-            if (lifetime > 0f) Destroy(summon, lifetime);
+            if (lifetime > 0f) StartCoroutine(ExpireSummon(summon, lifetime));
 
             return summon;
         }
@@ -78,6 +78,16 @@ namespace CrystalFlux.EntitySystem
             return result != null;
         }
 
+        private System.Collections.IEnumerator ExpireSummon(GameObject summon, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+
+            if (summon == null) yield break;
+
+            OnSummonDeath(summon);
+            Destroy(summon);
+        }
+
         private void ApplyPerSummonBuffs(bool adding)
         {
             if (perSummonBuffs.Count == 0) return;
@@ -89,7 +99,7 @@ namespace CrystalFlux.EntitySystem
 
         private void OnSummonDeath(GameObject summon)
         {
-            activeSummons.Remove(summon);
+            if (!activeSummons.Remove(summon)) return;
 
             if (summon != null && summon.TryGetComponent<IDamageable>(out var health))
                 health.OnDeath -= OnSummonDeath;
@@ -148,14 +158,6 @@ namespace CrystalFlux.EntitySystem
                 }
             }
 
-            if (obj.TryGetComponent<PlayerUpgradeManager>(out var pum))
-            {
-                for (int i = 0; i < pum.activeUpgrades.Count; i++)
-                {
-                    if (pum.activeUpgrades[i] != null)
-                        pum.activeUpgrades[i] = Object.Instantiate(pum.activeUpgrades[i]);
-                }
-            }
         }
         public void CleanupAllSummons()
         {

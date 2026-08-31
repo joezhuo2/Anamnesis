@@ -16,6 +16,8 @@ namespace CrystalFlux.EntitySystem
         private Animator a;
         private bool isAttackingCoroutineRunning = false;
         private readonly List<int> availableIndexes = new();
+        private readonly HashSet<AttackData> chainVisited = new();
+        private bool movementHeld;
         private float lastAttackEndTime;
         private IStatProvider esm;
         private GameObject Target => TryGetComponent<EnemyMovement>(out var em) ? em.target : null;
@@ -50,7 +52,7 @@ namespace CrystalFlux.EntitySystem
             if (attacks != null)
             {
                 foreach (var attack in attacks)
-                    if (attack != null && attack.IsRuntimeCopy) DestroyImmediate(attack, true);
+                    if (attack != null && attack.IsRuntimeCopy) Destroy(attack);
                 attacks.Clear();
             }
         }
@@ -88,11 +90,16 @@ namespace CrystalFlux.EntitySystem
 
                 if (cooldowns[i] > 0f || dist > (a.maxRange * a.maxRange)) continue;
 
-                float hpPct = (float)esm.GetStat(StatType.currentHp) / esm.GetStat(StatType.EffMaxHp);
+                float maxHp = esm.GetStat(StatType.EffMaxHp);
+                float hpPct = maxHp > 0f ? esm.GetStat(StatType.currentHp) / maxHp * 100f : 0f;
 
                 if (a.minHpPct > 0 && hpPct < a.minHpPct) continue;
                 if (a.maxHpPct < 100f && hpPct > a.maxHpPct) continue;
-                if (a.phaseReq >= 0 && (TryGetComponent<EnemyPhase>(out var ep) && ep.phase < a.phaseReq)) continue;
+                if (a.phaseReq >= 0)
+                {
+                    if (!TryGetComponent<EnemyPhase>(out var ep)) continue;
+                    if (ep.phase < a.phaseReq) continue;
+                }
 
                 availableIndexes.Add(i);
             }
@@ -106,56 +113,91 @@ namespace CrystalFlux.EntitySystem
         {
             if (esm.GetStat(StatType.CanAttack) <= 0f || esm.GetStat(StatType.isAlive) <= 0f) yield break;
 
-            float attackStartTime = Time.time;
+            chainVisited.Clear();
+
+            AttackData current = attack;
+            int currentIndex = index;
 
             isAttackingCoroutineRunning = true;
             esm.AddStat(new(StatType.IsAttacking, 1));
-            esm.AddStat(new(StatType.CanMove, attack.canMoveDuringAttack ? 1 : -1));
 
-            if (a != null) a.SetInteger(AttackIndexHash, index);
-
-            HandleOrbitInteractions(attack);
-
-            if (attack.projectilePrefab != null)
+            while (current != null && chainVisited.Add(current))
             {
-                if (attack.spawnDelay > 0) yield return new WaitForSeconds(attack.spawnDelay);
+                float attackStartTime = Time.time;
 
-                if (Target != null)
+                if (!current.canMoveDuringAttack)
                 {
-                    Vector2 dir = (Target.transform.position - transform.position).normalized;
-                    float dist = Vector2.Distance(Target.transform.position, transform.position);
-
-                    StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
-                        attack.projectilePrefab,
-                        gameObject,
-                        transform.position,
-                        dir,
-                        dist > attack.spawnDistance ? attack.spawnDistance : dist
-                    ));
+                    movementHeld = true;
+                    esm.AddStat(new(StatType.CanMove, -1));
                 }
-            }
 
-            if (attack.summonChance > 0f && attack.summonCondition == SummonCondition.OnCast && Random.value <= attack.summonChance)
-            {
-                if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
-                    summonHandler.Summon();
-            }
+                if (a != null) a.SetInteger(AttackIndexHash, currentIndex);
 
-            if (index >= 0) cooldowns[index] = attack.cooldown;
+                HandleOrbitInteractions(current);
 
-            if (attack.animationLength > 0)
-            {
-                float remaining = attack.animationLength - (Time.time - attackStartTime);
-                if (remaining > 0) yield return new WaitForSeconds(remaining);
+                if (current.projectilePrefab != null)
+                {
+                    if (current.spawnDelay > 0) yield return new WaitForSeconds(current.spawnDelay);
+
+                    if (Target != null && ProjectileSpawner.Instance != null)
+                    {
+                        Vector2 dir = (Target.transform.position - transform.position).normalized;
+                        float dist = Vector2.Distance(Target.transform.position, transform.position);
+
+                        StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
+                            current.projectilePrefab,
+                            gameObject,
+                            transform.position,
+                            dir,
+                            dist > current.spawnDistance ? current.spawnDistance : dist
+                        ));
+                    }
+                }
+
+                if (current.summonChance > 0f && current.summonCondition == SummonCondition.OnCast && Random.value <= current.summonChance)
+                {
+                    if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
+                        summonHandler.Summon();
+                }
+
+                if (currentIndex >= 0) cooldowns[currentIndex] = current.cooldown;
+
+                if (current.animationLength > 0)
+                {
+                    float remaining = current.animationLength - (Time.time - attackStartTime);
+                    if (remaining > 0) yield return new WaitForSeconds(remaining);
+                }
+
+                ReleaseMovementHold();
+
+                current = current.nextAttack;
+                currentIndex = -1;
             }
 
             isAttackingCoroutineRunning = false;
             esm.AddStat(new(StatType.IsAttacking, -1));
-            esm.AddStat(new(StatType.CanMove, 1));
             lastAttackEndTime = Time.time;
             if (a != null) a.SetInteger(AttackIndexHash, -1);
+        }
 
-            if (attack.nextAttack != null) yield return PerformAttack(attack.nextAttack, -1);
+        private void ReleaseMovementHold()
+        {
+            if (!movementHeld) return;
+
+            movementHeld = false;
+            esm.AddStat(new(StatType.CanMove, 1));
+        }
+
+        private void OnDisable()
+        {
+            if (esm == null) return;
+
+            ReleaseMovementHold();
+
+            if (!isAttackingCoroutineRunning) return;
+
+            isAttackingCoroutineRunning = false;
+            esm.AddStat(new(StatType.IsAttacking, -1));
         }
 
         private void HandleOrbitInteractions(AttackData attack)

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.crystalflux.core": {
-      "version": "https://github.com/joezhuo2/CrystalFlux-Core.git",
+      "version": "https://github.com/joezhuo2/CrystalFlux-Core.git#4aaca3687fefc2828a14dfea2ddf4e4b57d34ef7",
       "depth": 0,
       "source": "git",
       "dependencies": {},
