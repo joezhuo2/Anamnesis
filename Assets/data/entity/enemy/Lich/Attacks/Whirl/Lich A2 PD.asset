@@ -13,11 +13,16 @@ MonoBehaviour:
   m_Name: Lich A2 PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 3fbcbd6ac701c904e8076bb3e85cd3ba, type: 2}
-  speed: 3.5
   lifetime: 1.5
-  numPierce: 1
   size: 2
-  physicalMult: 0.45
+  numPierce: 1
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 3.5
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 0.9
   spellMult: 0
   trueMult: 0
   scalingStat: 31
@@ -25,6 +30,7 @@ MonoBehaviour:
   specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 2.5
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0

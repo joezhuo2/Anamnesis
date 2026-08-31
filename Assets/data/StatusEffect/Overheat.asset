@@ -18,7 +18,7 @@ MonoBehaviour:
   isBuff: 0
   icon: {fileID: 6985626698306143173, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Overheat
-  desc: Each stack reduces attack by 6% and stamina regeneration by 12%
+  desc: Each stack reduces attack by 8% and stamina regeneration by 12%
   maxStacks: 5
   loseAllStacksOnExpire: 0
   target: {fileID: 0}

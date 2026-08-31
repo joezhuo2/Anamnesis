@@ -13,11 +13,16 @@ MonoBehaviour:
   m_Name: BallSpam PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: f3cc7e014ed852f468d5721a3bbd0087, type: 2}
-  speed: 5
   lifetime: 0.75
-  numPierce: 10
   size: 1
-  physicalMult: 0.65
+  numPierce: 10
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 5
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 0.8
   spellMult: 0
   trueMult: 0
   scalingStat: 31

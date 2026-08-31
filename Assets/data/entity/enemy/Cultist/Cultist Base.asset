@@ -15,7 +15,7 @@ MonoBehaviour:
   damagePct: 0
   physicalDmgPct: 0
   spellDmgPct: 0
-  attack: 18
+  attack: 14
   atkPct: 0
   intelligence: 0
   intPct: 0

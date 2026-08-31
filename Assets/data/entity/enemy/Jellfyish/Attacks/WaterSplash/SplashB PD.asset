@@ -13,13 +13,18 @@ MonoBehaviour:
   m_Name: SplashB PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 1fbe50cce2240ef41949d96992814549, type: 2}
-  speed: 0
   lifetime: 1
-  numPierce: 10
   size: 2
-  physicalMult: 0
-  spellMult: 0
-  trueMult: 0.35
+  numPierce: 10
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 0.35
+  spellMult: 0.45
+  trueMult: 0
   scalingStat: 31
   specialMult: 1
   specialSclaing: 0

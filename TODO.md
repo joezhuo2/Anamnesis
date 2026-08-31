@@ -1,11 +1,10 @@
 # Planned Features 
 
 ## Pre [v0.4.0] Checklist
-- [ ] re-add phase based buffs using the new system
+- [ ] re-add phase based buffs using the new system (Lich done in v0.3.9, Cultist and Jellyfish still pending)
 - [ ] map borders
 - [ ] Tilemaps
-- [ ] Enough Content for complete builds of all types (hp - missing ult/skill/awakenings, armor - missing basic/ult, dot - missing basic)
-- [ ] skill tree 'capstone' nodes - upgrading existing Awakenings/Attacks (Warp, Cosmic Superimposition done) and/or introducing new ones
+- [ ] Enough Content for complete builds of all types (hp - missing awakenings, armor - missing basic/ult, dot - missing basic)
 - [ ] Wave 60 boss and enemies, and Boss Rush Extension
 - [ ] Pause menu with resume/restart/home/quit, settings/controls menu
 
@@ -74,6 +73,4 @@
 
 ## Notes
 
-- `Overheat`'s description reads "reduces attack by 6%" but the asset serializes `atkPct: -8` — either the text or the value needs to change.
-- `Slow 6 15 5` is authored but no projectile references it yet; Blizzard applies the older `Slow 5 3 15`.
-- Docs for v0.3.8 are written (CHANGELOG, ROADMAP, README, GAME.md). `ProjectSettings.bundleVersion` is still `1.0` and has never tracked the changelog version.
+- `Slow 5 3 15` is now unreferenced after Blizzard moved to `Slow 6 15 5`.

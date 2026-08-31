@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Lich A AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  cooldown: 3
+  type: 0
+  cooldown: 4
   projectilePrefab: {fileID: 8030177708144237794, guid: 19e8d56c5744aff479d5bc429072a382, type: 3}
   pd: {fileID: 11400000, guid: 842574bb92796584a817585b916d2990, type: 2}
   pattern: 0
@@ -52,6 +53,5 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 0
   icon: {fileID: 0}
   displayName: 

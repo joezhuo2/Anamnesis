@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Ripple PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 27dfe950167aee049ab4380900febe09, type: 2}
-  speed: 1.5
   lifetime: 1
-  numPierce: 10
   size: 3
+  numPierce: 10
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 1.5
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.35
+  spellMult: 0.65
   trueMult: 0
   scalingStat: 31
   specialMult: 1

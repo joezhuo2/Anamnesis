@@ -7,6 +7,27 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.9] - 2026-08-31
+
+### Added
+- **`GrantStatusEffect` player upgrade** — a `PlayerUpgrade` type (`PlayerUpgrade/GrantStatusEffect`) that applies an authored `StatusEffect` to the player when its trigger fires, with a `stacks` count applied one `Apply` call at a time. It overrides all three `TriggerUpgradeEffect` overloads, so it works under every trigger condition regardless of which overload that condition dispatches to, and its `OnRemove` strips the effect again when the upgrade is removed. Its tooltip lists the effect name, the stack count when above 1, the duration and the effect's own description
+- **`HoverScale` UI component** (`Assets/scripts/Misc/HoverScale.cs`) — scales a target transform to `hoverScale` (default 1.1) while the pointer is over it, easing at `speed` (default 12) on unscaled time so it keeps animating while the game is paused. It handles both `IPointerEnter/ExitHandler` for UI and `OnMouseEnter/Exit` for colliders, resets to the base scale on enable and disable so pooled buttons never come back mid-animation, and exposes `SetHoverScale` for runtime tuning. Added to the reward, anomaly, cooldown-indicator and skill-node prefabs and to 113 objects in the scene
+- **`WaveManager.showCompletionMessage`** — a serialized toggle (default `true`, and disabled on both wave managers in the scene) that suppresses the "Wave N Complete" / "Boss Defeated" / "Anomaly Complete" subtitle, the reroll and skill-point announcement, and the 1.5s pause that followed them. With it off, `EndWave` runs immediately after rewards are rolled instead of waiting out the title. Honoured by both `WaveManager` and `UnlimitedWaveManager`
+- **Lich phase buffs** — `Lich.prefab` carries an `EnemyPhase` with a single 40% HP threshold that grants **+40% `moveSpeedPct`** and **+20% `attackSpeedPct`**, the first enemy rebuilt onto the new phase system
+- **New UI sprite sheet** — `Assets/data/images/UI/20250420manaSoulHeaderB-Sheet.png`
+
+### Changed
+- **Button prefabs moved** into `Assets/data/prefabs/Buttons/` — `AnomalyButtonPrefab`, `CooldownIndicatorPrefab`, `RewardButtonPrefab` and `SkillNodePrefab` keep their GUIDs, so every existing reference still resolves. `SkillNodePrefab`'s button transition switched from ColorTint to None now that `HoverScale` carries the hover feedback, and `CooldownIndicatorPrefab` dropped its stale `borderImage` reference
+- **Blizzard applies `Slow 6 15 5`** instead of `Slow 5 3 15` — the same total slow ceiling, but built out of 15 stacks of 5% rather than 3 stacks of 15%, so the field ramps up gradually as a target lingers in it. `Slow 6 15 5` was authored in v0.3.8 and previously unreferenced
+
+### Fixed
+- **`Overheat` description** read "reduces attack by 6%" while the asset serialized `atkPct: -8`. The text now matches the value
+
+### Rebalance
+- **Cultist** — base attack 18 to 14, clone attack 12 to 11. `Summon PD` 80% Physical to **115% Physical + 40% Spell**; `Wave PD` 110% Spell to **75% Spell**
+- **Jellyfish** — base attack 5 to 9. `BallSpam PD` 65% to **80% Physical**; `Ripple PD` 35% to **65% Spell**; `SplashB PD` 35% True to **35% Physical + 45% Spell**
+- **Lich** — global cooldown 3s to 2s, with every attack's own cooldown raised to compensate: Wave 3s to 4s, Whirl 6s to 7s, Plant 8s to 9s. Wave 25% to **55% Spell**, Whirl 45% to **90% Physical**, Plant 30% to **45% True**
+
 ## [v0.3.8_1] - 2026-08-31
 
 ### Fixed

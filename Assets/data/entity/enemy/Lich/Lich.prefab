@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5572708716589551903}
   - component: {fileID: 2300084746356785352}
   - component: {fileID: 97605587463365141}
+  - component: {fileID: 653838707023720264}
   m_Layer: 0
   m_Name: Lich
   m_TagString: Enemy
@@ -106,7 +107,7 @@ MonoBehaviour:
   canDeaggro: 0
   stoppingDistance: 3
   flipRotation: 0
-  es: {fileID: 0}
+  target: {fileID: 0}
 --- !u!114 &6423432274336431945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +125,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3fbcbd6ac701c904e8076bb3e85cd3ba, type: 2}
   - {fileID: 11400000, guid: 88fb5d50bc45a4b4a8e705140fe9c1a3, type: 2}
   - {fileID: 11400000, guid: d4194199ecd546246be73d289971a1f7, type: 2}
-  globalCooldown: 3
+  globalCooldown: 2
 --- !u!212 &3478480386570623367
 SpriteRenderer:
   serializedVersion: 2
@@ -210,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d3bfa51801c446ad1dfffe864340e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  deathAnimTime: 1
   healthBarPrefab: {fileID: 0}
   healthBarOffset: {x: 0, y: 0, z: 0}
   healthBarTextPrefab: {fileID: 0}
@@ -275,5 +277,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatManager
   baseStats: {fileID: 11400000, guid: 2deb7f42d3e78a843974de06116552ef, type: 2}
-  s: {fileID: 0}
   currentBuffs: []
+  teamID: 0
+--- !u!114 &653838707023720264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340896494091933513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc860c2b7d6883a45affc61eaae86e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrystalFlux.Entity::CrystalFlux.EntitySystem.EnemyPhase
+  phaseThresholds:
+  - 40
+  phaseBuffs:
+  - buff:
+      type: 24
+      value: 40
+    phaseReq: 1
+  - buff:
+      type: 3
+      value: 20
+    phaseReq: 1
+  phase: 0

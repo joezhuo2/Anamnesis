@@ -119,6 +119,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &2572663 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 48e5ab09075bb8d42b22c0f17ca97971, type: 3}
+  m_PrefabInstance: {fileID: 1280790499}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7977457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: f82955c99762afb4b948c38898fe0ee9, type: 3}
+  m_PrefabInstance: {fileID: 1082121172}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8666608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,7 +224,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 27471d097be14f047b49e7d50bfff287, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 164308263}
   m_SourcePrefab: {fileID: 100100000, guid: 27471d097be14f047b49e7d50bfff287, type: 3}
 --- !u!224 &8666609 stripped
 RectTransform:
@@ -316,7 +329,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 18f653cfff1fcfa48b938e86f2314cc1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1047060339}
   m_SourcePrefab: {fileID: 100100000, guid: 18f653cfff1fcfa48b938e86f2314cc1, type: 3}
 --- !u!224 &13160180 stripped
 RectTransform:
@@ -418,7 +434,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 1428fa1dc4aef734189bc27491ddfa83, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 86041718}
   m_SourcePrefab: {fileID: 100100000, guid: 1428fa1dc4aef734189bc27491ddfa83, type: 3}
 --- !u!224 &15584034 stripped
 RectTransform:
@@ -657,12 +676,20 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 8bb07e7c8d6ed7047a611ae9db818748, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1603593211}
   m_SourcePrefab: {fileID: 100100000, guid: 8bb07e7c8d6ed7047a611ae9db818748, type: 3}
 --- !u!224 &17460592 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 8bb07e7c8d6ed7047a611ae9db818748, type: 3}
   m_PrefabInstance: {fileID: 17460591}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &17864283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 8a3f43984ba91174ea5979c28028153d, type: 3}
+  m_PrefabInstance: {fileID: 1070479072}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &19899868
 GameObject:
@@ -739,6 +766,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 19899868}
   m_CullTransparentMesh: 1
+--- !u!1 &24356373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: cca7c67052841f64ea96fd3bf36d47eb, type: 3}
+  m_PrefabInstance: {fileID: 1268113662}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &47818892 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 750357c96968171459ff6542f6583909, type: 3}
+  m_PrefabInstance: {fileID: 1717458079}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &57263873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 366026e7b3e916449aa8ea7618990419, type: 3}
+  m_PrefabInstance: {fileID: 623104666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &63409561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 70d9e32b493d4884abd035260690fcff, type: 3}
+  m_PrefabInstance: {fileID: 1025082603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &74398399 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: a34356286eaaca84d84b948dce394896, type: 3}
+  m_PrefabInstance: {fileID: 1760018188}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &77414890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -834,7 +886,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: a32a520b07bd9024fa45246ce07e4121, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2136448792}
   m_SourcePrefab: {fileID: 100100000, guid: a32a520b07bd9024fa45246ce07e4121, type: 3}
 --- !u!224 &77414891 stripped
 RectTransform:
@@ -874,6 +929,32 @@ Transform:
   - {fileID: 173672072}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &78638524 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 6f6f6d745a3b08c489a8040c59bbd342, type: 3}
+  m_PrefabInstance: {fileID: 1478065612}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &86041713 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 1428fa1dc4aef734189bc27491ddfa83, type: 3}
+  m_PrefabInstance: {fileID: 15584033}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &86041718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86041713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &91542763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -969,12 +1050,20 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 110275ca261bb654094c1b3ef00368a9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1457922857}
   m_SourcePrefab: {fileID: 100100000, guid: 110275ca261bb654094c1b3ef00368a9, type: 3}
 --- !u!224 &91542764 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 110275ca261bb654094c1b3ef00368a9, type: 3}
   m_PrefabInstance: {fileID: 91542763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &101691467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: c199cfe83609a144899628377ff32cf5, type: 3}
+  m_PrefabInstance: {fileID: 2124532657}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &118886080
 PrefabInstance:
@@ -1071,7 +1160,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: ad29ae562b6667c46bc982bdae685f88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 329221634}
   m_SourcePrefab: {fileID: 100100000, guid: ad29ae562b6667c46bc982bdae685f88, type: 3}
 --- !u!224 &118886081 stripped
 RectTransform:
@@ -1173,8 +1265,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 748aed3e5a7cbdd489f3aa4cc00175b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1967542838}
   m_SourcePrefab: {fileID: 100100000, guid: 748aed3e5a7cbdd489f3aa4cc00175b1, type: 3}
+--- !u!1 &130809930 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: cd1ba020daac80e459991c0bf698f9ed, type: 3}
+  m_PrefabInstance: {fileID: 542673799}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &138343720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1270,13 +1370,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 61a11ca1766826b4cba0b78cd489cc54, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2059131767}
   m_SourcePrefab: {fileID: 100100000, guid: 61a11ca1766826b4cba0b78cd489cc54, type: 3}
 --- !u!224 &138343721 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 61a11ca1766826b4cba0b78cd489cc54, type: 3}
   m_PrefabInstance: {fileID: 138343720}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &146174502 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: f0fcbd85dcb40d6459f1d6028d8687d9, type: 3}
+  m_PrefabInstance: {fileID: 1724316420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &164308258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 27471d097be14f047b49e7d50bfff287, type: 3}
+  m_PrefabInstance: {fileID: 8666608}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &164308263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164308258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &172564791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,7 +1501,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_UseReflectionProbes: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1648,10 +1777,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 186757954}
   m_CullTransparentMesh: 1
+--- !u!1 &199737691 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 80c347b2c62eae444bd1eb513e7df8a5, type: 3}
+  m_PrefabInstance: {fileID: 1464756848}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &201956389 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 5e007a578dd2c65428f30156af6f4b22, type: 3}
   m_PrefabInstance: {fileID: 445616180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &205872707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: cd95e490fdccb9946849ed1d8e3b5b5e, type: 3}
+  m_PrefabInstance: {fileID: 955314377}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &209156019
 PrefabInstance:
@@ -1748,7 +1887,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 68ac58d97e7c95b488b8f7cd9cf4da79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 346071009}
   m_SourcePrefab: {fileID: 100100000, guid: 68ac58d97e7c95b488b8f7cd9cf4da79, type: 3}
 --- !u!224 &209156020 stripped
 RectTransform:
@@ -2023,7 +2165,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 961e4229d1554e9489094c384bd14864, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1652607770}
   m_SourcePrefab: {fileID: 100100000, guid: 961e4229d1554e9489094c384bd14864, type: 3}
 --- !u!224 &274648232 stripped
 RectTransform:
@@ -2125,7 +2270,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: ca394f1c9c17b514bb554674365c55aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1050189629}
   m_SourcePrefab: {fileID: 100100000, guid: ca394f1c9c17b514bb554674365c55aa, type: 3}
 --- !u!224 &275057177 stripped
 RectTransform:
@@ -2232,7 +2380,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 4909b81c802f5994e8baa93f92512ef4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1108697544}
   m_SourcePrefab: {fileID: 100100000, guid: 4909b81c802f5994e8baa93f92512ef4, type: 3}
 --- !u!1 &312895894
 GameObject:
@@ -2466,7 +2617,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: f109c81997fb7bc408e6fe31095537c5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1159194110}
   m_SourcePrefab: {fileID: 100100000, guid: f109c81997fb7bc408e6fe31095537c5, type: 3}
 --- !u!224 &319368002 stripped
 RectTransform:
@@ -2568,8 +2722,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 07fa7cd552b75dd4b84071cd8c9fed7e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2090623866}
   m_SourcePrefab: {fileID: 100100000, guid: 07fa7cd552b75dd4b84071cd8c9fed7e, type: 3}
+--- !u!1 &329221629 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: ad29ae562b6667c46bc982bdae685f88, type: 3}
+  m_PrefabInstance: {fileID: 118886080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &329221634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329221629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &329635098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2665,7 +2843,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 3521421f158cc9a46947a7bd0af12576, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1656024034}
   m_SourcePrefab: {fileID: 100100000, guid: 3521421f158cc9a46947a7bd0af12576, type: 3}
 --- !u!224 &329635099 stripped
 RectTransform:
@@ -2767,13 +2948,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 1dc4b0115708d814d80f727eba522aad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1815080193}
   m_SourcePrefab: {fileID: 100100000, guid: 1dc4b0115708d814d80f727eba522aad, type: 3}
 --- !u!224 &333649463 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 1dc4b0115708d814d80f727eba522aad, type: 3}
   m_PrefabInstance: {fileID: 333649462}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &346071004 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 68ac58d97e7c95b488b8f7cd9cf4da79, type: 3}
+  m_PrefabInstance: {fileID: 209156019}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &346071009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346071004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &353364454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2788,6 +2993,7 @@ GameObject:
   - component: {fileID: 353364456}
   - component: {fileID: 353364459}
   - component: {fileID: 353364460}
+  - component: {fileID: 353364461}
   m_Layer: 0
   m_Name: SkipButton
   m_TagString: Untagged
@@ -2941,6 +3147,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9105d1febb54ece40b3bc8fa9593d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TooltipTrigger
+--- !u!114 &353364461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353364454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &359406444
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,6 +3199,16 @@ Transform:
   - {fileID: 1186772504}
   m_Father: {fileID: 1434897402}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &389762998 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 38964cc4109146e418a08753a4718c77, type: 3}
+  m_PrefabInstance: {fileID: 579792082}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &397872185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 0b58809d21fd5344982b3f801999bc72, type: 3}
+  m_PrefabInstance: {fileID: 1218567419}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &399509983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3072,7 +3304,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 724e2d5d5f0e4f4478a6bf94b4e60ecf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 652433671}
   m_SourcePrefab: {fileID: 100100000, guid: 724e2d5d5f0e4f4478a6bf94b4e60ecf, type: 3}
 --- !u!224 &399509984 stripped
 RectTransform:
@@ -3174,7 +3409,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 9281894f1f3ebf84cba7bd824b5570d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1618155320}
   m_SourcePrefab: {fileID: 100100000, guid: 9281894f1f3ebf84cba7bd824b5570d0, type: 3}
 --- !u!1001 &418289824
 PrefabInstance:
@@ -3271,7 +3509,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 675d5b1a801cd434bb8c16eea505fb07, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 487402660}
   m_SourcePrefab: {fileID: 100100000, guid: 675d5b1a801cd434bb8c16eea505fb07, type: 3}
 --- !u!224 &418289825 stripped
 RectTransform:
@@ -3467,7 +3708,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 6a940efa20e6a524085cdded98b973d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1510459265}
   m_SourcePrefab: {fileID: 100100000, guid: 6a940efa20e6a524085cdded98b973d2, type: 3}
 --- !u!224 &429691331 stripped
 RectTransform:
@@ -3574,7 +3818,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5e007a578dd2c65428f30156af6f4b22, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1337643269}
   m_SourcePrefab: {fileID: 100100000, guid: 5e007a578dd2c65428f30156af6f4b22, type: 3}
 --- !u!1 &446634533
 GameObject:
@@ -3740,6 +3987,11 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &460195464 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5f7d3826098dfd3419e685c8046f77c5, type: 3}
+  m_PrefabInstance: {fileID: 1936428943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &477087765
 GameObject:
   m_ObjectHideFlags: 0
@@ -3939,7 +4191,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 867b42658f5450240aa594618bc3e366, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2015023425}
   m_SourcePrefab: {fileID: 100100000, guid: 867b42658f5450240aa594618bc3e366, type: 3}
 --- !u!1001 &483012596
 PrefabInstance:
@@ -4036,13 +4291,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: d40681cc31f31c44ca4b07adad557449, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 594561549}
   m_SourcePrefab: {fileID: 100100000, guid: d40681cc31f31c44ca4b07adad557449, type: 3}
 --- !u!224 &483012597 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: d40681cc31f31c44ca4b07adad557449, type: 3}
   m_PrefabInstance: {fileID: 483012596}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &487402655 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 675d5b1a801cd434bb8c16eea505fb07, type: 3}
+  m_PrefabInstance: {fileID: 418289824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &487402660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487402655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &506637367
 GameObject:
   m_ObjectHideFlags: 0
@@ -4263,7 +4542,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 1ab4e83bd48be4d4f966214ea4c5c702, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 950216745}
   m_SourcePrefab: {fileID: 100100000, guid: 1ab4e83bd48be4d4f966214ea4c5c702, type: 3}
 --- !u!1001 &542673799
 PrefabInstance:
@@ -4360,13 +4642,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: cd1ba020daac80e459991c0bf698f9ed, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 542673805}
   m_SourcePrefab: {fileID: 100100000, guid: cd1ba020daac80e459991c0bf698f9ed, type: 3}
 --- !u!224 &542673800 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: cd1ba020daac80e459991c0bf698f9ed, type: 3}
   m_PrefabInstance: {fileID: 542673799}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &542673805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130809930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &552836093
 GameObject:
   m_ObjectHideFlags: 0
@@ -4381,6 +4682,7 @@ GameObject:
   - component: {fileID: 552836096}
   - component: {fileID: 552836095}
   - component: {fileID: 552836099}
+  - component: {fileID: 552836100}
   m_Layer: 0
   m_Name: CorruptButton
   m_TagString: Untagged
@@ -4534,6 +4836,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9105d1febb54ece40b3bc8fa9593d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TooltipTrigger
+--- !u!114 &552836100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552836093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &579792082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4629,17 +4947,41 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 38964cc4109146e418a08753a4718c77, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 579792088}
   m_SourcePrefab: {fileID: 100100000, guid: 38964cc4109146e418a08753a4718c77, type: 3}
 --- !u!224 &579792083 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 38964cc4109146e418a08753a4718c77, type: 3}
   m_PrefabInstance: {fileID: 579792082}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &579792088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389762998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &583473992 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: f109c81997fb7bc408e6fe31095537c5, type: 3}
   m_PrefabInstance: {fileID: 1606612521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &584283859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: fe3c75ec20511804ba89be4c49c703de, type: 3}
+  m_PrefabInstance: {fileID: 1056685972}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &584812859 stripped
 RectTransform:
@@ -4741,7 +5083,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 03d493cb36193a34db6f2aded7d02bcf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 700383526}
   m_SourcePrefab: {fileID: 100100000, guid: 03d493cb36193a34db6f2aded7d02bcf, type: 3}
 --- !u!224 &586956343 stripped
 RectTransform:
@@ -4780,6 +5125,8 @@ MonoBehaviour:
   rerollGoldCost: 200
   currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2.5
+  killSpawnSpeedup: 0.15
+  showCompletionMessage: 0
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
   waveText: {fileID: 1154343300}
@@ -5565,13 +5912,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 9f8d044f50cde2847a5c16c0db9ed3d3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 812248191}
   m_SourcePrefab: {fileID: 100100000, guid: 9f8d044f50cde2847a5c16c0db9ed3d3, type: 3}
 --- !u!224 &588457530 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 9f8d044f50cde2847a5c16c0db9ed3d3, type: 3}
   m_PrefabInstance: {fileID: 588457529}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &594561544 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: d40681cc31f31c44ca4b07adad557449, type: 3}
+  m_PrefabInstance: {fileID: 483012596}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &594561549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594561544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &598157668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5667,7 +6038,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: febb80725654c7944af9bdd7b889c814, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1552518278}
   m_SourcePrefab: {fileID: 100100000, guid: febb80725654c7944af9bdd7b889c814, type: 3}
 --- !u!224 &598157669 stripped
 RectTransform:
@@ -5678,6 +6052,16 @@ RectTransform:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: f972023ab0cb91641a589bffcf00eb5f, type: 3}
   m_PrefabInstance: {fileID: 1119475059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &599203511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 20208d4a28758cb4db7594d7d23b5f62, type: 3}
+  m_PrefabInstance: {fileID: 1652205216}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &607636076 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: e571ce47932c08443bbb5dfb8df616d9, type: 3}
+  m_PrefabInstance: {fileID: 1921015666}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &609790327
 PrefabInstance:
@@ -5774,12 +6158,20 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: b0bb36ff3af66be4db51d317502c71b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1179340079}
   m_SourcePrefab: {fileID: 100100000, guid: b0bb36ff3af66be4db51d317502c71b1, type: 3}
 --- !u!224 &609790328 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: b0bb36ff3af66be4db51d317502c71b1, type: 3}
   m_PrefabInstance: {fileID: 609790327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &610491931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 4b77010d53f3e3d4b812e5f1932e5bce, type: 3}
+  m_PrefabInstance: {fileID: 696322414}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &612038593
 PrefabInstance:
@@ -5876,7 +6268,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: ecf395953586ada4b9078e3bcb44460a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1242768314}
   m_SourcePrefab: {fileID: 100100000, guid: ecf395953586ada4b9078e3bcb44460a, type: 3}
 --- !u!224 &612038594 stripped
 RectTransform:
@@ -5978,7 +6373,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 9a894a38964e0cd479e6def74d6b5ba9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1753571476}
   m_SourcePrefab: {fileID: 100100000, guid: 9a894a38964e0cd479e6def74d6b5ba9, type: 3}
 --- !u!1001 &623104666
 PrefabInstance:
@@ -6075,12 +6473,41 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 366026e7b3e916449aa8ea7618990419, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 623104672}
   m_SourcePrefab: {fileID: 100100000, guid: 366026e7b3e916449aa8ea7618990419, type: 3}
 --- !u!224 &623104667 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 366026e7b3e916449aa8ea7618990419, type: 3}
   m_PrefabInstance: {fileID: 623104666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &623104672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57263873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &643302308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 25e8d5b8c3ce6ef4a944b737614bbdac, type: 3}
+  m_PrefabInstance: {fileID: 1199664685}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &645258070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: a9e2784d83121084f89d596c7ebe99b9, type: 3}
+  m_PrefabInstance: {fileID: 1095451721}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &652157717
 GameObject:
@@ -6186,6 +6613,48 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &652433666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 724e2d5d5f0e4f4478a6bf94b4e60ecf, type: 3}
+  m_PrefabInstance: {fileID: 399509983}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &652433671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652433666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &657721363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5ffcbdeba55ff3c4282dcf06561cec8a, type: 3}
+  m_PrefabInstance: {fileID: 940719444}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &657721368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657721363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &659378127 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: d8bd672a4b8f6234e8b41392e5fdb7ba, type: 3}
@@ -6286,7 +6755,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 25e8d5b8c3ce6ef4a944b737614bbdac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2111805001}
   m_SourcePrefab: {fileID: 100100000, guid: 25e8d5b8c3ce6ef4a944b737614bbdac, type: 3}
 --- !u!224 &673634325 stripped
 RectTransform:
@@ -6329,6 +6801,16 @@ RectTransform:
   m_AnchoredPosition: {x: -6.500002, y: -1.0000005}
   m_SizeDelta: {x: 7.000004, y: 9.999999}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &681264389 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5b4f1a7d7412f1149afb03e45f861f14, type: 3}
+  m_PrefabInstance: {fileID: 1843387526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &686369085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 1dfdd5d364483d54b954b4b66c346099, type: 3}
+  m_PrefabInstance: {fileID: 1616672460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &687635309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6424,7 +6906,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 370237a8c15458e41b31dc8bf34190a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2023346282}
   m_SourcePrefab: {fileID: 100100000, guid: 370237a8c15458e41b31dc8bf34190a0, type: 3}
 --- !u!1001 &696322414
 PrefabInstance:
@@ -6521,13 +7006,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 4b77010d53f3e3d4b812e5f1932e5bce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 696322420}
   m_SourcePrefab: {fileID: 100100000, guid: 4b77010d53f3e3d4b812e5f1932e5bce, type: 3}
 --- !u!224 &696322415 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 4b77010d53f3e3d4b812e5f1932e5bce, type: 3}
   m_PrefabInstance: {fileID: 696322414}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &696322420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610491931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &700383521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 03d493cb36193a34db6f2aded7d02bcf, type: 3}
+  m_PrefabInstance: {fileID: 586956342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &700383526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700383521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &745736264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6623,7 +7148,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: e84f1683bc1d7504f8c75a618d7d243d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2091003060}
   m_SourcePrefab: {fileID: 100100000, guid: e84f1683bc1d7504f8c75a618d7d243d, type: 3}
 --- !u!1 &756341796
 GameObject:
@@ -6660,11 +7188,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 800, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &762979643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 407dfafcdfc80474f99fa7f5762b01ae, type: 3}
+  m_PrefabInstance: {fileID: 1737285505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &763252819 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 750357c96968171459ff6542f6583909, type: 3}
   m_PrefabInstance: {fileID: 1717458079}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &763252824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47818892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &771094158
 GameObject:
   m_ObjectHideFlags: 0
@@ -6754,6 +7303,7 @@ GameObject:
   - component: {fileID: 786092299}
   - component: {fileID: 786092302}
   - component: {fileID: 786092303}
+  - component: {fileID: 786092304}
   m_Layer: 0
   m_Name: RerollButton
   m_TagString: Untagged
@@ -6908,6 +7458,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9105d1febb54ece40b3bc8fa9593d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TooltipTrigger
+--- !u!114 &786092304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786092297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &810889096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7003,8 +7569,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: beb08173d414bb24ab5ea089dd84569b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1285399468}
   m_SourcePrefab: {fileID: 100100000, guid: beb08173d414bb24ab5ea089dd84569b, type: 3}
+--- !u!1 &812248186 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 9f8d044f50cde2847a5c16c0db9ed3d3, type: 3}
+  m_PrefabInstance: {fileID: 588457529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &812248191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812248186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &821783129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: c1c83e511eec31249a9d7e49aba91b59, type: 3}
+  m_PrefabInstance: {fileID: 2015944013}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &831657455
 GameObject:
   m_ObjectHideFlags: 0
@@ -7242,7 +7837,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 0a8ad5c6783896a42811d84178b94599, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1080406447}
   m_SourcePrefab: {fileID: 100100000, guid: 0a8ad5c6783896a42811d84178b94599, type: 3}
 --- !u!224 &864930006 stripped
 RectTransform:
@@ -7344,7 +7942,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: e208a97846b0dcf47b08da4da5af2b4c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1900698248}
   m_SourcePrefab: {fileID: 100100000, guid: e208a97846b0dcf47b08da4da5af2b4c, type: 3}
 --- !u!1001 &884191529
 PrefabInstance:
@@ -7441,7 +8042,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 92d639f0c529ad7419f05f93a201280c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1844371482}
   m_SourcePrefab: {fileID: 100100000, guid: 92d639f0c529ad7419f05f93a201280c, type: 3}
 --- !u!224 &884191530 stripped
 RectTransform:
@@ -7504,6 +8108,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1018056650}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &913239233 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 54bf22384ee1cd64fb28862d8faa04c6, type: 3}
+  m_PrefabInstance: {fileID: 1533859218}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &917213025
 GameObject:
   m_ObjectHideFlags: 0
@@ -7674,7 +8283,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 618d5bd817bc4094cb35929c77d0949c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2061335232}
   m_SourcePrefab: {fileID: 100100000, guid: 618d5bd817bc4094cb35929c77d0949c, type: 3}
 --- !u!1001 &940719444
 PrefabInstance:
@@ -7771,7 +8383,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5ffcbdeba55ff3c4282dcf06561cec8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 657721368}
   m_SourcePrefab: {fileID: 100100000, guid: 5ffcbdeba55ff3c4282dcf06561cec8a, type: 3}
 --- !u!1001 &941808836
 PrefabInstance:
@@ -7868,7 +8483,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: bba94b899b5e2434c8c92c18af28c216, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1469424195}
   m_SourcePrefab: {fileID: 100100000, guid: bba94b899b5e2434c8c92c18af28c216, type: 3}
 --- !u!224 &941808837 stripped
 RectTransform:
@@ -7950,6 +8568,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947911584}
   m_CullTransparentMesh: 1
+--- !u!1 &950216740 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 1ab4e83bd48be4d4f966214ea4c5c702, type: 3}
+  m_PrefabInstance: {fileID: 537996938}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &950216745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950216740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &955314377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8045,18 +8684,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: cd95e490fdccb9946849ed1d8e3b5b5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 955314383}
   m_SourcePrefab: {fileID: 100100000, guid: cd95e490fdccb9946849ed1d8e3b5b5e, type: 3}
 --- !u!224 &955314378 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: cd95e490fdccb9946849ed1d8e3b5b5e, type: 3}
   m_PrefabInstance: {fileID: 955314377}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &955314383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205872707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &957120348 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 0b58809d21fd5344982b3f801999bc72, type: 3}
   m_PrefabInstance: {fileID: 1218567419}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &957120353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397872185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &957380136
 GameObject:
   m_ObjectHideFlags: 0
@@ -8324,7 +8998,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 281d82758420ca24ea3926ea6e5a3f51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1423641841}
   m_SourcePrefab: {fileID: 100100000, guid: 281d82758420ca24ea3926ea6e5a3f51, type: 3}
 --- !u!224 &965305306 stripped
 RectTransform:
@@ -8435,11 +9112,53 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &971273167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: df7a1e288f7d46942a1800b409bb25da, type: 3}
+  m_PrefabInstance: {fileID: 1636723290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &994363779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: d07a9f4fe285be949b69c52aba7310f1, type: 3}
+  m_PrefabInstance: {fileID: 1767809145}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &994363784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994363779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &998043431 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 5f7d3826098dfd3419e685c8046f77c5, type: 3}
   m_PrefabInstance: {fileID: 1936428943}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &998043436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460195464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &998463988
 GameObject:
   m_ObjectHideFlags: 0
@@ -8529,6 +9248,16 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1015026020 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 0f08035c9f7e5b44aa46ad942ce1c56a, type: 3}
+  m_PrefabInstance: {fileID: 1628316433}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1016499468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 1458ef0d1bab0214d8e3a5be8655f136, type: 3}
+  m_PrefabInstance: {fileID: 1585069739}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1016790732
 GameObject:
   m_ObjectHideFlags: 0
@@ -8756,13 +9485,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 70d9e32b493d4884abd035260690fcff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1025082609}
   m_SourcePrefab: {fileID: 100100000, guid: 70d9e32b493d4884abd035260690fcff, type: 3}
 --- !u!224 &1025082604 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 70d9e32b493d4884abd035260690fcff, type: 3}
   m_PrefabInstance: {fileID: 1025082603}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1025082609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63409561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1026189507
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8858,7 +9606,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 1052b7c0e77f912479f81197ba01b896, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1206561403}
   m_SourcePrefab: {fileID: 100100000, guid: 1052b7c0e77f912479f81197ba01b896, type: 3}
 --- !u!224 &1026189508 stripped
 RectTransform:
@@ -8870,6 +9621,64 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 1458ef0d1bab0214d8e3a5be8655f136, type: 3}
   m_PrefabInstance: {fileID: 1585069739}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1031705693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016499468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1047060334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 18f653cfff1fcfa48b938e86f2314cc1, type: 3}
+  m_PrefabInstance: {fileID: 13160179}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1047060339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047060334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1050189624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: ca394f1c9c17b514bb554674365c55aa, type: 3}
+  m_PrefabInstance: {fileID: 275057176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1050189629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050189624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1056685972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8965,13 +9774,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: fe3c75ec20511804ba89be4c49c703de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1056685978}
   m_SourcePrefab: {fileID: 100100000, guid: fe3c75ec20511804ba89be4c49c703de, type: 3}
 --- !u!224 &1056685973 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: fe3c75ec20511804ba89be4c49c703de, type: 3}
   m_PrefabInstance: {fileID: 1056685972}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1056685978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584283859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1070479072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9067,13 +9895,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 8a3f43984ba91174ea5979c28028153d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1070479078}
   m_SourcePrefab: {fileID: 100100000, guid: 8a3f43984ba91174ea5979c28028153d, type: 3}
 --- !u!224 &1070479073 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 8a3f43984ba91174ea5979c28028153d, type: 3}
   m_PrefabInstance: {fileID: 1070479072}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1070479078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17864283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1080406442 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 0a8ad5c6783896a42811d84178b94599, type: 3}
+  m_PrefabInstance: {fileID: 864930005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1080406447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080406442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1082121172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9169,13 +10037,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: f82955c99762afb4b948c38898fe0ee9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1082121178}
   m_SourcePrefab: {fileID: 100100000, guid: f82955c99762afb4b948c38898fe0ee9, type: 3}
 --- !u!224 &1082121173 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: f82955c99762afb4b948c38898fe0ee9, type: 3}
   m_PrefabInstance: {fileID: 1082121172}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1082121178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1082951235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9271,7 +10158,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 1f1fc0c127ab11c41908783c46f5e084, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1626426752}
   m_SourcePrefab: {fileID: 100100000, guid: 1f1fc0c127ab11c41908783c46f5e084, type: 3}
 --- !u!224 &1082951236 stripped
 RectTransform:
@@ -9528,13 +10418,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: a9e2784d83121084f89d596c7ebe99b9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1095451727}
   m_SourcePrefab: {fileID: 100100000, guid: a9e2784d83121084f89d596c7ebe99b9, type: 3}
 --- !u!224 &1095451722 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: a9e2784d83121084f89d596c7ebe99b9, type: 3}
   m_PrefabInstance: {fileID: 1095451721}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1095451727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645258070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1108697539 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 4909b81c802f5994e8baa93f92512ef4, type: 3}
+  m_PrefabInstance: {fileID: 297264624}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1108697544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108697539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1114438774
 GameObject:
   m_ObjectHideFlags: 0
@@ -9550,6 +10480,7 @@ GameObject:
   - component: {fileID: 1114438776}
   - component: {fileID: 1114438781}
   - component: {fileID: 1114438780}
+  - component: {fileID: 1114438782}
   m_Layer: 0
   m_Name: Button_Unlimited
   m_TagString: Untagged
@@ -9704,6 +10635,22 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1114438782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114438774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1119475059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9799,7 +10746,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: f972023ab0cb91641a589bffcf00eb5f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1675762325}
   m_SourcePrefab: {fileID: 100100000, guid: f972023ab0cb91641a589bffcf00eb5f, type: 3}
 --- !u!1001 &1145342386
 PrefabInstance:
@@ -9896,7 +10846,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: f2f194f2c0de2934db58dbb4f3e2366c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1983466049}
   m_SourcePrefab: {fileID: 100100000, guid: f2f194f2c0de2934db58dbb4f3e2366c, type: 3}
 --- !u!224 &1145342387 stripped
 RectTransform:
@@ -10040,6 +10993,32 @@ RectTransform:
   m_AnchoredPosition: {x: -200, y: -76.5}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1159194105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: f109c81997fb7bc408e6fe31095537c5, type: 3}
+  m_PrefabInstance: {fileID: 319368001}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1159194110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159194105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1159225128 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 464c1beca9677924d8266b331c805889, type: 3}
+  m_PrefabInstance: {fileID: 1826263570}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1168247678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10135,7 +11114,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5753a9eedc3dcc040a1c6f47b7678080, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1415112139}
   m_SourcePrefab: {fileID: 100100000, guid: 5753a9eedc3dcc040a1c6f47b7678080, type: 3}
 --- !u!224 &1168247679 stripped
 RectTransform:
@@ -10189,6 +11171,8 @@ MonoBehaviour:
   rerollGoldCost: 100
   currentSequence: {fileID: 0}
   spawnRadius: 2.5
+  killSpawnSpeedup: 0.15
+  showCompletionMessage: 0
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
   waveText: {fileID: 1154343300}
@@ -10852,13 +11836,9 @@ MonoBehaviour:
   milestoneInterval: 25
   milestoneRewardChoices: 3
   availableAnomalies:
-  - {fileID: 11400000, guid: c57fdda8c6062df4ab1ccc303187118d, type: 2}
-  - {fileID: 11400000, guid: cd15acce3a0ad044ba2eeb6762e2c971, type: 2}
-  - {fileID: 11400000, guid: 93c6fc4da2bdae544957f2ca8da253b3, type: 2}
-  - {fileID: 11400000, guid: 7b6a07acfa60e3f4c9965612f9969528, type: 2}
-  - {fileID: 11400000, guid: c606e919e6969c94c8d5ba434c0b7055, type: 2}
-  - {fileID: 11400000, guid: 8cdc45e75e0d1ca41885e6e563ef285c, type: 2}
-  - {fileID: 11400000, guid: 9e7d67e92c12ea449ae71ac414c026e2, type: 2}
+  - {fileID: 11400000, guid: 2d711879a2a363d4eaa7b524885bc3e6, type: 2}
+  - {fileID: 11400000, guid: 0431cb6a2efc82a4f8e28b30e65b6b31, type: 2}
+  - {fileID: 11400000, guid: 2692db60c19e66e4bb451bebd4bc697f, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
@@ -10893,6 +11873,32 @@ MonoBehaviour:
   - {fileID: 7457594691964507130, guid: 24bacf361cba81f488717cc41f41440e, type: 3}
   - {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}
   - {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
+--- !u!1 &1174038199 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 990cbe8a06d75e446bcb4c445486690d, type: 3}
+  m_PrefabInstance: {fileID: 1291071166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1179340074 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: b0bb36ff3af66be4db51d317502c71b1, type: 3}
+  m_PrefabInstance: {fileID: 609790327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1179340079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1179340074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!4 &1181093676 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2704963678538198986, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
@@ -10975,6 +11981,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!1 &1196370299 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 748aed3e5a7cbdd489f3aa4cc00175b1, type: 3}
+  m_PrefabInstance: {fileID: 126576676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1199664685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11070,13 +12081,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 25e8d5b8c3ce6ef4a944b737614bbdac, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1199664691}
   m_SourcePrefab: {fileID: 100100000, guid: 25e8d5b8c3ce6ef4a944b737614bbdac, type: 3}
 --- !u!224 &1199664686 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 25e8d5b8c3ce6ef4a944b737614bbdac, type: 3}
   m_PrefabInstance: {fileID: 1199664685}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1199664691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643302308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &1203089794 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: f26245791d585b74d8718f05a5a85943, type: 3}
@@ -11144,6 +12174,27 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!1 &1206561398 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 1052b7c0e77f912479f81197ba01b896, type: 3}
+  m_PrefabInstance: {fileID: 1026189507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1206561403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206561398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1207911047
 GameObject:
   m_ObjectHideFlags: 0
@@ -11296,7 +12347,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 0b58809d21fd5344982b3f801999bc72, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 957120353}
   m_SourcePrefab: {fileID: 100100000, guid: 0b58809d21fd5344982b3f801999bc72, type: 3}
 --- !u!1001 &1220323181
 PrefabInstance:
@@ -11393,12 +12447,56 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5fd5f522a0eab7f48a9cb1411aefe68a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1636332330}
   m_SourcePrefab: {fileID: 100100000, guid: 5fd5f522a0eab7f48a9cb1411aefe68a, type: 3}
 --- !u!224 &1220323182 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 5fd5f522a0eab7f48a9cb1411aefe68a, type: 3}
   m_PrefabInstance: {fileID: 1220323181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1242768309 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: ecf395953586ada4b9078e3bcb44460a, type: 3}
+  m_PrefabInstance: {fileID: 612038593}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1242768314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242768309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1243367279 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 07fa7cd552b75dd4b84071cd8c9fed7e, type: 3}
+  m_PrefabInstance: {fileID: 322303252}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1257356613 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 84eac981f7b9bb643b94ea776995f140, type: 3}
+  m_PrefabInstance: {fileID: 1841557777}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1265418530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 370237a8c15458e41b31dc8bf34190a0, type: 3}
+  m_PrefabInstance: {fileID: 687635309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1267507716 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5587ce74cb3cc9447a6d7134752d512f, type: 3}
+  m_PrefabInstance: {fileID: 1835855233}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1268113662
 PrefabInstance:
@@ -11495,13 +12593,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: cca7c67052841f64ea96fd3bf36d47eb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1268113668}
   m_SourcePrefab: {fileID: 100100000, guid: cca7c67052841f64ea96fd3bf36d47eb, type: 3}
 --- !u!224 &1268113663 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: cca7c67052841f64ea96fd3bf36d47eb, type: 3}
   m_PrefabInstance: {fileID: 1268113662}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1268113668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24356373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &1276428476 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: e84f1683bc1d7504f8c75a618d7d243d, type: 3}
@@ -11602,13 +12719,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 48e5ab09075bb8d42b22c0f17ca97971, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1280790505}
   m_SourcePrefab: {fileID: 100100000, guid: 48e5ab09075bb8d42b22c0f17ca97971, type: 3}
 --- !u!224 &1280790500 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 48e5ab09075bb8d42b22c0f17ca97971, type: 3}
   m_PrefabInstance: {fileID: 1280790499}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1280790505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1285399463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: beb08173d414bb24ab5ea089dd84569b, type: 3}
+  m_PrefabInstance: {fileID: 810889096}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1285399468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285399463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1288912327
 GameObject:
   m_ObjectHideFlags: 0
@@ -11779,13 +12936,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 990cbe8a06d75e446bcb4c445486690d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1291071172}
   m_SourcePrefab: {fileID: 100100000, guid: 990cbe8a06d75e446bcb4c445486690d, type: 3}
 --- !u!224 &1291071167 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 990cbe8a06d75e446bcb4c445486690d, type: 3}
   m_PrefabInstance: {fileID: 1291071166}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1291071172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174038199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1295024172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11881,7 +13057,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: cdcf5c89d14dcb745a34803fbfebb31f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1452165430}
   m_SourcePrefab: {fileID: 100100000, guid: cdcf5c89d14dcb745a34803fbfebb31f, type: 3}
 --- !u!224 &1295024173 stripped
 RectTransform:
@@ -11983,13 +13162,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 79a79c242c63c2947b9dfa4beb9474b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1507784741}
   m_SourcePrefab: {fileID: 100100000, guid: 79a79c242c63c2947b9dfa4beb9474b3, type: 3}
 --- !u!224 &1318781827 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 79a79c242c63c2947b9dfa4beb9474b3, type: 3}
   m_PrefabInstance: {fileID: 1318781826}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1337643264 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5e007a578dd2c65428f30156af6f4b22, type: 3}
+  m_PrefabInstance: {fileID: 445616180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1337643269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337643264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1341647493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12085,7 +13288,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 90c2d2cb3db8d914d9db7969f43e7d92, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1985401546}
   m_SourcePrefab: {fileID: 100100000, guid: 90c2d2cb3db8d914d9db7969f43e7d92, type: 3}
 --- !u!224 &1341647494 stripped
 RectTransform:
@@ -12262,12 +13468,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5f1eb988ae63c834c8004da120b52cc3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2131960373}
   m_SourcePrefab: {fileID: 100100000, guid: 5f1eb988ae63c834c8004da120b52cc3, type: 3}
 --- !u!224 &1346719096 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 5f1eb988ae63c834c8004da120b52cc3, type: 3}
   m_PrefabInstance: {fileID: 1346719095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1349849472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: c564361e9cede6b44b2745debf64794f, type: 3}
+  m_PrefabInstance: {fileID: 1772423080}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1355004312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: d1498b4f5fd5a6141ac174c5eacd4375, type: 3}
+  m_PrefabInstance: {fileID: 1407785965}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1364317348
 GameObject:
@@ -12380,6 +13599,11 @@ RectTransform:
   m_AnchoredPosition: {x: -6.499999, y: -1}
   m_SizeDelta: {x: 6.999998, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1366910282 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: d7e9629a711a3d342b97e7505c8265b2, type: 3}
+  m_PrefabInstance: {fileID: 1936112008}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1372610693
 GameObject:
   m_ObjectHideFlags: 0
@@ -12749,7 +13973,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 9fbf1b72591ccec4fa28f232d9381928, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1864106631}
   m_SourcePrefab: {fileID: 100100000, guid: 9fbf1b72591ccec4fa28f232d9381928, type: 3}
 --- !u!1001 &1391809507
 PrefabInstance:
@@ -12846,8 +14073,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 26c19dd5c49907948b9550b0b8817f04, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1822752489}
   m_SourcePrefab: {fileID: 100100000, guid: 26c19dd5c49907948b9550b0b8817f04, type: 3}
+--- !u!1 &1395575660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: d8bd672a4b8f6234e8b41392e5fdb7ba, type: 3}
+  m_PrefabInstance: {fileID: 1800981218}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1395575665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395575660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1398105158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12943,12 +14194,20 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 95d308b1f811a8140ad99c8e20c265aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1587378866}
   m_SourcePrefab: {fileID: 100100000, guid: 95d308b1f811a8140ad99c8e20c265aa, type: 3}
 --- !u!224 &1398105159 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 95d308b1f811a8140ad99c8e20c265aa, type: 3}
   m_PrefabInstance: {fileID: 1398105158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1400116134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5f901e3c1dfe3374b8789431348c25b1, type: 3}
+  m_PrefabInstance: {fileID: 1973440533}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1407785965
 PrefabInstance:
@@ -13057,8 +14316,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: d1498b4f5fd5a6141ac174c5eacd4375, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1740153688}
   m_SourcePrefab: {fileID: 100100000, guid: d1498b4f5fd5a6141ac174c5eacd4375, type: 3}
+--- !u!1 &1415112134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5753a9eedc3dcc040a1c6f47b7678080, type: 3}
+  m_PrefabInstance: {fileID: 1168247678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1415112139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415112134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1423153584
 GameObject:
   m_ObjectHideFlags: 0
@@ -13197,6 +14480,27 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1423641836 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 281d82758420ca24ea3926ea6e5a3f51, type: 3}
+  m_PrefabInstance: {fileID: 965305305}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1423641841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423641836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1424804069
 GameObject:
   m_ObjectHideFlags: 0
@@ -13528,6 +14832,53 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1449605569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 66850bd3b2cc8ad47874a15548d28c81, type: 3}
+  m_PrefabInstance: {fileID: 1774497820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1452165425 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: cdcf5c89d14dcb745a34803fbfebb31f, type: 3}
+  m_PrefabInstance: {fileID: 1295024172}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1452165430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452165425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1457922852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 110275ca261bb654094c1b3ef00368a9, type: 3}
+  m_PrefabInstance: {fileID: 91542763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1457922857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457922852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1464756848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13623,13 +14974,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 80c347b2c62eae444bd1eb513e7df8a5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1464756854}
   m_SourcePrefab: {fileID: 100100000, guid: 80c347b2c62eae444bd1eb513e7df8a5, type: 3}
 --- !u!224 &1464756849 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 80c347b2c62eae444bd1eb513e7df8a5, type: 3}
   m_PrefabInstance: {fileID: 1464756848}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1464756854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199737691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1465221076
 GameObject:
   m_ObjectHideFlags: 0
@@ -13665,6 +15035,27 @@ Transform:
   - {fileID: 1171801693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1469424190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: bba94b899b5e2434c8c92c18af28c216, type: 3}
+  m_PrefabInstance: {fileID: 941808836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1469424195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469424190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1472304446
 GameObject:
   m_ObjectHideFlags: 0
@@ -13839,7 +15230,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 6f6f6d745a3b08c489a8040c59bbd342, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1625700849}
   m_SourcePrefab: {fileID: 100100000, guid: 6f6f6d745a3b08c489a8040c59bbd342, type: 3}
 --- !u!1001 &1480274629
 PrefabInstance:
@@ -13936,7 +15330,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 0bbbc3c36f9025141bb1031c1ef5dff2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1487159179}
   m_SourcePrefab: {fileID: 100100000, guid: 0bbbc3c36f9025141bb1031c1ef5dff2, type: 3}
 --- !u!224 &1480274630 stripped
 RectTransform:
@@ -13948,6 +15345,27 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 05dc522a34db12e4fa444675ae525df5, type: 3}
   m_PrefabInstance: {fileID: 1912529043}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1487159174 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 0bbbc3c36f9025141bb1031c1ef5dff2, type: 3}
+  m_PrefabInstance: {fileID: 1480274629}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1487159179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487159174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1498711254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14043,13 +15461,63 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: f0af4fcfa27a6264b9679796c4c09c10, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1625909369}
   m_SourcePrefab: {fileID: 100100000, guid: f0af4fcfa27a6264b9679796c4c09c10, type: 3}
 --- !u!224 &1498711255 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: f0af4fcfa27a6264b9679796c4c09c10, type: 3}
   m_PrefabInstance: {fileID: 1498711254}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1507784736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 79a79c242c63c2947b9dfa4beb9474b3, type: 3}
+  m_PrefabInstance: {fileID: 1318781826}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1507784741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507784736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1509924307 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 7bf7f834cf6c5134b82f9509ba718338, type: 3}
+  m_PrefabInstance: {fileID: 1561594100}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1510459260 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 6a940efa20e6a524085cdded98b973d2, type: 3}
+  m_PrefabInstance: {fileID: 429691330}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1510459265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510459260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1533859218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14145,13 +15613,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 54bf22384ee1cd64fb28862d8faa04c6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1533859224}
   m_SourcePrefab: {fileID: 100100000, guid: 54bf22384ee1cd64fb28862d8faa04c6, type: 3}
 --- !u!224 &1533859219 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 54bf22384ee1cd64fb28862d8faa04c6, type: 3}
   m_PrefabInstance: {fileID: 1533859218}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1533859224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913239233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1535559041
 GameObject:
   m_ObjectHideFlags: 0
@@ -14212,6 +15699,27 @@ MonoBehaviour:
   m_Spacing: {x: 15, y: 15}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!1 &1552518273 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: febb80725654c7944af9bdd7b889c814, type: 3}
+  m_PrefabInstance: {fileID: 598157668}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1552518278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552518273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1561594100
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14307,13 +15815,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 7bf7f834cf6c5134b82f9509ba718338, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1561594106}
   m_SourcePrefab: {fileID: 100100000, guid: 7bf7f834cf6c5134b82f9509ba718338, type: 3}
 --- !u!224 &1561594101 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 7bf7f834cf6c5134b82f9509ba718338, type: 3}
   m_PrefabInstance: {fileID: 1561594100}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1561594106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509924307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &1564163660 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 9281894f1f3ebf84cba7bd824b5570d0, type: 3}
@@ -14394,6 +15921,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570585254}
   m_CullTransparentMesh: 1
+--- !u!1 &1580127889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 34bccd8461fbdd547ae27196af8e037c, type: 3}
+  m_PrefabInstance: {fileID: 1880439801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1581639597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 2aa9ad6c5ee001246832ccbb84a8fecd, type: 3}
+  m_PrefabInstance: {fileID: 2071649627}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1585069739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14489,8 +16026,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 1458ef0d1bab0214d8e3a5be8655f136, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1031705693}
   m_SourcePrefab: {fileID: 100100000, guid: 1458ef0d1bab0214d8e3a5be8655f136, type: 3}
+--- !u!1 &1587378861 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 95d308b1f811a8140ad99c8e20c265aa, type: 3}
+  m_PrefabInstance: {fileID: 1398105158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1587378866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587378861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1603593206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 8bb07e7c8d6ed7047a611ae9db818748, type: 3}
+  m_PrefabInstance: {fileID: 17460591}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1603593211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603593206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1604680360
 GameObject:
   m_ObjectHideFlags: 0
@@ -14744,7 +16326,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: f109c81997fb7bc408e6fe31095537c5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2024170472}
   m_SourcePrefab: {fileID: 100100000, guid: f109c81997fb7bc408e6fe31095537c5, type: 3}
 --- !u!1 &1613919037
 GameObject:
@@ -14903,13 +16488,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 1dfdd5d364483d54b954b4b66c346099, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1616672466}
   m_SourcePrefab: {fileID: 100100000, guid: 1dfdd5d364483d54b954b4b66c346099, type: 3}
 --- !u!224 &1616672461 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 1dfdd5d364483d54b954b4b66c346099, type: 3}
   m_PrefabInstance: {fileID: 1616672460}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1616672466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686369085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1618155315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 9281894f1f3ebf84cba7bd824b5570d0, type: 3}
+  m_PrefabInstance: {fileID: 413095631}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1618155320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618155315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1620850738
 GameObject:
   m_ObjectHideFlags: 0
@@ -15233,6 +16858,64 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 6f6f6d745a3b08c489a8040c59bbd342, type: 3}
   m_PrefabInstance: {fileID: 1478065612}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1625700849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78638524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1625909364 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: f0af4fcfa27a6264b9679796c4c09c10, type: 3}
+  m_PrefabInstance: {fileID: 1498711254}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1625909369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625909364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1626426747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 1f1fc0c127ab11c41908783c46f5e084, type: 3}
+  m_PrefabInstance: {fileID: 1082951235}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1626426752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626426747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1628316433
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15328,13 +17011,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 0f08035c9f7e5b44aa46ad942ce1c56a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1628316439}
   m_SourcePrefab: {fileID: 100100000, guid: 0f08035c9f7e5b44aa46ad942ce1c56a, type: 3}
 --- !u!224 &1628316434 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 0f08035c9f7e5b44aa46ad942ce1c56a, type: 3}
   m_PrefabInstance: {fileID: 1628316433}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1628316439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015026020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1636332325 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5fd5f522a0eab7f48a9cb1411aefe68a, type: 3}
+  m_PrefabInstance: {fileID: 1220323181}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1636332330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636332325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1636723290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15430,13 +17153,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: df7a1e288f7d46942a1800b409bb25da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1636723296}
   m_SourcePrefab: {fileID: 100100000, guid: df7a1e288f7d46942a1800b409bb25da, type: 3}
 --- !u!224 &1636723291 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: df7a1e288f7d46942a1800b409bb25da, type: 3}
   m_PrefabInstance: {fileID: 1636723290}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1636723296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971273167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1652205216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15532,13 +17274,74 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 20208d4a28758cb4db7594d7d23b5f62, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1652205222}
   m_SourcePrefab: {fileID: 100100000, guid: 20208d4a28758cb4db7594d7d23b5f62, type: 3}
 --- !u!224 &1652205217 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 20208d4a28758cb4db7594d7d23b5f62, type: 3}
   m_PrefabInstance: {fileID: 1652205216}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1652205222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599203511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1652607765 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 961e4229d1554e9489094c384bd14864, type: 3}
+  m_PrefabInstance: {fileID: 274648231}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1652607770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652607765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1656024029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 3521421f158cc9a46947a7bd0af12576, type: 3}
+  m_PrefabInstance: {fileID: 329635098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1656024034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656024029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1663598201
 GameObject:
   m_ObjectHideFlags: 0
@@ -15635,6 +17438,32 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!1 &1675762320 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: f972023ab0cb91641a589bffcf00eb5f, type: 3}
+  m_PrefabInstance: {fileID: 1119475059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1675762325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675762320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1687541898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5e56bf02baa155b4b91f3c6fe302959a, type: 3}
+  m_PrefabInstance: {fileID: 2073554836}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1693905610
 GameObject:
   m_ObjectHideFlags: 0
@@ -15710,6 +17539,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693905610}
   m_CullTransparentMesh: 1
+--- !u!1 &1697240698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: f26245791d585b74d8718f05a5a85943, type: 3}
+  m_PrefabInstance: {fileID: 2126164018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1697240703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697240698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1697974994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 05dc522a34db12e4fa444675ae525df5, type: 3}
+  m_PrefabInstance: {fileID: 1912529043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1697974999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697974994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &1712875387 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 9a894a38964e0cd479e6def74d6b5ba9, type: 3}
@@ -15810,7 +17681,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 750357c96968171459ff6542f6583909, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 763252824}
   m_SourcePrefab: {fileID: 100100000, guid: 750357c96968171459ff6542f6583909, type: 3}
 --- !u!1001 &1724316420
 PrefabInstance:
@@ -15907,13 +17781,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: f0fcbd85dcb40d6459f1d6028d8687d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1724316426}
   m_SourcePrefab: {fileID: 100100000, guid: f0fcbd85dcb40d6459f1d6028d8687d9, type: 3}
 --- !u!224 &1724316421 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: f0fcbd85dcb40d6459f1d6028d8687d9, type: 3}
   m_PrefabInstance: {fileID: 1724316420}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1724316426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146174502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1726235260
 GameObject:
   m_ObjectHideFlags: 0
@@ -16084,7 +17977,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: efb074c484ec28b468e27e6038844e3d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1947570314}
   m_SourcePrefab: {fileID: 100100000, guid: efb074c484ec28b468e27e6038844e3d, type: 3}
 --- !u!224 &1728281187 stripped
 RectTransform:
@@ -16186,18 +18082,74 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 407dfafcdfc80474f99fa7f5762b01ae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1737285511}
   m_SourcePrefab: {fileID: 100100000, guid: 407dfafcdfc80474f99fa7f5762b01ae, type: 3}
 --- !u!224 &1737285506 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 407dfafcdfc80474f99fa7f5762b01ae, type: 3}
   m_PrefabInstance: {fileID: 1737285505}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1737285511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762979643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &1740153683 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: d1498b4f5fd5a6141ac174c5eacd4375, type: 3}
   m_PrefabInstance: {fileID: 1407785965}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1740153688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355004312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1753571471 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 9a894a38964e0cd479e6def74d6b5ba9, type: 3}
+  m_PrefabInstance: {fileID: 614500539}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1753571476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753571471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1760018188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16293,13 +18245,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: a34356286eaaca84d84b948dce394896, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1760018194}
   m_SourcePrefab: {fileID: 100100000, guid: a34356286eaaca84d84b948dce394896, type: 3}
 --- !u!224 &1760018189 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: a34356286eaaca84d84b948dce394896, type: 3}
   m_PrefabInstance: {fileID: 1760018188}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1760018194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74398399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1767809145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16395,7 +18366,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: d07a9f4fe285be949b69c52aba7310f1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 994363784}
   m_SourcePrefab: {fileID: 100100000, guid: d07a9f4fe285be949b69c52aba7310f1, type: 3}
 --- !u!1001 &1772423080
 PrefabInstance:
@@ -16492,13 +18466,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: c564361e9cede6b44b2745debf64794f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1772423086}
   m_SourcePrefab: {fileID: 100100000, guid: c564361e9cede6b44b2745debf64794f, type: 3}
 --- !u!224 &1772423081 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: c564361e9cede6b44b2745debf64794f, type: 3}
   m_PrefabInstance: {fileID: 1772423080}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1772423086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349849472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1774497820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16594,13 +18587,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 66850bd3b2cc8ad47874a15548d28c81, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1774497826}
   m_SourcePrefab: {fileID: 100100000, guid: 66850bd3b2cc8ad47874a15548d28c81, type: 3}
 --- !u!224 &1774497821 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 66850bd3b2cc8ad47874a15548d28c81, type: 3}
   m_PrefabInstance: {fileID: 1774497820}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1774497826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449605569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1800981218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16696,7 +18708,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: d8bd672a4b8f6234e8b41392e5fdb7ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1395575665}
   m_SourcePrefab: {fileID: 100100000, guid: d8bd672a4b8f6234e8b41392e5fdb7ba, type: 3}
 --- !u!1001 &1801531712
 PrefabInstance:
@@ -16793,13 +18808,58 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 6bb128747141bd849b6296373b7cfd99, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2021610331}
   m_SourcePrefab: {fileID: 100100000, guid: 6bb128747141bd849b6296373b7cfd99, type: 3}
 --- !u!224 &1801531713 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 6bb128747141bd849b6296373b7cfd99, type: 3}
   m_PrefabInstance: {fileID: 1801531712}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1815080188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 1dc4b0115708d814d80f727eba522aad, type: 3}
+  m_PrefabInstance: {fileID: 333649462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1815080193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815080188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1822752484 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 26c19dd5c49907948b9550b0b8817f04, type: 3}
+  m_PrefabInstance: {fileID: 1391809507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1822752489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822752484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1826263570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16895,13 +18955,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 464c1beca9677924d8266b331c805889, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1826263576}
   m_SourcePrefab: {fileID: 100100000, guid: 464c1beca9677924d8266b331c805889, type: 3}
 --- !u!224 &1826263571 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 464c1beca9677924d8266b331c805889, type: 3}
   m_PrefabInstance: {fileID: 1826263570}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1826263576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159225128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1831102150
 GameObject:
   m_ObjectHideFlags: 0
@@ -17072,7 +19151,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5587ce74cb3cc9447a6d7134752d512f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1901113193}
   m_SourcePrefab: {fileID: 100100000, guid: 5587ce74cb3cc9447a6d7134752d512f, type: 3}
 --- !u!1001 &1841557777
 PrefabInstance:
@@ -17169,13 +19251,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 84eac981f7b9bb643b94ea776995f140, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1841557783}
   m_SourcePrefab: {fileID: 100100000, guid: 84eac981f7b9bb643b94ea776995f140, type: 3}
 --- !u!224 &1841557778 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 84eac981f7b9bb643b94ea776995f140, type: 3}
   m_PrefabInstance: {fileID: 1841557777}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1841557783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257356613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1843387526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17271,13 +19372,74 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5b4f1a7d7412f1149afb03e45f861f14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1843387532}
   m_SourcePrefab: {fileID: 100100000, guid: 5b4f1a7d7412f1149afb03e45f861f14, type: 3}
 --- !u!224 &1843387527 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 5b4f1a7d7412f1149afb03e45f861f14, type: 3}
   m_PrefabInstance: {fileID: 1843387526}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1843387532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681264389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1844371477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 92d639f0c529ad7419f05f93a201280c, type: 3}
+  m_PrefabInstance: {fileID: 884191529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1844371482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844371477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1864106626 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 9fbf1b72591ccec4fa28f232d9381928, type: 3}
+  m_PrefabInstance: {fileID: 1390663232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1864106631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864106626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1880439801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17373,13 +19535,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 34bccd8461fbdd547ae27196af8e037c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1880439807}
   m_SourcePrefab: {fileID: 100100000, guid: 34bccd8461fbdd547ae27196af8e037c, type: 3}
 --- !u!224 &1880439802 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 34bccd8461fbdd547ae27196af8e037c, type: 3}
   m_PrefabInstance: {fileID: 1880439801}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1880439807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580127889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1899124825
 GameObject:
   m_ObjectHideFlags: 0
@@ -17395,6 +19576,7 @@ GameObject:
   - component: {fileID: 1899124827}
   - component: {fileID: 1899124832}
   - component: {fileID: 1899124831}
+  - component: {fileID: 1899124833}
   m_Layer: 0
   m_Name: Button_Regular
   m_TagString: Untagged
@@ -17549,6 +19731,22 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1899124833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899124825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &1899896840
 GameObject:
   m_ObjectHideFlags: 0
@@ -17624,11 +19822,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899896840}
   m_CullTransparentMesh: 1
+--- !u!1 &1900698243 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: e208a97846b0dcf47b08da4da5af2b4c, type: 3}
+  m_PrefabInstance: {fileID: 877444696}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1900698248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900698243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &1901113188 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 5587ce74cb3cc9447a6d7134752d512f, type: 3}
   m_PrefabInstance: {fileID: 1835855233}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1901113193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267507716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1912529043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17724,7 +19959,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 05dc522a34db12e4fa444675ae525df5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1697974999}
   m_SourcePrefab: {fileID: 100100000, guid: 05dc522a34db12e4fa444675ae525df5, type: 3}
 --- !u!1001 &1921015666
 PrefabInstance:
@@ -17821,13 +20059,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: e571ce47932c08443bbb5dfb8df616d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1921015672}
   m_SourcePrefab: {fileID: 100100000, guid: e571ce47932c08443bbb5dfb8df616d9, type: 3}
 --- !u!224 &1921015667 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: e571ce47932c08443bbb5dfb8df616d9, type: 3}
   m_PrefabInstance: {fileID: 1921015666}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1921015672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607636076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1936112008
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17923,13 +20180,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: d7e9629a711a3d342b97e7505c8265b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1936112014}
   m_SourcePrefab: {fileID: 100100000, guid: d7e9629a711a3d342b97e7505c8265b2, type: 3}
 --- !u!224 &1936112009 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: d7e9629a711a3d342b97e7505c8265b2, type: 3}
   m_PrefabInstance: {fileID: 1936112008}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1936112014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366910282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1936428943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18025,13 +20301,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5f7d3826098dfd3419e685c8046f77c5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 998043436}
   m_SourcePrefab: {fileID: 100100000, guid: 5f7d3826098dfd3419e685c8046f77c5, type: 3}
+--- !u!1 &1947570309 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: efb074c484ec28b468e27e6038844e3d, type: 3}
+  m_PrefabInstance: {fileID: 1728281186}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1947570314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947570309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &1967542833 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 748aed3e5a7cbdd489f3aa4cc00175b1, type: 3}
   m_PrefabInstance: {fileID: 126576676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1967542838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196370299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &1973440533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18127,13 +20443,74 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5f901e3c1dfe3374b8789431348c25b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1973440539}
   m_SourcePrefab: {fileID: 100100000, guid: 5f901e3c1dfe3374b8789431348c25b1, type: 3}
 --- !u!224 &1973440534 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 5f901e3c1dfe3374b8789431348c25b1, type: 3}
   m_PrefabInstance: {fileID: 1973440533}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1973440539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400116134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1983466044 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: f2f194f2c0de2934db58dbb4f3e2366c, type: 3}
+  m_PrefabInstance: {fileID: 1145342386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1983466049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983466044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &1985401541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 90c2d2cb3db8d914d9db7969f43e7d92, type: 3}
+  m_PrefabInstance: {fileID: 1341647493}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1985401546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985401541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &2001100235
 GameObject:
   m_ObjectHideFlags: 0
@@ -18170,6 +20547,27 @@ RectTransform:
   m_AnchoredPosition: {x: -6.499999, y: -1}
   m_SizeDelta: {x: 6.999998, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2015023420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 867b42658f5450240aa594618bc3e366, type: 3}
+  m_PrefabInstance: {fileID: 482921819}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2015023425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015023420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &2015944013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18265,18 +20663,116 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: c1c83e511eec31249a9d7e49aba91b59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2015944019}
   m_SourcePrefab: {fileID: 100100000, guid: c1c83e511eec31249a9d7e49aba91b59, type: 3}
 --- !u!224 &2015944014 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: c1c83e511eec31249a9d7e49aba91b59, type: 3}
   m_PrefabInstance: {fileID: 2015944013}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2015944019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821783129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &2021610326 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 6bb128747141bd849b6296373b7cfd99, type: 3}
+  m_PrefabInstance: {fileID: 1801531712}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2021610331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021610326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!224 &2023346277 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 370237a8c15458e41b31dc8bf34190a0, type: 3}
   m_PrefabInstance: {fileID: 687635309}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2023346282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265418530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &2024170467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: f109c81997fb7bc408e6fe31095537c5, type: 3}
+  m_PrefabInstance: {fileID: 1606612521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2024170472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024170467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &2059131762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 61a11ca1766826b4cba0b78cd489cc54, type: 3}
+  m_PrefabInstance: {fileID: 138343720}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2059131767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059131762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &2059475857
 GameObject:
   m_ObjectHideFlags: 0
@@ -18384,6 +20880,27 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &2061335227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 618d5bd817bc4094cb35929c77d0949c, type: 3}
+  m_PrefabInstance: {fileID: 929692405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2061335232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061335227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &2071649627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18479,13 +20996,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 2aa9ad6c5ee001246832ccbb84a8fecd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2071649633}
   m_SourcePrefab: {fileID: 100100000, guid: 2aa9ad6c5ee001246832ccbb84a8fecd, type: 3}
 --- !u!224 &2071649628 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 2aa9ad6c5ee001246832ccbb84a8fecd, type: 3}
   m_PrefabInstance: {fileID: 2071649627}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2071649633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581639597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &2073554836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18581,13 +21117,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: 5e56bf02baa155b4b91f3c6fe302959a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2073554842}
   m_SourcePrefab: {fileID: 100100000, guid: 5e56bf02baa155b4b91f3c6fe302959a, type: 3}
 --- !u!224 &2073554837 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 5e56bf02baa155b4b91f3c6fe302959a, type: 3}
   m_PrefabInstance: {fileID: 2073554836}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2073554842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687541898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &2082466645
 GameObject:
   m_ObjectHideFlags: 0
@@ -18770,6 +21325,43 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 07fa7cd552b75dd4b84071cd8c9fed7e, type: 3}
   m_PrefabInstance: {fileID: 322303252}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2090623866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243367279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &2091003055 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: e84f1683bc1d7504f8c75a618d7d243d, type: 3}
+  m_PrefabInstance: {fileID: 745736264}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2091003060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091003055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &2100974893
 GameObject:
   m_ObjectHideFlags: 0
@@ -18907,6 +21499,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100974893}
   m_CullTransparentMesh: 1
+--- !u!1 &2111804996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 25e8d5b8c3ce6ef4a944b737614bbdac, type: 3}
+  m_PrefabInstance: {fileID: 673634324}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2111805001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111804996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &2124532657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19002,13 +21615,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: c199cfe83609a144899628377ff32cf5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2124532663}
   m_SourcePrefab: {fileID: 100100000, guid: c199cfe83609a144899628377ff32cf5, type: 3}
 --- !u!224 &2124532658 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: c199cfe83609a144899628377ff32cf5, type: 3}
   m_PrefabInstance: {fileID: 2124532657}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2124532663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101691467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &2126164018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19104,8 +21736,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 626069542039898348, guid: f26245791d585b74d8718f05a5a85943, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1697240703}
   m_SourcePrefab: {fileID: 100100000, guid: f26245791d585b74d8718f05a5a85943, type: 3}
+--- !u!1 &2131960368 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 5f1eb988ae63c834c8004da120b52cc3, type: 3}
+  m_PrefabInstance: {fileID: 1346719095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2131960373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131960368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
+--- !u!1 &2136448787 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: a32a520b07bd9024fa45246ce07e4121, type: 3}
+  m_PrefabInstance: {fileID: 77414890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2136448792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136448787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.UISystem.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1001 &8692802964581176887
 PrefabInstance:
   m_ObjectHideFlags: 0

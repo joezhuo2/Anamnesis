@@ -726,6 +726,10 @@ player upgrades rather than attacks the player selects.
 
 # Player Upgrades
 
+The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an authored
+`StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
+again on `OnRemove`. No asset uses it yet.
+
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded` are present
 in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
@@ -883,6 +887,7 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 - HP Percent: 6%
 - Description: 20% chance on each health regen tick to additionally heal for 6% of
   EffMaxHp.
+- Note: the asset also serializes `bypassMaxPct`, which `TriggerUpgradeEffect` never reads.
 
 ## Supersonic
 - Asset: `Supersonic`
@@ -919,7 +924,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Reminiscence Cooldown` | Info | Reminiscence Cooldown | 4s | - | 1 | Cooldown marker |
 | `Slow 3 8 10` | StatReduction | Slow | 3s | - | 8 | -10% moveSpeed per stack |
 | `Slow 5 3 15` | StatReduction | Slow | 5s | - | 3 | -15% moveSpeed per stack |
-| `Slow 6 15 5` | StatReduction | Slow | 6s | - | 15 | -5% moveSpeed per stack (unreferenced) |
+| `Slow 6 15 5` | StatReduction | Slow | 6s | - | 15 | -5% moveSpeed per stack |
 | `Slow 8 2 30` | StatReduction | Slow | 8s | - | 2 | -30% moveSpeed per stack |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
@@ -933,7 +938,8 @@ Folder: `Assets/data/StatusEffect`.
 
 Used by enemies rather than the player: `Crumbling 6 10 4` (Crab), `Poison 2 0.5 1 20 Atk`
 (Slime), `Slow 8 2 30` (Lich), `Stun 6` (Cultist), `Vulnerable 6 6 5` (Bat Mark),
-`Stun 2` (also used by BallSpam), `Slow 5 3 15` and `Freeze 2` (Slime (Frost)'s Blizzard),
+`Stun 2` (also used by BallSpam), `Slow 6 15 5` and `Freeze 2` (Slime (Frost)'s Blizzard),
 `Overheat` (Slime (Magma)'s Eruption).
 
-`Slow 6 15 5` is authored but not referenced by any projectile yet.
+`Slow 5 3 15` is authored but no longer referenced by any projectile — Blizzard moved to
+`Slow 6 15 5` in v0.3.9.

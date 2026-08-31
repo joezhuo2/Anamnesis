@@ -19,6 +19,9 @@ namespace CrystalFlux.WaveSystem
         public float spawnRadius = 2f;
         [Range(0f, 0.9f)] public float killSpawnSpeedup = 0.15f;
 
+        [Header("Messages")]
+        public bool showCompletionMessage = true;
+
         [Header("Wave Info Settings")]
         public GameObject waveInfoPanel;
         public TextMeshProUGUI anomalyInfoText;
@@ -260,13 +263,17 @@ namespace CrystalFlux.WaveSystem
                 yield return _waitForSeconds0_5;
             }
 
-            if (activeBossBar != null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
-            else if (currentAnomaly != null && currentAnomaly.isActive) GameController?.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
-            else GameController?.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
+            if (showCompletionMessage)
+            {
+                if (activeBossBar != null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
+                else if (currentAnomaly != null && currentAnomaly.isActive) GameController?.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
+                else GameController?.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
+            }
 
             RollAndAnnounceWaveRewards();
 
-            yield return _waitForSeconds1_5;
+            if (showCompletionMessage) yield return _waitForSeconds1_5;
+
             EndWave();
         }
 
@@ -409,7 +416,7 @@ namespace CrystalFlux.WaveSystem
 
             int rerollGain = pendingOccasionalRerolls + pendingAnomalyRerolls;
             int skillPointGain = pendingOccasionalSkillPoints + pendingAnomalySkillPoints;
-            if (rerollGain <= 0 && skillPointGain <= 0) return;
+            if (rerollGain <= 0 && skillPointGain <= 0 || !showCompletionMessage) return;
 
             string msg = "";
             if (rerollGain > 0) msg = $"+{rerollGain} Reroll{(rerollGain > 1 ? "s" : "")}";

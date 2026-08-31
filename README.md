@@ -37,7 +37,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, single-enemy boss waves, boss bars, and reward/anomaly button panels that update dynamically. A live **wave progress indicator** (`Wave 7 (12/30)`) tracks kills against the wave total, and clearing a wave announces the rerolls and skill points it granted in a single subtitle.
 - **Unlimited waves** — an endless mode that scales infinitely: enemy level and max total enemies rise each wave, spawns speed up, boss waves appear periodically, and rewards never stop. Reuses all shared `WaveManager` settings (reroll cost, rewards, corruption, milestones, anomalies) with no reconfiguration.
 - **Enemy splitting** — enemies can split into more enemies on death with configurable split count, health scaling, and behavior settings.
-- **Enemy phases** — bosses (and any configured enemy) transition through phases as their HP drops below thresholds (e.g. 70% / 40%), granting phase stat buffs and unlocking stronger phase-gated attacks.
+- **Enemy phases** — bosses (and any configured enemy) transition through phases as their HP drops below thresholds (e.g. 70% / 40%), granting phase stat buffs and unlocking stronger phase-gated attacks. The Lich speeds up at 40% HP (+40% move speed, +20% attack speed).
 - **Global enemy spawner** — centralized spawning system for consistent enemy management.
 - **Anomaly system** — randomized run modifiers with configurable frequency, counts, and reward bonuses (e.g., *Time Trial*, *No Damage*, *Stat Modifier*).
 - **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage, spread barrage, and the screen-wide converging lines: top-down, left-right, diagonal, diagonal reverse, full X), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, **wave** and **spiral** flight paths, orbit interactions (fire, absorb, redirect, explode), **follow-source** option for projectiles, and on-hit **additional attacks** that chain into multi-stage combos (e.g. Blaze → Blaze Spark, Exodus → Exodus Wave → Exodus Core, Lifeforce → Shard → Burst).
@@ -47,7 +47,8 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%).
 - **Wave-gated content** — enemies, rare attacks, and Awakenings each carry a `minWave` and only enter their pools once the run reaches it, so early waves draw from a smaller, gentler set.
 - **Milestone rewards** — every 25 waves (25, 50, 75, 100...), choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks (e.g., *Glass Cannon*: +40% Damage / -40% Max Health). Each stat has ±15% variance for replayability.
-- **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays.
+- **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays. The between-wave subtitle (and the 1.5s pause it holds) can be switched off per wave manager via `showCompletionMessage`.
+- **Hover feedback** — reward, anomaly, cooldown-indicator and skill-node buttons scale up under the pointer via `HoverScale`, easing on unscaled time so it keeps animating while the game is paused.
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
 - **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.
 - **Damage indicators** — floating damage numbers with small randomness. **XP gain indicators** and **XP wrapper option** for custom XP display. **Gold gain indicators** (+{gold}g in gold color).
@@ -83,7 +84,7 @@ Each enemies have their own stats, attack sets, movement patterns, behavior, and
 
 **Status effects** — DoTs, Stun, Stat Buffs, Stat Reductions (Slow, Weaken, etc.), Attack Enhancements,and more.
 
-**Player upgrades** — Additional Damage, Cooldown Advance, Decoy, Gain Mana, Hex Cast, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge.
+**Player upgrades** — Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge.
 
 ### Awakening trigger conditions
 
