@@ -107,7 +107,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
   - Speed: 0 (melee)
   - Lifetime: 1s
   - Pierce: 3000
-  - Size: 2.5
+  - Size: 4
   - Damage: 930% Phys
   - Scaling: EffAtk
   - Time Before Same Enemy: 0.5s
@@ -728,7 +728,7 @@ player upgrades rather than attacks the player selects.
 
 The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an authored
 `StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
-again on `OnRemove`. No asset uses it yet.
+again on `OnRemove`. Used by `Solar Wind`.
 
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded` are present
 in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
@@ -845,6 +845,22 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Damage Type: True
 - Description: 35% chance to deal 24% of the damage dealt again as True damage.
 
+## Solar Wind (Capstone)
+- Asset: `SolarWind`
+- Type: GrantStatusEffect
+- Conditions: OnHealthRegen
+- Chance: 30%
+- Cooldown: 3s
+- Delay: 0s
+- Effect: `Solar Wind` (6s, 6 stacks), 1 stack per trigger
+- Description: 30% chance on each health regen tick to gain a stack of Solar Wind, at
+  most once every 3s.
+- Unlocked by: `Node_solarwind` ("Solar Wind" capstone, 3 skill points, prerequisite
+  `Node_hprp5`, requires the Stellar Surge Awakening). Like every capstone it *adds*
+  the upgrade rather than replacing the required one, so Stellar Surge keeps rolling
+  its own 20% heal on the same trigger.
+- Not in `treasurePool` — capstone-only.
+
 ## Soul Rend
 - Asset: `SoulRendPU`
 - Unlocks: wave 35
@@ -926,6 +942,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Slow 5 3 15` | StatReduction | Slow | 5s | - | 3 | -15% moveSpeed per stack |
 | `Slow 6 15 5` | StatReduction | Slow | 6s | - | 15 | -5% moveSpeed per stack |
 | `Slow 8 2 30` | StatReduction | Slow | 8s | - | 2 | -30% moveSpeed per stack |
+| `Solar Wind` | StatBuffs | Solar Wind | 6s | - | 6 | +3 hpRegen, +8% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
 | `Stun 6` | Stun | Stun | 6s | - | 1 | Cannot move or attack |

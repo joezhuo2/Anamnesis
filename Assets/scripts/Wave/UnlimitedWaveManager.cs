@@ -178,7 +178,6 @@ namespace CrystalFlux.WaveSystem
         {
             pendingStandardRewards = false;
             if (currentAnomaly != null) currentAnomaly.Cleanup();
-            GameController?.SetTitle("Choose Wave Reward");
 
             currentAnomaly = null;
 

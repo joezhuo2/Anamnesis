@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
   mainAttack: {fileID: 11400000, guid: b1a5467fbe69f6f4bb68a21a361d5cdf, type: 2}
   lifetime: 1
-  size: 2.5
+  size: 4
   numPierce: 3000
   destroyOnMaxPierce: 0
   movementType: 0

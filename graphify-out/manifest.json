@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityHealth.cs": {
-    "mtime": 1788195657.9633806,
-    "seen": 1788196081.8413458,
+    "mtime": 1788197411.193294,
+    "seen": 1788208906.9330385,
     "ast_hash": "e7bbbfeaf40169bd030bf5a9ffc6990b",
     "semantic_hash": ""
   },
@@ -432,8 +432,8 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrades/StellarSurge.cs": {
-    "mtime": 1788142655.895562,
-    "seen": 1788143852.8782902,
+    "mtime": 1788208857.9301064,
+    "seen": 1788208906.9330952,
     "ast_hash": "e7d00dd463382b878a6083fc1e677d27",
     "semantic_hash": ""
   },
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1788195658.4213226,
-    "seen": 1788196081.841433,
-    "ast_hash": "f0a45b7b99b0a55e5b0fe9b54b6faba9",
+    "mtime": 1788208166.2411132,
+    "seen": 1788208906.933178,
+    "ast_hash": "6cf00ca9bd0b8ab57eefbf0666a4c24d",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788196060.748618,
-    "seen": 1788196081.841452,
-    "ast_hash": "802de21581e6a06c92ab123c2c7bfab9",
+    "mtime": 1788208767.478875,
+    "seen": 1788208906.9332166,
+    "ast_hash": "53f12dca617004502dea1ead6c9def3e",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -702,21 +702,21 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788195012.9647875,
-    "seen": 1788195034.970827,
-    "ast_hash": "8819b3cced7b11acca1af7de35b799ac",
+    "mtime": 1788208804.6024692,
+    "seen": 1788208906.9332285,
+    "ast_hash": "ae0d5665d0470f8eb5c011f89f6608d0",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1788194829.6264982,
-    "seen": 1788195034.9708297,
-    "ast_hash": "74c32a5c3bd6c03fb16190d45c0a0d3e",
+    "mtime": 1788208779.4400618,
+    "seen": 1788208906.9332306,
+    "ast_hash": "43b28aa5207e362f2ec94d2154c1bedd",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1788194918.0489728,
-    "seen": 1788195034.9708323,
-    "ast_hash": "63bb1056fe104a944a1564a49e00f762",
+    "mtime": 1788208869.6843646,
+    "seen": 1788208906.9332328,
+    "ast_hash": "cca6abc64cc5d716efa38d8b4f41a86e",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1182,15 +1182,15 @@
     "semantic_hash": ""
   },
   "GAME.md": {
-    "mtime": 1788194879.5302768,
-    "seen": 1788195034.9708223,
-    "ast_hash": "cad66f25ad3774e0364537436ed005b6",
+    "mtime": 1788208792.7603183,
+    "seen": 1788208906.9332232,
+    "ast_hash": "df40bfb0e0bf18e0363239e16e01b1e8",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/UnlimitedWaveManager.cs": {
-    "mtime": 1788195658.6115122,
-    "seen": 1788196081.8414323,
-    "ast_hash": "ab7927217888ffd7f1dbe80f5870231b",
+    "mtime": 1788208253.7056744,
+    "seen": 1788208906.9331763,
+    "ast_hash": "4c32dcde8ea2f080b7cdad254a31a582",
     "semantic_hash": ""
   },
   ".vscode/mcp.json": {
@@ -1869,6 +1869,24 @@
     "mtime": 1782066636.3230848,
     "seen": 1788195034.9711905,
     "ast_hash": "798bd572bf0c0d0da49b9fe5eaae2304",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Entity/Player/PlayerUpgrades/GrantStatusEffect.cs": {
+    "mtime": 1788197725.0820973,
+    "seen": 1788208906.9330826,
+    "ast_hash": "0d07e463664018b1eaebe3af0ad89733",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Misc/HoverScale.cs": {
+    "mtime": 1788208321.918696,
+    "seen": 1788208906.9331071,
+    "ast_hash": "0ba66a2de1ca588e90d7300d2cbdeadb",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/UI/20250420manaSoulHeaderB-Sheet.png": {
+    "mtime": 1788114891.148974,
+    "seen": 1788208906.9334748,
+    "ast_hash": "5c6d55d18b31e4c1a44d9f04ec0a228b",
     "semantic_hash": ""
   }
 }

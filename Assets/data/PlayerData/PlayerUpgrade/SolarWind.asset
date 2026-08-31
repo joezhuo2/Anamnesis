@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a045d02bb19ae4344b0868beb80fa73c, type: 3}
+  m_Name: SolarWind
+  m_EditorClassIdentifier: CrystalFlux.Entity::GrantStatusEffect
+  upgradeName: Solar WInd
+  conditions: 08000000
+  chance: 30
+  cooldown: 3
+  delay: 0
+  effect: {fileID: 11400000, guid: 304052d8888330e428df996d228f0a4b, type: 2}
+  stacks: 1

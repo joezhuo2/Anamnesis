@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.10] - 2026-08-31
+
+### Added
+- **Solar Wind Awakening** — `SolarWind.asset`, the first asset built on the `GrantStatusEffect` type added in v0.3.9. Fires on `OnHealthRegen` with a **30%** chance and a 3s cooldown, granting one stack of the new `Solar Wind` effect. It is not in `treasurePool`; like `Decoy Upgraded` it can only be obtained from its capstone node
+- **`Solar Wind` status effect** in `Assets/data/StatusEffect/` — `StatBuffs`, 6s, up to 6 stacks, granting **+3 `hpRegen`**, **+8% `hpRegPct`** and **+6% `moveSpeedPct`** per stack, and dropping all stacks at once when the duration runs out rather than decaying one at a time
+- **Solar Wind capstone node** — `Node_solarwind` (3 skill points, 50g refund) hangs off `Node_hprp5` and requires the Stellar Surge Awakening, granting Solar Wind alongside it
+- **Five skill tree nodes**, taking the tree from 108 to **114**: `Node_hp3a` and `Node_hp3aa` extend the health branch past `Node_hp2ba`, `Node_hp3b` and `Node_hp3ba` extend it past `Node_hp2b`, and `Node_hprp5` (**+3% `hpRegPct`**, 1 point) leads into the Solar Wind capstone
+- **`__Copyable/Node_`** — a blank `SkillNodeDef` asset and matching prefab kept as a template to duplicate when authoring new nodes
+
+### Changed
+- **Decoy Burst** projectile size 2.5 to **4**
+- **Unlimited waves no longer set a "Choose Wave Reward" title** when standard rewards open, matching the quieter between-wave presentation introduced with `showCompletionMessage` in v0.3.9
+
 ## [v0.3.9] - 2026-08-31
 
 ### Added
