@@ -212,6 +212,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (dp == null) return;
 
+            bool tookProjectileHit = false;
             bool prevSuppress = _suppressHurtIFrames;
             bool prevPending = _pendingHurtIFrames;
             _suppressHurtIFrames = true;
@@ -254,7 +255,10 @@ namespace CrystalFlux.EntitySystem
                     cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeDamage);
 
                 if (cpum != null && dmg > 0 && IsEnemyHit(dp, i))
+                {
                     cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeHit);
+                    if (Projectile.ApplyingProjectileHit) tookProjectileHit = true;
+                }
 
                 if (i.isCrit)
                 {
@@ -291,7 +295,7 @@ namespace CrystalFlux.EntitySystem
                 if (fireIFrames && !prevSuppress) TriggerIFramesCoroutine(hurtIFrameDuration);
             }
 
-            if (cpum != null) PlayerEvents.RaisePlayerTakeDamage(this);
+            if (cpum != null && tookProjectileHit) PlayerEvents.RaisePlayerTakeDamage(this);
         }
 
         private bool IsEnemyHit(DamagePacket dp, DamageInstance i)

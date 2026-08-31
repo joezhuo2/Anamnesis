@@ -17,6 +17,7 @@ namespace CrystalFlux.WaveSystem
         [Header("Basic Settings")]
         public WaveSequence currentSequence;
         public float spawnRadius = 2f;
+        [Range(0f, 0.9f)] public float killSpawnSpeedup = 0.15f;
 
         [Header("Wave Info Settings")]
         public GameObject waveInfoPanel;
@@ -251,7 +252,7 @@ namespace CrystalFlux.WaveSystem
                 }
 
                 SpawnEnemies(c);
-                yield return new WaitForSeconds(Random.Range(c.minSpawnFrequency, c.maxSpawnFrequency));
+                yield return WaitForNextSpawn(Random.Range(c.minSpawnFrequency, c.maxSpawnFrequency));
             }
             while (currentEnemies.Count > 0)
             {
@@ -309,6 +310,26 @@ namespace CrystalFlux.WaveSystem
 
             totalSpawned++;
             currentEnemies.Add(enemy);
+        }
+
+        protected IEnumerator WaitForNextSpawn(float delay)
+        {
+            float remaining = delay;
+            int lastAlive = currentEnemies.Count;
+
+            while (remaining > 0f)
+            {
+                yield return null;
+                remaining -= Time.deltaTime;
+
+                CleanEnemyList();
+                int alive = currentEnemies.Count;
+
+                if (alive < lastAlive)
+                    remaining *= Mathf.Pow(1f - killSpawnSpeedup, lastAlive - alive);
+
+                lastAlive = alive;
+            }
         }
 
         protected void CleanEnemyList()

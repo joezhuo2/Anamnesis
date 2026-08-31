@@ -102,7 +102,7 @@ namespace CrystalFlux.WaveSystem
                 SpawnEnemies();
 
                 float spawnDelay = Random.Range(GetMinSpawnFrequency(wave), GetMaxSpawnFrequency(wave));
-                yield return new WaitForSeconds(spawnDelay);
+                yield return WaitForNextSpawn(spawnDelay);
             }
             while (currentEnemies.Count > 0)
             {

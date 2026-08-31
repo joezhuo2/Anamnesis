@@ -7,6 +7,20 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.8_1] - 2026-08-31
+
+### Fixed
+- **ApplyingProjectileHit** - static flag, set around the TakeDamage call in HandleHitEntity (saved/restored, so nested damage cascades don't leak state).
+- **PlayerEvents.RaisePlayerTakeDamage** - now fires only when a damage instance passed IsEnemyHit (enemy team, non-DoT, dmg > 0, not iframe-bypass) and came from a projectile. DoT ticks, self-damage from attack costs, Consume/Heal packets, and dashing through a projectile with iframes no longer fail the trial.
+- **Enemy Scaling** - magma and frost slime stayed at level 1.
+
+### Added
+- Kill accelerates next spawn by 15%
+
+### Rebalance
+- increased hp scaling (10% > 12%)
+- increased armor scaling (5% > 8%)
+
 ## [v0.3.8] - 2026-08-31
 
 ### Added

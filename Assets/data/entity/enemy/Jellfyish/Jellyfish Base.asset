@@ -45,7 +45,7 @@ MonoBehaviour:
   hpPct: 0
   hpRegen: 50
   hpRegPct: 0
-  armor: 30
+  armor: 70
   armorPct: 0
   damageRes: 30
   dodgeChance: 10
@@ -59,6 +59,7 @@ MonoBehaviour:
   seTickRatePct: 0
   moveSpeed: 0.6
   moveSpeedPct: 0
+  detectionRange: 12
   currentStamina: 0
   maxStamina: 0
   maxStaminaPct: 0
@@ -76,9 +77,6 @@ MonoBehaviour:
   dashStaminaCost: 0
   dashStaminaCostRedPct: 0
   dashShouldApplyIFrame: 0
-  isDashing: 0
-  canDash: 0
-  canGainStamina: 0
   level: 0
   exp: 0
   expBonus: 0
@@ -92,26 +90,7 @@ MonoBehaviour:
   isAttacking: 0
   canMove: 0
   canGainHp: 0
-  detectionRange: 12
-  target: {fileID: 0}
-  phase: 0
-  phaseThresholds:
-  - 70
-  - 40
-  phaseBuffs:
-  - buff:
-      type: 18
-      value: 30
-    phaseReq: 1
-  - buff:
-      type: 24
-      value: -40
-    phaseReq: 1
-  - buff:
-      type: 24
-      value: 130
-    phaseReq: 2
-  - buff:
-      type: 2
-      value: 50
-    phaseReq: 2
+  isDashing: 0
+  canDash: 0
+  canGainStamina: 0
+  globalDoTCanCrit: 0

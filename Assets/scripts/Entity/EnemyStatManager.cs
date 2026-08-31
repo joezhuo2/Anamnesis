@@ -25,8 +25,8 @@ namespace CrystalFlux.Core
             if (levelOffset <= 0) return;
 
             const float atkGrowth = 1.05f;
-            const float hpGrowth = 1.1f;
-            const float armorGrowth = 1.05f;
+            const float hpGrowth = 1.12f;
+            const float armorGrowth = 1.08f;
             const float utilityGrowth = 1.04f;
 
             float atkMult = Mathf.Pow(atkGrowth, levelOffset);

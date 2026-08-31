@@ -45,7 +45,7 @@ MonoBehaviour:
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0
-  armor: 60
+  armor: 35
   armorPct: 0
   damageRes: 15
   dodgeChance: 0

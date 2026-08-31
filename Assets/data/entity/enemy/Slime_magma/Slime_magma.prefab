@@ -221,9 +221,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2492915923741323917}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4274b1e4542f000428bc3b26c85b915a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5931b0066360d094fb7acef0229eda9e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: CrystalFlux.Entity::CrystalFlux.Core.EntityStatManager
+  m_EditorClassIdentifier: CrystalFlux.Entity::CrystalFlux.Core.EnemyStatManager
   baseStats: {fileID: 11400000, guid: 5272bd084bc16ff40ac6ea933ab39678, type: 2}
   currentBuffs: []
   teamID: 0

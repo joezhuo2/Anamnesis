@@ -14,6 +14,7 @@ namespace CrystalFlux.ProjectileSystem
         public ProjectileData pd;
 
         [HideInInspector] public GameObject ownerObj;
+        public static bool ApplyingProjectileHit { get; private set; }
         [HideInInspector] public Vector2 dir;
         [HideInInspector] public int pierced;
         private float effSpd;
@@ -144,7 +145,10 @@ namespace CrystalFlux.ProjectileSystem
 
             DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(pd, damageSnapshot, true, ownerObj, false, 1f);
 
-            eh.TakeDamage(dp);
+            bool prevApplyingHit = ApplyingProjectileHit;
+            ApplyingProjectileHit = true;
+            try { eh.TakeDamage(dp); }
+            finally { ApplyingProjectileHit = prevApplyingHit; }
 
             if (pd.kbForce > 0f && (eh as Component).TryGetComponent<Rigidbody2D>(out var rb2d))
             {
