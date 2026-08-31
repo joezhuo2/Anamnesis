@@ -13,25 +13,26 @@ MonoBehaviour:
   m_Name: Heartburn
   m_EditorClassIdentifier: Assembly-CSharp::StatBuffs
   currentTime: 0
-  duration: 8
+  duration: 6
   tickInterval: 0
   isBuff: 1
   icon: {fileID: -7921052967969465774, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Heartburn
-  desc: For each stack, increases crit damage by 20%, damage bonus by 6% and stamina
-    cost by 18%, but reduce health regen by 12%.
-  maxStacks: 10
+  desc: For each stack, increases crit damage by 12%, damage bonus by 4% and stamina
+    cost by 18%, but reduce health regen by 16%.
+  maxStacks: 15
   loseAllStacksOnExpire: 1
   target: {fileID: 0}
   source: {fileID: 0}
-  projectile: {fileID: 0}
+  location: {x: 0, y: 0}
   currentStacks: 0
+  potencyMultiplier: 1
   buffs:
   - type: 0
-    value: 6
+    value: 4
   - type: 7
-    value: 20
+    value: 12
   - type: 47
-    value: 15
+    value: 18
   - type: 15
-    value: -12
+    value: -16

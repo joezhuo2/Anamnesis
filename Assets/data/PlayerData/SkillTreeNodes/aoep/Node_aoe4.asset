@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
+  m_Name: Node_aoe4
+  m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
+  nodeName: AOE %
+  desc: +3% Increased Area of Effect
+  nodeID: aoe4
+  icon: {fileID: 141442949, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  isStartingNode: 0
+  prerequisites:
+  - {fileID: 11400000, guid: cf426cc3ca1fdcb40adeae9c823a2fab, type: 2}
+  incompatibleNodes: []
+  requirements: []
+  unlockEffects:
+  - rid: 678176194800648338
+  cost: 1
+  undoCost: 50
+  references:
+    version: 2
+    RefIds:
+    - rid: 678176194800648338
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        buffs:
+        - type: 8
+          value: 3
+        attacks: []
+        awakenings: []

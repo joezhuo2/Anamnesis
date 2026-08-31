@@ -15,7 +15,7 @@ MonoBehaviour:
   nodeName: Solar Wind
   desc: Upgrades Stellar Surge to occasionally grant Solar Wind instead of healing
   nodeID: solarwind
-  icon: {fileID: -523499465, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  icon: {fileID: -657396959, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
   prerequisites:
   - {fileID: 11400000, guid: 0dc93841577c2554cb070e00abdf85f2, type: 2}

@@ -19,9 +19,9 @@ MonoBehaviour:
   isStartingNode: 0
   prerequisites:
   - {fileID: 11400000, guid: a4115ea1c300f534a9c9a89c8811ea50, type: 2}
+  - {fileID: 11400000, guid: f09163258c484c24fbb9d84ec05a2eca, type: 2}
   incompatibleNodes: []
   requirements: []
-  statBuffs: []
   unlockEffects:
   - rid: 678176144140534086
   cost: 1
@@ -30,7 +30,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 678176144140534086
-      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: Assembly-CSharp}
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
       data:
         buffs:
         - type: 60

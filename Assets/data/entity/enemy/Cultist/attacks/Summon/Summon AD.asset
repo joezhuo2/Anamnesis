@@ -27,7 +27,7 @@ MonoBehaviour:
   randomSpread: 0
   minDelay: 0
   maxDelay: 0
-  maxRange: 4
+  maxRange: 12
   canMoveDuringAttack: 0
   minHpPct: 0
   maxHpPct: 100

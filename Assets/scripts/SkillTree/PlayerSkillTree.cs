@@ -211,6 +211,7 @@ namespace CrystalFlux.SkillTree
             TrySpend(node.cost);
             unlockedNodes.Add(node.nodeID);
 
+            ConsumeNodeRequirements(node);
             ApplyNodeEffects(node);
 
             if (node.isStartingNode) choseStarting = true;
@@ -274,6 +275,7 @@ namespace CrystalFlux.SkillTree
                 AddSkillPoints(node.cost);
                 unlockedNodes.Remove(node.nodeID);
                 RemoveNodeEffects(node);
+                RestoreNodeRequirements(node);
             }
         }
 
@@ -289,6 +291,22 @@ namespace CrystalFlux.SkillTree
             if (node.unlockEffects != null)
                 foreach (var effect in node.unlockEffects)
                     if (effect != null) effect.Remove(gameObject);
+        }
+
+        private void ConsumeNodeRequirements(SkillNodeDef node)
+        {
+            if (node.requirements == null) return;
+
+            foreach (var req in node.requirements)
+                if (req is NodeRequirement nr) nr.Consume(gameObject);
+        }
+
+        private void RestoreNodeRequirements(SkillNodeDef node)
+        {
+            if (node.requirements == null) return;
+
+            foreach (var req in node.requirements)
+                if (req is NodeRequirement nr) nr.Restore(gameObject);
         }
 
         public void AddSkillPoints(int amount) => SkillPoints += amount;

@@ -111,7 +111,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
   - Damage: 930% Phys
   - Scaling: EffAtk
   - Time Before Same Enemy: 0.5s
-  - Effect: 100% self on cast (Blaze Soul, 8s, replaces the attack with Cosmic Blaze)
+  - Effect: 100% self on cast (Blaze Soul, 6s, replaces the attack with Cosmic Blaze)
   - Additional: 30% chance on hit to create Blaze Spark
   - Knockback: none
 
@@ -122,8 +122,8 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 - Pattern: Single (1 count)
 - Spawn: 0.5 dist
 - Animation: 0.5s
-- Costs: Stamina 20 +10%
-- Gains on hit: Stamina +3 +2%
+- Costs: Stamina 18 +8%
+- Gains on hit: Stamina +2 +1%
 - Projectile:
   - Speed: 12
   - Lifetime: 1s
@@ -131,9 +131,9 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
   - Size: 2
   - Damage: 685% Phys, 30% True
   - Scaling: EffAtk
-  - Effects: 100% self on cast (Blaze Soul, refreshes the 8s replacement) + 100% self on
-    cast (Heartburn, 8s, max 10 stacks: +6% damagePct, +20% critDamage, +15% stCostPct,
-    -12% hpRegPct per stack)
+  - Effects: 100% self on cast (Blaze Soul, refreshes the 6s replacement) + 100% self on
+    cast (Heartburn, 6s, max 15 stacks: +4% damagePct, +12% critDamage, +18% stCostPct,
+    -16% hpRegPct per stack)
   - Additional: 40% chance on hit to create Blaze Hyperspark
   - Knockback: 12 force for 0.15s
 
@@ -161,7 +161,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 - Pattern: Single (1 count)
 - Spawn: 0 dist (fixed)
 - Animation: 0.5s
-- Gains on hit: Stamina +3 +2%
+- Gains on hit: Stamina +2 +2%, Mana +1
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.5s
@@ -178,14 +178,14 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 - Pattern: Single (1 count)
 - Spawn: 0.5 dist (fixed)
 - Animation: 0.5s
-- Costs: Health 14 +11%
-- Gains on hit: Stamina +2, Health +6 +6%, Mana +2
+- Costs: Health 9 +5%
+- Gains on hit: Stamina +2, Health +6 +3%, Mana +1
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.5s
   - Pierce: 10
   - Size: 2.5
-  - Damage: 60% Phys, 20% True
+  - Damage: 50% Phys, 15% True
   - Scaling: EffMaxHp
   - Effect: 40% on hit (Bleed, 3s, 0.5s tick, max 5 stacks, 15% EffMaxHp per tick as DoT)
   - Knockback: 4 force for 0.15s
@@ -787,7 +787,8 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Description: Dashing spawns a decoy that taunts for 6 seconds, then detonates at its
   own position for 225% Spell damage and applies Vulnerable.
 - Unlocked by: `Node_decoy` ("Cosmic Superimposition", 3 skill points, prerequisite
-  `Node_ms2`, requires the base Decoy upgrade)
+  `Node_ms2`, requires the base Decoy upgrade, which it consumes on unlock and returns
+  on refund)
 
 ## Feedback Loop
 - Asset: `FeedbackLoop`
@@ -856,9 +857,9 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Description: 30% chance on each health regen tick to gain a stack of Solar Wind, at
   most once every 3s.
 - Unlocked by: `Node_solarwind` ("Solar Wind" capstone, 3 skill points, prerequisite
-  `Node_hprp5`, requires the Stellar Surge Awakening). Like every capstone it *adds*
-  the upgrade rather than replacing the required one, so Stellar Surge keeps rolling
-  its own 20% heal on the same trigger.
+  `Node_hprp5`, requires the Stellar Surge Awakening). Unlocking it consumes Stellar
+  Surge — the Awakening is removed as Solar Wind is granted, so the health regen tick
+  rolls for Solar Wind instead of the heal. Refunding the node returns Stellar Surge.
 - Not in `treasurePool` — capstone-only.
 
 ## Soul Rend
@@ -923,14 +924,14 @@ Folder: `Assets/data/StatusEffect`.
 
 | Asset | Class | Name | Duration | Tick | Max stacks | Effect |
 | --- | --- | --- | --- | --- | --- | --- |
-| `Blaze Soul` | AttackReplacement | Blaze Soul | 8s | - | 1 | Replaces the attack with `Blaze A1 AD` (Cosmic Blaze) |
+| `Blaze Soul` | AttackReplacement | Blaze Soul | 6s | - | 1 | Replaces the attack with `Blaze A1 AD` (Cosmic Blaze) |
 | `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 15% EffMaxHp per tick |
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
 | `DotDetonator 0.5 2` | Detonator | (unnamed) | 0.5s | - | 1 | Detonates DoTs for 250% as True |
 | `Freeze 2` | Stun | Frozen | 2s | - | 1 | Cannot move or attack |
-| `Heartburn` | StatBuffs | Heartburn | 8s | - | 10 | +6% damagePct, +20% critDamage, +15% stCostPct, -12% hpRegPct per stack |
+| `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
 | `Overheat` | StatBuffs | Overheat | 7s | - | 5 | -8% atkPct, -12% stRegPct per stack |
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |

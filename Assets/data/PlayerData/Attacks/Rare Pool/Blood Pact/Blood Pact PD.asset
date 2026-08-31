@@ -13,18 +13,24 @@ MonoBehaviour:
   m_Name: Blood Pact PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
-  speed: 0
   lifetime: 0.5
-  numPierce: 10
   size: 2.5
-  physicalMult: 0.6
+  numPierce: 10
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 0.5
   spellMult: 0
-  trueMult: 0.2
+  trueMult: 0.15
   scalingStat: 30
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0

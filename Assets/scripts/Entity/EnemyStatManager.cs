@@ -24,7 +24,7 @@ namespace CrystalFlux.Core
             int levelOffset = currentLevel - 1;
             if (levelOffset <= 0) return;
 
-            const float atkGrowth = 1.05f;
+            const float atkGrowth = 1.03f;
             const float hpGrowth = 1.12f;
             const float armorGrowth = 1.08f;
             const float utilityGrowth = 1.04f;

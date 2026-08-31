@@ -39,5 +39,23 @@ namespace CrystalFlux.SkillTree
 
             return true;
         }
+
+        public void Consume(GameObject target)
+        {
+            if (target == null || requiredAwakenings == null) return;
+            if (!target.TryGetComponent<IUpgradeHolder>(out var pum)) return;
+
+            foreach (var u in requiredAwakenings)
+                if (u != null && pum.HasUpgrade(u)) pum.RemoveUpgrade(u);
+        }
+
+        public void Restore(GameObject target)
+        {
+            if (target == null || requiredAwakenings == null) return;
+            if (!target.TryGetComponent<IUpgradeHolder>(out var pum)) return;
+
+            foreach (var u in requiredAwakenings)
+                if (u != null && !pum.HasUpgrade(u)) pum.AddUpgrade(u);
+        }
     }
 }

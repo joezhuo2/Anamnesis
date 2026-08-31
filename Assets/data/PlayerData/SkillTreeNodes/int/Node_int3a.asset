@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
+  m_Name: Node_int3a
+  m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
+  nodeName: Intelligence III
+  desc: '+3 Intelligence
+
+    +2% Intelligence'
+  nodeID: int3a
+  icon: {fileID: -1850113505, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  isStartingNode: 0
+  prerequisites:
+  - {fileID: 11400000, guid: c6a8afe2085df8843b3549bb133d383a, type: 2}
+  incompatibleNodes: []
+  requirements: []
+  unlockEffects:
+  - rid: 678176144140534070
+  cost: 1
+  undoCost: 50
+  references:
+    version: 2
+    RefIds:
+    - rid: 678176144140534070
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        buffs:
+        - type: 42
+          value: 3
+        - type: 43
+          value: 2
+        attacks: []
+        awakenings: []

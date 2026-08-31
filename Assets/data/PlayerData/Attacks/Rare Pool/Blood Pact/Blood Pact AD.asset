@@ -35,16 +35,16 @@ MonoBehaviour:
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
-  healthCost: 11
-  healthCostPct: 7
+  healthCost: 9
+  healthCostPct: 5
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 2
   staminaPctGainOnHit: 0
   healthGainOnHit: 6
-  healthPctGainOnHit: 6
-  manaGainOnHit: 2
+  healthPctGainOnHit: 3
+  manaGainOnHit: 1
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Blaze A1 AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  type: 0
   cooldown: 1
   projectilePrefab: {fileID: 1285953719107998448, guid: 99e255c094cb5bc478eb547135b31cd8, type: 3}
   pd: {fileID: 11400000, guid: 9c493f56548e1a24c9adeed0008c2999, type: 2}
@@ -32,15 +33,15 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 20
-  staminaCostPct: 10
+  staminaCost: 18
+  staminaCostPct: 8
   healthCost: 0
   healthCostPct: 0
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 3
-  staminaPctGainOnHit: 2
+  staminaGainOnHit: 2
+  staminaPctGainOnHit: 1
   healthGainOnHit: 0
   healthPctGainOnHit: 0
   manaGainOnHit: 0
@@ -48,10 +49,9 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 0
   icon: {fileID: 5803850864075934229, guid: 931c039b9f802b445ba96e6ad71b512f, type: 3}
   displayName: Cosmic Blaze

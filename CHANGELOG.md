@@ -7,18 +7,41 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.11] - 2026-08-31
+
+### Added
+- **New skill tree nodes**, taking the tree from 114 to **125**:
+  - **Five `AOE %` nodes** (`Node_aoe1` through `Node_aoe5`) in the new `aoep/` folder, **+3% `aoePct`** each for 1 skill point. They branch off `Node_intatk3` and chain `aoe1 - aoe2 - aoe3 - aoe4 - aoe5`, with `aoe5` also listing `aoe1` as a prerequisite so the five close into a ring that can be entered from either end
+  - **Six `Intelligence III` nodes** in `int/`, **+3 `Intelligence` and +2% `IntPct`** each for 1 skill point: `int3a` - `int3aa` - `int3ab` extending `Node_int2ba`, and `int3b` - `int3ba` - `int3bb` extending `Node_int2b`
+- **`Node_int3ab` is now a second prerequisite of `Node_mm3`**, connecting the intelligence branch into the movement branch that leads to the Warp capstone
+
+### Fixed
+- **`Node_mm3`'s `UnlockEffect` `SerializeReference` binding** named the `Assembly-CSharp` assembly rather than `CrystalFlux.SkillTree`, left over from the v0.3.2 package extraction. It also carried a stale empty `statBuffs` field that `SkillNodeDef` no longer declares
+- **Heartburn's description** claimed +18% stamina cost while the asset serialized `15`. The value is now 18 and the two agree
+
+### Rebalance
+- **Enemy attack scaling** — per-level attack growth 5% to **3%** (`EnemyStatManager.atkGrowth`), partly walking back the HP and armor scaling increases from v0.3.8_1
+- **Heartburn** — duration 8s to **6s**, max stacks 10 to **15**, and per stack: `damagePct` +6% to **+4%**, `critDamage` +20% to **+12%**, `stCostPct` +15% to **+18%**, `hpRegPct` -12% to **-16%**. Shorter and harsher per stack, but now higher limits
+- **Blaze Soul** — duration 8s to **6s**, so the Cosmic Blaze replacement window matches Heartburn's
+- **Cosmic Blaze** — stamina cost 20 +10% to **18 +8%**, stamina gain on hit +3 +2% to **+2 +1%**
+- **Blaze Hyperspark** — stamina gain on hit +3 to **+2**, and it now returns **+1 mana** on hit
+- **Blood Pact** — health cost 11 +7% to **9 +5%**, health gain on hit +6 +6% to **+6 +3%**, mana gain on hit 2 to **1**, and the projectile 60% Physical + 20% True to **50% Physical + 15% True**
+- **Cultist Summon** — `maxRange` 4 to **12**, so the Cultist summons clones from across the arena instead of only in melee range
+
+### Changed
+- **Capstone nodes now consume the Awakening they require.** `NodeRequirement` gained `Consume` and `Restore`, and `PlayerSkillTree.UnlockNode` calls `Consume` on every `NodeRequirement` before applying the node's unlock effects, so the required `PlayerUpgrade` is stripped from the player as the upgraded one is granted. `UndoNode` calls `Restore` after removing the node's effects, so refunding a capstone hands the original Awakening back instead of leaving the player with neither. Affects `Node_solarwind` (consumes Stellar Surge) and `Node_decoy` (consumes Decoy); `Node_warp` requires an *attack*, which `UnlockEffect` already swaps in place through `UpdateAttack`, and is unchanged
+- **`Node_solarwind` icon** swapped for a different sprite in the shared node sheet
+
 ## [v0.3.10] - 2026-08-31
 
 ### Added
-- **Solar Wind Awakening** — `SolarWind.asset`, the first asset built on the `GrantStatusEffect` type added in v0.3.9. Fires on `OnHealthRegen` with a **30%** chance and a 3s cooldown, granting one stack of the new `Solar Wind` effect. It is not in `treasurePool`; like `Decoy Upgraded` it can only be obtained from its capstone node
-- **`Solar Wind` status effect** in `Assets/data/StatusEffect/` — `StatBuffs`, 6s, up to 6 stacks, granting **+3 `hpRegen`**, **+8% `hpRegPct`** and **+6% `moveSpeedPct`** per stack, and dropping all stacks at once when the duration runs out rather than decaying one at a time
 - **Solar Wind capstone node** — `Node_solarwind` (3 skill points, 50g refund) hangs off `Node_hprp5` and requires the Stellar Surge Awakening, granting Solar Wind alongside it
-- **Five skill tree nodes**, taking the tree from 108 to **114**: `Node_hp3a` and `Node_hp3aa` extend the health branch past `Node_hp2ba`, `Node_hp3b` and `Node_hp3ba` extend it past `Node_hp2b`, and `Node_hprp5` (**+3% `hpRegPct`**, 1 point) leads into the Solar Wind capstone
-- **`__Copyable/Node_`** — a blank `SkillNodeDef` asset and matching prefab kept as a template to duplicate when authoring new nodes
+- **Solar Wind Awakening** — `SolarWind.asset`, the first asset built on the `GrantStatusEffect` type added in v0.3.9. Fires on `OnHealthRegen` with a **30%** chance and a 3s cooldown, granting one stack of the new `Solar Wind` effect. It can only be obtained from its capstone node
+- **`Solar Wind` status effect** in `Assets/data/StatusEffect/` — `StatBuffs`, 6s, up to 6 stacks, granting **+3 `hpRegen`**, **+8% `hpRegPct`** and **+6% `moveSpeedPct`** per stack, and dropping all stacks at once when the duration runs out rather than decaying one at a time
+- **New skill tree nodes**, taking the tree from 108 to **114**: `Node_hp3a` and `Node_hp3aa` extend the health branch past `Node_hp2ba`, `Node_hp3b` and `Node_hp3ba` extend it past `Node_hp2b`, and `Node_hprp5` (**+3% `hpRegPct`**, 1 point) leads into the Solar Wind capstone
 
 ### Changed
 - **Decoy Burst** projectile size 2.5 to **4**
-- **Unlimited waves no longer set a "Choose Wave Reward" title** when standard rewards open, matching the quieter between-wave presentation introduced with `showCompletionMessage` in v0.3.9
 
 ## [v0.3.9] - 2026-08-31
 

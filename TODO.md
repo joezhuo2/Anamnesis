@@ -4,8 +4,8 @@
 - [ ] re-add phase based buffs using the new system (Lich done in v0.3.9, Cultist and Jellyfish still pending)
 - [ ] map borders
 - [ ] Tilemaps
-- [ ] Enough Content for complete builds of all types (hp - Solar Wind added in v0.3.10, armor - missing basic/ult, dot - missing basic)
-- [ ] Wave 60 boss and enemies, and Boss Rush Extension
+- [ ] Enough Content for complete builds of all types (armor - missing basic)
+- [ ] Wave 60 boss, and Boss Rush Extension
 - [ ] Pause menu with resume/restart/home/quit, settings/controls menu
 
 ## Pre [v0.5.0] Checklist
@@ -70,11 +70,3 @@
 - [ ] Screenshot mode that hides the HUD
 - [ ] FPS counter & performance stats toggle
 - [ ] Confirmation dialog before corrupting a reward
-
-## Notes
-
-- `Slow 5 3 15` is now unreferenced after Blizzard moved to `Slow 6 15 5`.
-- `Node_hp3a`, `Node_hp3aa`, `Node_hp3b` and `Node_hp3ba` describe "+5 Max Health / +2% Max Health" but their `unlockEffects` lists are empty — all four cost a skill point and grant nothing.
-- `SolarWind.asset`'s `upgradeName` is spelled "Solar WInd" and shows that way in the tooltip.
-- `Node_solarwind`'s description says it upgrades Stellar Surge "instead of healing", but the capstone only adds the Solar Wind Awakening — Stellar Surge still rolls its own heal on the same trigger.
-- Docs for v0.3.10 are written (CHANGELOG, ROADMAP, README, GAME.md). `ProjectSettings.bundleVersion` is still `1.0` and has never tracked the changelog version.
