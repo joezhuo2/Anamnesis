@@ -104,16 +104,23 @@ namespace CrystalFlux.SkillTree
             return transform as RectTransform;
         }
 
+        // Connections are undirected at runtime (CanUnlock walks prerequisites both ways),
+        // so the line color must consider both endpoints, not just the child.
         private Color GetLineColor(SkillNodeDef node, SkillNodeDef prereq)
         {
             if (manager == null) return lockedColor;
 
-            bool prereqUnlocked = manager.IsNodeUnlocked(prereq);
             bool nodeUnlocked = manager.IsNodeUnlocked(node);
-            bool canUnlock = manager.CanUnlock(node).canUnlock;
+            bool prereqUnlocked = manager.IsNodeUnlocked(prereq);
 
-            if (nodeUnlocked) return unlockedColor;
-            if (prereqUnlocked && canUnlock) return availableColor;
+            if (nodeUnlocked && prereqUnlocked) return unlockedColor;
+
+            if (nodeUnlocked || prereqUnlocked)
+            {
+                SkillNodeDef target = nodeUnlocked ? prereq : node;
+                return manager.CanUnlock(target).canUnlock ? availableColor : lockedColor;
+            }
+
             return lockedColor;
         }
 

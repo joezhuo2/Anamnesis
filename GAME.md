@@ -69,7 +69,7 @@
 ## Autopilot
 - Type: Additional
 - Cooldown: 0s (upgrade-spawned)
-- Pattern: Single (1 count)
+- Pattern: Circle (3 count)
 - Animation: 1s
 - Health: +15 (on hit, based on damage dealt)
 - Stamina: +10 (on hit, based on damage dealt)
@@ -167,6 +167,24 @@
   - Scaling: MaxHP
   - Effect: 40% chance on hit (Bleed, 15% EffMapHp as DoT every 0.5s for 3s, max 5 stacks)
   - Knockback: 4 force
+
+## Decoy Burst (Capstone)
+- Type: Additional
+- Cooldown: 0s (spawned on decoy expiry)
+- Pattern: Single (1 count)
+- Animation: 1s
+- Stamina: +3 (on hit, based on damage dealt)
+- Mana: +3 (on hit, based on damage dealt)
+- Projectile:
+  - Speed: 0 (melee)
+  - Lifetime: 1s
+  - Pierce: 3000
+  - Size: 2.5
+  - Damage: 225% Spell
+  - Scaling: EffAtk
+  - Effect: 100% chance on hit (Vulnerable, -30% Damage Res for 4s)
+  - Knockback: 5 force
+- Unlocked by: Cosmic Superimposition capstone skill node (requires Cosmic Afterimage, 3 skill points)
 
 ## Exodus
 - Type: Ultimate
@@ -289,6 +307,26 @@
   - Damage: 165% Spell
   - Scaling: MaxHP
   - Knockback: 14 force
+
+## Luminaria
+- Type: Ultimate
+- Cooldown: 18s
+- Pattern: Single (1 count)
+- Animation: 1s
+- Stamina: -15 +2
+- Health: -10%
+- Mana: -60 +3
+- Projectile:
+  - Speed: 0 (melee)
+  - Lifetime: 1s
+  - Pierce: 3000
+  - Size: 3
+  - Damage: 270% True
+  - Scaling: EffHpReg
+  - Use True Angle
+  - Effect: 100% self on cast (Holy Bounty, +80% Additional Damage, +30% Res Pen, +15% Damage Res for 24s)
+  - Effect: 40% chance on cast (Stun, 2s)
+  - Knockback: 8 force
 
 ## Meteor Shower
 - Type: Skill
@@ -508,7 +546,7 @@
   - Orbit: radius 1.25, orbits self, CCW
   - Additional: 25% chance on hit to create Warp Rift
   - Knockback: 2 force
-- Unlocked by: Warp capstone skill node (requires Warp, 1 skill point)
+- Unlocked by: Warp capstone skill node (requires Warp, 3 skill points)
 
 ## Warp Rift
 - Type: Additional
@@ -599,24 +637,39 @@
 
 ## Autopilot
 - Type: SpawnProjectile
-- Conditions: OnTakeDamage
+- Conditions: OnTakeHit
 - Chance: 100%
-- Cooldown: 3s
+- Cooldown: 2s
 - Delay: 0.25s
 - Projectile: Autopilot projectile
-- Description: Taking damage spawns a projectile that homes in on nearby enemies and heals the player.
+- Description: Taking a direct hit spawns 3 projectiles in a circle that home in on nearby enemies and heal the player.
 
 ## Decoy
 - Type: Decoy
-- Conditions: OnDash
+- Conditions: OnStartDash
 - Chance: 100%
 - Cooldown: 6s
 - Delay: 0s
 - Lifetime: 4s
 - Spawn Offset: (0, 0, 0)
-- Tint: White (75% alpha)
+- Tint: White (61% alpha)
 - Cooldown Effect: Yes
+- Projectile: None (base version does not detonate)
 - Description: Spawn a decoy that taunts enemies for 4 seconds when dashing. Applies a cooldown indicator effect on trigger.
+
+## Decoy Upgraded (Capstone)
+- Type: Decoy
+- Conditions: OnStartDash
+- Chance: 100%
+- Cooldown: 5s
+- Delay: 0s
+- Lifetime: 6s
+- Spawn Offset: (0, 0, 0)
+- Tint: White (78% alpha)
+- Cooldown Effect: Yes
+- Projectile: Decoy Burst projectile
+- Description: Spawn a decoy that taunts enemies for 6 seconds when dashing, then detonates at its own position for 225% Spell damage and applies Vulnerable. Applies a cooldown indicator effect on trigger.
+- Unlocked by: Cosmic Superimposition capstone skill node (requires Cosmic Afterimage, 3 skill points)
 
 ## Feedback Loop
 - Type: SpawnProjectile

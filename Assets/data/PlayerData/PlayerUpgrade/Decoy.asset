@@ -19,5 +19,6 @@ MonoBehaviour:
   delay: 0
   lifetime: 4
   spawnOffset: {x: 0, y: 0, z: 0}
-  tint: {r: 1, g: 1, b: 1, a: 0.75}
+  tint: {r: 1, g: 1, b: 1, a: 0.60784316}
   cooldownEffect: {fileID: 11400000, guid: 1a3294cdbdea9bb4c9e9faefc9436c44, type: 2}
+  projectilePrefab: {fileID: 0}

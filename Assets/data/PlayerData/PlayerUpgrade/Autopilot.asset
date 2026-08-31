@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Autopilot
   m_EditorClassIdentifier: CrystalFlux.Entity::SpawnProjectile
   upgradeName: Autopilot
-  conditions: 05000000
+  conditions: 04000000
   chance: 100
-  cooldown: 3
+  cooldown: 2
   delay: 0.25
   projectilePrefab: {fileID: 1985649582465619481, guid: 6b04a3805ba81a543bc6a411ea852e8d, type: 3}

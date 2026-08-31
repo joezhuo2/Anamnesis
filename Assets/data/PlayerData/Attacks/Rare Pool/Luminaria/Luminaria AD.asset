@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Luminaria AD
+  m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
+  type: 2
+  cooldown: 18
+  projectilePrefab: {fileID: 2403796181220430076, guid: 12da43ff12063b5409f2b2e84f29150d, type: 3}
+  pd: {fileID: 11400000, guid: 5a23b08728dd60140be4ef786ab38c4a, type: 2}
+  pattern: 0
+  spawnDelay: 0
+  spawnDistance: 0
+  fixedDistance: 0
+  animationLength: 1
+  projectileCount: 1
+  randomCount: 0
+  spread: 0
+  randomSpread: 0
+  minDelay: 0
+  maxDelay: 0
+  maxRange: 0
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 15
+  staminaCostPct: 0
+  healthCost: 0
+  healthCostPct: 10
+  manaCost: 60
+  manaCostPct: 0
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 2
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 3
+  manaPctGainOnHit: 0
+  summonChance: 0
+  summonCondition: 0
+  fireOrbits: 0
+  absorbOrbitPct: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
+  redirectCount: 0
+  icon: {fileID: 1992992966, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  displayName: Luminaria

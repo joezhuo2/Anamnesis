@@ -7,6 +7,33 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.5] - 2026-08-30 - Content Expansion Update
+
+### Added
+- **Luminaria** — new rare-pool Ultimate (`Attacks/Rare Pool/Luminaria/`, with its own prefab, controller, clip, `AttackData`, `ProjectileData` and an 11-frame `Priest_skill2` sprite sheet). 18s cooldown, single stationary projectile (`speed 0`, `useTrueAngle`), 1s lifetime, size 3, effectively unlimited pierce (`numPierce 3000`), 8 knockback force over 0.3s. Deals **270% True** damage scaling off `EffHpReg` — the first attack in the game to scale off health regen. Costs 15 stamina, 10% max health and 60 mana; returns 2 stamina and 3 mana on hit. On cast it applies **Holy Bounty** to the player (100%) and has a 40% chance to apply **Stun** for 2s. Registered in the `rarePool` of both the regular and the Unlimited reward manager in `New.unity`
+- **Cosmic Superimposition** — second capstone skill node (`SkillTreeNodes/_Capstone/Node_decoy.asset` + node prefab, placed in `New.unity` at `(-67.1, -228.8)`). Requires the player to already own the **Cosmic Afterimage** (Decoy) Awakening via `NodeRequirement.requiredAwakenings`, hangs off `Node_ms2`, costs 3 skill points and 50g to refund, and its `UnlockEffect` swaps the owned Awakening for **Decoy Upgraded**
+- **Decoy Upgraded** — capstone version of the Decoy Awakening (`PlayerUpgrade/Decoy Upgraded.asset`). Against the base version: lifetime `4` → `6`s, cooldown `6` → `5`s, tint alpha `0.61` → `0.78`, and it carries a `projectilePrefab` so the decoy detonates on expiry instead of quietly disappearing
+- **Decoy expiry burst** — attack set under `Attacks/SkillTree/Decoy/` (prefab, controller, clip, `Decoy AD`, `Decoy PD`, `1225.png`) fired at the decoy's last position when its lifetime runs out. `Additional` type, no cooldown and no resource cost; the projectile is a stationary 1s burst, size 2.5, `numPierce 3000`, dealing **225% Spell** scaling off `EffAtk` with 5 knockback force, applying **Vulnerable** on hit (100%) and returning 3 stamina and 3 mana on hit (`basedOnDmgDealt`)
+- **Two movement-speed skill nodes** — `SkillTreeNodes/ms/Node_ms1` and `Node_ms2` (+ node prefabs in `New.unity` at `(-23.1, -252.9)` and `(-30.3, -219.9)`), each granting **+2% `moveSpeedPct`** for 1 skill point / 50g refund. Both hang off `Node_atkarmor2`; `Node_ms2` is what gates the new Cosmic Superimposition capstone
+- **`Holy Bounty`** — 24s single-stack buff (`StatusEffects/StatBuff/Holy Bounty.asset`) granting **+80% `addDmgPct`**, **+30% `resPen`** and **+15% `damageRes`**. Applied to the player on Luminaria cast
+- **`Vulnerable 4 30`** — 4s single-stack debuff (`StatusEffects/StatBuff/Vulnerable 4 30.asset`) applying **-30% `damageRes`**. Applied by the Decoy expiry burst
+- **`Decoy.projectilePrefab`** — optional prefab on the `Decoy` upgrade. When set, the decoy spawns that attack's full pattern at its own position the moment it expires; when null the decoy just disappears, so the base Awakening is unchanged
+
+### Changed
+- **Decoy lifetime is now a coroutine rather than a delayed `Destroy`.** `Decoy` is a `ScriptableObject` and cannot run coroutines itself, so the routine is hosted on `ProjectileSpawner.Instance` — the same object that has to spawn the expiry burst anyway. The routine waits out the lifetime, snapshots the decoy's position, destroys it, then hands that position to `ProjectileSpawner.SpawnFromPattern`. If there is no `ProjectileSpawner` in the scene it falls back to the old `Destroy(decoy, lifetime)` path, and it bails out early if the decoy was already destroyed
+- **`DamageCalculator` resistance and armor model reworked.** Three changes, all of which shift damage numbers:
+  - **Type resistance now shares one pool with `damageRes`.** `physicalRes` / `spellRes` used to be a separate multiplier applied after the `damageRes` one, which meant `resPen` could never touch it. They are now summed into a single `effRes` that `resPen` is subtracted from, so resistance penetration finally works against type resistance, and stacking `damageRes` with type resistance is additive instead of multiplicative
+  - **Penetration overflow is now a damage bonus.** Because the combined pool is floored at `-100` (not at 0), penetrating past an enemy's total resistance drives `effRes` negative and multiplies damage up to a hard **2×** cap
+  - **Armor may now go negative from `defShred` overflow.** `effArmor` is no longer clamped at 0. The positive side is the same diminishing curve rewritten as `100 / (effArmor + 100)`; the negative side mirrors it as `2 - 100 / (100 - effArmor)`, so over-shredding ramps physical damage toward the same **2×** ceiling instead of stopping dead at 1×
+- **Autopilot retuned** — trigger changed from `OnTakeDamage` to `OnTakeHit`, so it now only answers direct hostile hits rather than every DoT tick and self-inflicted health cost. Cooldown `3` → `2`s, and the attack fires a `Circle` pattern of **3** projectiles instead of a `Single` one
+- **Warp capstone cost `1` → `3` skill points**, matching the new Cosmic Superimposition capstone
+- **Base Decoy tint alpha `0.75` → `0.61`**, making the untrained decoy more obviously a ghost
+- **Blaze B1 `staminaGainOnHit` `2` → `3`.** The asset was also re-serialized against the current `AttackData` layout (`absorbOrbits` → `absorbOrbitPct`, `redirectCount` added, `type` moved into field order); no behaviour change from the re-serialization
+- **Skill tree grew 105 → 108 nodes** (`Node_ms1`, `Node_ms2`, `Node_decoy` added to `SkillTreeDefinition.asset`)
+
+### Fixed
+- **Skill-tree connector lines were coloured as if connections were directed.** `CanUnlock` walks prerequisites both ways, so either endpoint can be the one you unlock — but `GetLineColor` only ever asked whether the *child* was unlocked and whether the *child* could be unlocked. A line whose child was unlocked and whose prereq was not showed as fully unlocked, and a line that was available in the prereq→child direction only never showed as available. It now returns `unlockedColor` only when **both** endpoints are unlocked; when exactly one is unlocked it asks `CanUnlock` about the *other* endpoint, so the available colour follows whichever end is actually reachable
+
 ## [v0.3.4] - 2026-08-30
 
 ### Added

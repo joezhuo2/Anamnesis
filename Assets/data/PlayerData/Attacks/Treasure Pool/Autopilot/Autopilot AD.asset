@@ -16,12 +16,12 @@ MonoBehaviour:
   cooldown: 0
   projectilePrefab: {fileID: 1985649582465619481, guid: 6b04a3805ba81a543bc6a411ea852e8d, type: 3}
   pd: {fileID: 11400000, guid: ac69ca81548869c4fbc11199874da416, type: 2}
-  pattern: 0
+  pattern: 2
   spawnDelay: 0
   spawnDistance: 0
   fixedDistance: 0
   animationLength: 1
-  projectileCount: 1
+  projectileCount: 3
   randomCount: 0
   spread: 0
   randomSpread: 0
