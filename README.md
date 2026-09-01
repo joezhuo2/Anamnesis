@@ -40,12 +40,13 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Enemy phases** — bosses (and any configured enemy) transition through phases as their HP drops below thresholds (e.g. 70% / 40%), granting phase stat buffs and unlocking stronger phase-gated attacks. The Lich speeds up at 40% HP (+40% move speed, +20% attack speed).
 - **Global enemy spawner** — centralized spawning system for consistent enemy management.
 - **Anomaly system** — randomized run modifiers with configurable frequency, counts, and reward bonuses (e.g., *Time Trial*, *No Damage*, *Stat Modifier*).
-- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage, spread barrage, and the screen-wide converging lines: top-down, left-right, diagonal, diagonal reverse, full X), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, **wave** and **spiral** flight paths, orbit interactions (fire, absorb, redirect, explode), **follow-source** option for projectiles, and on-hit **additional attacks** that chain into multi-stage combos (e.g. Blaze → Blaze Spark, Exodus → Exodus Wave → Exodus Core, Lifeforce → Shard → Burst).
+- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage, spread barrage, and the screen-wide converging lines: top-down, left-right, diagonal, diagonal reverse, full X), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, **wave**, **spiral** and **follow-cursor** flight paths, orbit interactions (fire, absorb, redirect, explode), **follow-source** option for projectiles, and on-hit **additional attacks** that chain into multi-stage combos (e.g. Blaze → Blaze Spark, Exodus → Exodus Wave → Exodus Core, Lifeforce → Shard → Burst).
 - **Cast time** — attacks can carry an interruptible windup (`castTime`) before they resolve, with `canMoveWhileCasting` deciding whether the caster is rooted for it. A pooled cast bar and remaining-time countdown follow the caster while it channels. The cooldown is spent when the cast starts, resource costs only when it lands, so an interrupt costs nothing but the cooldown. Death, stuns and enemy projectile hits all interrupt; the `interruptResist` stat tiers that off (1 ignores projectile hits, 2 also ignores stuns), and `castTimeRedPct` shortens casts.
+- **Charged attacks** — attacks flagged `canCharge` can be held down to sustain them. Holding past `chargeThreshold` (0.225s) skips the tap entirely and commits to the charge, spawning the separate `chargeAttack` and paying its cost again every `chargeTickInterval`; releasing sooner resolves as a plain tap at the base attack's cost. Each drain tick refreshes the sustained projectiles' lifetime and re-snapshots their damage, so buffs earned mid-hold carry forward. `minChargeTime` queues an early release, `maxChargeTime` forces one, and `cooldownOnAttackStart` decides whether the cooldown ticks down during the hold. Charges reuse the cast bar and every cast interrupt rule. Enemies skip the threshold, commit instantly, and roll to keep holding on each tick.
 - **Status effects** — stackable DoTs, stuns, stat buffs/reductions, attack replacement, and more, with cooldown UI.
 - **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects with chance/cooldown/delay, driven by 22 trigger conditions (on attack, on crit, on hit, on dash, on kill, on level up, on projectile spawn, …). See [Awakening trigger conditions](#awakening-trigger-conditions).
 - **Skill tree** — interactive pan/zoom tree with a **bidirectional connections system** (OR logic), incompatible nodes, tooltips, connector lines, and a skill-point currency. Nodes connect via the `prerequisites` field; unlocking works both ways (A→B means unlock A if B unlocked OR unlock B if A unlocked) and only **one** connected node needs to be unlocked. Left-click unlocked nodes to refund using **gold** (default 50g, configurable per node). **Capstone nodes** gate behind owning a specific attack or Awakening and upgrade it in place — a required Awakening is removed as the upgraded one is granted, and comes back if the node is refunded. 125 nodes across the health, regen, intelligence, area-of-effect, damage, movement and capstone branches.
-- **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%).
+- **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%). Each corrupted button also has an 8% chance to be replaced outright by a **corruption special** — a rare attack pulled from a dedicated pool at a far lower unlock wave than the rare pool asks for, marked violet and labelled *Corrupted*.
 - **Wave-gated content** — enemies, rare attacks, and Awakenings each carry a `minWave` and only enter their pools once the run reaches it, so early waves draw from a smaller, gentler set.
 - **Milestone rewards** — every 25 waves (25, 50, 75, 100...), choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks (e.g., *Glass Cannon*: +40% Damage / -40% Max Health). Each stat has ±15% variance for replayability.
 - **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays. The between-wave subtitle (and the 1.5s pause it holds) can be switched off per wave manager via `showCompletionMessage`.
@@ -53,7 +54,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
 - **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.
 - **Damage indicators** — floating damage numbers with small randomness. **XP gain indicators** and **XP wrapper option** for custom XP display. **Gold gain indicators** (+{gold}g in gold color).
-- **Levelling system** — enemies drop XP, players collect XP to level up and gain stat buffs (HP, ATK, INT, SPD) and skill points. **Level-up indicator** on progression.
+- **Levelling system** — enemies drop XP, players collect XP to level up and gain stat buffs (+5 HP, +2 ATK, +2 INT, +0.008 SPD) and a skill point per level. **Level-up indicator** on progression.
 - **Gold system** — enemies drop gold on death (15% variance, same as XP). **Stealing stat** increases gold drops by {stealing}%. Spend gold to reroll rewards (200g when out of rerolls) or refund skill nodes.
 
 ## Controls
@@ -62,6 +63,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 | --- | --- |
 | Move | `WASD` / Arrow keys |
 | Basic attack | `Left Click` / `Space` |
+| Charge an attack | Hold its binding (chargeable attacks only) |
 | Skill | `E` / `1` |
 | Ultimate | `R` / `2` |
 | Dash | `Q` / `Right Click` |
@@ -74,7 +76,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 **Player attacks** — 
 - **Basic Attacks**: Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash
 - **Skill**: Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Supernova, Lifeforce
-- **Ultimate**: Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria
+- **Ultimate**: Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis
 - **Awakenings**: Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Cosmic Afterimage, Hypercarry, Autopilot, and the capstone-only Solar Wind
 
 **Enemies** — 

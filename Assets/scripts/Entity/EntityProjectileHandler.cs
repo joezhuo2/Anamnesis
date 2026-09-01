@@ -5,18 +5,23 @@ using CrystalFlux.Core;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister
+    public class EntityProjectileHandler : MonoBehaviour, IOrbitRegister, IChargeRegister
     {
         [Tooltip("Maximum orbiting projectiles tracked. 0 = unlimited.")]
         public int maxOrbiting = 0;
 
         private readonly List<Projectile> orbitingProjectiles = new();
+        private readonly List<Projectile> chargedProjectiles = new();
         public int Count => orbitingProjectiles.Count;
 
         private Camera mainCam;
         private Camera MainCam => mainCam != null ? mainCam : mainCam = Camera.main;
 
-        private void OnDestroy() => orbitingProjectiles.Clear();
+        private void OnDestroy()
+        {
+            orbitingProjectiles.Clear();
+            chargedProjectiles.Clear();
+        }
 
         private readonly List<Projectile> takeBuffer = new();
         private static readonly List<Collider2D> overlapBuffer = new();
@@ -63,6 +68,33 @@ namespace CrystalFlux.EntitySystem
         public void UnregisterOrbitingProjectile(Projectile p)
         {
             if (p != null) orbitingProjectiles.Remove(p);
+        }
+        public void RegisterChargedProjectile(Projectile p)
+        {
+            if (p == null || chargedProjectiles.Contains(p)) return;
+
+            chargedProjectiles.Add(p);
+        }
+        public void UnregisterChargedProjectile(Projectile p)
+        {
+            if (p != null) chargedProjectiles.Remove(p);
+        }
+        public void TickChargedProjectiles(AttackData source)
+        {
+            for (int i = chargedProjectiles.Count - 1; i >= 0; i--)
+            {
+                Projectile p = chargedProjectiles[i];
+
+                if (p == null)
+                {
+                    chargedProjectiles.RemoveAt(i);
+                    continue;
+                }
+
+                if (source != null && p.pd != null && p.pd.mainAttack != source) continue;
+
+                p.OnChargeTick();
+            }
         }
         public void ReleaseOrbits(int count = 0)
         {

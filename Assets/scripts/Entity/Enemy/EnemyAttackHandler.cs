@@ -26,6 +26,7 @@ namespace CrystalFlux.EntitySystem
         private readonly HashSet<AttackData> chainVisited = new();
         private bool movementHeld;
         private bool isCasting;
+        private bool isCharging;
         private bool castCancelled;
         private bool castMovementHeld;
         private Slider castBarInstance;
@@ -34,7 +35,7 @@ namespace CrystalFlux.EntitySystem
         private IStatProvider esm;
         private GameObject Target => TryGetComponent<EnemyMovement>(out var em) ? em.target : null;
 
-        public bool IsCasting => isCasting;
+        public bool IsCasting => isCasting || isCharging;
 
         private void Awake()
         {
@@ -193,7 +194,7 @@ namespace CrystalFlux.EntitySystem
 
                 HandleOrbitInteractions(current);
 
-                if (current.projectilePrefab != null)
+                if (current.projectilePrefab != null && !current.canCharge)
                 {
                     if (current.spawnDelay > 0) yield return new WaitForSeconds(current.spawnDelay);
 
@@ -220,6 +221,13 @@ namespace CrystalFlux.EntitySystem
 
                 if (currentIndex >= 0) cooldowns[currentIndex] = current.cooldown;
 
+                if (current.canCharge)
+                {
+                    yield return ChargeLoop(current);
+                    if (currentIndex >= 0 && !current.cooldownOnAttackStart) cooldowns[currentIndex] = current.cooldown;
+                    if (castCancelled) { castCancelled = false; break; }
+                }
+
                 if (current.animationLength > 0)
                 {
                     float remaining = current.animationLength - (Time.time - attackStartTime);
@@ -238,6 +246,62 @@ namespace CrystalFlux.EntitySystem
             esm.AddStat(new(StatType.IsAttacking, -1));
             lastAttackEndTime = Time.time;
             if (a != null) a.SetInteger(AttackIndexHash, -1);
+        }
+
+        private System.Collections.IEnumerator ChargeLoop(AttackData attack)
+        {
+            isCharging = true;
+            castCancelled = false;
+
+            TryGetComponent<EntityProjectileHandler>(out var eph);
+
+            AttackData chargeSource = attack.chargeAttack != null ? attack.chargeAttack : attack;
+
+            SpawnChargeSource(chargeSource);
+
+            float maxTime = Mathf.Max(attack.maxChargeTime, attack.minChargeTime);
+            float interval = Mathf.Max(attack.chargeTickInterval, 0.05f);
+            float elapsed = 0f;
+            float sinceTick = 0f;
+
+            while (elapsed < maxTime)
+            {
+                if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
+                else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
+
+                if (castCancelled) break;
+
+                yield return null;
+
+                elapsed += Time.deltaTime;
+                sinceTick += Time.deltaTime;
+
+                if (sinceTick < interval) continue;
+
+                sinceTick -= interval;
+
+                if (eph != null) eph.TickChargedProjectiles(chargeSource);
+
+                if (elapsed >= attack.minChargeTime && Random.value < 0.5f) break;
+            }
+
+            isCharging = false;
+        }
+
+        private void SpawnChargeSource(AttackData chargeSource)
+        {
+            if (Target == null || ProjectileSpawner.Instance == null) return;
+
+            Vector2 dir = (Target.transform.position - transform.position).normalized;
+            float dist = Vector2.Distance(Target.transform.position, transform.position);
+
+            StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
+                chargeSource,
+                gameObject,
+                transform.position,
+                dir,
+                dist > chargeSource.spawnDistance ? chargeSource.spawnDistance : dist
+            ));
         }
 
         private void ReleaseMovementHold()
@@ -264,7 +328,7 @@ namespace CrystalFlux.EntitySystem
 
         public void CancelCast()
         {
-            if (!isCasting) return;
+            if (!isCasting && !isCharging) return;
             if (esm != null && esm.GetStat(StatType.interruptResist) >= 1f) return;
 
             castCancelled = true;
@@ -272,6 +336,7 @@ namespace CrystalFlux.EntitySystem
 
         private void OnDisable()
         {
+            isCharging = false;
             EndCast();
 
             if (esm == null) return;

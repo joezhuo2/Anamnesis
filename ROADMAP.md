@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives under **Pre [v0.4.0]**.
 
 ### Pre [v0.4.0]
+- [v0.3.13] **Charged attacks**: hold-to-charge attacks via the `AttackData` charging block (`canCharge`, `chargeThreshold`, `minChargeTime`/`maxChargeTime`, `chargeTickInterval`, `chargeAttack`), sustained by ticked projectile lifetimes and the new `IChargeRegister`; plus `MovementType.FollowCursor`, the `corruptionSpecialPool` corruption outcome, and the chargeable Ultimate Nocturnis. Rebalances: Blood Pact, Lifeforce Burst, level-up rewards, rare pool unlock waves.
 - [v0.3.12] **Cast time**: interruptible attack windups with a pooled, entity-following cast bar; `castTime` and `canMoveWhileCasting` on `AttackData`, plus the `castTimeRedPct` and `interruptResist` stats (Core v0.8.0)
 - [v0.3.11] **Intelligence & AOE branches**: 11 new skill tree nodes (114 to 125). Capstone nodes now consume the Awakening they require. Rebalances: Blaze, Blood Pact, Cultist.
 - [v0.3.10] **Solar Wind**: `SolarWind` Awakening 6 ew skill tree nodes (108 to 114) Reblanace: Cosmic Superimposition

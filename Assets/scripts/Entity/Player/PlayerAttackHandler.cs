@@ -41,8 +41,13 @@ namespace CrystalFlux.EntitySystem
         private bool castStateHeld;
         private Slider castBarInstance;
         private TextMeshProUGUI castBarTextInstance;
+        private bool isCharging;
+        private bool chargeReleaseRequested;
+        private AttackType chargingType;
+        private AttackData chargingAttack;
 
-        public bool IsCasting => isCasting;
+        public bool IsCasting => isCasting || isCharging;
+        public bool IsCharging => isCharging;
 
         private void Start()
         {
@@ -54,11 +59,11 @@ namespace CrystalFlux.EntitySystem
 
             for (int i = 0; i < starting.Count; i++) UpdateAttack(starting[i].type, starting[i]);
         }
-        private void OnDisable() => EndCast();
+        private void OnDisable() => EndAllAttackStates();
 
         private void OnDestroy()
         {
-            EndCast();
+            EndAllAttackStates();
 
             if (attacks != null)
             {
@@ -129,7 +134,7 @@ namespace CrystalFlux.EntitySystem
 
         public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
         {
-            if (isCasting) return;
+            if (isCasting || isCharging) return;
             if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f || Time.timeScale == 0f) return;
 
             AttackData selected = attacks.Find(atk => atk.type == type);
@@ -142,23 +147,24 @@ namespace CrystalFlux.EntitySystem
             }
 
             float castTime = selected.GetEffCastTime(esm);
+            bool stampCooldownNow = !bypassCooldown && (!selected.canCharge || selected.cooldownOnAttackStart);
 
             if (castTime > 0f)
             {
-                if (!bypassCooldown) lastAttackTimes[type] = Time.time;
+                if (stampCooldownNow) lastAttackTimes[type] = Time.time;
 
-                StartCoroutine(CastRoutine(selected, type, castTime, noCost, triggerUpgrades));
+                StartCoroutine(CastRoutine(selected, type, castTime, noCost, triggerUpgrades, bypassCooldown));
                 return;
             }
 
-            if (!noCost && !HandleStatChanges(selected)) return;
+            if (!noCost && !selected.canCharge && !HandleStatChanges(selected)) return;
 
-            if (!bypassCooldown) lastAttackTimes[type] = Time.time;
+            if (stampCooldownNow) lastAttackTimes[type] = Time.time;
 
-            ExecuteAttack(selected, type, triggerUpgrades);
+            ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown);
         }
 
-        private IEnumerator CastRoutine(AttackData selected, AttackType type, float castTime, bool noCost, bool triggerUpgrades)
+        private IEnumerator CastRoutine(AttackData selected, AttackType type, float castTime, bool noCost, bool triggerUpgrades, bool bypassCooldown)
         {
             isCasting = true;
             castCancelled = false;
@@ -193,9 +199,9 @@ namespace CrystalFlux.EntitySystem
             bool completed = !castCancelled;
             EndCast();
 
-            if (completed && (noCost || HandleStatChanges(selected)))
+            if (completed && (noCost || selected.canCharge || HandleStatChanges(selected)))
             {
-                ExecuteAttack(selected, type, triggerUpgrades);
+                ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown);
                 yield break;
             }
 
@@ -228,19 +234,17 @@ namespace CrystalFlux.EntitySystem
 
         public void CancelCast()
         {
-            if (!isCasting) return;
+            if (!isCasting && !isCharging) return;
             if (esm != null && esm.GetStat(StatType.interruptResist) >= 1f) return;
 
             castCancelled = true;
         }
 
-        private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades)
+        private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades, bool noCost = false, bool bypassCooldown = false)
         {
             HandleOrbitInteractions(selected);
 
-            ProjectileSpawner ps = ProjectileSpawner.Instance;
-            if (ps != null)
-                StartCoroutine(ps.SpawnFromPattern(selected, gameObject, transform.position));
+            if (!selected.canCharge) SpawnAttack(selected);
 
             if (selected.summonChance > 0f && selected.summonCondition == SummonCondition.OnCast && UnityEngine.Random.value <= selected.summonChance)
             {
@@ -253,6 +257,138 @@ namespace CrystalFlux.EntitySystem
 
             ApplyAttackAnimator(type);
             StartCoroutine(ResetAttackType(selected.animationLength));
+
+            if (selected.canCharge) StartCoroutine(ChargeRoutine(selected, type, noCost, bypassCooldown));
+        }
+
+        private void SpawnAttack(AttackData ad)
+        {
+            ProjectileSpawner ps = ProjectileSpawner.Instance;
+            if (ps != null) StartCoroutine(ps.SpawnFromPattern(ad, gameObject, transform.position));
+        }
+
+        public void ReleaseAttack(AttackType type)
+        {
+            if (isCharging && chargingType == type) chargeReleaseRequested = true;
+        }
+
+        private IEnumerator ChargeRoutine(AttackData selected, AttackType type, bool noCost, bool bypassCooldown)
+        {
+            isCharging = true;
+            chargeReleaseRequested = false;
+            chargingType = type;
+            chargingAttack = selected;
+            castCancelled = false;
+
+            float maxTime = Mathf.Max(selected.maxChargeTime, selected.minChargeTime);
+            float interval = Mathf.Max(selected.chargeTickInterval, 0.05f);
+            float elapsed = 0f;
+
+            while (elapsed < selected.chargeThreshold)
+            {
+                if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
+                else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
+
+                if (castCancelled || chargeReleaseRequested)
+                {
+                    if (noCost || HandleStatChanges(selected)) SpawnAttack(selected);
+                    EndCharge(type, bypassCooldown);
+                    yield break;
+                }
+
+                yield return null;
+                elapsed += Time.deltaTime;
+            }
+
+            AttackData chargeSource = selected.chargeAttack != null ? selected.chargeAttack : selected;
+
+            if (!noCost && !HandleStatChanges(chargeSource))
+            {
+                EndCharge(type, bypassCooldown);
+                yield break;
+            }
+
+            castStateHeld = true;
+            esm.AddStat(new StatBuff(StatType.IsAttacking, 1f));
+
+            if (!selected.canMoveWhileCasting)
+            {
+                castMovementHeld = true;
+                esm.AddStat(new StatBuff(StatType.CanMove, -1f));
+            }
+
+            CastBar.Acquire(castBarPrefab, castBarTextPrefab, out castBarInstance, out castBarTextInstance);
+
+            SpawnAttack(chargeSource);
+
+            TryGetComponent<EntityProjectileHandler>(out var eph);
+
+            float chargeElapsed = 0f;
+            float sinceTick = 0f;
+
+            while (chargeElapsed < maxTime)
+            {
+                if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
+                else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
+
+                if (castCancelled) break;
+                if (chargeReleaseRequested && chargeElapsed >= selected.minChargeTime) break;
+
+                CastBar.Tick(castBarInstance, castBarTextInstance, transform, castBarOffset, chargeElapsed, maxTime);
+
+                yield return null;
+
+                chargeElapsed += Time.deltaTime;
+                sinceTick += Time.deltaTime;
+
+                if (sinceTick < interval) continue;
+
+                sinceTick -= interval;
+
+                if (!noCost && !HandleStatChanges(chargeSource)) break;
+
+                if (eph != null) eph.TickChargedProjectiles(chargeSource);
+            }
+
+            EndCharge(type, bypassCooldown);
+        }
+
+        private void EndCharge(AttackType type, bool bypassCooldown)
+        {
+            CastBar.Release(ref castBarInstance, ref castBarTextInstance);
+
+            if (castMovementHeld)
+            {
+                castMovementHeld = false;
+                if (esm != null) esm.AddStat(new StatBuff(StatType.CanMove, 1f));
+            }
+
+            if (castStateHeld)
+            {
+                castStateHeld = false;
+                if (esm != null) esm.AddStat(new StatBuff(StatType.IsAttacking, -1f));
+            }
+
+            isCharging = false;
+            chargeReleaseRequested = false;
+            castCancelled = false;
+
+            if (!bypassCooldown && (chargingAttack == null || !chargingAttack.cooldownOnAttackStart))
+                lastAttackTimes[type] = Time.time;
+
+            chargingAttack = null;
+
+            if (a != null)
+            {
+                a.SetInteger(AttackIndexHash, -1);
+                a.speed = 1f;
+            }
+        }
+
+        private void EndAllAttackStates()
+        {
+            if (isCharging) EndCharge(chargingType, true);
+            EndCast();
         }
 
         private void ApplyAttackAnimator(AttackType type)

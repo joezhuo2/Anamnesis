@@ -1,11 +1,21 @@
 # Planned Features 
 
+## Open Items
+- No affordability check on press. A player with no resources still plays the attack animation, and only
+  ~0.225s later does nothing spawn. A real pre-check is awkward: `HandleStatChanges` both triggers cost
+  upgrades and spends in one pass, and the public `GetCosts` skips `HandleHexCast`, so a rough check would
+  wrongly block HexCast builds. Needs the method split properly if the dead animation matters.
+- Orbit interactions and the `SummonCondition.OnCast` roll still fire on press, before the tap/hold split is
+  known — so a hold consumes your orbits even though it skips the tap.
+- The on-screen attack button (`PlayerAttackHandler.CreateButtonUI`) fires `onClick` only and has no release
+  event, so a chargeable attack triggered from the UI holds until `maxChargeTime`. Needs `IPointerUpHandler`.
+
 ## Pre [v0.4.0] Checklist
 - [ ] re-add phase based buffs using the new system (Cultist and Jellyfish still pending)
 - [ ] map borders & tilemaps
 - [ ] Enough Content for complete builds of all types (armor - missing basic)
 - [ ] Wave 60 boss
-- [ ] attack holding (charging)
+- [x] attack holding (charging)
 - [ ] Title/header for reward menu
 
 ## Pre [v0.5.0] Checklist — Feel & Foundations
@@ -126,5 +136,3 @@
 - [ ] Accessibility options (colorblind mode, reduced screen shake, larger text)
 - [ ] Screenshot mode that hides the HUD
 - [ ] "What's new" changelog popup on update
-
-# Notes

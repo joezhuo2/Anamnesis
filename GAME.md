@@ -53,9 +53,11 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
 
 # Rare Pool
 
-Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are present in
+Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 19 entries below are present in
 `WaveManager.rarePool`. Entries marked with an unlock wave carry a `minWave` on their
 `AttackReward` and cannot be rolled before that wave; the rest are available from wave 1.
+Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave — see
+[Corruption Special Pool](#corruption-special-pool).
 
 ## Aphelion
 - Asset: `Aphelion AD`
@@ -178,21 +180,21 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 - Pattern: Single (1 count)
 - Spawn: 0.5 dist (fixed)
 - Animation: 0.5s
-- Costs: Health 9 +5%
-- Gains on hit: Stamina +2, Health +6 +3%, Mana +1
+- Costs: Health 5 +3%
+- Gains on hit: Stamina +2, Health +4 +1%, Mana +1
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.5s
   - Pierce: 10
   - Size: 2.5
-  - Damage: 50% Phys, 15% True
+  - Damage: 35% Phys, 9% True
   - Scaling: EffMaxHp
-  - Effect: 40% on hit (Bleed, 3s, 0.5s tick, max 5 stacks, 15% EffMaxHp per tick as DoT)
+  - Effect: 40% on hit (Bleed, 3s, 0.5s tick, max 5 stacks, 8% EffMaxHp per tick as DoT)
   - Knockback: 4 force for 0.15s
 
 ## Exodus
 - Asset: `Exodus A AD`
-- Unlocks: wave 20
+- Unlocks: wave 25
 - Type: Ultimate
 - Cooldown: 90s
 - Pattern: Single (1 count)
@@ -309,7 +311,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 - Pattern: Single (1 count)
 - Spawn: 0 dist, 1s delay
 - Animation: 0.75s
-- Gains on hit: Stamina +4, Health +4 +3%, Mana +3
+- Gains on hit: Stamina +4, Health +5 +3%, Mana +3
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.75s
@@ -317,11 +319,11 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
   - Size: 3
   - Damage: 165% Spell
   - Scaling: EffMaxHp
-  - Knockback: 14 force for 0.15s
+  - Knockback: 8 force for 0.15s
 
 ## Luminaria
 - Asset: `Luminaria AD`
-- Unlocks: wave 20
+- Unlocks: wave 35
 - Type: Ultimate
 - Cooldown: 18s
 - Pattern: Single (1 count)
@@ -383,7 +385,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Nirvana
 - Asset: `Nirvana A AD`
-- Unlocks: wave 20
+- Unlocks: wave 35
 - Type: Ultimate
 - Cooldown: 24s
 - Pattern: Single (1 count)
@@ -402,9 +404,50 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
   - Special: 0.2x per orbit (specialScaling Orbits)
   - Knockback: 12 force for 0.15s
 
+## Nocturnis
+- Asset: `Nocturnis T AD` / `Nocturnis T PD`
+- Unlocks: wave 45 (wave 25 in `corruptionSpecialPool`)
+- Type: Ultimate
+- Cooldown: 14s (stamped on press, ticks down during the hold)
+- Pattern: Single (1 count)
+- Spawn: 0.7 dist
+- Animation: 1s
+- Costs: Health 35 +12%
+- Gains on hit: Health +2 +1%
+- Charging: hold 0.225s to charge, min 1s, max 6s, drains every 1s, charge attack `Nocturnis C AD`
+- Projectile (tap):
+  - Speed: 0 (melee)
+  - Lifetime: 1s
+  - Pierce: 3000
+  - Size: 2
+  - Damage: 60% Phys, 110% Spell, 14% True
+  - Scaling: EffMaxHp
+  - Use True Angle
+  - Knockback: 5 force for 0.15s
+
+## Nocturnis (Held)
+- Asset: `Nocturnis C AD` / `Nocturnis C PD`
+- Type: Ultimate (charge variant, spawned only by holding Nocturnis)
+- Cooldown: 0s (sustained)
+- Pattern: Single (1 count)
+- Spawn: 0 dist
+- Costs: Health 8 +4% on confirm, then again every 1s tick
+- Gains on hit: Health +2 +1%
+- Projectile:
+  - Speed: 0.6, FollowCursor movement
+  - Lifetime: 1.1s, refreshed by every charge tick
+  - Pierce: 3000
+  - Size: 2
+  - Damage: 15% Phys, 40% Spell, 4% True
+  - Scaling: EffMaxHp
+  - Special: 2x multiplier scaling on HpConsumed
+  - Time Before Same Enemy: 0.5s
+  - Use True Angle
+  - Knockback: none
+
 ## Revelation
 - Asset: `Revelation AD`
-- Unlocks: wave 20
+- Unlocks: wave 35
 - Type: Ultimate
 - Cooldown: 16s
 - Pattern: Single (1 count)
@@ -423,7 +466,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Shattered Singularity
 - Asset: `Shattered Singularity A AD`
-- Unlocks: wave 20
+- Unlocks: wave 25
 - Type: Ultimate
 - Cooldown: 12s
 - Pattern: Single (1 count)
@@ -459,7 +502,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Solar Collapse
 - Asset: `Solar Collapse AD`
-- Unlocks: wave 20
+- Unlocks: wave 25
 - Type: Ultimate
 - Cooldown: 14s
 - Pattern: Single (1 count)
@@ -481,7 +524,7 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
 
 ## Starfury
 - Asset: `Starfury AD`
-- Unlocks: wave 20
+- Unlocks: wave 25
 - Type: Ultimate
 - Cooldown: 6s
 - Pattern: Single (1 count)
@@ -577,6 +620,28 @@ Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 18 entries below are pre
   - Use True Angle
   - Effect: 100% on hit (Pulled, 0.6s, pull speed 5 +2 per stack, 1.5 radius)
   - Knockback: none
+
+---
+
+# Corruption Special Pool
+
+Serialized in `WaveManager.corruptionSpecialPool` (identical on the regular and unlimited
+managers). When the Corrupt button is pressed, every reward button that passes the
+`corruptChance` roll then rolls `corruptionSpecialChance` (8%). On a hit the stat reward is
+replaced outright by one of these attacks instead of receiving a value multiplier. The same
+special cannot appear on two buttons in one corruption pass, and claiming one removes it from
+the pool for the rest of the run. Full stats for each attack are in the sections above.
+
+| Attack | Unlock wave here | Unlock wave in `rarePool` |
+| --- | --- | --- |
+| Shattered Singularity | 0 | 25 |
+| Solar Collapse | 0 | 25 |
+| Starfury | 0 | 25 |
+| Exodus | 0 | 25 |
+| Revelation | 15 | 35 |
+| Nirvana | 15 | 35 |
+| Luminaria | 15 | 35 |
+| Nocturnis | 25 | 45 |
 
 ---
 
@@ -925,7 +990,7 @@ Folder: `Assets/data/StatusEffect`.
 | Asset | Class | Name | Duration | Tick | Max stacks | Effect |
 | --- | --- | --- | --- | --- | --- | --- |
 | `Blaze Soul` | AttackReplacement | Blaze Soul | 6s | - | 1 | Replaces the attack with `Blaze A1 AD` (Cosmic Blaze) |
-| `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 15% EffMaxHp per tick |
+| `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 8% EffMaxHp per tick |
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |

@@ -23,10 +23,10 @@ MonoBehaviour:
   loseAllStacksOnExpire: 0
   target: {fileID: 0}
   source: {fileID: 0}
-  projectile: {fileID: 0}
+  location: {x: 0, y: 0}
   currentStacks: 0
   potencyMultiplier: 1
-  dpt: 15
+  dpt: 8
   scalingStat: 30
   damageType: 2
   indicatorColor: {r: 1, g: 0.4009434, b: 0.4009434, a: 1}

@@ -12,14 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Lifeforce AD 2
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  type: 0
   cooldown: 0
   projectilePrefab: {fileID: 5007806784816359958, guid: 92da32c21c25aaf44ae1afff7805d064, type: 3}
   pd: {fileID: 11400000, guid: 5e4ca59848e81fb468e900b81b6020d6, type: 2}
   pattern: 0
+  castTime: 0
+  canMoveWhileCasting: 1
   spawnDelay: 1
   spawnDistance: 0
   fixedDistance: 0
   animationLength: 0.75
+  canCharge: 0
+  chargeThreshold: 0.15
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 0
+  chargeAttack: {fileID: 0}
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -41,7 +51,7 @@ MonoBehaviour:
   basedOnDmgDealt: 1
   staminaGainOnHit: 4
   staminaPctGainOnHit: 0
-  healthGainOnHit: 4
+  healthGainOnHit: 5
   healthPctGainOnHit: 3
   manaGainOnHit: 3
   manaPctGainOnHit: 0
@@ -52,6 +62,5 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 0
   icon: {fileID: 0}
   displayName: 

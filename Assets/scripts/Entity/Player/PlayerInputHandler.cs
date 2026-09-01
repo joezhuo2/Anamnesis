@@ -31,6 +31,11 @@ namespace CrystalFlux.EntitySystem
             controls.Player.Skill.performed += OnSkillPerformed;
             controls.Player.Ultimate.performed += OnUltimatePerformed;
             controls.Player.Technique.performed += OnTechniquePerformed;
+
+            controls.Player.BasicAttack.canceled += OnBasicAttackCanceled;
+            controls.Player.Skill.canceled += OnSkillCanceled;
+            controls.Player.Ultimate.canceled += OnUltimateCanceled;
+            controls.Player.Technique.canceled += OnTechniqueCanceled;
         }
         private void Update() => InputState.mousePos = controls.Player.MousePosition.ReadValue<Vector2>();
         private void OnDisable()
@@ -44,6 +49,11 @@ namespace CrystalFlux.EntitySystem
             controls.Player.Ultimate.performed -= OnUltimatePerformed;
             controls.Player.Technique.performed -= OnTechniquePerformed;
 
+            controls.Player.BasicAttack.canceled -= OnBasicAttackCanceled;
+            controls.Player.Skill.canceled -= OnSkillCanceled;
+            controls.Player.Ultimate.canceled -= OnUltimateCanceled;
+            controls.Player.Technique.canceled -= OnTechniqueCanceled;
+
             controls.Player.Disable();
         }
         private void OnDestroy() => controls?.Dispose();
@@ -55,5 +65,9 @@ namespace CrystalFlux.EntitySystem
         private void OnSkillPerformed(InputAction.CallbackContext ctx) => pah.PerformAttack(AttackType.Skill);
         private void OnUltimatePerformed(InputAction.CallbackContext ctx) => pah.PerformAttack(AttackType.Ultimate);
         private void OnTechniquePerformed(InputAction.CallbackContext ctx) => pah.PerformAttack(AttackType.Technique);
+        private void OnBasicAttackCanceled(InputAction.CallbackContext ctx) => pah.ReleaseAttack(AttackType.Basic);
+        private void OnSkillCanceled(InputAction.CallbackContext ctx) => pah.ReleaseAttack(AttackType.Skill);
+        private void OnUltimateCanceled(InputAction.CallbackContext ctx) => pah.ReleaseAttack(AttackType.Ultimate);
+        private void OnTechniqueCanceled(InputAction.CallbackContext ctx) => pah.ReleaseAttack(AttackType.Technique);
     }
 }

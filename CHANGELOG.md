@@ -7,6 +7,38 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.13] - 2026-09-01 - Charged Attacks Update
+
+### Added
+- **`AttackData` charging block** - `canCharge`, `chargeThreshold`, `minChargeTime`, `maxChargeTime`, `chargeTickInterval`, `cooldownOnAttackStart` and `chargeAttack`. A chargeable attack is held down to sustain it after it resolves; every field is inert while `canCharge` is false, so existing attack assets are unaffected
+- **Tap / hold split** - `chargeThreshold` (default `0.225`) is the only discriminator. A chargeable attack spawns nothing and pays nothing on press, it only plays its animation and waits out the threshold. Released sooner, the press resolves as a plain tap and the base attack's cost is paid at that moment; held longer, the tap is skipped entirely and never charged. A tap therefore costs `chargeThreshold` of latency, which is the deliberate resolution of a three-way tradeoff between instant taps, no tap-on-hold, and no spawn flicker - only two of the three are possible, and retracting already-spawned projectiles was worse
+- **Charge phase** - the hold pays `chargeAttack`'s cost on confirm and again every `chargeTickInterval`. Each drain tick refreshes the lifetime of the sustained projectiles and re-captures their damage snapshot, so buffs and resources earned during one tick cycle carry into the next. `minChargeTime` (default `0`) queues a voluntary release until it elapses; an interrupt always breaks immediately. Both `minChargeTime` and `maxChargeTime` measure the charge itself, not the time since press
+- **`AttackData.chargeAttack`** - an optional full `AttackData` for the hold variant, with its own prefab, projectile data, pattern, count, spread, spawn delay and costs. It is the only thing that spawns on a hold and the only thing a tick sustains; its `canCharge` is forced true on the runtime clone so its projectiles self-register as sustainable. Left null, the charge spawns and sustains the base attack instead, at its own cost
+- **`AttackData.cooldownOnAttackStart`** (default `true`) - stamps the cooldown when the attack is performed so it ticks down during the hold, meaning a long charge is not punished twice. Set false to stamp it when the charge ends instead, which makes short charges cycle faster than long ones. The flag affects chargeable attacks only; everything else always stamps on performance
+- **`IChargeRegister`** - `RegisterChargedProjectile` / `UnregisterChargedProjectile`, implemented by `EntityProjectileHandler` alongside `IOrbitRegister`. Sustained projectiles register themselves against their owner on spawn and unregister on destroy, and `TickChargedProjectiles(AttackData)` refreshes only the ones whose `pd.mainAttack` matches the charge source
+- **`PlayerAttackHandler.ReleaseAttack(AttackType)`** plus `canceled` bindings for all four attack actions on `PlayerInputHandler`, so a key release ends the matching charge. `IsCharging` is exposed and `IsCasting` now reports true while charging, so the existing cast interrupts cover charges unchanged
+- **`MovementType.FollowCursor`** - steers a projectile toward the cursor every physics step at full speed with no turn smoothing, clamping the final step so it settles on the cursor rather than oscillating. Enemy-owned projectiles have no cursor, so they chase the nearest player-team target instead, using `followDistance` as the search radius and falling back to `50` when it is `0`
+- **`WaveManager.corruptionSpecialChance`** (default `8`) and **`corruptionSpecialPool`** - a per-button roll made *before* the usual multiplier corruption. On a hit the stat reward is replaced outright by an `AttackReward` drawn from the pool; on a miss the existing positive/negative multiplier applies unchanged. Only buttons holding a `GeneratedReward` are eligible, so attack, treasure and milestone buttons are untouched. Both fields live on the base class, so `UnlimitedWaveManager` inherits the behavior with no extra wiring
+- **`RewardButton.Setup(AttackReward, callback, corrupted)`** - the new optional `corrupted` flag clears the stale `GeneratedReward`, marks the button corrupted so it cannot be corrupted twice, tints the border with the new `RewardButton.CorruptedSpecialColor` (violet, distinct from rare red and from the darkRed/darkGreen of value corruption), and appends a `Corrupted` line to the description
+- **Nocturnis** - a chargeable Ultimate. The tap is a melee burst; holding past the threshold spawns a cursor-following scythe sustained for up to 6s, draining health every second and scaling its damage off health consumed. Enters `rarePool` at wave 45 and `corruptionSpecialPool` at wave 25
+- **`ProjectileData` "Angle Overrides" header** grouping `angleOverride`, `useTrueAngle` and `bypassIFrames`
+- **Dark Caster** - new milestone reward 
+
+### Changed
+- **Projectile lifetime is now a ticked `lifeRemaining` counter in `Update`** rather than a fire-and-forget `WaitForSeconds` coroutine. Expiry behavior is identical, but the remaining time can now be refreshed mid-flight, which is what makes charge sustain possible
+- **`Projectile.HandleDirection` and the new cursor follow share `GetSpriteAngle`**, so a projectile with `useTrueAngle` stays locked to `angleOverride` while still tracking the cursor, and one without it faces its travel direction plus `rotationOffset`
+- **`HandlePatternMovement`** switched to a `switch` expression that falls back to the projectile's own position, so an unhandled `MovementType` holds still instead of being treated as a wave
+- **Enemies commit instantly.** `EnemyAttackHandler` has no button, so it skips `chargeThreshold` entirely: the base spawn is suppressed, the charge source is spawned once up front aimed at the target, and the enemy rolls 50/50 on every tick to keep holding or stop, with `minChargeTime` as its guaranteed hold before the first roll
+- **Rare pool unlock waves raised** - Exodus, Shattered Singularity, Solar Collapse and Starfury from wave 20 to **25**; Luminaria, Nirvana and Revelation from wave 20 to **35**
+- **Blood Pact rebalanced** - health cost `9 +5%` to `5 +3%`, health gain on hit `6 +3%` to `4 +1%`, damage `50% Phys / 15% True` to `35% Phys / 9% True`, and its `Bleed 5 1 3 30 EffAtk` tick from `15%` to `8%` of `EffMaxHp`
+- **Lifeforce Burst rebalanced** - health gain on hit `4` to `5`, knockback force `14` to `8`
+- **Level-up stat rewards increased** - per level `maxHp` `3` to `5`, `attack` `1` to `2`, `Intelligence` `1` to `2`, `moveSpeed` `0.005` to `0.008`
+
+### Fixed
+- **Corrupting a reward re-fetched the same `RewardButton` component twice** per button and skipped the `GeneratedReward` null check on one path. `OnCorruptButtonClicked` now resolves the component once and bails early when it is missing
+- **`PlayerAttackHandler` leaked attack state on teardown.** `OnDisable` / `OnDestroy` called `EndCast` only, which left an in-progress charge holding its `CanMove` and `IsAttacking` decrements. Both now call `EndAllAttackStates`, which ends the charge first
+
+
 ## [v0.3.12] - 2026-08-31 - Cast Time Update
 
 ### Added

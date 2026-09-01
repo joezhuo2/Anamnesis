@@ -6,7 +6,7 @@ namespace CrystalFlux.ProjectileSystem
 {
     public enum ApplyCondition { OnHit, OnCast }
     public enum SpecialScalingAttribute { None, Orbits, HpConsumed }
-    public enum MovementType { Default, Wave, Spiral }
+    public enum MovementType { Default, Wave, Spiral, FollowCursor }
 
     [CreateAssetMenu(fileName = "projectile_data", menuName = "Data/Projectile")]
     public class ProjectileData : ScriptableObject
@@ -49,6 +49,8 @@ namespace CrystalFlux.ProjectileSystem
         public float rotationOffset;
         [Tooltip("If > 0, projectile reverses direction after traveling this distance (boomerang effect)")]
         public float maxBoomerangDist = 0f;
+
+        [Header("Angle Overrides")]
         public float angleOverride;
         public bool useTrueAngle;
         public bool bypassIFrames;

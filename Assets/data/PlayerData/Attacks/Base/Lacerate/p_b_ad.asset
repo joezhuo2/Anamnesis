@@ -12,14 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: p_b_ad
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  type: 0
   cooldown: 1
   projectilePrefab: {fileID: 7905348454811799927, guid: f4ef1cf3b6211f448b7d0967f72645cb, type: 3}
   pd: {fileID: 11400000, guid: 09d514489199996499eca49699f28686, type: 2}
   pattern: 0
+  castTime: 0
+  canMoveWhileCasting: 1
   spawnDelay: 0
   spawnDistance: 0.5
   fixedDistance: 0
   animationLength: 0.5
+  canCharge: 0
+  chargeThreshold: 0.15
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  chargeAttack: {fileID: 0}
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -48,9 +57,9 @@ MonoBehaviour:
   summonChance: 0
   summonCondition: 0
   fireOrbits: 0
-  absorbOrbits: 0
+  absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
-  type: 0
+  redirectCount: 0
   icon: {fileID: -4290406455011644030, guid: ac0de4f746fa7df4daae01d78607f013, type: 3}
   displayName: Lacerate

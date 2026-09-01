@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Lifeforce PD 2
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 8343bb44033ca4e41aa14c9276118998, type: 2}
-  speed: 0
   lifetime: 0.75
-  numPierce: 3000
   size: 3
+  numPierce: 3000
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
   spellMult: 1.65
   trueMult: 0
@@ -41,5 +46,5 @@ MonoBehaviour:
   randOrbRadOffset: 0
   orbitSelf: 0
   rotateClockwise: 0
-  kbForce: 14
+  kbForce: 8
   knockbackTime: 0.15

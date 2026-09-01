@@ -17,6 +17,8 @@ namespace CrystalFlux.WaveSystem
         public Image borderHighlight;
         public Image iconImage;
 
+        public static readonly Color CorruptedSpecialColor = new(0.65f, 0.15f, 0.9f);
+
         [HideInInspector] public GeneratedReward gr;
         private AttackReward ar;
         private PlayerUpgradeReward pur;
@@ -87,16 +89,19 @@ namespace CrystalFlux.WaveSystem
             LinkButtonComponent();
         }
 
-        public void Setup(AttackReward attackReward, Action<AttackReward> claimCallback)
+        public void Setup(AttackReward attackReward, Action<AttackReward> claimCallback, bool corrupted = false)
         {
             ar = attackReward;
+            gr = null;
             onAttackClaimedCallback = claimCallback;
             type = RewardType.Rare;
+            isCorrupted = corrupted;
 
             if (titleText != null) titleText.text = attackReward.attackName;
-            if (descriptionText != null) descriptionText.text = attackReward.desc;
+            if (descriptionText != null)
+                descriptionText.text = corrupted ? attackReward.desc + "\nCorrupted" : attackReward.desc;
 
-            if (borderHighlight != null) borderHighlight.color = Color.red;
+            if (borderHighlight != null) borderHighlight.color = corrupted ? CorruptedSpecialColor : Color.red;
 
             if (iconImage != null && attackReward.icon != null)
                 iconImage.sprite = attackReward.icon;

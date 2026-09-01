@@ -43,6 +43,8 @@ namespace CrystalFlux.WaveSystem
         public float corruptChance = 40f;
         public float corruptPositiveChance = 40f;
         public float maxCorruptBoost = 80f;
+        public float corruptionSpecialChance = 8f;
+        public List<AttackReward> corruptionSpecialPool = new();
 
         [Header("Reward Panel Settings")]
         public GameObject rewardPanel;
@@ -78,6 +80,8 @@ namespace CrystalFlux.WaveSystem
         protected IUpgradeHolder cpum;
         protected ISkillPointHolder cpst;
         protected readonly List<AttackReward> availableRarePool = new();
+        protected readonly List<AttackReward> availableCorruptionSpecialPool = new();
+        protected readonly List<AttackReward> corruptionSpecialsThisRoll = new();
         protected readonly List<PlayerUpgradeReward> availableTreasurePool = new();
         protected int currentWaveIndex = 0;
         protected int totalSpawned = 0;
@@ -100,6 +104,7 @@ namespace CrystalFlux.WaveSystem
         protected void Awake()
         {
             availableRarePool.AddRange(rarePool);
+            availableCorruptionSpecialPool.AddRange(corruptionSpecialPool);
             availableTreasurePool.AddRange(treasurePool);
         }
 
@@ -649,6 +654,24 @@ namespace CrystalFlux.WaveSystem
 
             return chosen;
         }
+        protected AttackReward PickCorruptionSpecialReward()
+        {
+            int wave = GetCurrentWave();
+            AttackReward chosen = null;
+            int eligible = 0;
+
+            for (int i = 0; i < availableCorruptionSpecialPool.Count; i++)
+            {
+                AttackReward candidate = availableCorruptionSpecialPool[i];
+                if (candidate == null || candidate.minWave > wave) continue;
+                if (corruptionSpecialsThisRoll.Contains(candidate)) continue;
+
+                eligible++;
+                if (Random.Range(0, eligible) == 0) chosen = candidate;
+            }
+
+            return chosen;
+        }
         protected PlayerUpgradeReward PickTreasureReward()
         {
             int wave = GetCurrentWave();
@@ -872,20 +895,35 @@ namespace CrystalFlux.WaveSystem
             CachePlayerStatManager();
             if (cpsm == null) return;
 
+            corruptionSpecialsThisRoll.Clear();
+
             foreach (GameObject rb in activeRewardButtons)
             {
                 if (Random.value > (corruptChance * 0.01f)) continue;
 
-                float corruptMult = (Random.value < (corruptPositiveChance * 0.01f) ? 1f : -1f) * (1f + (Random.Range(1, maxCorruptBoost) * 0.01f));
-                GeneratedReward gr = rb.TryGetComponent<RewardButton>(out var grb) ? grb.gr : null;
+                if (!rb.TryGetComponent<RewardButton>(out var grb)) continue;
 
+                GeneratedReward gr = grb.gr;
                 if (gr == null) continue;
+
+                if (Random.value < (corruptionSpecialChance * 0.01f))
+                {
+                    AttackReward special = PickCorruptionSpecialReward();
+                    if (special != null)
+                    {
+                        corruptionSpecialsThisRoll.Add(special);
+                        grb.Setup(special, OnAttackRewardClaimed, true);
+                        continue;
+                    }
+                }
+
+                float corruptMult = (Random.value < (corruptPositiveChance * 0.01f) ? 1f : -1f) * (1f + (Random.Range(1, maxCorruptBoost) * 0.01f));
 
                 gr.mult = corruptMult;
 
                 string changeLine = BuildChangeLine(gr.br.baseBuff.type, gr.finalVal);
 
-                if (rb.TryGetComponent<RewardButton>(out var nrb)) nrb.CorruptButton(changeLine, corruptMult);
+                grb.CorruptButton(changeLine, corruptMult);
             }
 
             if (rerollButton != null) rerollButton.gameObject.SetActive(false);
@@ -957,6 +995,7 @@ namespace CrystalFlux.WaveSystem
             if (cpah == null) cpah = GameObject.FindWithTag("Player")?.GetComponent<IAttackHandler>();
             if (cpah != null) cpah.UpdateAttack(chosenAttack.type, chosenAttack.newAttack);
             if (availableRarePool.Contains(chosenAttack)) availableRarePool.Remove(chosenAttack);
+            if (availableCorruptionSpecialPool.Contains(chosenAttack)) availableCorruptionSpecialPool.Remove(chosenAttack);
 
             ResumeGameLoop();
         }

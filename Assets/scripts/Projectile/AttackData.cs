@@ -24,6 +24,22 @@ namespace CrystalFlux.ProjectileSystem
         [Tooltip("Time after attack is performed before resetting the attack animation")]
         public float animationLength;
 
+        [Header("Charging")]
+        [Tooltip("Whether this attack can be held down to sustain it after it resolves")]
+        public bool canCharge;
+        [Tooltip("How long the button must be held before this registers as a charge. Released sooner, the press resolves as a plain tap. Also the delay before a tap's projectiles spawn")]
+        public float chargeThreshold = 0.225f;
+        [Tooltip("Once charging, the minimum charge duration. An early release is queued until this elapses. 0 = release ends the charge immediately")]
+        public float minChargeTime = 0f;
+        [Tooltip("Maximum hold duration. The entity is forced to release at this point")]
+        public float maxChargeTime = 5f;
+        [Tooltip("Seconds between each resource drain / lifetime refresh tick while held")]
+        public float chargeTickInterval = 1f;
+        [Tooltip("Chargeable attacks only. True = the cooldown starts when the attack is performed, so it ticks down during the hold. False = it starts when the charge ends, which makes short charges cycle faster than long ones")]
+        public bool cooldownOnAttackStart = true;
+        [Tooltip("Optional separate attack spawned once the hold is confirmed. Its projectiles are the ones sustained by each charge tick, and its resource costs are what the tick drains. Null = sustain this attack's own projectiles")]
+        public AttackData chargeAttack;
+
         [Header("Spawn Logic")]
         public int projectileCount = 1;
         [Tooltip("Random additional projectiles to spawn")]
@@ -144,6 +160,13 @@ namespace CrystalFlux.ProjectileSystem
                 }
             }
 
+            if (chargeAttack != null && chargeAttack != this)
+            {
+                chargeAttack = Instantiate(chargeAttack);
+                chargeAttack.canCharge = true;
+                chargeAttack.DeepCloneInternal(visited);
+            }
+
             if (nextAttack != null)
             {
                 nextAttack = Instantiate(nextAttack);
@@ -168,6 +191,8 @@ namespace CrystalFlux.ProjectileSystem
                 Destroy(pd);
             }
 
+            if (chargeAttack != null && chargeAttack != this) Destroy(chargeAttack);
+
             if (nextAttack != null) Destroy(nextAttack);
         }
         public override void GetTooltipLines(List<string> lines)
@@ -175,6 +200,8 @@ namespace CrystalFlux.ProjectileSystem
             lines.Add($"Type: {type} ({pattern})");
             if (cooldown > 0f) lines.Add($"Cooldown: {cooldown:F1}s");
             if (castTime > 0f) lines.Add($"Cast Time: {castTime:F1}s{(canMoveWhileCasting ? string.Empty : " (rooted)")}");
+            if (canCharge) lines.Add($"Hold {chargeThreshold:F2}s to charge (max {maxChargeTime:F1}s, drains every {chargeTickInterval:F1}s)");
+            if (canCharge && chargeAttack != null) lines.Add($"Held: {chargeAttack.displayName}");
 
             if (staminaCost > 0f || staminaCostPct > 0f) lines.Add($"Stamina Cost: {staminaCost:F0} +{staminaCostPct:F1}%");
             if (manaCost > 0f || manaCostPct > 0f) lines.Add($"Mana Cost: {manaCost:F0} +{manaCostPct:F1}%");

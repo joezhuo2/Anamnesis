@@ -23,6 +23,12 @@ MonoBehaviour:
   spawnDistance: 3
   fixedDistance: 0
   animationLength: 0.5
+  canCharge: 0
+  chargeThreshold: 0.15
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  chargeAttack: {fileID: 0}
   projectileCount: 1
   randomCount: 0
   spread: 0

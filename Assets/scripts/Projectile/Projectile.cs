@@ -18,6 +18,7 @@ namespace CrystalFlux.ProjectileSystem
         [HideInInspector] public Vector2 dir;
         [HideInInspector] public int pierced;
         private float effSpd;
+        private float lifeRemaining;
         private List<GameObject> hit;
         private ProjectileDamageSnapshot damageSnapshot;
         private Transform followTarget;
@@ -72,6 +73,10 @@ namespace CrystalFlux.ProjectileSystem
             if (pd != null && pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null &&
                 ownerObj.TryGetComponent<IOrbitRegister>(out var ior))
                 ior.UnregisterOrbitingProjectile(this);
+
+            if (pd != null && pd.mainAttack != null && pd.mainAttack.canCharge && ownerObj != null &&
+                ownerObj.TryGetComponent<IChargeRegister>(out var icr))
+                icr.UnregisterChargedProjectile(this);
         }
 
         private void Start()
@@ -88,7 +93,7 @@ namespace CrystalFlux.ProjectileSystem
                 : pd.speed;
 
             pierced = 0;
-            damageSnapshot = ProjectileSnapshot.CaptureSnapshot(pd, ownerObj);
+            CaptureSnapshot();
             HandleSize();
             HandleDirection();
             rb = GetComponent<Rigidbody2D>();
@@ -110,10 +115,36 @@ namespace CrystalFlux.ProjectileSystem
                 iog.RegisterOrbitingProjectile(this);
             }
 
-            StartCoroutine(DestroyProjectileAfterDelay(pd.lifetime));
+            if (pd.mainAttack != null && pd.mainAttack.canCharge && ownerObj != null &&
+                ownerObj.TryGetComponent<IChargeRegister>(out var icr))
+            {
+                icr.RegisterChargedProjectile(this);
+            }
+
+            lifeRemaining = pd.lifetime;
         }
 
         private void FixedUpdate() => HandleMovement(false);
+
+        private void Update()
+        {
+            if (pd == null) return;
+
+            lifeRemaining -= Time.deltaTime;
+            if (lifeRemaining > 0f) return;
+
+            if (!pd.addAttackRequiresHit) HandleAdditionalSpawns();
+
+            Destroy(gameObject);
+        }
+
+        public void OnChargeTick()
+        {
+            if (pd == null) return;
+
+            lifeRemaining = pd.lifetime;
+            CaptureSnapshot();
+        }
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (pierced >= pd.numPierce && pd.destroyOnMaxPierce) Destroy(gameObject);
@@ -197,15 +228,6 @@ namespace CrystalFlux.ProjectileSystem
             }
         }
 
-        private IEnumerator DestroyProjectileAfterDelay(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-
-            if (!pd.addAttackRequiresHit) HandleAdditionalSpawns();
-
-            Destroy(gameObject);
-        }
-
         private void HandleAdditionalSpawns()
         {
             if (!canTriggerAdd) return;
@@ -252,10 +274,15 @@ namespace CrystalFlux.ProjectileSystem
                 }
             }
 
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, GetSpriteAngle(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg));
+        }
+
+        private float GetSpriteAngle(float moveAngle)
+        {
+            if (!pd.useTrueAngle) return moveAngle + pd.rotationOffset;
+
             Vector2 trueAngle = new(Mathf.Cos(pd.angleOverride * Mathf.Deg2Rad), Mathf.Sin(pd.angleOverride * Mathf.Deg2Rad));
-            float finalAngle = pd.useTrueAngle ? Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg : angle + pd.rotationOffset;
-            transform.rotation = Quaternion.Euler(0f, 0f, finalAngle);
+            return Mathf.Atan2(trueAngle.y, trueAngle.x) * Mathf.Rad2Deg;
         }
 
         private void InitBoomerang()
@@ -280,6 +307,12 @@ namespace CrystalFlux.ProjectileSystem
             }
 
             if (effSpd <= 0) return;
+
+            if (MoveType == MovementType.FollowCursor)
+            {
+                HandleCursorFollow();
+                return;
+            }
 
             if (MoveType != MovementType.Default)
             {
@@ -353,8 +386,44 @@ namespace CrystalFlux.ProjectileSystem
 
             patternTime += dt;
 
-            Vector2 target = MoveType == MovementType.Wave ? GetWavePosition() : GetSpiralPosition(dt);
+            Vector2 target = MoveType switch
+            {
+                MovementType.Wave => GetWavePosition(),
+                MovementType.Spiral => GetSpiralPosition(dt),
+                _ => (Vector2)transform.position
+            };
             rb.linearVelocity = (target - (Vector2)transform.position) / dt;
+        }
+
+        private void HandleCursorFollow()
+        {
+            Vector2 targetPos;
+
+            if (ownerObj.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1)
+            {
+                Camera cam = MainCam;
+                if (cam == null) return;
+
+                Vector3 mouseWorld = cam.ScreenToWorldPoint(InputState.mousePos);
+                mouseWorld.z = 0f;
+                targetPos = mouseWorld;
+            }
+            else
+            {
+                if (followTarget == null || !followTarget.gameObject.activeInHierarchy)
+                    followTarget = FindClosestTargetInRange(pd.followDistance > 0f ? pd.followDistance : 50f, true);
+
+                if (followTarget == null) return;
+                targetPos = followTarget.position;
+            }
+
+            Vector2 toTarget = targetPos - (Vector2)transform.position;
+            float dt = Time.fixedDeltaTime;
+
+            if (toTarget.sqrMagnitude > 0.0001f) dir = toTarget.normalized;
+
+            rb.linearVelocity = dt > 0f && toTarget.magnitude <= effSpd * dt ? toTarget / dt : dir * effSpd;
+            transform.rotation = Quaternion.Euler(0f, 0f, GetSpriteAngle(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg));
         }
 
         private void ResetPattern()
@@ -635,5 +704,7 @@ namespace CrystalFlux.ProjectileSystem
                 eh.TakeDamage(dp);
             }
         }
+
+        private void CaptureSnapshot() => damageSnapshot = ProjectileSnapshot.CaptureSnapshot(pd, ownerObj);
     }
 }
