@@ -23655,6 +23655,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1186772504}
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
+      propertyPath: castBarPrefab
+      value: 
+      objectReference: {fileID: 5326710201406479706, guid: fe45e7807c448b3488003baa762ff520, type: 3}
+    - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
+      propertyPath: castBarOffset.y
+      value: -0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
+      propertyPath: castBarTextPrefab
+      value: 
+      objectReference: {fileID: 6961074376611238736, guid: 096da352af1b7ee4fbabc3c804c8d36b, type: 3}
+    - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: starting.Array.size
       value: 2
       objectReference: {fileID: 0}

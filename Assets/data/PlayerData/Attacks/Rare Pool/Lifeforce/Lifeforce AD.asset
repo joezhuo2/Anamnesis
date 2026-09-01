@@ -17,6 +17,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5007806784816359958, guid: 695b70f16b985bc409de0f4ec313d195, type: 3}
   pd: {fileID: 11400000, guid: 08700545ed6f3dc4da44f1658415627a, type: 2}
   pattern: 0
+  castTime: 0.3
+  canMoveWhileCasting: 0
   spawnDelay: 0
   spawnDistance: 1
   fixedDistance: 0

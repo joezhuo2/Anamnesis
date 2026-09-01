@@ -70,7 +70,7 @@ namespace CrystalFlux.EntitySystem
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics() => sharedCanvas = null;
 
-        private static Canvas ResolveHealthBarCanvas()
+        internal static Canvas ResolveHealthBarCanvas()
         {
             if (sharedCanvas != null && sharedCanvas.isActiveAndEnabled) return sharedCanvas;
 
@@ -262,7 +262,10 @@ namespace CrystalFlux.EntitySystem
                 }
 
                 if (dmg > 0 && Projectile.ApplyingProjectileHit && IsEnemyHit(dp, i))
+                {
                     TryThorns(i.owner, dmg);
+                    if (TryGetComponent<ICastHandler>(out var ch)) ch.CancelCast();
+                }
 
                 if (i.isCrit)
                 {

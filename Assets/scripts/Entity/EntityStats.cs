@@ -84,6 +84,10 @@ namespace CrystalFlux.Core
         public float dashStaminaCostRedPct;
         public bool dashShouldApplyIFrame;
 
+        [Header("Casting")]
+        public float castTimeRedPct;
+        public float interruptResist;
+
         [Header("Levelling")]
         public int level;
         public float exp;
@@ -206,6 +210,8 @@ namespace CrystalFlux.Core
                 StatType.EffDashDistance => Mathf.Max(0f, dashDistance * (1f + (dashDistancePct * 0.01f))),
                 StatType.DashShouldApplyIFrame => dashShouldApplyIFrame ? 1f : 0f,
                 StatType.ArmorRes => (armor * (1f + (armorPct * 0.01f))) / ((armor * (1f + (armorPct * 0.01f))) + 100f),
+                StatType.castTimeRedPct => castTimeRedPct,
+                StatType.interruptResist => interruptResist,
                 _ => 0f
             };
         }
@@ -302,6 +308,8 @@ namespace CrystalFlux.Core
                 case StatType.EffMaxStamina: maxStamina += Mathf.RoundToInt(delta); break;
                 case StatType.EffMaxMana: maxMana += Mathf.RoundToInt(delta); break;
                 case StatType.EffArmor: armor += Mathf.RoundToInt(delta); break;
+                case StatType.castTimeRedPct: castTimeRedPct += delta; break;
+                case StatType.interruptResist: interruptResist += delta; break;
                 default: break;
             }
         }

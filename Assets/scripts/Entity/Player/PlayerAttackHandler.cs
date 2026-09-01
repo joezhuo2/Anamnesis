@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class PlayerAttackHandler : MonoBehaviour, IAttackHandler
+    public class PlayerAttackHandler : MonoBehaviour, IAttackHandler, ICastHandler
     {
         bool IAttackHandler.HasAttack(AttackAsset a) => HasAttack(a as AttackData);
         AttackAsset IAttackHandler.FindAttackOfType(AttackType type) => FindAttackOfType(type);
@@ -20,6 +21,11 @@ namespace CrystalFlux.EntitySystem
         public GameObject cooldownPrefab;
         public Transform objContainer;
 
+        [Header("Cast Bar")]
+        public Slider castBarPrefab;
+        public TextMeshProUGUI castBarTextPrefab;
+        public Vector3 castBarOffset;
+
         private Animator a;
         private IResourcePool pr;
         private IDamageable ph;
@@ -28,6 +34,15 @@ namespace CrystalFlux.EntitySystem
         private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
         [HideInInspector] public List<AttackData> attacks = new();
         [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
+
+        private bool isCasting;
+        private bool castCancelled;
+        private bool castMovementHeld;
+        private bool castStateHeld;
+        private Slider castBarInstance;
+        private TextMeshProUGUI castBarTextInstance;
+
+        public bool IsCasting => isCasting;
 
         private void Start()
         {
@@ -39,8 +54,12 @@ namespace CrystalFlux.EntitySystem
 
             for (int i = 0; i < starting.Count; i++) UpdateAttack(starting[i].type, starting[i]);
         }
+        private void OnDisable() => EndCast();
+
         private void OnDestroy()
         {
+            EndCast();
+
             if (attacks != null)
             {
                 foreach (var attack in attacks)
@@ -110,6 +129,7 @@ namespace CrystalFlux.EntitySystem
 
         public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
         {
+            if (isCasting) return;
             if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f || Time.timeScale == 0f) return;
 
             AttackData selected = attacks.Find(atk => atk.type == type);
@@ -121,10 +141,101 @@ namespace CrystalFlux.EntitySystem
                 if (Time.time - lastTime < GetEffCd(selected, esm)) return;
             }
 
+            float castTime = selected.GetEffCastTime(esm);
+
+            if (castTime > 0f)
+            {
+                if (!bypassCooldown) lastAttackTimes[type] = Time.time;
+
+                StartCoroutine(CastRoutine(selected, type, castTime, noCost, triggerUpgrades));
+                return;
+            }
+
             if (!noCost && !HandleStatChanges(selected)) return;
 
             if (!bypassCooldown) lastAttackTimes[type] = Time.time;
 
+            ExecuteAttack(selected, type, triggerUpgrades);
+        }
+
+        private IEnumerator CastRoutine(AttackData selected, AttackType type, float castTime, bool noCost, bool triggerUpgrades)
+        {
+            isCasting = true;
+            castCancelled = false;
+
+            castStateHeld = true;
+            esm.AddStat(new StatBuff(StatType.IsAttacking, 1f));
+
+            if (!selected.canMoveWhileCasting)
+            {
+                castMovementHeld = true;
+                esm.AddStat(new StatBuff(StatType.CanMove, -1f));
+            }
+
+            ApplyAttackAnimator(type);
+            CastBar.Acquire(castBarPrefab, castBarTextPrefab, out castBarInstance, out castBarTextInstance);
+
+            float elapsed = 0f;
+
+            while (elapsed < castTime)
+            {
+                if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
+                else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
+
+                if (castCancelled) break;
+
+                CastBar.Tick(castBarInstance, castBarTextInstance, transform, castBarOffset, elapsed, castTime);
+
+                yield return null;
+                elapsed += Time.deltaTime;
+            }
+
+            bool completed = !castCancelled;
+            EndCast();
+
+            if (completed && (noCost || HandleStatChanges(selected)))
+            {
+                ExecuteAttack(selected, type, triggerUpgrades);
+                yield break;
+            }
+
+            if (a != null)
+            {
+                a.SetInteger(AttackIndexHash, -1);
+                a.speed = 1f;
+            }
+        }
+
+        private void EndCast()
+        {
+            CastBar.Release(ref castBarInstance, ref castBarTextInstance);
+
+            if (castMovementHeld)
+            {
+                castMovementHeld = false;
+                if (esm != null) esm.AddStat(new StatBuff(StatType.CanMove, 1f));
+            }
+
+            if (castStateHeld)
+            {
+                castStateHeld = false;
+                if (esm != null) esm.AddStat(new StatBuff(StatType.IsAttacking, -1f));
+            }
+
+            isCasting = false;
+            castCancelled = false;
+        }
+
+        public void CancelCast()
+        {
+            if (!isCasting) return;
+            if (esm != null && esm.GetStat(StatType.interruptResist) >= 1f) return;
+
+            castCancelled = true;
+        }
+
+        private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades)
+        {
             HandleOrbitInteractions(selected);
 
             ProjectileSpawner ps = ProjectileSpawner.Instance;
@@ -140,6 +251,14 @@ namespace CrystalFlux.EntitySystem
             if (triggerUpgrades)
                 TriggerUpgradesOnAttack(type);
 
+            ApplyAttackAnimator(type);
+            StartCoroutine(ResetAttackType(selected.animationLength));
+        }
+
+        private void ApplyAttackAnimator(AttackType type)
+        {
+            if (a == null) return;
+
             int attackIndex = type switch
             {
                 AttackType.Basic => 0,
@@ -150,7 +269,6 @@ namespace CrystalFlux.EntitySystem
 
             a.SetInteger(AttackIndexHash, attackIndex);
             a.speed = Mathf.Max(0.1f, 1f + (esm.GetStat(StatType.attackSpeedPct) * 0.01f));
-            StartCoroutine(ResetAttackType(selected.animationLength));
         }
 
         private void HandleOrbitInteractions(AttackData attack)

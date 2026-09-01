@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives under **Pre [v0.4.0]**.
 
 ### Pre [v0.4.0]
+- [v0.3.12] **Cast time**: interruptible attack windups with a pooled, entity-following cast bar; `castTime` and `canMoveWhileCasting` on `AttackData`, plus the `castTimeRedPct` and `interruptResist` stats (Core v0.8.0)
 - [v0.3.11] **Intelligence & AOE branches**: 11 new skill tree nodes (114 to 125). Capstone nodes now consume the Awakening they require. Rebalances: Blaze, Blood Pact, Cultist.
 - [v0.3.10] **Solar Wind**: `SolarWind` Awakening 6 ew skill tree nodes (108 to 114) Reblanace: Cosmic Superimposition
 - [v0.3.8] **Enemy variants & wave gating**: two new slime variants — Magma and Frost. Rewards and enemies both gained a `minWave`.

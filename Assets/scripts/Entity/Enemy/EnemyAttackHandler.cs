@@ -1,15 +1,22 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class EnemyAttackHandler : MonoBehaviour
+    public class EnemyAttackHandler : MonoBehaviour, ICastHandler
     {
         public Vector2 projSpawnOffset;
         public List<AttackData> attacks;
         public float globalCooldown;
+
+        [Header("Cast Bar")]
+        public Slider castBarPrefab;
+        public TextMeshProUGUI castBarTextPrefab;
+        public Vector3 castBarOffset;
 
         private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
         private float[] cooldowns;
@@ -18,9 +25,16 @@ namespace CrystalFlux.EntitySystem
         private readonly List<int> availableIndexes = new();
         private readonly HashSet<AttackData> chainVisited = new();
         private bool movementHeld;
+        private bool isCasting;
+        private bool castCancelled;
+        private bool castMovementHeld;
+        private Slider castBarInstance;
+        private TextMeshProUGUI castBarTextInstance;
         private float lastAttackEndTime;
         private IStatProvider esm;
         private GameObject Target => TryGetComponent<EnemyMovement>(out var em) ? em.target : null;
+
+        public bool IsCasting => isCasting;
 
         private void Awake()
         {
@@ -49,6 +63,8 @@ namespace CrystalFlux.EntitySystem
 
         private void OnDestroy()
         {
+            EndCast();
+
             if (attacks != null)
             {
                 foreach (var attack in attacks)
@@ -133,6 +149,48 @@ namespace CrystalFlux.EntitySystem
 
                 if (a != null) a.SetInteger(AttackIndexHash, currentIndex);
 
+                float castTime = current.GetEffCastTime(esm);
+
+                if (castTime > 0f)
+                {
+                    isCasting = true;
+                    castCancelled = false;
+
+                    if (!current.canMoveWhileCasting)
+                    {
+                        castMovementHeld = true;
+                        esm.AddStat(new StatBuff(StatType.CanMove, -1f));
+                    }
+
+                    CastBar.Acquire(castBarPrefab, castBarTextPrefab, out castBarInstance, out castBarTextInstance);
+
+                    float elapsed = 0f;
+
+                    while (elapsed < castTime)
+                    {
+                        if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
+                        else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
+
+                        if (castCancelled) break;
+
+                        CastBar.Tick(castBarInstance, castBarTextInstance, transform, castBarOffset, elapsed, castTime);
+
+                        yield return null;
+                        elapsed += Time.deltaTime;
+                    }
+
+                    bool interrupted = castCancelled;
+                    EndCast();
+
+                    if (interrupted)
+                    {
+                        if (currentIndex >= 0) cooldowns[currentIndex] = current.cooldown;
+                        break;
+                    }
+
+                    attackStartTime = Time.time;
+                }
+
                 HandleOrbitInteractions(current);
 
                 if (current.projectilePrefab != null)
@@ -174,6 +232,8 @@ namespace CrystalFlux.EntitySystem
                 currentIndex = -1;
             }
 
+            ReleaseMovementHold();
+
             isAttackingCoroutineRunning = false;
             esm.AddStat(new(StatType.IsAttacking, -1));
             lastAttackEndTime = Time.time;
@@ -188,8 +248,32 @@ namespace CrystalFlux.EntitySystem
             esm.AddStat(new(StatType.CanMove, 1));
         }
 
+        private void EndCast()
+        {
+            CastBar.Release(ref castBarInstance, ref castBarTextInstance);
+
+            if (castMovementHeld)
+            {
+                castMovementHeld = false;
+                if (esm != null) esm.AddStat(new StatBuff(StatType.CanMove, 1f));
+            }
+
+            isCasting = false;
+            castCancelled = false;
+        }
+
+        public void CancelCast()
+        {
+            if (!isCasting) return;
+            if (esm != null && esm.GetStat(StatType.interruptResist) >= 1f) return;
+
+            castCancelled = true;
+        }
+
         private void OnDisable()
         {
+            EndCast();
+
             if (esm == null) return;
 
             ReleaseMovementHold();

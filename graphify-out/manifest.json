@@ -270,9 +270,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityHealth.cs": {
-    "mtime": 1788197411.193294,
-    "seen": 1788208906.9330385,
-    "ast_hash": "e7bbbfeaf40169bd030bf5a9ffc6990b",
+    "mtime": 1788225993.4469638,
+    "seen": 1788226322.5078933,
+    "ast_hash": "097a76e237c679696b4f5065d6eb2592",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityProjectileHandler.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788214518.5504248,
-    "seen": 1788214575.169572,
-    "ast_hash": "ab3154fcca5c738f5af13e4d9a672fe1",
+    "mtime": 1788226311.800624,
+    "seen": 1788226322.5079923,
+    "ast_hash": "d7d70b93e014c1e073ca0f74387ff2b2",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -708,15 +708,15 @@
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1788214419.4159994,
-    "seen": 1788214575.16958,
-    "ast_hash": "d811f5f7f72051ef9c1e3ac8d075c3a5",
+    "mtime": 1788224355.9145167,
+    "seen": 1788226322.5079975,
+    "ast_hash": "fc0bd62b891d16be552e70029f5a541d",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1788214557.2263925,
-    "seen": 1788214575.1695814,
-    "ast_hash": "c47696d9bdd98378f0552239fcac1e7b",
+    "mtime": 1788225783.153012,
+    "seen": 1788226322.5079982,
+    "ast_hash": "a2ed79845f0ed9bfde098115674e7b8c",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1794,9 +1794,9 @@
     "semantic_hash": ""
   },
   ".github/copilot-skills/update-documentation/SKILL.md": {
-    "mtime": 1788139454.844376,
-    "seen": 1788143852.8783636,
-    "ast_hash": "ee6488cfecabc62b91176b1e04399b26",
+    "mtime": 1788224343.296208,
+    "seen": 1788226322.5079827,
+    "ast_hash": "fa9f99f8e5d0277a7c57168cea269e1b",
     "semantic_hash": ""
   },
   "Assets/data/entity/enemy/Slime_frost/Attacks/Blizzard/Bullet 24x24 Free Part 4B.png": {
@@ -1887,6 +1887,18 @@
     "mtime": 1788114891.148974,
     "seen": 1788208906.9334748,
     "ast_hash": "5c6d55d18b31e4c1a44d9f04ec0a228b",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/StatusEffect/StatusEffects/Lifesteal.cs": {
+    "mtime": 1788226221.8394058,
+    "seen": 1788226322.5079575,
+    "ast_hash": "8ae6fe5a75c3292b2323bb1559dab168",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/StatusEffect/StatusEffects/Thorns.cs": {
+    "mtime": 1788224865.9475672,
+    "seen": 1788226322.507964,
+    "ast_hash": "3390799afc88447393cfb1416f1f3ca8",
     "semantic_hash": ""
   }
 }

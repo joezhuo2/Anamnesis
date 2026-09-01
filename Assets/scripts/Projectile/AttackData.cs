@@ -12,6 +12,10 @@ namespace CrystalFlux.ProjectileSystem
         public GameObject projectilePrefab;
         public ProjectileData pd;
         public ProjectilePattern pattern;
+        [Tooltip("Windup time before the attack resolves. 0 = instant")]
+        public float castTime;
+        [Tooltip("Whether the entity can move during the cast window")]
+        public bool canMoveWhileCasting = true;
         [Tooltip("Time after performing the attack before projectiles spawn")]
         public float spawnDelay;
         public float spawnDistance;
@@ -89,6 +93,13 @@ namespace CrystalFlux.ProjectileSystem
         [System.NonSerialized] private bool isRuntimeCopy;
         public override bool IsRuntimeCopy => isRuntimeCopy;
 
+        public float GetEffCastTime(IStatProvider esm)
+        {
+            if (castTime <= 0f) return 0f;
+            if (esm == null) return castTime;
+            return castTime * Mathf.Clamp(1f - (esm.GetStat(StatType.castTimeRedPct) * 0.01f), 0.1f, 1f);
+        }
+
         public void InitializeRuntimeCopy() => DeepClone();
         public override void DeepClone()
         {
@@ -163,6 +174,7 @@ namespace CrystalFlux.ProjectileSystem
         {
             lines.Add($"Type: {type} ({pattern})");
             if (cooldown > 0f) lines.Add($"Cooldown: {cooldown:F1}s");
+            if (castTime > 0f) lines.Add($"Cast Time: {castTime:F1}s{(canMoveWhileCasting ? string.Empty : " (rooted)")}");
 
             if (staminaCost > 0f || staminaCostPct > 0f) lines.Add($"Stamina Cost: {staminaCost:F0} +{staminaCostPct:F1}%");
             if (manaCost > 0f || manaCostPct > 0f) lines.Add($"Mana Cost: {manaCost:F0} +{manaCostPct:F1}%");

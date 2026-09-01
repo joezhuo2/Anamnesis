@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6961074376611238736}
   - component: {fileID: 6796849851117737571}
   m_Layer: 0
-  m_Name: TextIndicator
+  m_Name: CastTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

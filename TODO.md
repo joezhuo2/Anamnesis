@@ -5,9 +5,7 @@
 - [ ] map borders & tilemaps
 - [ ] Enough Content for complete builds of all types (armor - missing basic)
 - [ ] Wave 60 boss
-- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
-- [ ] attack holding (charging) and cast time
-- [ ] backstap `specialMult`
+- [ ] attack holding (charging)
 - [ ] Title/header for reward menu
 
 ## Pre [v0.5.0] Checklist — Feel & Foundations
@@ -22,6 +20,8 @@
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra hp, faster, new ai, split)
 - [ ] Chests or loot drops from elites/bosses with guaranteed rare rewards
+- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
+- [ ] backstap `specialMult`
 
 **QoL & Polish**
 - [ ] Screen shake and hit-stop feedback on attacks
@@ -127,4 +127,4 @@
 - [ ] Screenshot mode that hides the HUD
 - [ ] "What's new" changelog popup on update
 
-# Notes — Lifesteal & Thorns status effects
+# Notes

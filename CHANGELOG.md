@@ -7,6 +7,28 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.12] - 2026-08-31 - Cast Time Update
+
+### Added
+- **`AttackData.castTime`** (default `0`, seconds) - an interruptible windup that runs before the attack resolves. At `0` the attack fires immediately, exactly as before, so every existing attack asset is unaffected. Distinct from `spawnDelay`, which still delays only the projectile spawn *after* the attack has already committed
+- **`AttackData.canMoveWhileCasting`** (default `true`) - when false the caster holds `CanMove` for the duration of the cast window only. The enemy-only `canMoveDuringAttack` keeps covering the post-cast attack and animation window; the two holds nest safely because `EntityStatManager` ref-counts gate flags
+- **Pooled cast bar** on both `PlayerAttackHandler` and `EnemyAttackHandler` - a `castBarPrefab` (`Slider`), a `castBarTextPrefab` (`TextMeshProUGUI`) showing remaining cast time, and a `castBarOffset` from the entity's center. Bars appear only while casting and follow the caster every frame, so they track an entity that moves mid-cast
+- **`CastBar`** - a static pool keyed by prefab instance ID, parented under the shared `HealthBarCanvas` that `EntityHealth` already resolves. Instances are reset and reused rather than instantiated per cast, so repeated casting does not grow the canvas
+- **`ICastHandler`** - `IsCasting` / `CancelCast()`, implemented by both attack handlers, giving `EntityHealth` one hook to interrupt whichever handler an entity has
+- **`StatType.castTimeRedPct`** - percentage reduction applied to cast time via `AttackData.GetEffCastTime`, clamped so a cast can never fall below 10% of its authored length. Cast time deliberately does **not** scale with `attackSpeedPct`
+- **`StatType.interruptResist`** - cumulative interruption resistance. `>= 1` ignores projectile hits, `>= 2` additionally ignores `CanAttack` dropping mid-cast (stun). Death always interrupts
+
+### Changed
+- **`PlayerAttackHandler.PerformAttack`** now branches on cast time. An attack with no cast time keeps its original order exactly - cost, then cooldown stamp, then `ExecuteAttack`. A cast stamps the cooldown up front to stop windup spam, but defers `HandleStatChanges` until the cast finishes, so an **interrupted cast costs nothing but its cooldown**. Costs are not pre-checked either, so a cast that can no longer be afforded when it lands simply fires nothing. Everything after the cost check moved into `ExecuteAttack`, and the animator block into `ApplyAttackAnimator`, which the cast routine also calls up front so the windup animation plays during the cast
+- **`EnemyAttackHandler.PerformAttack`** runs the same cast phase inside its `nextAttack` chain, after the animator is set and before orbit interactions, so an interrupted cast fires nothing. An interrupt still puts the attack on cooldown and breaks the chain. `animationLength` is now measured from the moment the cast resolves rather than from the start of the windup
+- **`EntityHealth.TakeDamage`** cancels an in-progress cast alongside the existing `TryThorns` call, reusing the condition that already isolates real enemy projectile hits
+- **`EntityHealth.ResolveHealthBarCanvas`** is now `internal` so `CastBar` can share the same canvas instead of creating a second one
+- **Package `com.crystalflux.core`** repinned to **v0.8.0** for the two new `StatType` members, appended to the end of the enum so existing serialized `StatBuff` assets keep their integer mappings
+
+### Fixed
+- **`EnemyAttackHandler` could permanently freeze an enemy.** The `canMoveDuringAttack` movement hold was released only at the end of each chain iteration, so any early exit from the chain leaked a `CanMove` decrement. The hold is now also released after the loop
+
+
 ## [v0.3.11_1] - 2026-08-31
 
 ### Added
