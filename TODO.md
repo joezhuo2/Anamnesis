@@ -1,5 +1,13 @@
 # Planned Features 
 
+[?] indicates questionable behavior (may not be true)
+
+## Known Bugs
+- Blaze A deals no damage and its animation loops infinitely, but does grant the Blaze Soul buff. This ONLY occurs with Blaze A
+- for resource zone/status effect tooltips, when you try to read the description, it does not update, and you must always hover into, then out, then back in
+- [?] Overheat not removing stacks
+- [?] Solar Wind not triggering
+
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
   and `Destroy`ed on death, along with the whole per-spawn `AttackData`/`EntityStats` ScriptableObject clone
@@ -35,14 +43,10 @@
 - [ ] Armor based basic attack/ultimate
 
 **QoL & Polish**
-- [ ] Screen shake and hit-stop feedback on attacks
 - [ ] Title/header for reward menu
 - [ ] map borders (tilemap colliders)
 - [ ] finish tilemap
-- [ ] Auto-pause when window loses focus (single-player)
-- [ ] Scrollable Tooltips
-- [ ] target dummy
-- [ ] "What's new" changelog popup on update
+- [ ] target dummy OR dps counter
 
 ## Pre [v0.6.0] Checklist — Combat Depth
 *Attacks chain, enemies fight back with more than stats.*
@@ -55,11 +59,13 @@
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra hp, faster, new ai, split)
 - [ ] backstap `specialMult`
 - [ ] more enemy move telegraphs
+- [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 
 **QoL & Polish**
-- [ ] Full stats display
+- [ ] Full stats display menu
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
+- [ ] settings menu overhaul: volume control, enemy health bar toggle, damage number toggle/size change
 
 ## Pre [v0.7.0] Checklist — Run Variety
 *Every wave stops looking the same; the settings/stats menus catch up.*
@@ -76,8 +82,6 @@
 - [ ] environmental collectible items (mana, xp, hp, gold)
 
 **QoL & Polish**
-- [ ] settings menu overhaul: volume control, enemy health bar toggle, damage number toggle/size change
-- [ ] stats menu
 - [ ] Confirmation dialog before corrupting a reward (can be toggled in settings)
 - [ ] Accessibility options (colorblind mode, reduced screen shake, larger text)
 
@@ -99,7 +103,6 @@
 
 **QoL & Polish**
 - [ ] Screen-edge indicators for off-screen enemies, boss cursor
-- [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
 
 ## Pre [v0.9.0] Checklist — Gear & Items
 *The item layer itself: equip, consume, buy.*
@@ -119,7 +122,7 @@
 - [ ] Post-Death Summary
 - [ ] Build export/share — copy current loadout as text for sharing
 - [ ] damage breakdown (by attack, every x waves)
-- [ ] FPS counter & performance stats toggle
+- [ ] FPS counter & performance stats debug toggle
 
 ## Pre [v0.10.0] Checklist — Elemental Core
 *Damage gets a type, and defenses get a matching axis.*
@@ -161,3 +164,10 @@
 - [ ] Customizable HUD layout
 - [ ] Leaderboards (local/online) for boss rush/endless/highest dps
 - [ ] Screenshot mode that hides the HUD
+
+## Planned - Unknown
+- [ ] Screen shake and hit-stop feedback on attacks
+- [ ] Auto-pause when window loses focus (single-player)
+- [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
+- [ ] Scrollable Tooltips
+- [ ] "What's new" changelog popup on update

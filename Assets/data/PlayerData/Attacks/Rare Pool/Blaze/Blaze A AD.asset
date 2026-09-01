@@ -19,7 +19,7 @@ MonoBehaviour:
   pattern: 0
   castTime: 0
   canMoveWhileCasting: 0
-  spawnDelay: 0.25
+  spawnDelay: 0
   spawnDistance: 0.5
   fixedDistance: 0
   animationLength: 1

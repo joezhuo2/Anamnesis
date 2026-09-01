@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 1732660975801001008}
   - component: {fileID: 8123456789012345678}
   - component: {fileID: 4570478916981853004}
+  - component: {fileID: 4923921068073294834}
   m_Layer: 0
   m_Name: Node_ms2
   m_TagString: Untagged
@@ -144,7 +145,6 @@ MonoBehaviour:
   lockedOverlay: {fileID: 384978517364721562}
   unlockedCheckmark: {fileID: 7046504623789165532}
   availableGlow: {fileID: 2204623797996005649}
-  tooltipTrigger: {fileID: 8123456789012345678}
   node: {fileID: 0}
 --- !u!114 &8123456789012345678
 MonoBehaviour:
@@ -214,6 +214,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4923921068073294834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626069542039898348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cd7631c8ffc1f408670449644a5a28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.Utils.HoverScale
+  target: {fileID: 0}
+  hoverScale: 1.1
+  speed: 12
+  useUnscaledTime: 1
 --- !u!1 &747300497733683173
 GameObject:
   m_ObjectHideFlags: 0

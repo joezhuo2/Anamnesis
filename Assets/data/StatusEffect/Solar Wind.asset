@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Solar Wind
   m_EditorClassIdentifier: CrystalFlux.StatusEffect::CrystalFlux.StatusEffectSystem.StatBuffs
   currentTime: 0
-  duration: 6
+  duration: 8
   tickInterval: 0
   isBuff: 1
   icon: {fileID: -6420534950463556919, guid: 1a422c5f5436e5042861653928334be7, type: 3}

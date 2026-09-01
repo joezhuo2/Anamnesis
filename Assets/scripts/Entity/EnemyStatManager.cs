@@ -31,13 +31,14 @@ namespace CrystalFlux.Core
 
             float atkMult = Mathf.Pow(atkGrowth, levelOffset);
             float hpMult = Mathf.Pow(hpGrowth, levelOffset);
+            float hprMult = Mathf.Pow(hpGrowth, levelOffset * 0.3f);
             float armorMult = Mathf.Pow(armorGrowth, levelOffset);
             float utilMult = Mathf.Pow(utilityGrowth, levelOffset);
 
             s.attack = Mathf.RoundToInt(s.attack * atkMult);
             s.critDamage *= atkMult;
             s.maxHp = Mathf.RoundToInt(s.maxHp * hpMult);
-            s.hpRegen *= hpMult;
+            s.hpRegen *= hprMult;
             s.armor = Mathf.RoundToInt(s.armor * armorMult);
 
             s.aoePct *= utilMult;

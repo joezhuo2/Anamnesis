@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.0_1] - 2026-09-01
+
+### Added
+- **Skill tree grows 125 → 137 nodes** — twelve new single-point stat nodes, 50g each to refund:
+  - Six **Attack III** nodes split into two three-node chains, each granting **+3 Attack and +2% `atkPct`**: `atk3a` → `atk3aa` → `atk3ab` extending `Node_atk2b`, and `atk3b` → `atk3ba` → `atk3bb` extending `Node_atk2ba`
+  - Six **movement-speed nodes** (`ms3` → `ms8`) chaining off `Node_atk3b`, each granting **+2% `moveSpeedPct`**. `ms8` also lists `ms3` as a prerequisite (alongside `ms7`) so the six close into a ring that can be entered from either end
+- All twelve nodes are wired into the skill tree canvas in `New.unity`, bracketing the existing attack branch
+
+### Rebalance
+- **Enemy HP regen no longer tracks HP growth.** `EnemyStatManager.ScaleBaseStats` previously applied the full per-level `hpGrowth` (12%) to `hpRegen` as well as `maxHp`; regen now compounds at `hpGrowth ^ (0.3 × levelOffset)`, roughly **3% per level** instead of 12%, so late-game enemies regenerate far less relative to their growing health pools - (Jellyfish was unkillable without enough dps :/)
+- **Player level-ups grant +2 armor** (`PlayerLevel.LevelUp`), alongside the existing +5 max HP, +2 Attack, +2 Intelligence and +0.008 move speed
+- **Unlimited-wave concurrent-cap growth softened** — `UnlimitedWaveManager.BeginWave` bumps `maxTotalEnemies` by `Random.Range(0, 3)` instead of `Random.Range(1, 3)`, so the ceiling compounds more slowly over a long run
+- **Solar Wind** — buff duration `6` → **8**s.
+- **Cyclone Cleave reworked** — cooldown `6` → **5**s, cast time `0.5` → **0.3**s, and damage split `635% Phys + 185% Spell` → **545% Phys + 55% True**. The starting skill now leans on hybrid physical-and-true damage (and its 55% True cuts through armor) rather than spell scaling.
+- **Blaze** — spawn delay `0.25` → **0**, and the projectile's `timeBeforeSameEnemy` `0.5` → **0** so a single Blaze hit re-triggers every frame the target stays in the AoE instead of once per half-second
+
 ## [v0.4.0] - 2026-09-01 — Object Pooling Update (Release Summary)
 
 This release covers the full development arc from `v0.3.0` through `v0.3.13_1`, and closes with the pooling work documented below. Over this period `Core` was extracted into its own package, projectiles gained authored flight paths, attacks gained windups and hold-to-charge, the skill tree grew from 104 to 125 nodes, and the highest-churn `Instantiate`/`Destroy` sites in the game were moved onto a shared object pool.

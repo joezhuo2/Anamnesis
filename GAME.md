@@ -34,7 +34,7 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
 ## Cyclone Cleave
 - Asset: `p_s_ad` / `p_s_pd`
 - Type: Skill
-- Cooldown: 6s
+- Cooldown: 5s
 - Pattern: Single (1 count)
 - Spawn: 3 dist
 - Animation: 0.5s
@@ -45,7 +45,7 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
   - Lifetime: 0.5s
   - Pierce: 8
   - Size: 3
-  - Damage: 565% Phys, 125% Spell
+  - Damage: 545% Phys, 55% True
   - Scaling: EffAtk
   - Knockback: 5 force for 0.15s
 
@@ -102,7 +102,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Type: Basic
 - Cooldown: 26s
 - Pattern: Single (1 count)
-- Spawn: 0.5 dist, 0.25s delay
+- Spawn: 0.5 dist
 - Animation: 1s
 - Gains on hit: Stamina +6, Mana +3
 - Projectile:
@@ -112,7 +112,6 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Size: 4
   - Damage: 930% Phys
   - Scaling: EffAtk
-  - Time Before Same Enemy: 0.5s
   - Effect: 100% self on cast (Blaze Soul, 6s, replaces the attack with Cosmic Blaze)
   - Additional: 30% chance on hit to create Blaze Spark
   - Knockback: none
@@ -918,7 +917,7 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Chance: 30%
 - Cooldown: 3s
 - Delay: 0s
-- Effect: `Solar Wind` (6s, 6 stacks), 1 stack per trigger
+- Effect: `Solar Wind` (8s, 6 stacks), 1 stack per trigger
 - Description: 30% chance on each health regen tick to gain a stack of Solar Wind, at
   most once every 3s.
 - Unlocked by: `Node_solarwind` ("Solar Wind" capstone, 3 skill points, prerequisite
@@ -1008,7 +1007,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Slow 5 3 15` | StatReduction | Slow | 5s | - | 3 | -15% moveSpeed per stack |
 | `Slow 6 15 5` | StatReduction | Slow | 6s | - | 15 | -5% moveSpeed per stack |
 | `Slow 8 2 30` | StatReduction | Slow | 8s | - | 2 | -30% moveSpeed per stack |
-| `Solar Wind` | StatBuffs | Solar Wind | 6s | - | 6 | +3 hpRegen, +8% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
+| `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +3 hpRegen, +8% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
 | `Stun 6` | Stun | Stun | 6s | - | 1 | Cannot move or attack |

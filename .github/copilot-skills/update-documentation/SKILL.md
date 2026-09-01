@@ -29,6 +29,7 @@ Categorize changes into:
 - **Fixed**: Bug fixes, null-safety, logic corrections
 - **Removed**: Deleted code, files, features
 - **Updated**: Modified documentation, comments, or other non-code elements
+- When writing entries - follow the existing format unless otherwise stated
 
 ### 3. Update CHANGELOG.md
 Add a new version section at the top (after the header) in Keep a Changelog format, implementing whichever of the following categories apply, with UPDATE NAME only being included if there are notable changes to highlight:
@@ -70,7 +71,7 @@ Add a new entry at the top of the "Pre [vX.Y.0]" section. These entries must be 
 Remove any entries that have been completed in this version
 
 ### 7. Update GAME.md
-Add any new attacks, player upgrades, etc. that have been added in this version, and remove any that have been removed, and update any that have been changed. Follow the existing format.
+Add any new attacks, player upgrades, etc. that have been added in this version, and remove any that have been removed. Also update any attack assets that were changed. Follow the existing format.
 
 ## Rules
 - Only document *notable* changes (skip graphify-out/, .VSCodeCounter/, manifest files)

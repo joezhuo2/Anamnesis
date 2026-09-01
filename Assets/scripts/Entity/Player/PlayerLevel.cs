@@ -59,6 +59,7 @@ namespace CrystalFlux.EntitySystem
             if (TryGetComponent<ISkillPointHolder>(out var sph)) sph.AddSkillPoints(1);
 
             esm.AddStat(new(StatType.maxHp, 5));
+            esm.AddStat(new(StatType.armor, 2));
             esm.AddStat(new(StatType.attack, 2));
             esm.AddStat(new(StatType.Intelligence, 2));
             esm.AddStat(new(StatType.moveSpeed, 0.008f));
