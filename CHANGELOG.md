@@ -7,6 +7,12 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.11_1] - 2026-08-31
+
+### Added
+- **Lifesteal Effect** with configurable proc chance, amount healed, proc cooldown, and indicator color, that grants the user a portion of damage dealt while they have the status effect.
+- **Thorns Effect** with configurable proc chance, amount reflected, proc cooldown, damage type, and indicator color, that grants the user a chance to reflect a portion of damage taken by enemy projectiles
+
 ## [v0.3.11] - 2026-08-31
 
 ### Added

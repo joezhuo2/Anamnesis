@@ -58,7 +58,7 @@ Modify the **Project Structure** section to reflect:
 - Removed/renamed components
 
 ### 5. Update ROADMAP.md
-Add a new entry at the top of the "Pre [vX.Y.0]" section:
+Add a new entry at the top of the "Pre [vX.Y.0]" section. These entries must be MINIMAL (similar size to existing entries), and should focus on introducing new content, and bug fixes ONLY if they are critical:
 ```markdown
 - [vX.Y.Z] **Short Title**: Brief description of key changes; list major components affected
 ```

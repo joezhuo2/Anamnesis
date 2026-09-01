@@ -2,6 +2,7 @@
 using System.Collections;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.StatusEffectSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,9 @@ namespace CrystalFlux.EntitySystem
     public class EntityHealth : MonoBehaviour, IDamageable
     {
         public float deathAnimTime = 1f;
+        public Slider healthBarPrefab;
+        public Vector3 healthBarOffset = new(0, 0, 0);
+        public TextMeshProUGUI healthBarTextPrefab;
 
         public event Action<GameObject> OnDeath;
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
@@ -24,10 +28,7 @@ namespace CrystalFlux.EntitySystem
         private const float hurtIFrameDuration = 0.2f;
         private float accumulatedRegen;
         private Animator animator;
-        public Slider healthBarPrefab;
         private Slider healthBarInstance;
-        public Vector3 healthBarOffset = new(0, 0, 0);
-        public TextMeshProUGUI healthBarTextPrefab;
         private TextMeshProUGUI healthBarTextInstance;
         private Camera mainCamera;
         private PlayerUpgradeManager cpum;
@@ -260,6 +261,9 @@ namespace CrystalFlux.EntitySystem
                     if (Projectile.ApplyingProjectileHit) tookProjectileHit = true;
                 }
 
+                if (dmg > 0 && Projectile.ApplyingProjectileHit && IsEnemyHit(dp, i))
+                    TryThorns(i.owner, dmg);
+
                 if (i.isCrit)
                 {
                     if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit);
@@ -285,6 +289,8 @@ namespace CrystalFlux.EntitySystem
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDealDamage, gameObject, dmg);
                     _isTriggeringOnDealDamage = false;
                 }
+
+                if (dmg > 0 && i.owner != null && i.owner != gameObject) TryLifesteal(i.owner, dmg);
             }
             }
             finally
@@ -296,6 +302,18 @@ namespace CrystalFlux.EntitySystem
             }
 
             if (cpum != null && tookProjectileHit) PlayerEvents.RaisePlayerTakeDamage(this);
+        }
+
+        private static void TryLifesteal(GameObject dealer, float damageDealt)
+        {
+            if (!dealer.TryGetComponent<IStatusEffectReceiver>(out var sem)) return;
+            if (sem.GetActiveFirstEffectOfType<Lifesteal>() is Lifesteal ls) ls.TryLifesteal(damageDealt);
+        }
+
+        private void TryThorns(GameObject attacker, float damageTaken)
+        {
+            if (attacker == null || !TryGetComponent<IStatusEffectReceiver>(out var sem)) return;
+            if (sem.GetActiveFirstEffectOfType<Thorns>() is Thorns th) th.TryReflect(attacker, damageTaken);
         }
 
         private bool IsEnemyHit(DamagePacket dp, DamageInstance i)
