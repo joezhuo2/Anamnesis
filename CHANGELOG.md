@@ -7,6 +7,23 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.3.13_1] - 2026-09-01
+
+### Rebalance
+- **Corruption special chance** - `corruptionSpecialChance` 8 to **4** on both `WaveManager` and `UnlimitedWaveManager`, halving how often a corrupted stat reward is replaced by an attack from `corruptionSpecialPool`
+- **Unlimited waves concurrent enemy cap** - `UnlimitedWaveManager.maxCurrentEnemies` 10 to **6**, so pressure comes from enemy strength rather than crowd size
+- **Enemy base attack lowered across the roster** - Slime `6` to **3**, Magma Slime `9` to **5**, Frost Slime `4` to **3**, Bat `5` to **4**, Crab `7` to **6**, Jellyfish `9` to **8**, Lich `12` to **11**. The Slime line takes the largest cut because its contact damage applies most often
+- **Cyclone Cleave** - projectile `physicalMult` `5.65` to **6.35** and `spellMult` `1.25` to **1.85**
+- **Solar Wind** - proc cooldown `3` to **2**
+- **Blaze** - `castTime` `1` to **0**, removing the windup added in v0.3.12; the attack fires immediately again
+
+### Fixed
+- **Enemy base stat assets were missing the v0.3.12 stat fields.** `castTimeRedPct` and `interruptResist` were declared on the stat asset but never serialized into Bat, Crab, Cultist, Cultist Clone, Jellyfish, Lich, Slime, Frost Slime and Magma Slime, so the values were resolved from defaults rather than from the asset. All nine are re-serialized with both fields present at `0`
+- **`Blaze A AD` was missing the v0.3.13 charging block.** The asset now serializes `canCharge`, `chargeThreshold`, `minChargeTime`, `maxChargeTime`, `chargeTickInterval`, `cooldownOnAttackStart` and `chargeAttack`. `canCharge` is `false`, so Blaze's behavior is unchanged
+
+### Changed
+- **Roadmap checklists restructured in `TODO.md`.** The remaining Pre [v0.4.0] items were folded into later milestones and the plan now runs through **v0.11.0**, with each milestone given a theme: v0.5.0 Feel & Foundations, v0.6.0 Combat Depth, v0.7.0 Run Variety, v0.8.0 Player Power & Maps, v0.9.0 Gear & Items, v0.10.0 Elemental Core, v0.11.0 Gear & Elemental Expansion. Gear and elemental work is split so each system ships standalone before crafting, set bonuses and reactions build on top of it
+
 ## [v0.3.13] - 2026-09-01 - Charged Attacks Update
 
 ### Added

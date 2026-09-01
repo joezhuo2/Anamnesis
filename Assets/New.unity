@@ -5586,7 +5586,7 @@ MonoBehaviour:
   corruptChance: 40
   corruptPositiveChance: 40
   maxCorruptBoost: 80
-  corruptionSpecialChance: 8
+  corruptionSpecialChance: 4
   corruptionSpecialPool:
   - newAttack: {fileID: 11400000, guid: 2f0953e0a32bb9e4cbd8ced71255642f, type: 2}
     type: 2
@@ -12213,7 +12213,7 @@ MonoBehaviour:
   corruptChance: 40
   corruptPositiveChance: 40
   maxCorruptBoost: 80
-  corruptionSpecialChance: 8
+  corruptionSpecialChance: 4
   corruptionSpecialPool:
   - newAttack: {fileID: 11400000, guid: 2f0953e0a32bb9e4cbd8ced71255642f, type: 2}
     type: 2
@@ -12940,7 +12940,7 @@ MonoBehaviour:
   anomalyChance: 15
   anomalyGlobalMinWave: 3
   spawnLocation: {x: 0, y: 0}
-  maxCurrentEnemies: 10
+  maxCurrentEnemies: 6
   baseMaxTotalEnemies: 1
   baseEnemyLevel: 1
   minSpawnFrequency: 1

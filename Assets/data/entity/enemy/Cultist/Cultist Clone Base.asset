@@ -77,6 +77,8 @@ MonoBehaviour:
   dashStaminaCost: 0
   dashStaminaCostRedPct: 0
   dashShouldApplyIFrame: 0
+  castTimeRedPct: 0
+  interruptResist: 0
   level: 0
   exp: 0
   expBonus: 0

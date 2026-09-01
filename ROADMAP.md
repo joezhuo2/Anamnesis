@@ -1,8 +1,9 @@
 ## Roadmap
 
-Summarized major feature updates, newest first. Upcoming work lives under **Pre [v0.4.0]**.
+Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`, starting at **Pre [v0.5.0]**.
 
 ### Pre [v0.4.0]
+- [v0.3.13_1] **Balance pass**: enemy base attack lowered across the roster, `corruptionSpecialChance` 8 to 4, unlimited-wave enemy cap 10 to 6, Blaze windup removed, Cyclone Cleave and Solar Wind buffed
 - [v0.3.13] **Charged attacks**: hold-to-charge attacks via the `AttackData` charging block (`canCharge`, `chargeThreshold`, `minChargeTime`/`maxChargeTime`, `chargeTickInterval`, `chargeAttack`), sustained by ticked projectile lifetimes and the new `IChargeRegister`; plus `MovementType.FollowCursor`, the `corruptionSpecialPool` corruption outcome, and the chargeable Ultimate Nocturnis. Rebalances: Blood Pact, Lifeforce Burst, level-up rewards, rare pool unlock waves.
 - [v0.3.12] **Cast time**: interruptible attack windups with a pooled, entity-following cast bar; `castTime` and `canMoveWhileCasting` on `AttackData`, plus the `castTimeRedPct` and `interruptResist` stats (Core v0.8.0)
 - [v0.3.11] **Intelligence & AOE branches**: 11 new skill tree nodes (114 to 125). Capstone nodes now consume the Awakening they require. Rebalances: Blaze, Blood Pact, Cultist.

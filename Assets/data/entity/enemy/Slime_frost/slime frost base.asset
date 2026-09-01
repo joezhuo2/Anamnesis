@@ -15,7 +15,7 @@ MonoBehaviour:
   damagePct: 0
   physicalDmgPct: 0
   spellDmgPct: 0
-  attack: 4
+  attack: 3
   atkPct: 0
   intelligence: 0
   intPct: 0
@@ -77,6 +77,8 @@ MonoBehaviour:
   dashStaminaCost: 0
   dashStaminaCostRedPct: 0
   dashShouldApplyIFrame: 0
+  castTimeRedPct: 0
+  interruptResist: 0
   level: 0
   exp: 0
   expBonus: 0

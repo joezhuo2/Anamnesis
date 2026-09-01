@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Enemy/EnemyAttackHandler.cs": {
-    "mtime": 1788227149.5204647,
-    "seen": 1788228235.4120176,
-    "ast_hash": "6d45a77fe73b77175929ff4383fb9e78",
+    "mtime": 1788272818.5698063,
+    "seen": 1788274979.1757476,
+    "ast_hash": "7708564bb27287371a4e1f6dab381974",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Enemy/EnemyMovement.cs": {
@@ -276,9 +276,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityProjectileHandler.cs": {
-    "mtime": 1788143103.1744936,
-    "seen": 1788143852.878256,
-    "ast_hash": "07926052b0d21e26af766d66fd0029d5",
+    "mtime": 1788268760.9890323,
+    "seen": 1788274979.1757545,
+    "ast_hash": "5d8e1817e27413f2a50acbc9feefd427",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntitySplitting.cs": {
@@ -324,9 +324,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerAttackHandler.cs": {
-    "mtime": 1788227946.6476414,
-    "seen": 1788228235.4120445,
-    "ast_hash": "b6daf89f582d91254e9f3f47fe2aab5f",
+    "mtime": 1788272810.8194716,
+    "seen": 1788274979.175766,
+    "ast_hash": "7e5f5b8e24647262b4e93a476823f972",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerControls.cs": {
@@ -342,15 +342,15 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerInputHandler.cs": {
-    "mtime": 1788126388.1940174,
-    "seen": 1788126392.5469806,
-    "ast_hash": "e47b2614dcf61011111bedd7a5ae5860",
+    "mtime": 1788268799.4954438,
+    "seen": 1788274979.1757686,
+    "ast_hash": "335c8f18409fcd36c832644905e791ad",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerLevel.cs": {
-    "mtime": 1788126388.1950138,
-    "seen": 1788126392.5469818,
-    "ast_hash": "56af753c019598bd1be38c85d894a0a3",
+    "mtime": 1788274492.4624908,
+    "seen": 1788274979.1757696,
+    "ast_hash": "e65db6400734dcadc86f68417142b741",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerMovement.cs": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/AttackData.cs": {
-    "mtime": 1788226962.594306,
-    "seen": 1788228235.4120977,
-    "ast_hash": "e8005d57691a1a304fadf2549d525fc4",
+    "mtime": 1788272888.6843553,
+    "seen": 1788274979.1757977,
+    "ast_hash": "edfc37d5216dd3abf8480c0aec1888fb",
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/DamageCalculator.cs": {
@@ -480,15 +480,15 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/Projectile.cs": {
-    "mtime": 1788195658.2013078,
-    "seen": 1788196081.8413947,
-    "ast_hash": "7d403e8b2d5d92dd3d98729f94bfd0ab",
+    "mtime": 1788272561.47386,
+    "seen": 1788274979.1758044,
+    "ast_hash": "fc506f39f33dc7970e2f4c49d5e90ab8",
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/ProjectileData.cs": {
-    "mtime": 1788126388.209287,
-    "seen": 1788126392.5476775,
-    "ast_hash": "099299b91804b65c3a446633abfdbdc7",
+    "mtime": 1788268996.0129993,
+    "seen": 1788274979.175805,
+    "ast_hash": "43f9898c941261ae395826c8e763f189",
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/ProjectileSpawner.cs": {
@@ -588,15 +588,15 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/RewardButton.cs": {
-    "mtime": 1788142331.582549,
-    "seen": 1788143852.878349,
-    "ast_hash": "75e326534235ff0b5cc2face3f59df1d",
+    "mtime": 1788273636.121985,
+    "seen": 1788274979.1758444,
+    "ast_hash": "bcd5812867a53191621e31225683f752",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1788208166.2411132,
-    "seen": 1788208906.933178,
-    "ast_hash": "6cf00ca9bd0b8ab57eefbf0666a4c24d",
+    "mtime": 1788273406.8964484,
+    "seen": 1788274979.175848,
+    "ast_hash": "9ba43b7325e55513cc139fadf18eff0d",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788227977.9691525,
-    "seen": 1788228235.4122066,
-    "ast_hash": "9b1613ffd734b937bd54e73a89e54172",
+    "mtime": 1788274949.4257567,
+    "seen": 1788274979.1758678,
+    "ast_hash": "55cca4750656f199fb3505db06ab9002",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -702,21 +702,21 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788228068.4748068,
-    "seen": 1788228235.4122143,
-    "ast_hash": "e214241760432bd063ae9ed4efcd58d6",
+    "mtime": 1788274642.6904473,
+    "seen": 1788274979.1758726,
+    "ast_hash": "16fe3daeb8d76f739b1c851b7c070877",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1788228068.4748068,
-    "seen": 1788228235.412216,
-    "ast_hash": "2293890168bd6e9c36376960e37091f8",
+    "mtime": 1788274642.6992626,
+    "seen": 1788274979.1758733,
+    "ast_hash": "3b5754716f9baad6cc71ca304c8d92a2",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1788228199.8080556,
-    "seen": 1788228235.4122176,
-    "ast_hash": "d104b500f01556e74a90af0964130978",
+    "mtime": 1788272887.0909898,
+    "seen": 1788274979.1758742,
+    "ast_hash": "285dfbefe11e2fff65a7388548474f96",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1182,9 +1182,9 @@
     "semantic_hash": ""
   },
   "GAME.md": {
-    "mtime": 1788214407.170459,
-    "seen": 1788214575.1695757,
-    "ast_hash": "9fa0ffa00951f05186e54fdab4e5e988",
+    "mtime": 1788274571.7612178,
+    "seen": 1788274979.1758707,
+    "ast_hash": "23704b40ee144c51717ccd40b83a181d",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/UnlimitedWaveManager.cs": {
@@ -1883,12 +1883,6 @@
     "ast_hash": "0ba66a2de1ca588e90d7300d2cbdeadb",
     "semantic_hash": ""
   },
-  "Assets/data/images/UI/20250420manaSoulHeaderB-Sheet.png": {
-    "mtime": 1788114891.148974,
-    "seen": 1788208906.9334748,
-    "ast_hash": "5c6d55d18b31e4c1a44d9f04ec0a228b",
-    "semantic_hash": ""
-  },
   "Assets/scripts/StatusEffect/StatusEffects/Lifesteal.cs": {
     "mtime": 1788226221.8394058,
     "seen": 1788226322.5079575,
@@ -1911,6 +1905,36 @@
     "mtime": 1788226985.4885666,
     "seen": 1788228235.4120352,
     "ast_hash": "e009381a1a469e55a5a36acb0977dc84",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Projectile/IChargeRegister.cs": {
+    "mtime": 1788268723.5963593,
+    "seen": 1788274979.1758013,
+    "ast_hash": "ca44042a14a813584527548c389d9041",
+    "semantic_hash": ""
+  },
+  "Assets/data/PlayerData/Attacks/Rare Pool/Nocturnis/sprite-sheet 1.png": {
+    "mtime": 1783363891.268679,
+    "seen": 1788274979.1759295,
+    "ast_hash": "f83fe566c6332aec8c1f6855cfbfa6be",
+    "semantic_hash": ""
+  },
+  "Assets/data/PlayerData/Attacks/Rare Pool/Nocturnis/sprite-sheet 2.png": {
+    "mtime": 1783363891.326388,
+    "seen": 1788274979.1759303,
+    "ast_hash": "cefacf64d4c307bd90a6fb6a3abd3276",
+    "semantic_hash": ""
+  },
+  "Assets/data/PlayerData/Attacks/Rare Pool/Nocturnis/sprite-sheet.png": {
+    "mtime": 1783363855.171192,
+    "seen": 1788274979.1759312,
+    "ast_hash": "522fbf38d3514dd0298c56f7582e2707",
+    "semantic_hash": ""
+  },
+  "Assets/data/Tilemap/spritesheet.png": {
+    "mtime": 1788228375.2083,
+    "seen": 1788274979.1759546,
+    "ast_hash": "768444830a470d163d7a143c51dd0773",
     "semantic_hash": ""
   }
 }

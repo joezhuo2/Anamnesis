@@ -17,12 +17,19 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5503425455003998073, guid: 4c9f2c56814f45947848f2355cc01949, type: 3}
   pd: {fileID: 11400000, guid: db65b3d92d29193429de23df2b4e83a0, type: 2}
   pattern: 0
-  castTime: 1
+  castTime: 0
   canMoveWhileCasting: 0
   spawnDelay: 0.25
   spawnDistance: 0.5
   fixedDistance: 0
   animationLength: 1
+  canCharge: 0
+  chargeThreshold: 0.15
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 0
+  chargeAttack: {fileID: 0}
   projectileCount: 1
   randomCount: 0
   spread: 0

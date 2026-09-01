@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: Solar Wind
   conditions: 08000000
   chance: 30
-  cooldown: 3
+  cooldown: 2
   delay: 0
   effect: {fileID: 11400000, guid: 304052d8888330e428df996d228f0a4b, type: 2}
   stacks: 1
