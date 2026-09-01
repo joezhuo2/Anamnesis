@@ -89,6 +89,7 @@
   <Project Path="Unity.InternalAPIEngineBridge.004.csproj" />
   <Project Path="Unity.InputSystem.DocCodeSamples.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.Shaders.csproj" />
+  <Project Path="CrystalFlux.Pooling.csproj" />
   <Project Path="Unity.InternalAPIEditorBridge.ShaderGraph.Editor.csproj" />
   <Project Path="CrystalFlux.TextIndicator.csproj" />
   <Project Path="Unity.VisualScripting.DocCodeExamples.csproj" />

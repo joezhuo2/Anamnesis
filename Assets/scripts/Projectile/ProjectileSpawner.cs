@@ -9,6 +9,8 @@ namespace CrystalFlux.ProjectileSystem
     {
         public static ProjectileSpawner Instance;
 
+        private const int ProjectilePoolCap = 256;
+
         public static event System.Action<GameObject, GameObject, Vector2> ProjectileSpawned;
 
         private static Camera cachedMainCam;
@@ -35,8 +37,13 @@ namespace CrystalFlux.ProjectileSystem
         )
         {
             if (prefab == null) return null;
-            GameObject proj = Instantiate(prefab, spawnPos, Quaternion.identity);
-            Projectile p = proj.GetComponent<Projectile>();
+
+            PrefabPool.SetCap(prefab, ProjectilePoolCap);
+
+            GameObject proj = PrefabPool.Acquire(prefab, null);
+            if (proj == null) return null;
+
+            proj.transform.SetPositionAndRotation(spawnPos, Quaternion.identity);
 
             Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
             if (rb != null) rb.gravityScale = 0f;
@@ -44,13 +51,7 @@ namespace CrystalFlux.ProjectileSystem
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             if (rotateToDir) proj.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            if (p != null)
-            {
-                p.dir = dir;
-                p.pierced = 0;
-                p.ownerObj = sourceObj;
-                if (pdOverride != null) p.pd = pdOverride;
-            }
+            if (proj.TryGetComponent<Projectile>(out var p)) p.Setup(dir, sourceObj, pdOverride);
 
             ProjectileSpawned?.Invoke(sourceObj, proj, spawnPos);
 

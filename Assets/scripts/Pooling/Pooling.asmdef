@@ -1,11 +1,7 @@
 {
-    "name": "CrystalFlux.StatusEffect",
-    "rootNamespace": "CrystalFlux.StatusEffectSystem",
-    "references": [
-        "CrystalFlux.Pooling",
-        "CrystalFlux.Core",
-        "UnityEngine.UI"
-    ],
+    "name": "CrystalFlux.Pooling",
+    "rootNamespace": "CrystalFlux.Core",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

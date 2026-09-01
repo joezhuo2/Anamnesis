@@ -2,6 +2,7 @@
     "name": "CrystalFlux.TextIndicator",
     "rootNamespace": "",
     "references": [
+        "CrystalFlux.Pooling",
         "Unity.TextMeshPro"
     ],
     "includePlatforms": [],

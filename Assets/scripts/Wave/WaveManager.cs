@@ -97,7 +97,6 @@ namespace CrystalFlux.WaveSystem
         protected int pendingAnomalyRerolls = -1;
         protected int pendingAnomalySkillPoints = 0;
         protected readonly List<GameObject> activeRewardButtons = new();
-        protected readonly List<GameObject> inactiveRewardButtonPool = new();
         protected static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
         protected static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
 
@@ -182,24 +181,10 @@ namespace CrystalFlux.WaveSystem
 
         protected GameObject GetOrCreateRewardButton()
         {
-            GameObject btnObj;
             Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
+            GameObject btnObj = PrefabPool.Acquire(rewardButtonPrefab, targetParent);
 
-            if (inactiveRewardButtonPool.Count > 0)
-            {
-                int lastIndex = inactiveRewardButtonPool.Count - 1;
-                btnObj = inactiveRewardButtonPool[lastIndex];
-                inactiveRewardButtonPool.RemoveAt(lastIndex);
-
-                btnObj.transform.SetParent(targetParent, false);
-                btnObj.SetActive(true);
-            }
-            else
-            {
-                btnObj = Instantiate(rewardButtonPrefab, targetParent);
-            }
-
-            activeRewardButtons.Add(btnObj);
+            if (btnObj != null) activeRewardButtons.Add(btnObj);
             return btnObj;
         }
 
@@ -528,7 +513,9 @@ namespace CrystalFlux.WaveSystem
                 AnomalyInstance instance = amd.CreateInstance();
 
                 Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
-                GameObject btnObj = Instantiate(anomalyPrefab, targetParent);
+                GameObject btnObj = PrefabPool.Acquire(anomalyPrefab, targetParent);
+                if (btnObj == null) continue;
+
                 activeRewardButtons.Add(btnObj);
 
                 if (btnObj.TryGetComponent<AnomalyButtonUI>(out var anomalyButton))
@@ -1048,24 +1035,16 @@ namespace CrystalFlux.WaveSystem
         }
         protected void ClearRewardButtons()
         {
-            foreach (var btn in activeRewardButtons)
+            for (int i = 0; i < activeRewardButtons.Count; i++)
             {
-                if (btn != null)
-                {
-                    if (btn.GetComponent<AnomalyButtonUI>() != null)
-                    {
-                        Destroy(btn);
-                    }
-                    else
-                    {
-                        if (btn.TryGetComponent<RewardButton>(out var rewardButton))
-                            rewardButton.ResetForPooling();
-                        else if (btn.TryGetComponent<Button>(out var button))
-                            button.onClick.RemoveAllListeners();
-                        btn.SetActive(false);
-                        inactiveRewardButtonPool.Add(btn);
-                    }
-                }
+                GameObject btn = activeRewardButtons[i];
+                if (btn == null) continue;
+
+                if (btn.TryGetComponent<RewardButton>(out var rewardButton)) rewardButton.ResetForPooling();
+                else if (btn.TryGetComponent<AnomalyButtonUI>(out var anomalyButton)) anomalyButton.ResetForPooling();
+                else if (btn.TryGetComponent<Button>(out var button)) button.onClick.RemoveAllListeners();
+
+                PrefabPool.Release(ref btn);
             }
             activeRewardButtons.Clear();
         }

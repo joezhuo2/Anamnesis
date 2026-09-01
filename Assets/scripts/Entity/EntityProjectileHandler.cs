@@ -45,7 +45,7 @@ namespace CrystalFlux.EntitySystem
             {
                 Projectile p = orbitingProjectiles[i];
                 orbitingProjectiles.RemoveAt(i);
-                if (p != null && p.gameObject != null) taken.Add(p);
+                if (p != null && p.gameObject != null && p.gameObject.activeInHierarchy) taken.Add(p);
             }
 
             return taken;
@@ -60,7 +60,10 @@ namespace CrystalFlux.EntitySystem
                 Projectile oldest = orbitingProjectiles[0];
                 orbitingProjectiles.RemoveAt(0);
                 if (oldest != null && oldest.gameObject != null)
-                    Destroy(oldest.gameObject);
+                {
+                    GameObject go = oldest.gameObject;
+                    PrefabPool.Release(ref go);
+                }
             }
 
             orbitingProjectiles.Add(p);
@@ -85,7 +88,7 @@ namespace CrystalFlux.EntitySystem
             {
                 Projectile p = chargedProjectiles[i];
 
-                if (p == null)
+                if (p == null || !p.gameObject.activeInHierarchy)
                 {
                     chargedProjectiles.RemoveAt(i);
                     continue;
@@ -120,7 +123,9 @@ namespace CrystalFlux.EntitySystem
             foreach (var p in absorbed)
             {
                 TriggerStatGain(p, absorbPct * 0.01f);
-                Destroy(p.gameObject);
+
+                GameObject go = p.gameObject;
+                PrefabPool.Release(ref go);
             }
 
             return n;

@@ -33,7 +33,10 @@ Categorize changes into:
 ### 3. Update CHANGELOG.md
 Add a new version section at the top (after the header) in Keep a Changelog format, implementing whichever of the following categories apply, with UPDATE NAME only being included if there are notable changes to highlight:
 ```markdown
-## [vX.Y.Z] - YYYY-MM-DD [- UPDATE NAME]
+## [vVERYYMAJOR.MAJOR.MINOR_PATCH] - YYYY-MM-DD [- UPDATE NAME]
+
+### Highlights
+highlights from the previous MAJOR version to the current version, including any notable changes, new features, or important fixes. only include this for VERYMAJOR and MAJOR versions. this should be listed before any of the following categories, and should be a summary of the most important changes.
 
 ### Added
 - **`New Thing`** — description of what it does
@@ -70,12 +73,12 @@ Remove any entries that have been completed in this version
 Add any new attacks, player upgrades, etc. that have been added in this version, and remove any that have been removed, and update any that have been changed. Follow the existing format.
 
 ## Rules
-
 - Only document *notable* changes (skip graphify-out/, .VSCodeCounter/, manifest files)
 - Follow existing formatting/style in each file
 - Use backticks for code symbols (`ClassName`, `methodName`, `fieldName`)
 - Keep entries concise but informative
 - Date format: YYYY-MM-DD
+- document any other notes in claude_outputs.md at the top of the file (under the title) if they are relevant
 
 ## Example Prompt
 > "Update Documentation for v0.2.16"

@@ -11,7 +11,6 @@ namespace CrystalFlux.Core
         public Canvas canvas;
         public int initialPoolSize = 100;
 
-        private readonly Queue<TextIndicator> _pool = new();
         private readonly List<TextIndicator> _activeIndicators = new();
 
         void Awake()
@@ -39,12 +38,7 @@ namespace CrystalFlux.Core
                 return;
             }
 
-            for (int i = 0; i < initialPoolSize; i++)
-            {
-                var indicator = Instantiate(prefab, canvas.transform);
-                indicator.gameObject.SetActive(false);
-                _pool.Enqueue(indicator);
-            }
+            PrefabPool.Prewarm(prefab.gameObject, canvas.transform, initialPoolSize, initialPoolSize);
         }
 
         public void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false, bool isGold = false)
@@ -68,17 +62,8 @@ namespace CrystalFlux.Core
         {
             if (prefab == null || canvas == null) return;
 
-            TextIndicator indicator;
-
-            if (_pool.Count > 0)
-            {
-                indicator = _pool.Dequeue();
-                indicator.gameObject.SetActive(true);
-            }
-            else
-            {
-                indicator = Instantiate(prefab, canvas.transform);
-            }
+            TextIndicator indicator = PrefabPool.Acquire(prefab, canvas.transform);
+            if (indicator == null) return;
 
             indicator.Initialize(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText, isGold);
             _activeIndicators.Add(indicator);
@@ -89,8 +74,7 @@ namespace CrystalFlux.Core
             if (indicator == null) return;
 
             _activeIndicators.Remove(indicator);
-            indicator.gameObject.SetActive(false);
-            _pool.Enqueue(indicator);
+            PrefabPool.Release(ref indicator);
         }
     }
 }

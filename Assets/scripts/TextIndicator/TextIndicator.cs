@@ -25,6 +25,7 @@ namespace CrystalFlux.Core
             mainCam = mainCam != null ? mainCam : Camera.main;
 
             worldPos = sourcePos + new Vector3(Random.Range(-maxRandomOffset.x, maxRandomOffset.x), Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 0f);
+            if (mainCam != null) transform.position = mainCam.WorldToScreenPoint(worldPos);
 
             if (isGold) text.text = $"{(val >= 0 ? "+" : "")}{val}g";
             else if (xpWrapperText) text.text = $"{(val >= 0 ? "+" : "")}{val} xp";

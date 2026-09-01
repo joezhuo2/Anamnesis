@@ -19,7 +19,7 @@ namespace CrystalFlux.StatusEffectSystem
             cse = se;
             cesm = esm;
 
-            if (cse != null && cse.icon != null && iconImage != null) iconImage.sprite = cse.icon;
+            if (iconImage != null) iconImage.sprite = cse != null ? cse.icon : null;
 
             if (cooldownImage != null)
             {
@@ -46,7 +46,7 @@ namespace CrystalFlux.StatusEffectSystem
         {
             if (cse == null || (cesm != null && cesm.GetStat(StatType.isAlive) <= 0f))
             {
-                Destroy(gameObject);
+                ReturnToPool();
                 return;
             }
 
@@ -65,6 +65,17 @@ namespace CrystalFlux.StatusEffectSystem
             float cooldownRemainingPct = 1f - (timeElapsed / effDur);
 
             cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+        }
+
+        private void ReturnToPool()
+        {
+            cse = null;
+            cesm = null;
+            if (cooldownImage != null) cooldownImage.fillAmount = 0f;
+            if (iconImage != null) iconImage.sprite = null;
+
+            GameObject go = gameObject;
+            PrefabPool.Release(ref go);
         }
 
         public (string title, string subtitle, Vector2 offset) GetStatusEffectTooltip()

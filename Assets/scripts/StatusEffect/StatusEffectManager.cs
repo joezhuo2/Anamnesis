@@ -184,7 +184,8 @@ namespace CrystalFlux.StatusEffectSystem
         private void CreateDisplayUI(StatusEffect se)
         {
             if (displayPrefab == null || displayContainer == null) return;
-            GameObject uiObj = Instantiate(displayPrefab, displayContainer);
+            GameObject uiObj = PrefabPool.Acquire(displayPrefab, displayContainer);
+            if (uiObj == null) return;
 
             if (uiObj.TryGetComponent<StatusEffectCooldownUI>(out var secui))
                 secui.Setup(se, cesm);

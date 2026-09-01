@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using CrystalFlux.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,21 +7,10 @@ namespace CrystalFlux.EntitySystem
 {
     public static class CastBar
     {
-        private static readonly Dictionary<EntityId, Queue<Slider>> barPools = new();
-        private static readonly Dictionary<EntityId, Queue<TextMeshProUGUI>> textPools = new();
-        private static readonly Dictionary<EntityId, EntityId> barOrigin = new();
-        private static readonly Dictionary<EntityId, EntityId> textOrigin = new();
         private static Camera mainCamera;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void ResetStatics()
-        {
-            barPools.Clear();
-            textPools.Clear();
-            barOrigin.Clear();
-            textOrigin.Clear();
-            mainCamera = null;
-        }
+        private static void ResetStatics() => mainCamera = null;
 
         public static void Acquire(Slider barPrefab, TextMeshProUGUI textPrefab, out Slider bar, out TextMeshProUGUI text)
         {
@@ -33,22 +22,15 @@ namespace CrystalFlux.EntitySystem
 
             if (barPrefab != null)
             {
-                EntityId key = barPrefab.GetEntityId();
-                bar = Rent(barPools, key, barPrefab, canvas);
-                if (bar != null)
-                {
-                    barOrigin[bar.GetEntityId()] = key;
-                    ResetBar(bar);
-                }
+                bar = PrefabPool.Acquire(barPrefab, canvas.transform);
+                if (bar != null) ResetBar(bar);
             }
 
             if (textPrefab != null)
             {
-                EntityId key = textPrefab.GetEntityId();
-                text = Rent(textPools, key, textPrefab, canvas);
+                text = PrefabPool.Acquire(textPrefab, canvas.transform);
                 if (text != null)
                 {
-                    textOrigin[text.GetEntityId()] = key;
                     text.text = string.Empty;
                     text.transform.SetAsLastSibling();
                 }
@@ -57,34 +39,11 @@ namespace CrystalFlux.EntitySystem
 
         public static void Release(ref Slider bar, ref TextMeshProUGUI text)
         {
-            if (bar != null)
-            {
-                EntityId id = bar.GetEntityId();
-                if (barOrigin.TryGetValue(id, out EntityId key))
-                {
-                    barOrigin.Remove(id);
-                    ResetBar(bar);
-                    bar.gameObject.SetActive(false);
-                    Pool(barPools, key).Enqueue(bar);
-                }
-                else Object.Destroy(bar.gameObject);
-            }
+            if (bar != null) ResetBar(bar);
+            if (text != null) text.text = string.Empty;
 
-            if (text != null)
-            {
-                EntityId id = text.GetEntityId();
-                if (textOrigin.TryGetValue(id, out EntityId key))
-                {
-                    textOrigin.Remove(id);
-                    text.text = string.Empty;
-                    text.gameObject.SetActive(false);
-                    Pool(textPools, key).Enqueue(text);
-                }
-                else Object.Destroy(text.gameObject);
-            }
-
-            bar = null;
-            text = null;
+            PrefabPool.Release(ref bar);
+            PrefabPool.Release(ref text);
         }
 
         public static void Tick(Slider bar, TextMeshProUGUI text, Transform t, Vector3 offset, float elapsed, float total)
@@ -118,36 +77,6 @@ namespace CrystalFlux.EntitySystem
                     text.transform.position = screenPos;
                 }
             }
-        }
-
-        private static T Rent<T>(Dictionary<EntityId, Queue<T>> pools, EntityId key, T prefab, Canvas canvas) where T : Component
-        {
-            Queue<T> pool = Pool(pools, key);
-
-            while (pool.Count > 0)
-            {
-                T pooled = pool.Dequeue();
-                if (pooled == null) continue;
-
-                if (pooled.transform.parent != canvas.transform) pooled.transform.SetParent(canvas.transform, false);
-                pooled.gameObject.SetActive(true);
-                pooled.transform.SetAsLastSibling();
-                return pooled;
-            }
-
-            T created = Object.Instantiate(prefab, canvas.transform);
-            created.transform.SetAsLastSibling();
-            return created;
-        }
-
-        private static Queue<T> Pool<T>(Dictionary<EntityId, Queue<T>> pools, EntityId key)
-        {
-            if (!pools.TryGetValue(key, out var pool))
-            {
-                pool = new Queue<T>();
-                pools[key] = pool;
-            }
-            return pool;
         }
 
         private static void ResetBar(Slider bar)

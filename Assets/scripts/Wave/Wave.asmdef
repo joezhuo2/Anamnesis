@@ -2,6 +2,7 @@
     "name": "CrystalFlux.Wave",
     "rootNamespace": "CrystalFlux.WaveSystem",
     "references": [
+        "CrystalFlux.Pooling",
         "CrystalFlux.Core",
         "Unity.TextMeshPro",
         "UnityEngine.UI"

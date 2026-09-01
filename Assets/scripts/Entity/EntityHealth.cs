@@ -128,14 +128,10 @@ namespace CrystalFlux.EntitySystem
 
             if (cachedCanvas == null) return;
 
-            healthBarInstance = Instantiate(healthBarPrefab, cachedCanvas.transform);
-            healthBarInstance.transform.SetAsLastSibling();
+            healthBarInstance = PrefabPool.Acquire(healthBarPrefab, cachedCanvas.transform);
 
             if (healthBarTextPrefab != null)
-            {
-                healthBarTextInstance = Instantiate(healthBarTextPrefab, cachedCanvas.transform);
-                healthBarTextInstance.transform.SetAsLastSibling();
-            }
+                healthBarTextInstance = PrefabPool.Acquire(healthBarTextPrefab, cachedCanvas.transform);
 
             barCurHp = int.MinValue;
             barMaxHp = int.MinValue;
@@ -171,10 +167,10 @@ namespace CrystalFlux.EntitySystem
 
             if (healthBarInstance == null || cachedCanvas == null || !cachedCanvas.isActiveAndEnabled)
             {
-                if (healthBarInstance != null) Destroy(healthBarInstance.gameObject);
-                if (healthBarTextInstance != null) Destroy(healthBarTextInstance.gameObject);
-                healthBarInstance = null;
-                healthBarTextInstance = null;
+                if (healthBarPrefab == null || barRetired || ResolveHealthBarCanvas() == null) return;
+
+                PrefabPool.Release(ref healthBarInstance);
+                PrefabPool.Release(ref healthBarTextInstance);
 
                 InitializeHealthBar();
                 if (healthBarInstance == null) return;
@@ -203,10 +199,8 @@ namespace CrystalFlux.EntitySystem
         private void OnDestroy()
         {
             barRetired = true;
-            if (healthBarInstance != null) Destroy(healthBarInstance.gameObject);
-            if (healthBarTextInstance != null) Destroy(healthBarTextInstance.gameObject);
-            healthBarInstance = null;
-            healthBarTextInstance = null;
+            PrefabPool.Release(ref healthBarInstance);
+            PrefabPool.Release(ref healthBarTextInstance);
         }
 
         public void TakeDamage(DamagePacket dp)
@@ -451,10 +445,8 @@ namespace CrystalFlux.EntitySystem
                 sem.ClearAllEffects();
 
             barRetired = true;
-            if (healthBarInstance != null) Destroy(healthBarInstance.gameObject);
-            if (healthBarTextInstance != null) Destroy(healthBarTextInstance.gameObject);
-            healthBarInstance = null;
-            healthBarTextInstance = null;
+            PrefabPool.Release(ref healthBarInstance);
+            PrefabPool.Release(ref healthBarTextInstance);
 
             if (animator != null && !IsAlive && deathAnimTime > 0f)
             {

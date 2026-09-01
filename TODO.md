@@ -1,6 +1,16 @@
 # Planned Features 
 
 ## Open Items
+- Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
+  and `Destroy`ed on death, along with the whole per-spawn `AttackData`/`EntityStats` ScriptableObject clone
+  chain. Three things block a straight swap to `PrefabPool`: cleanup is `Destroy`-bound across eight
+  components (`EntityStatManager`, `EntityHealth`, `EnemyAttackHandler`, `EnemyMovement`,
+  `StatusEffectManager`, `EnemyPhase`, `EntitySummonHandler`, `EntityProjectileHandler`) with no `OnDisable`
+  counterparts; `EnemyStatManager.ScaleBaseStats` is non-idempotent, so level scaling compounds on a reused
+  stat clone; and `WaveManager.CleanEnemyList` counts kills purely by Unity fake-null
+  (`RemoveAll(e => e == null)`), which a deactivated enemy never satisfies, so the wave-completion gate would
+  never close. Also latched with no reset: `EntityHealth.barRetired`, the animator `isDead` bool,
+  `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
 - No affordability check on press. A player with no resources still plays the attack animation, and only
   ~0.225s later does nothing spawn. A real pre-check is awkward: `HandleStatChanges` both triggers cost
   upgrades and spends in one pass, and the public `GetCosts` skips `HandleHexCast`, so a rough check would
@@ -16,15 +26,19 @@
 **Systems**
 - [ ] Pause menu with resume/restart/home/quit, settings/controls menu
 - [ ] Audio (SFX + music buses, ready for the volume sliders)
-- [ ] Data saving (settings, unlocks, groundwork for run history)
+- [ ] Data saving
 
 **Content**
 - [ ] re-add phase based buffs using the new system (Cultist and Jellyfish still pending)
+- [ ] Wave 60 boss
+- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
+- [ ] Armor based basic attack/ultimate
 
 **QoL & Polish**
 - [ ] Screen shake and hit-stop feedback on attacks
 - [ ] Title/header for reward menu
-- [ ] map borders
+- [ ] map borders (tilemap colliders)
+- [ ] finish tilemap
 - [ ] Auto-pause when window loses focus (single-player)
 - [ ] Scrollable Tooltips
 - [ ] target dummy
@@ -39,14 +53,11 @@
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra hp, faster, new ai, split)
-- [ ] Chests or loot drops from elites/bosses with guaranteed rare rewards
-- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
 - [ ] backstap `specialMult`
-- [ ] Wave 60 boss
 - [ ] more enemy move telegraphs
 
 **QoL & Polish**
-- [ ] Full attack stats display
+- [ ] Full stats display
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
 
@@ -99,9 +110,9 @@
 - [ ] Shop/merchant between waves to spend currency on items or stat boosts
 
 **Content**
-- [ ] Corrupt button (part 2) - can turn normal rewards into new type of special rewards (very rare)
 - [ ] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
 - [ ] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses
+- [ ] Chests or loot drops from elites/bosses with guaranteed rare rewards
 
 **QoL & Polish**
 - [ ] Suggest certain stats based on player's current loadout

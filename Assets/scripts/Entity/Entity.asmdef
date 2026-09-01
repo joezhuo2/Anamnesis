@@ -2,6 +2,7 @@
     "name": "CrystalFlux.Entity",
     "rootNamespace": "CrystalFlux.EntitySystem",
     "references": [
+        "CrystalFlux.Pooling",
         "CrystalFlux.Core",
         "CrystalFlux.TextIndicator",
         "CrystalFlux.Projectile",

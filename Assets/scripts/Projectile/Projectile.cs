@@ -9,7 +9,7 @@ namespace CrystalFlux.ProjectileSystem
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(RectTransform))]
-    public class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour, IPoolable
     {
         public ProjectileData pd;
 
@@ -44,6 +44,8 @@ namespace CrystalFlux.ProjectileSystem
         private float prefabWaveAmp;
         private float prefabWaveFreq;
         private float prefabSpiralSpacing;
+        private ProjectileData defaultPd;
+        private Vector3 defaultScale;
 
         private bool UsePrefabMove => prefabMoveType != MovementType.Default;
         private MovementType MoveType => UsePrefabMove ? prefabMoveType : pd.movementType;
@@ -55,6 +57,8 @@ namespace CrystalFlux.ProjectileSystem
         {
             hit = new();
             canTriggerAdd = true;
+            defaultPd = pd;
+            defaultScale = transform.localScale;
             CachePrefabMovement();
         }
 
@@ -68,7 +72,9 @@ namespace CrystalFlux.ProjectileSystem
             prefabSpiralSpacing = pd.spiralSpacing;
         }
 
-        private void OnDestroy()
+        private void OnDestroy() => UnregisterFromOwner();
+
+        private void UnregisterFromOwner()
         {
             if (pd != null && pd.orbitRadius > 0 && pd.orbitSelf && ownerObj != null &&
                 ownerObj.TryGetComponent<IOrbitRegister>(out var ior))
@@ -79,24 +85,78 @@ namespace CrystalFlux.ProjectileSystem
                 icr.UnregisterChargedProjectile(this);
         }
 
-        private void Start()
+        private void Despawn()
         {
+            GameObject go = gameObject;
+            PrefabPool.Release(ref go);
+        }
+
+        public void OnPoolAcquire() { }
+
+        public void OnPoolRelease()
+        {
+            StopAllCoroutines();
+            UnregisterFromOwner();
+
+            hit?.Clear();
+            ownerObj = null;
+            followTarget = null;
+            orbitTarget = null;
+            sourceRb = null;
+
+            if (rb != null) rb.linearVelocity = Vector2.zero;
+        }
+
+        public void Setup(Vector2 direction, GameObject owner, ProjectileData pdOverride)
+        {
+            pd = pdOverride != null ? pdOverride : defaultPd;
+
             if (pd == null)
             {
                 Debug.LogError($"Projectile '{name}' has no ProjectileData assigned.", this);
-                Destroy(gameObject);
+                Despawn();
                 return;
             }
+
+            ownerObj = owner;
+            dir = direction;
+
+            hit.Clear();
+            canTriggerAdd = true;
+            pierced = 0;
+
+            orbitCancelled = false;
+            orbitInitialized = false;
+            orbitTarget = null;
+            orbitDirectionSign = 0f;
+            orbitAngleOffset = 0f;
+            effectiveOrbitRadius = 0f;
+
+            boomerangActive = false;
+            boomerangReturning = false;
+            boomerangSpeed = 0f;
+            boomerangDecel = 0f;
+
+            followTarget = null;
+            sourceRb = null;
+
+            patternSuspended = false;
+            patternTime = 0f;
+            spiralTheta = 0f;
 
             effSpd = ownerObj != null && ownerObj.TryGetComponent<IStatProvider>(out var esm)
                 ? pd.speed * (1f + (esm.GetStat(StatType.ProjSpd) * 0.01f))
                 : pd.speed;
 
-            pierced = 0;
             CaptureSnapshot();
+
+            transform.localScale = defaultScale;
             HandleSize();
             HandleDirection();
+
             rb = GetComponent<Rigidbody2D>();
+            if (rb != null) rb.linearVelocity = Vector2.zero;
+
             InitBoomerang();
             HandleMovement(true);
 
@@ -135,7 +195,7 @@ namespace CrystalFlux.ProjectileSystem
 
             if (!pd.addAttackRequiresHit) HandleAdditionalSpawns();
 
-            Destroy(gameObject);
+            Despawn();
         }
 
         public void OnChargeTick()
@@ -147,7 +207,12 @@ namespace CrystalFlux.ProjectileSystem
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (pierced >= pd.numPierce && pd.destroyOnMaxPierce) Destroy(gameObject);
+            if (pierced >= pd.numPierce && pd.destroyOnMaxPierce)
+            {
+                Despawn();
+                return;
+            }
+
             if (pierced >= pd.numPierce) return;
             if (hit.Contains(other.gameObject)) return;
 
@@ -641,7 +706,7 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2? addDir = pd.additionalFollowsMouse ? null : dir;
                 spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance));
             }
-            Destroy(gameObject);
+            Despawn();
         }
 
         private void ApplyEffect(GameObject target, EffectData ed)

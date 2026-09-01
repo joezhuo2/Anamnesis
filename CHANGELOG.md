@@ -7,6 +7,51 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.0] - 2026-09-01 — Object Pooling Update (Release Summary)
+
+This release covers the full development arc from `v0.3.0` through `v0.3.13_1`, and closes with the pooling work documented below. Over this period `Core` was extracted into its own package, projectiles gained authored flight paths, attacks gained windups and hold-to-charge, the skill tree grew from 104 to 125 nodes, and the highest-churn `Instantiate`/`Destroy` sites in the game were moved onto a shared object pool.
+
+### Highlights
+
+- **`Core` as a package (`v0.3.2`)** — `Assets/scripts/Core` was extracted to [joezhuo2/CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) and is imported from its git URL. `Wave` was decoupled onto `Core` alone via `IBossBar`, `EnemySpawning`, `PlayerEvents` and the `GetTooltipLines` hooks, so it orchestrates a run without naming a single concrete system type
+- **Projectile movement patterns (`v0.3.3`)** — `MovementType` (`Wave` / `Spiral`) on `ProjectileData` gives projectiles authored flight paths that coexist with homing, plus five screen-wide converging-line spawn patterns (`TopDown`, `LeftRight`, `Diagonal`, `DiagonalReverse`, `FullX`)
+- **Capstone skill nodes (`v0.3.3_2`, `v0.3.11`)** — nodes gated on owning an attack that swap it for an upgraded variant, starting with Warp; the Autopilot Awakening and a working `OnTakeDamage` upgrade trigger shipped alongside. Capstones now consume the Awakening they require
+- **Skill tree expansion (`v0.3.5`, `v0.3.10`, `v0.3.11`)** — 104 to 125 nodes across the Luminaria, Cosmic Superimposition, Solar Wind, Intelligence and AOE branches
+- **Enemy variants & wave gating (`v0.3.8`)** — Magma and Frost slime variants; rewards and enemies both gained a `minWave`, so the pools open up as a run progresses
+- **Cast time (`v0.3.12`)** — interruptible attack windups with a pooled, entity-following cast bar. `castTime` and `canMoveWhileCasting` on `AttackData`, plus the `castTimeRedPct` and `interruptResist` stats (Core v0.8.0)
+- **Charged attacks (`v0.3.13`)** — hold-to-charge attacks via the `AttackData` charging block (`canCharge`, `chargeThreshold`, `minChargeTime`/`maxChargeTime`, `chargeTickInterval`, `chargeAttack`), sustained by ticked projectile lifetimes and the new `IChargeRegister`; plus `MovementType.FollowCursor`, the `corruptionSpecialPool` corruption outcome, and the chargeable Ultimate Nocturnis
+- **Object pooling (`v0.4.0`)** — an audit of every `Instantiate` and `new GameObject` call found seven spawn sites with meaningful runtime churn and three independent hand-rolled pools with no shared abstraction. All of them now go through one static `PrefabPool`: health bars, status effect icons, cast bars, damage numbers, reward and anomaly buttons, and projectiles. Projectiles were the largest win by far, since every projectile of every pattern funnels through a single spawn call. The migration also surfaced eight latent bugs that were live before pooling existed, listed under **Fixed** below
+
+### Added
+- **`PrefabPool`** — a static, prefab-keyed object pool in the new `CrystalFlux.Pooling` assembly. `Acquire`/`Release` (with both `GameObject` and `Component` overloads), `Prewarm`, `SetCap` and `CountInactive`. Instances are keyed by prefab `EntityId` with an instance-to-prefab origin map, so releasing an object the pool never handed out destroys it rather than pooling it. A per-prefab retention cap (`DefaultCap` 64) destroys past the cap instead of growing forever. Pools clear on `SubsystemRegistration` and on `sceneUnloaded`. It has no MonoBehaviour, no scene object and no serialized state, so nothing needed wiring in the Editor
+- **`IPoolable`** — optional `OnPoolAcquire()` / `OnPoolRelease()` hooks invoked by `PrefabPool` through the non-allocating `GetComponentsInChildren` overload. Release hooks fire while the object is still active, acquire hooks fire after reactivation, and both run on the freshly-created path so a first spawn and a reuse behave identically
+- **`Projectile.Setup(Vector2 direction, GameObject owner, ProjectileData pdOverride)`** — the per-spawn initializer, replacing `Start`. It also resets everything a fresh `Instantiate` used to zero for free: the hit history, `canTriggerAdd`, the five orbit fields, the four boomerang fields, `followTarget`/`sourceRb`, the pattern accumulators and the rigidbody velocity
+- **`AnomalyButtonUI.ResetForPooling()`** — mirrors `RewardButton.ResetForPooling`, nulling the select callback and cached `AnomalyInstance`, removing `onClick` listeners and clearing the title and description
+
+### Changed
+- **Health bars are pooled.** `EntityHealth` acquires and releases its `Slider` and `TextMeshProUGUI` instead of instantiating and destroying them per entity
+- **Status effect icons are pooled.** `StatusEffectManager.CreateDisplayUI` acquires from the pool, and `StatusEffectCooldownUI` returns itself on expiry instead of self-destructing. The existing expiry mechanism is unchanged — the runtime `StatusEffect` clone is destroyed, `cse` goes null, and the icon releases on the next frame
+- **`CastBar` now delegates to `PrefabPool`.** Its two prefab-keyed queues, origin maps and `Rent`/`Pool` helpers were deleted. `Acquire`, `Release` and `Tick` keep identical signatures, so the nine call sites in `PlayerAttackHandler` and `EnemyAttackHandler` are untouched
+- **`TextIndicatorSpawner` now delegates to `PrefabPool`.** Its manual prewarm loop became `Prewarm`, and the pool is capped at `initialPoolSize`
+- **Reward buttons now use `PrefabPool`,** and anomaly buttons join them. The old `List`-based free list could not tell the two prefabs apart, so anomaly buttons were excluded from it and hard-destroyed on every reward screen; prefab-keyed pooling makes the distinction free
+- **Projectiles are pooled.** `ProjectileSpawner.SpawnProjectile` acquires from the pool and calls `Projectile.Setup`; the four `Destroy(gameObject)` sites in `Projectile` route through a `Despawn` helper. `Projectile.Start` was deleted outright rather than left in place, since a surviving `Start` would re-run the whole initializer at end of frame on a first spawn. `CachePrefabMovement` deliberately stays in `Awake` — it has to capture the prefab's `pd` before the spawner assigns an override. The per-prefab cap is raised to 256, since the default 64 is far too low for circle and barrage patterns
+- **`EntityProjectileHandler` liveness checks widened.** Orbit and charge registration was `Destroy`-symmetric on both sides; the handler's filters now also reject `!activeInHierarchy`, and its two `Destroy` calls (over-cap orbiter eviction and `AbsorbOrbits`) release to the pool instead
+- **New `CrystalFlux.Pooling` assembly.** `Pooling` references nothing and is referenced by `Entity`, `Projectile`, `StatusEffect`, `Wave` and `TextIndicator`. A standalone assembly was necessary because `TextIndicator` previously referenced only `Unity.TextMeshPro`, and `Core` ships as an external package
+
+### Fixed
+- **Health bars were destroyed and re-instantiated every frame whenever the canvas went inactive.** `EntityHealth.MoveHealthBar` runs from `Update` and re-entered `InitializeHealthBar` on any canvas loss, so the cost was paid per living entity per frame. It now bails early instead of churning
+- **The damage-number pool grew without bound.** `TextIndicatorSpawner` instantiated an overflow instance on a pool miss and enqueued every returned instance unconditionally, so a single burst permanently raised the pool's floor and it never trimmed. The retention cap now destroys past the cap
+- **A reused status effect icon kept the previous effect's sprite.** `StatusEffectCooldownUI.Setup` only assigned `iconImage.sprite` when the new effect had a non-null icon
+- **`AnomalyButtonUI.Setup` left stale title and description text** when handed a null instance, because it early-returned before writing either field
+- **A projectile silently inherited the previous attack's `ProjectileData`.** `pd` is permanently overwritten by `pdOverride`, so any later spawn passing no override reused whatever the last override had been. `Awake` now caches the prefab's own `pd` and `Setup` falls back to it
+- **`HandleSize` leaked size between spawns and zeroed `localScale.z`.** It writes `localScale` from a `Vector2`, and it early-returns when the owner has no `IStatProvider`, so a projectile could keep a previous owner's scale. `Awake` caches the prefab scale and `Setup` restores it before sizing
+- **`orbitCancelled` was set in `Launch` and reset nowhere**, so a released orbiter could never orbit again once its instance was reused
+- **The max-pierce branch of `OnTriggerEnter2D` had no `return` after its `Destroy`.** Harmless under `Destroy`'s end-of-frame semantics, but `SetActive(false)` is immediate, so the rest of the method would keep processing a hit on a despawned projectile. The projectile no longer lands one extra hit on the frame it maxes pierce
+- **`TextIndicator.Initialize` never wrote `transform.position`,** so a reused indicator could render for a frame at the previous one's screen position
+
+### Updated
+- **`TODO.md`** — a new Open Item records why enemy pooling was deliberately left out: cleanup is `Destroy`-bound across eight components with no `OnDisable` counterparts, `EnemyStatManager.ScaleBaseStats` is non-idempotent so level scaling compounds on a reused stat clone, and `WaveManager.CleanEnemyList` counts kills purely by Unity fake-null, which a deactivated enemy never satisfies
+
 ## [v0.3.13_1] - 2026-09-01
 
 ### Rebalance

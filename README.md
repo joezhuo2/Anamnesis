@@ -155,6 +155,7 @@ Assets/
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
     ├── Items/                 # Items/Gear system (Assembly-CSharp)
     ├── Misc/                  # Game Controller (implements IAnnouncer) (Assembly-CSharp)
+    ├── Pooling/               # [asmdef] PrefabPool + IPoolable — shared prefab-keyed object pool
     ├── Projectile/            # [asmdef] Projectiles/Attack data and the damage calculator
     ├── StatusEffect/          # [asmdef] Status effect system & implementations (DoTs, Stun, Pulled, buffs) — data lives in data/StatusEffect/
     ├── SkillTree/             # [asmdef] Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
@@ -188,13 +189,20 @@ Core (package) ───┼─ SkillTree
                   ├─ Wave
                   └─ Entity ──→ Projectile, StatusEffect, SkillTree, TextIndicator
 
-TextIndicator ── (references nothing; TextMeshPro only)
+                  ┌─ Projectile
+                  ├─ StatusEffect
+Pooling ──────────┼─ Wave
+                  ├─ TextIndicator
+                  └─ Entity
+
+TextIndicator ── (references Pooling and TextMeshPro only)
 ```
 
 - **`Core` references nothing.** It holds only contracts — interfaces, abstract `ScriptableObject` bases, and shared value types — and ships as its own package.
-- **`Projectile`, `StatusEffect`, `SkillTree`, and `Wave` reference `Core` and nothing else** — including each other. Adding a cross-reference between them is a compile error, which is the point.
-- **`Entity`** is the only assembly that composes the leaf systems, so it is the only one with more than one reference.
-- **`TextIndicator`** is self-contained and references no `CrystalFlux` assembly at all — floating numbers need only TextMeshPro.
+- **`Pooling` references nothing either.** It holds `PrefabPool` and the `IPoolable` reset hook, needs only `UnityEngine`, and is referenced by every assembly that spawns something. It is a separate assembly rather than part of `Core` because `Core` ships as an external package, and because `TextIndicator` referenced neither.
+- **`Projectile`, `StatusEffect`, `SkillTree`, and `Wave` never reference each other** — only `Core`, plus `Pooling` where they spawn something (`SkillTree` does not). Adding a cross-reference between them is a compile error, which is the point.
+- **`Entity`** is the only assembly that composes the leaf systems — everything else references infrastructure (`Core`, `Pooling`) and nothing else.
+- **`TextIndicator`** references only `Pooling` and TextMeshPro — floating numbers need the object pool and nothing else.
 - `Items` and `Misc` remain in `Assembly-CSharp`, which auto-references every assembly above.
 
 Types shared across a boundary live in `Core` as an abstract base (`AttackAsset`, `UpgradeAsset`, `EffectAsset`) rather than an interface, because Unity cannot serialize interface-typed asset fields. Concrete data (`AttackData`, `PlayerUpgrade`, `StatusEffect`) stays in its own assembly.
