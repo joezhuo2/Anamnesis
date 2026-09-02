@@ -7,6 +7,10 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.1_1] - 2026-09-01
+
+- forgot to save scene
+
 ## [v0.4.1] - 2026-09-01 — Settings Menu
 
 ### Added

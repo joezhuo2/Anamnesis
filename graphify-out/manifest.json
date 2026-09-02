@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "Anamnesis.slnx": {
-    "mtime": 1788290997.2738593,
-    "seen": 1788291721.1869557,
-    "ast_hash": "059daf10a56c54e7dc592312869b247d",
+    "mtime": 1788314488.3717895,
+    "seen": 1788321731.7259672,
+    "ast_hash": "6684e1ba6d2cd401f0c37fafb3268111",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs": {
@@ -270,9 +270,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityHealth.cs": {
-    "mtime": 1788288783.8083053,
-    "seen": 1788291721.1870897,
-    "ast_hash": "8f6753dc787e9afe9f3a19eae28bcf79",
+    "mtime": 1788321679.149285,
+    "seen": 1788321731.7260387,
+    "ast_hash": "c9d65c3ec6d996d99411d1c10d3aa5af",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityProjectileHandler.cs": {
@@ -330,9 +330,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerControls.cs": {
-    "mtime": 1783005204.732137,
-    "seen": 1787538805.3414397,
-    "ast_hash": "50f8d3e8455136dcade5a63f6bb65922",
+    "mtime": 1788314533.7986083,
+    "seen": 1788321731.7260609,
+    "ast_hash": "2c03967048715d8da751623b745b53bb",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerDashCooldownUI.cs": {
@@ -342,9 +342,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerInputHandler.cs": {
-    "mtime": 1788268799.4954438,
-    "seen": 1788274979.1757686,
-    "ast_hash": "335c8f18409fcd36c832644905e791ad",
+    "mtime": 1788314446.3635125,
+    "seen": 1788321731.7260637,
+    "ast_hash": "2ebf5326a3bafb55c3fd492355f06a04",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerLevel.cs": {
@@ -462,8 +462,8 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Misc/GameController.cs": {
-    "mtime": 1788142708.4368322,
-    "seen": 1788143852.878299,
+    "mtime": 1788319938.8604643,
+    "seen": 1788321731.7261043,
     "ast_hash": "07762600d51968a1381e6dd06d195b34",
     "semantic_hash": ""
   },
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1788288915.8987944,
-    "seen": 1788291721.1873372,
-    "ast_hash": "ac62b05e1facfa0f1395fbc8cd540c17",
+    "mtime": 1788314470.4197092,
+    "seen": 1788321731.726188,
+    "ast_hash": "5f75977b1a00ee3e742bd4ecd977392e",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788305379.3777063,
-    "seen": 1788305400.7216346,
-    "ast_hash": "55abfe8ae113f10c73eb8eab82e451cd",
+    "mtime": 1788321707.4281847,
+    "seen": 1788321731.7262158,
+    "ast_hash": "2f52d5af82abb064e3642a24e1df3b4b",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -702,21 +702,21 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788305282.7919014,
-    "seen": 1788305400.721642,
-    "ast_hash": "310a774034ea97402049406ebfeb5466",
+    "mtime": 1788321580.248243,
+    "seen": 1788321731.726223,
+    "ast_hash": "302244974c94022e4ba31f5fda1b2d08",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1788305279.2772074,
-    "seen": 1788305400.7216444,
-    "ast_hash": "382d56ebb0bd3d9e9a660cf3e9aa302f",
+    "mtime": 1788321593.9441688,
+    "seen": 1788321731.7262244,
+    "ast_hash": "5f0c1336eae0817d89823e1c84f0e117",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1788304493.914124,
-    "seen": 1788305400.7216463,
-    "ast_hash": "e044f79324bf260a8b6b2b017f56c58e",
+    "mtime": 1788321327.9818304,
+    "seen": 1788321731.7262259,
+    "ast_hash": "47c7c5983d44740a04726be2af5f7fe2",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1113,36 +1113,6 @@
     "mtime": 1782178599.4784186,
     "seen": 1787538805.341596,
     "ast_hash": "bf36e79cfbcd2f36163eab3177d9ff45",
-    "semantic_hash": ""
-  },
-  "Assets/data/images/UI/icons/fb1019.png": {
-    "mtime": 1782178607.7203896,
-    "seen": 1787538805.3415966,
-    "ast_hash": "e41d544c261c31db67032f5b456e6351",
-    "semantic_hash": ""
-  },
-  "Assets/data/images/UI/icons/fb1020.png": {
-    "mtime": 1782178607.7289314,
-    "seen": 1787538805.3415976,
-    "ast_hash": "4c8c6e2867f5f912d318bb4ba64b639e",
-    "semantic_hash": ""
-  },
-  "Assets/data/images/UI/icons/fb671.png": {
-    "mtime": 1782178614.5915222,
-    "seen": 1787538805.3415983,
-    "ast_hash": "01cab0bfe1ed85f89deb7ec07ee7152f",
-    "semantic_hash": ""
-  },
-  "Assets/data/images/UI/icons/reroll.png": {
-    "mtime": 1782222444.59682,
-    "seen": 1787538805.341599,
-    "ast_hash": "752fb8fff15b35ea88f85d0db57dd693",
-    "semantic_hash": ""
-  },
-  "Assets/data/images/UI/icons/spritesheet.png": {
-    "mtime": 1782947397.8728247,
-    "seen": 1787538805.3416,
-    "ast_hash": "1362a7337da1fe902966d1567d9ad51f",
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicator.cs": {
@@ -1620,9 +1590,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/SkillTreeInputToggle.cs": {
-    "mtime": 1788142650.8503983,
-    "seen": 1788143852.8782914,
-    "ast_hash": "df7f834437ca987b1a9285bc5d8daedf",
+    "mtime": 1788314446.3667538,
+    "seen": 1788321731.726092,
+    "ast_hash": "145a7f8129c74111629d0b08d1244688",
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/IOrbitRegister.cs": {
@@ -1953,6 +1923,132 @@
     "mtime": 1788304990.0704427,
     "seen": 1788305400.721303,
     "ast_hash": "eb8d3d7e67472f7b008f73042ee092a4",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Entity/Player/GameInput.cs": {
+    "mtime": 1788314446.3635125,
+    "seen": 1788321731.7260544,
+    "ast_hash": "8fd9231f6e68ce50959a7846fbf22774",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Entity/Player/UIInputBindingSync.cs": {
+    "mtime": 1788314413.343554,
+    "seen": 1788321731.7260962,
+    "ast_hash": "e5f62bb1d20d479840e82266b82fbf15",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Misc/ControlsPanelUI.cs": {
+    "mtime": 1788321300.1985588,
+    "seen": 1788321731.7261028,
+    "ast_hash": "ce7d70d17836e41197faf78e2d349bdd",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Misc/MenuPause.cs": {
+    "mtime": 1788320899.404808,
+    "seen": 1788321731.7261074,
+    "ast_hash": "d9eec7999e03330809086cabc566cd0b",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Misc/RebindButtonUI.cs": {
+    "mtime": 1788319963.4944782,
+    "seen": 1788321731.7261093,
+    "ast_hash": "2a6967bf27ab32dd2d5fdb27a71f9a0b",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Misc/SettingsMenuInputToggle.cs": {
+    "mtime": 1788320843.1536322,
+    "seen": 1788321731.726111,
+    "ast_hash": "0fb131c7bea862977328e2bba2c616a4",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Misc/SettingsPanelUI.cs": {
+    "mtime": 1788320944.9771092,
+    "seen": 1788321731.7261124,
+    "ast_hash": "694f2b8fdb1e2ea2b40c0404e8bd94bb",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Settings/GameSettings.cs": {
+    "mtime": 1788321290.938779,
+    "seen": 1788321731.726131,
+    "ast_hash": "f919bb2de6f32a78dead529b382235fa",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Settings/GameSettingsLifecycle.cs": {
+    "mtime": 1788314392.894302,
+    "seen": 1788321731.726132,
+    "ast_hash": "0448f9b97336cfc6c8e8e0298e759b4d",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/UI/ControlsButton.png": {
+    "mtime": 1788114891.3743136,
+    "seen": 1788321731.726436,
+    "ast_hash": "412de1b92b8476e0639da4987369612b",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/UI/closeButton.png": {
+    "mtime": 1788114891.3294284,
+    "seen": 1788321731.726439,
+    "ast_hash": "25c241cb4a7287be756df2dccd9eb001",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/UI/emptybutton.png": {
+    "mtime": 1788114891.289157,
+    "seen": 1788321731.72644,
+    "ast_hash": "7e8106ada163c2e8c742514e77d6ed60",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/UI/emptyframe.png": {
+    "mtime": 1788114891.148974,
+    "seen": 1788321731.7264411,
+    "ast_hash": "5c6d55d18b31e4c1a44d9f04ec0a228b",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/UI/exitButton.png": {
+    "mtime": 1788114891.3444798,
+    "seen": 1788321731.726442,
+    "ast_hash": "86ddd0d29dbed01ce0fe6ce212578b6c",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/UI/titleWrapper.png": {
+    "mtime": 1788114891.143955,
+    "seen": 1788321731.7264447,
+    "ast_hash": "1e8b76c4659c5599678fe8e899bd24c4",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/icons/fb1019.png": {
+    "mtime": 1782178607.7203896,
+    "seen": 1788321731.7264462,
+    "ast_hash": "e41d544c261c31db67032f5b456e6351",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/icons/fb1020.png": {
+    "mtime": 1782178607.7289314,
+    "seen": 1788321731.726447,
+    "ast_hash": "4c8c6e2867f5f912d318bb4ba64b639e",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/icons/fb671.png": {
+    "mtime": 1782178614.5915222,
+    "seen": 1788321731.7264483,
+    "ast_hash": "01cab0bfe1ed85f89deb7ec07ee7152f",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/icons/feather.png": {
+    "mtime": 1788114891.267006,
+    "seen": 1788321731.7264495,
+    "ast_hash": "77ec9c1620c57f27837909e01bd23bbe",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/icons/reroll.png": {
+    "mtime": 1782222444.59682,
+    "seen": 1788321731.7264507,
+    "ast_hash": "752fb8fff15b35ea88f85d0db57dd693",
+    "semantic_hash": ""
+  },
+  "Assets/data/images/icons/spritesheet.png": {
+    "mtime": 1782947397.8728247,
+    "seen": 1788321731.7264516,
+    "ast_hash": "1362a7337da1fe902966d1567d9ad51f",
     "semantic_hash": ""
   }
 }
