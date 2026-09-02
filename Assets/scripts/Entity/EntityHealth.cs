@@ -2,6 +2,7 @@
 using System.Collections;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.SettingsSystem;
 using CrystalFlux.StatusEffectSystem;
 using TMPro;
 using UnityEngine;
@@ -44,6 +45,7 @@ namespace CrystalFlux.EntitySystem
             esm = GetComponent<IStatProvider>();
             animator = GetComponent<Animator>();
             mainCamera = Camera.main;
+            isPlayerEntity = CompareTag("Player");
 
             regenTimer = 0f;
             accumulatedRegen = 0f;
@@ -64,6 +66,8 @@ namespace CrystalFlux.EntitySystem
         private const int healthBarSortingOrder = -1;
         private static Canvas sharedCanvas;
         private bool barRetired;
+        private bool isPlayerEntity;
+        private bool BarsAllowed => isPlayerEntity || GameSettings.Current.showEnemyHealthBars;
         private int barCurHp = int.MinValue;
         private int barMaxHp = int.MinValue;
 
@@ -122,7 +126,7 @@ namespace CrystalFlux.EntitySystem
 
         private void InitializeHealthBar()
         {
-            if (healthBarPrefab == null || barRetired) return;
+            if (healthBarPrefab == null || barRetired || !BarsAllowed) return;
 
             cachedCanvas = ResolveHealthBarCanvas();
 
@@ -164,6 +168,16 @@ namespace CrystalFlux.EntitySystem
         {
             if (mainCamera == null) mainCamera = Camera.main;
             if (mainCamera == null || !IsAlive) return;
+
+            if (!BarsAllowed)
+            {
+                if (healthBarInstance != null || healthBarTextInstance != null)
+                {
+                    PrefabPool.Release(ref healthBarInstance);
+                    PrefabPool.Release(ref healthBarTextInstance);
+                }
+                return;
+            }
 
             if (healthBarInstance == null || cachedCanvas == null || !cachedCanvas.isActiveAndEnabled)
             {
@@ -272,7 +286,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames, dp.source))
                 {
-                    if (dp.source != null && dp.source.TryGetComponent<PlayerLevel>(out var pl))
+                    if (GameSettings.Current.xpDropsEnabled && dp.source != null && dp.source.TryGetComponent<PlayerLevel>(out var pl))
                         pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
                     DropGold(dp.source);
 
@@ -352,7 +366,7 @@ namespace CrystalFlux.EntitySystem
             TextIndicatorSpawner tis = TextIndicatorSpawner.Instance;
             Vector3 pos = transform.position;
 
-            if (tis != null && showIndicator)
+            if (tis != null && showIndicator && (finalAmount > 0 || GameSettings.Current.showDamageNumbers))
             {
                 Color indicatorColor = colorOverride != default ? colorOverride : (finalAmount < 0 ? Color.red : Color.green);
 
@@ -462,6 +476,7 @@ namespace CrystalFlux.EntitySystem
         private void DropGold(GameObject target)
         {
             if (target == null) return;
+            if (!GameSettings.Current.goldDropsEnabled) return;
             if (esm.GetStat(StatType.goldDrop) <= 0) return;
 
             float stealing = target.TryGetComponent<IStatProvider>(out var tsm) ? tsm.GetStat(StatType.Stealing) : 0f;

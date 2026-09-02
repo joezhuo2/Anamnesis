@@ -7,6 +7,33 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.1] - 2026-09-01 — Settings Menu
+
+### Added
+- **Settings menu** — a new `SettingsCanvas` in `New.unity`, opened with `Escape` (`SettingsMenuInputToggle`, driven by a new `Pause` action in the `UI` map). It is a two-page flow: `SettingsPanelUI` is the outer pause page, and a button on it opens `ControlsPanelUI`, which holds the four gameplay toggles, the keybind list, a *Reset* button, a *Close* button and a status line. `Escape` backs out one page at a time rather than closing everything at once
+- **`MenuPause`** — a refcounted, single-owner freeze shared by both settings pages. The first `Push` records the live `Time.timeScale` and zeroes it; the last `Pop` restores it. Panels no longer capture and restore the timescale individually, so they can open, close and hand off to each other in any order without corrupting the saved value
+- **Persistent settings** — new `CrystalFlux.Settings` assembly with `GameSettings`, a versioned JSON blob written to `Application.persistentDataPath/settings.json` through a temp-file-and-replace so a crash mid-write cannot leave a truncated file. Malformed or missing JSON silently falls back to defaults. `GameSettingsLifecycle` bootstraps it at `AfterSceneLoad` on a `DontDestroyOnLoad` object and flushes on application pause and quit; the panel also saves on close. `GameSettings.Changed` lets systems react live
+- **Gameplay toggles** — *enemy health bars*, *XP drops*, *gold drops*, *damage numbers*, and *wave completion message*. All five apply immediately, with no restart:
+  - Enemy health bars gate `EntityHealth.InitializeHealthBar` and release the pooled bar/text pair back to `PrefabPool` when switched off mid-run, re-acquiring them when switched back on. The player's own bar is exempt. Boss bars are a separate system and unaffected
+  - XP and gold are gated at the kill site in `EntityHealth.TakeDamage` and at the top of `DropGold`; their floating indicators are suppressed with them
+  - Damage numbers are gated in `EntityHealth.ChangeHealth`, at the one `SpawnTextIndicator` call that is neither XP nor gold. XP and gold keep their own toggles. Visibility only; the indicator size stays fixed
+  - `WaveManager.showCompletionMessage` is no longer a serialized field — it now reads the setting, for both `WaveManager` and `UnlimitedWaveManager`
+- **Keybind rebinding** — every keyboard binding across both action maps gets a row (`RebindButtonUI` on `RebindRowPrefab`), including each of `Move`'s eight WASD/arrow part bindings individually. Clicking a row starts `PerformInteractiveRebinding`, restricted to keyboard controls (mouse, pen, touch and gamepad are excluded) and cancelable with `Escape`. Binding to a key already in use reverts the change and reports the clash rather than silently unbinding the other action. Overrides are saved into `settings.json` as the Input System's own override JSON; *Reset* clears them all
+- `Assets/data/images/UI/` gains `closeButton`, `exitButton`, `emptybutton`, `emptyframe` and `titleWrapper` sprites for the panel
+
+### Changed
+- **One shared `PlayerControls` instance.** `PlayerInputHandler` and `SkillTreeInputToggle` each constructed their own, and the generated wrapper builds a fresh `InputActionAsset` rather than loading the imported one — together with the `InputSystemUIInputModule` on the player's `EventSystem`, that was three disjoint copies of the binding data, so a rebind could never have reached all of them. The new static `GameInput` owns the single instance, applies stored overrides on construction, and exposes `SaveOverrides` / `ResetAllBindings`
+  - Both consumers dropped their `OnDestroy() => controls?.Dispose()`; `Dispose` destroys the shared asset, so the first component to die would have taken input down for everything else
+  - Map enable/disable is now refcounted through `GameInput.EnablePlayerMap` / `DisablePlayerMap` / `EnableUIMap` / `DisableUIMap`. Previously the player dying ran `SkillTreeInputToggle.OnDisable` and disabled the `UI` map for every other consumer
+  - `UIInputBindingSync` on the `EventSystem` child of `Player.prefab` registers the UI module's action asset with `GameInput`, so rebinding `Move` also moves UI navigation off the old keys
+- `Entity` and `Wave` now reference the `CrystalFlux.Settings` assembly
+- Icon sprites moved from `Assets/data/images/UI/icons/` to `Assets/data/images/icons/`, and `feather.png` was added
+
+### Fixed
+- Wave completion messages were serialized off in `New.unity`; the new setting defaults to **on**, so they now appear for anyone without a settings file
+- **`Escape` could not close the controls page.** It was wired directly to the settings page's `Toggle`, so the controls page had no `Escape` path at all and stayed open, with `isOpen` still `true`, while the settings page toggled around it. A second press reopened the settings page and the stranded controls page reappeared with it. `Escape` now routes through `SettingsPanelUI.HandleEscape`, which closes the top-most open page
+- **Opening the controls page could leave the game frozen with no menu open.** Each page captured and restored `Time.timeScale` independently, which breaks as soon as one page hands off to another: the controls page captured the already-frozen `0`, the settings page then restored `1` and left the game running behind the open menu, and closing the controls page restored its captured `0`. `MenuPause` now owns the freeze, so the timescale only returns to normal once the last page closes
+
 ## [v0.4.0_1] - 2026-09-01
 
 ### Added

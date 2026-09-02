@@ -147,6 +147,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
   cooldownPrefab: {fileID: 1749710292777410887, guid: 47db549e516fc9642bc9e1bbabac16c1, type: 3}
   objContainer: {fileID: 0}
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: 0, z: 0}
   attacks: []
 --- !u!114 &16536631209803568
 MonoBehaviour:
@@ -160,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99523bdb2923fb44866006bcc277b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUI
-  resourceHoverZone: {fileID: 0}
+  pui: {fileID: 0}
   manaBar: {fileID: 0}
   manaText: {fileID: 0}
   healthUI: {fileID: 0}
@@ -280,6 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d3bfa51801c446ad1dfffe864340e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  deathAnimTime: 1
   healthBarPrefab: {fileID: 0}
   healthBarOffset: {x: 0, y: 0, z: 0}
   healthBarTextPrefab: {fileID: 0}
@@ -426,6 +430,7 @@ GameObject:
   - component: {fileID: 592143631767070145}
   - component: {fileID: 9029637528863553138}
   - component: {fileID: 8884305214242378816}
+  - component: {fileID: 961744675192520999}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -494,3 +499,15 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
+--- !u!114 &961744675192520999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977842000929726646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d70419307be9b148b6cda73b848f2a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrystalFlux.Entity::CrystalFlux.EntitySystem.UIInputBindingSync

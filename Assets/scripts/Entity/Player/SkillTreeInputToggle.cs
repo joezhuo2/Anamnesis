@@ -1,3 +1,4 @@
+using CrystalFlux.EntitySystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,20 +8,19 @@ namespace CrystalFlux.SkillTree
     {
         private PlayerControls controls;
 
-        private void Awake() => controls = new PlayerControls();
+        private void Awake() => controls = GameInput.Controls;
 
         private void OnEnable()
         {
-            controls.UI.Enable();
+            GameInput.EnableUIMap();
             controls.UI.ToggleSkillTree.performed += OnToggleSkillTree;
         }
 
         private void OnDisable()
         {
             controls.UI.ToggleSkillTree.performed -= OnToggleSkillTree;
-            controls.UI.Disable();
+            GameInput.DisableUIMap();
         }
-        private void OnDestroy() => controls?.Dispose();
 
         private void OnToggleSkillTree(InputAction.CallbackContext ctx) => ToggleSkillTree();
 

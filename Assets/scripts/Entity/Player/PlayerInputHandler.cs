@@ -13,13 +13,13 @@ namespace CrystalFlux.EntitySystem
 
         private void Awake()
         {
-            controls = new PlayerControls();
+            controls = GameInput.Controls;
             pm = GetComponent<PlayerMovement>();
             pah = GetComponent<PlayerAttackHandler>();
         }
         private void OnEnable()
         {
-            controls.Player.Enable();
+            GameInput.EnablePlayerMap();
 
             InputState.mousePos = controls.Player.MousePosition.ReadValue<Vector2>();
 
@@ -54,10 +54,8 @@ namespace CrystalFlux.EntitySystem
             controls.Player.Ultimate.canceled -= OnUltimateCanceled;
             controls.Player.Technique.canceled -= OnTechniqueCanceled;
 
-            controls.Player.Disable();
+            GameInput.DisablePlayerMap();
         }
-        private void OnDestroy() => controls?.Dispose();
-
         private void OnMovePerformed(InputAction.CallbackContext ctx) => pm.moveInput = ctx.ReadValue<Vector2>();
         private void OnMoveCanceled(InputAction.CallbackContext ctx) => pm.moveInput = Vector2.zero;
         private void OnDashPerformed(InputAction.CallbackContext ctx) => pm.TryStartDash();

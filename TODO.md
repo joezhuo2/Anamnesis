@@ -27,14 +27,17 @@
   known — so a hold consumes your orbits even though it skips the tap.
 - The on-screen attack button (`PlayerAttackHandler.CreateButtonUI`) fires `onClick` only and has no release
   event, so a chargeable attack triggered from the UI holds until `maxChargeTime`. Needs `IPointerUpHandler`.
+- `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
+- `companyName` is still `DefaultCompany`, which is part of the settings file path. Changing it later orphans existing settings files
+- scroll map in settings menu does not have a background image yet
 
 ## Pre [v0.5.0] Checklist — Feel & Foundations
 *Make the current game feel finished before stacking more systems on it.*
 
 **Systems**
-- [ ] Pause menu with resume/restart/home/quit, settings/controls menu
-- [ ] Audio (SFX + music buses, ready for the volume sliders)
+- [ ] Pause menu with restart/home/quit
 - [ ] Data saving
+- [ ] Difficulty selector - Easy (chance for additional skill points/rerolls, starting rare pool free pick, more reward choices) - Normal (current) - Hard (boosted enemy levels, lower bonus skill point/reroll chances)
 
 **Content**
 - [ ] re-add phase based buffs using the new system (Cultist and Jellyfish still pending)
@@ -46,7 +49,8 @@
 - [ ] Title/header for reward menu
 - [ ] map borders (tilemap colliders)
 - [ ] finish tilemap
-- [ ] target dummy OR dps counter
+- [ ] Background Overlays - skill tree, reward menu, home screen, etc.
+- [ ] skill point indicator
 
 ## Pre [v0.6.0] Checklist — Combat Depth
 *Attacks chain, enemies fight back with more than stats.*
@@ -54,6 +58,7 @@
 **Systems**
 - [ ] attack combo chains
 - [ ] input buffering (queue next attack early)
+- [ ] Audio (SFX + music buses)
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra hp, faster, new ai, split)
@@ -65,7 +70,9 @@
 - [ ] Full stats display menu
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
-- [ ] settings menu overhaul: volume control, enemy health bar toggle, damage number toggle/size change
+- [ ] settings menu overhaul: volume control
+- [ ] attack cooldown over indicator
+- [ ] number formatting - use K, M
 
 ## Pre [v0.7.0] Checklist — Run Variety
 *Every wave stops looking the same; the settings/stats menus catch up.*
@@ -73,13 +80,14 @@
 **Systems**
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves
-- [ ] Difficulty selector
 - [ ] certain upgrades have requirements before being added to the pool
 
 **Content**
 - [ ] wave events - random events that can randomly occur during waves
 - [ ] contracts - similar to anomaly, but no fail risk, easier objective, but still some bonus rewards
 - [ ] environmental collectible items (mana, xp, hp, gold)
+- [ ] Nightmare/Death difficulty
+- [ ] Game modifiers - ironman (no reroll/refund/corruption)
 
 **QoL & Polish**
 - [ ] Confirmation dialog before corrupting a reward (can be toggled in settings)
@@ -98,7 +106,7 @@
 - [ ] multiple map layouts
 - [ ] Environmental hazards on maps (spikes, lava, traps)
 - [ ] portals
-- [ ] Anamolies update (change spawning behavior)
+- [ ] Anamolies update (swarm wave (-stat + count), duel wave (1 count against non-boss))
 - [ ] starting builds / starting kits
 
 **QoL & Polish**
@@ -119,7 +127,7 @@
 
 **QoL & Polish**
 - [ ] Suggest certain stats based on player's current loadout
-- [ ] Post-Death Summary
+- [ ] Post-Death Summary (run grade)
 - [ ] Build export/share — copy current loadout as text for sharing
 - [ ] damage breakdown (by attack, every x waves)
 - [ ] FPS counter & performance stats debug toggle
@@ -171,3 +179,15 @@
 - [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
 - [ ] Scrollable Tooltips
 - [ ] "What's new" changelog popup on update
+- [ ] target dummy OR dps counter
+- [ ] reward history
+- [ ] queue skill point spending
+- [ ] undo grace window
+
+- [ ] neutral entities
+- [ ] in-world spawners
+- [ ] rift system (portal opens to add new enemies)
+- [ ] beacon objective (defend/destroy)
+- [ ] cosmetics (player skins/dash effects/attack effects)
+- [ ] nameplates/titles
+- [ ] background/ambience (debris/wind)

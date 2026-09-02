@@ -1,13 +1,7 @@
 {
-    "name": "CrystalFlux.Wave",
-    "rootNamespace": "CrystalFlux.WaveSystem",
-    "references": [
-        "CrystalFlux.Pooling",
-        "CrystalFlux.Core",
-        "CrystalFlux.Settings",
-        "Unity.TextMeshPro",
-        "UnityEngine.UI"
-    ],
+    "name": "CrystalFlux.Settings",
+    "rootNamespace": "CrystalFlux.SettingsSystem",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

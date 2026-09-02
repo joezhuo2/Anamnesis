@@ -4,6 +4,7 @@
     "references": [
         "CrystalFlux.Pooling",
         "CrystalFlux.Core",
+        "CrystalFlux.Settings",
         "CrystalFlux.TextIndicator",
         "CrystalFlux.Projectile",
         "CrystalFlux.StatusEffect",

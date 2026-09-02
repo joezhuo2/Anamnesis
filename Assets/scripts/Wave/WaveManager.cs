@@ -1,6 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
+using CrystalFlux.SettingsSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +20,7 @@ namespace CrystalFlux.WaveSystem
         public float spawnRadius = 2f;
         [Range(0f, 0.9f)] public float killSpawnSpeedup = 0.15f;
 
-        [Header("Messages")]
-        public bool showCompletionMessage = true;
+        protected bool showCompletionMessage => GameSettings.Current.showWaveCompletionMessage;
 
         [Header("Wave Info Settings")]
         public GameObject waveInfoPanel;

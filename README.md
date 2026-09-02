@@ -49,7 +49,8 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 - **Corruption system** — once per wave, corrupt rewards for a chance at massive stat boosts (up to +80%) or severe penalties (down to -180%). Each corrupted button also has an 8% chance to be replaced outright by a **corruption special** — a rare attack pulled from a dedicated pool at a far lower unlock wave than the rare pool asks for, marked violet and labelled *Corrupted*.
 - **Wave-gated content** — enemies, rare attacks, and Awakenings each carry a `minWave` and only enter their pools once the run reaches it, so early waves draw from a smaller, gentler set.
 - **Milestone rewards** — every 25 waves (25, 50, 75, 100...), choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks (e.g., *Glass Cannon*: +40% Damage / -40% Max Health). Each stat has ±15% variance for replayability.
-- **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays. The between-wave subtitle (and the 1.5s pause it holds) can be switched off per wave manager via `showCompletionMessage`.
+- **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays. The between-wave subtitle (and the 1.5s pause it holds) can be switched off per wave manager via the *wave completion message* setting.
+- **Settings menu** — press `Escape` to open a pause-and-configure panel. It runs two pages: the outer pause page, and a controls page holding toggles for enemy health bars, XP drops, gold drops, damage numbers and the wave completion message, plus a rebindable list of every keyboard binding. `Escape` backs out one page at a time. Everything applies live and persists to `settings.json` in the platform's persistent data path. Rebinding runs the Input System's interactive rebind, restricted to keyboard controls, cancelable with `Escape`, and rejects a key that is already bound to something else.
 - **Hover feedback** — reward, anomaly, cooldown-indicator and skill-node buttons scale up under the pointer via `HoverScale`, easing on unscaled time so it keeps animating while the game is paused.
 - **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
 - **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.
@@ -68,8 +69,11 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 | Ultimate | `R` / `2` |
 | Dash | `Q` / `Right Click` |
 | Toggle skill tree | `K` |
+| Settings menu (pause) | `Escape` |
 | Skill tree pan | Drag (Alt+Left / Alt+Right / Middle) |
 | Skill tree zoom | Mouse wheel (zoom-to-cursor) |
+
+Every keyboard binding above except the skill tree pan/zoom can be rebound in the settings menu; `Escape` itself is fixed.
 
 ## Content
 
@@ -154,9 +158,10 @@ Assets/
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
     ├── Items/                 # Items/Gear system (Assembly-CSharp)
-    ├── Misc/                  # Game Controller (implements IAnnouncer) (Assembly-CSharp)
+    ├── Misc/                  # Game Controller (implements IAnnouncer), settings menu UI (Assembly-CSharp)
     ├── Pooling/               # [asmdef] PrefabPool + IPoolable — shared prefab-keyed object pool
     ├── Projectile/            # [asmdef] Projectiles/Attack data and the damage calculator
+    ├── Settings/              # [asmdef] GameSettings — persisted gameplay toggles and keybind overrides
     ├── StatusEffect/          # [asmdef] Status effect system & implementations (DoTs, Stun, Pulled, buffs) — data lives in data/StatusEffect/
     ├── SkillTree/             # [asmdef] Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
     ├── TextIndicator/         # [asmdef] Floating damage numbers, XP/Gold indicators
@@ -196,10 +201,14 @@ Pooling ──────────┼─ Wave
                   └─ Entity
 
 TextIndicator ── (references Pooling and TextMeshPro only)
+
+Settings ─────────┬─ Entity
+                  └─ Wave
 ```
 
 - **`Core` references nothing.** It holds only contracts — interfaces, abstract `ScriptableObject` bases, and shared value types — and ships as its own package.
 - **`Pooling` references nothing either.** It holds `PrefabPool` and the `IPoolable` reset hook, needs only `UnityEngine`, and is referenced by every assembly that spawns something. It is a separate assembly rather than part of `Core` because `Core` ships as an external package, and because `TextIndicator` referenced neither.
+- **`Settings` references nothing either.** It holds `GameSettings` and its lifecycle bootstrap, and is referenced by the two assemblies that read a setting — `Entity` (health bars, XP and gold drops) and `Wave` (the completion message). The menu UI itself lives in `Misc`.
 - **`Projectile`, `StatusEffect`, `SkillTree`, and `Wave` never reference each other** — only `Core`, plus `Pooling` where they spawn something (`SkillTree` does not). Adding a cross-reference between them is a compile error, which is the point.
 - **`Entity`** is the only assembly that composes the leaf systems — everything else references infrastructure (`Core`, `Pooling`) and nothing else.
 - **`TextIndicator`** references only `Pooling` and TextMeshPro — floating numbers need the object pool and nothing else.
