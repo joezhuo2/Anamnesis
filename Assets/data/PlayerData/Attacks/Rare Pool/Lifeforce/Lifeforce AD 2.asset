@@ -53,7 +53,7 @@ MonoBehaviour:
   staminaPctGainOnHit: 0
   healthGainOnHit: 5
   healthPctGainOnHit: 3
-  manaGainOnHit: 3
+  manaGainOnHit: 2
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0

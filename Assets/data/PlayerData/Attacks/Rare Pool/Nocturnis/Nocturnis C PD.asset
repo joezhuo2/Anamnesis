@@ -18,7 +18,7 @@ MonoBehaviour:
   numPierce: 3000
   destroyOnMaxPierce: 0
   movementType: 3
-  speed: 0.6
+  speed: 0.8
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1

@@ -7,6 +7,37 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.1_2] - 2026-09-02
+
+### Added
+- **Attack cleanse** — `AttackData.cleanseDebuffs` removes that many active debuffs from the attacker the moment the attack is performed. Backed by a new `StatusEffectManager.RemoveDebuffs(int)`, which walks `activeEffects` newest-first, skips anything flagged `isBuff`, and runs each removed effect's `OnExpire` before destroying it. Wired into both `PlayerAttackHandler.ExecuteAttack` and `EnemyAttackHandler.PerformAttack`, so enemies can cleanse themselves too. The tooltip gains a *Cleanses N debuff(s)* line. No shipped attack asset sets it yet — the field defaults to `0` (disabled)
+
+### Changed
+- **Status effect stacking now matches on `effName` first.** `Apply` compared runtime types, so two effects sharing a base class merged into one and two distinct assets of the same class could never coexist. `IsSameEffect` now compares `effName` case-insensitively when both effects name themselves, and only falls back to the old type/subclass check when one does not
+
+### Fixed
+- **Swapping an attack could destroy `AttackData` still being read by live projectiles.** `UpdateAttack` and `RemoveAttack` destroyed the outgoing runtime copy immediately, while any projectile already in flight kept a reference to its `ProjectileData` — the next frame's read hit a destroyed object. `Projectile` now refcounts live `ProjectileData` in a static table (registered in `Setup`, released in `OnPoolRelease` and `OnDestroy`), and `DestroyAttackDeferred` parks the copy in `pendingDestroy` and waits until nothing live references it — following `chargeAttack`, `nextAttack` and `pd.additionalAttack` chains, with a visited set so a cyclic chain cannot loop forever. Anything still pending is destroyed outright in `OnDestroy`
+- Armor in the player resource tooltip printed its raw float; it is now formatted `F0` like the other stats
+
+### Rebalance
+- Enemy per-level HP growth lowered from `1.12x` to `1.10x` in `EnemyStatManager.ScaleBaseStats`.
+  - To compensate, Slime base HP 80 → 90 and Crab base HP 90 → 100
+- `Slow 6 15 5` replaced by `Slow 4 15 5` — the same 5%-per-stack, 15-stack slow with its duration cut from 6s to 4s
+- **frost slime**: Blizzard cooldown 5s → 7s and its random spawn count 3 → 2 (2-5 → 2-4)
+- **Nebula**: physical 440% → 320% and cooldown 2s → 2.5s
+  - Radiation: duration 4s → 5s, max stacks 8 → 10, damage per tick (% of critDmg, per stack) 3 → 5
+- **Lifeforce** 
+  - (first): mana gain on hit 3 → 2, spawn distance 1 → 2 
+  - (third): knockback 8 → 6 
+- **Nocturnis** 
+  - Tap
+    - phys 60% → 85%
+    - spell 110% → 130%
+    - true 14% → 22%
+    - heal: flat 2 → 4, 1% → 3%
+  - Hold: 
+    - speed 0.6 → 0.8
+
 ## [v0.4.1_1] - 2026-09-01
 
 - forgot to save scene

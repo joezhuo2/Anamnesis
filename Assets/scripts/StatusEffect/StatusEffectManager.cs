@@ -55,15 +55,23 @@ namespace CrystalFlux.StatusEffectSystem
             return null;
         }
 
+        private static bool IsSameEffect(StatusEffect a, StatusEffect b)
+        {
+            if (a == null || b == null) return false;
+
+            if (!string.IsNullOrEmpty(a.effName) && !string.IsNullOrEmpty(b.effName))
+                return string.Equals(a.effName, b.effName, System.StringComparison.OrdinalIgnoreCase);
+
+            return a.GetType() == b.GetType() ||
+                a.GetType().IsSubclassOf(b.GetType()) ||
+                b.GetType().IsSubclassOf(a.GetType());
+        }
+
         public void Apply(EffectAsset effect, GameObject source, Vector2 location = default)
         {
             if (effect is not StatusEffect se) return;
 
-            StatusEffect existing = activeEffects.Find(
-                e => e.GetType() == se.GetType() ||
-                e.GetType().IsSubclassOf(se.GetType()) ||
-                se.GetType().IsSubclassOf(e.GetType())
-            );
+            StatusEffect existing = activeEffects.Find(e => IsSameEffect(e, se));
 
             if (existing != null)
             {
@@ -116,6 +124,23 @@ namespace CrystalFlux.StatusEffectSystem
             }
         }
 
+        public void RemoveDebuffs(int count)
+        {
+            if (count <= 0) return;
+
+            for (int i = activeEffects.Count - 1; i >= 0 && count > 0; i--)
+            {
+                StatusEffect e = activeEffects[i];
+                if (e == null) continue;
+                if (e.isBuff) continue;
+
+                e.OnExpire();
+                activeEffects.RemoveAt(i);
+                Destroy(e);
+                count--;
+            }
+        }
+
         public void RemoveEffect<T>() where T : EffectAsset => RemoveStacks<T>(int.MaxValue);
 
         public void RemoveEffectAfterDelay<T>(float delay) where T : EffectAsset
@@ -131,12 +156,12 @@ namespace CrystalFlux.StatusEffectSystem
         {
             for (int i = activeEffects.Count - 1; i >= 0; i--)
             {
-                StatusEffect effect = activeEffects[i];
-                if (effect == null) continue;
+                StatusEffect e = activeEffects[i];
+                if (e == null) continue;
 
-                effect.OnExpire();
+                e.OnExpire();
                 activeEffects.RemoveAt(i);
-                Destroy(effect);
+                Destroy(e);
             }
         }
         private void Update()

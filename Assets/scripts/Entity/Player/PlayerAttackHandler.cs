@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.StatusEffectSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,6 +46,8 @@ namespace CrystalFlux.EntitySystem
         private bool chargeReleaseRequested;
         private AttackType chargingType;
         private AttackData chargingAttack;
+        private readonly List<AttackData> pendingDestroy = new();
+        private static readonly HashSet<AttackData> inUseVisited = new();
 
         public bool IsCasting => isCasting || isCharging;
         public bool IsCharging => isCharging;
@@ -64,6 +67,10 @@ namespace CrystalFlux.EntitySystem
         private void OnDestroy()
         {
             EndAllAttackStates();
+
+            foreach (var attack in pendingDestroy)
+                if (attack != null) Destroy(attack);
+            pendingDestroy.Clear();
 
             if (attacks != null)
             {
@@ -104,6 +111,48 @@ namespace CrystalFlux.EntitySystem
                 if (attacks[i] == null) continue;
                 if (NormalizeAttackName(attacks[i].name).Equals(n, StringComparison.OrdinalIgnoreCase)) return true;
             }
+            return false;
+        }
+
+        private void DestroyAttackDeferred(AttackData attack)
+        {
+            if (attack == null || !attack.IsRuntimeCopy) return;
+
+            if (!isActiveAndEnabled)
+            {
+                Destroy(attack);
+                return;
+            }
+
+            pendingDestroy.Add(attack);
+            StartCoroutine(DestroyWhenUnused(attack));
+        }
+
+        private IEnumerator DestroyWhenUnused(AttackData attack)
+        {
+            yield return null;
+
+            while (attack != null && IsAttackDataInUse(attack)) yield return null;
+
+            pendingDestroy.Remove(attack);
+            if (attack != null) Destroy(attack);
+        }
+
+        private static bool IsAttackDataInUse(AttackData attack)
+        {
+            inUseVisited.Clear();
+            return IsAttackDataInUseInternal(attack);
+        }
+
+        private static bool IsAttackDataInUseInternal(AttackData attack)
+        {
+            if (attack == null || !inUseVisited.Add(attack)) return false;
+
+            if (Projectile.IsDataLive(attack.pd)) return true;
+            if (attack.pd != null && IsAttackDataInUseInternal(attack.pd.additionalAttack)) return true;
+            if (IsAttackDataInUseInternal(attack.chargeAttack)) return true;
+            if (IsAttackDataInUseInternal(attack.nextAttack)) return true;
+
             return false;
         }
 
@@ -243,6 +292,7 @@ namespace CrystalFlux.EntitySystem
         private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades, bool noCost = false, bool bypassCooldown = false)
         {
             HandleOrbitInteractions(selected);
+            HandleCleanse(selected);
 
             if (!selected.canCharge) SpawnAttack(selected);
 
@@ -259,6 +309,12 @@ namespace CrystalFlux.EntitySystem
             StartCoroutine(ResetAttackType(selected.animationLength));
 
             if (selected.canCharge) StartCoroutine(ChargeRoutine(selected, type, noCost, bypassCooldown));
+        }
+
+        private void HandleCleanse(AttackData ad)
+        {
+            if (ad.cleanseDebuffs <= 0) return;
+            if (TryGetComponent<StatusEffectManager>(out var sem)) sem.RemoveDebuffs(ad.cleanseDebuffs);
         }
 
         private void SpawnAttack(AttackData ad)
@@ -479,7 +535,7 @@ namespace CrystalFlux.EntitySystem
             if (current != null)
             {
                 attacks.Remove(current);
-                if (current.IsRuntimeCopy) Destroy(current);
+                DestroyAttackDeferred(current);
             }
 
             AttackData runtimeAttackCopy = Instantiate(newAttack);
@@ -506,7 +562,7 @@ namespace CrystalFlux.EntitySystem
             if (current != null)
             {
                 attacks.Remove(current);
-                if (current.IsRuntimeCopy) Destroy(current);
+                DestroyAttackDeferred(current);
             }
             lastAttackTimes.Remove(type);
 

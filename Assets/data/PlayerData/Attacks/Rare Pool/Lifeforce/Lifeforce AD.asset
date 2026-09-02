@@ -20,9 +20,16 @@ MonoBehaviour:
   castTime: 0.3
   canMoveWhileCasting: 0
   spawnDelay: 0
-  spawnDistance: 1
+  spawnDistance: 2
   fixedDistance: 0
   animationLength: 0.75
+  canCharge: 0
+  chargeThreshold: 0.225
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 1
+  chargeAttack: {fileID: 0}
   projectileCount: 1
   randomCount: 0
   spread: 0

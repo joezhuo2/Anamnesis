@@ -46,6 +46,34 @@ namespace CrystalFlux.ProjectileSystem
         private float prefabSpiralSpacing;
         private ProjectileData defaultPd;
         private Vector3 defaultScale;
+        private ProjectileData registeredData;
+
+        private static readonly Dictionary<ProjectileData, int> liveDataRefs = new();
+
+        public static bool IsDataLive(ProjectileData data)
+            => data != null && liveDataRefs.TryGetValue(data, out int count) && count > 0;
+
+        private void RegisterData()
+        {
+            UnregisterData();
+            if (pd == null) return;
+
+            liveDataRefs.TryGetValue(pd, out int count);
+            liveDataRefs[pd] = count + 1;
+            registeredData = pd;
+        }
+
+        private void UnregisterData()
+        {
+            if (ReferenceEquals(registeredData, null)) return;
+
+            if (liveDataRefs.TryGetValue(registeredData, out int count))
+            {
+                if (count <= 1) liveDataRefs.Remove(registeredData);
+                else liveDataRefs[registeredData] = count - 1;
+            }
+            registeredData = null;
+        }
 
         private bool UsePrefabMove => prefabMoveType != MovementType.Default;
         private MovementType MoveType => UsePrefabMove ? prefabMoveType : pd.movementType;
@@ -72,7 +100,11 @@ namespace CrystalFlux.ProjectileSystem
             prefabSpiralSpacing = pd.spiralSpacing;
         }
 
-        private void OnDestroy() => UnregisterFromOwner();
+        private void OnDestroy()
+        {
+            UnregisterFromOwner();
+            UnregisterData();
+        }
 
         private void UnregisterFromOwner()
         {
@@ -97,6 +129,7 @@ namespace CrystalFlux.ProjectileSystem
         {
             StopAllCoroutines();
             UnregisterFromOwner();
+            UnregisterData();
 
             hit?.Clear();
             ownerObj = null;
@@ -117,6 +150,8 @@ namespace CrystalFlux.ProjectileSystem
                 Despawn();
                 return;
             }
+
+            RegisterData();
 
             ownerObj = owner;
             dir = direction;

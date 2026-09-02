@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.StatusEffectSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -193,6 +194,7 @@ namespace CrystalFlux.EntitySystem
                 }
 
                 HandleOrbitInteractions(current);
+                HandleCleanse(current);
 
                 if (current.projectilePrefab != null && !current.canCharge)
                 {
@@ -302,6 +304,12 @@ namespace CrystalFlux.EntitySystem
                 dir,
                 dist > chargeSource.spawnDistance ? chargeSource.spawnDistance : dist
             ));
+        }
+
+        private void HandleCleanse(AttackData ad)
+        {
+            if (ad.cleanseDebuffs <= 0) return;
+            if (TryGetComponent<StatusEffectManager>(out var sem)) sem.RemoveDebuffs(ad.cleanseDebuffs);
         }
 
         private void ReleaseMovementHold()

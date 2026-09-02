@@ -13,16 +13,25 @@ MonoBehaviour:
   m_Name: Blizzard AD
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
   type: 0
-  cooldown: 5
+  cooldown: 7
   projectilePrefab: {fileID: 5235015789626464611, guid: f9eef65a303cda54ea15f6900579b21d, type: 3}
   pd: {fileID: 11400000, guid: 93539e64e36701545b88f05ae48411f2, type: 2}
   pattern: 2
+  castTime: 0
+  canMoveWhileCasting: 1
   spawnDelay: 0.35
   spawnDistance: 0
   fixedDistance: 0
   animationLength: 0.75
+  canCharge: 0
+  chargeThreshold: 0.225
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 1
+  chargeAttack: {fileID: 0}
   projectileCount: 2
-  randomCount: 3
+  randomCount: 2
   spread: 0
   randomSpread: 0
   minDelay: 0

@@ -40,8 +40,8 @@ MonoBehaviour:
   basicCdRedPct: 0
   skillCdRedPct: 0
   ultCdRedPct: 0
-  currentHp: 45
-  maxHp: 45
+  currentHp: 60
+  maxHp: 60
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0

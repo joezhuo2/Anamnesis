@@ -91,6 +91,10 @@ namespace CrystalFlux.ProjectileSystem
         [Range(0f, 1f)] public float summonChance = 0f;
         public SummonCondition summonCondition = SummonCondition.None;
 
+        [Header("Cleanse")]
+        [Tooltip("Number of active debuffs removed from the attacker when this attack is performed. 0 = disabled")]
+        public int cleanseDebuffs;
+
         [Header("Orbit Interactions")]
         [Tooltip("Fires all currently orbiting projectiles toward the mouse direction before spawning this attack.")]
         public bool fireOrbits;
@@ -210,6 +214,8 @@ namespace CrystalFlux.ProjectileSystem
             if (healthGainOnHit > 0f || healthPctGainOnHit > 0f) lines.Add($"Health Gain: {healthGainOnHit:F0} +{healthPctGainOnHit:F1}%");
             if (staminaGainOnHit > 0f || staminaPctGainOnHit > 0f) lines.Add($"Stamina Gain: {staminaGainOnHit:F0} +{staminaPctGainOnHit:F1}%");
             if (manaGainOnHit > 0f || manaPctGainOnHit > 0f) lines.Add($"Mana Gain: {manaGainOnHit:F0} +{manaPctGainOnHit:F1}%");
+
+            if (cleanseDebuffs > 0) lines.Add($"Cleanses {cleanseDebuffs} debuff{(cleanseDebuffs == 1 ? string.Empty : "s")}");
 
             if (explodeOrbits) lines.Add($"Explodes all orbiting projectiles");
             if (fireOrbits) lines.Add($"Fires all orbiting projectiles");

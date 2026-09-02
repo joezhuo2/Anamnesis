@@ -29,7 +29,7 @@ namespace CrystalFlux.EntitySystem
             List<string> lines = new();
             if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s (+{esm.GetStat(StatType.stRegPct):F0}%)");
             if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s (+{esm.GetStat(StatType.hpRegPct):F0}%)");
-            if (esm.GetStat(StatType.EffArmor) != 0) lines.Add($"Armor: {esm.GetStat(StatType.EffArmor)} (+{esm.GetStat(StatType.armorPct):F0}%) [-{esm.GetStat(StatType.ArmorRes)*100f:F1}%P]");
+            if (esm.GetStat(StatType.EffArmor) != 0) lines.Add($"Armor: {esm.GetStat(StatType.EffArmor):F0} (+{esm.GetStat(StatType.armorPct):F0}%) [-{esm.GetStat(StatType.ArmorRes)*100f:F1}%P]");
             if (esm.GetStat(StatType.EffAtk) != 0) lines.Add($"Attack: {esm.GetStat(StatType.EffAtk):F0} (+{esm.GetStat(StatType.atkPct):F0}%)");
             if (esm.GetStat(StatType.EffInt) != 0) lines.Add($"Int: {esm.GetStat(StatType.EffInt):F0} (+{esm.GetStat(StatType.IntPct):F0}%)");
             if (esm.GetStat(StatType.EffectRes) != 0) lines.Add($"Effect Res: {esm.GetStat(StatType.EffectRes):F0}%");

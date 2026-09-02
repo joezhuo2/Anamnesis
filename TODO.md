@@ -1,12 +1,6 @@
 # Planned Features 
 
-[?] indicates questionable behavior (may not be true)
-
-## Known Bugs
-- Blaze A deals no damage and its animation loops infinitely, but does grant the Blaze Soul buff. This ONLY occurs with Blaze A
-- for resource zone/status effect tooltips, when you try to read the description, it does not update, and you must always hover into, then out, then back in
-- [?] Overheat not removing stacks
-- [?] Solar Wind not triggering
+[?] indicates questionable behavior (may not be true), only occured one time, or may be unlucky
 
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
@@ -36,7 +30,6 @@
 
 **Systems**
 - [ ] Pause menu with restart/home/quit
-- [ ] Data saving
 - [ ] Difficulty selector - Easy (chance for additional skill points/rerolls, starting rare pool free pick, more reward choices) - Normal (current) - Hard (boosted enemy levels, lower bonus skill point/reroll chances)
 
 **Content**
@@ -182,7 +175,8 @@
 - [ ] target dummy OR dps counter
 - [ ] reward history
 - [ ] queue skill point spending
-- [ ] undo grace window
+- [ ] skill node undo grace window
+- [ ] data saving - full game runs
 
 - [ ] neutral entities
 - [ ] in-world spawners
