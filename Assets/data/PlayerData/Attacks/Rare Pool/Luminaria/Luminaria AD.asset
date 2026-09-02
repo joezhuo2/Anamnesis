@@ -23,6 +23,13 @@ MonoBehaviour:
   spawnDistance: 0
   fixedDistance: 0
   animationLength: 1
+  canCharge: 0
+  chargeThreshold: 0.225
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 1
+  chargeAttack: {fileID: 0}
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -35,11 +42,11 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 15
+  staminaCost: 0
   staminaCostPct: 0
-  healthCost: 0
-  healthCostPct: 10
-  manaCost: 60
+  healthCost: 35
+  healthCostPct: 25
+  manaCost: 30
   manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 2
@@ -50,6 +57,7 @@ MonoBehaviour:
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
+  cleanseDebuffs: 0
   fireOrbits: 0
   absorbOrbitPct: 0
   redirectOrbits: 0

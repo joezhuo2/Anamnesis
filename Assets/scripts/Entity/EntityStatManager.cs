@@ -33,6 +33,7 @@ namespace CrystalFlux.Core
             if (s != null)
             {
                 s.currentHp = s.EffMaxHp;
+                s.overhealth = 0f;
                 s.canAttack = true;
                 s.isAttacking = false;
                 s.canMove = true;

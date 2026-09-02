@@ -6920,6 +6920,26 @@ MonoBehaviour:
     desc: Taking damage spawns a projectile that homes in on nearby enemies and heals
       the player.
     minWave: -1
+  - upgrade: {fileID: 11400000, guid: 9d7ae74c1477e274a9e8f086e7c72c76, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Tempo
+    desc: All attacks advance dash by 18%.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 4044a5878da1cba4197f9b635104c9b0, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Cresendo
+    desc: 'Basic attacks advance Ultimate by 8%. '
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 5f5b14c3b532bb641b5037a522596e9c, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Exsanguinate
+    desc: All healing received at full health converts into overhealth.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: a237608ee660bc44ba25b10444943273, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Terminal Cascade
+    desc: Additional attacks have a chance to trigger the original attack.
+    minWave: -1
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -14509,9 +14529,9 @@ MonoBehaviour:
   rerollText: {fileID: 186757956}
   nextWaveButton: {fileID: 353364456}
   corruptButton: {fileID: 552836096}
-  corruptChance: 40
-  corruptPositiveChance: 35
-  maxCorruptBoost: 110
+  corruptChance: 45
+  corruptPositiveChance: 30
+  maxCorruptBoost: 135
   corruptionSpecialChance: 4
   corruptionSpecialPool:
   - newAttack: {fileID: 11400000, guid: 2f0953e0a32bb9e4cbd8ced71255642f, type: 2}
@@ -14868,6 +14888,26 @@ MonoBehaviour:
     upgradeName: Autopilot
     desc: Taking damage spawns a projectile that homes in on nearby enemies and heals
       the player.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 9d7ae74c1477e274a9e8f086e7c72c76, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Tempo
+    desc: All attacks advance dash by 18%.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 4044a5878da1cba4197f9b635104c9b0, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Cresendo
+    desc: 'Basic attacks advance Ultimate by 8%. '
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 5f5b14c3b532bb641b5037a522596e9c, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Exsanguinate
+    desc: All healing received at full health converts into overhealth.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: a237608ee660bc44ba25b10444943273, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Terminal Cascade
+    desc: Additional attacks have a chance to trigger the original attack.
     minWave: -1
   mixedPool:
   - icon: {fileID: 0}
@@ -34925,7 +34965,11 @@ PrefabInstance:
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: aa5d6740036e8054abca0a5472d6c4a2, type: 2}
+      objectReference: {fileID: 11400000, guid: 5f5b14c3b532bb641b5037a522596e9c, type: 2}
+    - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
+      propertyPath: 'activeUpgrades.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d442c0a382ce7cf4cb0853a33c9f1319, type: 2}
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: objContainer
       value: 
@@ -34944,7 +34988,7 @@ PrefabInstance:
       objectReference: {fileID: 6961074376611238736, guid: 096da352af1b7ee4fbabc3c804c8d36b, type: 3}
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: starting.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'starting.Array.data[0]'

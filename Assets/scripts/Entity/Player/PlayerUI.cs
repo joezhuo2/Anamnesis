@@ -34,8 +34,11 @@ namespace CrystalFlux.EntitySystem
         private int lastMaxStamina = -1;
         private int lastLevel = -1;
         private float lastXp = -1;
+        private int lastOverhealth = -1;
         private IStatProvider esm;
         private ICurrencyHolder ich;
+        private EntityHealth eh;
+        private int Overhealth => eh != null ? Mathf.FloorToInt(eh.Overhealth) : 0;
         private int CurMana => Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana));
         private int CurHp => Mathf.RoundToInt(esm.GetStat(StatType.currentHp));
         private int CurStamina => Mathf.RoundToInt(esm.GetStat(StatType.CurrentStamina));
@@ -51,6 +54,7 @@ namespace CrystalFlux.EntitySystem
         {
             esm ??= GetComponent<IStatProvider>();
             ich ??= GetComponent<ICurrencyHolder>();
+            eh ??= GetComponent<EntityHealth>();
             UpdateUI();
 
             if (pui != null) pui.Setup(esm, ich);
@@ -65,7 +69,7 @@ namespace CrystalFlux.EntitySystem
             UpdateStaminaBar();
         }
 
-        private static void SetBar(Slider bar, TextMeshProUGUI label, int value, int max)
+        private static void SetBar(Slider bar, TextMeshProUGUI label, int value, int max, int over = 0)
         {
             if (bar != null)
             {
@@ -73,7 +77,7 @@ namespace CrystalFlux.EntitySystem
                 bar.value = value;
             }
 
-            if (label != null) label.text = $"{value}/{max}";
+            if (label != null) label.text = over > 0 ? $"{value+over}/{max}" : $"{value}/{max}";
         }
 
         private void UpdateManaBar()
@@ -94,15 +98,17 @@ namespace CrystalFlux.EntitySystem
 
                 lastHp = 0;
                 lastMaxHp = MaxHp;
+                lastOverhealth = 0;
                 return;
             }
 
-            if (CurHp == lastHp && MaxHp == lastMaxHp) return;
+            if (CurHp == lastHp && MaxHp == lastMaxHp && Overhealth == lastOverhealth) return;
 
-            SetBar(healthUI, healthText, CurHp, MaxHp);
+            SetBar(healthUI, healthText, CurHp, MaxHp, Overhealth);
 
             lastHp = CurHp;
             lastMaxHp = MaxHp;
+            lastOverhealth = Overhealth;
         }
         private void UpdateStaminaBar()
         {

@@ -28,6 +28,10 @@ namespace CrystalFlux.EntitySystem
         private const float fullRegenFrequency = 5f;
         private const float hurtIFrameDuration = 0.2f;
         private float accumulatedRegen;
+        private float overhealthConvPct;
+        private float overhealthDecayPct;
+        private float overhealthDecayInterval;
+        private float overhealthDecayTimer;
         private Animator animator;
         private Slider healthBarInstance;
         private TextMeshProUGUI healthBarTextInstance;
@@ -37,6 +41,7 @@ namespace CrystalFlux.EntitySystem
         private Canvas cachedCanvas;
         public bool IsAlive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
         private bool Immune => esm != null && esm.GetStat(StatType.isImmune) > 0f;
+        public float Overhealth => esm != null ? esm.GetStat(StatType.overhealth) : 0f;
         private int CurHp => esm != null ? Mathf.RoundToInt(esm.GetStat(StatType.currentHp)) : 0;
         private int MaxHp => esm != null ? Mathf.RoundToInt(esm.GetStat(StatType.EffMaxHp)) : 0;
 
@@ -49,6 +54,7 @@ namespace CrystalFlux.EntitySystem
 
             regenTimer = 0f;
             accumulatedRegen = 0f;
+            overhealthDecayTimer = 0f;
 
             if (esm == null)
             {
@@ -70,6 +76,7 @@ namespace CrystalFlux.EntitySystem
         private bool BarsAllowed => isPlayerEntity || GameSettings.Current.showEnemyHealthBars;
         private int barCurHp = int.MinValue;
         private int barMaxHp = int.MinValue;
+        private int barOverhealth = int.MinValue;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics() => sharedCanvas = null;
@@ -139,6 +146,7 @@ namespace CrystalFlux.EntitySystem
 
             barCurHp = int.MinValue;
             barMaxHp = int.MinValue;
+            barOverhealth = int.MinValue;
             RefreshHealthBar();
         }
 
@@ -148,22 +156,59 @@ namespace CrystalFlux.EntitySystem
 
             int cur = CurHp;
             int max = MaxHp;
-            if (cur == barCurHp && max == barMaxHp) return;
+            int over = Mathf.FloorToInt(Overhealth);
+            if (cur == barCurHp && max == barMaxHp && over == barOverhealth) return;
 
             barCurHp = cur;
             barMaxHp = max;
+            barOverhealth = over;
 
             healthBarInstance.maxValue = max;
             healthBarInstance.value = cur;
 
-            if (healthBarTextInstance != null) healthBarTextInstance.text = $"{cur}/{max}";
+            if (healthBarTextInstance != null)
+                healthBarTextInstance.text = over > 0 ? $"{cur}(+{over})/{max}" : $"{cur}/{max}";
         }
 
         private void Update()
         {
             RegenHp();
+            DecayOverhealth();
             MoveHealthBar();
         }
+
+        public void SetOverhealth(float convPct, float decayPct, float decayInterval)
+        {
+            overhealthConvPct = Mathf.Max(0f, convPct);
+            overhealthDecayPct = Mathf.Max(0f, decayPct);
+            overhealthDecayInterval = Mathf.Max(0f, decayInterval);
+            overhealthDecayTimer = 0f;
+            if (overhealthConvPct <= 0f) AddOverhealth(-Overhealth);
+        }
+
+        private void AddOverhealth(float delta)
+        {
+            if (esm == null || delta == 0f) return;
+            esm.AddStat(new StatBuff(StatType.overhealth, delta));
+        }
+
+        private void DecayOverhealth()
+        {
+            if (Time.timeScale == 0f) return;
+
+            float cur = Overhealth;
+            if (cur <= 0f || overhealthDecayPct <= 0f || overhealthDecayInterval <= 0f) return;
+
+            overhealthDecayTimer += Time.deltaTime;
+            if (overhealthDecayTimer < overhealthDecayInterval) return;
+
+            overhealthDecayTimer -= overhealthDecayInterval;
+
+            float loss = cur * overhealthDecayPct * 0.01f;
+            if (cur - loss < 1f) loss = cur;
+            AddOverhealth(-loss);
+        }
+
         private void MoveHealthBar()
         {
             if (mainCamera == null) mainCamera = Camera.main;
@@ -340,6 +385,12 @@ namespace CrystalFlux.EntitySystem
 
         public bool ChangeHealth(float amount, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
         {
+            if (amount > 0f && esm != null)
+            {
+                float healingPct = esm.GetStat(StatType.healingPct);
+                if (healingPct != 0f) amount *= Mathf.Max(0f, 1f + (healingPct * 0.01f));
+            }
+
             int finalAmount = Mathf.RoundToInt(amount);
             if (finalAmount == 0) return false;
 
@@ -358,6 +409,21 @@ namespace CrystalFlux.EntitySystem
             }
 
             int targetChange = finalAmount;
+            float curOverhealth = Overhealth;
+
+            if (targetChange < 0 && curOverhealth >= 1f)
+            {
+                int absorbed = Mathf.Min(Mathf.FloorToInt(curOverhealth), -targetChange);
+                AddOverhealth(-absorbed);
+                targetChange += absorbed;
+            }
+            else if (targetChange > 0 && overhealthConvPct > 0f && CurHp >= MaxHp)
+            {
+                int converted = Mathf.RoundToInt(targetChange * overhealthConvPct * 0.01f);
+                AddOverhealth(converted);
+                targetChange -= converted;
+            }
+
             if (targetChange > 0) targetChange = Mathf.Min(targetChange, MaxHp - CurHp);
             esm.AddStat(new StatBuff(StatType.currentHp, targetChange));
 
@@ -421,7 +487,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (Time.timeScale == 0f) return;
             if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
-            if (CurHp >= (int)MaxHp) return;
+            if (CurHp >= MaxHp && overhealthConvPct <= 0f) return;
 
             regenTimer += Time.deltaTime;
 
@@ -447,6 +513,7 @@ namespace CrystalFlux.EntitySystem
 
         private void StartDeathSequence()
         {
+            AddOverhealth(-Overhealth);
             esm.AddStat(new StatBuff(StatType.isAlive, -1));
 
             if (cpum != null) cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDeath);

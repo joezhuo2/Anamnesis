@@ -41,6 +41,8 @@ namespace CrystalFlux.Core
         public float hpPct;
         public float hpRegen;
         public float hpRegPct;
+        public float healingPct;
+        [HideInInspector] public float overhealth;
         public int armor;
         public float armorPct;
         [Range(-100f, 100f)] public float damageRes;
@@ -212,6 +214,8 @@ namespace CrystalFlux.Core
                 StatType.ArmorRes => (armor * (1f + (armorPct * 0.01f))) / ((armor * (1f + (armorPct * 0.01f))) + 100f),
                 StatType.castTimeRedPct => castTimeRedPct,
                 StatType.interruptResist => interruptResist,
+                StatType.overhealth => overhealth,
+                StatType.healingPct => healingPct,
                 _ => 0f
             };
         }
@@ -310,6 +314,8 @@ namespace CrystalFlux.Core
                 case StatType.EffArmor: armor += Mathf.RoundToInt(delta); break;
                 case StatType.castTimeRedPct: castTimeRedPct += delta; break;
                 case StatType.interruptResist: interruptResist += delta; break;
+                case StatType.overhealth: overhealth = Mathf.Max(0f, overhealth + delta); break;
+                case StatType.healingPct: healingPct += delta; break;
                 default: break;
             }
         }

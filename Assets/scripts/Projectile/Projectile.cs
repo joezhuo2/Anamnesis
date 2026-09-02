@@ -47,8 +47,19 @@ namespace CrystalFlux.ProjectileSystem
         private ProjectileData defaultPd;
         private Vector3 defaultScale;
         private ProjectileData registeredData;
+        private AttackData chainRoot;
+
+        public static float ChainRetriggerChance;
 
         private static readonly Dictionary<ProjectileData, int> liveDataRefs = new();
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            ChainRetriggerChance = 0f;
+            ApplyingProjectileHit = false;
+            liveDataRefs.Clear();
+        }
 
         public static bool IsDataLive(ProjectileData data)
             => data != null && liveDataRefs.TryGetValue(data, out int count) && count > 0;
@@ -140,9 +151,10 @@ namespace CrystalFlux.ProjectileSystem
             if (rb != null) rb.linearVelocity = Vector2.zero;
         }
 
-        public void Setup(Vector2 direction, GameObject owner, ProjectileData pdOverride)
+        public void Setup(Vector2 direction, GameObject owner, ProjectileData pdOverride, AttackData chainRootOverride = null)
         {
             pd = pdOverride != null ? pdOverride : defaultPd;
+            chainRoot = chainRootOverride;
 
             if (pd == null)
             {
@@ -312,6 +324,7 @@ namespace CrystalFlux.ProjectileSystem
 
             if (pd.additionalChance > 0f && pd.additionalAttack != null && Random.value <= pd.additionalChance)
                 HandleAdditionalSpawns();
+            else if (canTriggerAdd) TryRetriggerChain();
 
             canTriggerAdd = false;
 
@@ -331,14 +344,33 @@ namespace CrystalFlux.ProjectileSystem
         private void HandleAdditionalSpawns()
         {
             if (!canTriggerAdd) return;
-            if (pd.additionalAttack == null || pd.additionalAttack.projectilePrefab == null) return;
             if (ProjectileSpawner.Instance == null) return;
+
+            if (pd.additionalAttack == null || pd.additionalAttack.projectilePrefab == null)
+            {
+                TryRetriggerChain();
+                return;
+            }
 
             ProjectileSpawner spawner = ProjectileSpawner.Instance;
 
             Vector2? addDir = pd.additionalFollowsMouse ? null : dir;
 
-            spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance));
+            spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance, ChainOrigin));
+        }
+
+        private AttackData ChainOrigin => chainRoot != null ? chainRoot : (pd != null ? pd.mainAttack : null);
+
+        private void TryRetriggerChain()
+        {
+            if (chainRoot == null || chainRoot.projectilePrefab == null) return;
+            if (ChainRetriggerChance <= 0f || ownerObj == null) return;
+            if (!ownerObj.TryGetComponent<ITeamMember>(out var itm) || itm.TeamID != 1) return;
+            if (ProjectileSpawner.Instance == null) return;
+            if (Random.Range(0f, 100f) > ChainRetriggerChance) return;
+
+            ProjectileSpawner spawner = ProjectileSpawner.Instance;
+            spawner.StartCoroutine(spawner.SpawnFromPattern(chainRoot, ownerObj, null, null, null, chainRoot));
         }
 
         private void HandleSize()
@@ -739,7 +771,7 @@ namespace CrystalFlux.ProjectileSystem
             {
                 ProjectileSpawner spawner = ProjectileSpawner.Instance;
                 Vector2? addDir = pd.additionalFollowsMouse ? null : dir;
-                spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance));
+                spawner.StartCoroutine(spawner.SpawnFromPattern(pd.additionalAttack, ownerObj, transform.position, addDir, pd.additionalAttack.spawnDistance, ChainOrigin));
             }
             Despawn();
         }

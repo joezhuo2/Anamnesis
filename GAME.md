@@ -109,7 +109,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Speed: 0 (melee)
   - Lifetime: 1s
   - Pierce: 3000
-  - Size: 4
+  - Size: 2.5
   - Damage: 930% Phys
   - Scaling: EffAtk
   - Effect: 100% self on cast (Blaze Soul, 6s, replaces the attack with Cosmic Blaze)
@@ -270,9 +270,9 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Type: Skill
 - Cooldown: 11s
 - Pattern: Single (1 count)
-- Spawn: 1 dist
+- Spawn: 2 dist
 - Animation: 0.75s
-- Costs: Health 30 +40%
+- Costs: Health 10 +15%
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.75s
@@ -310,15 +310,15 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 0 dist, 1s delay
 - Animation: 0.75s
-- Gains on hit: Stamina +4, Health +5 +3%, Mana +3
+- Gains on hit: Stamina +4, Health +5 +3%, Mana +2
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.75s
   - Pierce: 3000
   - Size: 3
-  - Damage: 165% Spell
+  - Damage: 180% Spell, 15% True
   - Scaling: EffMaxHp
-  - Knockback: 8 force for 0.15s
+  - Knockback: 6 force for 0.15s
 
 ## Luminaria
 - Asset: `Luminaria AD`
@@ -328,7 +328,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 0 dist
 - Animation: 1s
-- Costs: Stamina 15, Health 10%, Mana 60
+- Costs: Health 35 +25%, Mana 30
 - Gains on hit: Stamina +2, Mana +3
 - Projectile:
   - Speed: 0 (melee)
@@ -365,7 +365,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 ## Nebula
 - Asset: `Nebula AD`
 - Type: Skill
-- Cooldown: 2s
+- Cooldown: 2.5s
 - Pattern: Single (1 count)
 - Spawn: 3 dist
 - Animation: 0.5s
@@ -376,9 +376,9 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 0.5s
   - Pierce: 12
   - Size: 3.5
-  - Damage: 440% Phys
+  - Damage: 320% Phys
   - Scaling: EffAtk
-  - Effect: 100% on hit (Radiation, 4s, 0.25s tick, max 8 stacks, 3% critDamage per tick
+  - Effect: 100% on hit (Radiation, 5s, 0.25s tick, max 10 stacks, 5% critDamage per tick
     as DoT)
   - Knockback: 4 force for 0.15s
 
@@ -412,14 +412,14 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Spawn: 0.7 dist
 - Animation: 1s
 - Costs: Health 35 +12%
-- Gains on hit: Health +2 +1%
+- Gains on hit: Health +4 +3%
 - Charging: hold 0.225s to charge, min 1s, max 6s, drains every 1s, charge attack `Nocturnis C AD`
 - Projectile (tap):
   - Speed: 0 (melee)
   - Lifetime: 1s
   - Pierce: 3000
   - Size: 2
-  - Damage: 60% Phys, 110% Spell, 14% True
+  - Damage: 85% Phys, 130% Spell, 22% True
   - Scaling: EffMaxHp
   - Use True Angle
   - Knockback: 5 force for 0.15s
@@ -433,7 +433,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Costs: Health 8 +4% on confirm, then again every 1s tick
 - Gains on hit: Health +2 +1%
 - Projectile:
-  - Speed: 0.6, FollowCursor movement
+  - Speed: 0.8, FollowCursor movement
   - Lifetime: 1.1s, refreshed by every charge tick
   - Pierce: 3000
   - Size: 2
@@ -547,7 +547,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Spread (14 count +10 random, 30 spread +/-15)
 - Spawn: 0 dist
 - Animation: 0.5s
-- Costs: Stamina 40 +44%, Mana 18 +52%
+- Costs: Stamina 30 +24%, Mana 14 +42%
 - Gains on hit: Stamina +3, Mana +2
 - Projectile:
   - Speed: 8
@@ -626,7 +626,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 
 Serialized in `WaveManager.corruptionSpecialPool` (identical on the regular and unlimited
 managers). When the Corrupt button is pressed, every reward button that passes the
-`corruptChance` roll then rolls `corruptionSpecialChance` (8%). On a hit the stat reward is
+`corruptChance` roll then rolls `corruptionSpecialChance` (4%). On a hit the stat reward is
 replaced outright by one of these attacks instead of receiving a value multiplier. The same
 special cannot appear on two buttons in one corruption pass, and claiming one removes it from
 the pool for the rest of the run. Full stats for each attack are in the sections above.
@@ -656,7 +656,7 @@ skill tree nodes.
 - Pattern: Circle (3 count +3 random)
 - Spawn: 0 dist (fixed)
 - Animation: 1s
-- Costs: Stamina 30, Mana 55 +20%
+- Costs: Stamina 15, Mana 50 +15%
 - Gains on hit: Stamina +1, Mana +2 +2%
 - Projectile:
   - Speed: 1.4
@@ -684,7 +684,7 @@ skill tree nodes.
   - Speed: 0 (melee)
   - Lifetime: 1s
   - Pierce: 3000
-  - Size: 2.5
+  - Size: 4
   - Damage: 225% Spell
   - Scaling: EffAtk
   - Effect: 100% on hit (Vulnerable, 4s, -30% damageRes)
@@ -794,6 +794,9 @@ The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an auth
 `StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
 again on `OnRemove`. Used by `Solar Wind`.
 
+The `Overhealth` and `AddChain` types are passive: they configure the player on `OnUnlock`
+and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
+
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded` are present
 in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
@@ -820,6 +823,18 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Projectile: `Autopilot.prefab`
 - Description: Taking a direct hit spawns 3 spiraling projectiles that home in on nearby
   enemies and return stamina and health on hit.
+
+## Cresendo
+- Asset: `Cresendo`
+- Type: CooldownAdvance
+- Conditions: OnBasicAttack
+- Chance: 100%
+- Cooldown: 1s
+- Delay: 0s
+- Amount: 8
+- Advance Type: Ult
+- Description: Basic attacks advance the Ultimate cooldown by 8% of its length, at most
+  once per second.
 
 ## Decoy
 - Asset: `Decoy`
@@ -853,6 +868,16 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Unlocked by: `Node_decoy` ("Cosmic Superimposition", 3 skill points, prerequisite
   `Node_ms2`, requires the base Decoy upgrade, which it consumes on unlock and returns
   on refund)
+
+## Exsanguinate
+- Asset: `Exsanguinate`
+- Type: Overhealth
+- Conditions: none (applied on unlock)
+- Conversion: 50% of healing received at full health
+- Decay: 3% of the current pool per 0.5s
+- Description: While at full health, half of every heal â€” health regen included â€” becomes
+  overhealth instead. Overhealth sits above `EffMaxHp`, is spent before health when damage
+  lands, and bleeds off 3% of what remains every 0.5s. Cleared on death.
 
 ## Feedback Loop
 - Asset: `FeedbackLoop`
@@ -980,6 +1005,27 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 - Projectile: `Supersonic.prefab`
 - Description: Ending a dash spawns 3 Supersonic projectiles, at most once per second.
 
+## Tempo
+- Asset: `Tempo`
+- Type: CooldownAdvance
+- Conditions: OnAttack
+- Chance: 100%
+- Cooldown: 0s
+- Delay: 0s
+- Amount: 18
+- Advance Type: Dash
+- Description: Every attack advances the dash cooldown by 18% of its length.
+
+## Terminal Cascade
+- Asset: `Terminal Cascade`
+- Type: AddChain
+- Conditions: none (applied on unlock)
+- Retrigger Chance: 25%
+- Description: When a chain of `additionalAttack` spawns reaches its end â€” the last link
+  has no further additional attack, or its `additionalChance` roll fails â€” there is a 25%
+  chance to fire the attack that started the chain again, from the player and aimed at the
+  cursor. The retrigger pays no cooldown or resource cost, and the new chain can loop again.
+
 ---
 
 # Status Effects
@@ -1001,11 +1047,11 @@ Folder: `Assets/data/StatusEffect`.
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |
 | `Pulled 0.6 1 1.5 5 0.1` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 5 (+2/stack), 1.5 radius |
 | `Pulled 0.75 1 1.4 2 1.5` | Pulled | Possessed | 0.75s | 0.016s | 1 | Pull speed 1.4 (+2/stack), 1.5 radius |
-| `Radiation 4 0.25 8 2 CritDmg` | DoT | Radiation | 4s | 0.25s | 8 | 3% critDamage per tick |
+| `Radiation 4 0.25 8 2 CritDmg` | DoT | Radiation | 5s | 0.25s | 10 | 5% critDamage per tick |
 | `Reminiscence Cooldown` | Info | Reminiscence Cooldown | 4s | - | 1 | Cooldown marker |
 | `Slow 3 8 10` | StatReduction | Slow | 3s | - | 8 | -10% moveSpeed per stack |
 | `Slow 5 3 15` | StatReduction | Slow | 5s | - | 3 | -15% moveSpeed per stack |
-| `Slow 6 15 5` | StatReduction | Slow | 6s | - | 15 | -5% moveSpeed per stack |
+| `Slow 4 15 5` | StatReduction | Slow | 4s | - | 15 | -5% moveSpeed per stack |
 | `Slow 8 2 30` | StatReduction | Slow | 8s | - | 2 | -30% moveSpeed per stack |
 | `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +3 hpRegen, +8% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
@@ -1020,8 +1066,9 @@ Folder: `Assets/data/StatusEffect`.
 
 Used by enemies rather than the player: `Crumbling 6 10 4` (Crab), `Poison 2 0.5 1 20 Atk`
 (Slime), `Slow 8 2 30` (Lich), `Stun 6` (Cultist), `Vulnerable 6 6 5` (Bat Mark),
-`Stun 2` (also used by BallSpam), `Slow 6 15 5` and `Freeze 2` (Slime (Frost)'s Blizzard),
+`Stun 2` (also used by BallSpam), `Slow 4 15 5` and `Freeze 2` (Slime (Frost)'s Blizzard),
 `Overheat` (Slime (Magma)'s Eruption).
 
 `Slow 5 3 15` is authored but no longer referenced by any projectile â€” Blizzard moved to
-`Slow 6 15 5` in v0.3.9.
+`Slow 6 15 5` in v0.3.9, which was reauthored as `Slow 4 15 5` (4s instead of 6s) in v0.4.1_2.
+The `Radiation 4 0.25 8 2 CritDmg` asset name is likewise stale: it now runs 5s with 10 stacks.

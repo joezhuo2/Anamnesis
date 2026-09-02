@@ -119,6 +119,7 @@ namespace CrystalFlux.EntitySystem
             }
             EndDash();
         }
+
         public void EndDash()
         {
             esm.AddStat(new StatBuff(StatType.IsDashing, 0f));
@@ -126,6 +127,7 @@ namespace CrystalFlux.EntitySystem
 
             if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnEndDash);
         }
+
         public void AdvanceDash(float pctAmt)
         {
             var edc = esm.GetStat(StatType.EffDashCooldown);

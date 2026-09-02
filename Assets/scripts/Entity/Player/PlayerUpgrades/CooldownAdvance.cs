@@ -1,9 +1,8 @@
 using CrystalFlux.EntitySystem;
-using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 using CrystalFlux.Core;
 
-public enum CooldownAdvanceType { All, Basic, Skill, Ult }
+public enum CooldownAdvanceType { All, Basic, Skill, Ult, Dash }
 
 [CreateAssetMenu(fileName = "PlayerUpgrade", menuName = "PlayerUpgrade/CooldownAdvance")]
 public class CooldownAdvance : PlayerUpgrade
@@ -23,6 +22,10 @@ public class CooldownAdvance : PlayerUpgrade
                 case CooldownAdvanceType.Ult: pah.AdvanceCooldown(AttackType.Ultimate, amt); break;
                 default: break;
             }
+        }
+        if (type == CooldownAdvanceType.Dash && player.TryGetComponent<PlayerMovement>(out var pm))
+        {
+            pm.AdvanceDash(amt);
         }
     }
 }

@@ -1,6 +1,6 @@
 # Planned Features 
 
-[?] indicates questionable behavior (may not be true), only occured one time, or may be unlucky
+[?] Questionable - indicates questionable behavior (may not be true), only occured one time, or may be unlucky
 
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
@@ -25,32 +25,40 @@
 - `companyName` is still `DefaultCompany`, which is part of the settings file path. Changing it later orphans existing settings files
 - scroll map in settings menu does not have a background image yet
 
+### Planned Abilities 
+- **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
+- **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct
+- **Midas Touch** - *something* consumes gold to increase all damage dealt by `{y}%`
+- **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
+
 ## Pre [v0.5.0] Checklist — Feel & Foundations
 *Make the current game feel finished before stacking more systems on it.*
 
 **Systems**
 - [ ] Pause menu with restart/home/quit
 - [ ] Difficulty selector - Easy (chance for additional skill points/rerolls, starting rare pool free pick, more reward choices) - Normal (current) - Hard (boosted enemy levels, lower bonus skill point/reroll chances)
+- [ ] input buffering (queue next attack early) (max 1?)
 
 **Content**
 - [ ] re-add phase based buffs using the new system (Cultist and Jellyfish still pending)
-- [ ] Wave 60 boss
-- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
-- [ ] Armor based basic attack/ultimate
+- [ ] Boss #4
+- [ ] Armor based basic/ultimate (potentially change supernova (skill → basic) → new skill)
 
 **QoL & Polish**
-- [ ] Title/header for reward menu
 - [ ] map borders (tilemap colliders)
 - [ ] finish tilemap
-- [ ] Background Overlays - skill tree, reward menu, home screen, etc.
+- [ ] attack cooldown over indicator
+- [ ] number formatting - use K, M
+- [ ] Background Overlays - skill tree, reward menu, home screen, settings menu
 - [ ] skill point indicator
+- [ ] Title/header for reward menu
+- [ ] unlimited wave tuning (everything spawns all at once rn → cap max spawn speed OR disable extra spawns)
 
 ## Pre [v0.6.0] Checklist — Combat Depth
 *Attacks chain, enemies fight back with more than stats.*
 
 **Systems**
 - [ ] attack combo chains
-- [ ] input buffering (queue next attack early)
 - [ ] Audio (SFX + music buses)
 
 **Content**
@@ -58,14 +66,13 @@
 - [ ] backstap `specialMult`
 - [ ] more enemy move telegraphs
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
+- [ ] contact damage
 
 **QoL & Polish**
 - [ ] Full stats display menu
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
 - [ ] settings menu overhaul: volume control
-- [ ] attack cooldown over indicator
-- [ ] number formatting - use K, M
 
 ## Pre [v0.7.0] Checklist — Run Variety
 *Every wave stops looking the same; the settings/stats menus catch up.*
@@ -167,12 +174,12 @@
 - [ ] Screenshot mode that hides the HUD
 
 ## Planned - Unknown
+- [ ] target dummy OR dps counter
 - [ ] Screen shake and hit-stop feedback on attacks
 - [ ] Auto-pause when window loses focus (single-player)
 - [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
 - [ ] Scrollable Tooltips
 - [ ] "What's new" changelog popup on update
-- [ ] target dummy OR dps counter
 - [ ] reward history
 - [ ] queue skill point spending
 - [ ] skill node undo grace window
@@ -185,3 +192,4 @@
 - [ ] cosmetics (player skins/dash effects/attack effects)
 - [ ] nameplates/titles
 - [ ] background/ambience (debris/wind)
+- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)

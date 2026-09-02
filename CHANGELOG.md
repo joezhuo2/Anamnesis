@@ -7,6 +7,27 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.2] - 2026-09-02
+
+### Added
+- **Overhealth** — a pool of health held *above* `EffMaxHp`. It is spent before `currentHp` when damage lands, is never clamped by max health, and is cleared on death. Backed by the new `StatType.overhealth` (Core v0.9.0), so buffs, status effects and gear can move the pool directly; `EntityHealth` owns the gain/decay rules and exposes `SetOverhealth(convPct, decayPct, interval)`. Damage absorbed by overhealth still runs the hurt animation, i-frames, the damage number and the `OnTakeHit` triggers, so a fully-absorbed hit does not hand out free invulnerability
+- **Exsanguinate** (`Overhealth`) — a passive `PlayerUpgrade` that converts 50% of any healing received *while already at full health* (health regen included) into overhealth, which then decays 3% of what remains every 0.5s. `RegenHp` no longer early-returns at full health while the conversion is active, so regen is the main feed. In the treasure pool
+- **Terminal Cascade** (`AddChain`) — a passive `PlayerUpgrade` giving a 25% chance, when a chain of `additionalAttack` spawns ends, to fire the attack that *started* the chain again from the player. Projectiles now carry a `chainRoot`: an attack's own projectiles have none, the additional attacks they spawn inherit `pd.mainAttack` as the root, and deeper links keep propagating it, so `A → B → C` all resolve back to `A`. The end of the chain is a rooted projectile that spawns nothing further — no `additionalAttack`, or a failed `additionalChance` roll — checked on hit, on lifetime expiry when `addAttackRequiresHit` is false, and from `Explode`. Fires at most once per projectile, player team only. Retriggers pay no cooldown or resource cost. In the treasure pool
+- **`StatType.healingPct`** (Core v0.9.0) — scales incoming healing before it is applied, so it covers every heal path (lifesteal, on-hit resource gains, Stellar Surge, regen) and stacks in front of the overhealth conversion. Clamped at `>= 0`, so a -100% roll zeroes healing rather than inverting it into damage. Not yet on any reward, gear or skill tree node
+- **Cresendo** (`CooldownAdvance`) — basic attacks advance the Ultimate cooldown by 8%, at most once per second. In the treasure pool
+- **Tempo** (`CooldownAdvance`) — every attack advances the dash cooldown by 18%. In the treasure pool
+- `CooldownAdvanceType.Dash` — `CooldownAdvance` can now target the dash cooldown through `PlayerMovement.AdvanceDash`, alongside the existing All/Basic/Skill/Ult targets
+
+### Changed
+- Health bar text (both the world-space bar and the player HUD) reads `cur(+over)/max` while overhealth is held, and falls back to `cur/max` at zero. The slider itself still tops out at max health
+- `ProjectileSpawner.SpawnProjectile`, both `SpawnFromPattern` overloads and every pattern helper take an optional trailing `AttackData chainRoot`; `Projectile.Setup` takes an optional `chainRootOverride`. All existing call sites are unaffected
+- `Projectile` gained a `ResetStatics` domain-reload hook, which also clears `liveDataRefs` and `ApplyingProjectileHit`
+- `com.crystalflux.core` repinned from `a8c06b2` (v0.8.0) to `3284d28` (v0.9.0)
+
+### Rebalance
+- **Luminaria** cost reworked from Stamina 15 + Health 10% + Mana 60 to Health 35 + 25% + Mana 30
+- Unlimited waves only: `corruptChance` 40 → 45, `corruptPositiveChance` 35 → 30, `maxCorruptBoost` 110 → 135. The regular wave manager is untouched at 40 / 40 / 80
+
 ## [v0.4.1_2] - 2026-09-02
 
 ### Added
