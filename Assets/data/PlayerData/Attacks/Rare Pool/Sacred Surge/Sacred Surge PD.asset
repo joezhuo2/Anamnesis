@@ -22,8 +22,8 @@ MonoBehaviour:
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
-  physicalMult: 3.2
-  spellMult: 1.1
+  physicalMult: 3.45
+  spellMult: 1.4
   trueMult: 0
   scalingStat: 35
   specialMult: 1
@@ -46,5 +46,5 @@ MonoBehaviour:
   randOrbRadOffset: 0
   orbitSelf: 0
   rotateClockwise: 0
-  kbForce: 4
+  kbForce: 2
   knockbackTime: 0.15

@@ -25,10 +25,13 @@ namespace CrystalFlux.WaveSystem
             if (waveManager == null) return;
 
             waveManager.CloseAllButtons();
-            waveManager.StartNextWave();
+
+            DifficultySelector.Current?.LockIn(waveManager);
 
             IAnnouncer.Current?.DisableSubtitle();
             IAnnouncer.Current?.DisableTitle();
+
+            if (!waveManager.TryStartPreRunPicks()) waveManager.StartNextWave();
         }
 
         private WaveManager FindBaseWaveManager()

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sacred Surge AD
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
   type: 1
-  cooldown: 14
+  cooldown: 12
   projectilePrefab: {fileID: 4371589364534054369, guid: 45290b72536a755469900e3881cfb6a2, type: 3}
   pd: {fileID: 11400000, guid: 32038abd689cd564aa6d456b0c6e4c47, type: 2}
   pattern: 0

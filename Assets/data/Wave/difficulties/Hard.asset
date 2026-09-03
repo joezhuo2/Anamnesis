@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15cc7e945876e6d4f83d64d2df238cf6, type: 3}
+  m_Name: Hard
+  m_EditorClassIdentifier: CrystalFlux.Wave::CrystalFlux.WaveSystem.DifficultyData
+  displayName: Hard
+  description: A high-intensity challenge for seasoned players.
+  frameSprite: {fileID: -2093662943970375201, guid: b87c65ce3fa2fb641b9889c4e9222dcb, type: 3}
+  nameColor: {r: 1, g: 1, b: 1, a: 1}
+  enemyLevelAdd: 3
+  enemyLevelPerWaveAdd: 0.25
+  maxTotalEnemiesAdd: 5
+  maxCurrentEnemiesAdd: 2
+  rewardChoicesAdd: 0
+  qualityBonusAdd: -0.1
+  milestoneRewardChoicesAdd: 0
+  occasionalRerollChanceAdd: -0.2
+  occasionalSkillPointChanceAdd: -0.2
+  anomalyChanceAdd: 15
+  minAnomalyCountAdd: 0
+  maxAnomalyCountAdd: 0
+  anomalyRerollMinAdd: 0
+  anomalyRerollMaxAdd: 0
+  anomalySkillPointAdd: 0
+  anomalyQualityAdd: 0
+  corruptChanceAdd: 0
+  corruptPositiveChanceAdd: -10
+  maxCorruptBoostAdd: 0
+  rerollGoldCostAdd: 50
+  startingRerollsAdd: 0
+  startingSkillPointsAdd: 0
+  preRunPickCount: 0
+  preRunTreasureChance: 25

@@ -23,7 +23,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 
 ## Core Loop
 
-1. **Pick a gamemode** — choose **Regular** waves (standard escalating sequence) or **Unlimited** waves (infinite scaling, faster spawns, periodic boss waves, endless rewards).
+1. **Pick a difficulty and a gamemode** — cycle between **Easy**, **Normal** and **Hard** on the home screen (the tooltip lists exactly what each one shifts), then choose **Regular** waves (standard escalating sequence) or **Unlimited** waves (infinite scaling, faster spawns, periodic boss waves, endless rewards). Easy opens a free pre-run pick from the rare and treasure pools before wave 1.
 2. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters. Enemies can even **split** into more enemies on death, and extra spawns occur every 10 waves. Enemies scale exponentially.
 3. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some rare attacks and Awakenings are gated behind a minimum wave, so late-game options only start appearing once the run is deep enough. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward. Reroll with **gold** (200g) when out of rerolls.
 4. **Face anomalies** — random world modifiers (e.g. *Time Trial*, *No Damage*, *Stat Modifier*, and more) that add risk for greater reward.
@@ -33,6 +33,7 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 
 ## Features
 
+- **Difficulty selector** — pick **Easy**, **Normal** or **Hard** on the home screen with the left/right arrows before starting a run; the choice persists to `settings.json` and locks in when a gamemode button is pressed. Each difficulty is a `DifficultyData` ScriptableObject of additive offsets — enemy level (flat and per wave), total and concurrent enemy counts, reward choices and quality, milestone choices, bonus reroll/skill-point chance, anomaly chance/counts/rewards, corruption odds and boost, reroll gold cost, starting rerolls and skill points, and pre-run free picks. The tooltip is generated from the asset, listing only the non-zero offsets, and Normal is an all-zero asset so it is exactly the untuned baseline. Easy hands out 3 pre-run free picks, +5 rerolls and +3 skill points; Hard adds +3 enemy levels (+0.25 per wave), 5 more total and 2 more concurrent enemies, a +50g reroll cost and worse corrupt odds.
 - **Gamemode selector** — choose between **Regular** and **Unlimited** waves at the start of each run via dedicated buttons (with tooltips). Player actions are enabled in the lobby.
 - **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, single-enemy boss waves, boss bars, and reward/anomaly button panels that update dynamically. A live **wave progress indicator** (`Wave 7 (12/30)`) tracks kills against the wave total, and clearing a wave announces the rerolls and skill points it granted in a single subtitle.
 - **Unlimited waves** — an endless mode that scales infinitely: enemy level and max total enemies rise each wave, spawns speed up, boss waves appear periodically, and rewards never stop. Reuses the shared `WaveManager` settings (reroll cost, rewards, corruption, milestones, anomalies) with no reconfiguration; only the corruption odds are tuned separately.
@@ -159,7 +160,7 @@ Assets/
 │   ├── PlayerData/            # Player attacks, upgrades, skill tree data, controls
 │   ├── prefabs/               # UI element prefabs
 │   ├── StatusEffect/          # Authored status effect assets (DoTs, stuns, buffs, debuffs)
-│   └── WaveData/              # Wave sequences
+│   └── Wave/                  # Wave sequences (waves/) and difficulty assets (difficulties/)
 └── scripts/
     ├── Entity/                # [asmdef] Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats

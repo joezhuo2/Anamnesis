@@ -44,7 +44,13 @@ namespace CrystalFlux.WaveSystem
         {
             base.Start();
             lastBossWave = -minWavesBetweenBossWaves;
-            maxTotalEnemies = baseMaxTotalEnemies;
+            maxTotalEnemies = Mathf.Max(1, baseMaxTotalEnemies + D.maxTotalEnemiesAdd);
+        }
+
+        public override void ApplyDifficulty(DifficultyData d)
+        {
+            base.ApplyDifficulty(d);
+            maxTotalEnemies = Mathf.Max(1, baseMaxTotalEnemies + d.maxTotalEnemiesAdd);
         }
 
         public override void StartNextWave()
@@ -88,7 +94,7 @@ namespace CrystalFlux.WaveSystem
         private IEnumerator WaveSpawnRoutine()
         {
             int wave = GetCurrentWave();
-            int maxCurrent = isBossWave ? 1 : maxCurrentEnemies;
+            int maxCurrent = isBossWave ? 1 : Mathf.Max(1, maxCurrentEnemies + D.maxCurrentEnemiesAdd);
 
             while (totalSpawned < waveMaxTotalEnemies)
             {
@@ -233,7 +239,7 @@ namespace CrystalFlux.WaveSystem
             return bossPrefabs[Random.Range(0, bossPrefabs.Count)];
         }
 
-        private int GetEnemyLevel(int wave) => baseEnemyLevel + (wave - 1);
+        private int GetEnemyLevel(int wave) => EnemyLevel(baseEnemyLevel + (wave - 1));
         private float GetMinSpawnFrequency(int wave) => Mathf.Max(0.1f, minSpawnFrequency - (spawnSpeedIncreasePerWave * (wave - 1)));
         private float GetMaxSpawnFrequency(int wave) => Mathf.Max(0.1f, maxSpawnFrequency - (spawnSpeedIncreasePerWave * (wave - 1)));
     }

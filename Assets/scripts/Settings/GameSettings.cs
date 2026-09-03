@@ -7,10 +7,11 @@ namespace CrystalFlux.SettingsSystem
     [Serializable]
     public class GameSettings
     {
-        public const int CurrentVersion = 1;
+        public const int CurrentVersion = 2;
         public const string FileName = "settings.json";
 
         public int version = CurrentVersion;
+        public int difficultyIndex = 1;
         public bool showEnemyHealthBars = true;
         public bool xpDropsEnabled = true;
         public bool goldDropsEnabled = true;

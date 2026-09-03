@@ -30,7 +30,6 @@
 
 **Systems**
 - [ ] Pause menu with restart run/home screen/quit
-- [ ] Difficulty selector - Easy (chance for additional skill points/rerolls every wave starting rare pool free pick before starting first wave, more reward choices/reward quality) - Normal (current) - Hard (boosted enemy levels, lower bonus skill point/reroll chances by), use tooltiptrigger with a description preview, every setting should be configurable
 
 **Content**
 - [ ] re-add phase based buffs using the new system (Cultist and Jellyfish still pending)
@@ -39,11 +38,11 @@
 **QoL & Polish**
 - [ ] finish tilemap
   - [ ] map borders (tilemap colliders)
-- [ ] attack cooldown over indicator
+- [ ] attack cooldown over indicator - how
   - [ ] attack cannot cast indicator (change attack cooldown indicator border highlight color to red)
 - [ ] Background Overlays - skill tree, reward menu, home screen, settings menu
   - [ ] Title/header for reward menu
-- [ ] skill point indicator
+- [ ] skill point indicator - how/where
 
 ## Pre [v0.6.0] Checklist — Combat Depth
 *Attacks chain, enemies fight back with more than stats.*
@@ -64,6 +63,7 @@
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
 - [ ] settings menu overhaul: volume control
+- [ ] add code of conduct, license, [*] security policy, issue template, [*] pull req template
 
 ## Pre [v0.7.0] Checklist — Run Variety
 *Every wave stops looking the same; the settings/stats menus catch up.*

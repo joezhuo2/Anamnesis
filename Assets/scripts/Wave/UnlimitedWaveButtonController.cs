@@ -24,10 +24,13 @@ namespace CrystalFlux.WaveSystem
             if (unlimitedWaveManager == null) return;
 
             unlimitedWaveManager.CloseAllButtons();
-            unlimitedWaveManager.StartNextWave();
+
+            DifficultySelector.Current?.LockIn(unlimitedWaveManager);
 
             IAnnouncer.Current?.DisableSubtitle();
             IAnnouncer.Current?.DisableTitle();
+
+            if (!unlimitedWaveManager.TryStartPreRunPicks()) unlimitedWaveManager.StartNextWave();
         }
     }
 }

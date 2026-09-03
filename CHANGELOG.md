@@ -7,6 +7,26 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.4] - 2026-09-03 — Difficulty Selector
+
+### Added
+- **Difficulty selector** — a cycler on the home screen (left/right arrow buttons, framed header sprite, tooltip preview) that picks the run's difficulty before the gamemode button is pressed. The choice persists to `settings.json` (`difficultyIndex`, default 1 = Normal) and locks in the moment a wave manager starts, hiding the selector for the rest of the run
+- **`DifficultyData`** (`Data/Difficulty` ScriptableObject) — every difficulty is authored data, not code. It carries identity (display name, description, frame sprite, name color) plus additive offsets for enemy scaling (`enemyLevelAdd`, `enemyLevelPerWaveAdd`, `maxTotalEnemiesAdd`, `maxCurrentEnemiesAdd`), rewards (`rewardChoicesAdd`, `qualityBonusAdd`, `milestoneRewardChoicesAdd`), occasional wave rewards (`occasionalRerollChanceAdd`, `occasionalSkillPointChanceAdd`), anomalies (chance, min/max counts, min/max rerolls, skill points, quality), corruption (chance, positive chance, max boost), economy (`rerollGoldCostAdd`, `startingRerollsAdd`, `startingSkillPointsAdd`) and the pre-run free pick (`preRunPickCount`, `preRunTreasureChance`). `BuildTooltipDescription()` renders only the non-zero offsets, signed, so the tooltip is generated from the asset rather than hand-written
+- **Three shipped difficulties** — *Easy*, *Normal* (the untouched baseline, all offsets zero) and *Hard*
+  - **Easy**: +1 reward choice, +0.25 reward quality, +1 milestone choice, +15% bonus reroll and skill point chance, +1 min/max anomaly choice, +1/+2 anomaly rerolls, +1 anomaly skill point, +0.25 anomaly quality, +15% corrupt chance / positive chance / max boost, +5 starting rerolls, +3 starting skill points, and 3 pre-run free picks
+  - **Hard**: +3 enemy level and +0.25 enemy level per wave, +5 total and +2 concurrent enemies, -0.1 reward quality, -20% bonus reroll and skill point chance, +15% anomaly chance, -10% corrupt positive chance, +50g reroll cost
+- **Pre-run free pick** — a difficulty with `preRunPickCount > 0` opens a reward panel before wave 1 offering that many choices drawn from the rare and treasure pools (`preRunTreasureChance` decides which pool each slot rolls, defaulting to the rare pool when a roll comes up empty). It reuses the existing reward panel, reroll button and claim flow end-to-end; claiming or skipping starts wave 1. Corrupt is hidden on this panel, and reroll is refused when neither pool has a `minWave`-eligible entry. Backed by the new `RewardType.PreRun`
+- **`WaveManager.ApplyDifficulty(DifficultyData)`** — applies the one-shot offsets (starting rerolls, starting skill points) and stores the asset. `UnlimitedWaveManager` overrides it to fold `maxTotalEnemiesAdd` into its accumulating `maxTotalEnemies`, which is the only field that cannot be read per use
+
+### Changed
+- Difficulty offsets are read at the point of use through the protected `D` accessor, never written back into the serialized `WaveManager` fields. `D` falls back to `DifficultyData.Neutral` — an all-zero, hidden singleton — so a run with no difficulty assigned behaves exactly as it did before, and applying a difficulty twice cannot stack. Enemy level goes through `EnemyLevel()`, reward quality through `Quality`, reroll cost through `RerollGoldCost`
+- `GameSettings.CurrentVersion` bumped `1` → `2` for the new `difficultyIndex` field. Existing settings files load and are re-stamped to the current version, so the field simply takes its default
+- Wave assets moved from `Assets/data/WaveData/` to `Assets/data/Wave/waves/` (with the profiling sequence under `waves/test/`), and difficulty assets live alongside them in `Assets/data/Wave/difficulties/`
+
+### Fixed
+- `HandleAnomalyRewards` guarded the pending anomaly skill point count on the *reroll* field (`pendingAnomalyRerolls >= 0 ? pendingAnomalySkillPoints : 1`), so a rolled value of 0 was indistinguishable from "not rolled". `pendingAnomalySkillPoints` now defaults to and resets to `-1`, matching `pendingAnomalyRerolls`, and guards on itself
+- The pre-run panel routed reroll / skip / corrupt clicks through the static `ActiveManager`, which is normally assigned in `StartNextWave()` — a method the pre-run panel runs before. `TryStartPreRunPicks` now sets `ActiveManager = this`. In unlimited mode the null had let the regular `WaveManager` handle the reroll: it generated normal-pool rewards, never cleared the pre-run button, and decremented its own reroll count, making the shared reroll text jump
+
 ## [v0.4.2_2] - 2026-09-03
 
 ### Added
