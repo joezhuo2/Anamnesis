@@ -133,7 +133,7 @@ namespace CrystalFlux.WaveSystem
             }
 
             int wave = GetCurrentWave();
-            int spawnCount = Mathf.Min(Mathf.RoundToInt(wave / 10) + 1, waveMaxTotalEnemies - totalSpawned);
+            int spawnCount = enableExtraSpawns ? Mathf.Min(Mathf.RoundToInt(wave / 10) + 1, waveMaxTotalEnemies - totalSpawned) : 1;
             for (int i = 0; i < spawnCount; i++) SpawnEnemy();
         }
 

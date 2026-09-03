@@ -17,7 +17,7 @@ namespace CrystalFlux.WaveSystem
         public Image borderHighlight;
         public Image iconImage;
 
-        public static readonly Color CorruptedSpecialColor = new(0.65f, 0.15f, 0.9f);
+        public static readonly Color CorruptedSpecialColor = Color.darkBlue;
 
         [HideInInspector] public GeneratedReward gr;
         private AttackReward ar;

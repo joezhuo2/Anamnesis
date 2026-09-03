@@ -7,6 +7,43 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.2_2] - 2026-09-03
+
+### Added
+- **Sacred Surge** (`Sacred Surge AD`) — a new rare-pool Skill built around armor. 14s cooldown, 1s cast time that can be moved through, spawns 4 units out for 320% Phys + 110% Spell scaling off `EffArmor` across a 3000-pierce, size-2 field that re-hits the same enemy every 0.9s. Costs Stamina 8 +4%, and returns Stamina +3, Health +1 +2%, Mana +2 on hit. It has `cleanseDebuffs` (max 1) - strips the caster's debuffs on cast, and holding past the 0.225s threshold sustains the projectile for up to 8s on a 0.9s tick interval rather than spawning a separate charge attack. No `minWave`, so it can roll from wave 1. Reuses the retired Luminaria (`Priest_skill2`) sprites
+- **Attack input buffering** — `PlayerAttackHandler` queues an attack pressed during a cast or charge instead of dropping it, then fires it the frame the previous attack ends. Tunable through `maxQueuedAttacks` (default 1) and `queueExpiry` (default 0.3s); a repeat press of an already-queued type refreshes its expiry rather than adding a second entry. The queue is cleared on death, on losing `CanAttack`, and by `EndAllAttackStates`, and does not advance while `Time.timeScale == 0f`
+- **`WaveManager.enableExtraSpawns`** — when off, a spawn tick always spawns exactly one enemy instead of the `wave / 10 + 1` batch. Inherited by `UnlimitedWaveManager`. On for the regular wave manager, off for unlimited waves
+- **`TextType`** (`Standard` / `Gold` / `Exp`) — replaces the two `xpWrapperText` / `isGold` bools that `TextIndicator` and `TextIndicatorSpawner` threaded through five overloads, so the three indicator kinds are now one exclusive choice at the call site
+- `StatType.healingPct` added to the reward buff pool (+3, weight 2) on both wave managers — it shipped in v0.4.2 with no way to roll it
+
+### Changed
+- Floating numbers abbreviate at scale: `1234` reads `1.2k` and `1234567` reads `1.2M`, applied before the gold/XP suffix so those read `+1.2k g` and `+1.2k xp`
+- `TextIndicator.Initialize` and all three `TextIndicatorSpawner.SpawnTextIndicator` overloads take a trailing `TextType` in place of the two trailing bools. Call sites in `EntityHealth` (damage and gold) and `PlayerLevel` (XP) updated
+- **Luminaria** re-animated onto the `Priest_skill3` sprite sheet — 12 frames over ~1s, replacing the 11-frame `Priest_skill2` clip — with the prefab sprite and collider bounds repointed
+- `RewardButton.CorruptedSpecialColor` changed from purple `(0.65, 0.15, 0.9)` to `Color.darkBlue`
+
+### Rebalance
+- **Supernova** — reworked into a no-cost Basic Attack, paid for with weaker numbers
+  - staminaCost: 20 → 0
+  - staminaCostPct: 10 → 0
+  - manaCost: 5 → 0
+  - staminaGainOnHit: 4 → 3
+  - healthPctGainOnHit: 5 → 3
+  - manaGainOnHit: 0 → 2
+  - physicalMult: 190% → 160%
+  - trueMult: 30% → 20%
+- **`UnlimitedWaveManager`** — extra spawns disabled and the reward rarity curve flattened, so late unlimited waves stop dumping the whole spawn budget at once. The regular wave manager is untouched
+  - enableExtraSpawns: on → off (one enemy per spawn tick regardless of wave)
+  - spawnSpeedIncreasePerWave: 0.1 → 0.12
+  - Common weight: 600 → 700
+  - Uncommon weight: 350 → 300
+  - Rare weight: 200 → 175
+  - Epic weight: 100 → 90
+  - Legendary weight: 50 → 40
+  - Mythic weight: 15 → 10
+  - Celestial: mult 16 → 15, weight 3 → 2.97
+  - Transcendent: mult 20 → 15
+
 ## [v0.4.2] - 2026-09-02
 
 ### Added
@@ -44,8 +81,12 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 - Enemy per-level HP growth lowered from `1.12x` to `1.10x` in `EnemyStatManager.ScaleBaseStats`.
   - To compensate, Slime base HP 80 → 90 and Crab base HP 90 → 100
 - `Slow 6 15 5` replaced by `Slow 4 15 5` — the same 5%-per-stack, 15-stack slow with its duration cut from 6s to 4s
-- **frost slime**: Blizzard cooldown 5s → 7s and its random spawn count 3 → 2 (2-5 → 2-4)
-- **Nebula**: physical 440% → 320% and cooldown 2s → 2.5s
+- **Frost slime - Blizzard**: 
+  - cooldown 5s → 7s 
+  - random spawn count 3 → 2 (2-5 → 2-4)
+- **Nebula**: 
+  - physical 440% → 320% 
+  - cooldown 2s → 2.5s
   - Radiation: duration 4s → 5s, max stacks 8 → 10, damage per tick (% of critDmg, per stack) 3 → 5
 - **Lifeforce** 
   - (first): mana gain on hit 3 → 2, spawn distance 1 → 2 

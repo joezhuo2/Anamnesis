@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Supernova AD
-  m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  type: 0
-  cooldown: 3
-  projectilePrefab: {fileID: 3196581985793714705, guid: 4c90613353e49a3479ac6268eca0b4f3, type: 3}
-  pd: {fileID: 11400000, guid: 0c760ae910e8b2846aaddfaca2f32757, type: 2}
+  m_Name: Sacred Surge AD
+  m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
+  type: 1
+  cooldown: 14
+  projectilePrefab: {fileID: 4371589364534054369, guid: 45290b72536a755469900e3881cfb6a2, type: 3}
+  pd: {fileID: 11400000, guid: 32038abd689cd564aa6d456b0c6e4c47, type: 2}
   pattern: 0
-  castTime: 0
+  castTime: 1
   canMoveWhileCasting: 1
   spawnDelay: 0
-  spawnDistance: 1
-  fixedDistance: 1
-  animationLength: 0.5
-  canCharge: 0
+  spawnDistance: 4
+  fixedDistance: 0
+  animationLength: 1
+  canCharge: 1
   chargeThreshold: 0.225
-  minChargeTime: 0
-  maxChargeTime: 5
-  chargeTickInterval: 1
+  minChargeTime: 1
+  maxChargeTime: 8
+  chargeTickInterval: 0.9
   cooldownOnAttackStart: 1
   chargeAttack: {fileID: 0}
   projectileCount: 1
@@ -42,8 +42,8 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 0
-  staminaCostPct: 0
+  staminaCost: 8
+  staminaCostPct: 4
   healthCost: 0
   healthCostPct: 0
   manaCost: 0
@@ -51,17 +51,17 @@ MonoBehaviour:
   basedOnDmgDealt: 1
   staminaGainOnHit: 3
   staminaPctGainOnHit: 0
-  healthGainOnHit: 0
-  healthPctGainOnHit: 3
+  healthGainOnHit: 1
+  healthPctGainOnHit: 2
   manaGainOnHit: 2
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
-  cleanseDebuffs: 0
+  cleanseDebuffs: 1
   fireOrbits: 0
   absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  icon: {fileID: 1520652673195428207, guid: 200003f81e59f234eb518c9441cf9f83, type: 3}
-  displayName: Supernova
+  icon: {fileID: -1199337406, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  displayName: Sacred Surge

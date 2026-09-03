@@ -3,6 +3,8 @@ using UnityEngine;
 
 namespace CrystalFlux.Core
 {
+    public enum TextType { Standard, Gold, Exp }
+
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class TextIndicator : MonoBehaviour
     {
@@ -20,17 +22,28 @@ namespace CrystalFlux.Core
             baseFontSize = text.fontSize;
         }
 
-        public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false, bool isGold = false)
+        public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, TextType textType)
         {
             mainCam = mainCam != null ? mainCam : Camera.main;
 
-            worldPos = sourcePos + new Vector3(Random.Range(-maxRandomOffset.x, maxRandomOffset.x), Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 0f);
+            worldPos = sourcePos + new Vector3(
+                Random.Range(-maxRandomOffset.x, maxRandomOffset.x), 
+                Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 
+                0f
+            );
+
             if (mainCam != null) transform.position = mainCam.WorldToScreenPoint(worldPos);
 
-            if (isGold) text.text = $"{(val >= 0 ? "+" : "")}{val}g";
-            else if (xpWrapperText) text.text = $"{(val >= 0 ? "+" : "")}{val} xp";
-            else text.text = val.ToString();
+            string result = val >= 1_000_000 ? (val / 1_000_000f).ToString("0.#") + "M"
+              : val >= 1_000     ? (val / 1_000f).ToString("0.#") + "k"
+              : val.ToString();
 
+            text.text = textType switch
+            {
+                TextType.Gold => $"{(val >= 0 ? "+" : "")}{result} g",
+                TextType.Exp => $"{(val >= 0 ? "+" : "")}{result} xp",
+                _ => result,
+            };
             text.color = color;
             text.fontSize = baseFontSize * scale;
 

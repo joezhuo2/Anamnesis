@@ -46,7 +46,7 @@ namespace CrystalFlux.EntitySystem
                     UnityEngine.Random.Range(0.5f, 0.7f),
                     UnityEngine.Random.Range(0.8f, 1.2f),
                     UnityEngine.Random.Range(0f, 0.2f),
-                    true
+                    TextType.Exp
                 );
             }
         }

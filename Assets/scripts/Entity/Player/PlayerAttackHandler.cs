@@ -27,6 +27,10 @@ namespace CrystalFlux.EntitySystem
         public TextMeshProUGUI castBarTextPrefab;
         public Vector3 castBarOffset;
 
+        [Header("Attack Queue")]
+        public int maxQueuedAttacks = 1;
+        public float queueExpiry = 0.3f;
+
         private Animator a;
         private IResourcePool pr;
         private IDamageable ph;
@@ -48,6 +52,16 @@ namespace CrystalFlux.EntitySystem
         private AttackData chargingAttack;
         private readonly List<AttackData> pendingDestroy = new();
         private static readonly HashSet<AttackData> inUseVisited = new();
+        private readonly List<QueuedAttack> attackQueue = new();
+
+        private struct QueuedAttack
+        {
+            public AttackType type;
+            public float expireAt;
+            public bool bypassCooldown;
+            public bool noCost;
+            public bool triggerUpgrades;
+        }
 
         public bool IsCasting => isCasting || isCharging;
         public bool IsCharging => isCharging;
@@ -62,6 +76,58 @@ namespace CrystalFlux.EntitySystem
 
             for (int i = 0; i < starting.Count; i++) UpdateAttack(starting[i].type, starting[i]);
         }
+        private void Update()
+        {
+            if (Time.timeScale == 0f) return;
+            if (attackQueue.Count == 0) return;
+
+            if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f)
+            {
+                attackQueue.Clear();
+                return;
+            }
+
+            if (Time.time >= attackQueue[0].expireAt)
+            {
+                attackQueue.RemoveAt(0);
+                return;
+            }
+
+            if (isCasting || isCharging) return;
+
+            QueuedAttack q = attackQueue[0];
+            attackQueue.RemoveAt(0);
+            PerformAttack(q.type, q.bypassCooldown, q.noCost, q.triggerUpgrades);
+        }
+
+        private void EnqueueAttack(AttackType type, bool bypassCooldown, bool noCost, bool triggerUpgrades)
+        {
+            if (maxQueuedAttacks <= 0) return;
+
+            float expireAt = Time.time + queueExpiry;
+
+            for (int i = 0; i < attackQueue.Count; i++)
+            {
+                if (attackQueue[i].type != type) continue;
+
+                QueuedAttack existing = attackQueue[i];
+                existing.expireAt = expireAt;
+                attackQueue[i] = existing;
+                return;
+            }
+
+            if (attackQueue.Count >= maxQueuedAttacks) return;
+
+            attackQueue.Add(new QueuedAttack
+            {
+                type = type,
+                expireAt = expireAt,
+                bypassCooldown = bypassCooldown,
+                noCost = noCost,
+                triggerUpgrades = triggerUpgrades
+            });
+        }
+
         private void OnDisable() => EndAllAttackStates();
 
         private void OnDestroy()
@@ -183,7 +249,12 @@ namespace CrystalFlux.EntitySystem
 
         public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
         {
-            if (isCasting || isCharging) return;
+            if (isCasting || isCharging)
+            {
+                EnqueueAttack(type, bypassCooldown, noCost, triggerUpgrades);
+                return;
+            }
+
             if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f || Time.timeScale == 0f) return;
 
             AttackData selected = attacks.Find(atk => atk.type == type);
@@ -443,6 +514,8 @@ namespace CrystalFlux.EntitySystem
 
         private void EndAllAttackStates()
         {
+            attackQueue.Clear();
+
             if (isCharging) EndCharge(chargingType, true);
             EndCast();
         }

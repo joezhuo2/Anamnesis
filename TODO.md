@@ -25,34 +25,25 @@
 - `companyName` is still `DefaultCompany`, which is part of the settings file path. Changing it later orphans existing settings files
 - scroll map in settings menu does not have a background image yet
 
-### Planned Abilities 
-- **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
-- **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct
-- **Midas Touch** - *something* consumes gold to increase all damage dealt by `{y}%`
-- **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
-
 ## Pre [v0.5.0] Checklist — Feel & Foundations
 *Make the current game feel finished before stacking more systems on it.*
 
 **Systems**
-- [ ] Pause menu with restart/home/quit
-- [ ] Difficulty selector - Easy (chance for additional skill points/rerolls, starting rare pool free pick, more reward choices) - Normal (current) - Hard (boosted enemy levels, lower bonus skill point/reroll chances)
-- [ ] input buffering (queue next attack early) (max 1?)
+- [ ] Pause menu with restart run/home screen/quit
+- [ ] Difficulty selector - Easy (chance for additional skill points/rerolls every wave starting rare pool free pick before starting first wave, more reward choices/reward quality) - Normal (current) - Hard (boosted enemy levels, lower bonus skill point/reroll chances by), use tooltiptrigger with a description preview, every setting should be configurable
 
 **Content**
 - [ ] re-add phase based buffs using the new system (Cultist and Jellyfish still pending)
 - [ ] Boss #4
-- [ ] Armor based basic/ultimate (potentially change supernova (skill → basic) → new skill)
 
 **QoL & Polish**
-- [ ] map borders (tilemap colliders)
 - [ ] finish tilemap
+  - [ ] map borders (tilemap colliders)
 - [ ] attack cooldown over indicator
-- [ ] number formatting - use K, M
+  - [ ] attack cannot cast indicator (change attack cooldown indicator border highlight color to red)
 - [ ] Background Overlays - skill tree, reward menu, home screen, settings menu
+  - [ ] Title/header for reward menu
 - [ ] skill point indicator
-- [ ] Title/header for reward menu
-- [ ] unlimited wave tuning (everything spawns all at once rn → cap max spawn speed OR disable extra spawns)
 
 ## Pre [v0.6.0] Checklist — Combat Depth
 *Attacks chain, enemies fight back with more than stats.*
@@ -193,3 +184,16 @@
 - [ ] nameplates/titles
 - [ ] background/ambience (debris/wind)
 - [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
+
+### Planned Abilities 
+- **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
+- **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct
+- **Midas Touch** - *something* consumes gold to increase all damage dealt by `{y}%`
+- **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
+
+### Available Colors 
+- **red**
+- **red-pink**
+- purple-blue
+- green-yellow
+- brown

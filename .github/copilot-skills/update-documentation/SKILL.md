@@ -3,7 +3,7 @@ name: update-documentation
 description: Update All documentation (CHANGELOG, README, and ROADMAP) based on git diff for a specific version
 ---
 
-# Update Documentation (Changelog, README, and Roadmap) Skill
+# Update Documentation (Changelog, README, and Roadmap, and Game Index) Skill
 
 This skill automates the process of updating project documentation based on git changes for a specific version release.
 
@@ -18,7 +18,10 @@ This skill automates the process of updating project documentation based on git 
 
 ### 1. Get Git Diff
 ```bash
-git diff --name-only
+# Uncommitted changes:
+git diff --name-only 
+# OR changes between previous release tag and HEAD:
+git diff PREVIOUS_TAG..HEAD -- 'Assets/scripts/**' 'Assets/data/**'
 git diff -- 'Assets/scripts/**' 'Assets/data/**' 'Assets/*.unity' 'CHANGELOG.md' 'README.md' 'ROADMAP.md' 'TODO.md'
 ```
 
@@ -29,30 +32,40 @@ Categorize changes into:
 - **Fixed**: Bug fixes, null-safety, logic corrections
 - **Removed**: Deleted code, files, features
 - **Updated**: Modified documentation, comments, or other non-code elements
+- **Rebalance**: Adjusted values, mechanics, or systems to improve balance
 - When writing entries - follow the existing format unless otherwise stated
 
 ### 3. Update CHANGELOG.md
 Add a new version section at the top (after the header) in Keep a Changelog format, implementing whichever of the following categories apply, with UPDATE NAME only being included if there are notable changes to highlight:
 ```markdown
-## [vVERYYMAJOR.MAJOR.MINOR_PATCH] - YYYY-MM-DD [- UPDATE NAME]
+## [vVERYMAJOR.MAJOR.MINOR_PATCH] - YYYY-MM-DD [- UPDATE NAME]
 
 ### Highlights
 highlights from the previous MAJOR version to the current version, including any notable changes, new features, or important fixes. only include this for VERYMAJOR and MAJOR versions. this should be listed before any of the following categories, and should be a summary of the most important changes.
 
 ### Added
-- **`New Thing`** — description of what it does
+- **`Thing`** — rough description for addition, and one line for each notable mention
+  - feature: description
 
 ### Changed
-- **`Class`** — what changed and why
+- **`Thing`** — rough introduction for change, and one line for each notable mention
+  - field: before → after (small note/description IF needed)
 
 ### Fixed
-- **Issue description** — what was fixed
+- **Issue description** — rough introduction for fix, and one line for each notable mention
+  - feature: before → after (small note/description IF needed)
 
 ### Removed
-- **`Old Thing`** — what was removed and why
+- **`Old Thing`** — rough description for addition, and one line for each notable reason for removal
+  - reason: description
 
 ### Updated
-- **`Class`** — what was updated and why
+- **`Thing`** — rough description for update, and one line for each notable mention
+  - feature: before → after (small note/description IF needed)
+
+### Rebalance
+- **`Thing`** — short description of what was rebalanced and why, create one entry per class that was rebalanced and one point per field changed
+  - field: before → after (small note IF needed)
 ```
 
 ### 4. Update README.md

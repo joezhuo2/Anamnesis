@@ -41,31 +41,31 @@ namespace CrystalFlux.Core
             PrefabPool.Prewarm(prefab.gameObject, canvas.transform, initialPoolSize, initialPoolSize);
         }
 
-        public void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false, bool isGold = false)
+        public void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, TextType type)
         {
             if (delay <= 0f)
             {
-                SpawnTextIndicator(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText, isGold);
+                SpawnTextIndicator(damage, sourcePos, color, scale, lifetime, floatSpeed, type);
                 return;
             }
 
-            StartCoroutine(SpawnAfterDelay(damage, sourcePos, color, scale, lifetime, floatSpeed, delay, xpWrapperText, isGold));
+            StartCoroutine(SpawnAfterDelay(damage, sourcePos, color, scale, lifetime, floatSpeed, delay, type));
         }
 
-        private IEnumerator SpawnAfterDelay(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, bool xpWrapperText = false, bool isGold = false)
+        private IEnumerator SpawnAfterDelay(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, TextType type)
         {
             yield return new WaitForSeconds(delay);
-            SpawnTextIndicator(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText, isGold);
+            SpawnTextIndicator(damage, sourcePos, color, scale, lifetime, floatSpeed, type);
         }
 
-        private void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, bool xpWrapperText = false, bool isGold = false)
+        private void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, TextType type)
         {
             if (prefab == null || canvas == null) return;
 
             TextIndicator indicator = PrefabPool.Acquire(prefab, canvas.transform);
             if (indicator == null) return;
 
-            indicator.Initialize(damage, sourcePos, color, scale, lifetime, floatSpeed, xpWrapperText, isGold);
+            indicator.Initialize(damage, sourcePos, color, scale, lifetime, floatSpeed, type);
             _activeIndicators.Add(indicator);
         }
 

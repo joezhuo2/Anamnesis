@@ -19,6 +19,7 @@ namespace CrystalFlux.WaveSystem
         public WaveSequence currentSequence;
         public float spawnRadius = 2f;
         [Range(0f, 0.9f)] public float killSpawnSpeedup = 0.15f;
+        public bool enableExtraSpawns = true;
 
         protected bool showCompletionMessage => GameSettings.Current.showWaveCompletionMessage;
 
@@ -275,7 +276,7 @@ namespace CrystalFlux.WaveSystem
                 return;
             }
 
-            int spawnCount = Mathf.Min(Mathf.RoundToInt(GetCurrentWave() / 10) + 1, waveMaxTotalEnemies - totalSpawned);
+            int spawnCount = enableExtraSpawns ? Mathf.Min(Mathf.RoundToInt(GetCurrentWave() / 10) + 1, waveMaxTotalEnemies - totalSpawned) : 1;
             for (int i = 0; i < spawnCount; i++) SpawnEnemy(c);
         }
 

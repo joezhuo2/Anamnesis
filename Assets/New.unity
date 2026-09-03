@@ -6547,6 +6547,7 @@ MonoBehaviour:
   currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
   spawnRadius: 2.5
   killSpawnSpeedup: 0.15
+  enableExtraSpawns: 1
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
   waveText: {fileID: 1154343300}
@@ -6773,7 +6774,7 @@ MonoBehaviour:
     desc: AOE True DoT Slow
     minWave: 25
   - newAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
-    type: 1
+    type: 0
     icon: {fileID: 0}
     attackName: Supernova
     desc: AOE True Armor Gen
@@ -6856,6 +6857,12 @@ MonoBehaviour:
     attackName: Nocturnis
     desc: Ult Hp Duo
     minWave: 45
+  - newAttack: {fileID: 11400000, guid: 3a460cf6d9a37344499ce3a89112bf9a, type: 2}
+    type: 1
+    icon: {fileID: 0}
+    attackName: Sacred Surge
+    desc: Armor Heal Charge Cast
+    minWave: -1
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -7046,6 +7053,11 @@ MonoBehaviour:
       type: 93
       value: 1
     weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 96
+      value: 3
+    weight: 2
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
@@ -14516,6 +14528,7 @@ MonoBehaviour:
   currentSequence: {fileID: 0}
   spawnRadius: 4
   killSpawnSpeedup: 0.3
+  enableExtraSpawns: 0
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
   waveText: {fileID: 1154343300}
@@ -14742,7 +14755,7 @@ MonoBehaviour:
     desc: AOE True DoT Slow
     minWave: 25
   - newAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
-    type: 1
+    type: 0
     icon: {fileID: 0}
     attackName: Supernova
     desc: AOE True Armor Gen
@@ -14825,6 +14838,12 @@ MonoBehaviour:
     attackName: Nocturnis
     desc: Ult Hp Duo
     minWave: 45
+  - newAttack: {fileID: 11400000, guid: 3a460cf6d9a37344499ce3a89112bf9a, type: 2}
+    type: 1
+    icon: {fileID: 0}
+    attackName: Sacred Surge
+    desc: Armor Heal Charge Cast
+    minWave: -1
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -15015,38 +15034,43 @@ MonoBehaviour:
       type: 93
       value: 1
     weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 96
+      value: 3
+    weight: 2
   rarityData:
   - rarityName: Common
-    displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
+    displayColor: {r: 0.4392157, g: 0.4392157, b: 0.4392157, a: 1}
     mult: 1
-    weight: 600
+    weight: 700
   - rarityName: Uncommon
     displayColor: {r: 0.21562162, g: 0.754717, b: 0, a: 1}
     mult: 3
-    weight: 350
+    weight: 300
   - rarityName: Rare
     displayColor: {r: 0, g: 0.39995039, b: 0.745283, a: 1}
     mult: 5
-    weight: 200
+    weight: 175
   - rarityName: Epic
     displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 1}
     mult: 7
-    weight: 100
+    weight: 90
   - rarityName: Legendary
-    displayColor: {r: 0.74509805, g: 0.32248145, b: 0, a: 1}
+    displayColor: {r: 1, g: 0.33157894, b: 0, a: 1}
     mult: 10
-    weight: 50
+    weight: 40
   - rarityName: Mythic
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
     mult: 13
-    weight: 15
-  - rarityName: Celestial
-    displayColor: {r: 0.012014951, g: 0.041026052, b: 0.509434, a: 1}
-    mult: 16
-    weight: 3
+    weight: 10
+  - rarityName: Celstial
+    displayColor: {r: 0.54446805, g: 0, b: 0.64705884, a: 1}
+    mult: 15
+    weight: 2.97
   - rarityName: Transcendent
-    displayColor: {r: 0.7783019, g: 0.9616805, b: 1, a: 1}
-    mult: 20
+    displayColor: {r: 0.7764706, g: 1, b: 0.9876039, a: 1}
+    mult: 15
     weight: 1
   milestoneRewards:
   - rewardName: Glass Cannon
@@ -15299,7 +15323,7 @@ MonoBehaviour:
   baseEnemyLevel: 1
   minSpawnFrequency: 2
   maxSpawnFrequency: 5
-  spawnSpeedIncreasePerWave: 0.1
+  spawnSpeedIncreasePerWave: 0.12
   minRewardChoices: 1
   maxRewardChoices: 7
   bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}

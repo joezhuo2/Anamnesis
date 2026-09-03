@@ -53,7 +53,7 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
 
 # Rare Pool
 
-Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 19 entries below are present in
+Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 20 entries below are present in
 `WaveManager.rarePool`. Entries marked with an unlock wave carry a `minWave` on their
 `AttackReward` and cannot be rolled before that wave; the rest are available from wave 1.
 Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€” see
@@ -463,6 +463,29 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Effect: 100% on hit (Detonator, 0.5s, detonates DoTs for 250% as True damage)
   - Knockback: 6 force for 0.15s
 
+## Sacred Surge
+- Asset: `Sacred Surge AD`
+- Type: Skill
+- Cooldown: 14s (stamped on press)
+- Pattern: Single (1 count)
+- Spawn: 4 dist
+- Animation: 1s
+- Cast: 1s, can move while casting
+- Costs: Stamina 8 +4%
+- Gains on hit: Stamina +3, Health +1 +2%, Mana +2
+- Cleanses the caster's debuffs on cast
+- Charging: hold 0.225s to charge, min 1s, max 8s, ticks every 0.9s, no separate charge attack â€” the tick refreshes the projectile instead
+- Projectile:
+  - Speed: 0 (melee)
+  - Lifetime: 1s, refreshed by every charge tick
+  - Pierce: 3000
+  - Size: 2
+  - Damage: 320% Phys, 110% Spell
+  - Scaling: EffArmor
+  - Time Before Same Enemy: 0.9s
+  - Use True Angle
+  - Knockback: 4 force for 0.15s
+
 ## Shattered Singularity
 - Asset: `Shattered Singularity A AD`
 - Unlocks: wave 25
@@ -567,14 +590,14 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 1 dist (fixed)
 - Animation: 0.5s
-- Costs: Stamina 20 +10%, Mana 5
-- Gains on hit: Stamina +4, Health +5%
+- Costs: none
+- Gains on hit: Stamina +3, Health +3%, Mana +2
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.75s
   - Pierce: 9
   - Size: 4
-  - Damage: 190% Phys, 30% True
+  - Damage: 160% Phys, 20% True
   - Scaling: EffArmor
   - Effect: 40% on hit (Weaken, 5s, max 4 stacks, -10% attack per stack)
   - Knockback: 3 force for 0.15s
