@@ -53,6 +53,10 @@ namespace CrystalFlux.WaveSystem
         [Header("Reward Panel Settings")]
         public GameObject rewardPanel;
         public GameObject rewardButtonPrefab;
+        public TextMeshProUGUI rewardTitleText;
+        public GameObject rewardTitleWrapper;
+        public string rewardTitle = "Choose your reward";
+        public string anomalyTitle = "Select anomaly reward";
 
         [Header("Reward Pools")]
         public List<BaseReward> baseBuffPool;
@@ -117,6 +121,8 @@ namespace CrystalFlux.WaveSystem
         protected virtual void Start()
         {
             waveInfoPanel.SetActive(false);
+
+            if (rewardTitleWrapper != null) rewardTitleWrapper.SetActive(false);
 
             SortRarityData();
             CloseRewardButtons();
@@ -889,9 +895,17 @@ namespace CrystalFlux.WaveSystem
             if (rewardPanel != null) rewardPanel.SetActive(true);
             ClearRewardButtons();
 
+            UpdateRewardTitle();
             UpdateCorruptButton();
 
             Time.timeScale = 0f;
+        }
+
+        protected void UpdateRewardTitle()
+        {
+            if (rewardTitleText == null || rewardTitleWrapper == null) return;
+            if (rewardTitleWrapper != null) rewardTitleWrapper.SetActive(true);
+            rewardTitleText.text = type == RewardType.Anomaly ? anomalyTitle : rewardTitle;
         }
 
         private void UpdateCorruptButton()
@@ -1114,6 +1128,7 @@ namespace CrystalFlux.WaveSystem
         {
             ClearRewardButtons();
             if (rewardPanel != null) rewardPanel.SetActive(false);
+            if (rewardTitleWrapper != null) rewardTitleWrapper.SetActive(false);
         }
 
         protected void CloseRewardButtons()

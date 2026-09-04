@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
@@ -12,6 +13,13 @@ namespace CrystalFlux.EntitySystem
     {
         public Image cooldownImage;
         public Image iconImage;
+        public Image borderImage;
+
+        [Header("Blocked Feedback")]
+        public Color blockedBorderColor = new(0.85f, 0.15f, 0.15f, 1f);
+        public Color flashBorderColor = new(1f, 0.45f, 0.45f, 1f);
+        public int flashCount = 3;
+        public float flashInterval = 0.06f;
 
         private AttackType ctype;
         private AttackData cad;
@@ -24,6 +32,11 @@ namespace CrystalFlux.EntitySystem
         private Vector2 cachedOffset;
 
         private static readonly Vector2 TooltipOffset = new(0, -100);
+
+        private Color normalBorderColor = Color.white;
+        private bool borderColorCached;
+        private bool lastCanCast = true;
+        private Coroutine flashRoutine;
 
         public void Setup(PlayerAttackHandler pah, AttackType type, IStatProvider esm)
         {
@@ -39,6 +52,24 @@ namespace CrystalFlux.EntitySystem
             cachedTitle = null;
             cachedSubtitle = null;
 
+            if (flashRoutine != null)
+            {
+                StopCoroutine(flashRoutine);
+                flashRoutine = null;
+            }
+
+            if (borderImage != null)
+            {
+                if (!borderColorCached)
+                {
+                    normalBorderColor = borderImage.color;
+                    borderColorCached = true;
+                }
+                borderImage.color = normalBorderColor;
+            }
+
+            lastCanCast = true;
+
             RefreshTooltip();
 
             if (cooldownImage != null)
@@ -53,11 +84,13 @@ namespace CrystalFlux.EntitySystem
 
         private void Update()
         {
-            if (cpah == null || cad == null || !cpah.lastAttackTimes.ContainsKey(ctype)) return;
+            if (cpah == null || cad == null) return;
+
+            UpdateBorder();
+
+            if (cooldownImage == null || !cpah.lastAttackTimes.ContainsKey(ctype)) return;
 
             float effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
-
-            if (cooldownImage == null) return;
 
             if (effCd <= 0f)
             {
@@ -70,6 +103,55 @@ namespace CrystalFlux.EntitySystem
 
                 cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
             }
+        }
+
+        private void UpdateBorder()
+        {
+            if (borderImage == null) return;
+
+            bool canCast = cpah.CanCast(ctype);
+            if (canCast == lastCanCast) return;
+
+            lastCanCast = canCast;
+            if (flashRoutine == null) borderImage.color = canCast ? normalBorderColor : blockedBorderColor;
+        }
+
+        public void FlashBlocked()
+        {
+            if (borderImage == null || !isActiveAndEnabled) return;
+
+            if (flashRoutine != null) StopCoroutine(flashRoutine);
+            flashRoutine = StartCoroutine(FlashRoutine());
+        }
+
+        private IEnumerator FlashRoutine()
+        {
+            int count = Mathf.Max(1, flashCount);
+            float interval = Mathf.Max(0.01f, flashInterval);
+
+            for (int i = 0; i < count; i++)
+            {
+                borderImage.color = flashBorderColor;
+                yield return new WaitForSecondsRealtime(interval);
+                borderImage.color = blockedBorderColor;
+                yield return new WaitForSecondsRealtime(interval);
+            }
+
+            flashRoutine = null;
+            lastCanCast = cpah != null && cpah.CanCast(ctype);
+            borderImage.color = lastCanCast ? normalBorderColor : blockedBorderColor;
+        }
+
+        private void OnDisable()
+        {
+            if (flashRoutine != null)
+            {
+                StopCoroutine(flashRoutine);
+                flashRoutine = null;
+            }
+
+            if (borderImage != null && borderColorCached) borderImage.color = normalBorderColor;
+            lastCanCast = true;
         }
 
         private void RefreshTooltip()

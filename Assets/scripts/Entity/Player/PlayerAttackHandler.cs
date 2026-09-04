@@ -255,7 +255,15 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
 
-            if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f || Time.timeScale == 0f) return;
+            if (esm == null || Time.timeScale == 0f) return;
+
+            if (esm.GetStat(StatType.isAlive) <= 0f) return;
+
+            if (esm.GetStat(StatType.CanAttack) <= 0f)
+            {
+                NotifyBlocked(type);
+                return;
+            }
 
             AttackData selected = attacks.Find(atk => atk.type == type);
             if (selected == null) return;
@@ -263,7 +271,11 @@ namespace CrystalFlux.EntitySystem
             if (!bypassCooldown)
             {
                 float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
-                if (Time.time - lastTime < GetEffCd(selected, esm)) return;
+                if (Time.time - lastTime < GetEffCd(selected, esm))
+                {
+                    NotifyBlocked(type);
+                    return;
+                }
             }
 
             float castTime = selected.GetEffCastTime(esm);
@@ -277,7 +289,11 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
 
-            if (!noCost && !selected.canCharge && !HandleStatChanges(selected)) return;
+            if (!noCost && !selected.canCharge && !HandleStatChanges(selected))
+            {
+                NotifyBlocked(type);
+                return;
+            }
 
             if (stampCooldownNow) lastAttackTimes[type] = Time.time;
 
@@ -567,6 +583,37 @@ namespace CrystalFlux.EntitySystem
             yield return new WaitForSeconds(delay);
             a.SetInteger(AttackIndexHash, -1);
             a.speed = 1f;
+        }
+
+        private void NotifyBlocked(AttackType type)
+        {
+            if (!spawnedUIElements.TryGetValue(type, out var uiObj) || uiObj == null) return;
+            if (uiObj.TryGetComponent<PlayerAttackCooldownUI>(out var pacui)) pacui.FlashBlocked();
+        }
+
+        public bool CanCast(AttackType type)
+        {
+            if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f) return false;
+
+            AttackData selected = FindAttackOfType(type);
+            if (selected == null) return false;
+
+            float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
+            if (Time.time - lastTime < GetEffCd(selected, esm)) return false;
+
+            return CanAfford(selected);
+        }
+
+        public bool CanAfford(AttackData attack)
+        {
+            if (attack == null || esm == null) return false;
+
+            var (hp, sp, mp) = GetCosts(attack, esm);
+            (hp, sp) = HandleHexCast(hp, sp);
+
+            return sp <= esm.GetStat(StatType.CurrentStamina)
+                && hp <= esm.GetStat(StatType.currentHp)
+                && mp <= esm.GetStat(StatType.CurrentMana);
         }
 
         public bool HandleStatChanges(AttackData attack)

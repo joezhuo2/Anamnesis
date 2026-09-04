@@ -139,6 +139,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackCooldownUI
   cooldownImage: {fileID: 6396199039445648262}
   iconImage: {fileID: 4355118444441382196}
+  borderImage: {fileID: 7527476035521311546}
+  blockedBorderColor: {r: 0.85, g: 0.15, b: 0.15, a: 1}
+  flashBorderColor: {r: 1, g: 0.45, b: 0.45, a: 1}
+  flashCount: 3
+  flashInterval: 0.06
 --- !u!114 &6905394615377536619
 MonoBehaviour:
   m_ObjectHideFlags: 0

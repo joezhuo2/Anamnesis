@@ -18,20 +18,20 @@ MonoBehaviour:
   nameColor: {r: 1, g: 1, b: 1, a: 1}
   enemyLevelAdd: 3
   enemyLevelPerWaveAdd: 0.25
-  maxTotalEnemiesAdd: 5
+  maxTotalEnemiesAdd: 3
   maxCurrentEnemiesAdd: 2
   rewardChoicesAdd: 0
-  qualityBonusAdd: -0.1
+  qualityBonusAdd: -0.3
   milestoneRewardChoicesAdd: 0
   occasionalRerollChanceAdd: -0.2
   occasionalSkillPointChanceAdd: -0.2
-  anomalyChanceAdd: 15
+  anomalyChanceAdd: 20
   minAnomalyCountAdd: 0
   maxAnomalyCountAdd: 0
-  anomalyRerollMinAdd: 0
-  anomalyRerollMaxAdd: 0
-  anomalySkillPointAdd: 0
-  anomalyQualityAdd: 0
+  anomalyRerollMinAdd: 1
+  anomalyRerollMaxAdd: 2
+  anomalySkillPointAdd: 1
+  anomalyQualityAdd: 0.2
   corruptChanceAdd: 0
   corruptPositiveChanceAdd: -10
   maxCorruptBoostAdd: 0

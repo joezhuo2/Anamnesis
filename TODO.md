@@ -13,10 +13,11 @@
   (`RemoveAll(e => e == null)`), which a deactivated enemy never satisfies, so the wave-completion gate would
   never close. Also latched with no reset: `EntityHealth.barRetired`, the animator `isDead` bool,
   `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
-- No affordability check on press. A player with no resources still plays the attack animation, and only
-  ~0.225s later does nothing spawn. A real pre-check is awkward: `HandleStatChanges` both triggers cost
-  upgrades and spends in one pass, and the public `GetCosts` skips `HandleHexCast`, so a rough check would
-  wrongly block HexCast builds. Needs the method split properly if the dead animation matters.
+- Affordability is now readable (`PlayerAttackHandler.CanAfford` prices an attack through `GetCosts` +
+  `HandleHexCast` without spending), and the cooldown indicator border uses it. `PerformAttack` still does
+  not gate on it: a cast-time attack starts its animation and only fails ~0.225s later when
+  `HandleStatChanges` runs. Moving the check earlier means splitting `HandleStatChanges`, which both
+  triggers cost upgrades and spends in one pass.`
 - Orbit interactions and the `SummonCondition.OnCast` roll still fire on press, before the tap/hold split is
   known — so a hold consumes your orbits even though it skips the tap.
 - The on-screen attack button (`PlayerAttackHandler.CreateButtonUI`) fires `onClick` only and has no release
@@ -39,9 +40,7 @@
 - [ ] finish tilemap
   - [ ] map borders (tilemap colliders)
 - [ ] attack cooldown over indicator - how
-  - [ ] attack cannot cast indicator (change attack cooldown indicator border highlight color to red)
 - [ ] Background Overlays - skill tree, reward menu, home screen, settings menu
-  - [ ] Title/header for reward menu
 - [ ] skill point indicator - how/where
 
 ## Pre [v0.6.0] Checklist — Combat Depth

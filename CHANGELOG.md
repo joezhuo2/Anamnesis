@@ -7,7 +7,21 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [v0.4.4] - 2026-09-03 — Difficulty Selector
+## [v0.4.3_1] - 2026-09-03
+
+### Added
+- **Attack blocked feedback** — `PlayerAttackCooldownUI` takes a `borderImage` and recolors it to `blockedBorderColor` whenever the attack cannot be cast, restoring `normalBorderColor` (cached from the prefab on first `Setup`) when it can. A refused press also runs a `flashCount` x `flashInterval` flash to `flashBorderColor` on unscaled time, so it still reads while the game is paused. The routine is stopped and the border reset in `Setup` and `OnDisable`, keeping the pooled indicator clean
+- **`PlayerAttackHandler.CanCast(AttackType)`** — the single predicate the border reads: alive, `CanAttack`, the attack exists, its effective cooldown has elapsed, and `CanAfford` passes
+- **`PlayerAttackHandler.CanAfford(AttackData)`** — resolves the attack's costs through `GetCosts` and `HandleHexCast`, then compares them against current stamina, health and mana without spending anything. It is the read-only half of `HandleStatChanges`, so a HexCast build is priced the way it will actually be charged
+- **Reward panel title** — `WaveManager` gains `rewardTitleText` / `rewardTitleWrapper` plus the `rewardTitle` ("Choose your reward") and `anomalyTitle` ("Select anomaly reward") strings. `PanelSetup` picks the string from the panel's `RewardType`, and the wrapper is hidden at `Start` and on `CloseRewardUI`
+
+### Changed
+- `PerformAttack` no longer folds every refusal into one guard. Death and a paused game still return silently, but a blocked `CanAttack`, an unfinished cooldown and an unaffordable cost each call `NotifyBlocked`, which looks the attack's spawned UI element up in `spawnedUIElements` and flashes its indicator
+- `PlayerAttackCooldownUI.Update` runs the border check before the `lastAttackTimes` lookup, so an attack that has never been cast still shows its blocked state; the cooldown fill keeps its old early-out
+- Unlimited waves grow by `Random.Range(1, 3)` instead of `Random.Range(0, 3)` per wave, removing the roll that added no enemies at all
+- **Hard difficulty** rebalanced: `maxTotalEnemiesAdd` 5 → 3 and `qualityBonusAdd` -0.1 → -0.3, with anomalies made both more frequent and more rewarding — `anomalyChanceAdd` 15 → 20, `anomalyRerollMinAdd` +1, `anomalyRerollMaxAdd` +2, `anomalySkillPointAdd` +1, `anomalyQualityAdd` +0.2
+
+## [v0.4.3] - 2026-09-03 — Difficulty Selector Update
 
 ### Added
 - **Difficulty selector** — a cycler on the home screen (left/right arrow buttons, framed header sprite, tooltip preview) that picks the run's difficulty before the gamemode button is pressed. The choice persists to `settings.json` (`difficultyIndex`, default 1 = Normal) and locks in the moment a wave manager starts, hiding the selector for the rest of the run
