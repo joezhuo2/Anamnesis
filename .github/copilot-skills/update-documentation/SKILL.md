@@ -92,7 +92,6 @@ Add any new attacks, player upgrades, etc. that have been added in this version,
 - Use backticks for code symbols (`ClassName`, `methodName`, `fieldName`)
 - Keep entries concise but informative
 - Date format: YYYY-MM-DD
-- document any other notes in claude_outputs.md at the top of the file (under the title) if they are relevant
 
 ## Example Prompt
 > "Update Documentation for v0.2.16"

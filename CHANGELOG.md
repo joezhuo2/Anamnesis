@@ -7,6 +7,15 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.3_2] - 2026-09-03
+
+### Added
+- **Skill points in the resource tooltip** — `PlayerResourceUI.Setup` now also takes an `ISkillPointHolder`, and the tooltip appends a `Skill Points: N` line whenever the holder reports more than zero. `PlayerUI` resolves the holder with `GetComponent<ISkillPointHolder>()` alongside its existing lookups and passes it through, so the count sits with the other resources instead of needing the skill tree open
+
+### Changed
+- **Deferred-cost attacks are priced before they start.** An attack with a cast time or `canCharge` now fires the `OnCalculateAttackCost` upgrades and runs `CanAfford` inside `PerformAttack`; if the cost cannot be paid it calls `NotifyBlocked(type)` and returns, so nothing plays. Previously the animation started and the cast only failed once `HandleStatChanges` ran at the end of `CastRoutine`
+- `HandleStatChanges` splits into the public one-argument entry point and a private `HandleStatChanges(AttackData, bool triggerCostUpgrades)` overload. A `costUpgradesTriggered` flag threads through `CastRoutine`, `ExecuteAttack` and `ChargeRoutine` and is cleared the moment it is consumed, so the up-front pricing pass and the later spending pass together trigger the `OnCalculateAttackCost` upgrades exactly once per attack
+
 ## [v0.4.3_1] - 2026-09-03
 
 ### Added

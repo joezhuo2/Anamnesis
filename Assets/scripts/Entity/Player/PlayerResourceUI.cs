@@ -10,12 +10,14 @@ namespace CrystalFlux.EntitySystem
     {
         private IStatProvider esm;
         private ICurrencyHolder ich;
+        private ISkillPointHolder isph;
         public GameObject resourceHoverZone;
 
-        public void Setup(IStatProvider isp, ICurrencyHolder ch)
+        public void Setup(IStatProvider isp, ICurrencyHolder ch, ISkillPointHolder sph)
         {
             esm = isp;
             ich = ch;
+            isph = sph;
             ShowTooltip();
         }
 
@@ -41,6 +43,7 @@ namespace CrystalFlux.EntitySystem
 
             if (resTypes.Count > 0) lines.Add($"Res: {string.Join(" ", resTypes)}");
             if (ich != null && ich.CurrentAmount > 0) lines.Add($"Gold: {ich.CurrentAmount}");
+            if (isph != null && isph.SkillPoints > 0) lines.Add($"Skill Points: {isph.SkillPoints}");
 
             return ("Resources", string.Join("\n", lines), new(100, -100));
         }

@@ -13,18 +13,12 @@
   (`RemoveAll(e => e == null)`), which a deactivated enemy never satisfies, so the wave-completion gate would
   never close. Also latched with no reset: `EntityHealth.barRetired`, the animator `isDead` bool,
   `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
-- Affordability is now readable (`PlayerAttackHandler.CanAfford` prices an attack through `GetCosts` +
-  `HandleHexCast` without spending), and the cooldown indicator border uses it. `PerformAttack` still does
-  not gate on it: a cast-time attack starts its animation and only fails ~0.225s later when
-  `HandleStatChanges` runs. Moving the check earlier means splitting `HandleStatChanges`, which both
-  triggers cost upgrades and spends in one pass.`
+- scroll map in settings menu does not have a background image yet
 - Orbit interactions and the `SummonCondition.OnCast` roll still fire on press, before the tap/hold split is
   known — so a hold consumes your orbits even though it skips the tap.
 - The on-screen attack button (`PlayerAttackHandler.CreateButtonUI`) fires `onClick` only and has no release
   event, so a chargeable attack triggered from the UI holds until `maxChargeTime`. Needs `IPointerUpHandler`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
-- `companyName` is still `DefaultCompany`, which is part of the settings file path. Changing it later orphans existing settings files
-- scroll map in settings menu does not have a background image yet
 
 ## Pre [v0.5.0] Checklist — Feel & Foundations
 *Make the current game feel finished before stacking more systems on it.*
@@ -39,9 +33,7 @@
 **QoL & Polish**
 - [ ] finish tilemap
   - [ ] map borders (tilemap colliders)
-- [ ] attack cooldown over indicator - how
 - [ ] Background Overlays - skill tree, reward menu, home screen, settings menu
-- [ ] skill point indicator - how/where
 
 ## Pre [v0.6.0] Checklist — Combat Depth
 *Attacks chain, enemies fight back with more than stats.*
@@ -52,7 +44,6 @@
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra hp, faster, new ai, split)
-- [ ] backstap `specialMult`
 - [ ] more enemy move telegraphs
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 - [ ] contact damage
@@ -174,6 +165,7 @@
 - [ ] queue skill point spending
 - [ ] skill node undo grace window
 - [ ] data saving - full game runs
+- [ ] attack cooldown over indicator
 
 - [ ] neutral entities
 - [ ] in-world spawners

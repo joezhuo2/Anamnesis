@@ -280,12 +280,26 @@ namespace CrystalFlux.EntitySystem
 
             float castTime = selected.GetEffCastTime(esm);
             bool stampCooldownNow = !bypassCooldown && (!selected.canCharge || selected.cooldownOnAttackStart);
+            bool deferredCost = castTime > 0f || selected.canCharge;
+            bool costUpgradesTriggered = false;
+
+            if (!noCost && deferredCost)
+            {
+                TriggerCostUpgrades();
+                costUpgradesTriggered = true;
+
+                if (!CanAfford(selected))
+                {
+                    NotifyBlocked(type);
+                    return;
+                }
+            }
 
             if (castTime > 0f)
             {
                 if (stampCooldownNow) lastAttackTimes[type] = Time.time;
 
-                StartCoroutine(CastRoutine(selected, type, castTime, noCost, triggerUpgrades, bypassCooldown));
+                StartCoroutine(CastRoutine(selected, type, castTime, noCost, triggerUpgrades, bypassCooldown, costUpgradesTriggered));
                 return;
             }
 
@@ -297,10 +311,10 @@ namespace CrystalFlux.EntitySystem
 
             if (stampCooldownNow) lastAttackTimes[type] = Time.time;
 
-            ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown);
+            ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown, costUpgradesTriggered);
         }
 
-        private IEnumerator CastRoutine(AttackData selected, AttackType type, float castTime, bool noCost, bool triggerUpgrades, bool bypassCooldown)
+        private IEnumerator CastRoutine(AttackData selected, AttackType type, float castTime, bool noCost, bool triggerUpgrades, bool bypassCooldown, bool costUpgradesTriggered)
         {
             isCasting = true;
             castCancelled = false;
@@ -335,10 +349,21 @@ namespace CrystalFlux.EntitySystem
             bool completed = !castCancelled;
             EndCast();
 
-            if (completed && (noCost || selected.canCharge || HandleStatChanges(selected)))
+            if (completed)
             {
-                ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown);
-                yield break;
+                bool paid = noCost || selected.canCharge;
+
+                if (!paid)
+                {
+                    paid = HandleStatChanges(selected, !costUpgradesTriggered);
+                    costUpgradesTriggered = false;
+                }
+
+                if (paid)
+                {
+                    ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown, costUpgradesTriggered);
+                    yield break;
+                }
             }
 
             if (a != null)
@@ -376,7 +401,7 @@ namespace CrystalFlux.EntitySystem
             castCancelled = true;
         }
 
-        private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades, bool noCost = false, bool bypassCooldown = false)
+        private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades, bool noCost = false, bool bypassCooldown = false, bool costUpgradesTriggered = false)
         {
             HandleOrbitInteractions(selected);
             HandleCleanse(selected);
@@ -395,7 +420,7 @@ namespace CrystalFlux.EntitySystem
             ApplyAttackAnimator(type);
             StartCoroutine(ResetAttackType(selected.animationLength));
 
-            if (selected.canCharge) StartCoroutine(ChargeRoutine(selected, type, noCost, bypassCooldown));
+            if (selected.canCharge) StartCoroutine(ChargeRoutine(selected, type, noCost, bypassCooldown, costUpgradesTriggered));
         }
 
         private void HandleCleanse(AttackData ad)
@@ -415,7 +440,7 @@ namespace CrystalFlux.EntitySystem
             if (isCharging && chargingType == type) chargeReleaseRequested = true;
         }
 
-        private IEnumerator ChargeRoutine(AttackData selected, AttackType type, bool noCost, bool bypassCooldown)
+        private IEnumerator ChargeRoutine(AttackData selected, AttackType type, bool noCost, bool bypassCooldown, bool costUpgradesTriggered)
         {
             isCharging = true;
             chargeReleaseRequested = false;
@@ -434,7 +459,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (castCancelled || chargeReleaseRequested)
                 {
-                    if (noCost || HandleStatChanges(selected)) SpawnAttack(selected);
+                    if (noCost || HandleStatChanges(selected, !costUpgradesTriggered)) SpawnAttack(selected);
                     EndCharge(type, bypassCooldown);
                     yield break;
                 }
@@ -445,11 +470,13 @@ namespace CrystalFlux.EntitySystem
 
             AttackData chargeSource = selected.chargeAttack != null ? selected.chargeAttack : selected;
 
-            if (!noCost && !HandleStatChanges(chargeSource))
+            if (!noCost && !HandleStatChanges(chargeSource, !costUpgradesTriggered))
             {
                 EndCharge(type, bypassCooldown);
                 yield break;
             }
+
+            costUpgradesTriggered = false;
 
             castStateHeld = true;
             esm.AddStat(new StatBuff(StatType.IsAttacking, 1f));
@@ -616,11 +643,18 @@ namespace CrystalFlux.EntitySystem
                 && mp <= esm.GetStat(StatType.CurrentMana);
         }
 
-        public bool HandleStatChanges(AttackData attack)
+        private void TriggerCostUpgrades()
+        {
+            if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
+        }
+
+        public bool HandleStatChanges(AttackData attack) => HandleStatChanges(attack, true);
+
+        private bool HandleStatChanges(AttackData attack, bool triggerCostUpgrades)
         {
             if (attack == null) return false;
 
-            if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCalculateAttackCost);
+            if (triggerCostUpgrades) TriggerCostUpgrades();
 
             var (hp, sp, mp) = GetCosts(attack, esm);
             (hp, sp) = HandleHexCast(hp, sp);
