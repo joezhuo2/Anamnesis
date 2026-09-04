@@ -7,6 +7,25 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.4] - 2026-09-04 — Ironman Update
+
+### Added
+- **Ironman Mode** — an opt-in run modifier toggled on the home screen that strips every take-back out of a run: no rerolls, no corruption, and no skill node refunds. `IronmanSelector` owns the toggle button, swaps between `toggleOnSprite` / `toggleOffSprite`, and drives a tooltip that shows the current state as `Ironman Mode [ON]` / `[OFF]`. The choice persists to `settings.json` and every system reads it through the static `IronmanSelector.Enabled`
+- **`IronmanSelector.LockIn()`** — both `RegularWaveButtonController` and `UnlimitedWaveButtonController` call it when a gamemode button is pressed, which latches the toggle and hides its `root` for the rest of the run, matching how the difficulty selector locks in
+- **`GameSettings.ironmanMode`** — a new persisted `bool`, defaulting to `false`. `GameSettings.CurrentVersion` bumped `2` → `3`; existing settings files load and are re-stamped, so the field simply takes its default
+- **`PlayerAttackHandler.HandleOnCastSummon(AttackData)`** — the `SummonCondition.OnCast` roll extracted out of `ExecuteAttack` into one helper, so the charge paths can run the same roll instead of duplicating it
+
+### Changed
+- **Rerolls are gone in Ironman, not merely unspendable.** `ApplyDifficulty` forces `rerolls` to 0 and skips `startingRerollsAdd`, `RollAnomalyRerolls` returns 0, `RollOccasionalWaveRewards` clears `pendingOccasionalRerolls`, `UpdateRerollUI` hides both the reroll button and its count text and returns before any of the gold-reroll bookkeeping, and `OnRerollButtonClicked` early-returns. The reroll and corrupt tooltips are not registered at all, so a stale tooltip cannot describe a button that is no longer there
+- **Corruption is unavailable in Ironman.** `UpdateCorruptButton` folds `!IronmanSelector.Enabled` into its `allowed` check, and `OnCorruptButtonClicked` early-returns
+- **Skill node refunds are unavailable in Ironman.** `PlayerSkillTree.CanUndo` returns `(false, "Disabled in Ironman Mode")` ahead of every other check, and `SkillNodeUI` gates its refund path on the same flag
+- **Starting nodes can now be undone** outside Ironman. The `isStartingNode` guard came out of both `CanUndo` and `SkillNodeUI.OnPointerClick`, and `UndoNode` clears `choseStarting` when the node it removes is a starting node, so the starting choice can be re-picked instead of being permanent for the run
+- `SkillTree.asmdef` now references `CrystalFlux.Settings`
+- UI button sprites moved from `Assets/data/images/UI/` to `Assets/data/images/Buttons/` (`Border All 6`, `ControlsButton`, `closeButton`, `emptybutton`, `exitButton`), joined by the new `ironman` sprite
+
+### Fixed
+- **Orbit interactions and the `SummonCondition.OnCast` roll fired on press, before the tap/hold split was known**, so starting a hold on a chargeable attack consumed the caster's orbits and burned the summon roll even though the tap itself was skipped. Both now run inside the `!selected.canCharge` branch of `ExecuteAttack`, and the two charge resolution paths in `ChargeRoutine` — the early release and the sustained charge — run them alongside their own `SpawnAttack`, so each resolved attack pays for its orbits and rolls its summon exactly once
+
 ## [v0.4.3_2] - 2026-09-03
 
 ### Added

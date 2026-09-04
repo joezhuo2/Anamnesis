@@ -3,6 +3,7 @@
     "rootNamespace": "CrystalFlux.SkillTree",
     "references": [
         "CrystalFlux.Core",
+        "CrystalFlux.Settings",
         "Unity.InputSystem",
         "UnityEngine.UI"
     ],

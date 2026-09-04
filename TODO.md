@@ -13,9 +13,6 @@
   (`RemoveAll(e => e == null)`), which a deactivated enemy never satisfies, so the wave-completion gate would
   never close. Also latched with no reset: `EntityHealth.barRetired`, the animator `isDead` bool,
   `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
-- scroll map in settings menu does not have a background image yet
-- Orbit interactions and the `SummonCondition.OnCast` roll still fire on press, before the tap/hold split is
-  known — so a hold consumes your orbits even though it skips the tap.
 - The on-screen attack button (`PlayerAttackHandler.CreateButtonUI`) fires `onClick` only and has no release
   event, so a chargeable attack triggered from the UI holds until `maxChargeTime`. Needs `IPointerUpHandler`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
@@ -25,35 +22,38 @@
 
 **Systems**
 - [ ] Pause menu with restart run/home screen/quit
+- [ ] Audio (SFX + music buses)
 
 **Content**
 - [ ] re-add phase based buffs using the new system (Cultist and Jellyfish still pending)
-- [ ] Boss #4
 
 **QoL & Polish**
 - [ ] finish tilemap
   - [ ] map borders (tilemap colliders)
-- [ ] Background Overlays - skill tree, reward menu, home screen, settings menu
+- [ ] Background Overlays - skill tree, reward menu, home screen, settings menu, scroll menu
+- [ ] settings menu volume control
+- [ ] skill tree refund all button (show total gold cost, confirm)
+- [ ] add code of conduct, license, [*] security policy, issue template, [*] pull req template
 
 ## Pre [v0.6.0] Checklist — Combat Depth
 *Attacks chain, enemies fight back with more than stats.*
 
 **Systems**
 - [ ] attack combo chains
-- [ ] Audio (SFX + music buses)
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra hp, faster, new ai, split)
 - [ ] more enemy move telegraphs
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 - [ ] contact damage
+- [ ] Boss #4
+- [ ] environmental collectible items (mana, xp, hp, gold)
+- [ ] Anamolies update (swarm wave (-stat + count), duel wave (1 count, superbuffed))
 
 **QoL & Polish**
 - [ ] Full stats display menu
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
-- [ ] settings menu overhaul: volume control
-- [ ] add code of conduct, license, [*] security policy, issue template, [*] pull req template
 
 ## Pre [v0.7.0] Checklist — Run Variety
 *Every wave stops looking the same; the settings/stats menus catch up.*
@@ -61,18 +61,11 @@
 **Systems**
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves
-- [ ] certain upgrades have requirements before being added to the pool
 
 **Content**
 - [ ] wave events - random events that can randomly occur during waves
 - [ ] contracts - similar to anomaly, but no fail risk, easier objective, but still some bonus rewards
-- [ ] environmental collectible items (mana, xp, hp, gold)
-- [ ] Nightmare/Death difficulty
-- [ ] Game modifiers - ironman (no reroll/refund/corruption)
-
-**QoL & Polish**
-- [ ] Confirmation dialog before corrupting a reward (can be toggled in settings)
-- [ ] Accessibility options (colorblind mode, reduced screen shake, larger text)
+- [ ] Nightmare/Death difficulty (new enemy ai (eg. spliting))
 
 ## Pre [v0.8.0] Checklist — Player Power & Maps
 *New ways to deal damage, and somewhere interesting to deal it.*
@@ -81,13 +74,11 @@
 - [ ] Player summons
 - [ ] Player new "signature" that charges via a new special resource instead of a cooldown
 - [ ] deployables (eg. totems/auras)
-- [ ] loadout slots
 
 **Content**
 - [ ] multiple map layouts
 - [ ] Environmental hazards on maps (spikes, lava, traps)
 - [ ] portals
-- [ ] Anamolies update (swarm wave (-stat + count), duel wave (1 count against non-boss))
 - [ ] starting builds / starting kits
 
 **QoL & Polish**
@@ -122,7 +113,6 @@
 - [ ] attack mastery (use more to level up)
 
 **Content**
-- [ ] Alternate movement options
 - [ ] choose next wave style
 - [ ] restrictions on run start - choose from a pool for bonus rewards
 
@@ -130,8 +120,7 @@
 - [ ] Status Effect vfx
 - [ ] Minimap
 - [ ] Build Guide menu
-- [ ] skill tree node search (by name, stat, etc.)
-- [ ] skill tree refund all button (show total gold cost, confirm)
+- [ ] skill tree node search bar (by name, stat, etc.)
 
 ## Pre [v0.11.0] Checklist — Gear & Elemental Expansion
 *Both systems stop being standalone: crafted, combined, and replayed.*
@@ -150,9 +139,7 @@
 
 **QoL & Polish**
 - [ ] Achievement system with unlock notifications
-- [ ] Customizable HUD layout
 - [ ] Leaderboards (local/online) for boss rush/endless/highest dps
-- [ ] Screenshot mode that hides the HUD
 
 ## Planned - Unknown
 - [ ] target dummy OR dps counter
@@ -162,10 +149,15 @@
 - [ ] Scrollable Tooltips
 - [ ] "What's new" changelog popup on update
 - [ ] reward history
+- [ ] Customizable HUD layout
+- [ ] Screenshot mode that hides the HUD
 - [ ] queue skill point spending
 - [ ] skill node undo grace window
 - [ ] data saving - full game runs
+- [ ] Confirmation dialog before corrupting a reward (can be toggled in settings)
+- [ ] Accessibility options (colorblind mode, reduced screen shake, larger text)
 - [ ] attack cooldown over indicator
+- [ ] loadout slots
 
 - [ ] neutral entities
 - [ ] in-world spawners

@@ -7,7 +7,7 @@ namespace CrystalFlux.SettingsSystem
     [Serializable]
     public class GameSettings
     {
-        public const int CurrentVersion = 2;
+        public const int CurrentVersion = 3;
         public const string FileName = "settings.json";
 
         public int version = CurrentVersion;
@@ -17,6 +17,7 @@ namespace CrystalFlux.SettingsSystem
         public bool goldDropsEnabled = true;
         public bool showWaveCompletionMessage = true;
         public bool showDamageNumbers = true;
+        public bool ironmanMode = false;
         public string bindingOverridesJson = "";
 
         private static GameSettings current;

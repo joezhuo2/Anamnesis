@@ -136,7 +136,8 @@ namespace CrystalFlux.WaveSystem
 
             difficulty = d;
 
-            rerolls = Mathf.Max(0, rerolls + d.startingRerollsAdd);
+            if (!IronmanSelector.Enabled) rerolls = Mathf.Max(0, rerolls + d.startingRerollsAdd);
+            else rerolls = 0;
 
             if (d.startingSkillPointsAdd != 0)
             {
@@ -157,6 +158,8 @@ namespace CrystalFlux.WaveSystem
 
         protected int RollAnomalyRerolls()
         {
+            if (IronmanSelector.Enabled) return 0;
+
             int min = Mathf.Max(0, 1 + D.anomalyRerollMinAdd);
             int max = Mathf.Max(min, 3 + D.anomalyRerollMaxAdd);
             return Random.Range(min, max + 1);
@@ -166,10 +169,13 @@ namespace CrystalFlux.WaveSystem
 
         private void SetupActionButtonTooltips()
         {
-            if (rerollButton != null && rerollButton.TryGetComponent<ITooltipDisplay>(out var td))
-                td.ShowTooltip("Reroll", $"Rerolls all reward choices.\nCost: 1 reroll token or {RerollGoldCost} gold if none are available.");
-            if (corruptButton != null && corruptButton.TryGetComponent<ITooltipDisplay>(out var td2))
-                td2.ShowTooltip("Corrupt", "Chance to corrupt any rewards massively increase or decrease their values.\nCan only be used once per wave and removes all other options.");
+            if (!IronmanSelector.Enabled)
+            {
+                if (rerollButton != null && rerollButton.TryGetComponent<ITooltipDisplay>(out var td))
+                    td.ShowTooltip("Reroll", $"Rerolls all reward choices.\nCost: 1 reroll token or {RerollGoldCost} gold if none are available.");
+                if (corruptButton != null && corruptButton.TryGetComponent<ITooltipDisplay>(out var td2))
+                    td2.ShowTooltip("Corrupt", "Chance to corrupt any rewards massively increase or decrease their values.\nCan only be used once per wave and removes all other options.");
+            }
             if (nextWaveButton != null && nextWaveButton.TryGetComponent<ITooltipDisplay>(out var td3))
                 td3.ShowTooltip("Skip", "Skip rewards and start the next wave immediately.");
         }
@@ -440,6 +446,8 @@ namespace CrystalFlux.WaveSystem
                 pendingOccasionalRerolls = Random.value < 0.5f + D.occasionalRerollChanceAdd ? 1 : 0;
                 pendingOccasionalSkillPoints = Random.value < 0.5f + D.occasionalSkillPointChanceAdd ? 1 : 0;
             }
+
+            if (IronmanSelector.Enabled) pendingOccasionalRerolls = 0;
         }
 
         protected void RollAndAnnounceWaveRewards()
@@ -912,12 +920,19 @@ namespace CrystalFlux.WaveSystem
         {
             if (corruptButton == null) return;
 
-            bool allowed = type != RewardType.Anomaly && type != RewardType.Milestone && type != RewardType.PreRun && GetCurrentWave() % 5 != 0;
+            bool allowed = !IronmanSelector.Enabled && type != RewardType.Anomaly && type != RewardType.Milestone && type != RewardType.PreRun && GetCurrentWave() % 5 != 0;
             corruptButton.gameObject.SetActive(allowed);
         }
 
         protected void UpdateRerollUI()
         {
+            if (IronmanSelector.Enabled)
+            {
+                if (rerollButton != null) rerollButton.gameObject.SetActive(false);
+                if (rerollText != null) rerollText.gameObject.SetActive(false);
+                return;
+            }
+
             CachePlayerStatManager();
 
             var canGoldReroll = cich != null && cich.CurrentAmount >= RerollGoldCost;
@@ -962,6 +977,8 @@ namespace CrystalFlux.WaveSystem
 
         protected void OnRerollButtonClicked()
         {
+            if (IronmanSelector.Enabled) return;
+
             if (ActiveManager != null && ActiveManager != this)
             {
                 ActiveManager.OnRerollButtonClicked();
@@ -996,6 +1013,8 @@ namespace CrystalFlux.WaveSystem
 
         public void OnCorruptButtonClicked()
         {
+            if (IronmanSelector.Enabled) return;
+
             if (ActiveManager != null && ActiveManager != this)
             {
                 ActiveManager.OnCorruptButtonClicked();

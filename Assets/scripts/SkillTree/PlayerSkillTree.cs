@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CrystalFlux.Core;
+using CrystalFlux.SettingsSystem;
 using UnityEngine;
 
 namespace CrystalFlux.SkillTree
@@ -222,8 +223,8 @@ namespace CrystalFlux.SkillTree
         public (bool canUndo, string failMessage) CanUndo(SkillNodeDef node)
         {
             if (node == null) return (false, "Node is null");
+            if (GameSettings.Current.ironmanMode) return (false, "Disabled in Ironman Mode");
             if (!IsNodeUnlocked(node)) return (false, "Node not unlocked");
-            if (node.isStartingNode) return (false, "Cannot undo starting node");
 
             if (!TryGetComponent<ICurrencyHolder>(out var esm)) return (false, "No stat manager found");
             if (esm.CurrentAmount < node.undoCost) return (false, $"Not enough gold ({node.undoCost}g required)");
@@ -276,6 +277,8 @@ namespace CrystalFlux.SkillTree
                 unlockedNodes.Remove(node.nodeID);
                 RemoveNodeEffects(node);
                 RestoreNodeRequirements(node);
+
+                if (node.isStartingNode) choseStarting = false;
             }
         }
 

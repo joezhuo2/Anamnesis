@@ -324,9 +324,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerAttackHandler.cs": {
-    "mtime": 1788483291.2309248,
-    "seen": 1788484612.869407,
-    "ast_hash": "680587fd7a37ae0b5ffee2ec820f60c9",
+    "mtime": 1788484768.497126,
+    "seen": 1788485259.584183,
+    "ast_hash": "a5822f7ed6ffe34b0dad8c9ef49725dd",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerControls.cs": {
@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUI.cs": {
-    "mtime": 1788388451.1450765,
-    "seen": 1788389475.4519167,
-    "ast_hash": "e4de615edbac332d8744abf4992dea4b",
+    "mtime": 1788484973.2737558,
+    "seen": 1788485259.584192,
+    "ast_hash": "15059e289456d8608b3b53c5c3b6883f",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrade.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788484560.729601,
-    "seen": 1788484612.8695076,
-    "ast_hash": "b9a3d9788dc4b99a01280862b7e86852",
+    "mtime": 1788485196.3056004,
+    "seen": 1788485259.5842931,
+    "ast_hash": "b66a3582845d0ea984d78069e829d605",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -714,9 +714,9 @@
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1788484600.4111347,
-    "seen": 1788484612.869513,
-    "ast_hash": "871f3052d4d89d341d522b9f6edcdb1d",
+    "mtime": 1788485059.8185353,
+    "seen": 1788485259.584299,
+    "ast_hash": "cffd2ea1ccb1cdc25f405360d59efcec",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1560,9 +1560,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerResourceUI.cs": {
-    "mtime": 1788372047.6111672,
-    "seen": 1788373880.3856661,
-    "ast_hash": "a39b8b1c4926403854405ba80ad12d7f",
+    "mtime": 1788485031.2521975,
+    "seen": 1788485259.584191,
+    "ast_hash": "321086fd09cbb59d09d4813baeb39c7b",
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/NodeRequirement.cs": {
@@ -1698,9 +1698,9 @@
     "semantic_hash": ""
   },
   ".github/copilot-skills/update-documentation/SKILL.md": {
-    "mtime": 1788469153.1202786,
-    "seen": 1788469397.824393,
-    "ast_hash": "1076c3885961f64cc2605332f8184d54",
+    "mtime": 1788485198.3838484,
+    "seen": 1788485259.5842838,
+    "ast_hash": "2b93c48ec0ef1a4bd955bb9e2392e200",
     "semantic_hash": ""
   },
   "Assets/data/entity/enemy/Slime_frost/Attacks/Blizzard/Bullet 24x24 Free Part 4B.png": {

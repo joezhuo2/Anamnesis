@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using CrystalFlux.Core;
+using CrystalFlux.SettingsSystem;
 
 namespace CrystalFlux.SkillTree
 {
@@ -77,7 +78,7 @@ namespace CrystalFlux.SkillTree
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 bool unlocked = manager.IsNodeUnlocked(node);
-                if (unlocked && !node.isStartingNode) UndoNode();
+                if (unlocked) UndoNode();
                 else UnlockNode();
             }
         }
@@ -120,7 +121,7 @@ namespace CrystalFlux.SkillTree
             if (!string.IsNullOrEmpty(failMessage))
                 lines.Add($"<color=#FF4444>{failMessage}</color>");
 
-            if (!node.isStartingNode)
+            if (!GameSettings.Current.ironmanMode)
             {
                 var playerSkillTree = FindAnyObjectByType<PlayerSkillTree>();
                 if (playerSkillTree != null && playerSkillTree.IsNodeUnlocked(node))

@@ -2,7 +2,7 @@
 - Do NOT invent non-existent Unity/C# APIs. Write new project methods freely following existing patterns.
 - Prioritize modifying existing code over creating new classes/methods.
 - NEVER destroy base GameObjects or ScriptableObjects.
-- Do not write comments on my code. Instead write in the output or add a note at the end of TODO.md
+- Do not write comments on my code. Instead write important notes in the output
 
 ## Code & Architecture
 - Abbreviate long local vars/params (e.g., `EntityStatManager` → `esm`).

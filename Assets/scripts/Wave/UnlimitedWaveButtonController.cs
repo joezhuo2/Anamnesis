@@ -26,6 +26,7 @@ namespace CrystalFlux.WaveSystem
             unlimitedWaveManager.CloseAllButtons();
 
             DifficultySelector.Current?.LockIn(unlimitedWaveManager);
+            IronmanSelector.Current?.LockIn();
 
             IAnnouncer.Current?.DisableSubtitle();
             IAnnouncer.Current?.DisableTitle();

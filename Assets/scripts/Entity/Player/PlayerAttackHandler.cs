@@ -403,15 +403,13 @@ namespace CrystalFlux.EntitySystem
 
         private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades, bool noCost = false, bool bypassCooldown = false, bool costUpgradesTriggered = false)
         {
-            HandleOrbitInteractions(selected);
             HandleCleanse(selected);
 
-            if (!selected.canCharge) SpawnAttack(selected);
-
-            if (selected.summonChance > 0f && selected.summonCondition == SummonCondition.OnCast && UnityEngine.Random.value <= selected.summonChance)
+            if (!selected.canCharge)
             {
-                if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
-                    summonHandler.Summon();
+                HandleOrbitInteractions(selected);
+                HandleOnCastSummon(selected);
+                SpawnAttack(selected);
             }
 
             if (triggerUpgrades)
@@ -459,7 +457,13 @@ namespace CrystalFlux.EntitySystem
 
                 if (castCancelled || chargeReleaseRequested)
                 {
-                    if (noCost || HandleStatChanges(selected, !costUpgradesTriggered)) SpawnAttack(selected);
+                    if (noCost || HandleStatChanges(selected, !costUpgradesTriggered))
+                    {
+                        HandleOrbitInteractions(selected);
+                        HandleOnCastSummon(selected);
+                        SpawnAttack(selected);
+                    }
+
                     EndCharge(type, bypassCooldown);
                     yield break;
                 }
@@ -489,6 +493,8 @@ namespace CrystalFlux.EntitySystem
 
             CastBar.Acquire(castBarPrefab, castBarTextPrefab, out castBarInstance, out castBarTextInstance);
 
+            HandleOrbitInteractions(chargeSource);
+            HandleOnCastSummon(chargeSource);
             SpawnAttack(chargeSource);
 
             TryGetComponent<EntityProjectileHandler>(out var eph);
@@ -588,6 +594,15 @@ namespace CrystalFlux.EntitySystem
             else if (attack.absorbOrbitPct > 0f) handler.AbsorbOrbits(attack.redirectCount, attack.absorbOrbitPct);
             else if (attack.redirectOrbits) handler.RedirectOrbits(attack.redirectCount);
             else if (attack.explodeOrbits) handler.ExplodeOrbits(attack.redirectCount);
+        }
+
+        private void HandleOnCastSummon(AttackData ad)
+        {
+            if (ad == null || ad.summonChance <= 0f || ad.summonCondition != SummonCondition.OnCast) return;
+            if (UnityEngine.Random.value > ad.summonChance) return;
+
+            if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
+                summonHandler.Summon();
         }
 
         private void TriggerUpgradesOnAttack(AttackType type)
