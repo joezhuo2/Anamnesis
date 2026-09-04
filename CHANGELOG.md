@@ -7,6 +7,21 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.5_1] - 2026-09-04
+
+### Added
+- **Cultist phase buffs.** The Cultist's `phaseBuffs` list was empty even though its `phaseThresholds` (`70` and `40`) were already set, so both escalations did nothing. Phase 1 now grants +30% `attackSpeedPct` and phase 2 grants +40% `moveSpeedPct` — it starts casting faster, then starts repositioning faster
+- **`PlayerAttackHandler.PressAttack(AttackType, bool, bool, bool)`** — a press-side entry point that records the input in a new `heldInputs` set before forwarding to `PerformAttack` with the same arguments. `ReleaseAttack` clears the type from that set. `PerformAttack` is unchanged and still the right call for scripted attacks that have no held button behind them (`Reminiscence`, the on-screen attack buttons, the queued-attack drain)
+
+### Changed
+- `PlayerInputHandler`'s four `performed` callbacks (`Basic`, `Skill`, `Ultimate`, `Technique`) call `PressAttack` instead of `PerformAttack`. The `canceled` callbacks still call `ReleaseAttack`
+- The Golem's `castBarOffset` override was dropped from `(0, -1.2, 0)` back to `(0, -0.7, 0)`, matching the new `EnemyAttackHandler` default
+- `WaveRewardImage` moved from y `450` to y `400` in `New.unity`
+- The Cultist prefab picked up serialized values for the fields added in v0.4.5 — `castBarPrefab` / `castBarTextPrefab` left empty, `castBarOffset` at the `(0, -0.7, 0)` default, and `EntityHealth.deathAnimTime` at its `1` default. No behaviour change
+
+### Fixed
+- **Charge attacks fired on a tap instead of hanging.** `ChargeRoutine` unconditionally reset `chargeReleaseRequested` to `false` on entry, so a release that arrived before the routine started — a quick tap, or any frame where cast setup ran ahead of the input — was thrown away and the charge held until some later release. It now seeds `chargeReleaseRequested` from `!heldInputs.Contains(type)`, so a button that is already up starts the routine in the released state and the charge resolves immediately
+
 ## [v0.4.5] - 2026-09-04 — Golem Update
 
 ### Added

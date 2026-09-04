@@ -25,7 +25,7 @@
 - [ ] Audio (SFX + music buses)
 
 **Content**
-- [ ] re-add phase based buffs using the new system (Cultist and Jellyfish still pending)
+- [ ] re-add phase based buffs using the new system (Jellyfish still pending)
 
 **QoL & Polish**
 - [ ] finish tilemap
@@ -46,7 +46,6 @@
 - [ ] more enemy move telegraphs
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 - [ ] contact damage
-- [x] Boss #4 — Golem [v0.4.5]
 - [ ] environmental collectible items (mana, xp, hp, gold)
 - [ ] Anamolies update (swarm wave (-stat + count), duel wave (1 count, superbuffed))
 

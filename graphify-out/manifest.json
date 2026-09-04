@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Enemy/EnemyAttackHandler.cs": {
-    "mtime": 1788373283.7740524,
-    "seen": 1788373880.3856404,
-    "ast_hash": "136a35759b3e08f7cec0f71b116c5552",
+    "mtime": 1788557868.6095998,
+    "seen": 1788559364.9198053,
+    "ast_hash": "a13400c9cd2c42d8d28e6bcda307d853",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Enemy/EnemyMovement.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788534689.4072273,
-    "seen": 1788534853.3798127,
-    "ast_hash": "639a9b6017e05d519dfe809a56eee5b2",
+    "mtime": 1788559331.79695,
+    "seen": 1788559364.9201183,
+    "ast_hash": "09c89f6de98efdec237c57f88b9f4668",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -702,21 +702,21 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1788534724.967615,
-    "seen": 1788534853.3798172,
-    "ast_hash": "2429d651282722c31bec6a500faf9398",
+    "mtime": 1788559231.4603968,
+    "seen": 1788559364.9201303,
+    "ast_hash": "9845a3f919a8870dff4210681609f86f",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1788534696.2052164,
-    "seen": 1788534853.3798177,
-    "ast_hash": "1168386ab65f6609eb0c227a51946e29",
+    "mtime": 1788559266.5878038,
+    "seen": 1788559364.9201322,
+    "ast_hash": "b7b12dacc7cd6045570e33b83711ad1d",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1788534830.4504359,
-    "seen": 1788534853.3798184,
-    "ast_hash": "812647061e90ff914505604f9638968c",
+    "mtime": 1788559266.5888014,
+    "seen": 1788559364.920134,
+    "ast_hash": "7c71482460c97b50d22e42e51c620865",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -797,294 +797,6 @@
     "ast_hash": "c433e8a4de4438d13693ed173b0d2dab",
     "semantic_hash": ""
   },
-  "Assets/data/entity/enemy/Bat/Attacks/Boomerang/928.png": {
-    "mtime": 1782075400.5214438,
-    "seen": 1787538805.3415613,
-    "ast_hash": "b56721aacb60e899ff8d6632a00d2efb",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Attacks/Mark/316.png": {
-    "mtime": 1782075409.790037,
-    "seen": 1787538805.341562,
-    "ast_hash": "eccd046ae447b3727899eb377f954145",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Images/Bat-Attack1.png": {
-    "mtime": 1782934220.3386607,
-    "seen": 1787538805.3415625,
-    "ast_hash": "56b89f3b0d784fbcafd2c51abee24745",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Images/Bat-Attack2.png": {
-    "mtime": 1782934220.3441947,
-    "seen": 1787538805.3415632,
-    "ast_hash": "97a73502d1958e5e6b287630d664f7da",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Images/Bat-Die.png": {
-    "mtime": 1782934220.3486166,
-    "seen": 1787538805.341564,
-    "ast_hash": "887e42568cdb90551533098d479606c9",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Images/Bat-Hurt.png": {
-    "mtime": 1782934220.3559625,
-    "seen": 1787538805.3415644,
-    "ast_hash": "c549df65011f4ce3ff4967691bd9b2d4",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Images/Bat-IdleFly.png": {
-    "mtime": 1782934220.3584683,
-    "seen": 1787538805.341565,
-    "ast_hash": "0206d8d63783af757a522ded49725954",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Images/Bat-Run.png": {
-    "mtime": 1782934220.3635056,
-    "seen": 1787538805.3415656,
-    "ast_hash": "82e4f7476a4155a95f63c02b814c7779",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Images/Bat-Sleep.png": {
-    "mtime": 1782934220.368535,
-    "seen": 1787538805.3415663,
-    "ast_hash": "78bea30ba1a80f805a48e7306c76aacf",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Bat/Images/Bat-WakeUp.png": {
-    "mtime": 1782934220.3729465,
-    "seen": 1787538805.3415668,
-    "ast_hash": "a8199fe556a8ab2cba6176ed5289cd04",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Crab/Attacks/Disc/115.png": {
-    "mtime": 1782075409.533367,
-    "seen": 1787538805.3415675,
-    "ast_hash": "560007eaf33bf7924f23f828bfc46036",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Crab/Attacks/Slice/295.png": {
-    "mtime": 1782075409.75618,
-    "seen": 1787538805.341568,
-    "ast_hash": "004cb7a613dc7776e9d1a552715f202a",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Crab/images/Crab_Ability.png": {
-    "mtime": 1782435939.6133223,
-    "seen": 1787538805.3415685,
-    "ast_hash": "02a44fad7db949015c13cc4d1f090a1e",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Crab/images/Crab_AttackC.png": {
-    "mtime": 1782435939.6326513,
-    "seen": 1787538805.3415692,
-    "ast_hash": "7ecaaf80c849535dc22f9003c37970b8",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Crab/images/Crab_Death.png": {
-    "mtime": 1782435939.6413164,
-    "seen": 1787538805.34157,
-    "ast_hash": "5757bcce97b4a88395842cfb6f4fa2b7",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Crab/images/Crab_Idle.png": {
-    "mtime": 1782435939.652488,
-    "seen": 1787538805.3415704,
-    "ast_hash": "61913a1df2c2a139cf2327de3ffca9dc",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Crab/images/Crab_Run.png": {
-    "mtime": 1782435939.6555011,
-    "seen": 1787538805.341571,
-    "ast_hash": "e4d3b422a63ad9858268065505f11197",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/BigBall/Bullet 24x24 Part 7B Free.png": {
-    "mtime": 1782876574.20684,
-    "seen": 1787538805.3415718,
-    "ast_hash": "985d415f6deac95fe3b1c4feee9a20bd",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame1.png": {
-    "mtime": 1783363855.0579078,
-    "seen": 1787538805.3415725,
-    "ast_hash": "a921f4061281ff4b5c023dc87e9cb65b",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame10.png": {
-    "mtime": 1783363855.0609598,
-    "seen": 1787538805.3415732,
-    "ast_hash": "75f54ea4e3ca01887bbe7f3b6e29b980",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame2.png": {
-    "mtime": 1783363855.0629964,
-    "seen": 1787538805.341574,
-    "ast_hash": "25ccfe390fdae89ef29e7fcf09ffb6cd",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame3.png": {
-    "mtime": 1783363855.070898,
-    "seen": 1787538805.3415744,
-    "ast_hash": "af94e8b487d59bd2cc41a2845b12a17a",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame4.png": {
-    "mtime": 1783363855.072543,
-    "seen": 1787538805.341575,
-    "ast_hash": "060d411ce25d6dc1eefcd199ad86a667",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame5.png": {
-    "mtime": 1783363855.077601,
-    "seen": 1787538805.3415756,
-    "ast_hash": "12d3f7697e59165e062600869f5e5dba",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame6.png": {
-    "mtime": 1783363855.0822792,
-    "seen": 1787538805.341576,
-    "ast_hash": "becaf121fd8c779563dfb970f2890c14",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame7.png": {
-    "mtime": 1783363855.0876424,
-    "seen": 1787538805.341577,
-    "ast_hash": "5fb5df2cf587187a8d52fee80416a98d",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame8.png": {
-    "mtime": 1783363855.091733,
-    "seen": 1787538805.3415775,
-    "ast_hash": "d788e5b059bd714fb48a369d94b1cd65",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/Summon/Vampire_skill1_frame9.png": {
-    "mtime": 1783363855.096374,
-    "seen": 1787538805.3415782,
-    "ast_hash": "ef53734ab599c67c180781c379910d42",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/ball/Bullet 24x24 Part 7A Free.png": {
-    "mtime": 1782876574.1988416,
-    "seen": 1787538805.3415787,
-    "ast_hash": "df1a43e33ff7f6ddbcde55bad94607e7",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/attacks/wave/sprite-sheet.png": {
-    "mtime": 1783363855.3473315,
-    "seen": 1787538805.3415794,
-    "ast_hash": "e99bf68845d93f4932ca6d42cc7a040c",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/CHARGE LOOP.png": {
-    "mtime": 1712896283.440667,
-    "seen": 1787538805.34158,
-    "ast_hash": "d021c1245d19a4d8932804d7f99d4762",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/EMOTE.png": {
-    "mtime": 1712896282.8424203,
-    "seen": 1787538805.3415809,
-    "ast_hash": "16c3bfe098a9b9cce70f87afcb3cf72d",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/IDLE.png": {
-    "mtime": 1712896282.727219,
-    "seen": 1787538805.3415813,
-    "ast_hash": "ad4c82f119837fa99230841538f40adc",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/SPAWN.png": {
-    "mtime": 1712896282.601946,
-    "seen": 1787538805.341582,
-    "ast_hash": "91624346a324d0590b4abfe68355c055",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/WALK.png": {
-    "mtime": 1712896282.9701002,
-    "seen": 1787538805.3415825,
-    "ast_hash": "4a0024ccb933b7cc35b040ced2fd7dea",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/attack.png": {
-    "mtime": 1712896283.5741918,
-    "seen": 1787538805.3415833,
-    "ast_hash": "ab85721bf90a35c055adaa6fbeca0fa3",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/charge.png": {
-    "mtime": 1712896283.3287785,
-    "seen": 1787538805.341584,
-    "ast_hash": "8f8a4f37e5b3b54b52183825719bc835",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/death.png": {
-    "mtime": 1712896283.6935184,
-    "seen": 1787538805.3415847,
-    "ast_hash": "f68c4bf2391eb7bc886ec7e95a97867f",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/emote laugh.png": {
-    "mtime": 1712896283.081226,
-    "seen": 1787538805.3415852,
-    "ast_hash": "e5f25fe343641ed57f86d31a3ff844d8",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Cultist/images/hurt.png": {
-    "mtime": 1712896283.193499,
-    "seen": 1787538805.3415859,
-    "ast_hash": "06f2d24a946598fec67f70b7710b07f2",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Jellfyish/Attacks/BallSpam/1225.png": {
-    "mtime": 1782075400.9559221,
-    "seen": 1787538805.3415864,
-    "ast_hash": "8f68e18c17b25bf7f6f61ddfe3da8823",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Jellfyish/Attacks/Ripple/466.png": {
-    "mtime": 1782075409.0204318,
-    "seen": 1787538805.3415868,
-    "ast_hash": "a1ed5604a6bc0f839fce89b7f474eb4a",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Jellfyish/Attacks/WaterSplash/529.png": {
-    "mtime": 1782075409.1323364,
-    "seen": 1787538805.3415878,
-    "ast_hash": "16a600430efe8e6dd63eef99b1843d03",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Jellfyish/Attacks/WaterSplash/588.png": {
-    "mtime": 1782075409.195807,
-    "seen": 1787538805.3415883,
-    "ast_hash": "d151c92c251a3f1250dbb072918a89f6",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Lich/Attacks/Plant/655.png": {
-    "mtime": 1782075409.3097827,
-    "seen": 1787538805.3415902,
-    "ast_hash": "855c5c873d070d3223c614c49b456393",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Lich/Attacks/Wave/465.png": {
-    "mtime": 1782075409.0156384,
-    "seen": 1787538805.341591,
-    "ast_hash": "844e5b0d77c21f1d90f0094a31617b6d",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Lich/Attacks/Whirl/1615.png": {
-    "mtime": 1782075401.6135025,
-    "seen": 1787538805.3415916,
-    "ast_hash": "59cb093d44d37f10e88820f1163a4d59",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Lich/Necromancer_creativekind-Sheet.png": {
-    "mtime": 1782266933.098701,
-    "seen": 1787538805.341592,
-    "ast_hash": "1c02828b721379cea59951477218dff3",
-    "semantic_hash": ""
-  },
   "Assets/data/images/UI/01.png": {
     "mtime": 1684280739.0,
     "seen": 1787538805.341593,
@@ -1146,9 +858,9 @@
     "semantic_hash": ""
   },
   "GAME.md": {
-    "mtime": 1788469136.421327,
-    "seen": 1788469397.8244123,
-    "ast_hash": "59529550a88ba6719a194f0fe40b116c",
+    "mtime": 1788559257.1596782,
+    "seen": 1788559364.9201257,
+    "ast_hash": "6145221a3a4592b44e6ffd269f04a1a8",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/UnlimitedWaveManager.cs": {
@@ -1445,54 +1157,6 @@
     "ast_hash": "72b00dd33aba51d9b7c31f8aa98b7727",
     "semantic_hash": ""
   },
-  "Assets/data/entity/enemy/Jellfyish/images/charged.png": {
-    "mtime": 1782769567.5078607,
-    "seen": 1787775918.1735494,
-    "ast_hash": "db3be6223804067bec07efab6900c322",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Jellfyish/images/idle.png": {
-    "mtime": 1782769567.5131855,
-    "seen": 1787775918.1735504,
-    "ast_hash": "e878c360e29be471358b95ae88993ee3",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime/Attacks/A/427.png": {
-    "mtime": 1782075409.9204428,
-    "seen": 1787775918.1735566,
-    "ast_hash": "e2395b0e8a8b59232fa113742eca4d4e",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime/images/Slime1_Death_full.png": {
-    "mtime": 1782066636.2004585,
-    "seen": 1787775918.1735575,
-    "ast_hash": "7f97d690e7e5358946a1d651e8bfbf63",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime/images/Slime1_Hurt_full.png": {
-    "mtime": 1782066636.2192724,
-    "seen": 1787775918.1735587,
-    "ast_hash": "b650c1bed2051ab190d6c49423cd5d2f",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime/images/Slime1_Idle_full.png": {
-    "mtime": 1782066636.1575172,
-    "seen": 1787775918.17356,
-    "ast_hash": "99f2015ae45c0c67db8a4ef36bf077cd",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime/images/Slime1_Run_full.png": {
-    "mtime": 1782066636.2345572,
-    "seen": 1787775918.1735606,
-    "ast_hash": "f0272c183a47e95335fbc00f365a60ca",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime/images/Slime_1_Attack.png": {
-    "mtime": 1782066636.166862,
-    "seen": 1787775918.1735618,
-    "ast_hash": "04243c506e7f67a951371df4254a3e9b",
-    "semantic_hash": ""
-  },
   "Assets/data/entity/player/SPRITE_SHEET.png": {
     "mtime": 1782002438.7432632,
     "seen": 1787775918.1735628,
@@ -1695,78 +1359,6 @@
     "mtime": 1788485198.3838484,
     "seen": 1788485259.5842838,
     "ast_hash": "2b93c48ec0ef1a4bd955bb9e2392e200",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_frost/Attacks/Blizzard/Bullet 24x24 Free Part 4B.png": {
-    "mtime": 1782876574.1398275,
-    "seen": 1788195034.9711716,
-    "ast_hash": "fd0cc97fcc14196e327a2dd2ec7d5d8c",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_frost/images/Slime2_Attack_full.png": {
-    "mtime": 1782066636.3562875,
-    "seen": 1788195034.9711742,
-    "ast_hash": "e61dc6c1bba274707717ee4e5804607d",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_frost/images/Slime2_Death_full.png": {
-    "mtime": 1782066636.3876607,
-    "seen": 1788195034.9711764,
-    "ast_hash": "8f9cd0fe4dd7159340f8f880418ef7f9",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_frost/images/Slime2_Hurt_full.png": {
-    "mtime": 1782066636.4121609,
-    "seen": 1788195034.9711783,
-    "ast_hash": "a9983c78de0128768409ce22302ce1bc",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_frost/images/Slime2_Idle_full.png": {
-    "mtime": 1782066636.346635,
-    "seen": 1788195034.97118,
-    "ast_hash": "4e9599f8c2e05c0e2e647cf5f9a91793",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_frost/images/Slime2_Run_full.png": {
-    "mtime": 1782066636.42211,
-    "seen": 1788195034.971182,
-    "ast_hash": "dfc297e6e40fd3c6652fee06a4a488fd",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_magma/Attacks/Eruption/378.png": {
-    "mtime": 1782075409.8541665,
-    "seen": 1788195034.971184,
-    "ast_hash": "c8117c1eeff1741d2b2b7f830be252fc",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_magma/images/Slime3_Attack_full.png": {
-    "mtime": 1782066636.2615497,
-    "seen": 1788195034.9711854,
-    "ast_hash": "c593acd9d756393e3ac035e55eeb90c2",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_magma/images/Slime3_Death_full.png": {
-    "mtime": 1782066636.2856033,
-    "seen": 1788195034.9711864,
-    "ast_hash": "349bf16f4a63fb33ab08744d373fa4b3",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_magma/images/Slime3_Hurt_full.png": {
-    "mtime": 1782066636.302991,
-    "seen": 1788195034.971188,
-    "ast_hash": "46ea840a77e28e984f2fcc944d78d51b",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_magma/images/Slime3_Idle_full.png": {
-    "mtime": 1782066636.244335,
-    "seen": 1788195034.9711893,
-    "ast_hash": "65e9417bb76aa8e61801c10c3010e4bb",
-    "semantic_hash": ""
-  },
-  "Assets/data/entity/enemy/Slime_magma/images/Slime3_Run_full.png": {
-    "mtime": 1782066636.3230848,
-    "seen": 1788195034.9711905,
-    "ast_hash": "798bd572bf0c0d0da49b9fe5eaae2304",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrades/GrantStatusEffect.cs": {
@@ -2193,6 +1785,492 @@
     "mtime": 1788114891.3181787,
     "seen": 1788534853.3799698,
     "ast_hash": "376d096e1c44453733330cad4cc0422c",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/BigBall/Bullet 24x24 Part 7B Free.png": {
+    "mtime": 1782876574.20684,
+    "seen": 1788559364.920359,
+    "ast_hash": "985d415f6deac95fe3b1c4feee9a20bd",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame1.png": {
+    "mtime": 1783363855.0579078,
+    "seen": 1788559364.9203613,
+    "ast_hash": "a921f4061281ff4b5c023dc87e9cb65b",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame10.png": {
+    "mtime": 1783363855.0609598,
+    "seen": 1788559364.920363,
+    "ast_hash": "75f54ea4e3ca01887bbe7f3b6e29b980",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame2.png": {
+    "mtime": 1783363855.0629964,
+    "seen": 1788559364.9203649,
+    "ast_hash": "25ccfe390fdae89ef29e7fcf09ffb6cd",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame3.png": {
+    "mtime": 1783363855.070898,
+    "seen": 1788559364.9203677,
+    "ast_hash": "af94e8b487d59bd2cc41a2845b12a17a",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame4.png": {
+    "mtime": 1783363855.072543,
+    "seen": 1788559364.9203699,
+    "ast_hash": "060d411ce25d6dc1eefcd199ad86a667",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame5.png": {
+    "mtime": 1783363855.077601,
+    "seen": 1788559364.9203718,
+    "ast_hash": "12d3f7697e59165e062600869f5e5dba",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame6.png": {
+    "mtime": 1783363855.0822792,
+    "seen": 1788559364.9203737,
+    "ast_hash": "becaf121fd8c779563dfb970f2890c14",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame7.png": {
+    "mtime": 1783363855.0876424,
+    "seen": 1788559364.9203758,
+    "ast_hash": "5fb5df2cf587187a8d52fee80416a98d",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame8.png": {
+    "mtime": 1783363855.091733,
+    "seen": 1788559364.9203782,
+    "ast_hash": "d788e5b059bd714fb48a369d94b1cd65",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/Summon/Vampire_skill1_frame9.png": {
+    "mtime": 1783363855.096374,
+    "seen": 1788559364.9203799,
+    "ast_hash": "ef53734ab599c67c180781c379910d42",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/ball/Bullet 24x24 Part 7A Free.png": {
+    "mtime": 1782876574.1988416,
+    "seen": 1788559364.9203818,
+    "ast_hash": "df1a43e33ff7f6ddbcde55bad94607e7",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/attacks/wave/sprite-sheet.png": {
+    "mtime": 1783363855.3473315,
+    "seen": 1788559364.9203835,
+    "ast_hash": "e99bf68845d93f4932ca6d42cc7a040c",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/CHARGE LOOP.png": {
+    "mtime": 1712896283.440667,
+    "seen": 1788559364.9203858,
+    "ast_hash": "d021c1245d19a4d8932804d7f99d4762",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/EMOTE.png": {
+    "mtime": 1712896282.8424203,
+    "seen": 1788559364.9203877,
+    "ast_hash": "16c3bfe098a9b9cce70f87afcb3cf72d",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/IDLE.png": {
+    "mtime": 1712896282.727219,
+    "seen": 1788559364.9203904,
+    "ast_hash": "ad4c82f119837fa99230841538f40adc",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/SPAWN.png": {
+    "mtime": 1712896282.601946,
+    "seen": 1788559364.9203925,
+    "ast_hash": "91624346a324d0590b4abfe68355c055",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/WALK.png": {
+    "mtime": 1712896282.9701002,
+    "seen": 1788559364.9203944,
+    "ast_hash": "4a0024ccb933b7cc35b040ced2fd7dea",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/attack.png": {
+    "mtime": 1712896283.5741918,
+    "seen": 1788559364.9203966,
+    "ast_hash": "ab85721bf90a35c055adaa6fbeca0fa3",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/charge.png": {
+    "mtime": 1712896283.3287785,
+    "seen": 1788559364.9203992,
+    "ast_hash": "8f8a4f37e5b3b54b52183825719bc835",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/death.png": {
+    "mtime": 1712896283.6935184,
+    "seen": 1788559364.9204009,
+    "ast_hash": "f68c4bf2391eb7bc886ec7e95a97867f",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/emote laugh.png": {
+    "mtime": 1712896283.081226,
+    "seen": 1788559364.9204032,
+    "ast_hash": "e5f25fe343641ed57f86d31a3ff844d8",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Cultist/images/hurt.png": {
+    "mtime": 1712896283.193499,
+    "seen": 1788559364.920405,
+    "ast_hash": "06f2d24a946598fec67f70b7710b07f2",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/attacks/Cross/274.png": {
+    "mtime": 1782075409.7221303,
+    "seen": 1788559364.9204068,
+    "ast_hash": "43ee6035c26c3fbea6e0052871fbb62c",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/attacks/Cross/Bullet 24x24 Free Part 3C.png": {
+    "mtime": 1782876574.1299856,
+    "seen": 1788559364.9204085,
+    "ast_hash": "9b0f121c25fd5a3c4b74161a50229b14",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/attacks/Orbit/Bullet 24x24 Part 8C Free.png": {
+    "mtime": 1782876574.2278552,
+    "seen": 1788559364.920411,
+    "ast_hash": "1df88683306304e48fcf27c294c6a2ac",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/attacks/charge/1329.png": {
+    "mtime": 1782075401.1165738,
+    "seen": 1788559364.9204133,
+    "ast_hash": "2ccbe1981667748220bfed67aa26c029",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/attacks/slam/Bullet 24x24 Free  Part 1C.png": {
+    "mtime": 1782876574.0910494,
+    "seen": 1788559364.9204154,
+    "ast_hash": "36266fbe5be0afff95945a2440b1c514",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/images/Golem_AttackA.png": {
+    "mtime": 1782435939.8168306,
+    "seen": 1788559364.9204175,
+    "ast_hash": "b2a35762ed1fe2ab8951c1e2036f609c",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/images/Golem_AttackB.png": {
+    "mtime": 1782435939.823441,
+    "seen": 1788559364.9204202,
+    "ast_hash": "296f0731d7739c4ea0924cd849f63df4",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/images/Golem_AttackC.png": {
+    "mtime": 1782435939.8330715,
+    "seen": 1788559364.9204223,
+    "ast_hash": "295e7759d7827f2a4f8ec1848ae7967e",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/images/Golem_DeathB.png": {
+    "mtime": 1782435939.844988,
+    "seen": 1788559364.9204247,
+    "ast_hash": "8695eb3cc4edc7182a052841d6e5d43a",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/images/Golem_HitB.png": {
+    "mtime": 1782435939.860593,
+    "seen": 1788559364.9204268,
+    "ast_hash": "31c9cb27a4987e57f566f6dea6dfc90b",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/images/Golem_IdleB.png": {
+    "mtime": 1782435939.8687017,
+    "seen": 1788559364.920429,
+    "ast_hash": "7c2e53ab61d06e3c77adf68f147ee7ff",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/images/Golem_Reset.png": {
+    "mtime": 1782435939.871778,
+    "seen": 1788559364.9204314,
+    "ast_hash": "e43b902654cf24da2d33781e9ac86d85",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Golem/images/Golem_Run.png": {
+    "mtime": 1782435939.8753011,
+    "seen": 1788559364.920434,
+    "ast_hash": "9b43c344df339389cb5505694d1c9ef6",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Jellfyish/Attacks/BallSpam/1225.png": {
+    "mtime": 1782075400.9559221,
+    "seen": 1788559364.9204361,
+    "ast_hash": "8f68e18c17b25bf7f6f61ddfe3da8823",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Jellfyish/Attacks/Ripple/466.png": {
+    "mtime": 1782075409.0204318,
+    "seen": 1788559364.9204376,
+    "ast_hash": "a1ed5604a6bc0f839fce89b7f474eb4a",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Jellfyish/Attacks/WaterSplash/529.png": {
+    "mtime": 1782075409.1323364,
+    "seen": 1788559364.9204392,
+    "ast_hash": "16a600430efe8e6dd63eef99b1843d03",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Jellfyish/Attacks/WaterSplash/588.png": {
+    "mtime": 1782075409.195807,
+    "seen": 1788559364.9204416,
+    "ast_hash": "d151c92c251a3f1250dbb072918a89f6",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Jellfyish/images/charged.png": {
+    "mtime": 1782769567.5078607,
+    "seen": 1788559364.9204428,
+    "ast_hash": "db3be6223804067bec07efab6900c322",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Jellfyish/images/idle.png": {
+    "mtime": 1782769567.5131855,
+    "seen": 1788559364.9204452,
+    "ast_hash": "e878c360e29be471358b95ae88993ee3",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Lich/Attacks/Plant/655.png": {
+    "mtime": 1782075409.3097827,
+    "seen": 1788559364.9204469,
+    "ast_hash": "855c5c873d070d3223c614c49b456393",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Lich/Attacks/Wave/465.png": {
+    "mtime": 1782075409.0156384,
+    "seen": 1788559364.920449,
+    "ast_hash": "844e5b0d77c21f1d90f0094a31617b6d",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Lich/Attacks/Whirl/1615.png": {
+    "mtime": 1782075401.6135025,
+    "seen": 1788559364.92047,
+    "ast_hash": "59cb093d44d37f10e88820f1163a4d59",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Bosses/Lich/Necromancer_creativekind-Sheet.png": {
+    "mtime": 1782266933.098701,
+    "seen": 1788559364.9204724,
+    "ast_hash": "1c02828b721379cea59951477218dff3",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Attacks/Boomerang/928.png": {
+    "mtime": 1782075400.5214438,
+    "seen": 1788559364.9204743,
+    "ast_hash": "b56721aacb60e899ff8d6632a00d2efb",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Attacks/Mark/316.png": {
+    "mtime": 1782075409.790037,
+    "seen": 1788559364.920477,
+    "ast_hash": "eccd046ae447b3727899eb377f954145",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Images/Bat-Attack1.png": {
+    "mtime": 1782934220.3386607,
+    "seen": 1788559364.9204793,
+    "ast_hash": "56b89f3b0d784fbcafd2c51abee24745",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Images/Bat-Attack2.png": {
+    "mtime": 1782934220.3441947,
+    "seen": 1788559364.9204814,
+    "ast_hash": "97a73502d1958e5e6b287630d664f7da",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Images/Bat-Die.png": {
+    "mtime": 1782934220.3486166,
+    "seen": 1788559364.9204834,
+    "ast_hash": "887e42568cdb90551533098d479606c9",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Images/Bat-Hurt.png": {
+    "mtime": 1782934220.3559625,
+    "seen": 1788559364.920485,
+    "ast_hash": "c549df65011f4ce3ff4967691bd9b2d4",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Images/Bat-IdleFly.png": {
+    "mtime": 1782934220.3584683,
+    "seen": 1788559364.9204874,
+    "ast_hash": "0206d8d63783af757a522ded49725954",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Images/Bat-Run.png": {
+    "mtime": 1782934220.3635056,
+    "seen": 1788559364.9204893,
+    "ast_hash": "82e4f7476a4155a95f63c02b814c7779",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Images/Bat-Sleep.png": {
+    "mtime": 1782934220.368535,
+    "seen": 1788559364.9204915,
+    "ast_hash": "78bea30ba1a80f805a48e7306c76aacf",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Bat/Images/Bat-WakeUp.png": {
+    "mtime": 1782934220.3729465,
+    "seen": 1788559364.9204934,
+    "ast_hash": "a8199fe556a8ab2cba6176ed5289cd04",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Crab/Attacks/Disc/115.png": {
+    "mtime": 1782075409.533367,
+    "seen": 1788559364.920495,
+    "ast_hash": "560007eaf33bf7924f23f828bfc46036",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Crab/Attacks/Slice/295.png": {
+    "mtime": 1782075409.75618,
+    "seen": 1788559364.9204972,
+    "ast_hash": "004cb7a613dc7776e9d1a552715f202a",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Crab/images/Crab_Ability.png": {
+    "mtime": 1782435939.6133223,
+    "seen": 1788559364.920499,
+    "ast_hash": "02a44fad7db949015c13cc4d1f090a1e",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Crab/images/Crab_AttackC.png": {
+    "mtime": 1782435939.6326513,
+    "seen": 1788559364.9205012,
+    "ast_hash": "7ecaaf80c849535dc22f9003c37970b8",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Crab/images/Crab_Death.png": {
+    "mtime": 1782435939.6413164,
+    "seen": 1788559364.9205036,
+    "ast_hash": "5757bcce97b4a88395842cfb6f4fa2b7",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Crab/images/Crab_Idle.png": {
+    "mtime": 1782435939.652488,
+    "seen": 1788559364.9205053,
+    "ast_hash": "61913a1df2c2a139cf2327de3ffca9dc",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Crab/images/Crab_Run.png": {
+    "mtime": 1782435939.6555011,
+    "seen": 1788559364.920507,
+    "ast_hash": "e4d3b422a63ad9858268065505f11197",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime/Attacks/A/427.png": {
+    "mtime": 1782075409.9204428,
+    "seen": 1788559364.9205086,
+    "ast_hash": "e2395b0e8a8b59232fa113742eca4d4e",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime/images/Slime1_Death_full.png": {
+    "mtime": 1782066636.2004585,
+    "seen": 1788559364.9205103,
+    "ast_hash": "7f97d690e7e5358946a1d651e8bfbf63",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime/images/Slime1_Hurt_full.png": {
+    "mtime": 1782066636.2192724,
+    "seen": 1788559364.9205115,
+    "ast_hash": "b650c1bed2051ab190d6c49423cd5d2f",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime/images/Slime1_Idle_full.png": {
+    "mtime": 1782066636.1575172,
+    "seen": 1788559364.9205127,
+    "ast_hash": "99f2015ae45c0c67db8a4ef36bf077cd",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime/images/Slime1_Run_full.png": {
+    "mtime": 1782066636.2345572,
+    "seen": 1788559364.920514,
+    "ast_hash": "f0272c183a47e95335fbc00f365a60ca",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime/images/Slime_1_Attack.png": {
+    "mtime": 1782066636.166862,
+    "seen": 1788559364.9205153,
+    "ast_hash": "04243c506e7f67a951371df4254a3e9b",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_frost/Attacks/Blizzard/Bullet 24x24 Free Part 4B.png": {
+    "mtime": 1782876574.1398275,
+    "seen": 1788559364.9205165,
+    "ast_hash": "fd0cc97fcc14196e327a2dd2ec7d5d8c",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_frost/images/Slime2_Attack_full.png": {
+    "mtime": 1782066636.3562875,
+    "seen": 1788559364.9205182,
+    "ast_hash": "e61dc6c1bba274707717ee4e5804607d",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_frost/images/Slime2_Death_full.png": {
+    "mtime": 1782066636.3876607,
+    "seen": 1788559364.9205194,
+    "ast_hash": "8f9cd0fe4dd7159340f8f880418ef7f9",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_frost/images/Slime2_Hurt_full.png": {
+    "mtime": 1782066636.4121609,
+    "seen": 1788559364.9205208,
+    "ast_hash": "a9983c78de0128768409ce22302ce1bc",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_frost/images/Slime2_Idle_full.png": {
+    "mtime": 1782066636.346635,
+    "seen": 1788559364.9205217,
+    "ast_hash": "4e9599f8c2e05c0e2e647cf5f9a91793",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_frost/images/Slime2_Run_full.png": {
+    "mtime": 1782066636.42211,
+    "seen": 1788559364.9205232,
+    "ast_hash": "dfc297e6e40fd3c6652fee06a4a488fd",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_magma/Attacks/Eruption/378.png": {
+    "mtime": 1782075409.8541665,
+    "seen": 1788559364.9205248,
+    "ast_hash": "c8117c1eeff1741d2b2b7f830be252fc",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_magma/images/Slime3_Attack_full.png": {
+    "mtime": 1782066636.2615497,
+    "seen": 1788559364.9205258,
+    "ast_hash": "c593acd9d756393e3ac035e55eeb90c2",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_magma/images/Slime3_Death_full.png": {
+    "mtime": 1782066636.2856033,
+    "seen": 1788559364.9205272,
+    "ast_hash": "349bf16f4a63fb33ab08744d373fa4b3",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_magma/images/Slime3_Hurt_full.png": {
+    "mtime": 1782066636.302991,
+    "seen": 1788559364.920528,
+    "ast_hash": "46ea840a77e28e984f2fcc944d78d51b",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_magma/images/Slime3_Idle_full.png": {
+    "mtime": 1782066636.244335,
+    "seen": 1788559364.920529,
+    "ast_hash": "65e9417bb76aa8e61801c10c3010e4bb",
+    "semantic_hash": ""
+  },
+  "Assets/data/entity/enemy/Enemies/Slime_magma/images/Slime3_Run_full.png": {
+    "mtime": 1782066636.3230848,
+    "seen": 1788559364.9205308,
+    "ast_hash": "798bd572bf0c0d0da49b9fe5eaae2304",
     "semantic_hash": ""
   }
 }

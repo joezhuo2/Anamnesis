@@ -129,7 +129,7 @@ MonoBehaviour:
   globalCooldown: 2
   castBarPrefab: {fileID: 5326710201406479706, guid: fe45e7807c448b3488003baa762ff520, type: 3}
   castBarTextPrefab: {fileID: 6961074376611238736, guid: 096da352af1b7ee4fbabc3c804c8d36b, type: 3}
-  castBarOffset: {x: 0, y: -1.2, z: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &1979661521946848049
 SpriteRenderer:
   serializedVersion: 2

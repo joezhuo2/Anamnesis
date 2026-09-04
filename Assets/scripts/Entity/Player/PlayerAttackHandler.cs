@@ -50,6 +50,7 @@ namespace CrystalFlux.EntitySystem
         private bool chargeReleaseRequested;
         private AttackType chargingType;
         private AttackData chargingAttack;
+        private readonly HashSet<AttackType> heldInputs = new();
         private readonly List<AttackData> pendingDestroy = new();
         private static readonly HashSet<AttackData> inUseVisited = new();
         private readonly List<QueuedAttack> attackQueue = new();
@@ -433,15 +434,22 @@ namespace CrystalFlux.EntitySystem
             if (ps != null) StartCoroutine(ps.SpawnFromPattern(ad, gameObject, transform.position));
         }
 
+        public void PressAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
+        {
+            heldInputs.Add(type);
+            PerformAttack(type, bypassCooldown, noCost, triggerUpgrades);
+        }
+
         public void ReleaseAttack(AttackType type)
         {
+            heldInputs.Remove(type);
             if (isCharging && chargingType == type) chargeReleaseRequested = true;
         }
 
         private IEnumerator ChargeRoutine(AttackData selected, AttackType type, bool noCost, bool bypassCooldown, bool costUpgradesTriggered)
         {
             isCharging = true;
-            chargeReleaseRequested = false;
+            chargeReleaseRequested = !heldInputs.Contains(type);
             chargingType = type;
             chargingAttack = selected;
             castCancelled = false;

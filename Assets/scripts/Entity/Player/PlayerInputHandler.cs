@@ -59,10 +59,10 @@ namespace CrystalFlux.EntitySystem
         private void OnMovePerformed(InputAction.CallbackContext ctx) => pm.moveInput = ctx.ReadValue<Vector2>();
         private void OnMoveCanceled(InputAction.CallbackContext ctx) => pm.moveInput = Vector2.zero;
         private void OnDashPerformed(InputAction.CallbackContext ctx) => pm.TryStartDash();
-        private void OnBasicAttackPerformed(InputAction.CallbackContext ctx) => pah.PerformAttack(AttackType.Basic);
-        private void OnSkillPerformed(InputAction.CallbackContext ctx) => pah.PerformAttack(AttackType.Skill);
-        private void OnUltimatePerformed(InputAction.CallbackContext ctx) => pah.PerformAttack(AttackType.Ultimate);
-        private void OnTechniquePerformed(InputAction.CallbackContext ctx) => pah.PerformAttack(AttackType.Technique);
+        private void OnBasicAttackPerformed(InputAction.CallbackContext ctx) => pah.PressAttack(AttackType.Basic);
+        private void OnSkillPerformed(InputAction.CallbackContext ctx) => pah.PressAttack(AttackType.Skill);
+        private void OnUltimatePerformed(InputAction.CallbackContext ctx) => pah.PressAttack(AttackType.Ultimate);
+        private void OnTechniquePerformed(InputAction.CallbackContext ctx) => pah.PressAttack(AttackType.Technique);
         private void OnBasicAttackCanceled(InputAction.CallbackContext ctx) => pah.ReleaseAttack(AttackType.Basic);
         private void OnSkillCanceled(InputAction.CallbackContext ctx) => pah.ReleaseAttack(AttackType.Skill);
         private void OnUltimateCanceled(InputAction.CallbackContext ctx) => pah.ReleaseAttack(AttackType.Ultimate);

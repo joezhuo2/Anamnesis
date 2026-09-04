@@ -128,6 +128,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47a3fbab105cdc94880bd388d1ccc6d1, type: 2}
   - {fileID: 11400000, guid: 5018ef59fc68157478371e978c825e20, type: 2}
   globalCooldown: 3
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &467692590264923639
 SpriteRenderer:
   serializedVersion: 2
@@ -213,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d3bfa51801c446ad1dfffe864340e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  deathAnimTime: 1
   healthBarPrefab: {fileID: 0}
   healthBarOffset: {x: 0, y: 0, z: 0}
   healthBarTextPrefab: {fileID: 0}
@@ -326,5 +330,13 @@ MonoBehaviour:
   phaseThresholds:
   - 70
   - 40
-  phaseBuffs: []
+  phaseBuffs:
+  - buff:
+      type: 3
+      value: 30
+    phaseReq: 1
+  - buff:
+      type: 24
+      value: 40
+    phaseReq: 2
   phase: 0
