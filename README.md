@@ -89,9 +89,9 @@ Every keyboard binding above except the skill tree pan/zoom can be rebound in th
 
 **Enemies** — 
 - **Regular Enemies**: Bat, Crab, Slime, Slime (Frost), and Slime (Magma)
-- **Bosses**: Cultist (clone summoning), Jellyfish, Lich
+- **Bosses**: Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset)
 
-Each enemies have their own stats, attack sets, movement patterns, behavior, and inflict unique status effects. Some even have unique behaviour such as summons, and more to come! In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, and Slime (Frost) from 20.
+Each enemies have their own stats, attack sets, movement patterns, behavior, and inflict unique status effects. Some even have unique behaviour such as summons, phase escalation, and more to come! In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, and Slime (Frost) from 20.
 
 **Status effects** — DoTs, Stun, Stat Buffs, Stat Reductions (Slow, Weaken, etc.), Attack Enhancements,and more.
 
@@ -157,7 +157,9 @@ so a purely passive upgrade installs its effect in the first and reverses it in 
 Assets/
 ├── New.unity                  # Main game scene (WaveManager, SkillTree, Player UI)
 ├── data/                      # ScriptableObject data (attacks, entities, waves, skill tree)
+│   ├── _example/              # Template attack folder (AD/PD/controller/prefab) to copy when authoring
 │   ├── entity/                # Enemy/Player base stats, attacks, animation data, assets, and prefabs
+│   │   └── enemy/             # Split into Bosses/ and Enemies/
 │   ├── images/                # Images assets
 │   ├── PlayerData/            # Player attacks, upgrades, skill tree data, controls
 │   ├── prefabs/               # UI element prefabs

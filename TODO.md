@@ -46,7 +46,7 @@
 - [ ] more enemy move telegraphs
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 - [ ] contact damage
-- [ ] Boss #4
+- [x] Boss #4 — Golem [v0.4.5]
 - [ ] environmental collectible items (mana, xp, hp, gold)
 - [ ] Anamolies update (swarm wave (-stat + count), duel wave (1 count, superbuffed))
 

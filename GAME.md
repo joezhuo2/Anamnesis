@@ -1057,6 +1057,7 @@ Folder: `Assets/data/StatusEffect`.
 
 | Asset | Class | Name | Duration | Tick | Max stacks | Effect |
 | --- | --- | --- | --- | --- | --- | --- |
+| `AttackInc 14 2 40` | StatBuffs | Sharpened Instincts | 14s | - | 2 | +40% atkPct per stack |
 | `Blaze Soul` | AttackReplacement | Blaze Soul | 6s | - | 1 | Replaces the attack with `Blaze A1 AD` (Cosmic Blaze) |
 | `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 8% EffMaxHp per tick |
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
@@ -1076,9 +1077,11 @@ Folder: `Assets/data/StatusEffect`.
 | `Slow 5 3 15` | StatReduction | Slow | 5s | - | 3 | -15% moveSpeed per stack |
 | `Slow 4 15 5` | StatReduction | Slow | 4s | - | 15 | -5% moveSpeed per stack |
 | `Slow 8 2 30` | StatReduction | Slow | 8s | - | 2 | -30% moveSpeed per stack |
+| `Slow 8 4 10` | StatReduction | Slow | 8s | - | 4 | -10% moveSpeed per stack, capped at -90% |
 | `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +3 hpRegen, +8% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
+| `Stun 3` | Stun | Stun | 3s | - | 1 | Cannot move or attack |
 | `Stun 6` | Stun | Stun | 6s | - | 1 | Cannot move or attack |
 | `Supersonic Cooldown` | Info | Supersonic Cooldown | 3s | - | 1 | Cooldown marker |
 | `Vulnerable 6 30` | StatBuffs | Vulnerable | 6s | - | 1 | -30% damageRes |
@@ -1087,10 +1090,16 @@ Folder: `Assets/data/StatusEffect`.
 | `Vulnerable 8 2 20` | StatBuffs | Vulnerable | 8s | - | 2 | -20% damageRes per stack |
 | `Weaken 5 10 4` | StatReduction | Weaken | 5s | - | 4 | -10% attack per stack |
 
-Used by enemies rather than the player: `Crumbling 6 10 4` (Crab), `Poison 2 0.5 1 20 Atk`
-(Slime), `Slow 8 2 30` (Lich), `Stun 6` (Cultist), `Vulnerable 6 6 5` (Bat Mark),
-`Stun 2` (also used by BallSpam), `Slow 4 15 5` and `Freeze 2` (Slime (Frost)'s Blizzard),
-`Overheat` (Slime (Magma)'s Eruption).
+Used by enemies rather than the player: `Crumbling 6 10 4` (Crab, and the Golem's Orbit),
+`Poison 2 0.5 1 20 Atk` (Slime), `Slow 8 2 30` (Lich), `Stun 6` (Cultist),
+`Vulnerable 6 6 5` (Bat Mark), `Stun 2` (also used by BallSpam), `Slow 4 15 5` and
+`Freeze 2` (Slime (Frost)'s Blizzard), `Overheat` (Slime (Magma)'s Eruption),
+`Slow 8 4 10` (the Golem's Orbit).
+
+`Stun 3` and `AttackInc 14 2 40` are authored for the Golem's Charge and are both
+`selfApply`, so the Golem inflicts them on itself: the stun is guaranteed, the attack buff
+lands 40% of the time. `Vulnerable 6 3 8` is shared — Ignition Flash and the Golem's Cross
+both apply it.
 
 `Slow 5 3 15` is authored but no longer referenced by any projectile — Blizzard moved to
 `Slow 6 15 5` in v0.3.9, which was reauthored as `Slow 4 15 5` (4s instead of 6s) in v0.4.1_2.

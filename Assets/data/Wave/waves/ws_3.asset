@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ws_3
   m_EditorClassIdentifier: Assembly-CSharp::WaveSequence
   spawnLocation: {x: 0, y: 0}
-  nextSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  nextSequence: {fileID: 11400000, guid: e77ad60343d0822458cf92bf83748db7, type: 2}
   waves:
   - enemyPrefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
     maxTotalEnemies: 32

@@ -7751,36 +7751,36 @@ MonoBehaviour:
     weight: 2
   rarityData:
   - rarityName: Common
-    displayColor: {r: 0.43867922, g: 0.43867922, b: 0.43867922, a: 1}
+    displayColor: {r: 0.4392157, g: 0.4392157, b: 0.4392157, a: 1}
     mult: 1
-    weight: 600
+    weight: 700
   - rarityName: Uncommon
     displayColor: {r: 0.21562162, g: 0.754717, b: 0, a: 1}
     mult: 3
-    weight: 350
+    weight: 300
   - rarityName: Rare
     displayColor: {r: 0, g: 0.39995039, b: 0.745283, a: 1}
     mult: 5
-    weight: 200
+    weight: 175
   - rarityName: Epic
-    displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 1}
+    displayColor: {r: 0.48947394, g: 0, b: 1, a: 1}
     mult: 7
-    weight: 100
+    weight: 90
   - rarityName: Legendary
-    displayColor: {r: 0.74509805, g: 0.32248145, b: 0, a: 1}
+    displayColor: {r: 1, g: 0.33157894, b: 0, a: 1}
     mult: 10
-    weight: 50
+    weight: 40
   - rarityName: Mythic
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
     mult: 13
-    weight: 15
+    weight: 10
   - rarityName: Celestial
-    displayColor: {r: 0.012014951, g: 0.041026052, b: 0.509434, a: 1}
-    mult: 16
-    weight: 3
+    displayColor: {r: 0.3417382, g: 0, b: 0.4056604, a: 1}
+    mult: 15
+    weight: 2.97
   - rarityName: Transcendent
-    displayColor: {r: 0.7783019, g: 0.9616805, b: 1, a: 1}
-    mult: 20
+    displayColor: {r: 0.7764706, g: 1, b: 0.9876039, a: 1}
+    mult: 15
     weight: 1
   milestoneRewards:
   - rewardName: Glass Cannon
@@ -16025,7 +16025,7 @@ MonoBehaviour:
     mult: 5
     weight: 175
   - rarityName: Epic
-    displayColor: {r: 0.36342758, g: 0, b: 0.74509805, a: 1}
+    displayColor: {r: 0.48947394, g: 0, b: 1, a: 1}
     mult: 7
     weight: 90
   - rarityName: Legendary
@@ -16036,8 +16036,8 @@ MonoBehaviour:
     displayColor: {r: 1, g: 0, b: 0.6273154, a: 1}
     mult: 13
     weight: 10
-  - rarityName: Celstial
-    displayColor: {r: 0.54446805, g: 0, b: 0.64705884, a: 1}
+  - rarityName: Celestial
+    displayColor: {r: 0.3417382, g: 0, b: 0.4056604, a: 1}
     mult: 15
     weight: 2.97
   - rarityName: Transcendent
@@ -16318,6 +16318,7 @@ MonoBehaviour:
   - {fileID: 7457594691964507130, guid: 24bacf361cba81f488717cc41f41440e, type: 3}
   - {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}
   - {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
+  - {fileID: 9117472875837362680, guid: 05af5c27662d78449819af531e4aff51, type: 3}
 --- !u!1 &1174038199 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 990cbe8a06d75e446bcb4c445486690d, type: 3}

@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d38d1f0d9cc8b843b2ae91e8a168582, type: 3}
+  m_Name: ws_4
+  m_EditorClassIdentifier: Assembly-CSharp::WaveSequence
+  spawnLocation: {x: 0, y: 0}
+  nextSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  waves:
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 34
+    maxCurrentEnemies: 20
+    enemyLevel: 46
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 35
+    maxCurrentEnemies: 20
+    enemyLevel: 47
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 36
+    maxCurrentEnemies: 20
+    enemyLevel: 48
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 38
+    maxCurrentEnemies: 21
+    enemyLevel: 49
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 39
+    maxCurrentEnemies: 21
+    enemyLevel: 50
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 41
+    maxCurrentEnemies: 21
+    enemyLevel: 51
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 43
+    maxCurrentEnemies: 21
+    enemyLevel: 53
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 44
+    maxCurrentEnemies: 21
+    enemyLevel: 53
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 46
+    maxCurrentEnemies: 21
+    enemyLevel: 54
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 47
+    maxCurrentEnemies: 21
+    enemyLevel: 55
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 49
+    maxCurrentEnemies: 22
+    enemyLevel: 56
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 51
+    maxCurrentEnemies: 22
+    enemyLevel: 57
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 52
+    maxCurrentEnemies: 22
+    enemyLevel: 58
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+    maxTotalEnemies: 53
+    maxCurrentEnemies: 22
+    enemyLevel: 59
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 9117472875837362680, guid: 05af5c27662d78449819af531e4aff51, type: 3}
+    maxTotalEnemies: 1
+    maxCurrentEnemies: 1
+    enemyLevel: 60
+    minSpawnFrequency: 0
+    maxSpawnFrequency: 0
+    minRewardChoices: 2
+    maxRewardChoices: 6
+    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+    bossBarName: Golem
+    statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
+  waveOffset: 45

@@ -17,7 +17,7 @@ namespace CrystalFlux.EntitySystem
         [Header("Cast Bar")]
         public Slider castBarPrefab;
         public TextMeshProUGUI castBarTextPrefab;
-        public Vector3 castBarOffset;
+        public Vector3 castBarOffset = new(0f, -0.7f, 0f);
 
         private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
         private float[] cooldowns;

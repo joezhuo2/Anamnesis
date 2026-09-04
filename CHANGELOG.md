@@ -7,6 +7,28 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.5] - 2026-09-04 — Golem Update
+
+### Added
+- **Golem — the fourth boss.** A slow (`moveSpeed` 0.5), heavily armoured bruiser built around a two-stage `EnemyPhase` escalation: 500 HP, 300 armor, 50 `damageRes`, 15 `spellRes`, 35% crit chance / 90% crit damage, 15 detection range, 800 XP and 40 gold on death. `phaseThresholds` are `80` and `40`, and each phase adds a buff — phase 1 grants +30% `moveSpeedPct`, phase 2 adds another +30% `moveSpeedPct` and +20 `damageRes`. All of it lives in `Assets/data/entity/enemy/Bosses/Golem/`, with a `Golem AC` controller covering Idle / Move / Hurt / Death and four attack clips, and the prefab overrides `castBarOffset` to `(0, -1.2, 0)` so the cast bar clears its larger sprite. `globalCooldown` is 2s
+- **Golem — Slam** (`slam ad`, cooldown 4s, `maxRange` 12): a `Circle` pattern of 6–12 boulders (`projectileCount` 6 + `randomCount` 6) thrown after a 0.25s `spawnDelay`. Each is size 3, speed 6, `followDistance` 0.5 so it homes loosely, deals 70% `EffAtk` as physical, pierces once and is destroyed on that hit
+- **Golem — Cross** (`cross ad`, cooldown 3s, `maxRange` 6): a `Single` zero-damage marker spawned 6 units out (`useTrueAngle`, 0.5s lifetime) whose only job is to chain — `additionalChance` is 1 and `addAttackRequiresHit` is off, so it always spawns `cross_proj ad`, a `FullX` volley with `spread` 3 dealing 160% `EffAtk` as physical with a 65% chance of `Vulnerable 6 3 8`
+- **Golem — Charge** (`charge ad`, `phaseReq` 1, cooldown 6s, `maxRange` 10): unlocked once the Golem drops below 80% HP. A speed-10, 0.75s-lifetime body slam that pierces everything for 220% `EffAtk` as physical with 5 knockback force. Both of its effects are `selfApply`, so they land on the Golem: `Stun 3` always, and `AttackInc 14 2 40` 40% of the time — it always over-commits and is left open, but sometimes comes out of the recovery hitting much harder
+- **Golem — Orbit** (`Orbit AD`, `phaseReq` 2, `castTime` 1s, cooldown 8s, `maxRange` 8): the desperation move, unlocked below 40% HP. A 1s uninterruptible-by-movement cast (`canMoveWhileCasting` off) that puts 4–6 stones into a self-orbit (`orbitSelf`, `orbitRadius` 1, `randOrbRadOffset` 3) for 20s, each dealing 40% `EffAtk` physical + 25% spell with a 1s re-hit window, a 60% chance of `Crumbling 6 10 4` and a 30% chance of `Slow 8 4 10`
+- **`Stun 3`** — a `Stun` asset, 3s, 1 stack. Used by the Golem's charge on itself
+- **`Slow 8 4 10`** — a `StatReduction` asset, 8s, 4 stacks, -10% `moveSpeed` per stack, capped at -90%. Used by the Golem's orbit
+- **`AttackInc 14 2 40`** — a `StatBuffs` asset named *Sharpened Instincts*, 14s, 2 stacks, +40% `atkPct` per stack. Used by the Golem's charge on itself
+- **`ws_4`** — a fifth wave sequence covering waves 46–60 (`waveOffset` 45). Waves 46–59 are Slime (Magma) at levels 46–59, ramping 34→~48 total and 20→21 concurrent enemies with 2–6 reward choices; wave 60 is a single level-60 Golem with the boss bar. `ws_3.nextSequence` now points at `ws_4`, and `ws_4.nextSequence` points at `BossRush`, so the pre-existing chain is extended rather than rerouted
+- **Golem is in the Unlimited rotation** — added to `UnlimitedWaveManager.bossPrefabs` as the fourth entry, so boss waves can now roll it
+- **`Assets/data/_example/_proj/`** — a template attack folder (`example ad`, `example pd`, `example.controller`, `example.prefab`) to copy when authoring a new attack
+- **`Assets/data/Wave/waves/test/test.asset`** — a one-wave development sequence that spawns a single Golem with its boss bar and no `nextSequence`. Not referenced by either wave manager
+
+### Changed
+- **Enemy assets are now split by role.** Everything under `Assets/data/entity/enemy/` moved into `Bosses/` (Cultist, Euphoric Golem, Golem, Jellfyish, Lich) and `Enemies/` (Bat, Crab, Slime, Slime_frost, Slime_magma). Only folder paths changed — GUIDs are preserved, so no prefab or asset reference was rebound
+- **`WaveManager`'s rarity table was resynced with `UnlimitedWaveManager`'s**, which had drifted ahead of it. Weights: Common 600 → 700, Uncommon 350 → 300, Rare 200 → 175, Epic 100 → 90, Legendary 50 → 40, Mythic 15 → 10, Celestial 3 → 2.97. Multipliers: Celestial 16 → 15, Transcendent 20 → 15. Epic, Legendary, Celestial and Transcendent display colours were brought over too. The two tables are now identical
+- `UnlimitedWaveManager`'s rarity table fixes the `Celstial` → `Celestial` spelling and repaints Epic and Celestial
+- `EnemyAttackHandler.castBarOffset` now defaults to `(0, -0.7, 0)` instead of `Vector3.zero`, so a newly added handler puts its cast bar under the entity rather than on top of it
+
 ## [v0.4.4] - 2026-09-04 — Ironman Update
 
 ### Added

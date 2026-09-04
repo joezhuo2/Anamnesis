@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d38d1f0d9cc8b843b2ae91e8a168582, type: 3}
+  m_Name: test
+  m_EditorClassIdentifier: Assembly-CSharp::WaveSequence
+  spawnLocation: {x: 0, y: 0}
+  nextSequence: {fileID: 0}
+  waves:
+  - enemyPrefab: {fileID: 9117472875837362680, guid: 05af5c27662d78449819af531e4aff51, type: 3}
+    maxTotalEnemies: 1
+    maxCurrentEnemies: 1
+    enemyLevel: 1
+    minSpawnFrequency: 0
+    maxSpawnFrequency: 0
+    minRewardChoices: 0
+    maxRewardChoices: 0
+    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+    bossBarName: Golem
+    statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
+  waveOffset: 0
