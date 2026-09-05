@@ -7,6 +7,21 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.6] - 2026-09-05
+
+### Added
+- **Hypernova — the Supernova capstone.** `Hypernova AD` / `Hypernova PD` in `Assets/data/PlayerData/Attacks/SkillTree/Hypernova/`, with its own `Hypernova AC` controller, `Hypernova Clip` and prefab. It keeps Supernova's shape — a melee (speed 0) Basic attack on a 3s cooldown, spawned 1 unit out at a fixed distance, 0.75s lifetime, scaling off `EffArmor` — and scales every number up: size 5 (from 4), 14 pierce (from 9), 225% physical + 30% true (from 160% / 20%), and Weaken at 65% instead of 40%. On top of that it pulls: `Pulled 0.6 1 15 3` lands on every hit, `Celestial Protection` is `selfApply` at 50%, and `Stun 2` lands 30% of the time. Gains on hit are Stamina +3, Health +4%, Mana +3, and it has no knockback
+- **`Node_hypernova`** — a capstone node ("Hypernova", 3 skill points, `undoCost` 50) whose prerequisite is `Node_apdp3` and whose `NodeRequirement` is the base Supernova attack. Its `UnlockEffect` grants `Hypernova AD`, upgrading Supernova in place the same way the Warp capstone does
+- **Nine new stat nodes**, 1 skill point each, `undoCost` 50:
+  - `Node_armor3a` / `3aa` / `3ab` and `Node_armor3b` / `3ba` / `3bb` — *Defense III*, +3 `armor` and +2% `armorPct` each. The `a` chain hangs off `Node_armor2ba` and the `b` chain off `Node_armor2b`; `Node_armor3ab` and `Node_armor3bb` each take two prerequisites, their own chain plus `Node_pr2`, so the armor and regen branches meet
+  - `Node_apdp1` / `2` / `3` — *Added Physical Damage*, +3% `addPhysDmgPct` each, a straight chain off `Node_armor2b` that terminates in the Hypernova capstone
+  - All ten node assets are registered in `SkillTreeDefinition.allNodes` (now 148 entries / 147 unique — `Node_intatk3` is listed twice, which has been true since before this version) and placed in the skill tree panel in `New.unity`
+- **`Celestial Protection`** — a `StatBuffs` asset, 8s, 4 stacks, granting +4% `damageRes`, +8 `armor` and +5% `armorPct` per stack. Applied by Hypernova to the caster. It is authored with `isBuff` off, so it is presented as a debuff despite being a buff
+- **`Pulled 0.6 1 15 3`** — a `Pulled` asset, 0.6s, 0.016s tick, 1 stack, pull speed 15 (+2 per stack) with a 3-unit full-speed radius and a 0.1 dead zone. It pulls toward the projectile rather than the caster (`pullToSource` off) and does not disable movement. Applied by Hypernova on every hit
+
+### Fixed
+- Golem's Charge attack stunning itself instead of the player
+
 ## [v0.4.5_3] - 2026-09-05
 
 - **`Overhealth.convertRegen`** — a serialized flag on the `Overhealth` upgrade, threaded through `EntityHealth.SetOverhealth(convPct, decayPct, decayInterval, convertRegen)`. It is meant to decide whether health regen keeps ticking (and therefore keeps converting) at full health. As wired, `RegenHp` only returns early when `CurHp >= MaxHp && overhealthConvPct <= 0f && !regenOverHealth`, so any upgrade with a non-zero conversion percent keeps regenerating regardless of the flag — Exsanguinate's `convertRegen: 0` currently changes nothing

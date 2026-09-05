@@ -45,7 +45,7 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
   - Lifetime: 0.5s
   - Pierce: 8
   - Size: 3
-  - Damage: 545% Phys, 55% True
+  - Damage: 545% Phys, 85% True
   - Scaling: EffAtk
   - Knockback: 5 force for 0.15s
 
@@ -123,19 +123,20 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 0.5 dist
 - Animation: 0.5s
+- Cast: 1s, rooted while casting
 - Costs: Stamina 18 +8%
-- Gains on hit: Stamina +2 +1%
+- Gains on hit: Stamina +3
 - Projectile:
   - Speed: 12
   - Lifetime: 1s
   - Pierce: 3000
   - Size: 2
-  - Damage: 685% Phys, 30% True
+  - Damage: 600% Phys
   - Scaling: EffAtk
   - Effects: 100% self on cast (Blaze Soul, refreshes the 6s replacement) + 100% self on
     cast (Heartburn, 6s, max 15 stacks: +4% damagePct, +12% critDamage, +18% stCostPct,
     -16% hpRegPct per stack)
-  - Additional: 40% chance on hit to create Blaze Hyperspark
+  - Additional: 60% chance on hit to create Blaze Hyperspark
   - Knockback: 12 force for 0.15s
 
 ## Blaze Spark
@@ -151,7 +152,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 0.5s
   - Pierce: 6
   - Size: 1.5
-  - Damage: 185% Phys
+  - Damage: 255% Phys
   - Scaling: EffAtk
   - Knockback: none
 
@@ -162,13 +163,13 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 0 dist (fixed)
 - Animation: 0.5s
-- Gains on hit: Stamina +2 +2%, Mana +1
+- Gains on hit: Stamina +3, Mana +2
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.5s
   - Pierce: 8
   - Size: 2
-  - Damage: 215% Phys, 12% True
+  - Damage: 310% Phys, 18% True
   - Scaling: EffAtk
   - Knockback: none
 
@@ -472,7 +473,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Animation: 1s
 - Cast: 1s, can move while casting
 - Costs: Stamina 8 +4%
-- Gains on hit: Stamina +3, Health +1 +2%, Mana +2
+- Gains on hit: Stamina +2, Health +1 +2%, Mana +1
 - Cleanses the caster's debuffs on cast
 - Charging: hold 0.225s to charge, min 1s, max 8s, ticks every 0.9s, no separate charge attack â€” the tick refreshes the projectile instead
 - Projectile:
@@ -585,7 +586,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 
 ## Supernova
 - Asset: `Supernova AD`
-- Type: Skill
+- Type: Basic
 - Cooldown: 3s
 - Pattern: Single (1 count)
 - Spawn: 1 dist (fixed)
@@ -694,6 +695,29 @@ skill tree nodes.
   - Knockback: 2 force for 0.15s
 - Unlocked by: `Node_warp` ("Warp" capstone, 3 skill points, prerequisite `Node_mm3`,
   requires the base Warp attack)
+
+## Hypernova (Capstone)
+- Asset: `Hypernova AD`
+- Type: Basic
+- Cooldown: 3s
+- Pattern: Single (1 count)
+- Spawn: 1 dist (fixed)
+- Animation: 0.5s
+- Costs: none
+- Gains on hit: Stamina +3, Health +4%, Mana +3
+- Projectile:
+  - Speed: 0 (melee)
+  - Lifetime: 0.75s
+  - Pierce: 14
+  - Size: 5
+  - Damage: 225% Phys, 30% True
+  - Scaling: EffArmor
+  - Effects: 65% on hit (Weaken, 5s, max 4 stacks, -10% attack per stack) + 100% on hit
+    (Possessed, 0.6s, pulls the target toward the projectile at speed 15) + 50% self on cast
+    (Celestial Protection, 8s, max 4 stacks) + 30% on hit (Stun, 2s)
+  - Knockback: none
+- Unlocked by: `Node_hypernova` ("Hypernova" capstone, 3 skill points, prerequisite
+  `Node_apdp3`, requires the base Supernova attack)
 
 ## Decoy Burst
 - Asset: `Decoy AD`
@@ -897,10 +921,13 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Type: Overhealth
 - Conditions: none (applied on unlock)
 - Conversion: 50% of healing received at full health
-- Decay: 3% of the current pool per 0.5s
+- Decay: 10% of the current pool per 0.5s
+- Convert Regen: off (see note)
 - Description: While at full health, half of every heal â€” health regen included â€” becomes
   overhealth instead. Overhealth sits above `EffMaxHp`, is spent before health when damage
-  lands, and bleeds off 3% of what remains every 0.5s. Cleared on death.
+  lands, and bleeds off 10% of what remains every 0.5s. Cleared on death.
+- Note: `convertRegen` is authored off, but `EntityHealth.RegenHp` only stops regenerating at
+  full health when the conversion percent is also 0, so regen still converts here.
 
 ## Feedback Loop
 - Asset: `FeedbackLoop`
@@ -1061,6 +1088,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Blaze Soul` | AttackReplacement | Blaze Soul | 6s | - | 1 | Replaces the attack with `Blaze A1 AD` (Cosmic Blaze) |
 | `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 8% EffMaxHp per tick |
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
+| `Celestial Protection` | StatBuffs | Celestial Protection | 8s | - | 4 | +4% damageRes, +8 armor, +5% armorPct per stack (authored with `isBuff` off) |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
 | `DotDetonator 0.5 2` | Detonator | (unnamed) | 0.5s | - | 1 | Detonates DoTs for 250% as True |
@@ -1071,6 +1099,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |
 | `Pulled 0.6 1 1.5 5 0.1` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 5 (+2/stack), 1.5 radius |
 | `Pulled 0.75 1 1.4 2 1.5` | Pulled | Possessed | 0.75s | 0.016s | 1 | Pull speed 1.4 (+2/stack), 1.5 radius |
+| `Pulled 0.6 1 15 3` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 15 (+2/stack), 3 radius |
 | `Radiation 4 0.25 8 2 CritDmg` | DoT | Radiation | 5s | 0.25s | 10 | 5% critDamage per tick |
 | `Reminiscence Cooldown` | Info | Reminiscence Cooldown | 4s | - | 1 | Cooldown marker |
 | `Slow 3 8 10` | StatReduction | Slow | 3s | - | 8 | -10% moveSpeed per stack |
