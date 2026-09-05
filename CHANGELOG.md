@@ -7,6 +7,15 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.5_2] - 2026-09-05
+
+### Added
+- **`UI/ScrollWheel`** — a `Vector2` action bound to `<Mouse>/scroll`, added to `PlayerControls.inputactions` and the generated `PlayerControls.cs`. Nothing subscribes to it yet; skill tree zoom still polls `Mouse.current` directly
+
+### Changed
+- **`Escape` now closes the skill tree instead of opening the settings menu.** `SkillTreeInputToggle` subscribes to `UI.Pause.performed` and calls `SkillTreeUI.CloseFromEscape` when a tree is open; `SettingsMenuInputToggle.ToggleMenu` early-returns while `SkillTreeUI.IsAnyOpen` or `SkillTreeUI.EscapeConsumedThisFrame`, so the single `Escape` press that closes the tree cannot also open the pause panel
+- `SkillTreeUI.Toggle` was split into `Open()` / `Close()` / `CloseFromEscape()`, each idempotent, with `Toggle` now closing when open and refusing to open while `Time.timeScale` is already 0. The class tracks the open panel in a static `openInstance` (cleared in `OnDestroy`) and the consuming frame in `escapeConsumedFrame`, exposed as `IsOpen`, `IsAnyOpen` and `EscapeConsumedThisFrame`; both statics are reset from a `RuntimeInitializeOnLoadMethod(SubsystemRegistration)` hook so domain reload settings cannot leak them between play sessions
+
 ## [v0.4.5_1] - 2026-09-04
 
 ### Added

@@ -16,6 +16,20 @@ namespace CrystalFlux.SkillTree
         private bool isOpen;
         private float timeScaleBeforeOpen = 1f;
 
+        private static SkillTreeUI openInstance;
+        private static int escapeConsumedFrame = -1;
+
+        public bool IsOpen => isOpen;
+        public static bool IsAnyOpen => openInstance != null;
+        public static bool EscapeConsumedThisFrame => escapeConsumedFrame == Time.frameCount;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            openInstance = null;
+            escapeConsumedFrame = -1;
+        }
+
         void Awake()
         {
             if (manager == null) manager = FindAnyObjectByType<SkillTreeManager>();
@@ -30,24 +44,55 @@ namespace CrystalFlux.SkillTree
 
         public void Toggle(GameObject player)
         {
-            if (Time.timeScale == 0f && !isOpen) return;
+            if (isOpen)
+            {
+                Close();
+                return;
+            }
+
+            if (Time.timeScale == 0f) return;
 
             if (manager != null) manager.SetPlayer(player);
 
-            isOpen = !isOpen;
-            gameObject.SetActive(isOpen);
+            Open();
+        }
 
-            if (isOpen)
-            {
-                timeScaleBeforeOpen = Time.timeScale;
-                Time.timeScale = 0f;
+        public void Open()
+        {
+            if (isOpen) return;
 
-                BuildTree();
-            }
-            else
-            {
-                Time.timeScale = timeScaleBeforeOpen;
-            }
+            isOpen = true;
+            openInstance = this;
+            gameObject.SetActive(true);
+
+            timeScaleBeforeOpen = Time.timeScale;
+            Time.timeScale = 0f;
+
+            BuildTree();
+        }
+
+        public void Close()
+        {
+            if (!isOpen) return;
+
+            isOpen = false;
+            if (openInstance == this) openInstance = null;
+            gameObject.SetActive(false);
+
+            Time.timeScale = timeScaleBeforeOpen;
+        }
+
+        public void CloseFromEscape()
+        {
+            if (!isOpen) return;
+
+            escapeConsumedFrame = Time.frameCount;
+            Close();
+        }
+
+        private void OnDestroy()
+        {
+            if (openInstance == this) openInstance = null;
         }
 
         public void BuildTree()

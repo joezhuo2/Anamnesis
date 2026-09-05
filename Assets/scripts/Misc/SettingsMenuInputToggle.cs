@@ -1,4 +1,5 @@
 using CrystalFlux.EntitySystem;
+using CrystalFlux.SkillTree;
 using UnityEngine;
 using UnityEngine.InputSystem;
 namespace CrystalFlux.SettingsSystem
@@ -35,6 +36,8 @@ namespace CrystalFlux.SettingsSystem
 
         private void ToggleMenu()
         {
+            if (SkillTreeUI.IsAnyOpen || SkillTreeUI.EscapeConsumedThisFrame) return;
+
             if (cachedMenu == null) cachedMenu = FindAnyObjectByType<SettingsPanelUI>(FindObjectsInactive.Include);
             if (cachedMenu != null) cachedMenu.HandleEscape();
         }
