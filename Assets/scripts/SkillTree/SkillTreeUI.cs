@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -11,6 +11,7 @@ namespace CrystalFlux.SkillTree
         public RectTransform nodeContainer;
         public SkillTreeLineRenderer lineRenderer;
         public SkillTreePanZoom panZoom;
+        public SkillTreeRefundAllButton refundAllButton;
 
         private readonly Dictionary<SkillNodeDef, SkillNodeUI> nodeUIMap = new();
         private bool isOpen;
@@ -36,6 +37,7 @@ namespace CrystalFlux.SkillTree
             if (panZoom == null) panZoom = FindAnyObjectByType<SkillTreePanZoom>();
             if (lineRenderer == null) lineRenderer = FindAnyObjectByType<SkillTreeLineRenderer>();
             if (nodeContainer == null) nodeContainer = transform.Find("NodesContainer")?.GetComponent<RectTransform>();
+            if (refundAllButton == null) refundAllButton = GetComponentInChildren<SkillTreeRefundAllButton>(true);
 
             if (manager != null && manager.tree != null) BuildTree();
 
@@ -119,6 +121,17 @@ namespace CrystalFlux.SkillTree
             }
 
             if (lineRenderer != null) lineRenderer.Redraw(runtimeNodes);
+            RefreshRefundAllButton();
+        }
+
+        private void RefreshRefundAllButton()
+        {
+            if (refundAllButton == null) refundAllButton = GetComponentInChildren<SkillTreeRefundAllButton>(true);
+            if (refundAllButton == null) return;
+
+            if (refundAllButton.manager == null) refundAllButton.manager = manager;
+            if (refundAllButton.treeUI == null) refundAllButton.treeUI = this;
+            refundAllButton.RefreshVisuals();
         }
 
         private SkillNodeDef FindMatchingRuntimeNode(SkillNodeUI nodeUI, IReadOnlyList<SkillNodeDef> runtimeNodes)
@@ -147,6 +160,8 @@ namespace CrystalFlux.SkillTree
 
             if (lineRenderer != null && manager != null && manager.tree != null)
                 lineRenderer.Redraw(manager.tree.runtimeNodes);
+
+            RefreshRefundAllButton();
         }
     }
 }

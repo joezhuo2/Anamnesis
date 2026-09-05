@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.7] - 2026-09-05
+
+### Added
+- **Skill TreeRefund All button.** `SkillTreeRefundAllButton` in `Assets/scripts/SkillTree/` — a `Button` in the skill tree panel that undoes every unlocked node in one press. Hovering shows a tooltip with the unlocked node count, the total gold cost and the skill points returned, plus the reason when the refund is unavailable. The background tints `availableColor` (red) when the refund is affordable and `blockedColor` (grey) when it is not, the button is non-interactable in that state, and the whole object hides itself in Ironman Mode
+- **Refund-all API on `PlayerSkillTree`** — `UnlockedNodeCount`, `GetRefundAllCost()` (sum of `undoCost` over unlocked nodes), `GetRefundAllPoints()` (sum of their `cost`), `CanRefundAll()` returning a `(bool canRefund, string failMessage)` pair, and `RefundAll()`. A refund spends the total gold through `ICurrencyHolder.TrySpend`, clears `unlockedNodes`, resets `choseStarting` so a starting node can be picked again, then refunds the points and runs `RemoveNodeEffects` / `RestoreNodeRequirements` per node. It refuses in Ironman Mode, with no unlocked nodes, with no `ICurrencyHolder` on the player, or when gold is short — each with its own message. `SkillTreeManager` forwards all five members with null-safe fallbacks, and `SkillTreeUI` keeps a `refundAllButton` reference (auto-found in children), wires the button's `manager` / `treeUI` back-references, and refreshes it on `BuildTree` and on every `OnNodeStateChanged`
+- **41 new stat nodes**, 1 skill point each, `undoCost` 50, all registered in `SkillTreeDefinition.allNodes` (now 188 nodes) and placed in the skill tree panel in `New.unity`:
+  - `Node_dp1` through `Node_dp24` — *Damage I*, +1% `damagePct` each. They form a closed 24-node ring (`dp1`'s prerequisite is `dp24`) that wraps around the outside of the tree; the ring has no prerequisite of its own, so it is only reachable through the new branches that hang off it
+  - `Node_as1` through `as4` — *Attack Speed*, +2% `attackSpeedPct` each. `as1` off `Node_atk3bb`, `as2` off `Node_atk3ab`, and `as3` / `as4` close the pair back together, with `as3` also joining the ring at `dp1`
+  - `Node_cs1`, `cs2`, `cs2a` — *Cast Speed*, +2% each. The stat granted is `castTimeRedPct`, i.e. cast-time reduction rather than a cast-speed multiplier. `cs1` bridges `Node_int3ab` and `Node_int3bb`; `cs2` and `cs2a` join the ring at `dp18` and `dp20`
+  - `Node_h1`, `h2`, `h2a`, `h3`, `h3a` — *Healing*, +2% `healingPct` each. `h1` bridges `Node_hp3aa` and `Node_hp3ba`, then splits into `h2` / `h2a`, which join the ring at `dp14` and `dp12`
+  - `Node_kbr1` through `kbr5` — *Knockback Resistance*, +2% `kbRes` each, a closed five-node loop (`kbr1`'s prerequisites include `kbr5`) anchored on `Node_armor3ab` and `Node_armor3bb` and joining the ring at `dp8` and `dp6`
+- `Node_armor3c` — *Defense III*, +3 `armor` and +2% `armorPct`, off `Node_armor3ba`. The asset is authored but inert: it is not in `SkillTreeDefinition.allNodes`, its prefab is not placed in `New.unity`, and its `nodeID` is `armor3bb`, which `Node_armor3bb` already uses
+
 ## [v0.4.6] - 2026-09-05
 
 ### Added

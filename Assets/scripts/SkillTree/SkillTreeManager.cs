@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CrystalFlux.SkillTree
 {
@@ -32,5 +32,14 @@ namespace CrystalFlux.SkillTree
         }
 
         public bool IsNodeUnlocked(SkillNodeDef node) => tree != null && tree.IsNodeUnlocked(node);
+
+        public (bool canRefund, string failMessage) CanRefundAll()
+            => tree != null ? tree.CanRefundAll() : (false, "No player skill tree");
+
+        public int GetRefundAllCost() => tree != null ? tree.GetRefundAllCost() : 0;
+        public int GetRefundAllPoints() => tree != null ? tree.GetRefundAllPoints() : 0;
+        public int UnlockedNodeCount => tree != null ? tree.UnlockedNodeCount : 0;
+        public bool RefundAll() => tree != null && tree.RefundAll();
+
     }
 }

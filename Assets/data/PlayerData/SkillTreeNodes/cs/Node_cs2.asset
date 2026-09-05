@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
+  m_Name: Node_cs2
+  m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
+  nodeName: Cast Speed
+  desc: +2% Increased Cast Speed
+  nodeID: cs2
+  icon: {fileID: -700968429, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  isStartingNode: 0
+  prerequisites:
+  - {fileID: 11400000, guid: 1e4343553c08fad45be6589a74ec36ed, type: 2}
+  - {fileID: 11400000, guid: 7f3e75fc7952da14f9f147327b8f07a1, type: 2}
+  incompatibleNodes: []
+  requirements: []
+  unlockEffects:
+  - rid: 5243567785372024941
+  cost: 1
+  undoCost: 50
+  references:
+    version: 2
+    RefIds:
+    - rid: 5243567785372024941
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        buffs:
+        - type: 93
+          value: 2
+        attacks: []
+        awakenings: []

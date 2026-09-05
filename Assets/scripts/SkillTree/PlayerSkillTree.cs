@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CrystalFlux.Core;
 using CrystalFlux.SettingsSystem;
@@ -280,6 +280,72 @@ namespace CrystalFlux.SkillTree
 
                 if (node.isStartingNode) choseStarting = false;
             }
+        }
+
+        public int UnlockedNodeCount => unlockedNodes.Count;
+
+        public int GetRefundAllCost()
+        {
+            int total = 0;
+            foreach (var rn in runtimeNodes)
+            {
+                if (rn == null || !unlockedNodes.Contains(rn.nodeID)) continue;
+                total += rn.undoCost;
+            }
+
+            return total;
+        }
+
+        public int GetRefundAllPoints()
+        {
+            int total = 0;
+            foreach (var rn in runtimeNodes)
+            {
+                if (rn == null || !unlockedNodes.Contains(rn.nodeID)) continue;
+                total += rn.cost;
+            }
+
+            return total;
+        }
+
+        public (bool canRefund, string failMessage) CanRefundAll()
+        {
+            if (GameSettings.Current.ironmanMode) return (false, "Disabled in Ironman Mode");
+            if (unlockedNodes.Count == 0) return (false, "No unlocked nodes");
+            if (!TryGetComponent<ICurrencyHolder>(out var esm)) return (false, "No stat manager found");
+
+            int cost = GetRefundAllCost();
+            if (esm.CurrentAmount < cost) return (false, $"Not enough gold ({cost}g required)");
+
+            return (true, string.Empty);
+        }
+
+        public bool RefundAll()
+        {
+            var (canRefund, _) = CanRefundAll();
+            if (!canRefund) return false;
+
+            if (!TryGetComponent<ICurrencyHolder>(out var esm)) return false;
+            if (!esm.TrySpend(GetRefundAllCost())) return false;
+
+            var removed = new List<SkillNodeDef>();
+            foreach (var rn in runtimeNodes)
+            {
+                if (rn == null || !unlockedNodes.Contains(rn.nodeID)) continue;
+                removed.Add(rn);
+            }
+
+            unlockedNodes.Clear();
+            choseStarting = false;
+
+            foreach (var node in removed)
+            {
+                AddSkillPoints(node.cost);
+                RemoveNodeEffects(node);
+                RestoreNodeRequirements(node);
+            }
+
+            return true;
         }
 
         private void ApplyNodeEffects(SkillNodeDef node)

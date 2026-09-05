@@ -22,7 +22,7 @@
 
 **Systems**
 - [ ] Pause menu with restart run/home screen/quit
-- [ ] Audio (SFX + music buses)
+- [ ] Audio (SFX + music buses + menu volume control)
 
 **Content**
 - [ ] re-add phase based buffs using the new system (Jellyfish still pending)
@@ -31,8 +31,6 @@
 - [ ] finish tilemap
   - [ ] map borders (tilemap colliders)
 - [ ] Background Overlays - skill tree, reward menu, home screen, settings menu, scroll menu
-- [ ] settings menu volume control
-- [ ] skill tree refund all button (show total gold cost, confirm)
 - [ ] add code of conduct, license, [*] security policy, issue template, [*] pull req template
 
 ## Pre [v0.6.0] Checklist — Combat Depth

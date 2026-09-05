@@ -45,13 +45,13 @@ namespace CrystalFlux.Core
         [HideInInspector] public float overhealth;
         public int armor;
         public float armorPct;
-        [Range(-100f, 100f)] public float damageRes;
+        [Range(-200f, 100f)] public float damageRes;
         [Range(0f, 100f)] public float dodgeChance;
         [Range(0f, 100f)] public float dodgeResPct;
-        [Range(-100f, 100f)] public float physicalRes;
-        [Range(-100f, 100f)] public float spellRes;
+        [Range(-200f, 100f)] public float physicalRes;
+        [Range(-200f, 100f)] public float spellRes;
         public float hurtTime = 0.3f;
-        public float effectRes = 0f;
+        public float effectRes;
         public float kbRes;
         public float seDurPct;
         public float seTickRatePct;
