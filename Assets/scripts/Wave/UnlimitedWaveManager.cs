@@ -75,6 +75,7 @@ namespace CrystalFlux.WaveSystem
             if (isBossWave) lastBossWave = wave;
 
             if (wave > 1) maxTotalEnemies += Random.Range(1, 3);
+            if (wave % 10 == 0) maxTotalEnemies += Random.Range(1, 4);
 
             enemiesKilled = 0;
             waveMaxTotalEnemies = isBossWave ? 1 : maxTotalEnemies;

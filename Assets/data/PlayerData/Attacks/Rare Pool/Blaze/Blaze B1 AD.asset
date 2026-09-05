@@ -17,10 +17,19 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1285953719107998448, guid: e67c306542fae7d46a6e7fb7a0602b84, type: 3}
   pd: {fileID: 11400000, guid: e9f7d2af749307f4aaf84ff8d8411ddf, type: 2}
   pattern: 0
+  castTime: 0
+  canMoveWhileCasting: 1
   spawnDelay: 0
   spawnDistance: 0
   fixedDistance: 1
   animationLength: 0.5
+  canCharge: 0
+  chargeThreshold: 0.225
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 1
+  chargeAttack: {fileID: 0}
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -40,14 +49,15 @@ MonoBehaviour:
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 2
-  staminaPctGainOnHit: 2
+  staminaGainOnHit: 3
+  staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 1
+  manaGainOnHit: 2
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
+  cleanseDebuffs: 0
   fireOrbits: 0
   absorbOrbitPct: 0
   redirectOrbits: 0

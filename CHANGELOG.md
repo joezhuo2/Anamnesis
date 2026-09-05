@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.5_3] - 2026-09-05
+
+- **`Overhealth.convertRegen`** — a serialized flag on the `Overhealth` upgrade, threaded through `EntityHealth.SetOverhealth(convPct, decayPct, decayInterval, convertRegen)`. It is meant to decide whether health regen keeps ticking (and therefore keeps converting) at full health. As wired, `RegenHp` only returns early when `CurHp >= MaxHp && overhealthConvPct <= 0f && !regenOverHealth`, so any upgrade with a non-zero conversion percent keeps regenerating regardless of the flag — Exsanguinate's `convertRegen: 0` currently changes nothing
+
+### Changed
+- Enemy attack scaling per level went from 1.03 to 1.05 in `EnemyStatManager.ScaleBaseStats`. HP (1.1), armor (1.08) and utility (1.04) growth are unchanged
+- `UnlimitedWaveManager.BeginWave` adds a second bump of 1-3 `maxTotalEnemies` on every tenth wave, on top of the 1-2 it already added each wave past the first
+- `Exsanguinate`'s overhealth decay went from 3% to 10% of the remaining pool per 0.5s, and its new `convertRegen` flag is authored off
+
+### Rebalance
+- **Cyclone Cleave** (`p_s_pd`): true damage 55% -> 85%
+- **Cosmic Blaze** (`Blaze A1`): `castTime` 0.5s -> 1s, physical 685% -> 600%, true 30% -> 0%, chance to chain into Blaze Hyperspark 40% -> 60%, and stamina gain on hit moved off the percentage (2 +1% -> 3 flat)
+- **Blaze Spark** (`Blaze B PD`): physical 185% -> 255%
+- **Blaze Hyperspark** (`Blaze B1`): physical 215% -> 310%, true 12% -> 18%, stamina gain 2 +2% -> 3 flat, mana gain 1 -> 2
+- **Sacred Surge**: cooldown 12s -> 14s, stamina gain on hit 3 -> 2, mana gain on hit 2 -> 1
+
 ## [v0.4.5_2] - 2026-09-05
 
 ### Added

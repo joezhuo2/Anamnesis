@@ -18,5 +18,6 @@ MonoBehaviour:
   cooldown: 0
   delay: 0
   conversionPct: 50
-  decayPct: 3
+  decayPct: 10
   decayInterval: 0.5
+  convertRegen: 0

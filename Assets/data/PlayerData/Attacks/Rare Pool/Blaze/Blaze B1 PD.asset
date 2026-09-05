@@ -13,18 +13,24 @@ MonoBehaviour:
   m_Name: Blaze B1 PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 34126cf8f2525994a9eb49bd077acd07, type: 2}
-  speed: 0
   lifetime: 0.5
-  numPierce: 8
   size: 2
-  physicalMult: 2.15
+  numPierce: 8
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 3.1
   spellMult: 0
-  trueMult: 0.12
+  trueMult: 0.18
   scalingStat: 31
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
@@ -40,3 +46,5 @@ MonoBehaviour:
   randOrbRadOffset: 0
   orbitSelf: 0
   rotateClockwise: 0
+  kbForce: 0
+  knockbackTime: 0.15

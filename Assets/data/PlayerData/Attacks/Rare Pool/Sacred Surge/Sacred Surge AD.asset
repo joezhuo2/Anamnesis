@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sacred Surge AD
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
   type: 1
-  cooldown: 12
+  cooldown: 14
   projectilePrefab: {fileID: 4371589364534054369, guid: 45290b72536a755469900e3881cfb6a2, type: 3}
   pd: {fileID: 11400000, guid: 32038abd689cd564aa6d456b0c6e4c47, type: 2}
   pattern: 0
@@ -49,11 +49,11 @@ MonoBehaviour:
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 3
+  staminaGainOnHit: 2
   staminaPctGainOnHit: 0
   healthGainOnHit: 1
   healthPctGainOnHit: 2
-  manaGainOnHit: 2
+  manaGainOnHit: 1
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0

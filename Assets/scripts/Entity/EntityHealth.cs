@@ -32,6 +32,7 @@ namespace CrystalFlux.EntitySystem
         private float overhealthDecayPct;
         private float overhealthDecayInterval;
         private float overhealthDecayTimer;
+        private bool regenOverHealth;
         private Animator animator;
         private Slider healthBarInstance;
         private TextMeshProUGUI healthBarTextInstance;
@@ -177,12 +178,13 @@ namespace CrystalFlux.EntitySystem
             MoveHealthBar();
         }
 
-        public void SetOverhealth(float convPct, float decayPct, float decayInterval)
+        public void SetOverhealth(float convPct, float decayPct, float decayInterval, bool convertRegen)
         {
             overhealthConvPct = Mathf.Max(0f, convPct);
             overhealthDecayPct = Mathf.Max(0f, decayPct);
             overhealthDecayInterval = Mathf.Max(0f, decayInterval);
             overhealthDecayTimer = 0f;
+            regenOverHealth = convertRegen;
             if (overhealthConvPct <= 0f) AddOverhealth(-Overhealth);
         }
 
@@ -488,7 +490,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (Time.timeScale == 0f) return;
             if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
-            if (CurHp >= MaxHp && overhealthConvPct <= 0f) return;
+            if (CurHp >= MaxHp && overhealthConvPct <= 0f && !regenOverHealth) return;
 
             regenTimer += Time.deltaTime;
 
