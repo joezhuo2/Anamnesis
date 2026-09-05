@@ -1,3 +1,4 @@
+using CrystalFlux.Core;
 using UnityEngine;
 
 public class AnomalyInstance
@@ -20,6 +21,8 @@ public class AnomalyInstance
     }
 
     public virtual void UpdateCheck(float dt) { }
+
+    public virtual void ApplyEnemyBuffs(IStatProvider esm) { }
     public virtual void FailAnomaly()
     {
         if (!isActive) return;

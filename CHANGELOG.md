@@ -7,6 +7,32 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.8] - 2026-09-05
+
+### Added
+- **Swarm anomaly.** `AnomalyType.Swarm` / `SwarmInstance` — rolls a `penaltyAmount` from the asset's `anomalyMinVal`..`anomalyMaxVal` and rounds it. Every enemy spawned during the wave takes `-penalty%` `hpPct` and `-penalty%` `damagePct`, while both the wave's total and concurrent enemy counts are multiplied by `CountMultiplier`, which is `1 + penalty / 50` — twice the rolled percentage, so a 30 roll spawns 160% of the usual count against enemies at 70% health and damage. The on-screen description reads `-{penalty}% Health and Damage, but {penalty}% more of them spawn`, which understates the actual count increase by half
+- **Duel anomaly.** `AnomalyType.Duel` / `DuelInstance` — rolls a `boostAmount` the same way and spawns exactly one enemy for the wave, with `+boost%` `hpPct` and `+boost%` `atkPct`. Both `waveMaxTotalEnemies` and the concurrent cap are forced to 1 the way a boss wave is, and the single enemy gets a boss bar and a status effect display even on a normal wave
+- **`AnomalyInstance.ApplyEnemyBuffs(IStatProvider)`** — a virtual hook called on every spawn, overridden by `StatModifierInstance`, `SwarmInstance` and `DuelInstance`. Both wave managers now call `currentAnomaly.ApplyEnemyBuffs(esm)` instead of type-testing for `StatModifierInstance` and reading `GetBuff()` themselves
+- **`AnomalyData.disallowOnBossWave`** — a per-asset flag that keeps an anomaly out of the offer when the wave about to start is a boss wave. Both `HasAnomalyChoices()` and `GenerateAnomalyChoices()` filter on it. Set on the four Swarm/Duel assets and on `UDuel` / `USwarm`; `UStatMod` is authored with it off, and the older Regular assets (`NoHit`, `StatMod *`, `Time *`) predate the field and default to off
+- **`WaveManager.NextWaveIsBoss()`** — a virtual that reports whether the wave the player is about to enter is a boss wave. The base reads `IsBossWave` off `currentSequence.waves[currentWaveIndex]` with bounds checks; `UnlimitedWaveManager` overrides it to return its pre-rolled `isBossWave`
+- **`WaveManager.ScaleEnemyCount(int)`** — `Mathf.Max(1, RoundToInt(baseCount * EnemyCountMult))`, replacing the bare `Mathf.Max(1, …)` guards on both enemy-count calculations in both managers. `EnemyCountMult` is 1 unless an active `SwarmInstance` is running, so nothing changes without a Swarm
+- **`duelBossBarPrefab` and `duelStatusEffectPrefab`** on `WaveManager` — the boss bar and status effect display used for a Duel enemy, each falling back to the wave's own prefab when unset (`DuelBossBarPrefab` / `DuelStatusEffectPrefab`). Both wave managers in `New.unity` are wired to `LichBossBarPrefab` and `StatusEffectUIPrefab`
+- **`WaveManager.DuelTitle(enemy, prefab, level)`** — builds the `[Lv. N] Name` boss-bar title from `EnemyStatManager.displayName`, falling back to the prefab name
+- **`EnemyStatManager.displayName`** — a serialized human-readable name, authored on the five regular enemies: Bat, Crab, Slime, Frost Slime, Magma Slime
+- **Six new anomaly assets** — `Swarm 20 40` (waves 5-40), `Swarm 30 80` (40-80), `Duel 30 80` (5-40) and `Duel 50 150` (40-80) under `Assets/data/Wave/Anomaly/Regular/`, plus `USwarm` (30-80) and `UDuel` (50-400) under `Unlimited/`. All six are registered in the matching wave manager's `availableAnomalies` in `New.unity` and all six carry `disallowOnBossWave`
+
+### Changed
+- **Anomaly assets moved out of the scripts tree.** `Assets/scripts/Wave/Anomaly/Anomalies/` is gone; the assets now live under `Assets/data/Wave/Anomaly/`, split into `Regular/` and `Unlimited/` beside the rest of the authored data. The `.meta` GUIDs were preserved, so every existing scene reference still resolves
+- **`UnlimitedWaveManager` rolls the boss wave earlier.** `isBossWave = ShouldBeBossWave(currentWaveIndex + 1)` now runs in `StartNextWave`, before the anomaly offer, instead of in `BeginWave`. The boss roll is therefore known while anomaly choices are being filtered, which is what makes `disallowOnBossWave` work in Unlimited. `lastBossWave` is still assigned in `BeginWave`
+- **The Unlimited boss bar reads `displayName`.** It used to title itself `[Lv. N] {prefab.name}`; it now goes through `DuelTitle`, so an authored display name wins over the prefab name for bosses as well as duels
+- **The Unlimited status effect display** is now chosen through the same fallback helper as the boss bar, so a Duel enemy gets one on any wave rather than only when `lastBossWave == wave`
+- `Wave.asmdef` references `CrystalFlux.Entity` — needed for the `EnemyStatManager` lookup in `DuelTitle`
+- The UTF-8 BOM was dropped from `WaveManager.cs`
+
+### Notes
+- Swarm and Duel have no failure condition — nothing calls `FailAnomaly` on them — so they always complete and always pay the anomaly reroll and skill-point bonus. They are a trade on the wave's shape, not a challenge
+- A Duel on a Regular wave still ends after a single kill, regardless of the `maxTotalEnemies` the wave sequence asks for
+
 ## [v0.4.7] - 2026-09-05
 
 ### Added

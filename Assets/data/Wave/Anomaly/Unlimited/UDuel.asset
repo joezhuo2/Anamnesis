@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd68465f6c90387408c88945c62be307, type: 3}
+  m_Name: UDuel
+  m_EditorClassIdentifier: Assembly-CSharp::AnomalyData
+  anomalyName: Duel
+  desc: A single empowered enemy stands against you.
+  minWave: 0
+  maxWave: 1024
+  anomalyType: 4
+  anomalyValue: 0
+  anomalyMinVal: 50
+  anomalyMaxVal: 400
+  disallowOnBossWave: 1

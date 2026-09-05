@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd68465f6c90387408c88945c62be307, type: 3}
+  m_Name: USwarm
+  m_EditorClassIdentifier: Assembly-CSharp::AnomalyData
+  anomalyName: Swarm
+  desc: All enemies in the wave are weakened, but far more of them arrive.
+  minWave: 0
+  maxWave: 1024
+  anomalyType: 3
+  anomalyValue: 0
+  anomalyMinVal: 30
+  anomalyMaxVal: 80
+  disallowOnBossWave: 1

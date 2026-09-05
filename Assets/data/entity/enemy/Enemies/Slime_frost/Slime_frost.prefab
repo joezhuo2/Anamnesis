@@ -123,6 +123,9 @@ MonoBehaviour:
   attacks:
   - {fileID: 11400000, guid: b3ed3095e700666429b7d921fc194d05, type: 2}
   globalCooldown: 0
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &1122705287032613696
 SpriteRenderer:
   serializedVersion: 2
@@ -227,6 +230,7 @@ MonoBehaviour:
   baseStats: {fileID: 11400000, guid: d9563a4b9b5134443a1fab9306fe109f, type: 2}
   currentBuffs: []
   teamID: 0
+  displayName: Frost Slime
 --- !u!114 &4333151300303372636
 MonoBehaviour:
   m_ObjectHideFlags: 0

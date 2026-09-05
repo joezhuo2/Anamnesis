@@ -106,7 +106,7 @@ MonoBehaviour:
   canDeaggro: 1
   stoppingDistance: 1.5
   flipRotation: 0
-  es: {fileID: 0}
+  target: {fileID: 0}
 --- !u!114 &8723466638502329329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +124,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7f4f8986811f2b1489537d6386511433, type: 2}
   - {fileID: 11400000, guid: c8a8a4d0239b50949b2a5304a1db279f, type: 2}
   globalCooldown: 2
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &5973953995027838440
 SpriteRenderer:
   serializedVersion: 2
@@ -209,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d3bfa51801c446ad1dfffe864340e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  deathAnimTime: 1
   healthBarPrefab: {fileID: 5518146862584459917, guid: 18ec2045a412da24cbb177804a194bd3, type: 3}
   healthBarOffset: {x: 0, y: 0.375, z: 0}
   healthBarTextPrefab: {fileID: 5849711352053353307, guid: 645031be108b2f843ba8652788dd40bc, type: 3}
@@ -283,5 +287,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatManager
   baseStats: {fileID: 11400000, guid: 9cd9e4300cdcce64b8c1b1f37164430b, type: 2}
-  s: {fileID: 0}
   currentBuffs: []
+  teamID: 0
+  displayName: Crab

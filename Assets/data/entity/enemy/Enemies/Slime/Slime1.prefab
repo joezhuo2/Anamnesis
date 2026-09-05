@@ -96,6 +96,9 @@ MonoBehaviour:
   attacks:
   - {fileID: 11400000, guid: 5b9ca13cda46da94fb3c221b94bc1a98, type: 2}
   globalCooldown: 2
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &1197405272322073483
 SpriteRenderer:
   serializedVersion: 2
@@ -208,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d3bfa51801c446ad1dfffe864340e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  deathAnimTime: 1
   healthBarPrefab: {fileID: 5518146862584459917, guid: 18ec2045a412da24cbb177804a194bd3, type: 3}
   healthBarOffset: {x: 0, y: 0.375, z: 0}
   healthBarTextPrefab: {fileID: 5849711352053353307, guid: 645031be108b2f843ba8652788dd40bc, type: 3}
@@ -274,3 +278,4 @@ MonoBehaviour:
   baseStats: {fileID: 11400000, guid: 9c58e2e0cf903214dbe4e53206c8370c, type: 2}
   currentBuffs: []
   teamID: 0
+  displayName: Slime

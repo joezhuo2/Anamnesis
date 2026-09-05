@@ -45,7 +45,6 @@
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 - [ ] contact damage
 - [ ] environmental collectible items (mana, xp, hp, gold)
-- [ ] Anamolies update (swarm wave (-stat + count), duel wave (1 count, superbuffed))
 
 **QoL & Polish**
 - [ ] Full stats display menu

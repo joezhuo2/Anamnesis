@@ -4,6 +4,7 @@
     "references": [
         "CrystalFlux.Pooling",
         "CrystalFlux.Core",
+        "CrystalFlux.Entity",
         "CrystalFlux.Settings",
         "Unity.TextMeshPro",
         "UnityEngine.UI"

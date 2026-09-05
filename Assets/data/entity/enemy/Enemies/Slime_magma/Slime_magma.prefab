@@ -123,6 +123,9 @@ MonoBehaviour:
   attacks:
   - {fileID: 11400000, guid: 4180ba773d81ed142a5e5ea6e45e1f8a, type: 2}
   globalCooldown: 0
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &8367010736362624818
 SpriteRenderer:
   serializedVersion: 2
@@ -227,6 +230,7 @@ MonoBehaviour:
   baseStats: {fileID: 11400000, guid: 5272bd084bc16ff40ac6ea933ab39678, type: 2}
   currentBuffs: []
   teamID: 0
+  displayName: Magma Slime
 --- !u!114 &968634357956434793
 MonoBehaviour:
   m_ObjectHideFlags: 0

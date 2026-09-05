@@ -62,8 +62,12 @@ namespace CrystalFlux.WaveSystem
             totalSpawned = 0;
             currentEnemies.Clear();
 
+            isBossWave = ShouldBeBossWave(currentWaveIndex + 1);
+
             if (!RollAndGenerateAnomaly()) BeginWave();
         }
+
+        protected override bool NextWaveIsBoss() => isBossWave;
 
         protected override void BeginWave()
         {
@@ -71,14 +75,13 @@ namespace CrystalFlux.WaveSystem
             currentWaveIndex++;
 
             int wave = GetCurrentWave();
-            isBossWave = ShouldBeBossWave(wave);
             if (isBossWave) lastBossWave = wave;
 
             if (wave > 1) maxTotalEnemies += Random.Range(1, 3);
             if (wave % 10 == 0) maxTotalEnemies += Random.Range(1, 4);
 
             enemiesKilled = 0;
-            waveMaxTotalEnemies = isBossWave ? 1 : maxTotalEnemies;
+            waveMaxTotalEnemies = isBossWave || IsDuel ? 1 : ScaleEnemyCount(maxTotalEnemies);
 
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
@@ -95,7 +98,7 @@ namespace CrystalFlux.WaveSystem
         private IEnumerator WaveSpawnRoutine()
         {
             int wave = GetCurrentWave();
-            int maxCurrent = isBossWave ? 1 : Mathf.Max(1, maxCurrentEnemies + D.maxCurrentEnemiesAdd);
+            int maxCurrent = isBossWave || IsDuel ? 1 : ScaleEnemyCount(maxCurrentEnemies + D.maxCurrentEnemiesAdd);
 
             while (totalSpawned < waveMaxTotalEnemies)
             {
@@ -133,7 +136,7 @@ namespace CrystalFlux.WaveSystem
 
         private void SpawnEnemies()
         {
-            if (isBossWave)
+            if (isBossWave || IsDuel)
             {
                 SpawnEnemy();
                 return;
@@ -157,23 +160,25 @@ namespace CrystalFlux.WaveSystem
 
             bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
 
-            if (hasStats && currentAnomaly is StatModifierInstance statMod)
-                esm.AddStat(statMod.GetBuff());
+            if (hasStats && currentAnomaly != null) currentAnomaly.ApplyEnemyBuffs(esm);
 
-            if (hasStats && isBossWave && bossBarPrefab != null && activeBossBar == null)
+            GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(bossBarPrefab) : (isBossWave ? bossBarPrefab : null);
+
+            if (hasStats && bossBarSource != null && activeBossBar == null)
             {
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
-                activeBossBar = Instantiate(bossBarPrefab, spawnParent);
+                activeBossBar = Instantiate(bossBarSource, spawnParent);
 
-                string bossName = prefab.name;
                 if (activeBossBar.TryGetComponent<IBossBar>(out var bossBarScript))
-                    bossBarScript.Setup($"[Lv. {level}] {bossName}", esm);
+                    bossBarScript.Setup(DuelTitle(enemy, prefab, level), esm);
             }
 
-            if (statusEffectDisplayPrefab != null && enemy.TryGetComponent<IStatusEffectReceiver>(out var sem) && lastBossWave == wave)
+            GameObject statusSource = IsDuel ? DuelStatusEffectPrefab(statusEffectDisplayPrefab) : (lastBossWave == wave ? statusEffectDisplayPrefab : null);
+
+            if (statusSource != null && enemy.TryGetComponent<IStatusEffectReceiver>(out var sem))
             {
                 Transform spawnParent = statusEffectDisplayContainer != null ? statusEffectDisplayContainer : waveInfoPanel.transform.parent;
-                sem.DisplayPrefab = statusEffectDisplayPrefab;
+                sem.DisplayPrefab = statusSource;
                 sem.DisplayContainer = spawnParent;
             }
 

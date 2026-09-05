@@ -4,6 +4,8 @@ namespace CrystalFlux.Core
 {
     public class EnemyStatManager : EntityStatManager
     {
+        public string displayName;
+
         protected override void Awake()
         {
             base.Awake();

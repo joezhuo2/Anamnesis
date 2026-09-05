@@ -41,4 +41,10 @@ public class StatModifierInstance : AnomalyInstance
     }
 
     public StatBuff GetBuff() => new(selectedStat, boostAmount);
+
+    public override void ApplyEnemyBuffs(IStatProvider esm)
+    {
+        if (esm == null) return;
+        esm.AddStat(GetBuff());
+    }
 }

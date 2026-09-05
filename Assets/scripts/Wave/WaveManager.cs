@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.SettingsSystem;
@@ -78,6 +78,11 @@ namespace CrystalFlux.WaveSystem
         public int maxAnomalyCount = 5;
         public float anomalyChance = 15;
         public float anomalyGlobalMinWave = 10;
+        public GameObject duelBossBarPrefab = null;
+        public GameObject duelStatusEffectPrefab = null;
+
+        protected bool IsDuel => currentAnomaly != null && currentAnomaly.isActive && currentAnomaly is DuelInstance;
+        protected float EnemyCountMult => currentAnomaly != null && currentAnomaly.isActive && currentAnomaly is SwarmInstance sw ? sw.CountMultiplier : 1f;
 
         protected IAnnouncer GameController => IAnnouncer.Current ?? null;
         protected DifficultyData D => difficulty != null ? difficulty : DifficultyData.Neutral;
@@ -207,6 +212,8 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.TimeTrial: UpdateAnomalyTimeInfo(); break;
                         case AnomalyType.NoDamage: anomalyInfoText.text = "No Damage Anomaly Active"; break;
                         case AnomalyType.StatModifier: anomalyInfoText.text = currentAnomaly.Description; break;
+                        case AnomalyType.Swarm: anomalyInfoText.text = currentAnomaly.Description; break;
+                        case AnomalyType.Duel: anomalyInfoText.text = currentAnomaly.Description; break;
                         default: break;
                     }
                 }
@@ -268,7 +275,7 @@ namespace CrystalFlux.WaveSystem
             currentWaveIndex++;
 
             enemiesKilled = 0;
-            waveMaxTotalEnemies = IsBossWave(currentWave) ? 1 : Mathf.Max(1, currentWave.maxTotalEnemies + D.maxTotalEnemiesAdd);
+            waveMaxTotalEnemies = IsBossWave(currentWave) || IsDuel ? 1 : ScaleEnemyCount(currentWave.maxTotalEnemies + D.maxTotalEnemiesAdd);
 
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
@@ -284,9 +291,18 @@ namespace CrystalFlux.WaveSystem
 
         protected static bool IsBossWave(WaveData c) => c != null && c.bossBarPrefab != null;
 
+        protected virtual bool NextWaveIsBoss()
+        {
+            if (currentSequence == null || currentSequence.waves == null) return false;
+            if (currentWaveIndex < 0 || currentWaveIndex >= currentSequence.waves.Count) return false;
+            return IsBossWave(currentSequence.waves[currentWaveIndex]);
+        }
+
+        protected int ScaleEnemyCount(int baseCount) => Mathf.Max(1, Mathf.RoundToInt(baseCount * EnemyCountMult));
+
         protected IEnumerator WaveSpawnRoutine(WaveData c)
         {
-            int maxCurrent = IsBossWave(c) ? 1 : Mathf.Max(1, c.maxCurrentEnemies + D.maxCurrentEnemiesAdd);
+            int maxCurrent = IsBossWave(c) || IsDuel ? 1 : ScaleEnemyCount(c.maxCurrentEnemies + D.maxCurrentEnemiesAdd);
 
             while (totalSpawned < waveMaxTotalEnemies)
             {
@@ -322,7 +338,7 @@ namespace CrystalFlux.WaveSystem
 
         protected void SpawnEnemies(WaveData c)
         {
-            if (IsBossWave(c) || c.maxTotalEnemies == 1 || c.maxCurrentEnemies == 1)
+            if (IsBossWave(c) || IsDuel || c.maxTotalEnemies == 1 || c.maxCurrentEnemies == 1)
             {
                 SpawnEnemy(c);
                 return;
@@ -334,32 +350,51 @@ namespace CrystalFlux.WaveSystem
 
         protected void SpawnEnemy(WaveData c)
         {
-            var enemy = EnemySpawning.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, spawnRadius, EnemyLevel(c.enemyLevel));
+            int level = EnemyLevel(c.enemyLevel);
+            var enemy = EnemySpawning.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, spawnRadius, level);
             if (enemy == null) return;
 
             bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
 
-            if (hasStats && currentAnomaly is StatModifierInstance statMod)
-                esm.AddStat(statMod.GetBuff());
+            if (hasStats && currentAnomaly != null) currentAnomaly.ApplyEnemyBuffs(esm);
 
-            if (hasStats && c.bossBarPrefab != null && activeBossBar == null)
+            GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(c.bossBarPrefab) : c.bossBarPrefab;
+
+            if (hasStats && bossBarSource != null && activeBossBar == null)
             {
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
-                activeBossBar = Instantiate(c.bossBarPrefab, spawnParent);
+                activeBossBar = Instantiate(bossBarSource, spawnParent);
 
                 if (activeBossBar.TryGetComponent<IBossBar>(out var bossBarScript))
-                    bossBarScript.Setup(c.bossBarName, esm);
+                    bossBarScript.Setup(IsDuel ? DuelTitle(enemy, c.enemyPrefab, level) : c.bossBarName, esm);
             }
 
-            if (c.statusEffectDisplayPrefab != null && enemy.TryGetComponent<IStatusEffectReceiver>(out var sem))
+            GameObject statusSource = IsDuel ? DuelStatusEffectPrefab(c.statusEffectDisplayPrefab) : c.statusEffectDisplayPrefab;
+
+            if (statusSource != null && enemy.TryGetComponent<IStatusEffectReceiver>(out var sem))
             {
                 Transform spawnParent = statusEffectDisplayContainer != null ? statusEffectDisplayContainer : waveInfoPanel.transform.parent;
-                sem.DisplayPrefab = c.statusEffectDisplayPrefab;
+                sem.DisplayPrefab = statusSource;
                 sem.DisplayContainer = spawnParent;
             }
 
             totalSpawned++;
             currentEnemies.Add(enemy);
+        }
+
+        protected GameObject DuelBossBarPrefab(GameObject fallback) => duelBossBarPrefab != null ? duelBossBarPrefab : fallback;
+
+        protected GameObject DuelStatusEffectPrefab(GameObject fallback) => duelStatusEffectPrefab != null ? duelStatusEffectPrefab : fallback;
+
+        protected static string DuelTitle(GameObject enemy, GameObject prefab, int level)
+        {
+            string name = null;
+
+            if (enemy != null && enemy.TryGetComponent<EnemyStatManager>(out var esm) && !string.IsNullOrWhiteSpace(esm.displayName))
+                name = esm.displayName;
+            else if (prefab != null) name = prefab.name;
+
+            return $"[Lv. {level}] {name}";
         }
 
         protected IEnumerator WaitForNextSpawn(float delay)
@@ -547,7 +582,8 @@ namespace CrystalFlux.WaveSystem
             if (minAnomalyCount <= 0 || maxAnomalyCount <= 0) return false;
 
             int w = GetCurrentWave();
-            return availableAnomalies.Exists(a => a != null && w >= a.minWave && w <= a.maxWave);
+            bool bossNext = NextWaveIsBoss();
+            return availableAnomalies.Exists(a => a != null && w >= a.minWave && w <= a.maxWave && !(a.disallowOnBossWave && bossNext));
         }
         protected bool GenerateAnomalyChoices()
         {
@@ -555,7 +591,9 @@ namespace CrystalFlux.WaveSystem
             if (anomalyPrefab == null) return false;
             if (minAnomalyCount <= 0 || maxAnomalyCount <= 0) return false;
 
-            var available = availableAnomalies.FindAll(a => a != null && GetCurrentWave() >= a.minWave && GetCurrentWave() <= a.maxWave);
+            int w = GetCurrentWave();
+            bool bossNext = NextWaveIsBoss();
+            var available = availableAnomalies.FindAll(a => a != null && w >= a.minWave && w <= a.maxWave && !(a.disallowOnBossWave && bossNext));
             if (available.Count == 0) return false;
 
             type = RewardType.Anomaly;

@@ -2132,11 +2132,11 @@ RectTransform:
   m_LocalScale: {x: 0.3015625, y: 0.3015625, z: 0.3015625}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1336884835}
   - {fileID: 1625570274}
   - {fileID: 506637368}
   - {fileID: 1207911048}
   - {fileID: 165927444}
-  - {fileID: 1336884835}
   m_Father: {fileID: 1018056650}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9728,11 +9728,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c606e919e6969c94c8d5ba434c0b7055, type: 2}
   - {fileID: 11400000, guid: 8cdc45e75e0d1ca41885e6e563ef285c, type: 2}
   - {fileID: 11400000, guid: 9e7d67e92c12ea449ae71ac414c026e2, type: 2}
+  - {fileID: 11400000, guid: fdaf1445238541e8bfdf5fa720e7200b, type: 2}
+  - {fileID: 11400000, guid: 6f6979d96222242419a57c5e213bb830, type: 2}
+  - {fileID: 11400000, guid: 7b2d158b11174e17807a5390f38585a6, type: 2}
+  - {fileID: 11400000, guid: f5d72fca4788b0f4fb121bfe9c5da4f5, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
   anomalyChance: 15
   anomalyGlobalMinWave: 3
+  duelBossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+  duelStatusEffectPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
 --- !u!4 &587400166
 Transform:
   m_ObjectHideFlags: 0
@@ -19792,11 +19798,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2d711879a2a363d4eaa7b524885bc3e6, type: 2}
   - {fileID: 11400000, guid: 0431cb6a2efc82a4f8e28b30e65b6b31, type: 2}
   - {fileID: 11400000, guid: 2692db60c19e66e4bb451bebd4bc697f, type: 2}
+  - {fileID: 11400000, guid: 841013432574428e825c984a3af29a4b, type: 2}
+  - {fileID: 11400000, guid: 6452de7589c34320bc8f28a23867bac5, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
   anomalyChance: 15
   anomalyGlobalMinWave: 3
+  duelBossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+  duelStatusEffectPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
   spawnLocation: {x: 0, y: 0}
   maxCurrentEnemies: 10
   baseMaxTotalEnemies: 1
