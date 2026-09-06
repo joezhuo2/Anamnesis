@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Celestial Protection
   m_EditorClassIdentifier: Assembly-CSharp::StatBuffs
   currentTime: 0
-  duration: 8
+  duration: 6
   tickInterval: 0
   isBuff: 0
   icon: {fileID: -4721245407534591264, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Celestial Protection
-  desc: Each stack increases damage resistance by 4%, armor by 8, and armor by 5%.
+  desc: Each stack increases damage resistance by 3%, armor by 6, and armor by 4%.
   maxStacks: 4
   loseAllStacksOnExpire: 0
   target: {fileID: 0}
@@ -28,8 +28,8 @@ MonoBehaviour:
   potencyMultiplier: 1
   buffs:
   - type: 18
-    value: 4
+    value: 3
   - type: 16
-    value: 8
+    value: 6
   - type: 17
-    value: 5
+    value: 4

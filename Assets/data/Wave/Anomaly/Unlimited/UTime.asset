@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: UTime
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyData
   anomalyName: Time Trial I
-  desc: Complete the wave in at most 60 seconds
+  desc: Complete the wave in at most 90 seconds
   minWave: 0
   maxWave: 1024
   anomalyType: 0
-  anomalyValue: 60
+  anomalyValue: 90
   anomalyMinVal: 0
   anomalyMaxVal: 0
+  disallowOnBossWave: 0

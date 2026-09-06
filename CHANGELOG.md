@@ -7,6 +7,23 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.8_1] - 2026-09-05
+
+### Added
+- **Eight new stat nodes**, 1 skill point each, `undoCost` 50, hanging off the existing stat branches and tying into the outer Damage I ring:
+  - `Node_drp1` / `Node_drp2` — *Dodge Resistance*, +1% `dodgeResPct` each. `drp1` sits off `Node_hparmor2`; `drp2` requires `drp1` plus `Node_dp10`
+  - `Node_spr1` / `Node_spr2` — *Spell Resistance*, +1% `spellRes` each. `spr1` off `Node_hpint1`; `spr2` requires `spr1` plus `Node_dp16`
+  - `Node_msp1` / `Node_msp2` — *Maximum Stamina*, +3% `maxStaminaPct` each. `msp1` off `Node_atkarmor2`; `msp2` requires `msp1` plus `Node_dp4`
+  - `Node_ps1` / `Node_ps2` — *Projectile Speed*, +3% `ProjSpd` each. `ps1` off `Node_intatk1` and `Node_intatk2`; `ps2` requires `ps1` plus `Node_dp22`
+  - All eight are registered in `SkillTreeDefinition.allNodes` (188 → 196) and placed in the skill tree panel in `New.unity`
+- **Jellyfish phase buffs.** The Jellyfish prefab gains an authored `EnemyPhase` (`phaseThresholds` `70` / `50`): phase 1 grants +40% `moveSpeedPct`, phase 2 adds +30% `aoePct` and +15% `hpRegPct`. All three are `UnlockEffect` buffs on its `currentBuffs`, applied through the same phase system the Cultist and Golem use — the TODO checkbox that had the Jellyfish still pending is now done
+
+### Changed
+- **Hypernova rebalance.** On `Hypernova AD`: cooldown 3s → 2.2s, and gains on hit shifted toward health — stamina 3 → 2, mana 3 → 2, health 4% → 5%. On `Hypernova PD`: damage re-split 225% physical + 30% true → 215% physical + 60% spell (true damage removed), and the self-apply chance of `Celestial Protection` dropped 50% → 40%
+- **`Celestial Protection` trimmed.** Duration 8s → 6s, per-stack `damageRes` 4% → 3%, `armor` 8 → 6, `armorPct` 5% → 4%, with the description updated to match
+- **Duel now strengthens armor too.** `DuelInstance.ApplyEnemyBuffs` adds `armorPct` at the same rolled boost as `hpPct` / `atkPct`, and the anomaly description reads `+{boost}% Attack, Health, and Armor`
+- **Unlimited anomaly balance.** `UDuel`'s roll max `anomalyMaxVal` 400 → 600; `USwarm`'s range 30-80 → 20-60; `UTime`'s time trial `anomalyValue` 60 → 90 (its `disallowOnBossWave` field, previously absent, is now serialized as off)
+
 ## [v0.4.8] - 2026-09-05
 
 ### Added

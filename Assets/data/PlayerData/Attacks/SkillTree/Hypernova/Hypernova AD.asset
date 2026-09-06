@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hypernova AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   type: 0
-  cooldown: 3
+  cooldown: 2.2
   projectilePrefab: {fileID: 3196581985793714705, guid: 789a9865e93262e4cac8d74609b33aec, type: 3}
   pd: {fileID: 11400000, guid: 426044a91338c1e40a4d9c2dc07bc72a, type: 2}
   pattern: 0
@@ -49,11 +49,11 @@ MonoBehaviour:
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 3
+  staminaGainOnHit: 2
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
-  healthPctGainOnHit: 4
-  manaGainOnHit: 3
+  healthPctGainOnHit: 5
+  manaGainOnHit: 2
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0

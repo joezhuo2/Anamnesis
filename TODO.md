@@ -25,7 +25,7 @@
 - [ ] Audio (SFX + music buses + menu volume control)
 
 **Content**
-- [ ] re-add phase based buffs using the new system (Jellyfish still pending)
+- [x] re-add phase based buffs using the new system (Jellyfish)
 
 **QoL & Polish**
 - [ ] finish tilemap

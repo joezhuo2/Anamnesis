@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1488387932906524054}
   - component: {fileID: 767143972672191967}
   - component: {fileID: 5265354297847661027}
+  - component: {fileID: 8791486411344841200}
   m_Layer: 0
   m_Name: Jellyfish
   m_TagString: Enemy
@@ -106,7 +107,7 @@ MonoBehaviour:
   canDeaggro: 0
   stoppingDistance: 3
   flipRotation: 0
-  es: {fileID: 0}
+  target: {fileID: 0}
 --- !u!114 &2647219220679175777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +126,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f3cc7e014ed852f468d5721a3bbd0087, type: 2}
   - {fileID: 11400000, guid: 27dfe950167aee049ab4380900febe09, type: 2}
   globalCooldown: 3
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &6410795369213658342
 SpriteRenderer:
   serializedVersion: 2
@@ -210,6 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d3bfa51801c446ad1dfffe864340e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  deathAnimTime: 1
   healthBarPrefab: {fileID: 0}
   healthBarOffset: {x: 0, y: 0, z: 0}
   healthBarTextPrefab: {fileID: 0}
@@ -275,5 +280,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatManager
   baseStats: {fileID: 11400000, guid: 911a3b273806c4d45981183f1dcc7267, type: 2}
-  s: {fileID: 0}
   currentBuffs: []
+  teamID: 0
+  displayName: 
+--- !u!114 &8791486411344841200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826314347224335878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc860c2b7d6883a45affc61eaae86e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrystalFlux.Entity::CrystalFlux.EntitySystem.EnemyPhase
+  phaseThresholds:
+  - 70
+  - 50
+  phaseBuffs:
+  - buff:
+      type: 24
+      value: 40
+    phaseReq: 1
+  - buff:
+      type: 8
+      value: 30
+    phaseReq: 2
+  - buff:
+      type: 15
+      value: 15
+    phaseReq: 2
+  phase: 0

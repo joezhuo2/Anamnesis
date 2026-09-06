@@ -10,7 +10,7 @@ public class DuelInstance : AnomalyInstance
     public DuelInstance(AnomalyData data) : base(data)
     {
         boostAmount = Mathf.Round(Random.Range(data.anomalyMinVal, data.anomalyMaxVal));
-        description = $"Only a single enemy spawns this wave, and it gains +{boostAmount}% Attack and Health";
+        description = $"Only a single enemy spawns this wave, and it gains +{boostAmount}% Attack, Health, and Armor";
     }
 
     public override string Description => description;
@@ -20,5 +20,6 @@ public class DuelInstance : AnomalyInstance
         if (esm == null) return;
         esm.AddStat(new StatBuff(StatType.hpPct, boostAmount));
         esm.AddStat(new StatBuff(StatType.atkPct, boostAmount));
+        esm.AddStat(new StatBuff(StatType.armorPct, boostAmount));
     }
 }

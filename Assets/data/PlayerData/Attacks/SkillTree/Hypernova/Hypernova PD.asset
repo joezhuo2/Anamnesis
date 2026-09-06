@@ -22,9 +22,9 @@ MonoBehaviour:
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
-  physicalMult: 2.25
-  spellMult: 0
-  trueMult: 0.3
+  physicalMult: 2.15
+  spellMult: 0.6
+  trueMult: 0
   scalingStat: 35
   specialMult: 1
   specialSclaing: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   - effect: {fileID: 11400000, guid: 3c2c8c1b0d8fcf847b7485eda11a3624, type: 2}
     selfApply: 1
     applyCondition: 0
-    chance: 0.5
+    chance: 0.4
   - effect: {fileID: 11400000, guid: 7b227cb15c582744994c04526dff35e1, type: 2}
     selfApply: 0
     applyCondition: 0
