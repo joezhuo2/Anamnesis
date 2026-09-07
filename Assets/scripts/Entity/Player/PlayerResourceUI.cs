@@ -9,15 +9,11 @@ namespace CrystalFlux.EntitySystem
     public class PlayerResourceUI : MonoBehaviour, IPointerEnterHandler
     {
         private IStatProvider esm;
-        private ICurrencyHolder ich;
-        private ISkillPointHolder isph;
         public GameObject resourceHoverZone;
 
-        public void Setup(IStatProvider isp, ICurrencyHolder ch, ISkillPointHolder sph)
+        public void Setup(IStatProvider isp)
         {
             esm = isp;
-            ich = ch;
-            isph = sph;
             ShowTooltip();
         }
 
@@ -42,8 +38,6 @@ namespace CrystalFlux.EntitySystem
             if (esm.GetStat(StatType.spellRes) != 0f) resTypes.Add($"S:{esm.GetStat(StatType.spellRes):F1}%");
 
             if (resTypes.Count > 0) lines.Add($"Res: {string.Join(" ", resTypes)}");
-            if (ich != null && ich.CurrentAmount > 0) lines.Add($"Gold: {ich.CurrentAmount}");
-            if (isph != null && isph.SkillPoints > 0) lines.Add($"Skill Points: {isph.SkillPoints}");
 
             return ("Resources", string.Join("\n", lines), new(100, -100));
         }

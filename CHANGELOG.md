@@ -7,6 +7,17 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.9_1] - 2026-09-07
+
+### Added
+- **`SkillTreeOpenButton`** in `Assets/scripts/Entity/Player/` — an on-screen skill tree open button (`CrystalFlux.SkillTree` namespace, `RequireComponent(Button)`). It wires its `onClick` in `OnEnable` to `SkillTreeUI.Toggle(player)` and hides the tooltip on click, resolves `treeUI`/`player` on demand (`FindAnyObjectByType` for the tree, `FindWithTag("Player")` for the player), and resolves `ICurrencyHolder` / `ISkillPointHolder` from the player the first time the tooltip needs them. The hover tooltip shows the bound toggle key (from `GameInput.Controls.UI.ToggleSkillTree`, falling back to `"K"`), the player's gold and skill points, and refreshes every `Update` while hovered. Keep `ITooltipDisplay` and `HoverScale` on the same object
+- **`SkillTreeButton` in `New.unity`** — a new UI object on the `SkillTree` root (`RectTransform`, `Image` with the `emptybutton` sprite, `Button`, `TooltipTrigger`, `HoverScale`, and the new component), sized 150×150 at `(121.6, -280)` with `treeUI` wired in. Its `Icon` child uses a sprite from `Assets/data/images/UI/icons.png`
+- **`WaveManager.totalWaves`** — a serialized `int` on the base class, authored at `68` for the regular wave manager and `0` for Unlimited (Unlimited overrides display logic but the field is serialized alongside `enableExtraSpawns` for completeness). The on-screen wave counter now reads `Wave {current}/{totalWaves} ({killed}/{max})` instead of `Wave {current} ({killed}/{max})`
+
+### Changed
+- **Gold and skill points moved out of the resource tooltip.** `PlayerResourceUI.Setup(IStatProvider, ICurrencyHolder, ISkillPointHolder)` dropped its two holder arguments — the resource tooltip's `Gold: N` and `Skill Points: N` lines are removed. `PlayerUI` no longer resolves `ICurrencyHolder` or `ISkillPointHolder`, and passes only the `IStatProvider` into `Setup`. The lines now live on the new skill tree button's own tooltip, so the resource hover sticks to stats alone
+- **Boss Rush extended and levelled up.** `BossRush.asset` bumps its three bosses (Lich, Jellyfish, Cultist) from Lv 50 to **Lv 70**, restores a missing `statusEffectDisplayPrefab` reference on the Cultist entry, adds Golem as a fourth Lv 70 wave, and chains its `nextSequence` into the new `BossRush Part 2.asset` — a second wave holding the same four bosses (Lich, Jellyfish, Cultist, Golem) at **Lv 105**. Part 2's `nextSequence` is unset, so the run ends after it
+
 ## [v0.4.9] - 2026-09-06
 
 ### Added

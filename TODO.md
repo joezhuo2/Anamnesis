@@ -47,6 +47,10 @@
 - [ ] enemy status effect overlay on common enemies
 - [ ] sort attack cooldown ui by basic - skill - ult instead of whatever was obtained first
 - [ ] Pause menu quit button
+- [ ] wave track - show upcoming bosses/special rewards/milestones
+- [ ] map debris/decor
+- [ ] Screen shake and hit-stop feedback on attacks
+- [ ] Status Effect vfx
 
 ## Pre [v0.7.0] Checklist — Run Variety
 *Every wave stops looking the same; the settings/stats menus catch up.*
@@ -111,7 +115,6 @@
 - [ ] restrictions on run start - choose from a pool for bonus rewards
 
 **QoL & Polish**
-- [ ] Status Effect vfx
 - [ ] Minimap
 - [ ] Build Guide menu
 - [ ] skill tree node search bar (by name, stat, etc.)
@@ -137,7 +140,6 @@
 
 ## Planned - Unknown
 - [ ] target dummy OR dps counter
-- [ ] Screen shake and hit-stop feedback on attacks
 - [ ] Auto-pause when window loses focus (single-player)
 - [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
 - [ ] Scrollable Tooltips

@@ -23,6 +23,7 @@ namespace CrystalFlux.WaveSystem
         public float spawnRadius = 2f;
         [Range(0f, 0.9f)] public float killSpawnSpeedup = 0.15f;
         public bool enableExtraSpawns = true;
+        public int totalWaves;
 
         protected bool showCompletionMessage => GameSettings.Current.showWaveCompletionMessage;
 
@@ -428,7 +429,7 @@ namespace CrystalFlux.WaveSystem
 
         protected void UpdateWaveText()
         {
-            if (waveText != null) waveText.text = $"Wave {GetCurrentWave()} ({enemiesKilled}/{waveMaxTotalEnemies})";
+            if (waveText != null) waveText.text = $"Wave {GetCurrentWave()}/{totalWaves} ({enemiesKilled}/{waveMaxTotalEnemies})";
         }
         protected void EndWave()
         {

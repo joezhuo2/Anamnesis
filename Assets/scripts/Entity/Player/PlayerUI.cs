@@ -36,8 +36,6 @@ namespace CrystalFlux.EntitySystem
         private float lastXp = -1;
         private int lastOverhealth = -1;
         private IStatProvider esm;
-        private ICurrencyHolder ich;
-        private ISkillPointHolder isph;
         private EntityHealth eh;
         private int Overhealth => eh != null ? Mathf.FloorToInt(eh.Overhealth) : 0;
         private int CurMana => Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana));
@@ -54,12 +52,10 @@ namespace CrystalFlux.EntitySystem
         private void Start()
         {
             esm ??= GetComponent<IStatProvider>();
-            ich ??= GetComponent<ICurrencyHolder>();
-            isph ??= GetComponent<ISkillPointHolder>();
             eh ??= GetComponent<EntityHealth>();
             UpdateUI();
 
-            if (pui != null) pui.Setup(esm, ich, isph);
+            if (pui != null) pui.Setup(esm);
         }
         private void Update() => UpdateUI();
         private void UpdateUI()
