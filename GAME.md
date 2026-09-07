@@ -844,8 +844,8 @@ again on `OnRemove`. Used by `Solar Wind`.
 The `Overhealth` and `AddChain` types are passive: they configure the player on `OnUnlock`
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
-Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded` are present
-in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`
+and `Oblivion` — the capstone-only upgrades — are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 ## Hypercarry
@@ -921,13 +921,15 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Type: Overhealth
 - Conditions: none (applied on unlock)
 - Conversion: 50% of healing received at full health
-- Decay: 10% of the current pool per 0.5s
+- Decay: 20% of the current pool per 0.5s
 - Convert Regen: off (see note)
-- Description: While at full health, half of every heal — health regen included — becomes
-  overhealth instead. Overhealth sits above `EffMaxHp`, is spent before health when damage
-  lands, and bleeds off 10% of what remains every 0.5s. Cleared on death.
-- Note: `convertRegen` is authored off, but `EntityHealth.RegenHp` only stops regenerating at
-  full health when the conversion percent is also 0, so regen still converts here.
+- Description: While at full health, half of every heal becomes overhealth instead. Overhealth
+  sits above `EffMaxHp`, is spent before health when damage lands, and bleeds off 20% of what
+  remains every 0.5s. Cleared on death.
+- Note: `convertRegen` is authored off, so health regen is *not* one of the heals that convert
+  — regen stops at full health as usual. Before v0.4.9 the `RegenHp` guard ignored the flag
+  and regen converted here anyway.
+- Upgraded by the `Node_oblivion` capstone into Oblivion, which consumes it.
 
 ## Feedback Loop
 - Asset: `FeedbackLoop`
@@ -949,6 +951,26 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Delay: 0s
 - Description: Marker upgrade with no trigger logic of its own; allows Health to replace
   Stamina for attack costs.
+
+## Oblivion (Capstone)
+- Asset: `Oblivion`
+- Type: Overhealth
+- Conditions: none (applied on unlock)
+- Conversion: 100% of healing received at full health
+- Decay: 15% of the current pool per 0.5s
+- Convert Regen: on (see note)
+- Description: Exsanguinate with every number improved. At full health the entire heal —
+  health regen included, which Exsanguinate no longer converts — becomes overhealth instead
+  of being wasted, and the pool bleeds off 15% every 0.5s rather than 20%. Cleared on death.
+- Unlocked by: `Node_oblivion` ("Oblivion" capstone, 3 skill points, prerequisites `Node_h2`
+  and `Node_h2a`, requires the Exsanguinate Awakening). Unlocking it consumes Exsanguinate —
+  both upgrades write the same `EntityHealth.SetOverhealth` config, so they never stack.
+  Refunding the node returns Exsanguinate.
+- Not in `treasurePool` — capstone-only.
+- Note: `convertRegen` is authored on, which is what makes health regen keep ticking at full
+  health so it can feed the pool. As of v0.4.9 the flag is read by `EntityHealth.RegenHp`
+  rather than being implied by a non-zero conversion percent — see the `RegenHp` note in the
+  v0.4.9 changelog, the guard needs one more pass before this reads correctly at runtime.
 
 ## Paradox
 - Asset: `Paradox`
@@ -1070,9 +1092,9 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 - Asset: `Terminal Cascade`
 - Type: AddChain
 - Conditions: none (applied on unlock)
-- Retrigger Chance: 25%
+- Retrigger Chance: 20%
 - Description: When a chain of `additionalAttack` spawns reaches its end — the last link
-  has no further additional attack, or its `additionalChance` roll fails — there is a 25%
+  has no further additional attack, or its `additionalChance` roll fails — there is a 20%
   chance to fire the attack that started the chain again, from the player and aimed at the
   cursor. The retrigger pays no cooldown or resource cost, and the new chain can loop again.
 

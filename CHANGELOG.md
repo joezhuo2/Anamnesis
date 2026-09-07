@@ -7,6 +7,33 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.9] - 2026-09-06
+
+### Added
+- **Restart run.** A `RestartButton` now sits in the settings panel's `ActionButtons` row, between `CloseButton` and `ControlsButton`, using a frame from the new `Assets/data/images/Buttons/20250423helmetFrame-Sheet.png` sprite sheet. Pressing it calls the new `SettingsPanelUI.OpenRestartPanel()`, which opens the confirmation panel and closes the pause page behind it
+- **`RestartConfirmPanelUI`** in `Assets/scripts/Misc/` — a third settings page holding a message, a Confirm and a Cancel button. `Toggle()` pushes/pops `MenuPause` the same way the other pages do, and `ShowMessage` rewrites the label, which `Awake` seeds with the default `Restart run?\nAll progress will be lost.` Cancel routes through `SettingsPanelUI.HandleEscape()` so backing out reopens the pause page rather than dropping straight into the run; Confirm hides the panel and hands off to `GameRestart`. The panel finds its `SettingsPanelUI` itself when the reference is left unset, and wires both buttons' `onClick` in `Awake`
+- **`GameRestart`** in `Assets/scripts/Misc/` — a static that reloads the active scene single-mode to return to the home screen. `ToHomeScreen()` early-returns while `restarting` is set, then calls `MenuPause.ResetDepth()` and forces `Time.timeScale` back to 1 before the load, and repeats both once `sceneLoaded` fires (unsubscribing itself first). `IsRestarting` is public so the confirm button cannot double-fire
+- **`MenuPause.ResetDepth()`** — an `internal` reset of the pause depth counter and the stored restore time scale, shared by `ResetStatics` and `GameRestart`. Without it a restart taken from a pause page would reload the scene with a non-zero depth and a 0 time scale
+- **`SettingsPanelUI.restartConfirmPanel`** — `HandleEscape` now checks the confirm panel before the controls page, so `Escape` still backs out exactly one page at a time across all three
+- **Oblivion.** A new `Overhealth` upgrade asset (`Assets/data/PlayerData/PlayerUpgrade/Oblivion.asset`) that converts 100% of healing received at full health into overhealth, decays 15% of the pool per 0.5s, and sets `convertRegen`. It is not in the treasure pool — the only way to get it is the capstone node below
+- **`Node_oblivion`** — a capstone under `_Capstone/`, 3 skill points and `undoCost` 50, with prerequisites `Node_h2` and `Node_h2a`. It requires the Exsanguinate Awakening and grants Oblivion, so the usual capstone rule applies: Exsanguinate is consumed on unlock and returned on refund, and the two overhealth configs never coexist
+- **13 new stat nodes**, 1 skill point each, `undoCost` 50:
+  - `Node_dc1` through `dc6` — *Dodge Chance*, +1% `dodgeChance` each, forming a closed 6-node ring. `dc1` hangs off `Node_drp1`, `dc2`-`dc5` chain in order, and `dc6` requires both `dc5` and `dc1` to close the loop
+  - `Node_drp3` — *Dodge Resistance*, +5% `dodgeResPct`, off `Node_dc4`
+  - `Node_sedp1` / `sedp2` / `sedp3` — *Status Effect Duration*, +2% / +2% / +6% `seDurPct`. `sedp1` hangs off `Node_spr1` and the rest chain in order
+  - `Node_setr1` / `setr2` / `setr3` — *Status Effect Tick Rate*, +1% / +1% / +4% `seTickRatePct`, chained the same way off `Node_spr1`
+  - All 14 new nodes (the capstone included) are registered in `SkillTreeDefinition.allNodes`, taking it from 196 to 210, and placed in the skill tree panel in `New.unity`
+- **`Node_ MEDIUM` authoring template** under `__Copyable/` — the existing blank `Node_` template at 1.25x scale with the larger frame sprite from the same sheet. The higher-value new nodes (`sedp3`, `setr3`, `drp3`) use it, so a node's frame size now reads as its strength; the capstone stays at 1.5x
+
+### Changed
+- **`convertRegen` is now load-bearing.** `EntityHealth.RegenHp` used to early-out on `CurHp >= MaxHp && overhealthConvPct <= 0f && !regenOverHealth`, so regen converted into overhealth for any upgrade with a non-zero conversion percent whether or not the flag was set. It is now two guards — `!regenOverHealth || overhealthConvPct <= 0f`, then `CurHp >= MaxHp`. ⚠️ As written this also gates *all* health regeneration behind an active Overhealth upgrade: `regenOverHealth` is `false` and `overhealthConvPct` is 0 on every entity until `SetOverhealth` runs, and only `Overhealth.OnUnlock` calls it, so enemies and un-upgraded players regenerate nothing. The second guard also returns at full health before any conversion can happen, which is the case `convertRegen` exists to serve. See Notes
+- **Exsanguinate nerfed.** `decayPct` 10 → 20, so the pool now bleeds off twice as fast per 0.5s tick. Conversion stays at 50%. This is also what gives Oblivion's "lower decay" something to improve on
+- **Terminal Cascade trimmed.** `retriggerChance` 25% → 20%
+
+### Fixed
+- **Swarm's on-screen description understated its own spawn increase.** `SwarmInstance` built its description from `penaltyAmount` where the count multiplier is `1 + penalty / 50`, so a 30 roll advertised "30% more" against an actual 60%. The description now reads `{penaltyAmount * 2}%`, matching what the wave actually spawns
+- **`Projectile` statics leaked across a scene reload.** `ChainRetriggerChance`, `ApplyingProjectileHit` and the `liveDataRefs` map were only reset by `[RuntimeInitializeOnLoadMethod]`, which does not run on a scene load. `ResetStatics` now also subscribes `SceneManager.sceneUnloaded` (once, guarded by `hooked`) to a shared `ClearStatics`, so a restart no longer carries the previous run's Terminal Cascade chance into the next one
+
 ## [v0.4.8_1] - 2026-09-05
 
 ### Added

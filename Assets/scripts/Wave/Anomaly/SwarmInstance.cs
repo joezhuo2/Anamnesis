@@ -10,7 +10,7 @@ public class SwarmInstance : AnomalyInstance
     public SwarmInstance(AnomalyData data) : base(data)
     {
         penaltyAmount = Mathf.Round(Random.Range(data.anomalyMinVal, data.anomalyMaxVal));
-        description = $"All enemies in the wave gain -{penaltyAmount}% Health and Damage, but {penaltyAmount}% more of them spawn";
+        description = $"All enemies in the wave gain -{penaltyAmount}% Health and Damage, but {penaltyAmount * 2}% more of them spawn";
     }
 
     public override string Description => description;

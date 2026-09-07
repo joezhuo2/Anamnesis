@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CrystalFlux.ProjectileSystem
 {
@@ -52,9 +53,22 @@ namespace CrystalFlux.ProjectileSystem
         public static float ChainRetriggerChance;
 
         private static readonly Dictionary<ProjectileData, int> liveDataRefs = new();
+        private static bool hooked;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics()
+        {
+            ClearStatics();
+
+            if (hooked) return;
+
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
+            hooked = true;
+        }
+
+        private static void OnSceneUnloaded(Scene scene) => ClearStatics();
+
+        private static void ClearStatics()
         {
             ChainRetriggerChance = 0f;
             ApplyingProjectileHit = false;

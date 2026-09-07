@@ -5,6 +5,7 @@ namespace CrystalFlux.SettingsSystem
     public class SettingsPanelUI : MonoBehaviour
     {
         public ControlsPanelUI controlsPanel;
+        public RestartConfirmPanelUI restartConfirmPanel;
 
         private bool isOpen;
 
@@ -14,6 +15,13 @@ namespace CrystalFlux.SettingsSystem
 
         public void HandleEscape()
         {
+            if (restartConfirmPanel != null && restartConfirmPanel.IsOpen)
+            {
+                restartConfirmPanel.Close();
+                if (!isOpen) Toggle();
+                return;
+            }
+
             if (controlsPanel != null && controlsPanel.IsOpen)
             {
                 controlsPanel.Close();
@@ -49,7 +57,14 @@ namespace CrystalFlux.SettingsSystem
             ClosePanel();
         }
 
-        public void ClosePanel() 
+        public void OpenRestartPanel()
+        {
+            if (restartConfirmPanel != null)
+                restartConfirmPanel.Toggle();
+            ClosePanel();
+        }
+
+        public void ClosePanel()
         {
             if (isOpen)
                 Toggle();

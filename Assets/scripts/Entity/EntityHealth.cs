@@ -490,7 +490,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (Time.timeScale == 0f) return;
             if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
-            if (CurHp >= MaxHp && overhealthConvPct <= 0f && !regenOverHealth) return;
+            if (CurHp >= MaxHp && !(regenOverHealth && overhealthConvPct > 0f)) return;
 
             regenTimer += Time.deltaTime;
 

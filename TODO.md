@@ -16,21 +16,15 @@
 - The on-screen attack button (`PlayerAttackHandler.CreateButtonUI`) fires `onClick` only and has no release
   event, so a chargeable attack triggered from the UI holds until `maxChargeTime`. Needs `IPointerUpHandler`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
+- `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
 
 ## Pre [v0.5.0] Checklist — Feel & Foundations
 *Make the current game feel finished before stacking more systems on it.*
 
-**Systems**
-- [ ] Pause menu with restart run/home screen/quit
-- [ ] Audio (SFX + music buses + menu volume control)
-
-**Content**
-- [x] re-add phase based buffs using the new system (Jellyfish)
-
 **QoL & Polish**
 - [ ] finish tilemap
   - [ ] map borders (tilemap colliders)
-- [ ] Background Overlays - skill tree, reward menu, home screen, settings menu, scroll menu
+- [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu
 - [ ] add code of conduct, license, [*] security policy, issue template, [*] pull req template
 
 ## Pre [v0.6.0] Checklist — Combat Depth
@@ -38,18 +32,21 @@
 
 **Systems**
 - [ ] attack combo chains
+- [ ] Audio (SFX + music buses + menu volume control)
 
 **Content**
-- [ ] Elite/Champion enemy/boss variants with unique modifiers (extra hp, faster, new ai, split)
+- [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
 - [ ] more enemy move telegraphs
-- [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 - [ ] contact damage
+- [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back)
 - [ ] environmental collectible items (mana, xp, hp, gold)
 
 **QoL & Polish**
-- [ ] Full stats display menu
+- [ ] Full stats display menu (in settings panel)
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
+- [ ] sort attack cooldown ui by basic - skill - ult instead of whatever was obtained first
+- [ ] Pause menu quit button
 
 ## Pre [v0.7.0] Checklist — Run Variety
 *Every wave stops looking the same; the settings/stats menus catch up.*
@@ -57,6 +54,7 @@
 **Systems**
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves
+- [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 
 **Content**
 - [ ] wave events - random events that can randomly occur during waves
@@ -72,7 +70,7 @@
 - [ ] deployables (eg. totems/auras)
 
 **Content**
-- [ ] multiple map layouts
+- [ ] multiple map sections
 - [ ] Environmental hazards on maps (spikes, lava, traps)
 - [ ] portals
 - [ ] starting builds / starting kits
@@ -166,7 +164,7 @@
 
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
-- **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct
+- **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
 - **Midas Touch** - *something* consumes gold to increase all damage dealt by `{y}%`
 - **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
 
@@ -176,3 +174,48 @@
 - purple-blue
 - green-yellow
 - brown
+
+### Planned Capstone Nodes
+- Hex Cast (+buff -cost)
+- Starlit Reflexes (+buff -mana gain)
+- Supersonic (+count +dmg +size)
+- Shattered Singularity (+spd -cd +size)
+
+- Astral Nova (-spawnDelay -cd +range)
+- Stellar maelstrom (-cost +count +homing)
+- Solar Collapse (+size -cd +dmg)
+- Meteor Shower (+size +dmg)
+- Starfury (+size +debuff -cost)
+- Autopilot (+count +pierce +homing +dmg)
+- Feedback Loop (+chance -cd +dmg)
+
+### Stats without skill tree nodes
+- spell dmg pct
+- add spl dmg pct
+- add dmg pct
+- basic dmg pct
+- skill dmg pct
+- ult dmg pct
+- kb pct
+- se pot pct
+- basic cd red pct
+- skill cd red pct
+- ult cd red pct
+- max stamina
+- max mana
+- dash spd mult
+- dash cd red pdt
+- dash dist pct
+- dash stamina cost red pct
+- exp bonus
+- stealing
+
+- crit chance
+- crit damage
+- atk spd pct
+- aoe pct
+- def shred
+- res pen
+- healing pct
+- damage res 
+- move spd pct

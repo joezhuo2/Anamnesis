@@ -16,6 +16,12 @@ namespace CrystalFlux.SettingsSystem
             restoreTimeScale = 1f;
         }
 
+        internal static void ResetDepth()
+        {
+            depth = 0;
+            restoreTimeScale = 1f;
+        }
+
         public static void Push()
         {
             if (depth++ > 0) return;
