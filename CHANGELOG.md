@@ -7,6 +7,21 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.9_2] - 2026-09-08
+
+### Added
+- **Death screen.** `DeathScreenUI` in `Assets/scripts/Misc/` (`CrystalFlux.SettingsSystem`) — a panel that takes over when the player dies. `Awake` caches itself into a static `instance` (reset by a `SubsystemRegistration` hook), wires the restart button, seeds the label text, deactivates `panelRoot`, and spins up a private `CoroutineHost` on its own `[DeathScreenUI] Runner` GameObject. That host runs `BindPlayer`, which polls `FindGameObjectWithTag("Player")` every frame until it can subscribe to `EntityHealth.OnDeath` — the host exists precisely because the panel deactivates itself, so it cannot run coroutines of its own. On death the panel waits `showDelay` (authored `1`s, counted in `Time.unscaledDeltaTime` so it still elapses while paused), then `Show()` closes the restart-confirm page, the controls page and the settings panel, activates itself, calls `MenuPause.Push()`, and hands the `EventSystem` its `firstSelected` (falling back to the restart button) so the panel is controller/keyboard navigable. `OnRestart` hides the panel and hands off to `GameRestart.ToHomeScreen()`; every entry point early-returns on `GameRestart.IsRestarting`, and `OnDestroy` unsubscribes the death handler, the button listener, and destroys the host
+- **`DeathScreenUI` scene object** under `GlobalCanvas` in `New.unity`, holding three children: `TitleText` (600×150 at `(0, 200)`, 90pt, *You Died*), `MessageText` (800×150 at `(0, 125)`, 40pt, *The waves claim another.*) and `RestartButton` (150×150, `Image` + `Button` + `LayoutElement`, using a frame from `Assets/data/images/Buttons/20250423helmetFrame-Sheet.png` — the same sheet the pause-page restart button draws from). `title`/`message` are authored on the component and `SetText(title, message)` can rewrite both at runtime
+- **`NumberFormat`** in `Assets/scripts/Entity/` (`CrystalFlux.EntitySystem`) — a static holding the two formatters the bars now share. `Abbrev(int)` returns `0.0M` above a million, `0.0k` above a thousand, and the plain number below that (sign-safe, since it thresholds on `Mathf.Abs`). `Bar(cur, max, over = 0)` composes them into `{cur+over}(+{over})/{max}` when overhealth is present and `{cur}/{max}` when it is not
+
+### Changed
+- **Every health, resource and XP label now abbreviates.** `EntityHealth.RefreshHealthBar`, `PlayerUI.SetBar` and `PlayerUI.UpdateXpBar` all build their text through `NumberFormat.Bar` instead of inline interpolation, so five- and six-digit late-run numbers read as `1.2k` / `3.4M` on enemy bars, boss bars and the player's own health, mana, stamina and XP readouts
+- **The player's health label now shows overhealth explicitly.** `PlayerUI.SetBar` used to fold the pool in silently as `{value+over}/{max}`; it now matches the entity health bar's `{cur+over}(+{over})/{max}`, so an Exsanguinate or Oblivion pool is visible on the HUD rather than only inferable from a bar that reads past full
+- **The XP label lost its `F0` formatting** in favour of the shared abbreviation — same values, `k`/`M` past a thousand
+- **`SettingsPanelUI.Toggle` refuses to open behind the death screen.** A new `if (!isOpen && DeathScreenUI.IsOpen) return;` guard sits ahead of the existing paused-but-not-by-a-menu guard, so `Escape` cannot stack the pause page on top of a finished run
+- **`UnlimitedWaveManager.totalWaves` authored `0` → `1024`** in `New.unity`. Unlimited overrides the wave counter's display, so this is cosmetic bookkeeping on the serialized field rather than a cap
+- **`RestartConfirmPanel`'s `ConfirmText` regrown** — moved `(0, 150)` → `(0, 200)` and resized 300×50 → 500×200, so the two-line *Restart run? / All progress will be lost.* message fits its box
+
 ## [v0.4.9_1] - 2026-09-07
 
 ### Added

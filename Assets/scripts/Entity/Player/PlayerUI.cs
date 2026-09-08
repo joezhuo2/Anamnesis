@@ -75,7 +75,7 @@ namespace CrystalFlux.EntitySystem
                 bar.value = value;
             }
 
-            if (label != null) label.text = over > 0 ? $"{value+over}/{max}" : $"{value}/{max}";
+            if (label != null) label.text = NumberFormat.Bar(value, max, over);
         }
 
         private void UpdateManaBar()
@@ -128,7 +128,7 @@ namespace CrystalFlux.EntitySystem
             }
 
             if (levelText != null) levelText.text = $"Lv.{Level}";
-            if (xpText != null) xpText.text = $"{Xp:F0}/{XpReq:F0}";
+            if (xpText != null) xpText.text = NumberFormat.Bar(Xp, XpReq);
 
             lastLevel = Level;
             lastXp = Xp;

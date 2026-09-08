@@ -168,7 +168,7 @@ namespace CrystalFlux.EntitySystem
             healthBarInstance.value = cur;
 
             if (healthBarTextInstance != null)
-                healthBarTextInstance.text = over > 0 ? $"{cur}(+{over})/{max}" : $"{cur}/{max}";
+                healthBarTextInstance.text = NumberFormat.Bar(cur, max, over);
         }
 
         private void Update()

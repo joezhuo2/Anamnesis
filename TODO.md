@@ -17,6 +17,7 @@
   event, so a chargeable attack triggered from the UI holds until `maxChargeTime`. Needs `IPointerUpHandler`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
 - `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
+- `DeathScreenUI` pushes `MenuPause` and never pops it. Restart is the only exit today and `GameRestart.ToHomeScreen` resets the depth, but any future dismiss or return-to-menu path has to pop or reset it itself
 
 ## Pre [v0.5.0] Checklist — Feel & Foundations
 *Make the current game feel finished before stacking more systems on it.*
@@ -24,7 +25,7 @@
 **QoL & Polish**
 - [ ] finish tilemap
   - [ ] map borders (tilemap colliders)
-- [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu
+- [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
 - [ ] add code of conduct, license, [*] security policy, issue template, [*] pull req template
 
 ## Pre [v0.6.0] Checklist — Combat Depth
