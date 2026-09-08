@@ -1033,9 +1033,10 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Delay: 0s
 - Projectile: `Shattered Vessel A.prefab`
 - Soul Rend Effect: `Soul Rend` status effect
-- Description: On unlock, attaches the Soul Rend stacking buff to the equipped Basic and
-  Skill attacks. Using an Ultimate at 50 or more stacks fires the Shattered Vessel
-  projectile and then clears the stacks after 0.3s.
+- Description: On unlock, registers the Soul Rend stacking buff against the Basic and Skill
+  attack slots, so it applies to whatever attack fills them (an attack swapped in later is
+  covered) and is removed with the upgrade. Using an Ultimate at 50 or more stacks fires the
+  Shattered Vessel projectile and then clears the stacks after 0.3s.
 
 Soul Rend buff (1.5s duration, max 100 stacks):
 - +0.3% atkPct per stack

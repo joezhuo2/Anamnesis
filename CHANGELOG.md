@@ -7,6 +7,44 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.10] - 2026-09-08
+
+### Added
+- **`IAttackEffectSource`** in `Assets/scripts/Projectile/` (`CrystalFlux.ProjectileSystem`) — a one-method contract, `IReadOnlyList<EffectData> GetExtraEffects(AttackType type)`, that lets an owner contribute status effects to whatever attack currently fills a slot without touching the attack's own asset. `Projectile.Setup` resolves it off the owner (`TryGetComponent`) once per spawn and clears it on release
+- **An attack effect registry on `PlayerUpgradeManager`**, which now implements `IAttackEffectSource`. `RegisterAttackEffect(AttackType, EffectData)` appends into a per-`AttackType` list, ignoring a null `effect` and de-duplicating on the `EffectAsset` reference; `UnregisterAttackEffect(AttackType, EffectAsset)` removes every entry using that asset; `GetExtraEffects` returns the slot's list or a shared static empty one, so the hot path never allocates. The dictionary is cleared in `OnDestroy` alongside the existing upgrade collections
+- **An explicit charge window on `IChargeRegister`** — a new `AttackData ActiveChargeSource { get; }` member, implemented on `EntityProjectileHandler` with `BeginChargeWindow(AttackData)` / `EndChargeWindow()` and reset in `OnDestroy`. `PlayerAttackHandler.ChargeRoutine` opens the window with the resolved `chargeSource` immediately before the sustained attack spawns, and `EndCharge` closes it
+- **Read-only property surfaces on `AttackData` and `ProjectileData`** — every serialized field now has a matching expression-bodied getter (`Cooldown`, `ProjectilePrefab`, `Pd`, `Pattern`, `CastTime`, `ChargeAttack`, `NextAttack`, `Icon`, `DisplayName`, …; `Speed`, `Lifetime`, `NumPierce`, `MainAttack`, `AdditionalAttack`, `KbForce`, …). `ProjectileData.Effects` is exposed as `IReadOnlyList<EffectData>`, so the list can be read but not appended to from outside the asset
+
+### Changed
+- **Attack and projectile assets are no longer cloned at runtime.** Every entity now holds and reads the authored `AttackData` / `ProjectileData` asset directly:
+  - `PlayerAttackHandler.UpdateAttack` stores the incoming asset instead of `Instantiate`-ing it, renaming it and deep-cloning its `pd` / `effects` / `chargeAttack` / `nextAttack` graph
+  - `EnemyAttackHandler.Awake` no longer rebuilds `attacks` out of runtime copies; it null-strips the authored list (`RemoveAll(atk => atk == null)`, allocating an empty list when the field is unset) and sizes `cooldowns` off that
+  - `EntitySummonHandler` no longer re-instantiates a summon's attack assets after spawning it — summons share the same authored data as everything else
+  - `AttackReplacement.OnApply` keeps a plain reference to the attack it displaced rather than a deep-cloned copy of it
+- **All serialized fields on `AttackData` and `ProjectileData` are `[SerializeField] private`.** Authoring in the inspector is unchanged (same names, same order, same tooltips, same `[Range]` / `[Header]` decoration), but nothing outside the asset can write to them any more — the point of the change, now that the assets are shared and live for the whole run. Every consumer moved to the new properties: `Projectile`, `ProjectileSpawner`, `ProjectileSnapshot`, `DamageCalculator`, `DamagePacketBuilder`, `PlayerAttackHandler`, `EnemyAttackHandler`, `EntityProjectileHandler`, `PlayerAttackCooldownUI`, and `AttackData.GetTooltipLines` itself
+- **`PlayerAttackHandler.UpdateAttack` dropped its `AttackType` parameter** and reads `newAttack.type` instead, so the slot an attack lands in is always the one it was authored for. The explicit `IAttackHandler.UpdateAttack(AttackType, AttackAsset)` implementation still satisfies the `Core` contract but ignores the type it is handed. `Start` seeds the starting attacks through the one-argument form, and `WaveManager.OnAttackRewardClaimed` now null-checks `chosenAttack.newAttack` and passes the asset's own type
+- **`SoulRendPU` registers its buff on the player rather than on two attack assets.** `OnUnlock` builds the `EffectData` once (`selfApply`, `OnHit`, 100%) and calls `pum.RegisterAttackEffect` for `AttackType.Basic` and `AttackType.Skill`; the new `OnRemove` override unregisters both. The effect therefore follows the *slots* — swap the Basic attack mid-run and Soul Rend keeps applying — and it is torn down when the upgrade is removed
+- **`Projectile` applies effects from two sources.** The inline `foreach` loops in `Setup` and `HandleHitEntity` became `ApplyOnCast(EffectData)` and `ApplyOnHit(EffectData, GameObject)`, each run first over `pd.Effects` and then over the owner's `GetExtraEffects(pd.MainAttack.type)` list. The extras are fetched once per call through a private `ExtraEffects()` helper that returns null when there is no source, no `pd`, or no `MainAttack`
+- **Charged projectiles register against the attack actually being held.** Registration used to fire for any projectile whose `pd.mainAttack.canCharge` was true, which caught every projectile of a chargeable attack including taps and follow-ups. It now requires `icr.ActiveChargeSource == pd.MainAttack`, and the projectile remembers the outcome in a `chargeRegistered` bool that `UnregisterFromOwner` reads, instead of re-deriving the condition from `pd` at teardown time
+- **`ProjectileData.effects` is initialized to `new()`** so the list is never null; `Projectile` and `AttackData` still null-check it
+- **`AttackReplacement.OnExpire` restores by the stored attack's own type** (`originalAttack.type`) rather than the replacement's, and clears the reference afterwards
+- The UTF-8 BOM was dropped from `PlayerAttackHandler.cs` and `ProjectileData.cs`
+- `Warp AA PD.asset` re-serialized: `size` now precedes `numPierce`, matching the reordered field declarations, and `destroyOnMaxPierce: 0` is written out explicitly
+
+### Removed
+- **The whole runtime-copy machinery.** `AttackData.InitializeRuntimeCopy`, the recursive `DeepCloneInternal` (which walked `pd`, `pd.effects`, `pd.additionalAttack`, `chargeAttack` and `nextAttack` behind a `HashSet<AttackData>` cycle guard) and the matching `OnDestroy` teardown are gone. `DeepClone` is now an empty override and `IsRuntimeCopy` returns `false`, both kept only to satisfy the abstract members on `Core`'s `AttackAsset`
+- **`Projectile`'s live-data reference counting** — the static `Dictionary<ProjectileData, int> liveDataRefs`, `IsDataLive`, `RegisterData`, `UnregisterData`, and the `liveDataRefs.Clear()` line in the `SubsystemRegistration` static reset. Nothing needs to know whether an asset is still in flight when the asset is never destroyed
+- **`PlayerAttackHandler`'s deferred destruction path** — `pendingDestroy`, `DestroyAttackDeferred`, the `DestroyWhenUnused` coroutine, `IsAttackDataInUse` / `IsAttackDataInUseInternal`, and the static `inUseVisited` set. `OnDestroy` now just clears the list, and `RemoveAttack` just removes the entry
+- **`EnemyAttackHandler.OnDestroy`'s destroy loop**, leaving the expression-bodied `OnDestroy() => EndCast()`
+- **`EntitySummonHandler.InstantiateRuntimeScriptableObjects`**, the static that re-cloned a summon's `EnemyAttackHandler.attacks` and `PlayerAttackHandler.attacks` entries after `Instantiate`
+- **`SoulRendPU.AddOnce`**, which appended into a live `pd.effects` list, and the now-unused `System.Collections.Generic` import
+- **`AttackReplacement.OnDestroy`**, which existed only to destroy the cloned original
+- **`AttackReward.type`** in `WaveReward.cs` — the reward's slot is read off the attack asset, so the parallel authored field was a second source of truth
+
+### Fixed
+- **The Warp capstone's projectiles were paying out the base Warp's on-hit gains.** `Warp AA PD`'s `mainAttack` pointed at `Warp A AD` (the rare-pool Warp) instead of `Warp AA AD` (the capstone), so every orbiting Warp projectile from the capstone resolved its resource gains and its cost-derived `HpConsumed` scaling against the wrong asset — granting the base attack's Mana +3 rather than the capstone's Stamina +1 / Mana +2 +2%. Both attacks are `Skill`, so the attack-type damage bonus was unaffected
+
+
 ## [v0.4.9_2] - 2026-09-08
 
 ### Added

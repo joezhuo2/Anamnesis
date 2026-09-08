@@ -42,38 +42,16 @@ namespace CrystalFlux.EntitySystem
         {
             a = GetComponent<Animator>();
 
-            var runtimeAttacks = new List<AttackData>();
-            if (attacks != null)
-            {
-                foreach (var attack in attacks)
-                {
-                    if (attack != null)
-                    {
-                        var runtimeCopy = Instantiate(attack);
-                        runtimeCopy.InitializeRuntimeCopy();
-                        runtimeAttacks.Add(runtimeCopy);
-                    }
-                }
-            }
-            attacks = runtimeAttacks;
+            if (attacks == null) attacks = new List<AttackData>();
+            else attacks.RemoveAll(atk => atk == null);
 
             cooldowns = new float[attacks.Count];
-            for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].cooldown;
+            for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].Cooldown;
         }
 
         private void Start() => esm = GetComponent<IStatProvider>();
 
-        private void OnDestroy()
-        {
-            EndCast();
-
-            if (attacks != null)
-            {
-                foreach (var attack in attacks)
-                    if (attack != null && attack.IsRuntimeCopy) Destroy(attack);
-                attacks.Clear();
-            }
-        }
+        private void OnDestroy() => EndCast();
         private void Update()
         {
             if (esm.GetStat(StatType.isAlive) != 1f|| Time.timeScale == 0f) return;
@@ -106,17 +84,17 @@ namespace CrystalFlux.EntitySystem
             {
                 AttackData a = attacks[i];
 
-                if (cooldowns[i] > 0f || dist > (a.maxRange * a.maxRange)) continue;
+                if (cooldowns[i] > 0f || dist > (a.MaxRange * a.MaxRange)) continue;
 
                 float maxHp = esm.GetStat(StatType.EffMaxHp);
                 float hpPct = maxHp > 0f ? esm.GetStat(StatType.currentHp) / maxHp * 100f : 0f;
 
-                if (a.minHpPct > 0 && hpPct < a.minHpPct) continue;
-                if (a.maxHpPct < 100f && hpPct > a.maxHpPct) continue;
-                if (a.phaseReq >= 0)
+                if (a.MinHpPct > 0 && hpPct < a.MinHpPct) continue;
+                if (a.MaxHpPct < 100f && hpPct > a.MaxHpPct) continue;
+                if (a.PhaseReq >= 0)
                 {
                     if (!TryGetComponent<EnemyPhase>(out var ep)) continue;
-                    if (ep.phase < a.phaseReq) continue;
+                    if (ep.phase < a.PhaseReq) continue;
                 }
 
                 availableIndexes.Add(i);
@@ -143,7 +121,7 @@ namespace CrystalFlux.EntitySystem
             {
                 float attackStartTime = Time.time;
 
-                if (!current.canMoveDuringAttack)
+                if (!current.CanMoveDuringAttack)
                 {
                     movementHeld = true;
                     esm.AddStat(new(StatType.CanMove, -1));
@@ -158,7 +136,7 @@ namespace CrystalFlux.EntitySystem
                     isCasting = true;
                     castCancelled = false;
 
-                    if (!current.canMoveWhileCasting)
+                    if (!current.CanMoveWhileCasting)
                     {
                         castMovementHeld = true;
                         esm.AddStat(new StatBuff(StatType.CanMove, -1f));
@@ -186,7 +164,7 @@ namespace CrystalFlux.EntitySystem
 
                     if (interrupted)
                     {
-                        if (currentIndex >= 0) cooldowns[currentIndex] = current.cooldown;
+                        if (currentIndex >= 0) cooldowns[currentIndex] = current.Cooldown;
                         break;
                     }
 
@@ -196,9 +174,9 @@ namespace CrystalFlux.EntitySystem
                 HandleOrbitInteractions(current);
                 HandleCleanse(current);
 
-                if (current.projectilePrefab != null && !current.canCharge)
+                if (current.ProjectilePrefab != null && !current.CanCharge)
                 {
-                    if (current.spawnDelay > 0) yield return new WaitForSeconds(current.spawnDelay);
+                    if (current.SpawnDelay > 0) yield return new WaitForSeconds(current.SpawnDelay);
 
                     if (Target != null && ProjectileSpawner.Instance != null)
                     {
@@ -206,39 +184,39 @@ namespace CrystalFlux.EntitySystem
                         float dist = Vector2.Distance(Target.transform.position, transform.position);
 
                         StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
-                            current.projectilePrefab,
+                            current.ProjectilePrefab,
                             gameObject,
                             transform.position,
                             dir,
-                            dist > current.spawnDistance ? current.spawnDistance : dist
+                            dist > current.SpawnDistance ? current.SpawnDistance : dist
                         ));
                     }
                 }
 
-                if (current.summonChance > 0f && current.summonCondition == SummonCondition.OnCast && Random.value <= current.summonChance)
+                if (current.SummonChance > 0f && current.SummonCondition == SummonCondition.OnCast && Random.value <= current.SummonChance)
                 {
                     if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
                         summonHandler.Summon();
                 }
 
-                if (currentIndex >= 0) cooldowns[currentIndex] = current.cooldown;
+                if (currentIndex >= 0) cooldowns[currentIndex] = current.Cooldown;
 
-                if (current.canCharge)
+                if (current.CanCharge)
                 {
                     yield return ChargeLoop(current);
-                    if (currentIndex >= 0 && !current.cooldownOnAttackStart) cooldowns[currentIndex] = current.cooldown;
+                    if (currentIndex >= 0 && !current.CooldownOnAttackStart) cooldowns[currentIndex] = current.Cooldown;
                     if (castCancelled) { castCancelled = false; break; }
                 }
 
-                if (current.animationLength > 0)
+                if (current.AnimationLength > 0)
                 {
-                    float remaining = current.animationLength - (Time.time - attackStartTime);
+                    float remaining = current.AnimationLength - (Time.time - attackStartTime);
                     if (remaining > 0) yield return new WaitForSeconds(remaining);
                 }
 
                 ReleaseMovementHold();
 
-                current = current.nextAttack;
+                current = current.NextAttack;
                 currentIndex = -1;
             }
 
@@ -257,12 +235,12 @@ namespace CrystalFlux.EntitySystem
 
             TryGetComponent<EntityProjectileHandler>(out var eph);
 
-            AttackData chargeSource = attack.chargeAttack != null ? attack.chargeAttack : attack;
+            AttackData chargeSource = attack.ChargeAttack != null ? attack.ChargeAttack : attack;
 
             SpawnChargeSource(chargeSource);
 
-            float maxTime = Mathf.Max(attack.maxChargeTime, attack.minChargeTime);
-            float interval = Mathf.Max(attack.chargeTickInterval, 0.05f);
+            float maxTime = Mathf.Max(attack.MaxChargeTime, attack.MinChargeTime);
+            float interval = Mathf.Max(attack.ChargeTickInterval, 0.05f);
             float elapsed = 0f;
             float sinceTick = 0f;
 
@@ -284,7 +262,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (eph != null) eph.TickChargedProjectiles(chargeSource);
 
-                if (elapsed >= attack.minChargeTime && Random.value < 0.5f) break;
+                if (elapsed >= attack.MinChargeTime && Random.value < 0.5f) break;
             }
 
             isCharging = false;
@@ -302,14 +280,14 @@ namespace CrystalFlux.EntitySystem
                 gameObject,
                 transform.position,
                 dir,
-                dist > chargeSource.spawnDistance ? chargeSource.spawnDistance : dist
+                dist > chargeSource.SpawnDistance ? chargeSource.SpawnDistance : dist
             ));
         }
 
         private void HandleCleanse(AttackData ad)
         {
-            if (ad.cleanseDebuffs <= 0) return;
-            if (TryGetComponent<StatusEffectManager>(out var sem)) sem.RemoveDebuffs(ad.cleanseDebuffs);
+            if (ad.CleanseDebuffs <= 0) return;
+            if (TryGetComponent<StatusEffectManager>(out var sem)) sem.RemoveDebuffs(ad.CleanseDebuffs);
         }
 
         private void ReleaseMovementHold()
@@ -362,24 +340,24 @@ namespace CrystalFlux.EntitySystem
             if (attack == null) return;
             if (!TryGetComponent<EntityProjectileHandler>(out var handler)) return;
 
-            if (attack.fireOrbits)
+            if (attack.FireOrbits)
             {
                 Vector2 dir = Target != null
                     ? ((Vector2)Target.transform.position - (Vector2)transform.position).normalized
                     : Vector2.right;
-                handler.ReleaseOrbits(dir, attack.redirectCount);
+                handler.ReleaseOrbits(dir, attack.RedirectCount);
             }
-            else if (attack.absorbOrbitPct > 0f)
+            else if (attack.AbsorbOrbitPct > 0f)
             {
-                handler.AbsorbOrbits(attack.redirectCount, attack.absorbOrbitPct);
+                handler.AbsorbOrbits(attack.RedirectCount, attack.AbsorbOrbitPct);
             }
-            else if (attack.redirectOrbits)
+            else if (attack.RedirectOrbits)
             {
-                handler.RedirectOrbits(attack.redirectCount);
+                handler.RedirectOrbits(attack.RedirectCount);
             }
-            else if (attack.explodeOrbits)
+            else if (attack.ExplodeOrbits)
             {
-                handler.ExplodeOrbits(attack.redirectCount);
+                handler.ExplodeOrbits(attack.RedirectCount);
             }
         }
     }

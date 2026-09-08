@@ -69,13 +69,13 @@ namespace CrystalFlux.ProjectileSystem
 
         public static float CalculateHpConsumedMult(ProjectileData pd, IStatProvider esm)
         {
-            if (pd.mainAttack == null) return 1f;
+            if (pd.MainAttack == null) return 1f;
 
-            float totalHealthCost = Mathf.Abs(pd.mainAttack.healthCost + (esm.GetStat(StatType.EffMaxHp) * (pd.mainAttack.healthCostPct * 0.01f)));
+            float totalHealthCost = Mathf.Abs(pd.MainAttack.HealthCost + (esm.GetStat(StatType.EffMaxHp) * (pd.MainAttack.HealthCostPct * 0.01f)));
             if (totalHealthCost <= 0f) return 1f;
 
             float hpConsumedPct = totalHealthCost / esm.GetStat(StatType.EffMaxHp) * 100f;
-            return 1f + (hpConsumedPct * pd.specialMult * 0.01f);
+            return 1f + (hpConsumedPct * pd.SpecialMult * 0.01f);
         }
     }
 }

@@ -49,8 +49,6 @@ namespace CrystalFlux.EntitySystem
 
             GameObject summon = Instantiate(summonPrefab, position, rotation);
 
-            InstantiateRuntimeScriptableObjects(summon);
-
             if (summon.TryGetComponent<IDamageable>(out var summonHealth))
                 summonHealth.OnDeath += OnSummonDeath;
 
@@ -130,35 +128,6 @@ namespace CrystalFlux.EntitySystem
             return summon;
         }
 
-        private static void InstantiateRuntimeScriptableObjects(GameObject obj)
-        {
-            if (obj.TryGetComponent<EnemyAttackHandler>(out var eah))
-            {
-                for (int i = 0; i < eah.attacks.Count; i++)
-                {
-                    if (eah.attacks[i] != null)
-                    {
-                        eah.attacks[i] = Object.Instantiate(eah.attacks[i]);
-                        eah.attacks[i].InitializeRuntimeCopy();
-                    }
-                }
-            }
-
-            if (obj.TryGetComponent<PlayerAttackHandler>(out var pah))
-            {
-                for (int i = 0; i < pah.attacks.Count; i++)
-                {
-                    if (pah.attacks[i] != null)
-                    {
-                        AttackData runtime = Object.Instantiate(pah.attacks[i]);
-                        runtime.type = pah.attacks[i].type;
-                        runtime.InitializeRuntimeCopy();
-                        pah.attacks[i] = runtime;
-                    }
-                }
-            }
-
-        }
         public void CleanupAllSummons()
         {
             for (int i = activeSummons.Count - 1; i >= 0; i--)

@@ -4,8 +4,8 @@
 
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
-  and `Destroy`ed on death, along with the whole per-spawn `AttackData`/`EntityStats` ScriptableObject clone
-  chain. Three things block a straight swap to `PrefabPool`: cleanup is `Destroy`-bound across eight
+  and `Destroy`ed on death, along with the per-spawn `EntityStats` clone (the `AttackData` clone chain is
+  gone as of v0.4.10 — attacks are shared assets now). Three things block a straight swap to `PrefabPool`: cleanup is `Destroy`-bound across eight
   components (`EntityStatManager`, `EntityHealth`, `EnemyAttackHandler`, `EnemyMovement`,
   `StatusEffectManager`, `EnemyPhase`, `EntitySummonHandler`, `EntityProjectileHandler`) with no `OnDisable`
   counterparts; `EnemyStatManager.ScaleBaseStats` is non-idempotent, so level scaling compounds on a reused
@@ -17,6 +17,10 @@
   event, so a chargeable attack triggered from the UI holds until `maxChargeTime`. Needs `IPointerUpHandler`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
 - `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
+- Enemy charge attacks no longer sustain their projectiles. `EnemyAttackHandler.ChargeLoop` ticks the charged
+  projectile list, but nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`),
+  so no enemy projectile registers and the tick runs over an empty list. Enemy sustained projectiles expire at
+  their authored `lifetime`. Only `PlayerAttackHandler` opens and closes the window
 - `DeathScreenUI` pushes `MenuPause` and never pops it. Restart is the only exit today and `GameRestart.ToHomeScreen` resets the depth, but any future dismiss or return-to-menu path has to pop or reset it itself
 
 ## Pre [v0.5.0] Checklist — Feel & Foundations

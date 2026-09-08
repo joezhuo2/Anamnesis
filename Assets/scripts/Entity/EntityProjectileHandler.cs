@@ -14,6 +14,11 @@ namespace CrystalFlux.EntitySystem
         private readonly List<Projectile> chargedProjectiles = new();
         public int Count => orbitingProjectiles.Count;
 
+        public AttackData ActiveChargeSource { get; private set; }
+
+        public void BeginChargeWindow(AttackData source) => ActiveChargeSource = source;
+        public void EndChargeWindow() => ActiveChargeSource = null;
+
         private Camera mainCam;
         private Camera MainCam => mainCam != null ? mainCam : mainCam = Camera.main;
 
@@ -21,6 +26,7 @@ namespace CrystalFlux.EntitySystem
         {
             orbitingProjectiles.Clear();
             chargedProjectiles.Clear();
+            ActiveChargeSource = null;
         }
 
         private readonly List<Projectile> takeBuffer = new();
@@ -94,7 +100,7 @@ namespace CrystalFlux.EntitySystem
                     continue;
                 }
 
-                if (source != null && p.pd != null && p.pd.mainAttack != source) continue;
+                if (source != null && p.pd != null && p.pd.MainAttack != source) continue;
 
                 p.OnChargeTick();
             }
@@ -148,11 +154,11 @@ namespace CrystalFlux.EntitySystem
         {
             if (p == null || p.pd == null || p.ownerObj == null) return;
 
-            if (p.pd.mainAttack == null) return;
+            if (p.pd.MainAttack == null) return;
 
-            float hpGain = p.pd.mainAttack.healthGainOnHit * 0.01f * mult;
-            float staminaGain = p.pd.mainAttack.staminaGainOnHit * 0.01f * mult;
-            float manaGain = p.pd.mainAttack.manaGainOnHit * 0.01f * mult;
+            float hpGain = p.pd.MainAttack.HealthGainOnHit * 0.01f * mult;
+            float staminaGain = p.pd.MainAttack.StaminaGainOnHit * 0.01f * mult;
+            float manaGain = p.pd.MainAttack.ManaGainOnHit * 0.01f * mult;
 
             var dp = DamagePacketBuilder.BuildDamagePacket(hpGain, DamageType.Heal, false, Color.green, p.ownerObj, true, 1f);
 

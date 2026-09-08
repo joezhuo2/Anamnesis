@@ -36,7 +36,6 @@ namespace CrystalFlux.WaveSystem
     public class AttackReward
     {
         public AttackAsset newAttack;
-        public AttackType type;
         public Sprite icon;
         public string attackName;
         [TextArea] public string desc;

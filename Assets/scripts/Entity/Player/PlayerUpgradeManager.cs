@@ -7,7 +7,7 @@ using CrystalFlux.ProjectileSystem;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class PlayerUpgradeManager : MonoBehaviour, IOnHitEffect, IUpgradeHolder
+    public class PlayerUpgradeManager : MonoBehaviour, IOnHitEffect, IUpgradeHolder, IAttackEffectSource
     {
         bool IUpgradeHolder.HasUpgrade(UpgradeAsset pu) => HasUpgrade(pu as PlayerUpgrade);
         void IUpgradeHolder.AddUpgrade(UpgradeAsset pu) => AddUpgrade(pu as PlayerUpgrade);
@@ -18,6 +18,36 @@ namespace CrystalFlux.EntitySystem
         private readonly Dictionary<PlayerUpgrade, float> lastTriggerTimes = new();
         private readonly HashSet<PlayerUpgrade> runtimeCopies = new();
         private bool isTriggeringOnSpawnProjectile;
+
+        private readonly Dictionary<AttackType, List<EffectData>> extraEffects = new();
+        private static readonly List<EffectData> noEffects = new();
+
+        public IReadOnlyList<EffectData> GetExtraEffects(AttackType type)
+            => extraEffects.TryGetValue(type, out var list) ? list : noEffects;
+
+        public void RegisterAttackEffect(AttackType type, EffectData ed)
+        {
+            if (ed.effect == null) return;
+
+            if (!extraEffects.TryGetValue(type, out var list))
+            {
+                list = new List<EffectData>();
+                extraEffects[type] = list;
+            }
+
+            for (int i = 0; i < list.Count; i++)
+                if (list[i].effect == ed.effect) return;
+
+            list.Add(ed);
+        }
+
+        public void UnregisterAttackEffect(AttackType type, EffectAsset effect)
+        {
+            if (effect == null || !extraEffects.TryGetValue(type, out var list)) return;
+
+            for (int i = list.Count - 1; i >= 0; i--)
+                if (list[i].effect == effect) list.RemoveAt(i);
+        }
 
         private void Awake()
         {
@@ -63,6 +93,7 @@ namespace CrystalFlux.EntitySystem
             activeUpgrades.Clear();
             runtimeCopies.Clear();
             lastTriggerTimes.Clear();
+            extraEffects.Clear();
         }
 
         private PlayerUpgrade ToRuntimeCopy(PlayerUpgrade source)

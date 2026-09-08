@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
   m_Name: Warp AA PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
+  mainAttack: {fileID: 11400000, guid: 3ec023607b72e364896a91de492c8668, type: 2}
   lifetime: 10
-  numPierce: 3000
   size: 3
+  numPierce: 3000
+  destroyOnMaxPierce: 0
   movementType: 0
   speed: 1.4
   waveAmplitude: 1

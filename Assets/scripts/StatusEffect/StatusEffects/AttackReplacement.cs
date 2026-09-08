@@ -18,12 +18,7 @@ namespace CrystalFlux.StatusEffectSystem
 
             setAttack = true;
 
-            AttackAsset original = pah.FindAttackOfType(replacement.type);
-            if (original != null)
-            {
-                originalAttack = Instantiate(original);
-                originalAttack.DeepClone();
-            }
+            originalAttack = pah.FindAttackOfType(replacement.type);
 
             pah.UpdateAttack(replacement.type, replacement);
         }
@@ -35,14 +30,10 @@ namespace CrystalFlux.StatusEffectSystem
 
             setAttack = false;
 
-            if (originalAttack != null) pah.UpdateAttack(replacement.type, originalAttack);
+            if (originalAttack != null) pah.UpdateAttack(originalAttack.type, originalAttack);
             else pah.RemoveAttack(replacement.type);
-        }
 
-        private void OnDestroy()
-        {
-            if (originalAttack != null && originalAttack.IsRuntimeCopy)
-                Destroy(originalAttack);
+            originalAttack = null;
         }
     }
 }

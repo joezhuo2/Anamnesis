@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
@@ -14,7 +14,7 @@ namespace CrystalFlux.EntitySystem
     {
         bool IAttackHandler.HasAttack(AttackAsset a) => HasAttack(a as AttackData);
         AttackAsset IAttackHandler.FindAttackOfType(AttackType type) => FindAttackOfType(type);
-        void IAttackHandler.UpdateAttack(AttackType type, AttackAsset newAttack) => UpdateAttack(type, newAttack as AttackData);
+        void IAttackHandler.UpdateAttack(AttackType type, AttackAsset newAttack) => UpdateAttack(newAttack as AttackData);
         void IAttackHandler.RemoveAttack(AttackType type) => RemoveAttack(type);
 
         private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
@@ -51,8 +51,6 @@ namespace CrystalFlux.EntitySystem
         private AttackType chargingType;
         private AttackData chargingAttack;
         private readonly HashSet<AttackType> heldInputs = new();
-        private readonly List<AttackData> pendingDestroy = new();
-        private static readonly HashSet<AttackData> inUseVisited = new();
         private readonly List<QueuedAttack> attackQueue = new();
 
         private struct QueuedAttack
@@ -75,7 +73,7 @@ namespace CrystalFlux.EntitySystem
             pr = GetComponent<IResourcePool>();
             pum = GetComponent<PlayerUpgradeManager>();
 
-            for (int i = 0; i < starting.Count; i++) UpdateAttack(starting[i].type, starting[i]);
+            for (int i = 0; i < starting.Count; i++) UpdateAttack(starting[i]);
         }
         private void Update()
         {
@@ -135,16 +133,7 @@ namespace CrystalFlux.EntitySystem
         {
             EndAllAttackStates();
 
-            foreach (var attack in pendingDestroy)
-                if (attack != null) Destroy(attack);
-            pendingDestroy.Clear();
-
-            if (attacks != null)
-            {
-                foreach (var attack in attacks)
-                    if (attack != null && attack.IsRuntimeCopy) Destroy(attack);
-                attacks.Clear();
-            }
+            attacks?.Clear();
 
             foreach (var kvp in spawnedUIElements)
             {
@@ -178,48 +167,6 @@ namespace CrystalFlux.EntitySystem
                 if (attacks[i] == null) continue;
                 if (NormalizeAttackName(attacks[i].name).Equals(n, StringComparison.OrdinalIgnoreCase)) return true;
             }
-            return false;
-        }
-
-        private void DestroyAttackDeferred(AttackData attack)
-        {
-            if (attack == null || !attack.IsRuntimeCopy) return;
-
-            if (!isActiveAndEnabled)
-            {
-                Destroy(attack);
-                return;
-            }
-
-            pendingDestroy.Add(attack);
-            StartCoroutine(DestroyWhenUnused(attack));
-        }
-
-        private IEnumerator DestroyWhenUnused(AttackData attack)
-        {
-            yield return null;
-
-            while (attack != null && IsAttackDataInUse(attack)) yield return null;
-
-            pendingDestroy.Remove(attack);
-            if (attack != null) Destroy(attack);
-        }
-
-        private static bool IsAttackDataInUse(AttackData attack)
-        {
-            inUseVisited.Clear();
-            return IsAttackDataInUseInternal(attack);
-        }
-
-        private static bool IsAttackDataInUseInternal(AttackData attack)
-        {
-            if (attack == null || !inUseVisited.Add(attack)) return false;
-
-            if (Projectile.IsDataLive(attack.pd)) return true;
-            if (attack.pd != null && IsAttackDataInUseInternal(attack.pd.additionalAttack)) return true;
-            if (IsAttackDataInUseInternal(attack.chargeAttack)) return true;
-            if (IsAttackDataInUseInternal(attack.nextAttack)) return true;
-
             return false;
         }
 
@@ -280,8 +227,8 @@ namespace CrystalFlux.EntitySystem
             }
 
             float castTime = selected.GetEffCastTime(esm);
-            bool stampCooldownNow = !bypassCooldown && (!selected.canCharge || selected.cooldownOnAttackStart);
-            bool deferredCost = castTime > 0f || selected.canCharge;
+            bool stampCooldownNow = !bypassCooldown && (!selected.CanCharge || selected.CooldownOnAttackStart);
+            bool deferredCost = castTime > 0f || selected.CanCharge;
             bool costUpgradesTriggered = false;
 
             if (!noCost && deferredCost)
@@ -304,7 +251,7 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
 
-            if (!noCost && !selected.canCharge && !HandleStatChanges(selected))
+            if (!noCost && !selected.CanCharge && !HandleStatChanges(selected))
             {
                 NotifyBlocked(type);
                 return;
@@ -323,7 +270,7 @@ namespace CrystalFlux.EntitySystem
             castStateHeld = true;
             esm.AddStat(new StatBuff(StatType.IsAttacking, 1f));
 
-            if (!selected.canMoveWhileCasting)
+            if (!selected.CanMoveWhileCasting)
             {
                 castMovementHeld = true;
                 esm.AddStat(new StatBuff(StatType.CanMove, -1f));
@@ -352,7 +299,7 @@ namespace CrystalFlux.EntitySystem
 
             if (completed)
             {
-                bool paid = noCost || selected.canCharge;
+                bool paid = noCost || selected.CanCharge;
 
                 if (!paid)
                 {
@@ -406,7 +353,7 @@ namespace CrystalFlux.EntitySystem
         {
             HandleCleanse(selected);
 
-            if (!selected.canCharge)
+            if (!selected.CanCharge)
             {
                 HandleOrbitInteractions(selected);
                 HandleOnCastSummon(selected);
@@ -417,15 +364,15 @@ namespace CrystalFlux.EntitySystem
                 TriggerUpgradesOnAttack(type);
 
             ApplyAttackAnimator(type);
-            StartCoroutine(ResetAttackType(selected.animationLength));
+            StartCoroutine(ResetAttackType(selected.AnimationLength));
 
-            if (selected.canCharge) StartCoroutine(ChargeRoutine(selected, type, noCost, bypassCooldown, costUpgradesTriggered));
+            if (selected.CanCharge) StartCoroutine(ChargeRoutine(selected, type, noCost, bypassCooldown, costUpgradesTriggered));
         }
 
         private void HandleCleanse(AttackData ad)
         {
-            if (ad.cleanseDebuffs <= 0) return;
-            if (TryGetComponent<StatusEffectManager>(out var sem)) sem.RemoveDebuffs(ad.cleanseDebuffs);
+            if (ad.CleanseDebuffs <= 0) return;
+            if (TryGetComponent<StatusEffectManager>(out var sem)) sem.RemoveDebuffs(ad.CleanseDebuffs);
         }
 
         private void SpawnAttack(AttackData ad)
@@ -454,11 +401,11 @@ namespace CrystalFlux.EntitySystem
             chargingAttack = selected;
             castCancelled = false;
 
-            float maxTime = Mathf.Max(selected.maxChargeTime, selected.minChargeTime);
-            float interval = Mathf.Max(selected.chargeTickInterval, 0.05f);
+            float maxTime = Mathf.Max(selected.MaxChargeTime, selected.MinChargeTime);
+            float interval = Mathf.Max(selected.ChargeTickInterval, 0.05f);
             float elapsed = 0f;
 
-            while (elapsed < selected.chargeThreshold)
+            while (elapsed < selected.ChargeThreshold)
             {
                 if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
                 else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
@@ -480,7 +427,7 @@ namespace CrystalFlux.EntitySystem
                 elapsed += Time.deltaTime;
             }
 
-            AttackData chargeSource = selected.chargeAttack != null ? selected.chargeAttack : selected;
+            AttackData chargeSource = selected.ChargeAttack != null ? selected.ChargeAttack : selected;
 
             if (!noCost && !HandleStatChanges(chargeSource, !costUpgradesTriggered))
             {
@@ -493,7 +440,7 @@ namespace CrystalFlux.EntitySystem
             castStateHeld = true;
             esm.AddStat(new StatBuff(StatType.IsAttacking, 1f));
 
-            if (!selected.canMoveWhileCasting)
+            if (!selected.CanMoveWhileCasting)
             {
                 castMovementHeld = true;
                 esm.AddStat(new StatBuff(StatType.CanMove, -1f));
@@ -501,11 +448,12 @@ namespace CrystalFlux.EntitySystem
 
             CastBar.Acquire(castBarPrefab, castBarTextPrefab, out castBarInstance, out castBarTextInstance);
 
+            TryGetComponent<EntityProjectileHandler>(out var eph);
+            if (eph != null) eph.BeginChargeWindow(chargeSource);
+
             HandleOrbitInteractions(chargeSource);
             HandleOnCastSummon(chargeSource);
             SpawnAttack(chargeSource);
-
-            TryGetComponent<EntityProjectileHandler>(out var eph);
 
             float chargeElapsed = 0f;
             float sinceTick = 0f;
@@ -516,7 +464,7 @@ namespace CrystalFlux.EntitySystem
                 else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
 
                 if (castCancelled) break;
-                if (chargeReleaseRequested && chargeElapsed >= selected.minChargeTime) break;
+                if (chargeReleaseRequested && chargeElapsed >= selected.MinChargeTime) break;
 
                 CastBar.Tick(castBarInstance, castBarTextInstance, transform, castBarOffset, chargeElapsed, maxTime);
 
@@ -539,6 +487,8 @@ namespace CrystalFlux.EntitySystem
 
         private void EndCharge(AttackType type, bool bypassCooldown)
         {
+            if (TryGetComponent<EntityProjectileHandler>(out var eph)) eph.EndChargeWindow();
+
             CastBar.Release(ref castBarInstance, ref castBarTextInstance);
 
             if (castMovementHeld)
@@ -557,7 +507,7 @@ namespace CrystalFlux.EntitySystem
             chargeReleaseRequested = false;
             castCancelled = false;
 
-            if (!bypassCooldown && (chargingAttack == null || !chargingAttack.cooldownOnAttackStart))
+            if (!bypassCooldown && (chargingAttack == null || !chargingAttack.CooldownOnAttackStart))
                 lastAttackTimes[type] = Time.time;
 
             chargingAttack = null;
@@ -598,16 +548,16 @@ namespace CrystalFlux.EntitySystem
             if (attack == null) return;
             if (!TryGetComponent<EntityProjectileHandler>(out var handler)) return;
 
-            if (attack.fireOrbits) handler.ReleaseOrbits(attack.redirectCount);
-            else if (attack.absorbOrbitPct > 0f) handler.AbsorbOrbits(attack.redirectCount, attack.absorbOrbitPct);
-            else if (attack.redirectOrbits) handler.RedirectOrbits(attack.redirectCount);
-            else if (attack.explodeOrbits) handler.ExplodeOrbits(attack.redirectCount);
+            if (attack.FireOrbits) handler.ReleaseOrbits(attack.RedirectCount);
+            else if (attack.AbsorbOrbitPct > 0f) handler.AbsorbOrbits(attack.RedirectCount, attack.AbsorbOrbitPct);
+            else if (attack.RedirectOrbits) handler.RedirectOrbits(attack.RedirectCount);
+            else if (attack.ExplodeOrbits) handler.ExplodeOrbits(attack.RedirectCount);
         }
 
         private void HandleOnCastSummon(AttackData ad)
         {
-            if (ad == null || ad.summonChance <= 0f || ad.summonCondition != SummonCondition.OnCast) return;
-            if (UnityEngine.Random.value > ad.summonChance) return;
+            if (ad == null || ad.SummonChance <= 0f || ad.SummonCondition != SummonCondition.OnCast) return;
+            if (UnityEngine.Random.value > ad.SummonChance) return;
 
             if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
                 summonHandler.Summon();
@@ -697,30 +647,23 @@ namespace CrystalFlux.EntitySystem
         {
             if (attack == null || esm == null) return (0, 0, 0);
 
-            float totalStaminaCost = Mathf.Abs(attack.staminaCost + (esm.GetStat(StatType.EffMaxStamina) * (attack.staminaCostPct * 0.01f))) * (1f + (esm.GetStat(StatType.stCostPct) * 0.01f));
-            float totalHealthCost = Mathf.Abs(attack.healthCost + (esm.GetStat(StatType.EffMaxHp) * (attack.healthCostPct * 0.01f)));
-            float totalManaCost = Mathf.Abs(attack.manaCost + (esm.GetStat(StatType.EffMaxMana) * (attack.manaCostPct * 0.01f)));
+            float totalStaminaCost = Mathf.Abs(attack.StaminaCost + (esm.GetStat(StatType.EffMaxStamina) * (attack.StaminaCostPct * 0.01f))) * (1f + (esm.GetStat(StatType.stCostPct) * 0.01f));
+            float totalHealthCost = Mathf.Abs(attack.HealthCost + (esm.GetStat(StatType.EffMaxHp) * (attack.HealthCostPct * 0.01f)));
+            float totalManaCost = Mathf.Abs(attack.ManaCost + (esm.GetStat(StatType.EffMaxMana) * (attack.ManaCostPct * 0.01f)));
 
             return (Mathf.RoundToInt(totalHealthCost), Mathf.RoundToInt(totalStaminaCost), Mathf.RoundToInt(totalManaCost));
         }
 
-        public void UpdateAttack(AttackType type, AttackData newAttack)
+        public void UpdateAttack(AttackData newAttack)
         {
             if (newAttack == null) return;
+
+            AttackType type = newAttack.type;
             AttackData current = attacks.Find(atk => atk.type == type);
 
-            if (current != null)
-            {
-                attacks.Remove(current);
-                DestroyAttackDeferred(current);
-            }
+            if (current != null) attacks.Remove(current);
 
-            AttackData runtimeAttackCopy = Instantiate(newAttack);
-            runtimeAttackCopy.name = NormalizeAttackName(newAttack.name);
-            runtimeAttackCopy.type = type;
-            runtimeAttackCopy.InitializeRuntimeCopy();
-
-            attacks.Add(runtimeAttackCopy);
+            attacks.Add(newAttack);
 
             if (pum != null && pum.HasUpgradeOfType<SoulRendPU>() && (type == AttackType.Basic || type == AttackType.Skill))
                 pum.GetPlayerUpgradeOfType<SoulRendPU>().OnUnlock(gameObject);
@@ -730,17 +673,13 @@ namespace CrystalFlux.EntitySystem
                 Destroy(spawnedUIElements[type]);
                 spawnedUIElements.Remove(type);
             }
-            CreateButtonUI(runtimeAttackCopy);
+            CreateButtonUI(newAttack);
         }
 
         public void RemoveAttack(AttackType type)
         {
             AttackData current = attacks.Find(atk => atk.type == type);
-            if (current != null)
-            {
-                attacks.Remove(current);
-                DestroyAttackDeferred(current);
-            }
+            if (current != null) attacks.Remove(current);
             lastAttackTimes.Remove(type);
 
             if (spawnedUIElements.ContainsKey(type))
@@ -802,7 +741,7 @@ namespace CrystalFlux.EntitySystem
                 _ => 0f
             };
 
-            return attack.cooldown *
+            return attack.Cooldown *
                 Mathf.Clamp(1f - (esm.GetStat(StatType.attackSpeedPct) * 0.01f), 0.3f, 10f) *
                 Mathf.Clamp(1f - (cdrPct * 0.01f), 0.1f, 1f);
         }

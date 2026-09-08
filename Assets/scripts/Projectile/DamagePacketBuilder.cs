@@ -11,7 +11,7 @@ namespace CrystalFlux.ProjectileSystem
             DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
             if (pd == null || !snapshot.isValid) return dp;
 
-            float attackTypeBonus = pd.mainAttack != null ? DamageCalculator.AttackTypeBonus(pd.mainAttack.type, snapshot) : 1f;
+            float attackTypeBonus = pd.MainAttack != null ? DamageCalculator.AttackTypeBonus(pd.MainAttack.type, snapshot) : 1f;
 
             void AddDamageIfValid(DamageType type, float mult)
             {
@@ -31,9 +31,9 @@ namespace CrystalFlux.ProjectileSystem
                 dp.AddInstance(type, finalDamage, isCrit, default, owner);
             }
 
-            AddDamageIfValid(DamageType.Physical, pd.physicalMult);
-            AddDamageIfValid(DamageType.Spell, pd.spellMult);
-            AddDamageIfValid(DamageType.True, pd.trueMult);
+            AddDamageIfValid(DamageType.Physical, pd.PhysicalMult);
+            AddDamageIfValid(DamageType.Spell, pd.SpellMult);
+            AddDamageIfValid(DamageType.True, pd.TrueMult);
 
             return dp;
         }

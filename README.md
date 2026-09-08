@@ -256,6 +256,15 @@ Reward tooltips work the same way: rather than `RewardButton` reading two dozen 
 off `AttackData` and `PlayerUpgrade`, `AttackAsset` and `UpgradeAsset` declare an
 abstract `GetTooltipLines`, and each system describes its own data.
 
+Attack data is **shared, not cloned**. `AttackData` and `ProjectileData` assets are read
+straight off disk by every handler that uses them — no per-entity, per-summon or per-equip
+`Instantiate` — so their serialized fields are `[SerializeField] private` behind read-only
+properties and cannot be written to at runtime. Anything that needs to differ per run or per
+owner registers on the *owner* instead: `IAttackEffectSource` (implemented by
+`PlayerUpgradeManager`) lets an upgrade contribute status effects to an `AttackType` slot,
+which `Projectile` reads alongside the attack's own authored effects. That is the pattern to
+copy for any future per-run addition.
+
 > **Moving a `[SerializeReference]` type between assemblies breaks existing assets.** Unity stores a literal `{class, ns, asm}` triplet, so add `[MovedFrom(sourceAssembly: "...")]` when relocating one — see `UnlockEffect` and `NodeRequirement`.
 
 ## Getting Started

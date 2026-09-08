@@ -1165,7 +1165,8 @@ namespace CrystalFlux.WaveSystem
             CloseRewardUI();
 
             if (cpah == null) cpah = GameObject.FindWithTag("Player")?.GetComponent<IAttackHandler>();
-            if (cpah != null) cpah.UpdateAttack(chosenAttack.type, chosenAttack.newAttack);
+            if (cpah != null && chosenAttack.newAttack != null)
+                cpah.UpdateAttack(chosenAttack.newAttack.type, chosenAttack.newAttack);
             if (availableRarePool.Contains(chosenAttack)) availableRarePool.Remove(chosenAttack);
             if (availableCorruptionSpecialPool.Contains(chosenAttack)) availableCorruptionSpecialPool.Remove(chosenAttack);
 

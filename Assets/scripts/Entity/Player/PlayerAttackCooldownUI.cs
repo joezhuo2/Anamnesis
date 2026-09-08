@@ -46,7 +46,7 @@ namespace CrystalFlux.EntitySystem
 
             cad = cpah.attacks.Find(a => a.type == ctype);
 
-            if (cad != null && cad.icon != null && iconImage != null) iconImage.sprite = cad.icon;
+            if (cad != null && cad.Icon != null && iconImage != null) iconImage.sprite = cad.Icon;
 
             tooltipDisplay = GetComponent<ITooltipDisplay>();
             cachedTitle = null;
@@ -180,10 +180,10 @@ namespace CrystalFlux.EntitySystem
             var effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
 
             float basePhysDmg = 0f, baseSplDmg = 0f, trueDmg = 0f;
-            if (cad.pd != null)
+            if (cad.Pd != null)
             {
-                var previewSnapshot = ProjectileSnapshot.CaptureSnapshot(cad.pd, owner);
-                var previewPacket = DamagePacketBuilder.BuildDamagePacket(cad.pd, previewSnapshot, false, owner, false, 1f);
+                var previewSnapshot = ProjectileSnapshot.CaptureSnapshot(cad.Pd, owner);
+                var previewPacket = DamagePacketBuilder.BuildDamagePacket(cad.Pd, previewSnapshot, false, owner, false, 1f);
 
                 foreach (var instance in previewPacket.instances)
                 {
@@ -199,9 +199,9 @@ namespace CrystalFlux.EntitySystem
 
             List<string> lines = new() { $"{cad.type}" };
             if (effCd != 0f) lines.Add($"Cooldown: {effCd:F1}s");
-            if (hp != 0f || hpg != 0f) lines.Add($"Health: -{hp:F0} +{hpg:F0} +{cad.healthPctGainOnHit:F1}%");
-            if (sp != 0f || spg != 0f) lines.Add($"Stamina: -{sp:F0} +{spg:F0} +{cad.staminaPctGainOnHit:F1}%");
-            if (mp != 0f || mpg != 0f) lines.Add($"Mana: -{mp:F0} +{mpg:F0} +{cad.manaPctGainOnHit:F1}%");
+            if (hp != 0f || hpg != 0f) lines.Add($"Health: -{hp:F0} +{hpg:F0} +{cad.HealthPctGainOnHit:F1}%");
+            if (sp != 0f || spg != 0f) lines.Add($"Stamina: -{sp:F0} +{spg:F0} +{cad.StaminaPctGainOnHit:F1}%");
+            if (mp != 0f || mpg != 0f) lines.Add($"Mana: -{mp:F0} +{mpg:F0} +{cad.ManaPctGainOnHit:F1}%");
             if (cesm.GetStat(StatType.critChance) != 0f || cesm.GetStat(StatType.critDamage) != 0f)
                 lines.Add($"Crit: {cesm.GetStat(StatType.critChance):F1}% +{cesm.GetStat(StatType.critDamage):F1}%");
             if (cesm.GetStat(StatType.defShred) != 0f || cesm.GetStat(StatType.resPen) != 0f)
@@ -214,7 +214,7 @@ namespace CrystalFlux.EntitySystem
 
             if (dmgTypes.Count > 0) lines.Add($"Base: {string.Join(" ", dmgTypes)}");
 
-            return (cad.displayName, string.Join("\n", lines), TooltipOffset);
+            return (cad.DisplayName, string.Join("\n", lines), TooltipOffset);
         }
 
         public void OnPointerEnter(PointerEventData eventData) => RefreshTooltip();
