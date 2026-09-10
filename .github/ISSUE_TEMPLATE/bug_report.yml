@@ -1,0 +1,82 @@
+name: Bug report
+description: Something behaves incorrectly in-game or in the editor.
+title: "[Bug]: "
+labels: ["needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug. Please fill in as much as you can — issues with reproduction steps get fixed a lot faster.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: A clear description of the incorrect behaviour.
+      placeholder: When the Crab enemy dies mid-dash, its projectile keeps travelling and never despawns.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Include the scene, prefab, or ScriptableObject involved.
+      value: |
+        1. Open scene `Assets/New.unity`
+        2. Enter play mode
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: unity-version
+    attributes:
+      label: Unity version
+      placeholder: 6000.4.6f1
+    validations:
+      required: true
+
+  - type: input
+    id: game-version
+    attributes:
+      label: Game / package version
+      description: The version from `CHANGELOG.md`, or the commit SHA.
+      placeholder: v0.4.10
+    validations:
+      required: false
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often does it happen?
+      options:
+        - Every time
+        - Often, but not every time
+        - Rarely / only seen once
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console output / stack trace
+      description: Paste the relevant Unity console output. This is rendered as code, no backticks needed.
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: Screenshots, video, affected assets, suspected cause.
+    validations:
+      required: false

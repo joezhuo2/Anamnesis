@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1788899841.2879195,
-    "seen": 1788899881.836623,
-    "ast_hash": "b184d16ed655e6c87a771fa0721686ed",
+    "mtime": 1789044263.510994,
+    "seen": 1789044347.9626455,
+    "ast_hash": "7026ce5dadfa2cccdf1e72650b988bdc",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -714,9 +714,9 @@
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1788899755.833552,
-    "seen": 1788899881.8366344,
-    "ast_hash": "fc4ff3643c5de151a5a03eb928c56558",
+    "mtime": 1789044345.8606627,
+    "seen": 1789044347.96266,
+    "ast_hash": "f4a44348f68ee8f8c0d4e8244e5bb3f5",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -852,9 +852,9 @@
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1787684013.0122857,
-    "seen": 1787686006.2306623,
-    "ast_hash": "e0f099173f64f237b8fc385eed181812",
+    "mtime": 1789041984.029365,
+    "seen": 1789044347.962648,
+    "ast_hash": "b20fbf34fdbccb9249821105ef56d74a",
     "semantic_hash": ""
   },
   "GAME.md": {
@@ -2337,6 +2337,54 @@
     "mtime": 1788897452.5528905,
     "seen": 1788899881.8365157,
     "ast_hash": "4d9126c61f4dba9b0d495b2e952be5f4",
+    "semantic_hash": ""
+  },
+  ".github/ISSUE_TEMPLATE/balance_or_content.yml": {
+    "mtime": 1789044237.7621977,
+    "seen": 1789044347.9626098,
+    "ast_hash": "140704c38b8f65f9156fc5f382460966",
+    "semantic_hash": ""
+  },
+  ".github/ISSUE_TEMPLATE/bug_report.yml": {
+    "mtime": 1789044237.6466908,
+    "seen": 1789044347.9626133,
+    "ast_hash": "c4c29ce94db80b07e47312c2784d5fd1",
+    "semantic_hash": ""
+  },
+  ".github/ISSUE_TEMPLATE/config.yml": {
+    "mtime": 1789044237.825262,
+    "seen": 1789044347.9626155,
+    "ast_hash": "5fde5e74030ef6331a9f099ac6b816e8",
+    "semantic_hash": ""
+  },
+  ".github/ISSUE_TEMPLATE/feature_request.yml": {
+    "mtime": 1789044237.706897,
+    "seen": 1789044347.9626174,
+    "ast_hash": "0ae35536153ea1210148fef56c77feef",
+    "semantic_hash": ""
+  },
+  ".github/pull_request_template.md": {
+    "mtime": 1789044212.876175,
+    "seen": 1789044347.9626243,
+    "ast_hash": "22a1e236e1cfb27c3b7610897e6b49e2",
+    "semantic_hash": ""
+  },
+  "docs/agents/domain.md": {
+    "mtime": 1789041984.0261948,
+    "seen": 1789044347.962664,
+    "ast_hash": "0c132a2ca2798d86cd904fac433765cf",
+    "semantic_hash": ""
+  },
+  "docs/agents/issue-tracker.md": {
+    "mtime": 1789041972.9438634,
+    "seen": 1789044347.962666,
+    "ast_hash": "744b02931f517ab68b446e8b3c757bdb",
+    "semantic_hash": ""
+  },
+  "docs/agents/triage-labels.md": {
+    "mtime": 1789041973.008622,
+    "seen": 1789044347.962668,
+    "ast_hash": "85409347dbf487c8a25c9dac59708b83",
     "semantic_hash": ""
   }
 }

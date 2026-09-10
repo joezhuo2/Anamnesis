@@ -41,7 +41,7 @@ Add a new version section at the top (after the header) in Keep a Changelog form
 ## [vVERYMAJOR.MAJOR.MINOR_PATCH] - YYYY-MM-DD [- UPDATE NAME]
 
 ### Highlights
-highlights from the previous MAJOR version to the current version, including any notable changes, new features, or important fixes. only include this for VERYMAJOR and MAJOR versions. this should be listed before any of the following categories, and should be a summary of the most important changes.
+highlights from the previous MAJOR version to the current version, including any notable changes, new features, or important fixes. only include this for VERYMAJOR and MAJOR versions. this should be listed before any of the following categories, and should be a summary of the most important changes. This should be done every v0.X or vY. This must be done before the following sections are listed. 
 
 ### Added
 - **`Thing`** — rough description for addition, and one line for each notable mention

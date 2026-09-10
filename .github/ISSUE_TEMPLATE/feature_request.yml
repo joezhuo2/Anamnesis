@@ -1,0 +1,59 @@
+name: Feature request
+description: Propose new gameplay, systems, or tooling.
+title: "[Feature]: "
+labels: ["needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the gap or the player experience you want to change, not the implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: What should happen from the player's or the developer's point of view?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Combat
+        - Entity / stats
+        - Status effects
+        - Skill tree / upgrades
+        - Wave spawning
+        - UI
+        - Tooling / editor
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: existing
+    attributes:
+      label: Existing systems this should reuse
+      description: Which classes, ScriptableObjects, or patterns already in the project should this build on? Extending existing code is preferred over new classes.
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: This would change serialized data on existing assets (needs a migration plan)
+        - label: This is a breaking change for other systems

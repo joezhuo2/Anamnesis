@@ -23,14 +23,7 @@
   their authored `lifetime`. Only `PlayerAttackHandler` opens and closes the window
 - `DeathScreenUI` pushes `MenuPause` and never pops it. Restart is the only exit today and `GameRestart.ToHomeScreen` resets the depth, but any future dismiss or return-to-menu path has to pop or reset it itself
 
-## Pre [v0.5.0] Checklist — Feel & Foundations
-*Make the current game feel finished before stacking more systems on it.*
-
-**QoL & Polish**
-- [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
-- [ ] add code of conduct, license, [*] security policy, issue template, [*] pull req template
-
-## Pre [v0.6.0] Checklist — Combat Depth
+## Pre [v0.6.0] Checklist — Starlight Remnants
 *Attacks chain, enemies fight back with more than stats.*
 
 **Systems**
@@ -53,9 +46,10 @@
 - [ ] wave track - show upcoming bosses/special rewards/milestones
 - [ ] map debris/decor
 - [ ] Screen shake and hit-stop feedback on attacks
+- [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
 - [ ] Status Effect vfx
 
-## Pre [v0.7.0] Checklist — Run Variety
+## Pre [v0.7.0] Checklist — Threads of Fate
 *Every wave stops looking the same; the settings/stats menus catch up.*
 
 **Systems**
@@ -68,7 +62,7 @@
 - [ ] contracts - similar to anomaly, but no fail risk, easier objective, but still some bonus rewards
 - [ ] Nightmare/Death difficulty (new enemy ai (eg. spliting))
 
-## Pre [v0.8.0] Checklist — Player Power & Maps
+## Pre [v0.8.0] Checklist — Domains of the Unbound
 *New ways to deal damage, and somewhere interesting to deal it.*
 
 **Systems**
@@ -85,7 +79,7 @@
 **QoL & Polish**
 - [ ] Screen-edge indicators for off-screen enemies, boss cursor
 
-## Pre [v0.9.0] Checklist — Gear & Items
+## Pre [v0.9.0] Checklist — Starforged Echoes
 *The item layer itself: equip, consume, buy.*
 
 **Systems**
@@ -105,7 +99,7 @@
 - [ ] damage breakdown (by attack, every x waves)
 - [ ] FPS counter & performance stats debug toggle
 
-## Pre [v0.10.0] Checklist — Elemental Core
+## Pre [v0.10.0] Checklist — Prismatic Recollection
 *Damage gets a type, and defenses get a matching axis.*
 
 **Systems**
@@ -122,7 +116,7 @@
 - [ ] Build Guide menu
 - [ ] skill tree node search bar (by name, stat, etc.)
 
-## Pre [v0.11.0] Checklist — Gear & Elemental Expansion
+## Pre [v0.11.0] Checklist — Starlight Ascension
 *Both systems stop being standalone: crafted, combined, and replayed.*
 
 **Systems**
