@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Crab B PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: c8a8a4d0239b50949b2a5304a1db279f, type: 2}
-  speed: 5
   lifetime: 1
+  size: 1.75
   numPierce: 50
-  size: 2
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 5
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0.8
   spellMult: 0
   trueMult: 0

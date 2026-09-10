@@ -7,6 +7,14 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.4.11] - 2026-09-10
+
+### Added
+- **Tilemap Colliders** - a new Walls map that prevents the player from moving out of bounds (uses a water sprite), there will be an extension later, right now it is just a border
+
+### Rebalance
+- Crab: nerfed disk size from 2 to 1.75
+
 ## [v0.4.10] - 2026-09-08
 
 ### Added

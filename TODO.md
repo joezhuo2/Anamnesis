@@ -27,8 +27,6 @@
 *Make the current game feel finished before stacking more systems on it.*
 
 **QoL & Polish**
-- [ ] finish tilemap
-  - [ ] map borders (tilemap colliders)
 - [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
 - [ ] add code of conduct, license, [*] security policy, issue template, [*] pull req template
 
