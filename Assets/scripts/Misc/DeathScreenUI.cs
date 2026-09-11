@@ -33,6 +33,7 @@ namespace CrystalFlux.SettingsSystem
         private EntityHealth playerHealth;
         private bool isOpen;
         private bool pending;
+        private bool pushed;
 
         public static bool IsOpen => instance != null && instance.isOpen;
 
@@ -59,6 +60,7 @@ namespace CrystalFlux.SettingsSystem
             if (playerHealth != null) playerHealth.OnDeath -= OnPlayerDeath;
             if (restartButton != null) restartButton.onClick.RemoveListener(OnRestart);
             if (host != null) Destroy(host.gameObject);
+            ReleasePause();
             if (ReferenceEquals(instance, this)) instance = null;
         }
 
@@ -114,7 +116,12 @@ namespace CrystalFlux.SettingsSystem
             isOpen = true;
             panelRoot.SetActive(true);
             ApplyText();
-            MenuPause.Push();
+
+            if (!pushed)
+            {
+                MenuPause.Push();
+                pushed = true;
+            }
 
             GameObject select = firstSelected != null ? firstSelected
                 : restartButton != null ? restartButton.gameObject : null;
@@ -124,6 +131,23 @@ namespace CrystalFlux.SettingsSystem
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(select);
             }
+        }
+
+        public void Hide()
+        {
+            if (!isOpen) return;
+
+            isOpen = false;
+            if (panelRoot != null) panelRoot.SetActive(false);
+            ReleasePause();
+        }
+
+        private void ReleasePause()
+        {
+            if (!pushed) return;
+
+            pushed = false;
+            MenuPause.Pop();
         }
 
         public void SetText(string newTitle, string newMessage)
@@ -152,9 +176,7 @@ namespace CrystalFlux.SettingsSystem
         {
             if (!isOpen || GameRestart.IsRestarting) return;
 
-            isOpen = false;
-            if (panelRoot != null) panelRoot.SetActive(false);
-
+            Hide();
             GameRestart.ToHomeScreen();
         }
     }

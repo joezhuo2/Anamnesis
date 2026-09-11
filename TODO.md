@@ -17,7 +17,6 @@
   projectile list, but nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`),
   so no enemy projectile registers and the tick runs over an empty list. Enemy sustained projectiles expire at
   their authored `lifetime`. Only `PlayerAttackHandler` opens and closes the window
-- `DeathScreenUI` pushes `MenuPause` and never pops it. Restart is the only exit today and `GameRestart.ToHomeScreen` resets the depth, but any future dismiss or return-to-menu path has to pop or reset it itself
 
 ## Pre [v1.0.0] Checklist — First Light
 *Everything that has to be true before a stranger can play it.*
@@ -25,7 +24,6 @@
 **Systems**
 - [ ] Audio (SFX + music buses + menu volume control)
 - [ ] Pause/Death menu quit button
-- [ ] `DeathScreenUI` pushes `MenuPause` and never pops it
 - [ ] Nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`), so
   `EnemyAttackHandler.ChargeLoop` ticks an empty list and enemy sustained projectiles expire at their
   authored `lifetime`

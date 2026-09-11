@@ -7,6 +7,14 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.0_3] - 2026-09-11
+
+### Fixed
+- **Death screen releases its pause** - `DeathScreenUI` pushed `MenuPause` when it opened and never popped it, relying on `GameRestart.ToHomeScreen` resetting the depth. It now tracks its own push and pops it exactly once when it closes or is destroyed, so any dismiss path other than restart no longer leaves the game frozen at `timeScale` 0
+
+### Added
+- `DeathScreenUI.Hide()` - closes the death screen and releases its `MenuPause` push. The restart button now goes through it before handing off to `GameRestart.ToHomeScreen`
+
 ## [v0.5.0_2] - 2026-09-11
 
 ### Fixed
