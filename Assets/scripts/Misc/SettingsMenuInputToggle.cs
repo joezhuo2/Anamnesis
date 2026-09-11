@@ -36,6 +36,7 @@ namespace CrystalFlux.SettingsSystem
 
         private void ToggleMenu()
         {
+            if (DeathScreenUI.IsPlayerDead || GameRestart.IsRestarting) return;
             if (SkillTreeUI.IsAnyOpen || SkillTreeUI.EscapeConsumedThisFrame) return;
 
             if (cachedMenu == null) cachedMenu = FindAnyObjectByType<SettingsPanelUI>(FindObjectsInactive.Include);

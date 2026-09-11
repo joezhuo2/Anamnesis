@@ -36,6 +36,7 @@ namespace CrystalFlux.SettingsSystem
         private bool pushed;
 
         public static bool IsOpen => instance != null && instance.isOpen;
+        public static bool IsPlayerDead => instance != null && (instance.isOpen || instance.pending);
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics() => instance = null;

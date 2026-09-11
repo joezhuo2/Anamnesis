@@ -34,7 +34,7 @@ namespace CrystalFlux.SettingsSystem
 
         public void Toggle()
         {
-            if (!isOpen && DeathScreenUI.IsOpen) return;
+            if (!isOpen && DeathScreenUI.IsPlayerDead) return;
             if (!isOpen && Time.timeScale == 0f && !MenuPause.IsPaused) return;
 
             isOpen = !isOpen;

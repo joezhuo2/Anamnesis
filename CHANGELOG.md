@@ -7,6 +7,14 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.0_4] - 2026-09-11
+
+### Fixed
+- **Escape menu locked out after death** - pressing Escape during the delay between the player dying and the death screen appearing could open the settings menu. `SettingsMenuInputToggle` and `SettingsPanelUI.Toggle` now ignore the request while the player is dead (death screen pending or open) or a restart is in progress
+
+### Added
+- `DeathScreenUI.IsPlayerDead` - true from the moment the player dies until the death screen closes, covering the `showDelay` window that `IsOpen` missed
+
 ## [v0.5.0_3] - 2026-09-11
 
 ### Fixed
