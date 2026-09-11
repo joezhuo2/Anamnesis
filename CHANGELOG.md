@@ -7,6 +7,15 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.0_2] - 2026-09-11
+
+### Fixed
+- **On-screen attack buttons now release charged attacks** - the cooldown button spawned by `PlayerAttackHandler.CreateButtonUI` only listened to `Button.onClick`, which never registered as a held input, so a chargeable attack started from the button charged until `maxChargeTime`. `PlayerAttackCooldownUI` now implements `IPointerDownHandler` / `IPointerUpHandler` and routes left-click press and release through `PressAttack` / `ReleaseAttack`, the same path the keyboard bindings use. Holding the button charges, letting go fires. The press is also released when the button is disabled or destroyed (attack swap, `RemoveAttack`) or re-`Setup()`, so a charge can't get stuck held
+
+### Changed
+- On-screen attack buttons fire on pointer **down** instead of on click (pointer up over the button). Dragging off the button before letting go still releases the charge instead of cancelling the attack
+- `PlayerAttackHandler` no longer adds or clears `onClick` listeners on the cooldown button; the `Button` component stays on the prefab for its pressed/highlight transitions only
+
 ## [v0.5.0_1] - 2026-09-11
 
 ### Fixed

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class PlayerAttackCooldownUI : MonoBehaviour, IPointerEnterHandler
+    public class PlayerAttackCooldownUI : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
     {
         public Image cooldownImage;
         public Image iconImage;
@@ -36,10 +36,13 @@ namespace CrystalFlux.EntitySystem
         private Color normalBorderColor = Color.white;
         private bool borderColorCached;
         private bool lastCanCast = true;
+        private bool pressed;
         private Coroutine flashRoutine;
 
         public void Setup(PlayerAttackHandler pah, AttackType type, IStatProvider esm)
         {
+            ReleasePress();
+
             cpah = pah;
             ctype = type;
             cesm = esm;
@@ -144,6 +147,8 @@ namespace CrystalFlux.EntitySystem
 
         private void OnDisable()
         {
+            ReleasePress();
+
             if (flashRoutine != null)
             {
                 StopCoroutine(flashRoutine);
@@ -218,5 +223,27 @@ namespace CrystalFlux.EntitySystem
         }
 
         public void OnPointerEnter(PointerEventData eventData) => RefreshTooltip();
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (eventData.button != PointerEventData.InputButton.Left || cpah == null || pressed) return;
+
+            pressed = true;
+            cpah.PressAttack(ctype);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (eventData.button != PointerEventData.InputButton.Left) return;
+            ReleasePress();
+        }
+
+        private void ReleasePress()
+        {
+            if (!pressed) return;
+
+            pressed = false;
+            if (cpah != null) cpah.ReleaseAttack(ctype);
+        }
     }
 }

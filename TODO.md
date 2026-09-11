@@ -11,8 +11,6 @@
   (`RemoveAll(e => e == null)`), which a deactivated enemy never satisfies, so the wave-completion gate would
   never close. Also latched with no reset: `EntityHealth.barRetired`, the animator `isDead` bool,
   `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
-- The on-screen attack button (`PlayerAttackHandler.CreateButtonUI`) fires `onClick` only and has no release
-  event, so a chargeable attack triggered from the UI holds until `maxChargeTime`. Needs `IPointerUpHandler`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
 - `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
 - Enemy charge attacks no longer sustain their projectiles. `EnemyAttackHandler.ChargeLoop` ticks the charged
@@ -27,11 +25,6 @@
 **Systems**
 - [ ] Audio (SFX + music buses + menu volume control)
 - [ ] Pause/Death menu quit button
-- [x] Player settings metadata — `companyName` is `CrystalFlux`, `bundleVersion` is `0.5.0`,
-  `applicationIdentifier` is `com.CrystalFlux.Anamnesis`. `companyName` decides where `settings.json` lives, so
-  changing it after the first public build orphans everyone's settings
-- [ ] `PlayerAttackHandler.CreateButtonUI` fires `onClick` only — needs `IPointerUpHandler` so a chargeable
-  attack from the on-screen button releases instead of holding to `maxChargeTime`
 - [ ] `DeathScreenUI` pushes `MenuPause` and never pops it
 - [ ] Nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`), so
   `EnemyAttackHandler.ChargeLoop` ticks an empty list and enemy sustained projectiles expire at their

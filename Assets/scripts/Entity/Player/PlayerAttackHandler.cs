@@ -137,12 +137,7 @@ namespace CrystalFlux.EntitySystem
 
             foreach (var kvp in spawnedUIElements)
             {
-                if (kvp.Value != null)
-                {
-                    if (kvp.Value.TryGetComponent<Button>(out var btn))
-                        btn.onClick.RemoveAllListeners();
-                    Destroy(kvp.Value);
-                }
+                if (kvp.Value != null) Destroy(kvp.Value);
             }
             spawnedUIElements.Clear();
         }
@@ -187,12 +182,6 @@ namespace CrystalFlux.EntitySystem
 
             if (uiObj.TryGetComponent<PlayerAttackCooldownUI>(out var pacui))
                 pacui.Setup(this, attack.type, esm);
-
-            if (uiObj.TryGetComponent<Button>(out var b))
-            {
-                AttackType attackType = attack.type;
-                b.onClick.AddListener(() => PerformAttack(attackType));
-            }
         }
 
         public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
