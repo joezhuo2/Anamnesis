@@ -7,6 +7,11 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.0_1] - 2026-09-11
+
+### Fixed
+- **Project Settings** - `companyName` being `defaultCompany` and `bundleVersion` being the default `1.0`, fixed to being `CrystalFlux` and `0.5.0` respectively
+
 ## [v0.5.0] - 2026-09-10 - Feel & Foundations (Release Summary)
 
 *This release closes the pre-v0.5.0 "Feel & Foundations" checklist on the repository side: Anamnesis now ships with an explicit license, a contribution surface, and the agent-facing documentation the engineering skills read before touching the codebase.*

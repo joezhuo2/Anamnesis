@@ -1,7 +1,5 @@
 # Planned Features 
 
-[?] Questionable - indicates questionable behavior (may not be true), only occured one time, or may be unlucky
-
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
   and `Destroy`ed on death, along with the per-spawn `EntityStats` clone (the `AttackData` clone chain is
@@ -23,12 +21,39 @@
   their authored `lifetime`. Only `PlayerAttackHandler` opens and closes the window
 - `DeathScreenUI` pushes `MenuPause` and never pops it. Restart is the only exit today and `GameRestart.ToHomeScreen` resets the depth, but any future dismiss or return-to-menu path has to pop or reset it itself
 
-## Pre [v0.6.0] Checklist — Starlight Remnants
+## Pre [v1.0.0] Checklist — First Light
+*Everything that has to be true before a stranger can play it.*
+
+**Systems**
+- [ ] Audio (SFX + music buses + menu volume control)
+- [ ] Pause/Death menu quit button
+- [x] Player settings metadata — `companyName` is `CrystalFlux`, `bundleVersion` is `0.5.0`,
+  `applicationIdentifier` is `com.CrystalFlux.Anamnesis`. `companyName` decides where `settings.json` lives, so
+  changing it after the first public build orphans everyone's settings
+- [ ] `PlayerAttackHandler.CreateButtonUI` fires `onClick` only — needs `IPointerUpHandler` so a chargeable
+  attack from the on-screen button releases instead of holding to `maxChargeTime`
+- [ ] `DeathScreenUI` pushes `MenuPause` and never pops it
+- [ ] Nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`), so
+  `EnemyAttackHandler.ChargeLoop` ticks an empty list and enemy sustained projectiles expire at their
+  authored `lifetime`
+
+**Content**
+- [ ] Confirm every `CREDITS.md` asset license permits redistribution inside a compiled build, not just use
+- [ ] In-game credits/attribution screen — some of those licenses want attribution in the build itself
+- [ ] Store page — description, screenshots, capsule art, controls
+- [ ] Window icon + splash
+
+**QoL & Polish**
+- [ ] Resolution/window options (currently a fixed 1920x1080 with `resizableWindow: 0`)
+- [ ] Auto-pause when window loses focus (single-player)
+- [ ] Build version shown on the home screen, so playtest reports name a version
+- [ ] Clean-machine pass — fresh build, no `settings.json`, no Unity installed
+
+## Pre [v1.1.0] Checklist — Starlight Remnants
 *Attacks chain, enemies fight back with more than stats.*
 
 **Systems**
 - [ ] attack combo chains
-- [ ] Audio (SFX + music buses + menu volume control)
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
@@ -42,14 +67,13 @@
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
 - [ ] sort attack cooldown ui by basic - skill - ult instead of whatever was obtained first
-- [ ] Pause menu quit button
 - [ ] wave track - show upcoming bosses/special rewards/milestones
 - [ ] map debris/decor
 - [ ] Screen shake and hit-stop feedback on attacks
 - [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
 - [ ] Status Effect vfx
 
-## Pre [v0.7.0] Checklist — Threads of Fate
+## Pre [v1.2.0] Checklist — Threads of Fate
 *Every wave stops looking the same; the settings/stats menus catch up.*
 
 **Systems**
@@ -62,7 +86,7 @@
 - [ ] contracts - similar to anomaly, but no fail risk, easier objective, but still some bonus rewards
 - [ ] Nightmare/Death difficulty (new enemy ai (eg. spliting))
 
-## Pre [v0.8.0] Checklist — Domains of the Unbound
+## Pre [v1.3.0] Checklist — Domains of the Unbound
 *New ways to deal damage, and somewhere interesting to deal it.*
 
 **Systems**
@@ -79,7 +103,7 @@
 **QoL & Polish**
 - [ ] Screen-edge indicators for off-screen enemies, boss cursor
 
-## Pre [v0.9.0] Checklist — Starforged Echoes
+## Pre [v1.4.0] Checklist — Starforged Echoes
 *The item layer itself: equip, consume, buy.*
 
 **Systems**
@@ -99,7 +123,7 @@
 - [ ] damage breakdown (by attack, every x waves)
 - [ ] FPS counter & performance stats debug toggle
 
-## Pre [v0.10.0] Checklist — Prismatic Recollection
+## Pre [v1.5.0] Checklist — Prismatic Recollection
 *Damage gets a type, and defenses get a matching axis.*
 
 **Systems**
@@ -116,7 +140,7 @@
 - [ ] Build Guide menu
 - [ ] skill tree node search bar (by name, stat, etc.)
 
-## Pre [v0.11.0] Checklist — Starlight Ascension
+## Pre [v1.6.0] Checklist — Starlight Ascension
 *Both systems stop being standalone: crafted, combined, and replayed.*
 
 **Systems**
@@ -137,7 +161,6 @@
 
 ## Planned - Unknown
 - [ ] target dummy OR dps counter
-- [ ] Auto-pause when window loses focus (single-player)
 - [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
 - [ ] Scrollable Tooltips
 - [ ] "What's new" changelog popup on update

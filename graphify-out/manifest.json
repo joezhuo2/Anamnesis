@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1789044263.510994,
-    "seen": 1789044347.9626455,
-    "ast_hash": "7026ce5dadfa2cccdf1e72650b988bdc",
+    "mtime": 1789044550.5712602,
+    "seen": 1789044860.6332932,
+    "ast_hash": "cbfadcf633b89abc5954aeeab1c12a78",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -708,15 +708,15 @@
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1788899748.086141,
-    "seen": 1788899881.8366325,
-    "ast_hash": "66553729d6604a8a2217d894d0cd2bec",
+    "mtime": 1789044617.217905,
+    "seen": 1789044860.6333055,
+    "ast_hash": "e049858704fcf239ee0373a89a2b243b",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1789044345.8606627,
-    "seen": 1789044347.96266,
-    "ast_hash": "f4a44348f68ee8f8c0d4e8244e5bb3f5",
+    "mtime": 1789044822.712489,
+    "seen": 1789044860.6333072,
+    "ast_hash": "d0dea676a426ed681ff9892ce37b6d2a",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -1356,9 +1356,9 @@
     "semantic_hash": ""
   },
   ".github/copilot-skills/update-documentation/SKILL.md": {
-    "mtime": 1788485198.3838484,
-    "seen": 1788485259.5842838,
-    "ast_hash": "2b93c48ec0ef1a4bd955bb9e2392e200",
+    "mtime": 1789044531.5489643,
+    "seen": 1789044860.6332674,
+    "ast_hash": "dd6313a33398902f2e12c447c393be1c",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrades/GrantStatusEffect.cs": {
