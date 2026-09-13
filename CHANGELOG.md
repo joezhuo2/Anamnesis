@@ -7,6 +7,16 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.2] - 2026-09-13
+
+### Added
+- **Quit button** on the pause menu and the death screen. `SettingsPanelUI.QuitGame()` and `DeathScreenUI`'s new `quitButton` both save `settings.json` first, then hand off to `GameRestart.QuitGame()`, which resets the `MenuPause` depth and `timeScale` before calling `Application.Quit()` (or leaving Play mode in the editor). Both ignore the press while their panel is closed or a restart is in progress
+- **Build version on the home screen** - the new `BuildVersionLabel` component writes `Application.version` into a `TextMeshProUGUI` using an authorable `format` (default `v{0}`), with an optional `(editor)` / `(dev)` suffix, so playtest reports and screenshots name the build they came from. It sits on the home canvas as `VersionText`
+- `DifficultySelector.hideOnLockIn` - a list of extra objects deactivated when a difficulty is locked in and the run starts. The version label is hidden this way
+
+### Changed
+- Player `bundleVersion` 0.5.0 → 0.5.2, so `Application.version` matches the release
+
 ## [v0.5.1] - 2026-09-13
 
 ### Added

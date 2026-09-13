@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.5.1-6366F1)
+![Version](https://img.shields.io/badge/version-0.5.2-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.5.1** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.5.2** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -48,7 +48,7 @@ Current release: **v0.5.1** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a four-boss **Boss Rush** gauntlet |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
-| **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, and a *You Died* screen — all persisted to `settings.json` |
+| **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, quit buttons, a *You Died* screen, and the build version on the home screen — all persisted to `settings.json` |
 | **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, red borders and flashes on blocked attacks, and unscaled hover scaling that animates while paused |
 
 Full detail for every system lives in [GAME.md](GAME.md).

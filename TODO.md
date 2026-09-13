@@ -5,7 +5,6 @@
 
 **Systems**
 - [ ] Audio (SFX + music buses + menu volume control)
-- [ ] Pause/Death menu quit button
 - [ ] Nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`), so
   `EnemyAttackHandler.ChargeLoop` ticks an empty list and enemy sustained projectiles expire at their
   authored `lifetime`
@@ -19,7 +18,6 @@
 **QoL & Polish**
 - [ ] Resolution/window options (currently a fixed 1920x1080 with `resizableWindow: 0`)
 - [ ] Auto-pause when window loses focus (single-player)
-- [ ] Build version shown on the home screen, so playtest reports name a version
 - [ ] Clean-machine pass — fresh build, no `settings.json`, no Unity installed
 
 ## Pre [v1.1.0] Checklist — Starlight Remnants

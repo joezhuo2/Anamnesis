@@ -20,6 +20,9 @@ namespace CrystalFlux.WaveSystem
         public TextMeshProUGUI nameText;
         public Vector2 tooltipOffset;
 
+        [Header("Hide On Run Start")]
+        public List<GameObject> hideOnLockIn = new();
+
         [Header("Cycle Buttons")]
         public Button leftButton;
         public Button rightButton;
@@ -116,6 +119,9 @@ namespace CrystalFlux.WaveSystem
             if (wm != null) wm.ApplyDifficulty(d);
 
             if (root != null) root.SetActive(false);
+
+            foreach (var go in hideOnLockIn)
+                if (go != null) go.SetActive(false);
         }
     }
 }

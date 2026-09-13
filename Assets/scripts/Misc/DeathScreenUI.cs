@@ -23,6 +23,7 @@ namespace CrystalFlux.SettingsSystem
 
         [Header("Buttons")]
         public Button restartButton;
+        public Button quitButton;
         public GameObject firstSelected;
 
         [Header("Timing")]
@@ -48,6 +49,7 @@ namespace CrystalFlux.SettingsSystem
             if (panelRoot == null) panelRoot = gameObject;
 
             if (restartButton != null) restartButton.onClick.AddListener(OnRestart);
+            if (quitButton != null) quitButton.onClick.AddListener(OnQuit);
 
             ApplyText();
             panelRoot.SetActive(false);
@@ -60,6 +62,7 @@ namespace CrystalFlux.SettingsSystem
         {
             if (playerHealth != null) playerHealth.OnDeath -= OnPlayerDeath;
             if (restartButton != null) restartButton.onClick.RemoveListener(OnRestart);
+            if (quitButton != null) quitButton.onClick.RemoveListener(OnQuit);
             if (host != null) Destroy(host.gameObject);
             ReleasePause();
             if (ReferenceEquals(instance, this)) instance = null;
@@ -179,6 +182,14 @@ namespace CrystalFlux.SettingsSystem
 
             Hide();
             GameRestart.ToHomeScreen();
+        }
+
+        private void OnQuit()
+        {
+            if (!isOpen || GameRestart.IsRestarting) return;
+
+            GameSettings.Save();
+            GameRestart.QuitGame();
         }
     }
 }

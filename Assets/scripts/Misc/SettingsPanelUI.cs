@@ -65,6 +65,14 @@ namespace CrystalFlux.SettingsSystem
             ClosePanel();
         }
 
+        public void QuitGame()
+        {
+            if (!isOpen || GameRestart.IsRestarting) return;
+
+            GameSettings.Save();
+            GameRestart.QuitGame();
+        }
+
         public void ClosePanel()
         {
             if (isOpen)

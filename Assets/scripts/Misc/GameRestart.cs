@@ -24,6 +24,20 @@ namespace CrystalFlux.SettingsSystem
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
         }
 
+        public static void QuitGame()
+        {
+            if (restarting) return;
+
+            MenuPause.ResetDepth();
+            Time.timeScale = 1f;
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
         private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;

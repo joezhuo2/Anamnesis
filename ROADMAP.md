@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v0.6.0] - 
+- [v0.5.2] **Quit & build version**: the pause menu and death screen gain a Quit button that saves settings and exits cleanly through `GameRestart.QuitGame`, and the home screen now shows the build version (`BuildVersionLabel`, reading `Application.version`) so playtest reports name the build. The label hides itself when the run starts via `DifficultySelector.hideOnLockIn`
 - [v0.5.1] **The Grim Reaper (in progress)**: a fifth boss built on the *Bringer of Death* sprite sheet, with attacks designed by Fred Xu — Toss (stuns) above 60% HP, Strike (Vulnerable) above 30% HP, Balls from phase 2, and Spam, a slow wall of long-lived burning projectiles. It only spawns from the `test` wave for now. Also: difficulty assets moved to `Assets/data/Difficulty/`, the Cultist's Ball gained range and unlocks a phase earlier, and Sacred Surge and Hypernova were toned down
 
 ### [v0.5.0] - Feel and Foundations
