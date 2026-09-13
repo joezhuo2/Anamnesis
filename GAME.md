@@ -467,7 +467,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 ## Sacred Surge
 - Asset: `Sacred Surge AD`
 - Type: Skill
-- Cooldown: 14s (stamped on press)
+- Cooldown: 16s (stamped on press)
 - Pattern: Single (1 count)
 - Spawn: 4 dist
 - Animation: 1s
@@ -481,9 +481,9 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 1s, refreshed by every charge tick
   - Pierce: 3000
   - Size: 2
-  - Damage: 320% Phys, 110% Spell
+  - Damage: 290% Phys, 140% Spell
   - Scaling: EffArmor
-  - Time Before Same Enemy: 0.9s
+  - Time Before Same Enemy: 0.8s
   - Use True Angle
   - Knockback: 4 force for 0.15s
 
@@ -699,22 +699,22 @@ skill tree nodes.
 ## Hypernova (Capstone)
 - Asset: `Hypernova AD`
 - Type: Basic
-- Cooldown: 3s
+- Cooldown: 2.2s
 - Pattern: Single (1 count)
 - Spawn: 1 dist (fixed)
 - Animation: 0.5s
 - Costs: none
-- Gains on hit: Stamina +3, Health +4%, Mana +3
+- Gains on hit: Stamina +2, Health +3 +1%, Mana +2
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.75s
   - Pierce: 14
   - Size: 5
-  - Damage: 225% Phys, 30% True
+  - Damage: 190% Phys, 55% Spell
   - Scaling: EffArmor
   - Effects: 65% on hit (Weaken, 5s, max 4 stacks, -10% attack per stack) + 100% on hit
-    (Possessed, 0.6s, pulls the target toward the projectile at speed 15) + 50% self on cast
-    (Celestial Protection, 8s, max 4 stacks) + 30% on hit (Stun, 2s)
+    (Possessed, 0.6s, pulls the target toward the projectile at speed 15) + 30% self on cast
+    (Celestial Protection, 8s, max 4 stacks) + 20% on hit (Stun, 2s)
   - Knockback: none
 - Unlocked by: `Node_hypernova` ("Hypernova" capstone, 3 skill points, prerequisite
   `Node_apdp3`, requires the base Supernova attack)
@@ -1111,6 +1111,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Blaze Soul` | AttackReplacement | Blaze Soul | 6s | - | 1 | Replaces the attack with `Blaze A1 AD` (Cosmic Blaze) |
 | `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 8% EffMaxHp per tick |
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
+| `Burn 8 1 6 15` | DoT | Burn | 8s | 1s | 5 | 15% EffAtk per tick |
 | `Celestial Protection` | StatBuffs | Celestial Protection | 8s | - | 4 | +4% damageRes, +8 armor, +5% armorPct per stack (authored with `isBuff` off) |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
@@ -1132,6 +1133,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Slow 8 4 10` | StatReduction | Slow | 8s | - | 4 | -10% moveSpeed per stack, capped at -90% |
 | `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +3 hpRegen, +8% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
+| `Stun 1` | Stun | Stun | 1s | - | 1 | Cannot move or attack |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
 | `Stun 3` | Stun | Stun | 3s | - | 1 | Cannot move or attack |
 | `Stun 6` | Stun | Stun | 6s | - | 1 | Cannot move or attack |
@@ -1146,7 +1148,8 @@ Used by enemies rather than the player: `Crumbling 6 10 4` (Crab, and the Golem'
 `Poison 2 0.5 1 20 Atk` (Slime), `Slow 8 2 30` (Lich), `Stun 6` (Cultist),
 `Vulnerable 6 6 5` (Bat Mark), `Stun 2` (also used by BallSpam), `Slow 4 15 5` and
 `Freeze 2` (Slime (Frost)'s Blizzard), `Overheat` (Slime (Magma)'s Eruption),
-`Slow 8 4 10` (the Golem's Orbit).
+`Slow 8 4 10` (the Golem's Orbit), `Stun 1` (the Reaper's Toss), `Vulnerable 8 2 20`
+(the Reaper's Strike), `Burn 8 1 6 15` (the Reaper's Spam).
 
 `Stun 3` and `AttackInc 14 2 40` are authored for the Golem's Charge and are both
 `selfApply`, so the Golem inflicts them on itself: the stun is guaranteed, the attack buff

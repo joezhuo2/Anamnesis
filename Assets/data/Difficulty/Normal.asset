@@ -38,5 +38,5 @@ MonoBehaviour:
   rerollGoldCostAdd: 0
   startingRerollsAdd: 0
   startingSkillPointsAdd: 0
-  preRunPickCount: 0
+  preRunPickCount: 2
   preRunTreasureChance: 25

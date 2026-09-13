@@ -12685,7 +12685,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Shattered Singularity
     desc: Burst AOE Spl
-    minWave: 25
+    minWave: 15
   - newAttack: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
     icon: {fileID: 0}
     attackName: Blood Pact
@@ -12695,7 +12695,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Solar Collapse
     desc: AOE True DoT Slow
-    minWave: 25
+    minWave: 15
   - newAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
     icon: {fileID: 0}
     attackName: Supernova
@@ -12705,7 +12705,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Starfury
     desc: AOE True Speed
-    minWave: 25
+    minWave: 15
   - newAttack: {fileID: 11400000, guid: bd91f00154d86a04397a66652a8a79fa, type: 2}
     icon: {fileID: 0}
     attackName: Nebula
@@ -12715,7 +12715,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Revelation
     desc: AOE DoT Spl Atk Detonate
-    minWave: 35
+    minWave: 25
   - newAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
     icon: {fileID: 0}
     attackName: Meteor Shower
@@ -12730,7 +12730,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Nirvana
     desc: Orbit Spl
-    minWave: 35
+    minWave: 25
   - newAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
     icon: {fileID: 0}
     attackName: Warp
@@ -12745,7 +12745,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Exodus
     desc: Ult Atk Int Def AOE Add
-    minWave: 25
+    minWave: 15
   - newAttack: {fileID: 11400000, guid: 8afff44b5a5dbe947a9f4bdcc9dfce62, type: 2}
     icon: {fileID: 0}
     attackName: Ignition Flash
@@ -12760,7 +12760,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Luminaria
     desc: Ult Buff Hpr
-    minWave: 35
+    minWave: 25
   - newAttack: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
     icon: {fileID: 0}
     attackName: Nocturnis
@@ -18032,8 +18032,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1024749586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -24353,7 +24353,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Shattered Singularity
     desc: Burst AOE Spl
-    minWave: 25
+    minWave: 15
   - newAttack: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
     icon: {fileID: 0}
     attackName: Blood Pact
@@ -24363,7 +24363,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Solar Collapse
     desc: AOE True DoT Slow
-    minWave: 25
+    minWave: 15
   - newAttack: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
     icon: {fileID: 0}
     attackName: Supernova
@@ -24373,7 +24373,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Starfury
     desc: AOE True Speed
-    minWave: 25
+    minWave: 15
   - newAttack: {fileID: 11400000, guid: bd91f00154d86a04397a66652a8a79fa, type: 2}
     icon: {fileID: 0}
     attackName: Nebula
@@ -24383,7 +24383,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Revelation
     desc: AOE DoT Spl Atk Detonate
-    minWave: 35
+    minWave: 25
   - newAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
     icon: {fileID: 0}
     attackName: Meteor Shower
@@ -24398,7 +24398,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Nirvana
     desc: Orbit Spl
-    minWave: 35
+    minWave: 25
   - newAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
     icon: {fileID: 0}
     attackName: Warp
@@ -24413,7 +24413,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Exodus
     desc: Ult Atk Int Def AOE Add
-    minWave: 25
+    minWave: 15
   - newAttack: {fileID: 11400000, guid: 8afff44b5a5dbe947a9f4bdcc9dfce62, type: 2}
     icon: {fileID: 0}
     attackName: Ignition Flash
@@ -24428,7 +24428,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Luminaria
     desc: Ult Buff Hpr
-    minWave: 35
+    minWave: 25
   - newAttack: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
     icon: {fileID: 0}
     attackName: Nocturnis
@@ -24941,11 +24941,14 @@ MonoBehaviour:
     minWave: 5
   - prefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
     minWave: 15
+  - prefab: {fileID: 7457594691964507130, guid: ed6d4b1b71927f8408ba7d44890b6322, type: 3}
+    minWave: 20
   bossPrefabs:
   - {fileID: 7457594691964507130, guid: 24bacf361cba81f488717cc41f41440e, type: 3}
   - {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}
   - {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
   - {fileID: 9117472875837362680, guid: 05af5c27662d78449819af531e4aff51, type: 3}
+  - {fileID: 6689199875529418274, guid: 0998a9989d25854438b15fceae76690a, type: 3}
 --- !u!1 &1174038199 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 990cbe8a06d75e446bcb4c445486690d, type: 3}

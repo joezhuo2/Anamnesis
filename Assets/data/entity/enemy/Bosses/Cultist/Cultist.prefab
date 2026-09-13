@@ -315,6 +315,7 @@ MonoBehaviour:
   baseStats: {fileID: 11400000, guid: 1a3666cf6dd6dd34295273edebf5785d, type: 2}
   currentBuffs: []
   teamID: 0
+  displayName: Cultist
 --- !u!114 &4858436869559832951
 MonoBehaviour:
   m_ObjectHideFlags: 0

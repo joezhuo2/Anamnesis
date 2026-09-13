@@ -106,7 +106,7 @@ MonoBehaviour:
   canDeaggro: 1
   stoppingDistance: 4
   flipRotation: 0
-  es: {fileID: 0}
+  target: {fileID: 0}
 --- !u!114 &8195867897408456428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +125,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c507983e3fec1e5458b29c5dff279df1, type: 2}
   - {fileID: 11400000, guid: 47a3fbab105cdc94880bd388d1ccc6d1, type: 2}
   globalCooldown: 2
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &467692590264923639
 SpriteRenderer:
   serializedVersion: 2
@@ -210,6 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d3bfa51801c446ad1dfffe864340e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityHealth
+  deathAnimTime: 1
   healthBarPrefab: {fileID: 0}
   healthBarOffset: {x: 0, y: 0, z: 0}
   healthBarTextPrefab: {fileID: 0}
@@ -275,5 +279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStatManager
   baseStats: {fileID: 11400000, guid: 4609b008718f9ec419d3201206862ec8, type: 2}
-  s: {fileID: 0}
   currentBuffs: []
+  teamID: 0
+  displayName: Cultist Clone

@@ -15,7 +15,7 @@ MonoBehaviour:
   spawnLocation: {x: 0, y: 0}
   nextSequence: {fileID: 0}
   waves:
-  - enemyPrefab: {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+  - enemyPrefab: {fileID: 6689199875529418274, guid: 0998a9989d25854438b15fceae76690a, type: 3}
     maxTotalEnemies: 1
     maxCurrentEnemies: 1
     enemyLevel: 1

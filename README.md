@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.5.0__4-6366F1)
+![Version](https://img.shields.io/badge/version-0.5.1-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.5.0_4** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.5.1** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -84,7 +84,7 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, plus capstone-only Solar Wind and Oblivion |
 | **Capstones** | Warp and Hypernova upgrade their required attack; Decoy Upgraded, Solar Wind and Oblivion upgrade their required Awakening |
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma) |
-| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset) |
+| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (in progress, not yet in wave sets) |
 | **Boss Rush** | `BossRush` (Lv 70 Lich → Jellyfish → Cultist → Golem) chaining into `BossRush Part 2` (same four at Lv 105) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel* — separate Regular and Unlimited lists |
 | **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |

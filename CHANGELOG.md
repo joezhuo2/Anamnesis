@@ -7,6 +7,32 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.1] - 2026-09-13
+
+### Added
+- **The Grim Reaper** - a fifth boss under `Assets/data/entity/enemy/Bosses/reaper/`, built on the Clembod *Bringer of Death* sprite sheet with idle, move, attack, attack2, hurt and death animations. `Reaper Base` stats: 11 attack, 25% crit chance, 80% crit damage, 30 defense shred, 10 resistance penetration, 0.65 move speed. `EnemyPhase` thresholds at 60% and 30% HP, with a +40 phase buff from phase 2. Four attacks, 1s global cooldown:
+  - **Toss** - 3 physical projectiles (35% Phys) in a 30° spread, 5 range, 5s cooldown; 80% chance to apply `Stun 1`. Only used above 60% HP
+  - **Strike** - a single melee hit (160% Spell, size 3.5), 6 range, 7s cooldown; always applies `Vulnerable 8 2 20`. Only used above 30% HP
+  - **Balls** - 12 spell projectiles (35% Spell) in a 45° spread, 8 range, 7s cooldown. Phase 2 and later
+  - **Spam** - 20 slow, long-lived piercing projectiles (45% Spell, 14s lifetime), 10 range, 14s cooldown; always applies `Burn 8 1 6 15`
+- The Reaper is not yet part of any Regular, Unlimited or Boss Rush wave set; only the `test` wave spawns it
+- **`Burn 8 1 6 15`** - an 8s Burn (1s tick, 5 stacks, 15% EffAtk per tick), authored for the Reaper's Spam
+- **`Stun 1`** - a 1s Stun, authored for the Reaper's Toss
+- `CREDITS.md`: Clembod (*Bringer Of Death*) and Fred Xu (Reaper attack design)
+
+### Changed
+- **Difficulty assets moved** from `Assets/data/Wave/difficulties/` to `Assets/data/Difficulty/`. GUIDs were kept, so every `DifficultyData` reference still resolves
+- **Cultist Ball** - range 6 → 8, and it is now available from phase 1 instead of phase 2
+- `Cultist` and `Cultist Clone` prefabs re-serialized: `displayName` is now authored on both (the boss bar shows "Cultist" / "Cultist Clone"), and the clone picked up the current `EnemyAttackHandler` cast bar fields and `EntityHealth.deathAnimTime`
+- `test` wave now spawns the Reaper
+
+### Rebalance
+- **Sacred Surge** - cooldown 14s → 16s, physical multiplier 345% → 290%, time before same enemy 0.9s → 0.8s
+- **Hypernova** - physical multiplier 215% → 190%, spell multiplier 60% → 55%, health gain on hit 5% → 3 +1%, Celestial Protection self-apply chance 40% → 30%, Stun chance 30% → 20%
+
+### Fixed
+- `Burn 6 1 5 15` description said 15% of attack per stack; it now says 35%, matching its actual tick damage
+
 ## [v0.5.0_5] - 2026-09-13
 
 ### Updated

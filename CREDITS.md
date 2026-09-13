@@ -8,3 +8,6 @@
 - Frostwindz - [Pixel Art VFX: Frost Knight Free Version](https://frostwindz.itch.io/pixel-art-vfx-frost-knight-free-version) and additional effects/vfx assets
 - BDragon1727 - [Basic Pixel Health Bar and Scroll Bar](https://bdragon1727.itch.io/basic-pixel-health-bar-and-scroll-bar), [750 Effect and FX Pixel All](https://bdragon1727.itch.io/750-effect-and-fx-pixel-all), and additional effects/vfx and UI assets
 - tiopalada - [Tiny RPG - Mana Soul GUI](https://tiopalada.itch.io/tiny-rpg-mana-soul-gui)
+- Clembod - [Bringer Of Death (Free)](https://clembod.itch.io/bringer-of-death-free)
+
+- Fred Xu - designing boss (Reaper) attacks
