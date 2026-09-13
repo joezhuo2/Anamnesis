@@ -1,23 +1,5 @@
 # Planned Features 
 
-## Open Items
-- Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
-  and `Destroy`ed on death, along with the per-spawn `EntityStats` clone (the `AttackData` clone chain is
-  gone as of v0.4.10 — attacks are shared assets now). Three things block a straight swap to `PrefabPool`: cleanup is `Destroy`-bound across eight
-  components (`EntityStatManager`, `EntityHealth`, `EnemyAttackHandler`, `EnemyMovement`,
-  `StatusEffectManager`, `EnemyPhase`, `EntitySummonHandler`, `EntityProjectileHandler`) with no `OnDisable`
-  counterparts; `EnemyStatManager.ScaleBaseStats` is non-idempotent, so level scaling compounds on a reused
-  stat clone; and `WaveManager.CleanEnemyList` counts kills purely by Unity fake-null
-  (`RemoveAll(e => e == null)`), which a deactivated enemy never satisfies, so the wave-completion gate would
-  never close. Also latched with no reset: `EntityHealth.barRetired`, the animator `isDead` bool,
-  `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
-- `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
-- `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
-- Enemy charge attacks no longer sustain their projectiles. `EnemyAttackHandler.ChargeLoop` ticks the charged
-  projectile list, but nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`),
-  so no enemy projectile registers and the tick runs over an empty list. Enemy sustained projectiles expire at
-  their authored `lifetime`. Only `PlayerAttackHandler` opens and closes the window
-
 ## Pre [v1.0.0] Checklist — First Light
 *Everything that has to be true before a stranger can play it.*
 
@@ -45,10 +27,11 @@
 
 **Systems**
 - [ ] attack combo chains
+- [ ] frame freeze on high impact attacks (eg. ult)
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
-- [ ] more enemy move telegraphs
+- [ ] more enemy projectile telegraphs
 - [ ] contact damage
 - [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back)
 - [ ] environmental collectible items (mana, xp, hp, gold)
@@ -176,10 +159,30 @@
 - [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
 
 ### Planned Abilities 
+- **Wipeout** - when an enemy is inflicted by a debuff, that debuff has a `{z}%` chance to be applied to all nearby enemies within `{x}` tiles of the source every `{y}` seconds or every `{tickInterval}` seconds
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
-- **Midas Touch** - *something* consumes gold to increase all damage dealt by `{y}%`
+- **Midas Touch** - *something* consumes `{x}` gold on every attack to increase its damage dealt by `{y}%`
 - **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
+
+## Open Items
+- Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
+  and `Destroy`ed on death, along with the per-spawn `EntityStats` clone (the `AttackData` clone chain is
+  gone as of v0.4.10 — attacks are shared assets now). Three things block a straight swap to `PrefabPool`: cleanup is `Destroy`-bound across eight
+  components (`EntityStatManager`, `EntityHealth`, `EnemyAttackHandler`, `EnemyMovement`,
+  `StatusEffectManager`, `EnemyPhase`, `EntitySummonHandler`, `EntityProjectileHandler`) with no `OnDisable`
+  counterparts; `EnemyStatManager.ScaleBaseStats` is non-idempotent, so level scaling compounds on a reused
+  stat clone; and `WaveManager.CleanEnemyList` counts kills purely by Unity fake-null
+  (`RemoveAll(e => e == null)`), which a deactivated enemy never satisfies, so the wave-completion gate would
+  never close. Also latched with no reset: `EntityHealth.barRetired`, the animator `isDead` bool,
+  `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
+- `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
+- `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
+- Enemy charge attacks no longer sustain their projectiles. `EnemyAttackHandler.ChargeLoop` ticks the charged
+  projectile list, but nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`),
+  so no enemy projectile registers and the tick runs over an empty list. Enemy sustained projectiles expire at
+  their authored `lifetime`. Only `PlayerAttackHandler` opens and closes the window
+
 
 ### Available Colors 
 - **red**
@@ -191,7 +194,7 @@
 ### Planned Capstone Nodes
 - Hex Cast (+buff -cost)
 - Starlit Reflexes (+buff -mana gain)
-- Supersonic (+count +dmg +size)
+- Supersonic (+count +dmg +size -cd)
 - Shattered Singularity (+spd -cd +size)
 
 - Astral Nova (-spawnDelay -cd +range)
@@ -223,6 +226,7 @@
 - exp bonus
 - stealing
 
+### next non-basic skill tree nodes
 - crit chance
 - crit damage
 - atk spd pct

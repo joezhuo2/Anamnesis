@@ -2,75 +2,63 @@
 
 # Anamnesis
 
-**A 2D wave-based action roguelite built in Unity 6**
+> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 210-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
 
-*Anamnesis* — the recollection of memories. Survive endless waves of enemies, collect rewards, and rebuild your power through a branching skill tree. Choose between **Regular** waves or an **Unlimited** endless mode at the start of each run.
-
-</div>
+![Unity](https://img.shields.io/badge/Unity-6000.4.6f1-000000?logo=unity&logoColor=white)
+![C#](https://img.shields.io/badge/C%23-.NET-512BD4?logo=dotnet&logoColor=white)
+![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
+![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
+![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
+![Version](https://img.shields.io/badge/version-0.5.0__4-6366F1)
+![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
 | :---: | :---: | :---: | :---: | :---: | :---: |
 
+</div>
+
+Current release: **v0.5.0_4** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+
 ---
 
-## About
+## 🔁 Core Loop
 
-Anamnesis is a top-down, wave-based action game currently in active development. Each wave throws escalating hordes of enemies at you while you weave together basic attacks, skills, and ultimates. Between waves you pick from randomized rewards — stat buffs, rare attacks, and powerful player upgrades — and spend skill points on a persistent skill tree.
+1. **Pick a difficulty and a gamemode** — **Easy**, **Normal** or **Hard**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
+2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way.
+3. **Choose a reward** — buffs, rare attacks or treasure-pool Awakenings. Reroll, pay 200g when out of rerolls, or corrupt the rewards for a bigger gamble.
+4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*) that trade risk for rerolls and skill points.
+5. **Spend skill points and gold** — unlock skill tree nodes, refund them for gold, level up from XP, and repeat.
 
-At the start of each run you pick a **gamemode**: **Regular** waves follow the standard escalating sequence, while **Unlimited** waves scale infinitely with faster spawns, periodic boss waves, and endless rewards.
+---
 
-The game is built entirely with **ScriptableObject-driven data** (attacks, status effects, upgrades, skill tree nodes), so most content is data-authored and tuned in the Unity inspector. Under the hood, the combat, stat, resource, and UI systems are **decoupled onto small interfaces** (`IDamageable`, `IResourcePool`, `IStatusEffectReceiver`, `ITooltipDisplay`, and more) so systems compose without hard dependencies on concrete components.
+## ✨ Features
 
-## Core Loop
+| Feature | Description |
+|---------|-------------|
+| **🎚️ Difficulty** | Easy / Normal / Hard as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks). The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
+| **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
+| **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
+| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy |
+| **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, and once-per-wave corruption with a 4% chance of a *Corrupted* special attack |
+| **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, resource costs and chained on-hit attacks |
+| **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
+| **✨ Awakenings** | `PlayerUpgrade` assets driven by 22 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
+| **🌳 Skill Tree** | Pan/zoom tree of 210 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, and capstones that upgrade an owned attack or Awakening in place |
+| **🧪 Status Effects** | Stackable DoTs, stuns, stat buffs and reductions, attack replacement and cleansing, with cooldown UI |
+| **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a four-boss **Boss Rush** gauntlet |
+| **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
+| **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
+| **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, and a *You Died* screen — all persisted to `settings.json` |
+| **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, red borders and flashes on blocked attacks, and unscaled hover scaling that animates while paused |
 
-1. **Pick a difficulty and a gamemode** — cycle between **Easy**, **Normal** and **Hard** on the home screen (the tooltip lists exactly what each one shifts), then choose **Regular** waves (standard escalating sequence) or **Unlimited** waves (infinite scaling, faster spawns, periodic boss waves, endless rewards). Easy opens a free pre-run pick from the rare and treasure pools before wave 1. **Ironman Mode** can be toggled on alongside the difficulty for a run with no rerolls, no corruption and no skill node refunds.
-2. **Survive the waves** — enemies spawn in escalating sequences with occasional boss encounters. Enemies can even **split** into more enemies on death, and extra spawns occur every 10 waves. Enemies scale exponentially.
-3. **Choose a reward** — pick from buffs, special attacks, or treasure-pool Awakenings, using limited rerolls effectively. Some rare attacks and Awakenings are gated behind a minimum wave, so late-game options only start appearing once the run is deep enough. Some are even brave enough to "corrupt" the rewards, risking it all for a greater reward. Reroll with **gold** (200g) when out of rerolls.
-4. **Face anomalies** — optional wave modifiers offered before the wave starts (*Time Trial*, *No Damage*, *Augment*, *Swarm*, *Duel*) that add risk, or reshape the wave, for extra rerolls and skill points. An anomaly can be marked to never appear before a boss wave.
-5. **Spend skill points** — unlock nodes on the skill tree to permanently empower the run. Gain skill points from levelling up, occasionally on wave clears and every 5 waves. Refund nodes using gold (default 50g) — including the starting node, unless the run is Ironman. A **Refund All** button undoes the whole tree at once for the summed gold cost.
-6. **Level Up & Earn Gold** — collect experience from enemies to level up, gaining stat boosts and skill points along the way. Enemies drop XP (common enemies drop less, bosses drop more with 15% variance). **Enemies also drop gold (15% variance), increased by the Stealing stat.**
-7. **Repeat** — waves get harder, and you get stronger.
+Full detail for every system lives in [GAME.md](GAME.md).
 
-## Features
+---
 
-- **Difficulty selector** — pick **Easy**, **Normal** or **Hard** on the home screen with the left/right arrows before starting a run; the choice persists to `settings.json` and locks in when a gamemode button is pressed. Each difficulty is a `DifficultyData` ScriptableObject of additive offsets — enemy level (flat and per wave), total and concurrent enemy counts, reward choices and quality, milestone choices, bonus reroll/skill-point chance, anomaly chance/counts/rewards, corruption odds and boost, reroll gold cost, starting rerolls and skill points, and pre-run free picks. The tooltip is generated from the asset, listing only the non-zero offsets, and Normal is an all-zero asset so it is exactly the untuned baseline. Easy hands out 3 pre-run free picks, +5 rerolls and +3 skill points; Hard adds +3 enemy levels (+0.25 per wave), 5 more total and 2 more concurrent enemies, a +50g reroll cost and worse corrupt odds.
-- **Ironman Mode** — a home-screen toggle, sitting alongside the difficulty selector, that removes every take-back from the run: rerolls are forced to 0 (starting rerolls, anomaly rerolls and occasional wave rerolls all included) and the reroll button and its count are hidden, the corrupt button never appears, and skill node refunds are refused with *Disabled in Ironman Mode*. The tooltip reads the live state (`Ironman Mode [ON]` / `[OFF]`), the choice persists to `settings.json` as `ironmanMode`, and it locks in and hides the moment a gamemode button is pressed.
-- **Gamemode selector** — choose between **Regular** and **Unlimited** waves at the start of each run via dedicated buttons (with tooltips). Player actions are enabled in the lobby.
-- **Wave system** — scriptable wave sequences, escalating spawns, extra enemy spawns every 10 waves, single-enemy boss waves, boss bars, and reward/anomaly button panels that update dynamically. A live **wave progress indicator** (`Wave 7/68 (12/30)`) tracks kills against the wave total, and clearing a wave announces the rerolls and skill points it granted in a single subtitle. Boss bars title themselves from the enemy's authored `displayName`, falling back to the prefab name.
-- **Unlimited waves** — an endless mode that scales infinitely: enemy level and max total enemies rise each wave (by 1-2, plus another 1-3 on every tenth wave), spawns speed up, boss waves appear periodically, and rewards never stop. Reuses the shared `WaveManager` settings (reroll cost, rewards, corruption, milestones, anomalies) with no reconfiguration; only the corruption odds are tuned separately.
-- **Enemy splitting** — enemies can split into more enemies on death with configurable split count, health scaling, and behavior settings.
-- **Enemy phases** — bosses (and any configured enemy) transition through phases as their HP drops below thresholds (e.g. 70% / 40%), granting phase stat buffs and unlocking stronger phase-gated attacks. The Lich speeds up at 40% HP (+40% move speed, +20% attack speed).
-- **Global enemy spawner** — centralized spawning system for consistent enemy management.
-- **Anomaly system** — randomized wave modifiers with configurable frequency, counts, and reward bonuses, authored as `AnomalyData` assets with a wave range and an optional `disallowOnBossWave` flag. Five types: *Time Trial* and *No Damage* are challenges that can be failed; *Augment*, *Swarm* and *Duel* reshape the wave and always pay out. Enemy-side effects go through one `ApplyEnemyBuffs` hook, so every spawned enemy picks up the active anomaly's buffs no matter which type it is.
-- **Swarm and Duel** — the two anomalies that change the *shape* of a wave rather than its rules. **Swarm** weakens every enemy by the rolled percentage (health and damage) and multiplies both the total and concurrent enemy counts by `1 + roll / 50`, so a 30% penalty spawns 60% more enemies. **Duel** goes the other way: exactly one enemy for the whole wave, buffed by the rolled percentage in health and attack, with its own boss bar and status effect display even on a normal wave. Neither can be offered when the next wave is a boss wave.
-- **Data-driven attacks** — `AttackData` ScriptableObjects with projectile patterns (circle, spread, barrage, spread barrage, and the screen-wide converging lines: top-down, left-right, diagonal, diagonal reverse, full X), resource costs (stamina / mana / health), on-hit resource gains, summoning, boomerang travel patterns, **wave**, **spiral** and **follow-cursor** flight paths, orbit interactions (fire, absorb, redirect, explode), **follow-source** option for projectiles, `cleanseDebuffs` to strip N debuffs off the caster the moment the attack is performed, and on-hit **additional attacks** that chain into multi-stage combos. Every projectile in such a chain carries a `chainRoot` back to the attack that started it, so upgrades can react to the chain ending.
-- **Cast time** — attacks can carry an interruptible windup (`castTime`) before they resolve, with `canMoveWhileCasting` deciding whether the caster is rooted for it. A pooled cast bar and remaining-time countdown follow the caster while it channels. The cooldown is spent when the cast starts, resource costs only when it lands, so an interrupt costs nothing but the cooldown. Death, stuns and enemy projectile hits all interrupt; the `interruptResist` stat tiers that off (1 ignores projectile hits, 2 also ignores stuns), and `castTimeRedPct` shortens casts.
-- **Charged attacks** — attacks flagged `canCharge` can be held down to sustain them. Holding past `chargeThreshold` (0.225s) skips the tap entirely and commits to the charge, spawning the separate `chargeAttack` and paying its cost again every `chargeTickInterval`; releasing sooner resolves as a plain tap at the base attack's cost. Each drain tick refreshes the sustained projectiles' lifetime and re-snapshots their damage, so buffs earned mid-hold carry forward. `minChargeTime` queues an early release, `maxChargeTime` forces one, and `cooldownOnAttackStart` decides whether the cooldown ticks down during the hold. Charges reuse the cast bar and every cast interrupt rule. Enemies skip the threshold, commit instantly, and roll to keep holding on each tick.
-- **Status effects** — stackable DoTs, stuns, stat buffs/reductions, attack replacement, and more, with cooldown UI.
-- **Awakenings** — trigger-condition-based `PlayerUpgrade` ScriptableObjects with chance/cooldown/delay, driven by 22 trigger conditions (on attack, on crit, on hit, on dash, on kill, on level up, on projectile spawn, …). Awakenings can also be **passive**, wiring themselves up in `OnUnlock` and tearing themselves down in `OnRemove` instead of listening for a trigger. See [Awakening trigger conditions](#awakening-trigger-conditions).
-- **Skill tree open button** — an on-screen button (`SkillTreeOpenButton`) on the skill tree canvas that opens/closes the skill tree on click and shows a hover tooltip listing the toggle key, the player's current gold and skill points, and the tree title. Resolves its references on demand, so it works regardless of hierarchy order
-- **Skill tree** — interactive pan/zoom tree with a **bidirectional connections system** (OR logic), incompatible nodes, tooltips, connector lines, and a skill-point currency. Nodes connect via the `prerequisites` field; unlocking works both ways (A→B means unlock A if B unlocked OR unlock B if A unlocked) and only **one** connected node needs to be unlocked. Left-click unlocked nodes to refund using **gold** (default 50g, configurable per node) — the starting node included, which clears the starting choice so another can be picked. Refunds are disabled entirely in Ironman Mode. **Capstone nodes** gate behind owning a specific attack or Awakening and upgrade it in place — a required Awakening is removed as the upgraded one is granted, and comes back if the node is refunded. 210 nodes across the health, regen, intelligence, area-of-effect, damage, movement, attack speed, cast speed, healing, knockback resistance, dodge, dodge/spell resistance, stamina, projectile speed, status effect duration/tick rate and capstone branches, with a 24-node **Damage I** ring wrapping the outside of the tree that the newer branches tie into. A **Refund All** button undoes every unlocked node in one press for the summed `undoCost`, returns all spent skill points, clears the starting choice, and hides itself in Ironman Mode; its tooltip shows the node count, the total gold cost, the points returned and the reason when it is unavailable. `Escape` closes an open skill tree instead of opening the settings menu, and the press is consumed so the pause panel does not open behind it.
-- **Corruption system** — once per wave (never in Ironman Mode), corrupt rewards for a chance at massive stat boosts or severe penalties. In Regular waves a corrupt rolls at 40% with a 40% chance of landing positive and a boost capped at +80%; Unlimited waves push that to 45% / 30% / +135%, trading a worse coin flip for a bigger payout. Each corrupted button also has a 4% chance to be replaced outright by a **corruption special** — a rare attack pulled from a dedicated pool at a far lower unlock wave than the rare pool asks for, marked violet and labelled *Corrupted*.
-- **Wave-gated content** — enemies, rare attacks, and Awakenings each carry a `minWave` and only enter their pools once the run reaches it, so early waves draw from a smaller, gentler set.
-- **Milestone rewards** — every 25 waves (25, 50, 75, 100...), choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks (e.g., *Glass Cannon*: +40% Damage / -40% Max Health). Each stat has ±15% variance for replayability.
-- **Title system** — game title/subtitle with fade in/out, plus wave-complete and boss-killed title displays. The between-wave subtitle (and the 1.5s pause it holds) can be switched off per wave manager via the *wave completion message* setting.
-- **Settings menu** — press `Escape` to open a pause-and-configure panel. It runs three pages: the outer pause page, a controls page holding toggles for enemy health bars, XP drops, gold drops, damage numbers and the wave completion message plus a rebindable list of every keyboard binding, and a restart confirmation page. `Escape` backs out one page at a time. Everything applies live and persists to `settings.json` in the platform's persistent data path. Rebinding runs the Input System's interactive rebind, restricted to keyboard controls, cancelable with `Escape`, and rejects a key that is already bound to something else.
-- **Restart run** — a Restart button on the pause page opens a confirmation panel (*Restart run? All progress will be lost.*); confirming reloads the scene back to the home screen, cancelling drops back to the pause page. The reload resets the pause depth and time scale on both sides of the load, and clears the projectile system's run-scoped statics, so the next run starts clean.
-- **Death screen** — dying ends the run on a *You Died* panel with a restart button. It waits a second (in unscaled time) after the player's `OnDeath` fires, closes any settings page that is open behind it, pauses through `MenuPause`, and selects its restart button so the panel is keyboard- and controller-navigable. `Escape` cannot open the pause menu on top of it, and restarting routes through the same `GameRestart` reload as the pause-page Restart button. Title and message are authored on the component and can be rewritten at runtime with `SetText`.
-- **Abbreviated bar readouts** — every health, mana, stamina and XP label runs through a shared `NumberFormat` helper that renders `1.2k` past a thousand and `3.4M` past a million, so late-run six-digit numbers still fit their bars. Health labels also spell out the overhealth pool as `1.4k(+300)/1.2k` rather than folding it silently into the current value.
-- **Blocked-attack feedback** — each attack's cooldown indicator carries a border that turns red the moment the attack cannot be cast — dead, `CanAttack` off, still on cooldown, or unaffordable — and returns to its normal color when it can. Pressing a blocked attack flashes that border on unscaled time, so the refusal reads even while paused. Affordability is checked through `PlayerAttackHandler.CanAfford`, which prices the attack the same way spending does (`GetCosts` plus `HandleHexCast`) without taking anything.
-- **Hover feedback** — reward, anomaly, cooldown-indicator and skill-node buttons scale up under the pointer via `HoverScale`, easing on unscaled time so it keeps animating while the game is paused.
-- **Resources** — health, stamina, and mana with dash, knockback, and cooldown systems.
-- **Overhealth** — a pool of health held *above* `EffMaxHp`. It is spent before `currentHp` when damage lands, is never clamped by max health, and is cleared on death. Absorbed damage still runs the hurt animation, i-frames, the damage number and the `OnTakeHit` triggers, so a fully-absorbed hit hands out no free invulnerability. Backed by `StatType.overhealth`, so buffs, status effects and gear can move the pool directly; `EntityHealth` owns the gain/decay rules.
-- **Knockback** — full knockback for players and enemies, with knockback resistance and increased knockback stats.
-- **Damage indicators** — floating damage numbers with small randomness. **XP gain indicators** and **XP wrapper option** for custom XP display. **Gold gain indicators** (+{gold}g in gold color).
-- **Levelling system** — enemies drop XP, players collect XP to level up and gain stat buffs (+5 HP, +2 ATK, +2 INT, +0.008 SPD) and a skill point per level. **Level-up indicator** on progression.
-- **Gold system** — enemies drop gold on death (15% variance, same as XP). **Stealing stat** increases gold drops by {stealing}%. Spend gold to reroll rewards (200g when out of rerolls) or refund skill nodes.
-
-## Controls
+## 🎮 Controls
 
 | Action | Binding |
-| --- | --- |
+|--------|---------|
 | Move | `WASD` / Arrow keys |
 | Basic attack | `Left Click` / `Space` |
 | Charge an attack | Hold its binding (chargeable attacks only) |
@@ -78,51 +66,37 @@ The game is built entirely with **ScriptableObject-driven data** (attacks, statu
 | Ultimate | `R` / `2` |
 | Dash | `Q` / `Right Click` |
 | Toggle skill tree | `K` |
-| Close skill tree | `Escape` |
-| Settings menu (pause) | `Escape` |
+| Close skill tree / Settings menu | `Escape` |
 | Skill tree pan | Drag (Alt+Left / Alt+Right / Middle) |
 | Skill tree zoom | Mouse wheel (zoom-to-cursor) |
 
-Every keyboard binding above except the skill tree pan/zoom can be rebound in the settings menu; `Escape` itself is fixed.
+Every keyboard binding except skill tree pan/zoom can be rebound in the settings menu; `Escape` itself is fixed.
 
-## Content
+---
 
-**Player attacks** — 
-- **Basic Attacks**: Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova
-- **Skill**: Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge
-- **Ultimate**: Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis
-- **Awakenings**: Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, and the capstone-only Solar Wind and Oblivion
-- **Skill tree capstones**: Warp and Hypernova upgrade the attack they require in place; Decoy Upgraded, Solar Wind and Oblivion do the same for Awakenings. A required Awakening is removed as the upgraded one is granted, and returns if the node is refunded
+## 📚 Content
 
-**Enemies** — 
-- **Regular Enemies**: Bat, Crab, Slime, Slime (Frost), and Slime (Magma)
-- **Bosses**: Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset)
-- **Boss Rush** — a post-story gauntlet that runs all four bosses back-to-back as a sequence: `BossRush` (Lv 70 Lich → Jellyfish → Cultist → Golem) chaining into `BossRush Part 2` (the same four at Lv 105), each wave a single-enemy boss with its boss bar
+| Category | Entries |
+|----------|---------|
+| **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova |
+| **Skills** | Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge |
+| **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis |
+| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, plus capstone-only Solar Wind and Oblivion |
+| **Capstones** | Warp and Hypernova upgrade their required attack; Decoy Upgraded, Solar Wind and Oblivion upgrade their required Awakening |
+| **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma) |
+| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset) |
+| **Boss Rush** | `BossRush` (Lv 70 Lich → Jellyfish → Cultist → Golem) chaining into `BossRush Part 2` (same four at Lv 105) |
+| **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel* — separate Regular and Unlimited lists |
+| **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
-Each enemies have their own stats, attack sets, movement patterns, behavior, and inflict unique status effects. Some even have unique behaviour such as summons, phase escalation, and more to come! In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, and Slime (Frost) from 20.
-
-**Status effects** — DoTs, Stun, Stat Buffs, Stat Reductions (Slow, Weaken, etc.), Attack Enhancements,and more.
-
-**Anomalies** — optional modifiers offered before a wave, each an `AnomalyData` asset with its own wave range. Regular and Unlimited waves draw from separate lists.
-- *Time Trial I-IV* — clear the wave within 30 / 45 / 60 / 75 seconds (Unlimited uses a single 90s variant)
-- *No Hit* — clear the wave without taking a hit
-- *Augment* — every enemy gains a rolled percentage of one random stat (attack, health, armor, damage or move speed): 10-30% early, 20-60% late, 25-400% in Unlimited
-- *Swarm* — every enemy is weakened by the roll in health and damage, but the wave spawns `1 + roll / 50` times as many: 20-40% early, 30-80% late, 20-60% in Unlimited
-- *Duel* — one enemy for the whole wave, buffed by the roll in health and attack: 30-80% early, 50-150% late, 50-600% in Unlimited
-
-*Time Trial* and *No Hit* can be failed and pay nothing if they are. *Augment*, *Swarm* and *Duel* have no failure condition, so they always pay the anomaly bonus. *Swarm* and *Duel* are never offered before a boss wave.
-
-**Player upgrade effects** — the `PlayerUpgrade` subclasses the Awakening assets above are authored against: Add Chain, Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge.
+In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm* and *Duel* always pay out, and *Swarm* / *Duel* never appear before a boss wave.
 
 ### Awakening trigger conditions
 
-Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a chance, cooldown and
-delay. `PlayerUpgradeManager` rolls the chance and checks the cooldown once per condition match, then
-calls one of the `TriggerUpgradeEffect` overloads — so an upgrade only responds to a condition if it
-overrides the overload that condition dispatches to.
+Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a chance, cooldown and delay. `PlayerUpgradeManager` rolls the chance and checks the cooldown once per condition match, then calls one of the `TriggerUpgradeEffect` overloads — so an upgrade only responds to a condition if it overrides the overload that condition dispatches to.
 
 | Condition | Fires when | Overload |
-| --- | --- | --- |
+|-----------|------------|----------|
 | `OnAttack` | Any attack is performed | `(player)` |
 | `OnBasicAttack` | A Basic attack is performed | `(player)` |
 | `OnSkillAttack` | A Skill attack is performed | `(player)` |
@@ -146,71 +120,86 @@ overrides the overload that condition dispatches to.
 | `OnLevelUp` | The player gains a level. A single XP pickup that crosses several thresholds fires once per level | `(player)` |
 | `OnDeath` | The player dies, before the death sequence tears the object down. An upgrade whose `delay` outlasts the death animation is cut off | `(player)` |
 
-Two conditions are reentrancy-guarded so an upgrade cannot feed itself in a loop: `OnSpawnProjectile`
-(an upgrade that spawns projectiles) and `OnManaRegen` (an upgrade that grants mana). The guard only
-covers the immediate call, so an upgrade with a non-zero `delay` that re-triggers its own condition
-still needs a cooldown to stay bounded.
+- `OnSpawnProjectile` and `OnManaRegen` are reentrancy-guarded, but only for the immediate call — an upgrade with a non-zero `delay` that re-triggers its own condition still needs a cooldown.
+- A non-zero `delay` on a positional condition drops the position and calls the plain `(player)` overload, so position-sensitive upgrades should leave `delay` at 0.
+- Passive Awakenings leave `conditions` empty and install their effect in `OnUnlock`, reversing it in `OnRemove` — Exsanguinate and Terminal Cascade both work this way.
 
-Note that a non-zero `delay` on a `(player, spawnCenter)` condition drops the position: the delayed
-path calls the plain `(player)` overload. Position-sensitive upgrades on `OnSpawnProjectile` and
-`OnProjectileHit` should leave `delay` at 0.
+---
 
-An Awakening does not have to use a trigger at all. `OnUnlock(player)` runs when the upgrade is
-granted and `OnRemove(player)` when it is taken away (a capstone node swapping it out, or a refund),
-so a purely passive upgrade installs its effect in the first and reverses it in the second, leaving
-`conditions` empty. Exsanguinate (health-regen conversion on `EntityHealth`) and Terminal Cascade
-(the projectile chain-retrigger chance) both work this way.
+## 🏗️ Tech Stack
 
-## Tech Stack
+| Category | Technologies |
+|----------|--------------|
+| **Engine** | Unity `6000.4.6f1` (Unity 6), C# |
+| **Rendering** | Universal Render Pipeline 2D `17.4` |
+| **Input** | Input System `1.19` (`PlayerControls.inputactions`) with interactive rebinding |
+| **Camera** | Cinemachine `3.1.7` |
+| **UI** | uGUI + TextMeshPro |
+| **Data** | ScriptableObjects (`AttackData`, `PlayerUpgrade`, `StatusEffect`, `DifficultyData`, `AnomalyData`, skill tree nodes) |
+| **Contracts** | [CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) — interfaces, asset bases and shared value types, imported as a git package |
+| **Architecture** | Per-system assembly definitions, prefab-keyed object pooling (`PrefabPool` + `IPoolable`) |
+| **Persistence** | `GameSettings` JSON (`settings.json` in the persistent data path) |
 
-- **Engine:** Unity `6000.4.6f1` (Unity 6)
-- **Rendering:** Universal Render Pipeline (2D)
-- **Input:** New Input System (`PlayerControls.inputactions`)
-- **UI:** uGUI + TextMeshPro
+---
 
-## Project Structure
+## 🚀 Quick Start
+
+### Prerequisites
+- **Unity 6000.4.6f1** (or newer) via Unity Hub
+- Git — Unity resolves `com.crystalflux.core` from its GitHub URL on first open
+
+### Installation
+
+```bash
+git clone https://github.com/joezhuo2/Anamnesis.git
+```
+
+1. In Unity Hub, **Add → Add project from disk** and select the cloned folder.
+2. Open the main scene: `Assets/New.unity`.
+3. Press **Play**, or **File → Build and Run** (`Ctrl + B`).
+
+`Core` is imported automatically from `Packages/manifest.json`:
+
+```json
+"com.crystalflux.core": "https://github.com/joezhuo2/CrystalFlux-Core.git#3284d28ba9782972e69eab548cfe807bc3e589b8"
+```
+
+> **Note:** the build settings must include `Assets/New.unity` — `Assets/data/Scenes/SampleScene.unity` is an empty placeholder scene.
+
+---
+
+## 📁 Project Structure
 
 ```
 Assets/
 ├── New.unity                  # Main game scene (WaveManager, SkillTree, Player UI)
-├── data/                      # ScriptableObject data (attacks, entities, waves, skill tree)
+├── data/                      # ScriptableObject data
 │   ├── _example/              # Template attack folder (AD/PD/controller/prefab) to copy when authoring
-│   ├── entity/                # Enemy/Player base stats, attacks, animation data, assets, and prefabs
+│   ├── Difficulty/            # Easy / Normal / Hard DifficultyData assets
+│   ├── entity/                # Enemy/Player base stats, attacks, animation data, prefabs
 │   │   └── enemy/             # Split into Bosses/ and Enemies/
-│   ├── images/                # Images assets
+│   ├── images/                # Image assets
 │   ├── PlayerData/            # Player attacks, upgrades, skill tree data, controls
 │   ├── prefabs/               # UI element prefabs
-│   ├── StatusEffect/          # Authored status effect assets (DoTs, stuns, buffs, debuffs)
-│   └── Wave/                  # Wave sequences (waves/), difficulty assets (difficulties/) and anomalies (Anomaly/Regular, Anomaly/Unlimited)
+│   ├── StatusEffect/          # Authored status effects (DoTs, stuns, buffs, debuffs)
+│   └── Wave/                  # Wave sequences (waves/) and anomalies (Anomaly/Regular, Anomaly/Unlimited)
 └── scripts/
     ├── Entity/                # [asmdef] Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
     ├── Items/                 # Items/Gear system (Assembly-CSharp)
-    ├── Misc/                  # Game Controller (implements IAnnouncer), settings menu UI, death screen, restart (Assembly-CSharp)
+    ├── Misc/                  # Game Controller (IAnnouncer), settings menu, death screen, restart (Assembly-CSharp)
     ├── Pooling/               # [asmdef] PrefabPool + IPoolable — shared prefab-keyed object pool
-    ├── Projectile/            # [asmdef] Projectiles/Attack data and the damage calculator
-    ├── Settings/              # [asmdef] GameSettings — persisted gameplay toggles and keybind overrides
-    ├── StatusEffect/          # [asmdef] Status effect system & implementations (DoTs, Stun, Pulled, buffs) — data lives in data/StatusEffect/
-    ├── SkillTree/             # [asmdef] Skill tree manager (implements ISkillPointHolder), UI, pan/zoom, bidirectional connections
+    ├── Projectile/            # [asmdef] Projectiles, attack data, damage calculator
+    ├── Settings/              # [asmdef] GameSettings — persisted toggles and keybind overrides
+    ├── StatusEffect/          # [asmdef] Status effect system and implementations
+    ├── SkillTree/             # [asmdef] Skill tree manager (ISkillPointHolder), UI, pan/zoom, connections
     ├── TextIndicator/         # [asmdef] Floating damage numbers, XP/Gold indicators
     └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies, difficulty and Ironman selectors
+
+Packages/
+└── com.crystalflux.core       # (git) Contracts: IDamageable, IResourcePool, IStatusEffectReceiver, AttackAsset, DamagePacket, StatType, …
 ```
-
-`Core` is no longer in this repo. It lives in
-[joezhuo2/CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) and Unity
-imports it automatically from the git URL in `Packages/manifest.json`:
-
-```json
-"com.crystalflux.core": "https://github.com/joezhuo2/CrystalFlux-Core.git"
-```
-
-It holds contracts only — interfaces (`IStatProvider`, `IDamageable`, `IResourcePool`,
-`IStatusEffectReceiver`, `IAttackHandler`, `IUpgradeHolder`, `ISkillPointHolder`,
-`IBossBar`, `ITooltipDisplay`, `IUnlockEffect`, `IAnnouncer`, …), asset bases
-(`AttackAsset`, `UpgradeAsset`, `EffectAsset`), shared value types (`DamagePacket`,
-`StatType`, `StatBuff`, `InputState`, `DamageRoll`), and the `EnemySpawning` /
-`PlayerEvents` hooks. Everything in it sits in the `CrystalFlux.Core` namespace.
 
 ### Assembly Boundaries
 
@@ -235,58 +224,27 @@ Settings ─────────┬─ Entity
                   └─ Wave
 ```
 
-- **`Core` references nothing.** It holds only contracts — interfaces, abstract `ScriptableObject` bases, and shared value types — and ships as its own package.
-- **`Pooling` references nothing either.** It holds `PrefabPool` and the `IPoolable` reset hook, needs only `UnityEngine`, and is referenced by every assembly that spawns something. It is a separate assembly rather than part of `Core` because `Core` ships as an external package, and because `TextIndicator` referenced neither.
-- **`Settings` references nothing either.** It holds `GameSettings` and its lifecycle bootstrap, and is referenced by the two assemblies that read a setting — `Entity` (health bars, XP and gold drops) and `Wave` (the completion message). The menu UI itself lives in `Misc`.
-- **`Projectile`, `StatusEffect`, `SkillTree`, and `Wave` never reference each other** — only `Core`, plus `Pooling` where they spawn something (`SkillTree` does not). Adding a cross-reference between them is a compile error, which is the point.
-- **`Entity`** is the only assembly that composes the leaf systems — everything else references infrastructure (`Core`, `Pooling`) and nothing else.
-- **`TextIndicator`** references only `Pooling` and TextMeshPro — floating numbers need the object pool and nothing else.
-- `Items` and `Misc` remain in `Assembly-CSharp`, which auto-references every assembly above.
+| Assembly | Rule |
+|----------|------|
+| **Core** | References nothing. Contracts only — interfaces, abstract `ScriptableObject` bases, shared value types — shipped as its own package |
+| **Pooling** | References nothing. `PrefabPool` and `IPoolable`, used by every assembly that spawns something |
+| **Settings** | References nothing. `GameSettings` and its bootstrap, read by `Entity` and `Wave`; the menu UI lives in `Misc` |
+| **Projectile / StatusEffect / SkillTree / Wave** | Never reference each other — only `Core`, plus `Pooling` where they spawn. A cross-reference is a compile error |
+| **Entity** | The only assembly that composes the leaf systems |
+| **TextIndicator** | References only `Pooling` and TextMeshPro |
+| **Items / Misc** | Stay in `Assembly-CSharp`, which auto-references everything above |
 
-Types shared across a boundary live in `Core` as an abstract base (`AttackAsset`, `UpgradeAsset`, `EffectAsset`) rather than an interface, because Unity cannot serialize interface-typed asset fields. Concrete data (`AttackData`, `PlayerUpgrade`, `StatusEffect`) stays in its own assembly.
+**Design notes**
 
-`Wave` orchestrates the run but never names a concrete system type. Where it used to
-reach for `PlayerAttackHandler`, `PlayerUpgradeManager`, `PlayerSkillTree`,
-`StatusEffectManager`, or `BossBarUI`, it now talks to the `Core` interface each of
-those already implements. Two static entry points it depended on became `Core` hooks
-the owning system registers or raises — `EnemySpawning` (registered by `EnemySpawner`
-at load) and `PlayerEvents.OnPlayerTakeDamage` (raised by `EntityHealth`).
-
-Reward tooltips work the same way: rather than `RewardButton` reading two dozen fields
-off `AttackData` and `PlayerUpgrade`, `AttackAsset` and `UpgradeAsset` declare an
-abstract `GetTooltipLines`, and each system describes its own data.
-
-Attack data is **shared, not cloned**. `AttackData` and `ProjectileData` assets are read
-straight off disk by every handler that uses them — no per-entity, per-summon or per-equip
-`Instantiate` — so their serialized fields are `[SerializeField] private` behind read-only
-properties and cannot be written to at runtime. Anything that needs to differ per run or per
-owner registers on the *owner* instead: `IAttackEffectSource` (implemented by
-`PlayerUpgradeManager`) lets an upgrade contribute status effects to an `AttackType` slot,
-which `Projectile` reads alongside the attack's own authored effects. That is the pattern to
-copy for any future per-run addition.
+- Types shared across a boundary live in `Core` as abstract bases (`AttackAsset`, `UpgradeAsset`, `EffectAsset`) rather than interfaces, because Unity cannot serialize interface-typed asset fields.
+- `Wave` never names a concrete system type — it talks to the `Core` interfaces those systems implement, plus the `EnemySpawning` and `PlayerEvents.OnPlayerTakeDamage` hooks.
+- Reward tooltips come from each asset's own `GetTooltipLines`, so `RewardButton` never reads concrete data fields.
+- Attack data is **shared, not cloned**: `AttackData` and `ProjectileData` fields are private behind read-only properties. Per-run changes register on the owner instead, via `IAttackEffectSource` on `PlayerUpgradeManager`.
 
 > **Moving a `[SerializeReference]` type between assemblies breaks existing assets.** Unity stores a literal `{class, ns, asm}` triplet, so add `[MovedFrom(sourceAssembly: "...")]` when relocating one — see `UnlockEffect` and `NodeRequirement`.
 
-## Getting Started
+---
 
-1. Open the project in **Unity 6000.4.6f1** (or newer).
-2. Open the main scene: `Assets/New.unity`.
-3. Press **Play** or **File > Build and Run (`Ctrl + B`)**
+## 📄 License
 
-> **Note:** The build settings must include `Assets/New.unity` — `Assets/data/Scenes/SampleScene.unity` is an empty placeholder scene.
-
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md) for summary of major feature updates.
-
-## Planned Features
-
-See [TODO.md](TODO.md) for upcoming content and rebalances.
-
-## Changelog
-
-See [CHANGELOG.md](CHANGELOG.md) for the full release history.
-
-## License
-
-All rights reserved. This project is a personal work-in-progress and is not licensed for redistribution.
+**Anamnesis Source-Available License** — the source is public to read and learn from, but it is not open source and is not licensed for redistribution. See [LICENSE](LICENSE).

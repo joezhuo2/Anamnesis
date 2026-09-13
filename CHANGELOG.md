@@ -7,6 +7,11 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.0_5] - 2026-09-13
+
+### Updated
+- readme is now more modern
+
 ## [v0.5.0_4] - 2026-09-11
 
 ### Fixed
