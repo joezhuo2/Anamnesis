@@ -26,6 +26,7 @@ namespace CrystalFlux.SettingsSystem
         {
             if (depth++ > 0) return;
 
+            HitFeedback.Cancel();
             restoreTimeScale = Time.timeScale > 0f ? Time.timeScale : 1f;
             Time.timeScale = 0f;
         }

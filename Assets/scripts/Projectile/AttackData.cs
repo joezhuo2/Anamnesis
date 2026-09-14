@@ -106,6 +106,14 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private bool explodeOrbits;
         [SerializeField] private int redirectCount;
 
+        [Header("Impact Feedback")]
+        [Tooltip("Real-time seconds the game freezes when a projectile from this attack hits. 0 = disabled")]
+        [SerializeField] private float hitStop = 0f;
+        [Tooltip("Real-time seconds after a hit stop ends before another hit stop can start")]
+        [SerializeField] private float hitStopCooldown = 0f;
+        [Tooltip("Camera impulse force applied when a projectile from this attack hits. 0 = disabled")]
+        [SerializeField] private float screenShake = 0f;
+
         [Header("Misc - Player Only")]
         [SerializeField] private Sprite icon;
         [SerializeField] private string displayName;
@@ -160,6 +168,9 @@ namespace CrystalFlux.ProjectileSystem
         public bool RedirectOrbits => redirectOrbits;
         public bool ExplodeOrbits => explodeOrbits;
         public int RedirectCount => redirectCount;
+        public float HitStop => hitStop;
+        public float HitStopCooldown => hitStopCooldown;
+        public float ScreenShake => screenShake;
         public Sprite Icon => icon;
         public string DisplayName => displayName;
 

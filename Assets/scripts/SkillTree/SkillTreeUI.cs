@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using CrystalFlux.SettingsSystem;
 using UnityEngine;
 
 namespace CrystalFlux.SkillTree
@@ -67,6 +68,7 @@ namespace CrystalFlux.SkillTree
             openInstance = this;
             gameObject.SetActive(true);
 
+            HitFeedback.Cancel();
             timeScaleBeforeOpen = Time.timeScale;
             Time.timeScale = 0f;
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
+using CrystalFlux.SettingsSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -285,6 +286,8 @@ namespace CrystalFlux.ProjectileSystem
             try { eh.TakeDamage(dp); }
             finally { ApplyingProjectileHit = prevApplyingHit; }
 
+            TriggerImpact();
+
             if (pd.KbForce > 0f && (eh as Component).TryGetComponent<Rigidbody2D>(out var rb2d))
             {
                 Vector2 kbDir = (rb2d.transform.position - transform.position).normalized;
@@ -327,6 +330,15 @@ namespace CrystalFlux.ProjectileSystem
 
             if (hitExtras != null)
                 for (int i = 0; i < hitExtras.Count; i++) ApplyOnHit(hitExtras[i], target);
+        }
+
+        private void TriggerImpact()
+        {
+            var ad = pd.MainAttack;
+            if (ad == null) return;
+
+            HitFeedback.Stop(ad.HitStop, ad.HitStopCooldown);
+            HitFeedback.Shake(ad.ScreenShake);
         }
 
         private IReadOnlyList<EffectData> ExtraEffects()

@@ -1,13 +1,20 @@
 # Planned Features 
 
+## Pre [v0.6.0] Checklist
+
+- [ ] Nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`), so
+  `EnemyAttackHandler.ChargeLoop` ticks an empty list and enemy sustained projectiles expire at their
+  authored `lifetime`
+- [ ] Auto-pause when window loses focus (single-player)
+- [ ] more enemy projectile telegraphs
+- [ ] total wave time
+- [ ] seperate wave/total waves and enemies in wave display
+
 ## Pre [v1.0.0] Checklist — First Light
 *Everything that has to be true before a stranger can play it.*
 
 **Systems**
 - [ ] Audio (SFX + music buses + menu volume control)
-- [ ] Nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`), so
-  `EnemyAttackHandler.ChargeLoop` ticks an empty list and enemy sustained projectiles expire at their
-  authored `lifetime`
 
 **Content**
 - [ ] Confirm every `CREDITS.md` asset license permits redistribution inside a compiled build, not just use
@@ -17,7 +24,6 @@
 
 **QoL & Polish**
 - [ ] Resolution/window options (currently a fixed 1920x1080 with `resizableWindow: 0`)
-- [ ] Auto-pause when window loses focus (single-player)
 - [ ] Clean-machine pass — fresh build, no `settings.json`, no Unity installed
 
 ## Pre [v1.1.0] Checklist — Starlight Remnants
@@ -25,13 +31,12 @@
 
 **Systems**
 - [ ] attack combo chains
-- [ ] frame freeze on high impact attacks (eg. ult)
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
-- [ ] more enemy projectile telegraphs
 - [ ] contact damage
 - [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back)
+- [ ] splitting anomaly (enemies have a `{x}%` chance to split, all split enemies must be killed to pass wave)
 - [ ] environmental collectible items (mana, xp, hp, gold)
 
 **QoL & Polish**
@@ -41,7 +46,6 @@
 - [ ] sort attack cooldown ui by basic - skill - ult instead of whatever was obtained first
 - [ ] wave track - show upcoming bosses/special rewards/milestones
 - [ ] map debris/decor
-- [ ] Screen shake and hit-stop feedback on attacks
 - [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
 - [ ] Status Effect vfx
 

@@ -3,7 +3,8 @@
     "rootNamespace": "CrystalFlux.ProjectileSystem",
     "references": [
         "CrystalFlux.Pooling",
-        "CrystalFlux.Core"
+        "CrystalFlux.Core",
+        "CrystalFlux.Settings"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

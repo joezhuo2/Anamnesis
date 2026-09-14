@@ -7,6 +7,20 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.3] - 2026-09-14
+
+### Added
+- **Hit stop** - `AttackData` gained an *Impact Feedback* section. `hitStop` is how many real-time seconds the game freezes when a projectile from that attack hits, and `hitStopCooldown` is how long after a freeze ends before another can start. Both default to 0, so no existing attack freezes until it is authored. Overlapping hits extend the current freeze rather than stacking it
+- **Screen shake** - `AttackData.screenShake` (default 0) fires a Cinemachine impulse on hit, in a random direction, clamped by `CombatFeedback.maxShake`. A shake requested during a hit stop is held and plays once the freeze ends, because the camera follows a physics-driven target and does not update while `timeScale` is frozen. The player also shakes the camera when hurt (`CombatFeedback.playerHurtShake`, default 0.25), with an optional `playerHurtHitStop`
+- `HitFeedback` (Settings assembly) - a static that owns the freeze and relays shake requests. A freeze drops `timeScale` to 0.001 rather than 0, so pause checks (`timeScale == 0`) and input stay live, and it runs on unscaled time from a hidden `[HitFeedback]` runner
+- `CombatFeedback` - bootstraps itself after the first scene load if none is placed, adds a `CinemachineImpulseSource` to itself and a `CinemachineImpulseListener` to the scene's `CinemachineCamera`, and sets the impulse manager to ignore time scale so shakes play through a freeze. Place one in the scene to tune its values
+
+### Changed
+- `MenuPause.Push` and `SkillTreeUI.Open` cancel an active freeze before they record the time scale to restore, so closing a menu never restores the freeze scale
+- A freeze only restores `timeScale` if it is still at the freeze value, so a reward panel or pause that sets `timeScale` to 0 mid-freeze stays paused
+- `CrystalFlux.Projectile` now references `CrystalFlux.Settings`
+- Player `bundleVersion` 0.5.2 → 0.5.3
+
 ## [v0.5.2] - 2026-09-13
 
 ### Added

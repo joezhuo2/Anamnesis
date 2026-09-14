@@ -4968,6 +4968,8 @@ GameObject:
   - component: {fileID: 173672072}
   - component: {fileID: 173672074}
   - component: {fileID: 173672073}
+  - component: {fileID: 173672075}
+  - component: {fileID: 173672076}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -5064,6 +5066,48 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &173672075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173672071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  SignalCombinationMode: 0
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &173672076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173672071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa521510727fb5f4e87274ce2f20ad07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalFlux.SettingsSystem.CombatFeedback
+  source: {fileID: 0}
+  impulseDuration: 0.15
+  maxShake: 1.5
+  playerHurtShake: 0.075
+  playerHurtHitStop: 0
+  playerHurtHitStopCooldown: 0
 --- !u!224 &181639773 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 4909b81c802f5994e8baa93f92512ef4, type: 3}
@@ -62360,6 +62404,10 @@ PrefabInstance:
       propertyPath: 'activeUpgrades.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: d442c0a382ce7cf4cb0853a33c9f1319, type: 2}
+    - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
+      propertyPath: queueExpiry
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: objContainer
       value: 
