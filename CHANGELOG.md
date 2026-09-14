@@ -7,6 +7,26 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.3_1] - 2026-09-14
+
+### Added
+- **Impact feedback authored** across 10 player attacks — hit stop and screen shake values tuned per attack:
+  - **Cyclone Cleave** — 0.06s freeze, 0.08 shake
+  - **Cosmic Blaze** — 0.12s, 0.15
+  - **Exodus** (A/B/C) — 0.08s, 0.10–0.15 shake
+  - **Luminaria** — 0.15s, 0.15
+  - **Nebula** — 0.06s, 0.10
+  - **Nirvana** — 0.15s, 0.15
+  - **Nocturnis** — 0.15s, 0.15
+  - **Revelation** — 0.15s, 0.15
+  - **Shattered Singularity** — 0.20s, 0.15
+- **`ws_5`** — a new wave sequence covering waves 61–75 (`waveOffset` 60), all Slime (Magma) at levels 61–74 with 54→71 total and 22→27 concurrent enemies, capped by a Lv 75 Grim Reaper boss at wave 75. `ws_4.nextSequence` now points at `ws_5` instead of `BossRush`, and `ws_5.nextSequence` points at `BossRush`
+
+### Changed
+- **Boss Rush levels increased** — all four bosses (Lich, Jellyfish, Cultist, Golem) bumped from Lv 70 to Lv 85 in `BossRush.asset`, and the Grim Reaper is now a fifth Lv 85 boss. In `BossRush Part 2.asset` the Reaper appears as a fifth Lv 105 boss
+- **Golem Orbit** `castTime` 1s → 0 — the move no longer locks the Golem in place before firing, making it immediately available below 40% HP
+- **Cultist Ball** `spread` 10u → 12u
+
 ## [v0.5.3] - 2026-09-14
 
 ### Added

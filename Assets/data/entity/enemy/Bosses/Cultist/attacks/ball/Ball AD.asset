@@ -32,7 +32,7 @@ MonoBehaviour:
   chargeAttack: {fileID: 0}
   projectileCount: 8
   randomCount: 0
-  spread: 10
+  spread: 12
   randomSpread: 0
   minDelay: 0
   maxDelay: 0
@@ -63,5 +63,8 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
+  hitStop: 0
+  hitStopCooldown: 0
+  screenShake: 0
   icon: {fileID: 0}
   displayName: 

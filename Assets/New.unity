@@ -5105,7 +5105,7 @@ MonoBehaviour:
   source: {fileID: 0}
   impulseDuration: 0.15
   maxShake: 1.5
-  playerHurtShake: 0.075
+  playerHurtShake: 0.06
   playerHurtHitStop: 0
   playerHurtHitStopCooldown: 0
 --- !u!224 &181639773 stripped
@@ -12523,7 +12523,7 @@ MonoBehaviour:
   spawnRadius: 2.5
   killSpawnSpeedup: 0.15
   enableExtraSpawns: 1
-  totalWaves: 68
+  totalWaves: 85
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
   waveText: {fileID: 1154343300}

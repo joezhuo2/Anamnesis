@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d38d1f0d9cc8b843b2ae91e8a168582, type: 3}
+  m_Name: ws_5
+  m_EditorClassIdentifier: CrystalFlux.Wave::CrystalFlux.WaveSystem.WaveSequence
+  spawnLocation: {x: 0, y: 0}
+  nextSequence: {fileID: 11400000, guid: 862102566c9f9524b86f942cc02c859e, type: 2}
+  waves:
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 54
+    maxCurrentEnemies: 22
+    enemyLevel: 61
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 55
+    maxCurrentEnemies: 22
+    enemyLevel: 62
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 56
+    maxCurrentEnemies: 22
+    enemyLevel: 63
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 57
+    maxCurrentEnemies: 23
+    enemyLevel: 64
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 59
+    maxCurrentEnemies: 24
+    enemyLevel: 65
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 60
+    maxCurrentEnemies: 24
+    enemyLevel: 66
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 61
+    maxCurrentEnemies: 25
+    enemyLevel: 67
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 62
+    maxCurrentEnemies: 25
+    enemyLevel: 68
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 63
+    maxCurrentEnemies: 25
+    enemyLevel: 69
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 65
+    maxCurrentEnemies: 25
+    enemyLevel: 70
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 66
+    maxCurrentEnemies: 26
+    enemyLevel: 71
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 68
+    maxCurrentEnemies: 26
+    enemyLevel: 72
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 70
+    maxCurrentEnemies: 27
+    enemyLevel: 73
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 71
+    maxCurrentEnemies: 27
+    enemyLevel: 74
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 0}
+    bossBarName: 
+    statusEffectDisplayPrefab: {fileID: 0}
+  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+    maxTotalEnemies: 1
+    maxCurrentEnemies: 1
+    enemyLevel: 75
+    minSpawnFrequency: 1
+    maxSpawnFrequency: 3
+    minRewardChoices: 2
+    maxRewardChoices: 7
+    bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
+    bossBarName: '[Lv. 75] Grim Reaper'
+    statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
+  waveOffset: 60

@@ -6,7 +6,7 @@
   `EnemyAttackHandler.ChargeLoop` ticks an empty list and enemy sustained projectiles expire at their
   authored `lifetime`
 - [ ] Auto-pause when window loses focus (single-player)
-- [ ] more enemy projectile telegraphs
+- [ ] more enemy projectile telegraphs (jellyfish ball)
 - [ ] total wave time
 - [ ] seperate wave/total waves and enemies in wave display
 
@@ -238,3 +238,63 @@
 - healing pct
 - damage res 
 - move spd pct
+
+## Performance Improvements
+
+Audit 2026-09-14 (perf sweep of `Assets/scripts` + CrystalFlux packages). Ranked by severity.
+
+### High — GC pressure in combat hot path
+
+- [ ] Coroutine alloc storm per hit: `TextIndicatorSpawner.cs:44-53` starts a coroutine + `WaitForSeconds` for
+  every damage number (callers always pass a `Random.Range(0, 0.2f)` delay — `EntityHealth.cs:448,571`,
+  `PlayerLevel.cs:47`); same per hurt for `HurtDelay` (`EntityHealth.cs:456-460`) and
+  `TriggerIFramesInternal` (`591-598`), plus `Projectile.cs:318` hit-history removal. ~150-400 allocs/sec in
+  swarm fights. Fix: fold the spawn delay into TextIndicator's existing `Update` as a timer; replace the
+  iframe/hurt coroutines with timestamped state (`immunityEndTime`/`hurtResetTime`) checked in
+  `EntityHealth.Update`; cache a static `WaitForSeconds` where the delay is constant.
+- [ ] `DamagePacket` + inner `List<DamageInstance>` allocated per hit (`Projectile.cs:282` → Core
+  `DamagePacket.cs:6-8`; also `DoT.cs:23`, `DamageRoll.cs:18-26`), and `GetComponents<IOnHitEffect>()` returns
+  a fresh array per hit (`Projectile.cs:310`). Fix: static pool for `DamagePacket` with a reentrancy depth
+  counter (consume path is synchronous but upgrade triggers can nest), preallocate `instances` capacity 3;
+  cache `GetComponents<T>(List<T>)` buffer in `Projectile.Awake`.
+- [ ] `StatusEffectManager.Update` (`StatusEffectManager.cs:167-208`): `GetStat(EffectRes)` recomputed inside
+  the per-effect loop (8 effects × 40 enemies ≈ 300 wasted stat dispatches/frame), no
+  `Time.timeScale == 0f` early-return (project convention), redundant `i` bounds re-check per iteration.
+  Fix: hoist the stat read above the loop, add the pause early-return, drop the re-check.
+
+### Medium
+
+- [ ] Enemy pooling — documented as a deliberate deferral in Open Items; revisit when the three blockers
+  (Destroy-bound cleanup with no `OnDisable` counterparts, non-idempotent `ScaleBaseStats`, fake-null kill
+  counting) are resolved. Churn source: `EnemySpawner.cs:14-24`, `EntitySplitting.cs:21`,
+  `EntitySummonHandler.cs:50`, per-spawn `EntityStats` clone (`EntityStatManager.cs:27`).
+- [ ] `PlayerUpgradeManager.TriggerUpgrades` (`165-236`) full-scans all upgrades + conditions on every hit
+  event (up to 6 events per hit, `EntityHealth.cs:308-351`; late game ≈ 150-300 iteration steps per hit).
+  Fix: index upgrades by `TriggerCondition` in a `Dictionary` built at Start and updated on Add/Remove.
+- [ ] `EntityHealth.Update` (`174-179`): `RegenHp()` (5 GetStat calls) + `MoveHealthBar()` (~4 GetStat +
+  `WorldToScreenPoint`) every frame per entity with bars — 50 enemies ≈ 400-500 stat dispatches/frame.
+  Fix: run the regen guard on a 0.5s cadence; skip `MoveHealthBar` when bar hidden or entity stationary
+  (cached position delta threshold); HP paths already call `RefreshHealthBar()` directly.
+- [ ] `ProjectileSpawner` allocates a fresh `WaitForSeconds(Random.Range(...))` per shot in all five spawn
+  patterns (`75,97,118,132,174`) — a 20-shot barrage ≈ 20 allocs, firing constantly from both sides.
+  Fix: single manual timer (`yield return null; remaining -= Time.deltaTime;`) or bucketed cached instances.
+
+### Low
+
+- [ ] `StatusEffectManager.Apply:74` — `activeEffects.Find(e => ...)` closure alloc per apply, and
+  `IsSameEffect` does a case-insensitive string compare against every existing effect. Fix: manual `for`
+  loop; short-circuit on `ReferenceEquals` / exact `GetType()` before string work.
+- [ ] `EnemyMovement.cs:50-63,71-109` — per frame per enemy: `Vector2.Distance` (sqrt) for de-aggro, plus
+  `normalized` (second sqrt) on movement; `Start` (line 46) runs `FindGameObjectWithTag("Player")` per
+  spawn. Fix: compare `distSqr` against squared range; axis pick via `Mathf.Abs`; cache player reference.
+- [ ] `PlayerMovement.cs:72` — `animator.SetFloat(SpeedHash, ...)` every FixedUpdate even when unchanged
+  (dirty animator param 50×/sec). Fix: change-guard like `EnemyMovement.SetAnimator` already does.
+- [ ] `UnlimitedWaveManager.cs:233` — `List<GameObject> available = new()` per spawn (~1-3/sec in waves).
+  Fix: reuse a field buffer or reservoir-sample without a list.
+- [ ] Per-frame UI polling: `PlayerAttackCooldownUI.cs:88-120` re-runs `CanCast` (≈10 stat reads, 4 buttons
+  ≈ 40/frame) and `StatusEffectCooldownUI.cs:45-68` polls GetStat + recomputes fill per effect icon.
+  Fix: throttle to ~10 Hz or drive from cooldown-change events.
+- [ ] `TextIndicator.cs:54-68` — `WorldToScreenPoint` per indicator per frame; 100+ concurrent numbers = 100
+  screen-space transforms/frame. Fix: update screen pos only when world pos moved > ~1px.
+- [ ] `WaveManager.cs:228-241` — `$"Time Remaining: {tt.timeRemaining:F1}s"` string + TMP setter per frame
+  during Time Trial. Fix: rebuild when `FloorToInt(t * 10)` changes or description reference changes.

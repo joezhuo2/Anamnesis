@@ -63,5 +63,8 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
+  hitStop: 0.15
+  hitStopCooldown: 0.3
+  screenShake: 0.15
   icon: {fileID: 1992992966, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   displayName: Luminaria

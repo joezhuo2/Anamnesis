@@ -63,5 +63,8 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
+  hitStop: 0.12
+  hitStopCooldown: 0.3
+  screenShake: 0.15
   icon: {fileID: 5803850864075934229, guid: 931c039b9f802b445ba96e6ad71b512f, type: 3}
   displayName: Cosmic Blaze

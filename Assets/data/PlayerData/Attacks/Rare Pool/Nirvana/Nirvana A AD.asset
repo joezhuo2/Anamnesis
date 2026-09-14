@@ -12,14 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Nirvana A AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  type: 2
   cooldown: 24
   projectilePrefab: {fileID: 7236607404109697151, guid: 48c478ada976a6c4d8f908dd7f9e4ff5, type: 3}
   pd: {fileID: 11400000, guid: 11c383e7904eab24db5ec2ae3884aed1, type: 2}
   pattern: 0
+  castTime: 0
+  canMoveWhileCasting: 1
   spawnDelay: 0
   spawnDistance: 3
   fixedDistance: 0
   animationLength: 0.5
+  canCharge: 0
+  chargeThreshold: 0.225
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 1
+  chargeAttack: {fileID: 0}
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -47,11 +57,14 @@ MonoBehaviour:
   manaPctGainOnHit: 1
   summonChance: 0
   summonCondition: 0
+  cleanseDebuffs: 0
   fireOrbits: 1
   absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 2
+  hitStop: 0.15
+  hitStopCooldown: 0.3
+  screenShake: 0.15
   icon: {fileID: -1542465496953560609, guid: 044e0648c03a4e5478b90d5e1159ea57, type: 3}
   displayName: Nirvana

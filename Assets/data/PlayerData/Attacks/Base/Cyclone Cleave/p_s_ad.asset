@@ -63,8 +63,8 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  hitStop: 0.08
+  hitStop: 0.06
   hitStopCooldown: 0.3
-  screenShake: 0.1
+  screenShake: 0.08
   icon: {fileID: 196999898347057192, guid: 4511473431829134fa55de9598a0d9c5, type: 3}
   displayName: Cyclone Cleave

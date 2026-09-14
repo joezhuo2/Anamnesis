@@ -57,10 +57,14 @@ MonoBehaviour:
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
+  cleanseDebuffs: 0
   fireOrbits: 0
   absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
+  hitStop: 0.15
+  hitStopCooldown: 0.3
+  screenShake: 0.15
   icon: {fileID: 489291742, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   displayName: Nocturnis
