@@ -7,6 +7,16 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.4_1] - 2026-09-16
+
+### Changed
+- **`StatusEffectManager.Update` tightened** — the effect-resistance stat is now read once per frame (as a duration multiplier) instead of once per active effect, which removes roughly 300 wasted `GetStat` dispatches per frame in a 40-enemy swarm with a handful of effects each
+- `StatusEffectManager.Update` returns early while `Time.timeScale == 0f`, following the project pause convention. Effects no longer tick, age or expire during zero-timescale frames
+- The per-iteration index bounds re-check is gone. The list is only re-validated right after `OnTick`, which can mutate it (a lethal DoT tick triggers `ClearAllEffects`, `Detonator` removes DoTs); if it changed, the loop index is clamped to the new count
+- On expiry the effect is removed by index only when that slot still holds it, otherwise by reference, so an `OnExpire` that shifts the list can no longer remove the wrong effect
+- **`StatusEffectManager.Apply` no longer allocates** — the `activeEffects.Find(e => ...)` lambda (a closure capturing the incoming effect on every apply) is replaced with a plain `for` loop
+- `IsSameEffect` short-circuits on `ReferenceEquals` for the effects themselves and for their `effName` strings before falling back to the case-insensitive compare. Runtime effects are `Instantiate` clones that share the asset's name string, so re-applying the same effect now skips the string compare entirely. Type lookups are cached once per call. Matching rules are unchanged: named effects still match by name only, so two different effects of the same class (such as two `DoT` assets) still stack separately
+
 ## [v0.5.4] - 2026-09-16
 
 ### Changed

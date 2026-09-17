@@ -58,20 +58,29 @@ namespace CrystalFlux.StatusEffectSystem
         private static bool IsSameEffect(StatusEffect a, StatusEffect b)
         {
             if (a == null || b == null) return false;
+            if (ReferenceEquals(a, b)) return true;
 
-            if (!string.IsNullOrEmpty(a.effName) && !string.IsNullOrEmpty(b.effName))
-                return string.Equals(a.effName, b.effName, System.StringComparison.OrdinalIgnoreCase);
+            string an = a.effName, bn = b.effName;
+            if (!string.IsNullOrEmpty(an) && !string.IsNullOrEmpty(bn))
+                return ReferenceEquals(an, bn) || string.Equals(an, bn, System.StringComparison.OrdinalIgnoreCase);
 
-            return a.GetType() == b.GetType() ||
-                a.GetType().IsSubclassOf(b.GetType()) ||
-                b.GetType().IsSubclassOf(a.GetType());
+            System.Type at = a.GetType(), bt = b.GetType();
+            return at == bt || at.IsSubclassOf(bt) || bt.IsSubclassOf(at);
         }
 
         public void Apply(EffectAsset effect, GameObject source, Vector2 location = default)
         {
             if (effect is not StatusEffect se) return;
 
-            StatusEffect existing = activeEffects.Find(e => IsSameEffect(e, se));
+            StatusEffect existing = null;
+            for (int i = 0; i < activeEffects.Count; i++)
+            {
+                if (IsSameEffect(activeEffects[i], se))
+                {
+                    existing = activeEffects[i];
+                    break;
+                }
+            }
 
             if (existing != null)
             {
@@ -166,12 +175,13 @@ namespace CrystalFlux.StatusEffectSystem
         }
         private void Update()
         {
-            float dt = Time.deltaTime;
+            if (Time.timeScale == 0f || activeEffects.Count == 0) return;
 
-            if (activeEffects.Count == 0) return;
+            float dt = Time.deltaTime;
+            float resMult = 1f - ((cesm != null ? cesm.GetStat(StatType.EffectRes) : 0f) * 0.01f);
+
             for (int i = activeEffects.Count - 1; i >= 0; i--)
             {
-                if (i < 0 || i >= activeEffects.Count) return;
                 StatusEffect e = activeEffects[i];
                 if (e == null) continue;
 
@@ -180,15 +190,22 @@ namespace CrystalFlux.StatusEffectSystem
                     int oldTicks = Mathf.FloorToInt(e.currentTime / e.tickInterval);
                     int newTicks = Mathf.FloorToInt((e.currentTime + dt) / e.tickInterval);
 
-                    if (newTicks > oldTicks) e.OnTick();
+                    if (newTicks > oldTicks)
+                    {
+                        e.OnTick();
+                        if (i >= activeEffects.Count || activeEffects[i] != e)
+                        {
+                            i = Mathf.Min(i, activeEffects.Count);
+                            continue;
+                        }
+                    }
                 }
 
                 e.currentTime += dt;
 
-                float effRes = cesm != null ? cesm.GetStat(StatType.EffectRes) : 0f;
-                float effDur = e.isBuff ? e.duration : e.duration * (1f - (effRes * 0.01f));
+                float effDur = e.isBuff ? e.duration : e.duration * resMult;
 
-                if (e != null && e.currentTime > effDur)
+                if (e.currentTime > effDur)
                 {
                     if (e.currentStacks > 1 && !e.loseAllStacksOnExpire)
                     {
@@ -199,8 +216,10 @@ namespace CrystalFlux.StatusEffectSystem
                     else
                     {
                         e.OnExpire();
-                        if (i >= 0 && i < activeEffects.Count && activeEffects[i] != null)
+                        if (i < activeEffects.Count && activeEffects[i] == e)
                             activeEffects.RemoveAt(i);
+                        else
+                            activeEffects.Remove(e);
                         Destroy(e);
                     }
                 }

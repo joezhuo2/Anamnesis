@@ -243,13 +243,6 @@
 
 Audit 2026-09-14 (perf sweep of `Assets/scripts` + CrystalFlux packages). Ranked by severity.
 
-### High — GC pressure in combat hot path
-
-- [ ] `StatusEffectManager.Update` (`StatusEffectManager.cs:167-208`): `GetStat(EffectRes)` recomputed inside
-  the per-effect loop (8 effects × 40 enemies ≈ 300 wasted stat dispatches/frame), no
-  `Time.timeScale == 0f` early-return (project convention), redundant `i` bounds re-check per iteration.
-  Fix: hoist the stat read above the loop, add the pause early-return, drop the re-check.
-
 ### Medium
 
 - [ ] Enemy pooling — documented as a deliberate deferral in Open Items; revisit when the three blockers
@@ -269,9 +262,6 @@ Audit 2026-09-14 (perf sweep of `Assets/scripts` + CrystalFlux packages). Ranked
 
 ### Low
 
-- [ ] `StatusEffectManager.Apply:74` — `activeEffects.Find(e => ...)` closure alloc per apply, and
-  `IsSameEffect` does a case-insensitive string compare against every existing effect. Fix: manual `for`
-  loop; short-circuit on `ReferenceEquals` / exact `GetType()` before string work.
 - [ ] `EnemyMovement.cs:50-63,71-109` — per frame per enemy: `Vector2.Distance` (sqrt) for de-aggro, plus
   `normalized` (second sqrt) on movement; `Start` (line 46) runs `FindGameObjectWithTag("Player")` per
   spawn. Fix: compare `distSqr` against squared range; axis pick via `Mathf.Abs`; cache player reference.
