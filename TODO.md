@@ -245,18 +245,6 @@ Audit 2026-09-14 (perf sweep of `Assets/scripts` + CrystalFlux packages). Ranked
 
 ### High — GC pressure in combat hot path
 
-- [ ] Coroutine alloc storm per hit: `TextIndicatorSpawner.cs:44-53` starts a coroutine + `WaitForSeconds` for
-  every damage number (callers always pass a `Random.Range(0, 0.2f)` delay — `EntityHealth.cs:448,571`,
-  `PlayerLevel.cs:47`); same per hurt for `HurtDelay` (`EntityHealth.cs:456-460`) and
-  `TriggerIFramesInternal` (`591-598`), plus `Projectile.cs:318` hit-history removal. ~150-400 allocs/sec in
-  swarm fights. Fix: fold the spawn delay into TextIndicator's existing `Update` as a timer; replace the
-  iframe/hurt coroutines with timestamped state (`immunityEndTime`/`hurtResetTime`) checked in
-  `EntityHealth.Update`; cache a static `WaitForSeconds` where the delay is constant.
-- [ ] `DamagePacket` + inner `List<DamageInstance>` allocated per hit (`Projectile.cs:282` → Core
-  `DamagePacket.cs:6-8`; also `DoT.cs:23`, `DamageRoll.cs:18-26`), and `GetComponents<IOnHitEffect>()` returns
-  a fresh array per hit (`Projectile.cs:310`). Fix: static pool for `DamagePacket` with a reentrancy depth
-  counter (consume path is synchronous but upgrade triggers can nest), preallocate `instances` capacity 3;
-  cache `GetComponents<T>(List<T>)` buffer in `Projectile.Awake`.
 - [ ] `StatusEffectManager.Update` (`StatusEffectManager.cs:167-208`): `GetStat(EffectRes)` recomputed inside
   the per-effect loop (8 effects × 40 enemies ≈ 300 wasted stat dispatches/frame), no
   `Time.timeScale == 0f` early-return (project convention), redundant `i` bounds re-check per iteration.

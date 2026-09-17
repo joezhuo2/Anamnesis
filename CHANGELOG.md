@@ -7,6 +7,16 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.4] - 2026-09-16
+
+### Changed
+- **Per-hit coroutines removed** — the combat hot path no longer starts a coroutine (plus a `WaitForSeconds`) for every damage number, hurt, i-frame window or projectile re-hit window:
+  - `TextIndicatorSpawner.SpawnTextIndicator` acquires the indicator immediately and passes the spawn delay to `TextIndicator.Initialize`, which keeps the text hidden and counts the delay down in its existing `Update` before the lifetime starts
+  - `EntityHealth` tracks `hurtResetTime` and `immunityEndTime` and clears them in `Update`. `TriggerIFrames` grants `isImmune` once and extends the end time when a longer window overlaps, instead of stacking a grant per call. `TriggerIFramesCoroutine` is removed
+  - `Projectile` records `(target, expiry)` pairs for `TimeBeforeSameEnemy` and drops expired targets from its hit history in `Update`; the pairs are cleared in `Setup` and on pool release
+- **`DamagePacket` pooling** — CrystalFlux Core bumped to **0.10.0** (`7d6d068`). `DamagePacketBuilder` and `DamageRoll.Build` rent packets from `DamagePacket.Get`, and every consumer (`Projectile`, `EntityProjectileHandler`, `PlayerAttackHandler`, `PlayerAttackCooldownUI`, `AdditionalDamage`, `StellarSurge`, `DoT`, `Detonator`, `Thorns`, `Lifesteal`) returns them with `DamagePacket.Release` once `TakeDamage` has consumed them. `instances` is preallocated with capacity 3
+- `Projectile` fills a cached `List<IOnHitEffect>` via `GetComponents(List<T>)` instead of allocating an array per hit
+
 ## [v0.5.3_1] - 2026-09-14
 
 ### Added

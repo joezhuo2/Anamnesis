@@ -30,5 +30,6 @@ public class AdditionalDamage : PlayerUpgrade
 
         DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(bonusDamage, type, false, indicatorColor, player, true, 1.25f);
         if (dp.GetTotalDamage() > 0f) id.TakeDamage(dp);
+        DamagePacket.Release(dp);
     }
 }

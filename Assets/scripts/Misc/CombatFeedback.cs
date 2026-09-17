@@ -28,7 +28,7 @@ namespace CrystalFlux.SettingsSystem
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Bootstrap()
         {
-            if (instance != null || FindFirstObjectByType<CombatFeedback>() != null) return;
+            if (instance != null || FindAnyObjectByType<CombatFeedback>() != null) return;
 
             var go = new GameObject(nameof(CombatFeedback));
             DontDestroyOnLoad(go);
@@ -128,7 +128,7 @@ namespace CrystalFlux.SettingsSystem
         {
             if (listener != null) return true;
 
-            var cam = FindFirstObjectByType<CinemachineCamera>();
+            var cam = FindAnyObjectByType<CinemachineCamera>();
             if (cam == null) return false;
             if (cam.TryGetComponent(out listener)) return true;
 

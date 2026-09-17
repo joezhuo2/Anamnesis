@@ -33,6 +33,10 @@ namespace CrystalFlux.EntitySystem
         private float overhealthDecayInterval;
         private float overhealthDecayTimer;
         private bool regenOverHealth;
+        private float immunityEndTime;
+        private bool iFramesActive;
+        private float hurtResetTime;
+        private bool hurtPending;
         private Animator animator;
         private Slider healthBarInstance;
         private TextMeshProUGUI healthBarTextInstance;
@@ -173,6 +177,7 @@ namespace CrystalFlux.EntitySystem
 
         private void Update()
         {
+            TickTimers();
             RegenHp();
             DecayOverhealth();
             MoveHealthBar();
@@ -356,7 +361,7 @@ namespace CrystalFlux.EntitySystem
                 bool fireIFrames = _pendingHurtIFrames;
                 _suppressHurtIFrames = prevSuppress;
                 _pendingHurtIFrames = prevPending || (prevSuppress && fireIFrames);
-                if (fireIFrames && !prevSuppress) TriggerIFramesCoroutine(hurtIFrameDuration);
+                if (fireIFrames && !prevSuppress) TriggerIFrames(hurtIFrameDuration);
             }
 
             if (cpum != null && tookProjectileHit) PlayerEvents.RaisePlayerTakeDamage(this);
@@ -453,11 +458,15 @@ namespace CrystalFlux.EntitySystem
             if (finalAmount < 0 && animator != null && CurHp > 0)
             {
                 animator.SetBool(IsHurtHash, true);
-                StartCoroutine(HurtDelay(esm.GetStat(StatType.HurtTime)));
+                if (!hurtPending)
+                {
+                    hurtPending = true;
+                    hurtResetTime = Time.time + esm.GetStat(StatType.HurtTime);
+                }
                 if (!bypassIFrames)
                 {
                     if (_suppressHurtIFrames) _pendingHurtIFrames = true;
-                    else TriggerIFramesCoroutine(hurtIFrameDuration);
+                    else TriggerIFrames(hurtIFrameDuration);
                 }
             }
 
@@ -581,20 +590,37 @@ namespace CrystalFlux.EntitySystem
                 splitting.Split();
         }
 
-        private IEnumerator HurtDelay(float time)
+        private void TickTimers()
         {
-            yield return new WaitForSeconds(time);
-            animator?.SetBool(IsHurtHash, false);
+            float now = Time.time;
+
+            if (hurtPending && now >= hurtResetTime)
+            {
+                hurtPending = false;
+                if (animator != null) animator.SetBool(IsHurtHash, false);
+            }
+
+            if (iFramesActive && now >= immunityEndTime)
+            {
+                iFramesActive = false;
+                if (esm != null) esm.AddStat(new StatBuff(StatType.isImmune, -1f));
+            }
         }
 
-        public void TriggerIFrames(float duration) => TriggerIFramesCoroutine(duration);
-        public Coroutine TriggerIFramesCoroutine(float duration) => StartCoroutine(TriggerIFramesInternal(duration));
-
-        private IEnumerator TriggerIFramesInternal(float duration)
+        public void TriggerIFrames(float duration)
         {
+            if (esm == null) return;
+
+            float end = Time.time + duration;
+            if (iFramesActive)
+            {
+                if (end > immunityEndTime) immunityEndTime = end;
+                return;
+            }
+
+            iFramesActive = true;
+            immunityEndTime = end;
             esm.AddStat(new StatBuff(StatType.isImmune, 1f));
-            yield return new WaitForSeconds(duration);
-            esm.AddStat(new StatBuff(StatType.isImmune, -1f));
         }
 
         private IEnumerator DeathDelay(float delay)

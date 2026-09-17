@@ -164,6 +164,7 @@ namespace CrystalFlux.EntitySystem
 
             GameObject target = p.ownerObj;
             if (target.TryGetComponent<IDamageable>(out var eh)) eh.TakeDamage(dp);
+            DamagePacket.Release(dp);
             if (target.TryGetComponent<IResourcePool>(out var pr))
             {
                 pr.TryGain(ResourceType.Stamina, staminaGain);

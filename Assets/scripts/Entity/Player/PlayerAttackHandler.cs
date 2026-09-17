@@ -625,6 +625,7 @@ namespace CrystalFlux.EntitySystem
 
             var dp = DamagePacketBuilder.BuildDamagePacket(hp, DamageType.Consume, false, Color.red, gameObject, false, 1f);
             if (ph != null) ph.TakeDamage(dp);
+            DamagePacket.Release(dp);
 
             if (pr != null) pr.TrySpend(ResourceType.Stamina, sp);
             if (pr != null) pr.TrySpend(ResourceType.Mana, mp);

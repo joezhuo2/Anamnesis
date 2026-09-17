@@ -14,6 +14,7 @@ namespace CrystalFlux.Core
         private Vector3 worldPos;
         private Camera mainCam;
         private float timer;
+        private float delayTimer;
         private float baseFontSize;
 
         private void Awake()
@@ -22,7 +23,7 @@ namespace CrystalFlux.Core
             baseFontSize = text.fontSize;
         }
 
-        public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, TextType textType)
+        public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, TextType textType, float delay = 0f)
         {
             mainCam = mainCam != null ? mainCam : Camera.main;
 
@@ -49,10 +50,19 @@ namespace CrystalFlux.Core
 
             timer = lifetime;
             this.floatSpeed = floatSpeed;
+            delayTimer = Mathf.Max(0f, delay);
+            text.enabled = delayTimer <= 0f;
         }
 
         private void Update()
         {
+            if (delayTimer > 0f)
+            {
+                delayTimer -= Time.deltaTime;
+                if (delayTimer > 0f) return;
+                text.enabled = true;
+            }
+
             if (mainCam == null) return;
 
             Vector3 screenPos = mainCam.WorldToScreenPoint(worldPos);

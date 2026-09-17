@@ -22,6 +22,7 @@ namespace CrystalFlux.StatusEffectSystem
 
             DamagePacket damagePacket = DamageRoll.Build(damage, damageType, globalDoTCanCrit || canCrit, indicatorColor, source, true, 1f);
             eh.TakeDamage(damagePacket);
+            DamagePacket.Release(damagePacket);
         }
     }
 }

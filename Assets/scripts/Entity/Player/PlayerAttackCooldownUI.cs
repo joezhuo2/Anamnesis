@@ -200,6 +200,8 @@ namespace CrystalFlux.EntitySystem
                         default: break;
                     }
                 }
+
+                DamagePacket.Release(previewPacket);
             }
 
             List<string> lines = new() { $"{cad.type}" };

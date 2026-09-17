@@ -8,7 +8,7 @@ namespace CrystalFlux.ProjectileSystem
     {
         public static DamagePacket BuildDamagePacket(ProjectileData pd, ProjectileDamageSnapshot snapshot, bool rollCrits, GameObject owner, bool bypassIFrames, float sizeOverride)
         {
-            DamagePacket dp = new() { source = owner, bypassIFrames = bypassIFrames, sizeOverride = sizeOverride };
+            DamagePacket dp = DamagePacket.Get(owner, bypassIFrames, sizeOverride);
             if (pd == null || !snapshot.isValid) return dp;
 
             float attackTypeBonus = pd.MainAttack != null ? DamageCalculator.AttackTypeBonus(pd.MainAttack.type, snapshot) : 1f;

@@ -40,6 +40,7 @@ namespace CrystalFlux.StatusEffectSystem
 
             DamagePacket dp = DamageRoll.Build(total, dmgType, true, indicatorColor, source, true, 2f);
             eh.TakeDamage(dp);
+            DamagePacket.Release(dp);
         }
     }
 }

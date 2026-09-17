@@ -18,5 +18,6 @@ public class StellarSurge : PlayerUpgrade
             DamageType.Heal, false, Color.teal, player, true, 1f
         );
         id.TakeDamage(dp);
+        DamagePacket.Release(dp);
     }
 }

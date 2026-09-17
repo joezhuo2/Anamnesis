@@ -22,6 +22,9 @@ namespace CrystalFlux.ProjectileSystem
         private float effSpd;
         private float lifeRemaining;
         private List<GameObject> hit;
+        private List<GameObject> hitExpiryTargets;
+        private List<float> hitExpiryTimes;
+        private List<IOnHitEffect> onHitBuffer;
         private ProjectileDamageSnapshot damageSnapshot;
         private Transform followTarget;
         private Transform orbitTarget;
@@ -84,6 +87,9 @@ namespace CrystalFlux.ProjectileSystem
         private void Awake()
         {
             hit = new();
+            hitExpiryTargets = new();
+            hitExpiryTimes = new();
+            onHitBuffer = new();
             canTriggerAdd = true;
             defaultPd = pd;
             defaultScale = transform.localScale;
@@ -132,6 +138,9 @@ namespace CrystalFlux.ProjectileSystem
             UnregisterFromOwner();
 
             hit?.Clear();
+            hitExpiryTargets?.Clear();
+            hitExpiryTimes?.Clear();
+            onHitBuffer?.Clear();
             ownerObj = null;
             effectSource = null;
             followTarget = null;
@@ -161,6 +170,8 @@ namespace CrystalFlux.ProjectileSystem
             if (ownerObj != null) ownerObj.TryGetComponent(out effectSource);
 
             hit.Clear();
+            hitExpiryTargets.Clear();
+            hitExpiryTimes.Clear();
             canTriggerAdd = true;
             pierced = 0;
 
@@ -229,6 +240,8 @@ namespace CrystalFlux.ProjectileSystem
         private void Update()
         {
             if (pd == null) return;
+
+            TickHitHistory();
 
             lifeRemaining -= Time.deltaTime;
             if (lifeRemaining > 0f) return;
@@ -302,20 +315,26 @@ namespace CrystalFlux.ProjectileSystem
             }
 
             var (hp, stamina, mana) = CalculateStatGains(ownerObj, pd.MainAttack, dp.GetTotalDamage());
+            DamagePacket.Release(dp);
             TriggerStatGains(hp, stamina, mana, ownerObj);
 
             pierced++;
             hit.Add(target);
 
-            foreach (var e in ownerObj.GetComponents<IOnHitEffect>())
-                e.OnHit(ownerObj, target, transform.position);
+            ownerObj.GetComponents(onHitBuffer);
+            for (int i = 0; i < onHitBuffer.Count; i++)
+                onHitBuffer[i].OnHit(ownerObj, target, transform.position);
             if (pd.MainAttack != null && pd.MainAttack.SummonCondition == SummonCondition.OnHit && Random.value <= pd.MainAttack.SummonChance)
             {
                 if (ownerObj.TryGetComponent<ISummonTrigger>(out var ist))
                     ist.TrySummon(target.transform.position);
             }
 
-            if (pd.TimeBeforeSameEnemy > 0f) StartCoroutine(RemoveFromHitHistory(target, pd.TimeBeforeSameEnemy));
+            if (pd.TimeBeforeSameEnemy > 0f)
+            {
+                hitExpiryTargets.Add(target);
+                hitExpiryTimes.Add(Time.time + pd.TimeBeforeSameEnemy);
+            }
 
             if (pd.AdditionalChance > 0f && pd.AdditionalAttack != null && Random.value <= pd.AdditionalChance)
                 HandleAdditionalSpawns();
@@ -810,11 +829,25 @@ namespace CrystalFlux.ProjectileSystem
             }
         }
 
-        private System.Collections.IEnumerator RemoveFromHitHistory(GameObject target, float delay)
+        private void TickHitHistory()
         {
-            yield return new WaitForSeconds(delay);
-            if (hit != null && target != null) hit.Remove(target);
-            canTriggerAdd = true;
+            if (hitExpiryTimes.Count == 0) return;
+
+            float now = Time.time;
+            for (int i = hitExpiryTimes.Count - 1; i >= 0; i--)
+            {
+                if (now < hitExpiryTimes[i]) continue;
+
+                GameObject t = hitExpiryTargets[i];
+                int last = hitExpiryTimes.Count - 1;
+                hitExpiryTargets[i] = hitExpiryTargets[last];
+                hitExpiryTimes[i] = hitExpiryTimes[last];
+                hitExpiryTargets.RemoveAt(last);
+                hitExpiryTimes.RemoveAt(last);
+
+                if (t != null) hit.Remove(t);
+                canTriggerAdd = true;
+            }
         }
 
         public static (float hp, float stamina, float mana) CalculateStatGains(GameObject target, AttackData a, float totalDmg = 0f)
@@ -853,6 +886,7 @@ namespace CrystalFlux.ProjectileSystem
             {
                 var dp = DamagePacketBuilder.BuildDamagePacket(hp, DamageType.Heal, false, Color.green, target, true, 1f);
                 eh.TakeDamage(dp);
+                DamagePacket.Release(dp);
             }
         }
 

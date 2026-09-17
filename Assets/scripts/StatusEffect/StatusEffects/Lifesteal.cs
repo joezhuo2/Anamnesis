@@ -27,7 +27,9 @@ namespace CrystalFlux.StatusEffectSystem
             if (heal <= 0f) return;
 
             lastProcTime = Time.time;
-            eh.TakeDamage(DamageRoll.Build(heal, DamageType.Heal, false, indicatorColor, target, true, 1f));
+            DamagePacket dp = DamageRoll.Build(heal, DamageType.Heal, false, indicatorColor, target, true, 1f);
+            eh.TakeDamage(dp);
+            DamagePacket.Release(dp);
         }
     }
 }
