@@ -7,6 +7,17 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.5] - 2026-09-17
+
+### Added
+- **Teleport to projectile mechanic** — `AttackData` gained `teleportToProjectile` (bool) and `teleportDelay` (float) fields. When enabled, the attacker teleports to its first spawned projectile's position after the spawn delay + optional additional delay. Implemented in `ProjectileSpawner.SpawnFromPatternInternal` via a one-shot `ProjectileSpawned` callback that fires a coroutine to perform the teleport (moves both `Rigidbody2D.position` and `transform.position`). The callback unsubscribes itself after firing
+- **Astral Disjunction capstone** — new skill tree node (`Node_astraldisjunction`, 3 SP, `undoCost` 50) under `_Capstone/` that upgrades **Astral Nova** → **Astral Disjunction**. Prerequisite: the Astral Nova node. Unlocks the `Astral Disjunction AD` / `PD` attack pair:
+  - **Astral Disjunction AD**: cooldown 3 → 4, spawn delay 1.5s → 0.5s, spawn distance 5 → 8, `teleportToProjectile` enabled. Adds flat stamina +5 and mana +5 on hit (on top of existing 15% each)
+  - **Astral Disjunction PD**: size 2 → 2.5, spell multiplier 2.8 → 3.6, true multiplier 0.3 → 0.6, effect apply chance 80% → 100%. Lifetime, pierce, knockback unchanged
+
+### Changed
+- **Astral Nova (base)** — `teleportToProjectile` and `teleportDelay` fields now serialized (default false/0) so the upgrade can flip them without asset replacement
+
 ## [v0.5.4_1] - 2026-09-16
 
 ### Changed

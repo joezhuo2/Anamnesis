@@ -21,6 +21,10 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private float spawnDistance;
         [Tooltip("Whether to spawn the projectile at a fixed distance according to spawn distance")]
         [SerializeField] private bool fixedDistance;
+        [Tooltip("Teleports the attacker to its first spawned projectile after the spawn delay")]
+        [SerializeField] private bool teleportToProjectile;
+        [Tooltip("Additional time after the projectile spawns before teleporting")]
+        [SerializeField] private float teleportDelay;
         [Tooltip("Time after attack is performed before resetting the attack animation")]
         [SerializeField] private float animationLength;
 
@@ -127,6 +131,8 @@ namespace CrystalFlux.ProjectileSystem
         public float SpawnDelay => spawnDelay;
         public float SpawnDistance => spawnDistance;
         public bool FixedDistance => fixedDistance;
+        public bool TeleportToProjectile => teleportToProjectile;
+        public float TeleportDelay => teleportDelay;
         public float AnimationLength => animationLength;
         public bool CanCharge => canCharge;
         public float ChargeThreshold => chargeThreshold;

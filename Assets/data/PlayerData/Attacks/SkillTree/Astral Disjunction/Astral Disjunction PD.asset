@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Astral Nova PD
+  m_Name: Astral Disjunction PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
-  mainAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
+  mainAttack: {fileID: 11400000, guid: 53df949764372ec4b8b1b52be74feef5, type: 2}
   lifetime: 0.75
-  size: 2
+  size: 2.5
   numPierce: 6
   destroyOnMaxPierce: 0
   movementType: 0
@@ -23,8 +23,8 @@ MonoBehaviour:
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 2.8
-  trueMult: 0.3
+  spellMult: 3.6
+  trueMult: 0.6
   scalingStat: 44
   specialMult: 1
   specialSclaing: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   - effect: {fileID: 11400000, guid: 8514239ac6067df4a904017e9be22381, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.8
+    chance: 1
   orbitRadius: 0
   randOrbRadOffset: 0
   orbitSelf: 0

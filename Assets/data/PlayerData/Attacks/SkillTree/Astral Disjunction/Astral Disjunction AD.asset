@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Astral Nova AD
+  m_Name: Astral Disjunction AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   type: 0
-  cooldown: 3
-  projectilePrefab: {fileID: 7220300455555897671, guid: 6d5c8aa8d542c2941a8bf8e597f21e22, type: 3}
-  pd: {fileID: 11400000, guid: c1ae557b57454f949b566fdbcf24d2c6, type: 2}
+  cooldown: 4
+  projectilePrefab: {fileID: 7220300455555897671, guid: 4ac85a53084cf9a4ba6f2e44183592be, type: 3}
+  pd: {fileID: 11400000, guid: 69956bdd5c9eae24d96f568a5b9e92ba, type: 2}
   pattern: 0
   castTime: 0
   canMoveWhileCasting: 1
-  spawnDelay: 1.5
-  spawnDistance: 5
+  spawnDelay: 0.5
+  spawnDistance: 8
   fixedDistance: 0
-  teleportToProjectile: 0
+  teleportToProjectile: 1
   teleportDelay: 0
   animationLength: 0.5
   canCharge: 0
@@ -51,11 +51,11 @@ MonoBehaviour:
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 0
+  staminaGainOnHit: 5
   staminaPctGainOnHit: 15
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 0
+  manaGainOnHit: 5
   manaPctGainOnHit: 15
   summonChance: 0
   summonCondition: 0
@@ -68,5 +68,5 @@ MonoBehaviour:
   hitStop: 0
   hitStopCooldown: 0
   screenShake: 0
-  icon: {fileID: -1373909529987573398, guid: b2625615903b287418f1a0e3c142e88e, type: 3}
-  displayName: Astral Nova
+  icon: {fileID: 1073205573, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  displayName: Astral Disjunction

@@ -244,6 +244,19 @@ namespace CrystalFlux.ProjectileSystem
                 yield break;
             }
 
+            System.Action<GameObject, GameObject, Vector2> onSpawn = null;
+            if (ad.TeleportToProjectile && source != null)
+            {
+                onSpawn = (src, proj, _) =>
+                {
+                    if (src != source || proj == null) return;
+                    ProjectileSpawned -= onSpawn;
+                    onSpawn = null;
+                    StartCoroutine(TeleportToProjectile(source, proj, ad.TeleportDelay));
+                };
+                ProjectileSpawned += onSpawn;
+            }
+
             switch (ad.Pattern)
             {
                 case ProjectilePattern.Single:
@@ -278,6 +291,19 @@ namespace CrystalFlux.ProjectileSystem
                     break;
                 default: break;
             }
+
+            if (onSpawn != null) ProjectileSpawned -= onSpawn;
+        }
+
+        private IEnumerator TeleportToProjectile(GameObject src, GameObject proj, float delay)
+        {
+            if (delay > 0f) yield return new WaitForSeconds(delay);
+            if (src == null || proj == null || !proj.activeInHierarchy) yield break;
+            if (proj.TryGetComponent<Projectile>(out var p) && p.ownerObj != src) yield break;
+
+            Vector2 pos = proj.transform.position;
+            if (src.TryGetComponent<Rigidbody2D>(out var rb)) rb.position = pos;
+            src.transform.position = pos;
         }
     }
 }

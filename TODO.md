@@ -35,7 +35,7 @@
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
 - [ ] contact damage
-- [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back)
+- [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
 - [ ] splitting anomaly (enemies have a `{x}%` chance to split, all split enemies must be killed to pass wave)
 - [ ] environmental collectible items (mana, xp, hp, gold)
 
@@ -163,6 +163,8 @@
 ### Planned Abilities 
 - **Wipeout** - when an enemy is inflicted by a debuff, that debuff has a `{z}%` chance to be applied to all nearby enemies within `{x}` tiles of the source every `{y}` seconds or every `{tickInterval}` seconds
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
+- ***Something*** - After teleporting, creates an explosion that deals massive damage and increases damage and speed by `{z}%` for `{x}s`. This effect has a `{y}s` cooldown
+
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
 - **Midas Touch** - *something* consumes `{x}` gold on every attack to increase its damage dealt by `{y}%`
 - **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
@@ -185,7 +187,6 @@
   so no enemy projectile registers and the tick runs over an empty list. Enemy sustained projectiles expire at
   their authored `lifetime`. Only `PlayerAttackHandler` opens and closes the window
 
-
 ### Available Colors 
 - **red**
 - **red-pink**
@@ -199,7 +200,6 @@
 - Supersonic (+count +dmg +size -cd)
 - Shattered Singularity (+spd -cd +size)
 
-- Astral Nova (-spawnDelay -cd +range)
 - Stellar maelstrom (-cost +count +homing)
 - Solar Collapse (+size -cd +dmg)
 - Meteor Shower (+size +dmg)
