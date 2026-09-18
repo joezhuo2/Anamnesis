@@ -429,8 +429,9 @@ namespace CrystalFlux.WaveSystem
 
         protected void UpdateWaveText()
         {
-            if (waveText != null) waveText.text = $"Wave {GetCurrentWave()}/{totalWaves} ({enemiesKilled}/{waveMaxTotalEnemies})";
+            if (waveText != null) waveText.text = $"Wave {GetCurrentWave()}/{totalWaves}\nEnemies: {enemiesKilled}/{waveMaxTotalEnemies}";
         }
+        
         protected void EndWave()
         {
             WaveCleanup();

@@ -2,13 +2,7 @@
 
 ## Pre [v0.6.0] Checklist
 
-- [ ] Nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`), so
-  `EnemyAttackHandler.ChargeLoop` ticks an empty list and enemy sustained projectiles expire at their
-  authored `lifetime`
-- [ ] Auto-pause when window loses focus (single-player)
 - [ ] more enemy projectile telegraphs (jellyfish ball)
-- [ ] total wave time
-- [ ] seperate wave/total waves and enemies in wave display
 
 ## Pre [v1.0.0] Checklist — First Light
 *Everything that has to be true before a stranger can play it.*
@@ -182,10 +176,6 @@
   `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
 - `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
-- Enemy charge attacks no longer sustain their projectiles. `EnemyAttackHandler.ChargeLoop` ticks the charged
-  projectile list, but nothing on the enemy path opens the charge window (`IChargeRegister.BeginChargeWindow`),
-  so no enemy projectile registers and the tick runs over an empty list. Enemy sustained projectiles expire at
-  their authored `lifetime`. Only `PlayerAttackHandler` opens and closes the window
 
 ### Available Colors 
 - **red**

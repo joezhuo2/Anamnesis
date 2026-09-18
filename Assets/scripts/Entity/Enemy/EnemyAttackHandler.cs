@@ -237,6 +237,8 @@ namespace CrystalFlux.EntitySystem
 
             AttackData chargeSource = attack.ChargeAttack != null ? attack.ChargeAttack : attack;
 
+            if (eph != null) eph.BeginChargeWindow(chargeSource);
+
             SpawnChargeSource(chargeSource);
 
             float maxTime = Mathf.Max(attack.MaxChargeTime, attack.MinChargeTime);
@@ -265,6 +267,7 @@ namespace CrystalFlux.EntitySystem
                 if (elapsed >= attack.MinChargeTime && Random.value < 0.5f) break;
             }
 
+            if (eph != null) eph.EndChargeWindow();
             isCharging = false;
         }
 
@@ -322,6 +325,7 @@ namespace CrystalFlux.EntitySystem
 
         private void OnDisable()
         {
+            if (isCharging && TryGetComponent<EntityProjectileHandler>(out var eph)) eph.EndChargeWindow();
             isCharging = false;
             EndCast();
 

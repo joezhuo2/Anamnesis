@@ -6,6 +6,9 @@ namespace CrystalFlux.SettingsSystem
 {
     public class SettingsMenuInputToggle : MonoBehaviour
     {
+        [Tooltip("Open the pause menu when the game window loses focus.")]
+        public bool pauseOnFocusLoss = true;
+
         private InputAction pauseAction;
         private SettingsPanelUI cachedMenu;
 
@@ -33,6 +36,16 @@ namespace CrystalFlux.SettingsSystem
         }
 
         private void OnPause(InputAction.CallbackContext ctx) => ToggleMenu();
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            if (hasFocus || !pauseOnFocusLoss) return;
+            if (DeathScreenUI.IsPlayerDead || GameRestart.IsRestarting) return;
+            if (SkillTreeUI.IsAnyOpen || MenuPause.IsPaused || Time.timeScale == 0f) return;
+
+            if (cachedMenu == null) cachedMenu = FindAnyObjectByType<SettingsPanelUI>(FindObjectsInactive.Include);
+            if (cachedMenu != null && !cachedMenu.IsOpen) cachedMenu.Toggle();
+        }
 
         private void ToggleMenu()
         {

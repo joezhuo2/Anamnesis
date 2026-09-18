@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.5.4-6366F1)
+![Version](https://img.shields.io/badge/version-0.5.5-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)

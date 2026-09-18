@@ -7,6 +7,14 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.5_1] - 2026-09-18
+
+### Added
+- **Auto-pause on focus loss** — `SettingsMenuInputToggle` gained `pauseOnFocusLoss` (default on). `OnApplicationFocus(false)` opens the settings panel through `SettingsPanelUI.Toggle`, which pushes `MenuPause`. Skipped while the player is dead, a restart is in flight, the skill tree is open, a menu already holds `MenuPause`, or `Time.timeScale` is already 0. Regaining focus does not resume; the player closes the menu as usual
+
+### Fixed
+- **Enemy sustained projectiles expired early** — `EnemyAttackHandler.ChargeLoop` now calls `EntityProjectileHandler.BeginChargeWindow(chargeSource)` before spawning the charge source and `EndChargeWindow()` when the loop exits (release, interrupt or death). `OnDisable` also closes the window if a charge was in progress. Enemy charged projectiles register again, so `TickChargedProjectiles` keeps them alive for the full charge instead of letting them expire at their authored `lifetime`
+
 ## [v0.5.5] - 2026-09-17
 
 ### Added
