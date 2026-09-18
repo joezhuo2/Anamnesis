@@ -739,6 +739,25 @@ skill tree nodes.
 - Used by: the `Decoy Upgraded` player upgrade, granted by `Node_decoy`
   ("Cosmic Superimposition" capstone)
 
+## Ultrasonic (Capstone)
+- Asset: `Ultrasonic AD`
+- Type: Additional
+- Cooldown: 0s (upgrade-spawned)
+- Pattern: Circle (7 count, 45 random spread)
+- Spawn: 0 dist
+- Animation: 1s
+- Gains on hit: Stamina +4, Mana +4
+- Projectile:
+  - Speed: 14
+  - Lifetime: 0.75s
+  - Pierce: 3000
+  - Size: 1.5
+  - Damage: 170% True
+  - Scaling: moveSpeedPct
+  - Effect: 40% on hit (Stun, 2s)
+  - Knockback: 5 force for 0.15s
+- Used by: the `Ultrasonic` player upgrade, granted by `Node_ultrasonic`
+
 ---
 
 # Treasure Pool Attacks
@@ -819,7 +838,7 @@ player upgrades rather than attacks the player selects.
 - Asset: `Supersonic AD`
 - Type: Additional
 - Cooldown: 0s (upgrade-spawned)
-- Pattern: Circle (3 count, 45 random spread)
+- Pattern: Circle (3 count)
 - Spawn: 0 dist
 - Animation: 1s
 - Gains on hit: Stamina +3, Mana +3
@@ -828,9 +847,9 @@ player upgrades rather than attacks the player selects.
   - Lifetime: 1s
   - Pierce: 3000
   - Size: 1.5
-  - Damage: 110% True
+  - Damage: 135% True
   - Scaling: moveSpeedPct
-  - Effects: 60% on hit (Slow, 5s, max 3 stacks, -15% moveSpeed per stack) + 100% self on cast (Supersonic Cooldown, 3s)
+  - Effects: 100% self on cast (Supersonic Cooldown, 3s)
   - Knockback: 4 force for 0.15s
 
 ---
@@ -844,8 +863,8 @@ again on `OnRemove`. Used by `Solar Wind`.
 The `Overhealth` and `AddChain` types are passive: they configure the player on `OnUnlock`
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
-Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`
-and `Oblivion` — the capstone-only upgrades — are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
+`Oblivion` and `Ultrasonic` — the capstone-only upgrades — are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 ## Hypercarry
@@ -1077,6 +1096,21 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 - Delay: 0s
 - Projectile: `Supersonic.prefab`
 - Description: Ending a dash spawns 3 Supersonic projectiles, at most once per second.
+
+## Ultrasonic (Capstone)
+- Asset: `Ultrasonic`
+- Type: SpawnProjectile
+- Conditions: OnEndDash, OnTeleport
+- Chance: 100%
+- Cooldown: 0s
+- Delay: 0s
+- Projectile: `Ultrasonic.prefab`
+- Description: Ending a dash or teleporting through a `teleportToProjectile` attack spawns
+  7 Ultrasonic projectiles, with no cooldown.
+- Unlocked by: `Node_ultrasonic` ("Ultrasonic" capstone, 3 skill points, prerequisites
+  `Node_dd3` and `Node_dcr3`, requires the Supersonic upgrade). Unlocking it consumes
+  Supersonic. Refunding the node returns Supersonic.
+- Not in `treasurePool` — capstone-only.
 
 ## Tempo
 - Asset: `Tempo`

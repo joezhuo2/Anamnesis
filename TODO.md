@@ -1,9 +1,5 @@
 # Planned Features 
 
-## Pre [v0.6.0] Checklist
-
-- [ ] more enemy projectile telegraphs (jellyfish ball)
-
 ## Pre [v1.0.0] Checklist — First Light
 *Everything that has to be true before a stranger can play it.*
 
@@ -15,6 +11,7 @@
 - [ ] In-game credits/attribution screen — some of those licenses want attribution in the build itself
 - [ ] Store page — description, screenshots, capsule art, controls
 - [ ] Window icon + splash
+- [ ] more enemy projectile telegraphs (jellyfish ball)
 
 **QoL & Polish**
 - [ ] Resolution/window options (currently a fixed 1920x1080 with `resizableWindow: 0`)
@@ -155,9 +152,8 @@
 - [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
 
 ### Planned Abilities 
-- **Wipeout** - when an enemy is inflicted by a debuff, that debuff has a `{z}%` chance to be applied to all nearby enemies within `{x}` tiles of the source every `{y}` seconds or every `{tickInterval}` seconds
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
-- ***Something*** - After teleporting, creates an explosion that deals massive damage and increases damage and speed by `{z}%` for `{x}s`. This effect has a `{y}s` cooldown
+- **Chaos Theory** - After teleporting, creates an explosion that deals massive damage
 
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
 - **Midas Touch** - *something* consumes `{x}` gold on every attack to increase its damage dealt by `{y}%`
@@ -187,18 +183,17 @@
 ### Planned Capstone Nodes
 - Hex Cast (+buff -cost)
 - Starlit Reflexes (+buff -mana gain)
-- Supersonic (+count +dmg +size -cd)
-- Shattered Singularity (+spd -cd +size)
 
+- Shattered Singularity (+spd -cd +size)
 - Stellar maelstrom (-cost +count +homing)
 - Solar Collapse (+size -cd +dmg)
-- Meteor Shower (+size +dmg)
-- Starfury (+size +debuff -cost)
+
+- Meteor Shower
+- Starfury
 - Autopilot (+count +pierce +homing +dmg)
-- Feedback Loop (+chance -cd +dmg)
+- Feedback Loop
 
 ### Stats without skill tree nodes
-- spell dmg pct
 - add spl dmg pct
 - add dmg pct
 - basic dmg pct
@@ -212,8 +207,6 @@
 - max stamina
 - max mana
 - dash spd mult
-- dash cd red pdt
-- dash dist pct
 - dash stamina cost red pct
 - exp bonus
 - stealing

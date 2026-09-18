@@ -68,6 +68,13 @@ namespace CrystalFlux.StatusEffectSystem
             return at == bt || at.IsSubclassOf(bt) || bt.IsSubclassOf(at);
         }
 
+        public bool HasEffect(StatusEffect se)
+        {
+            for (int i = 0; i < activeEffects.Count; i++)
+                if (IsSameEffect(activeEffects[i], se)) return true;
+            return false;
+        }
+
         public void Apply(EffectAsset effect, GameObject source, Vector2 location = default)
         {
             if (effect is not StatusEffect se) return;
@@ -96,6 +103,7 @@ namespace CrystalFlux.StatusEffectSystem
             runtimeEffect.location = location;
             runtimeEffect.currentStacks = 1;
             runtimeEffect.currentTime = 0;
+            runtimeEffect.origin = se.origin != null ? se.origin : se;
 
             if (source != null && source.TryGetComponent<IStatProvider>(out var sem))
             {

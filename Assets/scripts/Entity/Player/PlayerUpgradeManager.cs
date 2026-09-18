@@ -58,8 +58,22 @@ namespace CrystalFlux.EntitySystem
             }
             Instance = this;
         }
-        private void OnEnable() => ProjectileSpawner.ProjectileSpawned += HandleProjectileSpawned;
-        private void OnDisable() => ProjectileSpawner.ProjectileSpawned -= HandleProjectileSpawned;
+        private void OnEnable()
+        {
+            ProjectileSpawner.ProjectileSpawned += HandleProjectileSpawned;
+            ProjectileSpawner.Teleported += HandleTeleported;
+        }
+        private void OnDisable()
+        {
+            ProjectileSpawner.ProjectileSpawned -= HandleProjectileSpawned;
+            ProjectileSpawner.Teleported -= HandleTeleported;
+        }
+
+        private void HandleTeleported(GameObject src, Vector2 pos)
+        {
+            if (src != gameObject) return;
+            TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTeleport);
+        }
 
         private void HandleProjectileSpawned(GameObject sourceObj, GameObject projectile, Vector2 spawnPos)
         {

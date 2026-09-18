@@ -24,7 +24,7 @@ MonoBehaviour:
   spiralSpacing: 1
   physicalMult: 0
   spellMult: 0
-  trueMult: 1.1
+  trueMult: 1.35
   scalingStat: 24
   specialMult: 1
   specialSclaing: 0
@@ -42,10 +42,6 @@ MonoBehaviour:
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects:
-  - effect: {fileID: 11400000, guid: 250277c2dfedd4246aedf91ddab8d9f4, type: 2}
-    selfApply: 0
-    applyCondition: 0
-    chance: 0.6
   - effect: {fileID: 11400000, guid: ee78caa1051a4214181a98b3c884ba0a, type: 2}
     selfApply: 1
     applyCondition: 1

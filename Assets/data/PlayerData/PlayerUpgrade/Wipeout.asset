@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c12b6fdb738a9745afc03d512877253, type: 3}
+  m_Name: Wipeout
+  m_EditorClassIdentifier: CrystalFlux.Entity::DoTSpread
+  upgradeName: Wipeout
+  conditions: 
+  chance: 0
+  cooldown: 0
+  delay: 0
+  radius: 2
+  spreadInterval: 1
+  useTickInterval: 1
+  spreadChance: 25

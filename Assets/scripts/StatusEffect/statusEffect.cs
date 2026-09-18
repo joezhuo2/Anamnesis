@@ -25,6 +25,7 @@ namespace CrystalFlux.StatusEffectSystem
         [HideInInspector] public Vector2 location;
         [HideInInspector] public int currentStacks = 0;
         [HideInInspector] public float potencyMultiplier = 1f;
+        [HideInInspector] public StatusEffect origin;
 
         public virtual void OnTick() {}
         public virtual void OnApply() {}

@@ -131,3 +131,6 @@ diff_output.txt
 ## copilot skills
 /.github/copilot-skills/
 /.github/skills/
+
+/build/
+diff_output.txt

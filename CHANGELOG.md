@@ -7,6 +7,23 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.6] - 2026-09-18
+
+### Added
+- **`OnTeleport` upgrade trigger** — `PlayerUpgrade.TriggerCondition` gained `OnTeleport`. `ProjectileSpawner` exposes a static `Teleported(GameObject src, Vector2 pos)` event, invoked at the end of the `TeleportToProjectile` coroutine once both `Rigidbody2D.position` and `transform.position` are moved. `PlayerUpgradeManager` subscribes in `OnEnable`/`OnDisable` and fires `OnTeleport` upgrades only when the teleporting source is the player
+- **Ultrasonic capstone** — new skill tree node (`Node_ultrasonic`, 3 SP, `undoCost` 50) under `_Capstone/`. Prerequisites: `Node_dd3` and `Node_dcr3`; requires the Supersonic upgrade, which it replaces with the `Ultrasonic` `SpawnProjectile` upgrade:
+  - Triggers on `OnEndDash` **and** `OnTeleport`, 100% chance, no cooldown (Supersonic: `OnEndDash` only, 1s cooldown)
+  - **Ultrasonic AD**: 7 projectiles (Supersonic: 3), 45 random spread, stamina +4 and mana +4 on hit (Supersonic: +3 each)
+  - **Ultrasonic PD**: speed 9 → 14, lifetime 1s → 0.75s, true multiplier 1.35 → 1.7, knockback 4 → 5, 40% chance to Stun (2s) on hit. No Supersonic Cooldown self-apply
+- **Dash Cooldown Reduction chain** — `Node_dcr1`–`Node_dcr3` (1 SP each), +2% dash cooldown reduction per node, branching off `Node_msp1`
+- **Dash Distance chain** — `Node_dd1`–`Node_dd3` (1 SP each), +3% dash distance per node, branching off `Node_dp5`
+- **DoTSpread player upgrade (Wipeout)** — `PlayerUpgrade/DoTSpread`. While equipped, a coroutine hosted on `PlayerUpgradeManager` checks every player-sourced debuff on active enemies (`EnemyMovement.Active`). Every `spreadInterval` seconds (or the debuff's own `tickInterval` when `useTickInterval` is set), each debuff has `spreadChance`% to apply itself to every living enemy within `radius` tiles that does not already carry it. Per-debuff timers live in a dictionary that is pruned of destroyed effects every 2s. The loop skips zero-timescale frames. Can be obtained through the treasure pool
+- `StatusEffectManager.HasEffect(StatusEffect)` — `IsSameEffect` check against the active list
+- `StatusEffect.origin` — runtime clones now remember the authored asset they came from (`Apply` keeps the first origin through re-application), so a spread debuff is re-applied from the original asset instead of a clone of a clone
+
+### Changed
+- **Supersonic** — true multiplier 1.1 → 1.35, random spread 45 → 0, and the 60% on-hit Slow was removed. The self-applied Supersonic Cooldown stays
+
 ## [v0.5.5_1] - 2026-09-18
 
 ### Added

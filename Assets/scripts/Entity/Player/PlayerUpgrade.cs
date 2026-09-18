@@ -29,7 +29,8 @@ namespace CrystalFlux.EntitySystem
             OnManaRegen,
             OnKill,
             OnLevelUp,
-            OnSpawnProjectile
+            OnSpawnProjectile,
+            OnTeleport
         }
         public TriggerCondition[] conditions;
         public float chance;
