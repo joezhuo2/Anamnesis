@@ -7,6 +7,18 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.5.7] - 2026-09-21
+
+### Changed
+- **Upgrade triggers are indexed by condition** — `PlayerUpgradeManager` keeps a `Dictionary<TriggerCondition, List<PlayerUpgrade>>` built in `Start` and maintained by `AddUpgrade` / `RemoveUpgrade`, so each of the three `TriggerUpgrades` overloads walks only the upgrades that actually listen for that condition instead of scanning every active upgrade and its `conditions` array. A single hit raises up to six trigger events (`EntityHealth.TakeDamage`), so a late-game build of ~25 upgrades went from roughly 150-300 iteration steps per hit to one dictionary lookup plus the matching upgrades
+- **`EntityHealth.RegenHp` runs its stat reads on the 0.5s cadence** — the timer is accumulated first and the five `GetStat` calls (`isAlive`, `CanGainHp`, `currentHp`, `EffMaxHp`, `EffHpReg`) only happen on a tick, instead of every frame per entity. The timer now advances even while regen is ineligible, so an entity that becomes eligible mid-interval can tick immediately rather than waiting a fresh 0.5s
+- **`EntityHealth.MoveHealthBar` skips stationary frames** — the method returns immediately when the entity has no bar and cannot have one, and otherwise skips `WorldToScreenPoint` and the transform writes while both the entity and the camera are within `1e-6` sq units of their last sampled positions. The per-frame `RefreshHealthBar()` call is gone; `AddOverhealth` now refreshes the bar so overhealth decay still updates the readout (the HP paths already refreshed directly). A 50-enemy wave drops ~400-500 stat dispatches and ~50 screen-space transforms per frame
+- **`EntityHealth.DecayOverhealth` checks its config before reading the stat** — the `overhealthDecayPct` / `overhealthDecayInterval` field checks moved ahead of the `overhealth` `GetStat`, so entities that never gain overhealth cost nothing
+- **`ProjectileSpawner` no longer allocates per shot** — all five spawn patterns (`SpawnCircle`, `SpawnSpread`, `SpawnSpreadBarrage`, `SpawnBarrage`, `SpawnOpposingLines`) replaced `yield return new WaitForSeconds(Random.Range(ad.MinDelay, ad.MaxDelay))` with a manual `do { yield return null; wait -= Time.deltaTime; } while (wait > 0f)` countdown. A 20-shot barrage stops producing 20 garbage objects, and the minimum one-frame gap of `WaitForSeconds(0)` is preserved. Delays remain scaled by `Time.timeScale`, so pausing still halts a barrage mid-flight
+
+### Fixed
+- **Delayed upgrades lost their spawn center** — `TriggerUpgrades(condition, Vector2 spawnCenter)` used to route upgrades with a `delay > 0` through the no-argument `TriggerWithDelay`, calling `TriggerUpgradeEffect(GameObject)` and dropping the spawn position. A `TriggerWithDelay(PlayerUpgrade, Vector2)` overload now carries it through, so delayed `OnSpawnProjectile` and `OnProjectileHit` upgrades behave like their instant counterparts
+
 ## [v0.5.6] - 2026-09-18
 
 ### Added

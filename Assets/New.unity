@@ -5325,7 +5325,7 @@ MonoBehaviour:
   source: {fileID: 0}
   impulseDuration: 0.15
   maxShake: 1.5
-  playerHurtShake: 0.06
+  playerHurtShake: 0.03
   playerHurtHitStop: 0
   playerHurtHitStopCooldown: 0
 --- !u!224 &181639773 stripped

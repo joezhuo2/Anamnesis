@@ -50,8 +50,8 @@
 
 **Content**
 - [ ] wave events - random events that can randomly occur during waves
-- [ ] contracts - similar to anomaly, but no fail risk, easier objective, but still some bonus rewards
-- [ ] Nightmare/Death difficulty (new enemy ai (eg. spliting))
+- [ ] contracts - similar to anomaly, but no fail risk, easier objective, less bonus rewards
+- [ ] Nightmare/Death difficulty (new enemy ai (eg. spliting), new attacks (attackData `minDifficulty` field))
 
 ## Pre [v1.3.0] Checklist — Domains of the Unbound
 *New ways to deal damage, and somewhere interesting to deal it.*
@@ -74,7 +74,7 @@
 *The item layer itself: equip, consume, buy.*
 
 **Systems**
-- [ ] Finish Gear/Item system (slots, rarity tiers, stat rolls, equip/unequip flow)
+- [ ] Finish Gear/Item system (slots, rarity tiers, stat rolls, equip/unequip)
 - [ ] Consumables (potions, bombs, temporary buffs) with hotkeys
 - [ ] Shop/merchant between waves to spend currency on items or stat boosts
 
@@ -184,13 +184,14 @@
 - Hex Cast (+buff -cost)
 - Starlit Reflexes (+buff -mana gain)
 
-- Shattered Singularity (+spd -cd +size)
-- Stellar maelstrom (-cost +count +homing)
-- Solar Collapse (+size -cd +dmg)
+- Shattered Singularity
+- Stellar maelstrom
+- Solar Collapse
+- Exodus
 
 - Meteor Shower
 - Starfury
-- Autopilot (+count +pierce +homing +dmg)
+- Autopilot
 - Feedback Loop
 
 ### Stats without skill tree nodes
@@ -224,24 +225,12 @@
 
 ## Performance Improvements
 
-Audit 2026-09-14 (perf sweep of `Assets/scripts` + CrystalFlux packages). Ranked by severity.
-
 ### Medium
 
 - [ ] Enemy pooling — documented as a deliberate deferral in Open Items; revisit when the three blockers
   (Destroy-bound cleanup with no `OnDisable` counterparts, non-idempotent `ScaleBaseStats`, fake-null kill
   counting) are resolved. Churn source: `EnemySpawner.cs:14-24`, `EntitySplitting.cs:21`,
   `EntitySummonHandler.cs:50`, per-spawn `EntityStats` clone (`EntityStatManager.cs:27`).
-- [ ] `PlayerUpgradeManager.TriggerUpgrades` (`165-236`) full-scans all upgrades + conditions on every hit
-  event (up to 6 events per hit, `EntityHealth.cs:308-351`; late game ≈ 150-300 iteration steps per hit).
-  Fix: index upgrades by `TriggerCondition` in a `Dictionary` built at Start and updated on Add/Remove.
-- [ ] `EntityHealth.Update` (`174-179`): `RegenHp()` (5 GetStat calls) + `MoveHealthBar()` (~4 GetStat +
-  `WorldToScreenPoint`) every frame per entity with bars — 50 enemies ≈ 400-500 stat dispatches/frame.
-  Fix: run the regen guard on a 0.5s cadence; skip `MoveHealthBar` when bar hidden or entity stationary
-  (cached position delta threshold); HP paths already call `RefreshHealthBar()` directly.
-- [ ] `ProjectileSpawner` allocates a fresh `WaitForSeconds(Random.Range(...))` per shot in all five spawn
-  patterns (`75,97,118,132,174`) — a 20-shot barrage ≈ 20 allocs, firing constantly from both sides.
-  Fix: single manual timer (`yield return null; remaining -= Time.deltaTime;`) or bucketed cached instances.
 
 ### Low
 

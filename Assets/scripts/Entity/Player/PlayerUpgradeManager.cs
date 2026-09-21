@@ -22,6 +22,8 @@ namespace CrystalFlux.EntitySystem
         private readonly Dictionary<AttackType, List<EffectData>> extraEffects = new();
         private static readonly List<EffectData> noEffects = new();
 
+        private readonly Dictionary<PlayerUpgrade.TriggerCondition, List<PlayerUpgrade>> byCondition = new();
+
         public IReadOnlyList<EffectData> GetExtraEffects(AttackType type)
             => extraEffects.TryGetValue(type, out var list) ? list : noEffects;
 
@@ -94,7 +96,38 @@ namespace CrystalFlux.EntitySystem
                 runtime.OnUnlock(gameObject);
             }
 
+            RebuildConditionIndex();
             WarnOnDuplicateNames();
+        }
+
+        private void RebuildConditionIndex()
+        {
+            foreach (var kv in byCondition) kv.Value.Clear();
+
+            for (int i = 0; i < activeUpgrades.Count; i++) IndexUpgrade(activeUpgrades[i]);
+        }
+
+        private void IndexUpgrade(PlayerUpgrade u)
+        {
+            if (u == null || u.conditions == null) return;
+
+            for (int i = 0; i < u.conditions.Length; i++)
+            {
+                if (!byCondition.TryGetValue(u.conditions[i], out var list))
+                {
+                    list = new List<PlayerUpgrade>();
+                    byCondition[u.conditions[i]] = list;
+                }
+                if (!list.Contains(u)) list.Add(u);
+            }
+        }
+
+        private void DeindexUpgrade(PlayerUpgrade u)
+        {
+            if (u == null || u.conditions == null) return;
+
+            for (int i = 0; i < u.conditions.Length; i++)
+                if (byCondition.TryGetValue(u.conditions[i], out var list)) list.Remove(u);
         }
 
         private void OnDestroy()
@@ -108,6 +141,7 @@ namespace CrystalFlux.EntitySystem
             runtimeCopies.Clear();
             lastTriggerTimes.Clear();
             extraEffects.Clear();
+            byCondition.Clear();
         }
 
         private PlayerUpgrade ToRuntimeCopy(PlayerUpgrade source)
@@ -163,6 +197,7 @@ namespace CrystalFlux.EntitySystem
 
             PlayerUpgrade runtime = ToRuntimeCopy(pu);
             activeUpgrades.Add(runtime);
+            IndexUpgrade(runtime);
             runtime.OnUnlock(gameObject);
         }
         public void RemoveUpgrade(PlayerUpgrade pu)
@@ -171,6 +206,7 @@ namespace CrystalFlux.EntitySystem
             if (active == null) return;
 
             activeUpgrades.Remove(active);
+            DeindexUpgrade(active);
             lastTriggerTimes.Remove(active);
             active.OnRemove(gameObject);
 
@@ -178,80 +214,76 @@ namespace CrystalFlux.EntitySystem
         }
         public void TriggerUpgrades(PlayerUpgrade.TriggerCondition condition)
         {
+            if (!byCondition.TryGetValue(condition, out var matches) || matches.Count == 0) return;
+
             float now = Time.time;
 
-            foreach (var u in activeUpgrades)
+            for (int i = 0; i < matches.Count; i++)
             {
+                PlayerUpgrade u = matches[i];
                 if (u == null) continue;
 
                 if (u.cooldown > 0f && lastTriggerTimes.TryGetValue(u, out float lastTriggerTime) && now < lastTriggerTime + u.cooldown)
                     continue;
 
-                foreach (var c in u.conditions)
-                {
-                    if (c == condition)
-                    {
-                        if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
-                        lastTriggerTimes[u] = now;
-                        if (u.delay > 0) StartCoroutine(TriggerWithDelay(u));
-                        else u.TriggerUpgradeEffect(gameObject);
-                        break;
-                    }
-                }
+                if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
+
+                lastTriggerTimes[u] = now;
+                if (u.delay > 0) StartCoroutine(TriggerWithDelay(u));
+                else u.TriggerUpgradeEffect(gameObject);
             }
         }
         public void TriggerUpgrades(PlayerUpgrade.TriggerCondition condition, Vector2 spawnCenter)
         {
+            if (!byCondition.TryGetValue(condition, out var matches) || matches.Count == 0) return;
+
             float now = Time.time;
 
-            foreach (var u in activeUpgrades)
+            for (int i = 0; i < matches.Count; i++)
             {
+                PlayerUpgrade u = matches[i];
                 if (u == null) continue;
 
                 if (u.cooldown > 0f && lastTriggerTimes.TryGetValue(u, out float lastTriggerTime) && now < lastTriggerTime + u.cooldown)
                     continue;
 
-                foreach (var c in u.conditions)
-                {
-                    if (c == condition)
-                    {
-                        if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
-                        lastTriggerTimes[u] = now;
-                        if (u.delay > 0) StartCoroutine(TriggerWithDelay(u));
-                        else u.TriggerUpgradeEffect(gameObject, spawnCenter);
-                        break;
-                    }
-                }
+                if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
+
+                lastTriggerTimes[u] = now;
+                if (u.delay > 0) StartCoroutine(TriggerWithDelay(u, spawnCenter));
+                else u.TriggerUpgradeEffect(gameObject, spawnCenter);
             }
         }
         public void TriggerUpgrades(PlayerUpgrade.TriggerCondition condition, GameObject target, float damageDealt)
         {
+            if (!byCondition.TryGetValue(condition, out var matches) || matches.Count == 0) return;
+
             float now = Time.time;
 
-            foreach (var u in activeUpgrades)
+            for (int i = 0; i < matches.Count; i++)
             {
+                PlayerUpgrade u = matches[i];
                 if (u == null) continue;
 
                 if (u.cooldown > 0f && lastTriggerTimes.TryGetValue(u, out float lastTriggerTime) && now < lastTriggerTime + u.cooldown)
                     continue;
 
-                foreach (var c in u.conditions)
-                {
-                    if (c == condition)
-                    {
-                        if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
-                        lastTriggerTimes[u] = now;
-                        if (u.delay > 0) StartCoroutine(TriggerWithDelay(u, target, damageDealt));
-                        else u.TriggerUpgradeEffect(gameObject, target, damageDealt);
-                        break;
-                    }
-                }
+                if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
+
+                lastTriggerTimes[u] = now;
+                if (u.delay > 0) StartCoroutine(TriggerWithDelay(u, target, damageDealt));
+                else u.TriggerUpgradeEffect(gameObject, target, damageDealt);
             }
         }
         private IEnumerator TriggerWithDelay(PlayerUpgrade u)
         {
             yield return new WaitForSeconds(u.delay);
             u.TriggerUpgradeEffect(gameObject);
+        }
+        private IEnumerator TriggerWithDelay(PlayerUpgrade u, Vector2 spawnCenter)
+        {
+            yield return new WaitForSeconds(u.delay);
+            u.TriggerUpgradeEffect(gameObject, spawnCenter);
         }
         private IEnumerator TriggerWithDelay(PlayerUpgrade u, GameObject target, float damageDealt)
         {

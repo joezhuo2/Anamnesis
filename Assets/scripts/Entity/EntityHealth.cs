@@ -82,6 +82,9 @@ namespace CrystalFlux.EntitySystem
         private int barCurHp = int.MinValue;
         private int barMaxHp = int.MinValue;
         private int barOverhealth = int.MinValue;
+        private Vector3 lastBarWorldPos = new(float.NaN, float.NaN, float.NaN);
+        private Vector3 lastBarCamPos = new(float.NaN, float.NaN, float.NaN);
+        private const float barMoveEpsilonSqr = 1e-6f;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics() => sharedCanvas = null;
@@ -152,6 +155,8 @@ namespace CrystalFlux.EntitySystem
             barCurHp = int.MinValue;
             barMaxHp = int.MinValue;
             barOverhealth = int.MinValue;
+            lastBarWorldPos = new Vector3(float.NaN, float.NaN, float.NaN);
+            lastBarCamPos = new Vector3(float.NaN, float.NaN, float.NaN);
             RefreshHealthBar();
         }
 
@@ -197,14 +202,16 @@ namespace CrystalFlux.EntitySystem
         {
             if (esm == null || delta == 0f) return;
             esm.AddStat(new StatBuff(StatType.overhealth, delta));
+            RefreshHealthBar();
         }
 
         private void DecayOverhealth()
         {
             if (Time.timeScale == 0f) return;
+            if (overhealthDecayPct <= 0f || overhealthDecayInterval <= 0f) return;
 
             float cur = Overhealth;
-            if (cur <= 0f || overhealthDecayPct <= 0f || overhealthDecayInterval <= 0f) return;
+            if (cur <= 0f) return;
 
             overhealthDecayTimer += Time.deltaTime;
             if (overhealthDecayTimer < overhealthDecayInterval) return;
@@ -218,6 +225,8 @@ namespace CrystalFlux.EntitySystem
 
         private void MoveHealthBar()
         {
+            if (healthBarInstance == null && (healthBarPrefab == null || barRetired || !BarsAllowed)) return;
+
             if (mainCamera == null) mainCamera = Camera.main;
             if (mainCamera == null || !IsAlive) return;
 
@@ -242,9 +251,16 @@ namespace CrystalFlux.EntitySystem
                 if (healthBarInstance == null) return;
             }
 
-            RefreshHealthBar();
+            Vector3 worldPos = transform.position;
+            Vector3 camPos = mainCamera.transform.position;
 
-            Vector3 screenPos = mainCamera.WorldToScreenPoint(transform.position + healthBarOffset);
+            if ((worldPos - lastBarWorldPos).sqrMagnitude < barMoveEpsilonSqr && (camPos - lastBarCamPos).sqrMagnitude < barMoveEpsilonSqr)
+                return;
+
+            lastBarWorldPos = worldPos;
+            lastBarCamPos = camPos;
+
+            Vector3 screenPos = mainCamera.WorldToScreenPoint(worldPos + healthBarOffset);
             bool visible = screenPos.z > 0f;
 
             if (healthBarInstance.gameObject.activeSelf != visible)
@@ -498,29 +514,25 @@ namespace CrystalFlux.EntitySystem
         private void RegenHp()
         {
             if (Time.timeScale == 0f) return;
+
+            regenTimer += Time.deltaTime;
+            if (regenTimer < regenInterval) return;
+
+            regenTimer -= regenInterval;
+
             if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
             if (CurHp >= MaxHp && !(regenOverHealth && overhealthConvPct > 0f)) return;
 
-            regenTimer += Time.deltaTime;
+            float hpPerSecond = esm.GetStat(StatType.EffHpReg) / fullRegenFrequency;
+            accumulatedRegen += hpPerSecond * regenInterval;
 
-            if (regenTimer >= regenInterval)
-            {
-                regenTimer -= regenInterval;
+            if (accumulatedRegen < 1f) return;
 
-                float hpPerSecond = esm.GetStat(StatType.EffHpReg) / fullRegenFrequency;
-                float hpPerTick = hpPerSecond * regenInterval;
+            int intRegen = Mathf.FloorToInt(accumulatedRegen);
+            accumulatedRegen -= intRegen;
+            ChangeHealth(intRegen, false);
 
-                accumulatedRegen += hpPerTick;
-
-                if (accumulatedRegen >= 1f)
-                {
-                    int intRegen = Mathf.FloorToInt(accumulatedRegen);
-                    accumulatedRegen -= intRegen;
-                    ChangeHealth(intRegen, false);
-
-                    if (cpum != null) cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnHealthRegen);
-                }
-            }
+            if (cpum != null) cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnHealthRegen);
         }
 
         private void StartDeathSequence()

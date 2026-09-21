@@ -73,7 +73,8 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 spawnPos = center + (dir * radius);
 
                 SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot);
-                yield return new WaitForSeconds(Random.Range(ad.MinDelay, ad.MaxDelay));
+                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
+                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 
@@ -95,7 +96,8 @@ namespace CrystalFlux.ProjectileSystem
 
                 SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd, chainRoot);
 
-                yield return new WaitForSeconds(Random.Range(ad.MinDelay, ad.MaxDelay));
+                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
+                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 
@@ -116,7 +118,8 @@ namespace CrystalFlux.ProjectileSystem
 
                 SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd, chainRoot);
 
-                yield return new WaitForSeconds(Random.Range(ad.MinDelay, ad.MaxDelay));
+                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
+                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 
@@ -130,7 +133,8 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 spawnPos = origin + randomOffset;
 
                 SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot);
-                yield return new WaitForSeconds(Random.Range(ad.MinDelay, ad.MaxDelay));
+                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
+                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 
@@ -172,7 +176,8 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 spawnPos = origin + (Vector2.Perpendicular(travel) * offset) - (dir * halfExtent);
 
                 SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot);
-                yield return new WaitForSeconds(Random.Range(ad.MinDelay, ad.MaxDelay));
+                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
+                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 

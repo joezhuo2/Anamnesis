@@ -22,6 +22,8 @@ MonoBehaviour:
   spawnDelay: 0
   spawnDistance: 3
   fixedDistance: 0
+  teleportToProjectile: 0
+  teleportDelay: 0
   animationLength: 0.5
   canCharge: 0
   chargeThreshold: 0.15
@@ -63,8 +65,8 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  hitStop: 0.06
+  hitStop: 0.04
   hitStopCooldown: 0.3
-  screenShake: 0.08
+  screenShake: 0.06
   icon: {fileID: 196999898347057192, guid: 4511473431829134fa55de9598a0d9c5, type: 3}
   displayName: Cyclone Cleave
