@@ -2,14 +2,14 @@
 
 # Anamnesis
 
-> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 210-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
+> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 221-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
 
 ![Unity](https://img.shields.io/badge/Unity-6000.4.6f1-000000?logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-.NET-512BD4?logo=dotnet&logoColor=white)
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.5.7-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.0-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,14 +17,14 @@
 
 </div>
 
-Current release: **v0.5.7** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.0** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
 ## 🔁 Core Loop
 
 1. **Pick a difficulty and a gamemode** — **Easy**, **Normal** or **Hard**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
-2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way.
+2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls.
 3. **Choose a reward** — buffs, rare attacks or treasure-pool Awakenings. Reroll, pay 200g when out of rerolls, or corrupt the rewards for a bigger gamble.
 4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*) that trade risk for rerolls and skill points.
 5. **Spend skill points and gold** — unlock skill tree nodes, refund them for gold, level up from XP, and repeat.
@@ -42,12 +42,13 @@ Current release: **v0.5.7** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, and once-per-wave corruption with a 4% chance of a *Corrupted* special attack |
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
-| **✨ Awakenings** | `PlayerUpgrade` assets driven by 22 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
-| **🌳 Skill Tree** | Pan/zoom tree of 210 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, and capstones that upgrade an owned attack or Awakening in place |
+| **✨ Awakenings** | `PlayerUpgrade` assets driven by 23 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
+| **🌳 Skill Tree** | Pan/zoom tree of 221 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, and capstones that upgrade an owned attack or Awakening in place |
 | **🧪 Status Effects** | Stackable DoTs, stuns, stat buffs and reductions, attack replacement and cleansing, with cooldown UI |
-| **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a four-boss **Boss Rush** gauntlet |
+| **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a five-boss **Boss Rush** gauntlet |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
+| **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman |
 | **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, quit buttons, a *You Died* screen, and the build version on the home screen — all persisted to `settings.json` |
 | **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, red borders and flashes on blocked attacks, and unscaled hover scaling that animates while paused |
 
@@ -81,12 +82,13 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova |
 | **Skills** | Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge |
 | **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis |
-| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, plus capstone-only Solar Wind and Oblivion |
-| **Capstones** | Warp and Hypernova upgrade their required attack; Decoy Upgraded, Solar Wind and Oblivion upgrade their required Awakening |
+| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, plus capstone-only Solar Wind and Oblivion |
+| **Capstones** | Warp, Hypernova and Astral Disjunction upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion and Ultrasonic upgrade their required Awakening |
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma) |
-| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (in progress, not yet in wave sets) |
-| **Boss Rush** | `BossRush` (Lv 70 Lich → Jellyfish → Cultist → Golem) chaining into `BossRush Part 2` (same four at Lv 105) |
+| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`) |
+| **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper) chaining into `BossRush Part 2` (the same five at Lv 105) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel* — separate Regular and Unlimited lists |
+| **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
 In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm* and *Duel* always pay out, and *Swarm* / *Duel* never appear before a boss wave.
@@ -114,6 +116,7 @@ Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a 
 | `OnCounterDodge` | The player is hit while immune and dashing | `(player)` |
 | `OnStartDash` | A dash begins | `(player)` |
 | `OnEndDash` | A dash ends | `(player)` |
+| `OnTeleport` | The player is teleported by a `teleportToProjectile` attack, after both the rigidbody and transform are moved | `(player)` |
 | `OnHealthRegen` | Passive health regen ticks for at least 1 HP | `(player)` |
 | `OnStaminaRegen` | Passive stamina regen ticks for at least 1 stamina | `(player)` |
 | `OnManaRegen` | The player actually gains mana. There is no passive mana regen tick, so this covers every mana gain | `(player)` |
@@ -175,6 +178,7 @@ Assets/
 ├── New.unity                  # Main game scene (WaveManager, SkillTree, Player UI)
 ├── data/                      # ScriptableObject data
 │   ├── _example/              # Template attack folder (AD/PD/controller/prefab) to copy when authoring
+│   ├── Collectibles/          # CollectibleData assets (XP, Gold, Health, Stamina, Mana, Reroll, SkillPoint)
 │   ├── Difficulty/            # Easy / Normal / Hard DifficultyData assets
 │   ├── entity/                # Enemy/Player base stats, attacks, animation data, prefabs
 │   │   └── enemy/             # Split into Bosses/ and Enemies/
@@ -184,6 +188,7 @@ Assets/
 │   ├── StatusEffect/          # Authored status effects (DoTs, stuns, buffs, debuffs)
 │   └── Wave/                  # Wave sequences (waves/) and anomalies (Anomaly/Regular, Anomaly/Unlimited)
 └── scripts/
+    ├── Collectible/            # [asmdef] CollectibleData, pooled Collectible pickup, CollectibleSpawner
     ├── Entity/                # [asmdef] Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
@@ -210,13 +215,15 @@ Each `[asmdef]` folder compiles to its own assembly, so cross-system dependencie
                   ├─ StatusEffect
 Core (package) ───┼─ SkillTree
                   ├─ Wave
-                  └─ Entity ──→ Projectile, StatusEffect, SkillTree, TextIndicator
+                  ├─ Entity ──→ Projectile, StatusEffect, SkillTree, TextIndicator
+                  └─ Collectible ──→ Entity, Wave, TextIndicator
 
                   ┌─ Projectile
                   ├─ StatusEffect
 Pooling ──────────┼─ Wave
                   ├─ TextIndicator
-                  └─ Entity
+                  ├─ Entity
+                  └─ Collectible
 
 TextIndicator ── (references Pooling and TextMeshPro only)
 
@@ -231,6 +238,7 @@ Settings ─────────┬─ Entity
 | **Settings** | References nothing. `GameSettings` and its bootstrap, read by `Entity` and `Wave`; the menu UI lives in `Misc` |
 | **Projectile / StatusEffect / SkillTree / Wave** | Never reference each other — only `Core`, plus `Pooling` where they spawn. A cross-reference is a compile error |
 | **Entity** | The only assembly that composes the leaf systems |
+| **Collectible** | Composes `Entity`, `Wave` and `TextIndicator` to pay out and announce a pickup. Nothing references it back — the spawner is placed in the scene |
 | **TextIndicator** | References only `Pooling` and TextMeshPro |
 | **Items / Misc** | Stay in `Assembly-CSharp`, which auto-references everything above |
 

@@ -17246,6 +17246,64 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: b0b7d6b7e5cf5e7479c11745e927f73a, type: 3}
   m_PrefabInstance: {fileID: 775410994}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &776374559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 776374561}
+  - component: {fileID: 776374560}
+  m_Layer: 0
+  m_Name: CollectibleSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &776374560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776374559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8c11dc9c6311d44b67d9088e0004d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrystalFlux.Collectible::CrystalFlux.CollectibleSystem.CollectibleSpawner
+  prefab: {fileID: 5559534897300924682, guid: 245ee770263d07b4bb9efab8031f6c72, type: 3}
+  collectibles:
+  - {fileID: 11400000, guid: 14fb9188e5eebd1418c6f67ef28403dc, type: 2}
+  - {fileID: 11400000, guid: 9369ae0ad568ca04bb3cd4d3e321c45e, type: 2}
+  - {fileID: 11400000, guid: 0f28b7132a0654c4085e5ecb2f8d6b0a, type: 2}
+  - {fileID: 11400000, guid: d2d059a491f33c846861a44db27cf176, type: 2}
+  - {fileID: 11400000, guid: 44f57e13d9679554fae52f1f8bf2fa14, type: 2}
+  - {fileID: 11400000, guid: 2d204a9e68272514e874df1eef5c206a, type: 2}
+  - {fileID: 11400000, guid: 802859c6b3b334b46836adf266506a67, type: 2}
+  prewarmCount: 8
+  minSpawnDist: 4
+  maxSpawnDist: 8
+  maxConcurrent: 8
+  tickInterval: 2
+--- !u!4 &776374561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776374559}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 274.94742, y: 110.07812, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &785655820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63622,4 +63680,5 @@ SceneRoots:
   - {fileID: 954713621}
   - {fileID: 1465221077}
   - {fileID: 1423153586}
+  - {fileID: 776374561}
   - {fileID: 554513013}

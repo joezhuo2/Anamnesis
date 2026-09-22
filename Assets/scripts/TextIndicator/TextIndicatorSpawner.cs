@@ -51,6 +51,17 @@ namespace CrystalFlux.Core
             _activeIndicators.Add(indicator);
         }
 
+        public void SpawnTextIndicator(string content, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay = 0f)
+        {
+            if (prefab == null || canvas == null || string.IsNullOrEmpty(content)) return;
+
+            TextIndicator indicator = PrefabPool.Acquire(prefab, canvas.transform);
+            if (indicator == null) return;
+
+            indicator.Initialize(content, sourcePos, color, scale, lifetime, floatSpeed, delay);
+            _activeIndicators.Add(indicator);
+        }
+
         public void ReturnToPool(TextIndicator indicator)
         {
             if (indicator == null) return;

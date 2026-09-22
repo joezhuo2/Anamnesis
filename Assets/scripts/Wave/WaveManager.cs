@@ -964,6 +964,17 @@ namespace CrystalFlux.WaveSystem
             corruptButton.gameObject.SetActive(allowed);
         }
 
+        public static bool WaveActive => ActiveManager != null && ActiveManager.isWaveActive;
+
+        public static bool GrantRerolls(int amount)
+        {
+            if (amount <= 0 || ActiveManager == null || IronmanSelector.Enabled) return false;
+
+            ActiveManager.rerolls += amount;
+            ActiveManager.UpdateRerollUI();
+            return true;
+        }
+
         protected void UpdateRerollUI()
         {
             if (IronmanSelector.Enabled)

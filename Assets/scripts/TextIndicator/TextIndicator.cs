@@ -25,26 +25,33 @@ namespace CrystalFlux.Core
 
         public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, TextType textType, float delay = 0f)
         {
-            mainCam = mainCam != null ? mainCam : Camera.main;
-
-            worldPos = sourcePos + new Vector3(
-                Random.Range(-maxRandomOffset.x, maxRandomOffset.x), 
-                Random.Range(-maxRandomOffset.y, maxRandomOffset.y), 
-                0f
-            );
-
-            if (mainCam != null) transform.position = mainCam.WorldToScreenPoint(worldPos);
-
             string result = val >= 1_000_000 ? (val / 1_000_000f).ToString("0.#") + "M"
               : val >= 1_000     ? (val / 1_000f).ToString("0.#") + "k"
               : val.ToString();
 
-            text.text = textType switch
+            string content = textType switch
             {
                 TextType.Gold => $"{(val >= 0 ? "+" : "")}{result} g",
                 TextType.Exp => $"{(val >= 0 ? "+" : "")}{result} xp",
                 _ => result,
             };
+
+            Initialize(content, sourcePos, color, scale, lifetime, floatSpeed, delay);
+        }
+
+        public void Initialize(string content, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay = 0f)
+        {
+            mainCam = mainCam != null ? mainCam : Camera.main;
+
+            worldPos = sourcePos + new Vector3(
+                Random.Range(-maxRandomOffset.x, maxRandomOffset.x),
+                Random.Range(-maxRandomOffset.y, maxRandomOffset.y),
+                0f
+            );
+
+            if (mainCam != null) transform.position = mainCam.WorldToScreenPoint(worldPos);
+
+            text.text = content;
             text.color = color;
             text.fontSize = baseFontSize * scale;
 

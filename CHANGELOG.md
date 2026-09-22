@@ -7,6 +7,57 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.0] - 2026-09-21 - Impact & Efficiency (Release Summary)
+
+*This release adds the first reward source that is not a between-wave panel: environmental collectibles — glowing pickups that appear around the player mid-wave and pay out health, XP, stamina, mana, gold, skill points or rerolls, each on its own roll chance, cooldown and on-ground lifetime.*
+
+It also caps the development arc from `v0.5.0_1` through `v0.5.7`. Over that period Anamnesis gained the weight behind a hit — per-attack hit stop and screen shake, authored across ten attacks — while a fifth boss shipped, attacks learned to teleport their caster to the projectile they fired (with two capstones built on it), the pause menu learned to open itself, and four passes took coroutines, allocations and per-frame stat reads out of the combat hot path.
+
+### Highlights
+
+- **The Grim Reaper (`v0.5.1`)** — a fifth boss on the *Bringer of Death* sprite sheet with attacks designed by Fred Xu: Toss (stuns) above 60% HP, Strike (Vulnerable) above 30%, Balls from phase 2, and Spam, a slow wall of long-lived burning projectiles. It reached the wave sets in `v0.5.3_1`, as the Lv 75 capstone of the new `ws_5` sequence and a fifth boss in both Boss Rush parts
+- **Hit stop and screen shake (`v0.5.3`, `v0.5.3_1`)** — every `AttackData` gained an *Impact Feedback* block: `hitStop` freezes the game on hit (at `timeScale` 0.001, so pause checks and input stay live) with a `hitStopCooldown` so rapid hits cannot lock it up, and `screenShake` fires a Cinemachine impulse that `CombatFeedback` wires up on its own. Both default to 0 and were then authored per attack across Cyclone Cleave, Cosmic Blaze, Exodus (A/B/C), Luminaria, Nebula, Nirvana, Nocturnis, Revelation and Shattered Singularity. Freezes step aside for the pause menu, skill tree and reward panel instead of fighting them over `timeScale`
+- **Teleport to projectile, and two capstones on it (`v0.5.5`, `v0.5.6`)** — `AttackData.teleportToProjectile` / `teleportDelay` move the caster to its first spawned projectile once the spawn delay elapses. **Astral Disjunction** turns Astral Nova into a longer-range blink nuke; `ProjectileSpawner` then exposed a static `Teleported` event, `PlayerUpgrade` gained an `OnTeleport` trigger, and **Ultrasonic** replaced Supersonic with 7 stunning projectiles on every dash end *and* every teleport, with no cooldown. Two 3-node chains (Dash Cooldown Reduction, Dash Distance) lead to it
+- **Leaner combat hot path (`v0.5.4`, `v0.5.4_1`, `v0.5.7`)** — the per-hit coroutines are gone (damage numbers, hurt resets, i-frames and projectile re-hit windows run on timers), `DamagePacket` is pooled through `DamagePacket.Get` / `Release` (CrystalFlux Core 0.10.0), `StatusEffectManager` reads effect resistance once per frame instead of once per effect and skips paused frames, upgrades are dispatched from a `Dictionary<TriggerCondition, List<PlayerUpgrade>>` instead of a full scan per trigger, health regen reads its stats on its 0.5s tick rather than every frame, health bars skip frames where neither the entity nor the camera moved, and barrages count their inter-shot delay down manually instead of allocating a `WaitForSeconds` per shot
+- **Quit, build version and auto-pause (`v0.5.2`, `v0.5.5_1`)** — the pause menu and death screen gained a Quit button that saves `settings.json` before exiting through `GameRestart.QuitGame`, the home screen shows `Application.version` through `BuildVersionLabel` so playtest reports name their build, and `pauseOnFocusLoss` opens the pause panel when the game window loses focus (skipped while dead, restarting, or already paused)
+- **Environmental collectibles (`v0.6.0`)** — the new `CrystalFlux.Collectible` assembly, seven authored `CollectibleData` assets and a scene spawner, detailed below
+
+### Added
+- **`CrystalFlux.Collectible` — a new assembly under `Assets/scripts/Collectible/`** (references `Core`, `Pooling`, `Entity`, `Wave`, `TextIndicator`, TextMeshPro) holding three types:
+  - **`CollectibleData`** (`Data/Collectible`) — the authored asset: `sprite`, `CollectibleType` (`Heal`, `Xp`, `Stamina`, `Mana`, `Gold`, `SkillPoints`, `Rerolls`), `lightColor`, a `minVal`–`maxVal` roll range, and the spawn triple `chance` / `cooldown` / `maxTime`. `RollValue()` rolls the range inclusively, `BuildDesc(int)` builds the pickup's label from the type (`+35 Gold`, `+1 Skill Point`, `+5% XP`), and `Apply(GameObject, int)` pays out through the `Core` interfaces — `ICurrencyHolder.AddCurrency`, `ISkillPointHolder.AddSkillPoints`, `IResourcePool.TryGain`, `EntityHealth.ChangeHealth`, `PlayerLevel.GainExp`, `WaveManager.GrantRerolls`. Every path is `TryGetComponent`-guarded and returns a bool, so a payout that cannot land is refused rather than silently lost
+  - **`Collectible`** — the pooled world object (`IPoolable`, `CircleCollider2D` trigger). Bobs on `visualRoot` (`bobAmp` 0.15, `bobSpeed` 2), pulses a `glow` renderer tinted with `lightColor` between `glowMinAlpha` and `glowMaxAlpha`, and carries a world-space `TextMeshPro` label showing what it will pay. Picked up on trigger contact with a `Player`-tagged collider (resolved through `attachedRigidbody` first), which applies the value, spawns a text indicator and releases the object. Both `Update` loops early-return while `Time.timeScale == 0f`
+  - **`CollectibleSpawner`** — one per scene (`Active` static). Every `tickInterval` while `WaveManager.WaveActive`, it prunes the live list, and if it is under `maxConcurrent` it builds the candidate list (skipping zero-chance assets, assets on cooldown, and `Rerolls` while `IronmanSelector.Enabled`), shuffles it, and spawns the first asset to pass its own `chance` roll — one spawn per tick at most — then puts that asset on its `cooldown`. Placement is a random angle at `minSpawnDist`–`maxSpawnDist` from the player's current position. Cooldowns tick down even between waves; `OnDisable` releases every live pickup and clears them
+- **Percentage payouts for the four scaling types** — `Heal`, `Xp`, `Stamina` and `Mana` treat the rolled value as a percentage of a live stat (`EffMaxHp`, `XpReq`, `EffMaxStamina`, `EffMaxMana`), so a pickup is worth the same fraction of the player's kit at wave 5 and at wave 75. `Gold`, `SkillPoints` and `Rerolls` are flat counts
+- **Collectibles hold their remaining time across a wave break** — `maxTime` is only counted down while `WaveManager.WaveActive`, so a pickup left on the ground when the wave ends is still there, with the same time left, once the next wave starts. It fades out over the last `fadeTime` (0.5s) of its life
+- **Seven `CollectibleData` assets** under `Assets/data/Collectibles/`, drawn from the existing `icons.png` sheet:
+
+  | Asset | Pays | Roll | Chance / tick | Cooldown | Lifetime |
+  | --- | --- | --- | --- | --- | --- |
+  | `XP` | % of `XpReq` | 3–15% | 8% | 10s | 30s |
+  | `Gold` | gold | 5–65 | 6% | 5s | 25s |
+  | `Health` | % of `EffMaxHp` | 3–20% | 4% | 10s | 25s |
+  | `Stamina` | % of `EffMaxStamina` | 3–15% | 4% | 15s | 25s |
+  | `Mana` | % of `EffMaxMana` | 3–15% | 3% | 15s | 25s |
+  | `Reroll` | rerolls | 1 | 2% | 15s | 20s |
+  | `SkillPoint` | skill points | 1 | 1% | 20s | 20s |
+
+- **`Collectible` prefab** (`Assets/data/prefabs/`) — sprite, glow (built-in circle sprite at `glowScaleMult` 2, alpha 0.15 → 0.4 at `glowPulseSpeed` 2), a `TextMeshPro` label and a 0.13-radius trigger collider
+- **`CollectibleSpawner` in `New.unity`** — all seven assets listed, `prewarmCount` 8, `tickInterval` 2s, `maxConcurrent` 8, spawn ring 4–8 units
+- **`WaveManager.WaveActive`** — a static read of the active manager's `isWaveActive`, so systems outside the `Wave` assembly can tell whether a wave is running
+- **`WaveManager.GrantRerolls(int)`** — adds rerolls and refreshes the reroll UI, refusing the grant outright while `IronmanSelector.Enabled`, so the Ironman rule holds even if a reroll pickup reaches the player some other way
+- **`TextIndicator.Initialize(string, …)` and `TextIndicatorSpawner.SpawnTextIndicator(string, …)`** — string-content overloads of the floating-number path, so a pickup can pop `+35 Gold` through the same pooled indicator that damage numbers use
+
+### Changed
+- **`TextIndicator.Initialize` split into two overloads** — the existing `int` overload now only does the `k`/`M` abbreviation and the `TextType` prefix, then forwards to the new string overload, which owns the camera lookup, the random offset, the screen-space placement and the TMP writes. Existing callers (damage, XP, gold, heals) are unchanged
+- **Text indicator lifetime 0.7s → 0.9s** for collectible pickups, since their labels are words rather than a number
+- **Documentation resynced against the assets.** `GAME.md` gained the `# Collectibles` section, the **Astral Disjunction** capstone attack (`v0.5.5`) and the **Wipeout** upgrade (`v0.5.6`, asset authored in `v0.5.7`), and its Astral Nova entry had a stale spawn distance corrected (3 → 5, matching the asset). `README.md` picked up the collectible feature and content rows, the `Collectible` assembly in the project tree and boundary diagram, the `OnTeleport` trigger row (22 → 23 conditions), the two capstones missing from the capstone row, the skill tree node count (210 → 221) and the post-`v0.5.3_1` boss facts — the Grim Reaper is the Lv 75 capstone of `ws_5`, and Boss Rush is a five-boss gauntlet at Lv 85 / Lv 105. `ROADMAP.md`'s `v0.5.6` entry no longer says Wipeout has no asset
+- Player `bundleVersion` 0.5.7 → 0.6.0
+- **`TODO.md`** — *environmental collectible items (mana, xp, hp, gold)* is closed and removed from the pre-v1.1.0 *Starlight Remnants* checklist
+
+### Rebalance
+- **Player Default Dash Buff** - mult 4 → 5 cooldown 4 → 2 cost 35 → 20
+- `PlayerStats.asset` was re-serialized in the same edit, so every stat field added since it was last written (`sePotPct`, `manaGainPct`, the per-slot cooldown reductions, `healingPct`, `overhealth`, `seDurPct`, `seTickRatePct`, `maxStaminaPct`, `maxManaPct`, `castTimeRedPct`, `interruptResist`, `goldDrop`, `gold`, `stealing`, `globalDoTCanCrit`, `detectionRange`) is now present at its default value
+
 ## [v0.5.7] - 2026-09-21
 
 ### Changed

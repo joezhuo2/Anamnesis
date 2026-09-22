@@ -35,11 +35,18 @@ MonoBehaviour:
   projSpd: 0
   stCostPct: 0
   kbPct: 0
+  sePotPct: 0
+  manaGainPct: 0
+  basicCdRedPct: 0
+  skillCdRedPct: 0
+  ultCdRedPct: 0
   currentHp: 100
   maxHp: 100
   hpPct: 0
   hpRegen: 5
   hpRegPct: 0
+  healingPct: 0
+  overhealth: 0
   armor: 0
   armorPct: 0
   damageRes: 0
@@ -50,33 +57,44 @@ MonoBehaviour:
   hurtTime: 0.3
   effectRes: 0
   kbRes: 0
+  seDurPct: 0
+  seTickRatePct: 0
   moveSpeed: 1.5
   moveSpeedPct: 0
+  detectionRange: 0
   currentStamina: 100
   maxStamina: 100
+  maxStaminaPct: 0
   staminaRegen: 5
   stRegPct: 0
   currentMana: 100
   maxMana: 100
+  maxManaPct: 0
   canGainMana: 0
-  dashSpeedMult: 4
-  dashCooldown: 4
+  dashSpeedMult: 5
+  dashCooldown: 2
   dashCooldownRedPct: 0
   dashDistance: 1.5
   dashDistancePct: 0
-  dashStaminaCost: 35
+  dashStaminaCost: 20
   dashStaminaCostRedPct: 0
   dashShouldApplyIFrame: 1
-  isDashing: 0
-  canDash: 0
-  canGainStamina: 0
+  castTimeRedPct: 0
+  interruptResist: 0
   level: 1
   exp: 0
   expBonus: 0
   xpDrop: 0
+  goldDrop: 0
+  gold: 0
+  stealing: 0
   isAlive: 1
   isImmune: 0
   canAttack: 1
   isAttacking: 0
   canMove: 1
   canGainHp: 0
+  isDashing: 0
+  canDash: 0
+  canGainStamina: 0
+  globalDoTCanCrit: 0

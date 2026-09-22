@@ -1,7 +1,7 @@
 # Game Data Reference
 
-Synced against the assets in `Assets/data/PlayerData/` and the `WaveManager` reward
-pools serialized in `Assets/New.unity`. Damage multipliers are shown as percentages
+Synced against the assets in `Assets/data/PlayerData/`, `Assets/data/Collectibles/` and
+the `WaveManager` reward pools serialized in `Assets/New.unity`. Damage multipliers are shown as percentages
 (asset value x 100). Scaling stats use the exact `StatType` enum name.
 
 Attack entries list the `AttackData` asset name; the paired `ProjectileData` asset is
@@ -84,7 +84,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
 - Type: Basic
 - Cooldown: 3s
 - Pattern: Single (1 count)
-- Spawn: 3 dist, 1.5s delay
+- Spawn: 5 dist, 1.5s delay
 - Animation: 0.5s
 - Gains on hit: Stamina +15%, Mana +15%
 - Projectile:
@@ -719,6 +719,28 @@ skill tree nodes.
 - Unlocked by: `Node_hypernova` ("Hypernova" capstone, 3 skill points, prerequisite
   `Node_apdp3`, requires the base Supernova attack)
 
+## Astral Disjunction (Capstone)
+- Asset: `Astral Disjunction AD`
+- Type: Basic
+- Cooldown: 4s
+- Pattern: Single (1 count)
+- Spawn: 8 dist, 0.5s delay
+- Animation: 0.5s
+- Teleport: `teleportToProjectile` on, 0 extra delay — the player is moved to the
+  projectile once the spawn delay elapses, which also fires the `OnTeleport` upgrade trigger
+- Gains on hit: Stamina +5 +15%, Mana +5 +15%
+- Projectile:
+  - Speed: 0 (melee)
+  - Lifetime: 0.75s
+  - Pierce: 6
+  - Size: 2.5
+  - Damage: 360% Spell, 60% True
+  - Scaling: EffInt
+  - Effect: 100% on hit (Vulnerable, 8s, max 2 stacks, -20% damageRes per stack)
+  - Knockback: none
+- Unlocked by: `Node_astraldisjunction` ("Astral Disjunction" capstone, 3 skill points,
+  `undoCost` 50, requires the base Astral Nova attack)
+
 ## Decoy Burst
 - Asset: `Decoy AD`
 - Type: Additional
@@ -1133,6 +1155,19 @@ Soul Rend buff (1.5s duration, max 100 stacks):
   chance to fire the attack that started the chain again, from the player and aimed at the
   cursor. The retrigger pays no cooldown or resource cost, and the new chain can loop again.
 
+## Wipeout
+- Asset: `Wipeout`
+- Type: DoTSpread
+- Conditions: none (passive loop while equipped)
+- Radius: 2 tiles
+- Spread Chance: 25%
+- Spread Interval: the debuff's own `tickInterval` (`useTickInterval` on)
+- Description: Every player-sourced debuff on an active enemy has a 25% chance, on each of
+  its own ticks, to copy itself onto every living enemy within 2 tiles that does not
+  already carry it. Re-applied from the debuff's `origin` asset, so a spread chain never
+  clones a clone. Per-debuff timers are pruned every 2s, and the loop sits out
+  zero-timescale frames.
+
 ---
 
 # Status Effects
@@ -1193,3 +1228,37 @@ both apply it.
 `Slow 5 3 15` is authored but no longer referenced by any projectile — Blizzard moved to
 `Slow 6 15 5` in v0.3.9, which was reauthored as `Slow 4 15 5` (4s instead of 6s) in v0.4.1_2.
 The `Radiation 4 0.25 8 2 CritDmg` asset name is likewise stale: it now runs 5s with 10 stacks.
+
+---
+
+# Collectibles
+
+Folder: `Assets/data/Collectibles`. Spawned by the `CollectibleSpawner` in `New.unity`,
+which holds all seven assets, prewarms 8 pickups, ticks every 2s, caps the field at 8 live
+pickups and places them 4–8 units from the player.
+
+| Asset | Type | Pays | Roll | Chance | Cooldown | Lifetime | Color |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `XP` | Xp | % of `XpReq` | 3–15% | 8% | 10s | 30s | magenta |
+| `Gold` | Gold | gold | 5–65 | 6% | 5s | 25s | gold |
+| `Health` | Heal | % of `EffMaxHp` | 3–20% | 4% | 10s | 25s | red |
+| `Stamina` | Stamina | % of `EffMaxStamina` | 3–15% | 4% | 15s | 25s | green |
+| `Mana` | Mana | % of `EffMaxMana` | 3–15% | 3% | 15s | 25s | blue |
+| `Reroll` | Rerolls | rerolls | 1 | 2% | 15s | 20s | teal |
+| `SkillPoint` | SkillPoints | skill points | 1 | 1% | 20s | 20s | purple |
+
+**Chance** is rolled per spawner tick (2s), not per second, and only one pickup can spawn
+per tick: candidates are filtered (chance above 0, not on cooldown), shuffled, and the
+first to pass its own roll spawns. **Cooldown** then blocks that asset — and only that
+asset — for its duration, counting down even between waves. **Lifetime** (`maxTime`) only
+counts down while a wave is active, so a pickup left on the ground at wave end is still
+there with the same time left when the next wave starts; it fades over its last 0.5s.
+
+`Heal`, `Xp`, `Stamina` and `Mana` treat the rolled value as a percentage of the live stat
+named above, so their worth scales with the build. `Gold`, `SkillPoints` and `Rerolls` are
+flat counts. `Reroll` pickups are skipped entirely while Ironman Mode is on, and
+`WaveManager.GrantRerolls` refuses the grant as a second guard.
+
+Each pickup bobs in place, pulses a glow tinted with its `lightColor`, and shows what it
+will pay as a world-space label (`+35 Gold`, `+8% HP`, `+1 Skill Point`). The same string
+pops as a floating indicator on pickup.

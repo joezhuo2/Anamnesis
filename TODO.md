@@ -3,17 +3,15 @@
 ## Pre [v1.0.0] Checklist — First Light
 *Everything that has to be true before a stranger can play it.*
 
-**Systems**
+**Bigger Things**
 - [ ] Audio (SFX + music buses + menu volume control)
-
-**Content**
-- [ ] Confirm every `CREDITS.md` asset license permits redistribution inside a compiled build, not just use
-- [ ] In-game credits/attribution screen — some of those licenses want attribution in the build itself
+- [ ] more enemy projectile telegraphs (jellyfish ball)
 - [ ] Store page — description, screenshots, capsule art, controls
 - [ ] Window icon + splash
-- [ ] more enemy projectile telegraphs (jellyfish ball)
 
-**QoL & Polish**
+**Smaller Things**
+- [ ] Confirm every `CREDITS.md` asset license permits redistribution inside a compiled build, not just use
+- [ ] In-game credits/attribution screen — some of those licenses want attribution in the build itself
 - [ ] Resolution/window options (currently a fixed 1920x1080 with `resizableWindow: 0`)
 - [ ] Clean-machine pass — fresh build, no `settings.json`, no Unity installed
 
@@ -28,7 +26,6 @@
 - [ ] contact damage
 - [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
 - [ ] splitting anomaly (enemies have a `{x}%` chance to split, all split enemies must be killed to pass wave)
-- [ ] environmental collectible items (mana, xp, hp, gold)
 
 **QoL & Polish**
 - [ ] Full stats display menu (in settings panel)
