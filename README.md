@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.0** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.1** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -26,7 +26,7 @@ Current release: **v0.6.0** — see [CHANGELOG.md](CHANGELOG.md) for release his
 1. **Pick a difficulty and a gamemode** — **Easy**, **Normal** or **Hard**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
 2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls.
 3. **Choose a reward** — buffs, rare attacks or treasure-pool Awakenings. Reroll, pay 200g when out of rerolls, or corrupt the rewards for a bigger gamble.
-4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*) that trade risk for rerolls and skill points.
+4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*) that trade risk for rerolls and skill points.
 5. **Spend skill points and gold** — unlock skill tree nodes, refund them for gold, level up from XP, and repeat.
 
 ---
@@ -38,7 +38,7 @@ Current release: **v0.6.0** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | **🎚️ Difficulty** | Easy / Normal / Hard as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks). The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
-| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy |
+| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave |
 | **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, and once-per-wave corruption with a 4% chance of a *Corrupted* special attack |
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
@@ -82,16 +82,16 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova |
 | **Skills** | Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge |
 | **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis |
-| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, plus capstone-only Solar Wind and Oblivion |
+| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, Chaos Theory, plus capstone-only Solar Wind and Oblivion |
 | **Capstones** | Warp, Hypernova and Astral Disjunction upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion and Ultrasonic upgrade their required Awakening |
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma) |
 | **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`) |
 | **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper) chaining into `BossRush Part 2` (the same five at Lv 105) |
-| **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel* — separate Regular and Unlimited lists |
+| **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission* — separate Regular and Unlimited lists |
 | **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
-In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm* and *Duel* always pay out, and *Swarm* / *Duel* never appear before a boss wave.
+In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel* and *Fission* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.
 
 ### Awakening trigger conditions
 

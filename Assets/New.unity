@@ -13224,6 +13224,11 @@ MonoBehaviour:
     upgradeName: Wipeout
     desc: Allows debuffs to spread to nearby enemies
     minWave: -1
+  - upgrade: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Chaos Theory
+    desc: Teleporting creates a massive impact explosion.
+    minWave: -1
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -13606,6 +13611,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6f6979d96222242419a57c5e213bb830, type: 2}
   - {fileID: 11400000, guid: 7b2d158b11174e17807a5390f38585a6, type: 2}
   - {fileID: 11400000, guid: f5d72fca4788b0f4fb121bfe9c5da4f5, type: 2}
+  - {fileID: 11400000, guid: b380a00df5f19494f928826ca19981c5, type: 2}
+  - {fileID: 11400000, guid: 8e9e384e928884b498d256f08d2306c3, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
@@ -25159,6 +25166,11 @@ MonoBehaviour:
     upgradeName: Wipeout
     desc: Allows debuffs to spread to nearby enemies
     minWave: -1
+  - upgrade: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Chaos Theory
+    desc: Teleporting creates a massive impact explosion.
+    minWave: -1
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -25545,6 +25557,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2692db60c19e66e4bb451bebd4bc697f, type: 2}
   - {fileID: 11400000, guid: 841013432574428e825c984a3af29a4b, type: 2}
   - {fileID: 11400000, guid: 6452de7589c34320bc8f28a23867bac5, type: 2}
+  - {fileID: 11400000, guid: 2cd5f665b7f569e4b800abeaee7ecbfc, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
@@ -63617,7 +63630,7 @@ PrefabInstance:
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: b7975edc91dd67e42ba8ff6f75ccf0f5, type: 2}
+      objectReference: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[1]'
       value: 

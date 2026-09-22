@@ -215,6 +215,7 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.StatModifier: anomalyInfoText.text = currentAnomaly.Description; break;
                         case AnomalyType.Swarm: anomalyInfoText.text = currentAnomaly.Description; break;
                         case AnomalyType.Duel: anomalyInfoText.text = currentAnomaly.Description; break;
+                        case AnomalyType.Split: anomalyInfoText.text = currentAnomaly.Description; break;
                         default: break;
                     }
                 }
@@ -358,6 +359,7 @@ namespace CrystalFlux.WaveSystem
             bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
 
             if (hasStats && currentAnomaly != null) currentAnomaly.ApplyEnemyBuffs(esm);
+            if (currentAnomaly != null) currentAnomaly.OnEnemySpawned(enemy, c.enemyPrefab, level);
 
             GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(c.bossBarPrefab) : c.bossBarPrefab;
 
@@ -416,6 +418,16 @@ namespace CrystalFlux.WaveSystem
 
                 lastAlive = alive;
             }
+        }
+
+        public static void RegisterSplitEnemy(GameObject enemy)
+        {
+            if (enemy == null || ActiveManager == null || !ActiveManager.isWaveActive) return;
+
+            ActiveManager.currentEnemies.Add(enemy);
+            ActiveManager.totalSpawned++;
+            ActiveManager.waveMaxTotalEnemies++;
+            ActiveManager.UpdateWaveText();
         }
 
         protected void CleanEnemyList()

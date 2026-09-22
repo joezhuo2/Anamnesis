@@ -161,6 +161,7 @@ namespace CrystalFlux.WaveSystem
             bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
 
             if (hasStats && currentAnomaly != null) currentAnomaly.ApplyEnemyBuffs(esm);
+            if (currentAnomaly != null) currentAnomaly.OnEnemySpawned(enemy, prefab, level);
 
             GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(bossBarPrefab) : (isBossWave ? bossBarPrefab : null);
 

@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "Anamnesis.slnx": {
-    "mtime": 1789339863.1399417,
-    "seen": 1789385962.741417,
-    "ast_hash": "5bc002e202952f40b49cebcd8aa5b9fa",
+    "mtime": 1790040173.9454837,
+    "seen": 1790043182.2966938,
+    "ast_hash": "29c8248ac8d88f51840eae0fb0834b64",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1789756214.9612238,
-    "seen": 1789756284.1441395,
-    "ast_hash": "c2711adf1e43d858986bc2ce84a3fe22",
+    "mtime": 1790039967.2862225,
+    "seen": 1790043182.297044,
+    "ast_hash": "0e53427402a83acdc8a9f69c9a5e8fa1",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1789988675.1178102,
-    "seen": 1789988914.9164402,
-    "ast_hash": "46df361efe0cc180b0e9f0637e86a1c7",
+    "mtime": 1790043033.6917,
+    "seen": 1790043182.2970912,
+    "ast_hash": "24cc1f26d07868dd59713ddd193451ef",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -702,21 +702,21 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789988675.120191,
-    "seen": 1789988914.91645,
-    "ast_hash": "e984943192328336192c70874b2c2ad1",
+    "mtime": 1790042925.1208375,
+    "seen": 1790043182.2971013,
+    "ast_hash": "71a4cbecf8504d3727a2616559b6cb47",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1789988675.1188622,
-    "seen": 1789988914.916452,
-    "ast_hash": "eef7e1c716969e3e99f5c5aad4273968",
+    "mtime": 1790043033.6891427,
+    "seen": 1790043182.2971027,
+    "ast_hash": "a4ce69f01de0901aff1b23fc4c6338b1",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1789988381.659751,
-    "seen": 1789988914.9164536,
-    "ast_hash": "54a0bc02783c785db51aad8681ca8ec8",
+    "mtime": 1790043141.918542,
+    "seen": 1790043182.2971044,
+    "ast_hash": "a9d43781e25ba529c4047f70276623aa",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -822,15 +822,15 @@
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicator.cs": {
-    "mtime": 1789611755.902761,
-    "seen": 1789612395.963874,
-    "ast_hash": "bba5b48dd9069ffcc78aa9adbc0a39c7",
+    "mtime": 1790041877.234205,
+    "seen": 1790043182.2970068,
+    "ast_hash": "43fe264a582078ea34d8964e00c68f42",
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicatorSpawner.cs": {
-    "mtime": 1789611734.4023917,
-    "seen": 1789612395.9638753,
-    "ast_hash": "873bc3c377273d8106f7d4caa1a64c01",
+    "mtime": 1790041882.5429196,
+    "seen": 1790043182.297009,
+    "ast_hash": "d92fdeb30bea55c86c56a0b03237d6c9",
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
@@ -858,9 +858,9 @@
     "semantic_hash": ""
   },
   "GAME.md": {
-    "mtime": 1789772825.722772,
-    "seen": 1789988914.9164462,
-    "ast_hash": "df0e5171b6ac2b3b2cc5abb79741ab37",
+    "mtime": 1790042848.8120503,
+    "seen": 1790043182.2970974,
+    "ast_hash": "faf9f61c1dae00f21ca78cdf9d64ecef",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/UnlimitedWaveManager.cs": {
@@ -2427,6 +2427,24 @@
     "mtime": 1789771277.126688,
     "seen": 1789988914.9161596,
     "ast_hash": "06ec35db8fa1e25d922f934fc926ae16",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Collectible/Collectible.cs": {
+    "mtime": 1790041887.801271,
+    "seen": 1790043182.2967687,
+    "ast_hash": "6c23ed96b71521e658a19900116bfb30",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Collectible/CollectibleData.cs": {
+    "mtime": 1790041867.0533402,
+    "seen": 1790043182.296771,
+    "ast_hash": "462da5d75f0cb384cb9e6b2e40b0cf9b",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Collectible/CollectibleSpawner.cs": {
+    "mtime": 1790039958.67665,
+    "seen": 1790043182.2967732,
+    "ast_hash": "57c51205ec93ee35f8977556e1f4a254",
     "semantic_hash": ""
   }
 }

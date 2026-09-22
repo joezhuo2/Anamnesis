@@ -7,6 +7,64 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.1] - 2026-09-22
+
+### Added
+- **Split anomaly (*Fission*)** — a sixth `AnomalyType`. Enemies that spawn while the anomaly is
+  active carry an `AnomalySplitter`, and on death each rolls `anomalyValue`% to burst into
+  `2`–`anomalyMaxVal` copies of its own prefab, spawned within 0.5 world units of the corpse at
+  `level - anomalyMinVal` (floored at level 1), so the copies inherit the full stat block of that
+  enemy type, scaled down. There is no failure condition — the anomaly always pays out — but every
+  copy counts toward the wave:
+  - **`AnomalyInstance.OnEnemySpawned(GameObject, GameObject, int)`** — a new virtual hook called by
+    `WaveManager.SpawnEnemy` and `UnlimitedWaveManager.SpawnEnemy` right after `ApplyEnemyBuffs`,
+    handing the anomaly the spawned enemy, the prefab it came from and its level. Empty on the base
+    class, so the other five anomalies are unaffected
+  - **`SplitInstance`** — reuses the generic `AnomalyData` fields rather than adding new ones:
+    `anomalyValue` is the split chance, `anomalyMinVal` the level reduction, `anomalyMaxVal` the
+    maximum copies (clamped to a minimum of 2, `SplitInstance.MinSplits`). It builds the in-game
+    description from those values and attaches the splitter on every spawn
+  - **`AnomalySplitter`** — subscribes to `EntityHealth.OnDeath`, unsubscribing on setup and on
+    destroy so a pooled or re-used enemy cannot split twice. It refuses to spawn when the wave is
+    no longer active (`WaveManager.WaveActive`), so a wave-clearing kill cannot leave orphans on the
+    field. Copies are spawned through `EnemySpawning.SpawnEnemy`, which bypasses the
+    `OnEnemySpawned` hook — so copies never receive a splitter, and a split cannot chain
+  - **`WaveManager.RegisterSplitEnemy(GameObject)`** — a static that adds a copy to the active
+    manager's `currentEnemies`, increments `totalSpawned` and `waveMaxTotalEnemies`, and refreshes
+    the wave text, so the live counter grows as enemies split (`Wave 7/68 (12/30)` → `(12/33)`) and
+    the wave is not cleared until every copy is dead
+- **Three `Fission` anomaly assets**, all with `disallowOnBossWave` on:
+
+  | Asset | List | Waves | Split chance | Level reduction | Max copies |
+  | --- | --- | --- | --- | --- | --- |
+  | `Split 10 50` | Regular | 10–50 | 30% | 5 | 3 |
+  | `Split 50 105` | Regular | 50–105 | 50% | 3 | 4 |
+  | `USplit` | Unlimited | 0–1024 | 50% | 3 | 5 |
+
+- **Chaos Theory** — a new treasure-pool Awakening (`SpawnProjectile`, `OnTeleport`, 100% chance, no
+  cooldown) that drops a heavy explosion on the player after every teleport, landing 0.15s after the
+  blink so it catches whatever followed. `Chaos Theory AD` is a single Additional projectile —
+  3.5 size, 0.75s lifetime, effectively unlimited pierce, 360% Spell + 60% True off `EffInt`,
+  6 knockback force, and +3 stamina / +5 mana on hit. Its projectile applies **Spellworn** on every
+  hit and **Stun** (2s) 40% of the time. Added to the `treasurePool` of both wave managers in
+  `New.unity`
+- **`Spellworn` status effect** — `StatBuffs` debuff, 4s, up to 2 stacks, −15% `spellRes` per stack,
+  so a second hit from a Chaos Theory explosion lands into −30% spell resistance
+
+### Changed
+- **`WaveManager`'s anomaly banner** handles `AnomalyType.Split`, printing the generated description
+  (*"Enemies have a 30% chance to split into 2-3 copies of themselves on death, each 5 levels lower.
+  Split enemies cannot split again, but all of them must be killed to clear the wave"*)
+- **Documentation resynced** — `GAME.md` gained the Chaos Theory attack and Awakening entries and the
+  `Spellworn` status effect row; `README.md` picked up *Fission* in the core loop, feature table and
+  content rows, and Chaos Theory in the Awakenings row
+- **`TODO.md` restructured** — *splitting anomaly* is closed; *attack combo chains*, *in-world
+  spawners* (now *spawner boxes*) and *passive stat synergies* moved to their real milestones; the
+  *Chaos Theory* planned ability is closed; *Planned - Unknown* split into **Will do sometime** and
+  **Will Consider**; and queued skill point spending, the node undo grace window, achievements,
+  leaderboards, the node search bar, a beacon objective and kill streaks were re-filed
+- Player `bundleVersion` 0.6.0 → 0.6.1
+
 ## [v0.6.0] - 2026-09-21 - Impact & Efficiency (Release Summary)
 
 *This release adds the first reward source that is not a between-wave panel: environmental collectibles — glowing pickups that appear around the player mid-wave and pay out health, XP, stamina, mana, gold, skill points or rerolls, each on its own roll chance, cooldown and on-ground lifetime.*

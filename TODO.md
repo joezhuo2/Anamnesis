@@ -16,34 +16,37 @@
 - [ ] Clean-machine pass — fresh build, no `settings.json`, no Unity installed
 
 ## Pre [v1.1.0] Checklist — Starlight Remnants
-*Attacks chain, enemies fight back with more than stats.*
-
-**Systems**
-- [ ] attack combo chains
+*Enemies fight back with more than stats.*
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
 - [ ] contact damage
-- [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
-- [ ] splitting anomaly (enemies have a `{x}%` chance to split, all split enemies must be killed to pass wave)
+  - [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
 
 **QoL & Polish**
 - [ ] Full stats display menu (in settings panel)
 - [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [ ] enemy status effect overlay on common enemies
-- [ ] sort attack cooldown ui by basic - skill - ult instead of whatever was obtained first
 - [ ] wave track - show upcoming bosses/special rewards/milestones
+- [ ] Status Effect vfx
+- [ ] sort attack cooldown ui by basic - skill - ult instead of whatever was obtained first
 - [ ] map debris/decor
 - [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
-- [ ] Status Effect vfx
+- [ ] queue skill point spending - different highlight color, can be undone
+- [ ] skill node undo grace window (no undo cost until closing the tree)
 
 ## Pre [v1.2.0] Checklist — Threads of Fate
 *Every wave stops looking the same; the settings/stats menus catch up.*
 
+**Content**
+- [ ] Passive stat synergies between different build types (e.g. "Increases attack by 18% of max health") (new type of perm reward)
+
 **Systems**
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
-- [ ] Permenant version of Anamolies (active until run ends) or one thats active for X waves
+- [ ] Permenant version of Anamolies (active until run ends) or one thats active for `X` waves, can also occur randomly at the start of every wave
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
+- [ ] attack combo chains
+- [ ] in-world spawner boxes - spawns a small group of enemies for some rewardd (that can be picked up)
 
 **Content**
 - [ ] wave events - random events that can randomly occur during waves
@@ -57,12 +60,15 @@
 - [ ] Player summons
 - [ ] Player new "signature" that charges via a new special resource instead of a cooldown
 - [ ] deployables (eg. totems/auras)
+- [ ] Achievement system with unlock notifications
+- [ ] Leaderboards (local/online) for boss rush/endless/highest dps
 
 **Content**
 - [ ] multiple map sections
 - [ ] Environmental hazards on maps (spikes, lava, traps)
 - [ ] portals
 - [ ] starting builds / starting kits
+- [ ] skill tree node search bar (by name, stat, etc.)
 
 **QoL & Polish**
 - [ ] Screen-edge indicators for off-screen enemies, boss cursor
@@ -102,7 +108,6 @@
 **QoL & Polish**
 - [ ] Minimap
 - [ ] Build Guide menu
-- [ ] skill tree node search bar (by name, stat, etc.)
 
 ## Pre [v1.6.0] Checklist — Starlight Ascension
 *Both systems stop being standalone: crafted, combined, and replayed.*
@@ -111,7 +116,6 @@
 - [ ] Crafting/enchanting system for gear
 - [ ] Set bonuses for equipping matching gear pieces
 - [ ] Elemental reactions
-- [ ] Passive stat synergies between different build types (e.g. armor scaling with hp) (player upgrades)
 - [ ] Combo/synergy bonuses for stacking related rewards
 - [ ] second skill tree (Prestiage/Ascension/Mastery)
 
@@ -119,38 +123,32 @@
 - [ ] Daily/weekly challenge modifiers with seeded runs
 - [ ] run archive
 
-**QoL & Polish**
-- [ ] Achievement system with unlock notifications
-- [ ] Leaderboards (local/online) for boss rush/endless/highest dps
+## Planned
 
-## Planned - Unknown
-- [ ] target dummy OR dps counter
-- [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
-- [ ] Scrollable Tooltips
+### Will do sometime
 - [ ] "What's new" changelog popup on update
 - [ ] reward history
 - [ ] Customizable HUD layout
-- [ ] Screenshot mode that hides the HUD
-- [ ] queue skill point spending
-- [ ] skill node undo grace window
 - [ ] data saving - full game runs
 - [ ] Confirmation dialog before corrupting a reward (can be toggled in settings)
+- [ ] beacon objective (defend/destroy)
+- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
+
+### Will Consider
+- [ ] target dummy OR dps counter
+- [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
+- [ ] Scrollable Tooltips
+- [ ] Screenshot mode that hides the HUD
 - [ ] Accessibility options (colorblind mode, reduced screen shake, larger text)
 - [ ] attack cooldown over indicator
-- [ ] loadout slots
-
+- [ ] build/loadout slots
 - [ ] neutral entities
-- [ ] in-world spawners
-- [ ] rift system (portal opens to add new enemies)
-- [ ] beacon objective (defend/destroy)
 - [ ] cosmetics (player skins/dash effects/attack effects)
 - [ ] nameplates/titles
 - [ ] background/ambience (debris/wind)
-- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
 
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
-- **Chaos Theory** - After teleporting, creates an explosion that deals massive damage
 
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
 - **Midas Touch** - *something* consumes `{x}` gold on every attack to increase its damage dealt by `{y}%`
@@ -186,7 +184,7 @@
 - Solar Collapse
 - Exodus
 
-- Meteor Shower
+- Meteor Shower - long cast time, small hitbox, large aoe, high mana cost
 - Starfury
 - Autopilot
 - Feedback Loop

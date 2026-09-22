@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.6.1] **Fission & Chaos Theory**: a sixth anomaly splits slain enemies into weaker copies of themselves — 30-50% chance depending on the asset, 2-5 copies spawned around the corpse at 3-5 levels below the original, with every copy added to the wave counter so the wave is not clear until all of them are down. Copies cannot split again, and the anomaly never lands on a boss wave. Also new: the Chaos Theory Awakening, which drops a heavy spell explosion on the player 0.15s after every teleport, applying the new Spellworn debuff (-15% spell resistance, 2 stacks) on hit and stunning 40% of the time
 - [v0.6.0] **Environmental collectibles**: pickups now appear around the player while a wave is running — health, XP, stamina, mana, gold, skill points and rerolls, each a `CollectibleData` asset with its own roll chance, spawn cooldown, value range and time on the ground. The four resource types pay a percentage of the matching live stat (`EffMaxHp`, `XpReq`, `EffMaxStamina`, `EffMaxMana`) so they stay relevant at any wave, each pickup shows what it will pay before you take it and pops a descriptive number when you do, and a pickup left behind at wave end keeps its remaining time into the next wave instead of vanishing. Reroll pickups never spawn in Ironman Mode. Also: the default dash is stronger and far cheaper — speed multiplier 4 → 5, cooldown 4s → 2s, stamina cost 35 → 20
 
 ### [v0.6.0] - Impact and Efficiency

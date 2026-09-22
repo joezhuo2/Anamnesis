@@ -23,6 +23,9 @@ public class AnomalyInstance
     public virtual void UpdateCheck(float dt) { }
 
     public virtual void ApplyEnemyBuffs(IStatProvider esm) { }
+
+    public virtual void OnEnemySpawned(GameObject enemy, GameObject prefab, int level) { }
+
     public virtual void FailAnomaly()
     {
         if (!isActive) return;

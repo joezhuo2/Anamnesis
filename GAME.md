@@ -806,6 +806,25 @@ player upgrades rather than attacks the player selects.
   - Homing: 0.5 follow distance
   - Knockback: 8 force for 0.15s
 
+## Chaos Theory
+- Asset: `Chaos Theory AD`
+- Type: Additional
+- Cooldown: 0s (upgrade-spawned)
+- Pattern: Single (1 count)
+- Spawn: 0 dist, 0.15s delay
+- Animation: 0s
+- Gains on hit: Stamina +3, Mana +5
+- Projectile:
+  - Speed: 0 (melee)
+  - Lifetime: 0.75s
+  - Pierce: 3000
+  - Size: 3.5
+  - Damage: 360% Spell, 60% True
+  - Scaling: EffInt
+  - Effects: 100% on hit (Spellworn, 4s, max 2 stacks, -15% spellRes per stack), 40% on hit
+    (Stun, 2s)
+  - Knockback: 6 force for 0.15s
+
 ## Feedback Loop
 - Asset: `Feedback Loop AD`
 - Type: Additional
@@ -911,6 +930,19 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Projectile: `Autopilot.prefab`
 - Description: Taking a direct hit spawns 3 spiraling projectiles that home in on nearby
   enemies and return stamina and health on hit.
+
+## Chaos Theory
+- Asset: `Chaos Theory`
+- Type: SpawnProjectile
+- Conditions: OnTeleport
+- Chance: 100%
+- Cooldown: 0s
+- Delay: 0s
+- Projectile: `Chaos Theory.prefab`
+- Description: Teleporting through a `teleportToProjectile` attack drops a Chaos Theory
+  explosion on the player 0.15s later. The blast applies Spellworn on every hit and stuns
+  40% of the time. `OnTeleport` dispatches without a spawn center, so the explosion lands
+  on the player at the teleport destination rather than on the projectile that caused it.
 
 ## Cresendo
 - Asset: `Cresendo`
@@ -1202,6 +1234,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Slow 8 4 10` | StatReduction | Slow | 8s | - | 4 | -10% moveSpeed per stack, capped at -90% |
 | `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +3 hpRegen, +8% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
+| `Spellworn` | StatBuffs | Spellworn | 4s | - | 2 | -15% spellRes per stack |
 | `Stun 1` | Stun | Stun | 1s | - | 1 | Cannot move or attack |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
 | `Stun 3` | Stun | Stun | 3s | - | 1 | Cannot move or attack |
