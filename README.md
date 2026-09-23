@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.0-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.2-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.1** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.2** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -38,11 +38,11 @@ Current release: **v0.6.1** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | **🎚️ Difficulty** | Easy / Normal / Hard as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks). The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
-| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave |
+| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave. Hovering a choice shows its rules and completion reward |
 | **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, and once-per-wave corruption with a 4% chance of a *Corrupted* special attack |
-| **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
+| **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, knockback, interrupt-resistance tiers), resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
-| **✨ Awakenings** | `PlayerUpgrade` assets driven by 23 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
+| **✨ Awakenings** | `PlayerUpgrade` assets driven by 25 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
 | **🌳 Skill Tree** | Pan/zoom tree of 221 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, and capstones that upgrade an owned attack or Awakening in place |
 | **🧪 Status Effects** | Stackable DoTs, stuns, stat buffs and reductions, attack replacement and cleansing, with cooldown UI |
 | **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a five-boss **Boss Rush** gauntlet |
@@ -117,6 +117,8 @@ Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a 
 | `OnStartDash` | A dash begins | `(player)` |
 | `OnEndDash` | A dash ends | `(player)` |
 | `OnTeleport` | The player is teleported by a `teleportToProjectile` attack, after both the rigidbody and transform are moved | `(player)` |
+| `OnRushStart` | A rushing attack starts moving the player | `(player)` |
+| `OnRushEnd` | A rush ends for any reason — duration or distance used up, collision, interruption, a dash, or death | `(player)` |
 | `OnHealthRegen` | Passive health regen ticks for at least 1 HP | `(player)` |
 | `OnStaminaRegen` | Passive stamina regen ticks for at least 1 stamina | `(player)` |
 | `OnManaRegen` | The player actually gains mana. There is no passive mana regen tick, so this covers every mana gain | `(player)` |

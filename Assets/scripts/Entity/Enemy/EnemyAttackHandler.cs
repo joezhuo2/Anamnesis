@@ -121,7 +121,7 @@ namespace CrystalFlux.EntitySystem
             {
                 float attackStartTime = Time.time;
 
-                if (!current.CanMoveDuringAttack)
+                if (!current.CanMoveDuringAttack && !current.Rushes)
                 {
                     movementHeld = true;
                     esm.AddStat(new(StatType.CanMove, -1));
@@ -174,6 +174,9 @@ namespace CrystalFlux.EntitySystem
                 HandleOrbitInteractions(current);
                 HandleCleanse(current);
 
+                TryGetComponent<EnemyMovement>(out var em);
+                if (current.Rushes && em != null) em.StartRush(current);
+
                 if (current.ProjectilePrefab != null && !current.CanCharge)
                 {
                     if (current.SpawnDelay > 0) yield return new WaitForSeconds(current.SpawnDelay);
@@ -207,6 +210,9 @@ namespace CrystalFlux.EntitySystem
                     if (currentIndex >= 0 && !current.CooldownOnAttackStart) cooldowns[currentIndex] = current.Cooldown;
                     if (castCancelled) { castCancelled = false; break; }
                 }
+
+                if (current.DisableAttacksWhileRushing && em != null)
+                    while (em.Rushing) yield return null;
 
                 if (current.AnimationLength > 0)
                 {

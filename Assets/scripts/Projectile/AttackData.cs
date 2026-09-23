@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace CrystalFlux.ProjectileSystem
 {
+    public enum RushDirection { TowardCursor, WorldAngle, CursorRelativeAngle }
+    public enum RushType { Duration, Distance }
+
     [CreateAssetMenu(fileName = "ad", menuName = "Data/Attack")]
     public class AttackData : AttackAsset
     {
@@ -11,24 +14,51 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private float cooldown;
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private ProjectileData pd;
-        [SerializeField] private ProjectilePattern pattern;
+        [Tooltip("Time after attack is performed before resetting the attack animation")]
+        [SerializeField] private float animationLength;
+
+        [Header("Casting")]
         [Tooltip("Windup time before the attack resolves. 0 = instant")]
         [SerializeField] private float castTime;
         [Tooltip("Whether the entity can move during the cast window")]
         [SerializeField] private bool canMoveWhileCasting = true;
-        [Tooltip("Time after performing the attack before projectiles spawn")]
-        [SerializeField] private float spawnDelay;
-        [SerializeField] private float spawnDistance;
-        [Tooltip("Whether to spawn the projectile at a fixed distance according to spawn distance")]
-        [SerializeField] private bool fixedDistance;
+
+        [Header("Teleportation")]
         [Tooltip("Teleports the attacker to its first spawned projectile after the spawn delay")]
         [SerializeField] private bool teleportToProjectile;
         [Tooltip("Additional time after the projectile spawns before teleporting")]
         [SerializeField] private float teleportDelay;
-        [Tooltip("Time after attack is performed before resetting the attack animation")]
-        [SerializeField] private float animationLength;
 
-        [Header("Charging")]
+        [Header("Rush")]
+        [Tooltip("How the rush direction is chosen. Enemies treat their target as the cursor")]
+        [SerializeField] private RushDirection rushDirection;
+        [Tooltip("Degrees. WorldAngle: 0 = right, counter-clockwise. CursorRelativeAngle: offset from the cursor direction. Unused by TowardCursor")]
+        [SerializeField] private float rushAngle;
+        [Tooltip("True = movement input steers the rush while it is active (enemies steer toward their target). False = direction is locked when the rush starts")]
+        [SerializeField] private bool omnidirectionalRush;
+        [Tooltip("Max degrees per second an omnidirectional rush can turn. 0 = instant")]
+        [SerializeField] private float rushTurnRate;
+        [Tooltip("Whether rushTypeVal is a duration in seconds or a distance in units")]
+        [SerializeField] private RushType rushType;
+        [Tooltip("Rush duration (s) or distance (units) depending on rush type. 0 = no rush")]
+        [SerializeField] private float rushTypeVal;
+        [Tooltip("Rush speed as a multiplier of the entity's effective speed")]
+        [SerializeField] private float rushSpeedMult = 1f;
+        [SerializeField] private bool immuneWhileRushing;
+        [Tooltip("Player: attacks pressed mid-rush are queued until it ends. Enemy: the attack chain waits for the rush to end")]
+        [SerializeField] private bool disableAttacksWhileRushing;
+        [Tooltip("Ends the rush when the entity collides with any non-trigger collider or rigidbody")]
+        [SerializeField] private bool endRushOnCollision;
+        [Tooltip("Reflects the rush off anything it collides with. Ignored when endRushOnCollision is true")]
+        [SerializeField] private bool bounceOnCollision;
+        [Tooltip("Knocks back opposing entities the rush collides with. Ignored when endRushOnCollision is true")]
+        [SerializeField] private bool rushKnockback;
+        [SerializeField] private float rushKnockbackForce;
+        [SerializeField] private float rushKnockbackTime;
+        [Tooltip("Enemy only. Aims at where the target will be when the rush reaches it, based on the target's velocity")]
+        [SerializeField] private bool predictTarget;
+
+        [Header("Charged Attacks")]
         [Tooltip("Whether this attack can be held down to sustain it after it resolves")]
         [SerializeField] private bool canCharge;
         [Tooltip("How long the button must be held before this registers as a charge. Released sooner, the press resolves as a plain tap. Also the delay before a tap's projectiles spawn")]
@@ -45,6 +75,12 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private AttackData chargeAttack;
 
         [Header("Spawn Logic")]
+        [SerializeField] private ProjectilePattern pattern;
+        [Tooltip("Time after performing the attack before projectiles spawn")]
+        [SerializeField] private float spawnDelay;
+        [SerializeField] private float spawnDistance;
+        [Tooltip("Whether to spawn the projectile at a fixed distance according to spawn distance")]
+        [SerializeField] private bool fixedDistance;
         [SerializeField] private int projectileCount = 1;
         [Tooltip("Random additional projectiles to spawn")]
         [SerializeField] private int randomCount;
@@ -133,6 +169,22 @@ namespace CrystalFlux.ProjectileSystem
         public bool FixedDistance => fixedDistance;
         public bool TeleportToProjectile => teleportToProjectile;
         public float TeleportDelay => teleportDelay;
+        public RushDirection RushDirection => rushDirection;
+        public float RushAngle => rushAngle;
+        public bool OmnidirectionalRush => omnidirectionalRush;
+        public RushType RushType => rushType;
+        public float RushTypeVal => rushTypeVal;
+        public float RushSpeedMult => rushSpeedMult;
+        public bool ImmuneWhileRushing => immuneWhileRushing;
+        public bool DisableAttacksWhileRushing => disableAttacksWhileRushing;
+        public bool EndRushOnCollision => endRushOnCollision;
+        public float RushTurnRate => rushTurnRate;
+        public bool BounceOnCollision => bounceOnCollision;
+        public bool RushKnockback => rushKnockback;
+        public float RushKnockbackForce => rushKnockbackForce;
+        public float RushKnockbackTime => rushKnockbackTime;
+        public bool PredictTarget => predictTarget;
+        public bool Rushes => rushTypeVal > 0f && rushSpeedMult > 0f;
         public float AnimationLength => animationLength;
         public bool CanCharge => canCharge;
         public float ChargeThreshold => chargeThreshold;
@@ -198,6 +250,7 @@ namespace CrystalFlux.ProjectileSystem
             if (castTime > 0f) lines.Add($"Cast Time: {castTime:F1}s{(canMoveWhileCasting ? string.Empty : " (rooted)")}");
             if (canCharge) lines.Add($"Hold {chargeThreshold:F2}s to charge (max {maxChargeTime:F1}s, drains every {chargeTickInterval:F1}s)");
             if (canCharge && chargeAttack != null) lines.Add($"Held: {chargeAttack.displayName}");
+            if (Rushes) lines.Add($"Rush: {rushTypeVal:F1}{(rushType == RushType.Duration ? "s" : "u")} at {rushSpeedMult:F1}x speed{(immuneWhileRushing ? " (immune)" : string.Empty)}");
 
             if (staminaCost > 0f || staminaCostPct > 0f) lines.Add($"Stamina Cost: {staminaCost:F0} +{staminaCostPct:F1}%");
             if (manaCost > 0f || manaCostPct > 0f) lines.Add($"Mana Cost: {manaCost:F0} +{manaCostPct:F1}%");

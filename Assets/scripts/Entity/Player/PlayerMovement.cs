@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
+using CrystalFlux.ProjectileSystem;
 using UnityEngine;
 
 namespace CrystalFlux.EntitySystem
@@ -20,16 +21,29 @@ namespace CrystalFlux.EntitySystem
         [HideInInspector] public static int playerDir = 1;
         private PlayerUpgradeManager pum;
         private IStatProvider esm;
+        private RushState rush;
+        private static Camera cachedMainCam;
+        private static Camera MainCam => cachedMainCam != null ? cachedMainCam : cachedMainCam = Camera.main;
         private bool Dashing => esm.GetStat(StatType.IsDashing) > 0f;
         private float Spd => esm.GetStat(StatType.EffSpd);
+        public bool Rushing => rush != null && rush.Active;
+        public bool RushBlocksAttacks => rush != null && rush.BlocksAttacks;
 
         private void Awake() => animator = GetComponent<Animator>();
+
+        private void OnDisable() => rush?.End();
+
+        private void OnCollisionEnter2D(Collision2D c) => rush?.OnCollision(c);
 
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
             esm = GetComponent<IStatProvider>();
             pum = GetComponent<PlayerUpgradeManager>();
+
+            rush = new RushState(gameObject, esm,
+                () => { if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnRushStart); },
+                () => { if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnRushEnd); });
 
             esm.AddStat(new StatBuff(StatType.CanMove, 1f));
             esm.AddStat(new StatBuff(StatType.CanDash, 1f));
@@ -47,22 +61,43 @@ namespace CrystalFlux.EntitySystem
         {
             if (Time.timeScale == 0f) return;
 
-            if (esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanMove) <= 0f)
+            bool alive = esm.GetStat(StatType.isAlive) > 0f;
+            bool canMove = alive && esm.GetStat(StatType.CanMove) > 0f;
+            if (!alive) rush.End();
+            if (!canMove) rush.OnImmobilized();
+
+            if (!canMove && !rush.Unstoppable)
             {
+                rush.Tick(Time.fixedDeltaTime, false);
                 rb.linearVelocity = Vector2.zero;
                 animator.speed = baseAnimSpeed;
                 return;
             }
 
             Vector2 velocity;
-            if (Dashing) velocity = dashDir * (Spd * esm.GetStat(StatType.DashSpdMult));
-            else velocity = Vector2.ClampMagnitude(moveInput, 1f) * Spd;
+            float faceX;
+            if (rush.Active)
+            {
+                velocity = rush.GetVelocity(moveInput, Time.fixedDeltaTime);
+                faceX = rush.Dir.x;
+            }
+            else if (Dashing)
+            {
+                velocity = dashDir * (Spd * esm.GetStat(StatType.DashSpdMult));
+                faceX = 0f;
+            }
+            else
+            {
+                velocity = Vector2.ClampMagnitude(moveInput, 1f) * Spd;
+                faceX = moveInput.x;
+            }
 
             rb.linearVelocity = velocity + GetKnockbackVelocity();
+            rush.Tick(Time.fixedDeltaTime, true);
 
             float inputMag = moveInput.magnitude;
 
-            if (!Dashing && ((moveInput.x > 0 && transform.localScale.x < 0) || (moveInput.x < 0 && transform.localScale.x > 0)))
+            if ((faceX > 0 && transform.localScale.x < 0) || (faceX < 0 && transform.localScale.x > 0))
             {
                 transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
                 playerDir *= -1;
@@ -75,13 +110,18 @@ namespace CrystalFlux.EntitySystem
         private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, Time.fixedDeltaTime);
 
         public void ApplyKnockback(Vector2 d, float f, float t)
-            => KnockbackHandler.ApplyKnockback(currentForces, d, f, t, esm.GetStat(StatType.kbRes));
+        {
+            if (rush != null && rush.OnKnockback()) return;
+            KnockbackHandler.ApplyKnockback(currentForces, d, f, t, esm.GetStat(StatType.kbRes));
+        }
 
         public void TryStartDash()
         {
             if (Dashing || esm.GetStat(StatType.CanDash) <= 0f || Time.timeScale == 0f) return;
             if (Time.time < lastDashTime + esm.GetStat(StatType.EffDashCooldown)) return;
             if (esm.GetStat(StatType.CurrentStamina) < esm.GetStat(StatType.EffDashStaminaCost)) return;
+
+            rush.End();
 
             if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnStartDash);
 
@@ -126,6 +166,14 @@ namespace CrystalFlux.EntitySystem
             dashTravelled = 0f;
 
             if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnEndDash);
+        }
+
+        public void StartRush(AttackData ad)
+        {
+            if (rush == null || ad == null || !ad.Rushes || Time.timeScale == 0f) return;
+
+            Vector2 aim = MainCam != null ? (Vector2)MainCam.ScreenToWorldPoint(InputState.mousePos) : rb.position;
+            rush.Begin(ad, rb.position, aim, new Vector2(playerDir, 0f));
         }
 
         public void AdvanceDash(float pctAmt)

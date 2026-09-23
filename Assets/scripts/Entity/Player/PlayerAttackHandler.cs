@@ -36,6 +36,7 @@ namespace CrystalFlux.EntitySystem
         private IDamageable ph;
         private IStatProvider esm;
         private PlayerUpgradeManager pum;
+        private PlayerMovement pm;
         private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
         [HideInInspector] public List<AttackData> attacks = new();
         [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
@@ -64,6 +65,7 @@ namespace CrystalFlux.EntitySystem
 
         public bool IsCasting => isCasting || isCharging;
         public bool IsCharging => isCharging;
+        private bool RushLocked => pm != null && pm.RushBlocksAttacks;
 
         private void Start()
         {
@@ -72,6 +74,7 @@ namespace CrystalFlux.EntitySystem
             ph = GetComponent<IDamageable>();
             pr = GetComponent<IResourcePool>();
             pum = GetComponent<PlayerUpgradeManager>();
+            pm = GetComponent<PlayerMovement>();
 
             for (int i = 0; i < starting.Count; i++) UpdateAttack(starting[i]);
         }
@@ -92,7 +95,7 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
 
-            if (isCasting || isCharging) return;
+            if (isCasting || isCharging || RushLocked) return;
 
             QueuedAttack q = attackQueue[0];
             attackQueue.RemoveAt(0);
@@ -186,7 +189,7 @@ namespace CrystalFlux.EntitySystem
 
         public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
         {
-            if (isCasting || isCharging)
+            if (isCasting || isCharging || RushLocked)
             {
                 EnqueueAttack(type, bypassCooldown, noCost, triggerUpgrades);
                 return;
@@ -349,6 +352,8 @@ namespace CrystalFlux.EntitySystem
                 SpawnAttack(selected);
             }
 
+            if (selected.Rushes && pm != null) pm.StartRush(selected);
+
             if (triggerUpgrades)
                 TriggerUpgradesOnAttack(type);
 
@@ -429,7 +434,7 @@ namespace CrystalFlux.EntitySystem
             castStateHeld = true;
             esm.AddStat(new StatBuff(StatType.IsAttacking, 1f));
 
-            if (!selected.CanMoveWhileCasting)
+            if (!selected.CanMoveWhileCasting && !selected.Rushes)
             {
                 castMovementHeld = true;
                 esm.AddStat(new StatBuff(StatType.CanMove, -1f));

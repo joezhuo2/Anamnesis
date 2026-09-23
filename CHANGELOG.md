@@ -7,6 +7,78 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.2] - 2026-09-22
+
+### Added
+- **Rush attacks** — any `AttackData` can now move its owner. An attack rushes when `rushTypeVal`
+  and `rushSpeedMult` are both above 0 (`AttackData.Rushes`). The rush starts when the attack
+  resolves, alongside its projectiles, and runs until its duration or distance is used up. No
+  shipped attack uses it yet, so this release changes no existing gameplay. New fields under a
+  `Rush` inspector header:
+  - **`rushDirection`** (`RushDirection`) — `TowardCursor`, `WorldAngle` (`rushAngle` degrees, 0 =
+    right, counter-clockwise) or `CursorRelativeAngle` (`rushAngle` offset from the cursor
+    direction). Enemies treat their target as the cursor. When the aim point sits on the entity,
+    the rush falls back to its facing direction
+  - **`omnidirectionalRush`** + **`rushTurnRate`** — when on, movement input steers the rush while it
+    is active (enemies steer toward their target). `rushTurnRate` caps the turn in degrees per
+    second through `Mathf.MoveTowardsAngle`; 0 turns instantly. Off, the direction locks at start
+  - **`rushType`** (`RushType.Duration` / `Distance`) + **`rushTypeVal`** — seconds or world units.
+    Distance only accrues while the entity is actually moving
+  - **`rushSpeedMult`** — rush speed as a multiple of `EffSpd`, so speed buffs and slows apply
+  - **`immuneWhileRushing`** — holds `isImmune` for the length of the rush
+  - **`disableAttacksWhileRushing`** — the player's attacks pressed mid-rush are queued until it
+    ends; an enemy's attack chain waits for the rush to finish before moving on
+  - **`endRushOnCollision`** — any non-trigger collision ends the rush. When on, the bounce and
+    knockback options below are ignored
+  - **`bounceOnCollision`** — reflects the rush direction off the contact normal
+  - **`rushKnockback`** + **`rushKnockbackForce`** + **`rushKnockbackTime`** — knocks back any
+    `IKnockbackable` the rush collides with, skipping entities on the owner's team
+  - **`predictTarget`** — enemy only. Leads the target by its `Rigidbody2D` velocity over the
+    time the rush needs to reach it, capped at the rush's own duration or distance
+- **`RushState`** (`Entity/RushState.cs`) — a plain class shared by `PlayerMovement` and
+  `EnemyMovement` that owns the rush lifecycle: direction, steering, progress, the immunity buff,
+  collision handling and interruption. Both movement components forward `OnCollisionEnter2D` to it
+  and end the rush on disable and on death
+- **Interrupt resistance tiers for rushes**, read from `interruptResist`:
+
+  | `interruptResist` | Immobilized (`CanMove` ≤ 0) | Knocked back |
+  | --- | --- | --- |
+  | < 1 | Rush ends | Rush ends, knockback applies |
+  | ≥ 1 | Rush survives but stops moving until freed | Rush continues, knockback applies |
+  | ≥ 2 (unstoppable) | Rush keeps moving | Knockback is ignored |
+
+- **`OnRushStart` / `OnRushEnd` trigger conditions** — two new `PlayerUpgrade.TriggerCondition`
+  values, both dispatched to the `(player)` overload. `OnRushEnd` fires however the rush ends —
+  timeout, collision, interruption, a dash or death
+- **Anomaly tooltips** — `AnomalyButtonPrefab` gained a `TooltipTrigger`, and
+  `AnomalyButtonUI.Setup` now fills it with the anomaly's name, its description, a type-specific
+  line (*Time Trial*: `Time Limit: 45s`; *No Hit*: `Fails if you take any damage`) and the
+  completion reward. The tooltip is cleared when the button is pooled. `tooltipOffset` defaults to
+  `(100, -100)`
+- **`WaveManager.GetAnomalyRewardLine()`** — builds that reward line once per anomaly panel from
+  the live difficulty offsets, e.g. *"Completion Reward: +1-3 Rerolls, +1 Skill Point, Increased
+  Reward Quality"*. The reroll range is left out in Ironman Mode
+
+### Changed
+- **`AttackData` inspector regrouped** — new `Casting` and `Teleportation` headers; `Charging` is now
+  `Charged Attacks`; `pattern`, `spawnDelay`, `spawnDistance` and `fixedDistance` moved under
+  `Spawn Logic`; `animationLength` moved up next to `pd`. Fields keep their names, so existing assets
+  are unaffected
+- **Attack tooltips** list the rush when an attack has one: `Rush: 0.4s at 3.0x speed (immune)`,
+  with `u` in place of `s` for distance rushes
+- **Rushes are exempt from movement locks** — `PlayerAttackHandler`'s charge routine no longer
+  applies the `canMoveWhileCasting` root to a rushing attack, and `EnemyAttackHandler` no longer
+  applies the `canMoveDuringAttack` hold to one, so the attack cannot freeze its own rush
+- **Dashing cancels a rush** — `PlayerMovement.TryStartDash` ends any active rush before the dash
+  starts
+- **Facing follows the rush** — the player and enemies turn to face the rush direction while it is
+  active. `EnemyMovement`'s sprite flip was pulled out into `Face(float)` so movement and rushes share
+  it
+- **`README.md`** — version badge 0.6.0 → 0.6.2 (it had missed v0.6.1), trigger condition count
+  23 → 25, `OnRushStart` / `OnRushEnd` rows added to the trigger table, rushes listed under
+  data-driven attacks, and anomaly hover tooltips noted in the Anomalies row
+- Player `bundleVersion` 0.6.1 → 0.6.2
+
 ## [v0.6.1] - 2026-09-22
 
 ### Added

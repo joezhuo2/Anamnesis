@@ -173,6 +173,25 @@ namespace CrystalFlux.WaveSystem
 
         protected int AnomalySkillPointGain() => Mathf.Max(0, 1 + D.anomalySkillPointAdd);
 
+        protected string GetAnomalyRewardLine()
+        {
+            List<string> parts = new();
+
+            if (!IronmanSelector.Enabled)
+            {
+                int min = Mathf.Max(0, 1 + D.anomalyRerollMinAdd);
+                int max = Mathf.Max(min, 3 + D.anomalyRerollMaxAdd);
+                if (max > 0) parts.Add(min == max ? $"+{min} Reroll{(min > 1 ? "s" : "")}" : $"+{min}-{max} Rerolls");
+            }
+
+            int sp = AnomalySkillPointGain();
+            if (sp > 0) parts.Add($"+{sp} Skill Point{(sp > 1 ? "s" : "")}");
+
+            parts.Add("Increased Reward Quality");
+
+            return $"Completion Reward: {string.Join(", ", parts)}";
+        }
+
         private void SetupActionButtonTooltips()
         {
             if (!IronmanSelector.Enabled)
@@ -617,6 +636,7 @@ namespace CrystalFlux.WaveSystem
             int minChoices = Mathf.Max(1, minAnomalyCount + D.minAnomalyCountAdd);
             int maxChoices = Mathf.Max(minChoices, maxAnomalyCount + D.maxAnomalyCountAdd);
             int choices = Random.Range(minChoices, maxChoices + 1);
+            string rewardLine = GetAnomalyRewardLine();
 
             for (int i = 0; i < choices; i++)
             {
@@ -630,7 +650,7 @@ namespace CrystalFlux.WaveSystem
                 activeRewardButtons.Add(btnObj);
 
                 if (btnObj.TryGetComponent<AnomalyButtonUI>(out var anomalyButton))
-                    anomalyButton.Setup(instance, OnAnomalyButtonClicked);
+                    anomalyButton.Setup(instance, OnAnomalyButtonClicked, rewardLine);
             }
 
             return true;

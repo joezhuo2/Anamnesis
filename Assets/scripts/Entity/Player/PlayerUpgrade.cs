@@ -30,7 +30,9 @@ namespace CrystalFlux.EntitySystem
             OnKill,
             OnLevelUp,
             OnSpawnProjectile,
-            OnTeleport
+            OnTeleport,
+            OnRushStart,
+            OnRushEnd
         }
         public TriggerCondition[] conditions;
         public float chance;
