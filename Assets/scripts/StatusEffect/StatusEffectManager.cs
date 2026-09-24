@@ -16,6 +16,56 @@ namespace CrystalFlux.StatusEffectSystem
         [HideInInspector] public readonly List<StatusEffect> activeEffects = new();
         private IStatProvider cesm;
 
+        private static readonly Dictionary<StatusEffect, Stack<StatusEffect>> pool = new();
+        private const int maxPooledPerAsset = 64;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => pool.Clear();
+
+        private static StatusEffect AcquireRuntime(StatusEffect se)
+        {
+            StatusEffect key = se.origin != null ? se.origin : se;
+
+            if (pool.TryGetValue(key, out var stack))
+            {
+                while (stack.Count > 0)
+                {
+                    StatusEffect e = stack.Pop();
+                    if (e != null) return e;
+                }
+            }
+
+            return Instantiate(key);
+        }
+
+        private static void ReleaseRuntime(StatusEffect e)
+        {
+            if (e == null || e.Released) return;
+
+            StatusEffect key = e.origin;
+            e.Release();
+
+            if (key == null || key == e)
+            {
+                Destroy(e);
+                return;
+            }
+
+            if (!pool.TryGetValue(key, out var stack))
+            {
+                stack = new Stack<StatusEffect>();
+                pool[key] = stack;
+            }
+
+            if (stack.Count >= maxPooledPerAsset)
+            {
+                Destroy(e);
+                return;
+            }
+
+            stack.Push(e);
+        }
+
         private void Awake()
         {
             cesm = GetComponent<IStatProvider>();
@@ -97,13 +147,8 @@ namespace CrystalFlux.StatusEffectSystem
                 return;
             }
 
-            StatusEffect runtimeEffect = Instantiate(se);
-            runtimeEffect.target = gameObject;
-            runtimeEffect.source = source;
-            runtimeEffect.location = location;
-            runtimeEffect.currentStacks = 1;
-            runtimeEffect.currentTime = 0;
-            runtimeEffect.origin = se.origin != null ? se.origin : se;
+            StatusEffect runtimeEffect = AcquireRuntime(se);
+            runtimeEffect.Setup(se, gameObject, source, location);
 
             if (source != null && source.TryGetComponent<IStatProvider>(out var sem))
             {
@@ -133,7 +178,7 @@ namespace CrystalFlux.StatusEffectSystem
             {
                 existing.OnExpire();
                 activeEffects.Remove(existing);
-                Destroy(existing);
+                ReleaseRuntime(existing);
             }
             else
             {
@@ -153,7 +198,7 @@ namespace CrystalFlux.StatusEffectSystem
 
                 e.OnExpire();
                 activeEffects.RemoveAt(i);
-                Destroy(e);
+                ReleaseRuntime(e);
                 count--;
             }
         }
@@ -178,7 +223,7 @@ namespace CrystalFlux.StatusEffectSystem
 
                 e.OnExpire();
                 activeEffects.RemoveAt(i);
-                Destroy(e);
+                ReleaseRuntime(e);
             }
         }
         private void Update()
@@ -228,7 +273,7 @@ namespace CrystalFlux.StatusEffectSystem
                             activeEffects.RemoveAt(i);
                         else
                             activeEffects.Remove(e);
-                        Destroy(e);
+                        ReleaseRuntime(e);
                     }
                 }
             }

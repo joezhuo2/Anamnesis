@@ -11,6 +11,12 @@ namespace CrystalFlux.StatusEffectSystem
         private AttackAsset originalAttack = null;
         private bool setAttack = false;
 
+        protected override void ResetRuntime()
+        {
+            originalAttack = null;
+            setAttack = false;
+        }
+
         public override void OnApply()
         {
             if (target == null || replacement == null) return;

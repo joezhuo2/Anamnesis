@@ -30,6 +30,8 @@ namespace CrystalFlux.WaveSystem
         [Header("Wave Info Settings")]
         public GameObject waveInfoPanel;
         public TextMeshProUGUI anomalyInfoText;
+        private string lastInfo;
+        private int lastInfoTick = int.MinValue;
         public TextMeshProUGUI waveText;
         public Transform bossBarContainer;
         public Transform statusEffectDisplayContainer;
@@ -230,19 +232,27 @@ namespace CrystalFlux.WaveSystem
                     switch (currentAnomaly.amd.anomalyType)
                     {
                         case AnomalyType.TimeTrial: UpdateAnomalyTimeInfo(); break;
-                        case AnomalyType.NoDamage: anomalyInfoText.text = "No Damage Anomaly Active"; break;
-                        case AnomalyType.StatModifier: anomalyInfoText.text = currentAnomaly.Description; break;
-                        case AnomalyType.Swarm: anomalyInfoText.text = currentAnomaly.Description; break;
-                        case AnomalyType.Duel: anomalyInfoText.text = currentAnomaly.Description; break;
-                        case AnomalyType.Split: anomalyInfoText.text = currentAnomaly.Description; break;
+                        case AnomalyType.NoDamage: SetAnomalyInfo("No Damage Anomaly Active"); break;
+                        case AnomalyType.StatModifier:
+                        case AnomalyType.Swarm:
+                        case AnomalyType.Duel:
+                        case AnomalyType.Split: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }
             }
             else
             {
-                if (anomalyInfoText != null && anomalyInfoText.text != "") anomalyInfoText.text = "";
+                lastInfoTick = int.MinValue;
+                if (anomalyInfoText != null) SetAnomalyInfo("");
             }
+        }
+
+        private void SetAnomalyInfo(string s)
+        {
+            if (ReferenceEquals(s, lastInfo)) return;
+            lastInfo = s;
+            anomalyInfoText.text = s;
         }
 
         private void UpdateAnomalyTimeInfo()
@@ -251,12 +261,17 @@ namespace CrystalFlux.WaveSystem
             {
                 if (tt.timeRemaining <= 0f)
                 {
-                    anomalyInfoText.text = "Time's Up! Anomaly Failed";
+                    lastInfoTick = int.MinValue;
+                    SetAnomalyInfo("Time's Up! Anomaly Failed");
                     GameController?.SetTitleForDuration("Anomaly Failed", 2f, 0.5f, 0.5f);
                     GameController?.SetSubtitleForDuration("Time's Up!", 2f, 0.5f, 0.5f);
                     return;
                 }
-                anomalyInfoText.text = $"Time Remaining: {tt.timeRemaining:F1}s";
+
+                int tick = Mathf.RoundToInt(tt.timeRemaining * 10f);
+                if (tick == lastInfoTick) return;
+                lastInfoTick = tick;
+                SetAnomalyInfo($"Time Remaining: {tick * 0.1f:F1}s");
             }
         }
 

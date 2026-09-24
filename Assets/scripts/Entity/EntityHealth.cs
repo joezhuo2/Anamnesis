@@ -43,6 +43,10 @@ namespace CrystalFlux.EntitySystem
         private Camera mainCamera;
         private PlayerUpgradeManager cpum;
         private IStatProvider esm;
+        private ITeamMember ownTeam;
+        private ICastHandler castHandler;
+        private IStatusEffectReceiver ownSem;
+        private EnemyPhase phase;
         private Canvas cachedCanvas;
         public bool IsAlive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
         private bool Immune => esm != null && esm.GetStat(StatType.isImmune) > 0f;
@@ -71,6 +75,10 @@ namespace CrystalFlux.EntitySystem
             esm.AddStat(new StatBuff(StatType.CanGainHp, 1f));
 
             if (TryGetComponent<PlayerUpgradeManager>(out var pum)) cpum = pum;
+            TryGetComponent(out ownTeam);
+            TryGetComponent(out castHandler);
+            TryGetComponent(out ownSem);
+            TryGetComponent(out phase);
         }
 
         public const string HealthBarCanvasName = "HealthBarCanvas";
@@ -148,9 +156,13 @@ namespace CrystalFlux.EntitySystem
             if (cachedCanvas == null) return;
 
             healthBarInstance = PrefabPool.Acquire(healthBarPrefab, cachedCanvas.transform);
+            EnsureOwnCanvas(healthBarInstance);
 
             if (healthBarTextPrefab != null)
+            {
                 healthBarTextInstance = PrefabPool.Acquire(healthBarTextPrefab, cachedCanvas.transform);
+                EnsureOwnCanvas(healthBarTextInstance);
+            }
 
             barCurHp = int.MinValue;
             barMaxHp = int.MinValue;
@@ -158,6 +170,12 @@ namespace CrystalFlux.EntitySystem
             lastBarWorldPos = new Vector3(float.NaN, float.NaN, float.NaN);
             lastBarCamPos = new Vector3(float.NaN, float.NaN, float.NaN);
             RefreshHealthBar();
+        }
+
+        private static void EnsureOwnCanvas(Component c)
+        {
+            if (c == null || c.TryGetComponent<Canvas>(out _)) return;
+            c.gameObject.AddComponent<Canvas>();
         }
 
         private void RefreshHealthBar()
@@ -295,11 +313,30 @@ namespace CrystalFlux.EntitySystem
             _suppressHurtIFrames = true;
             _pendingHurtIFrames = false;
 
+            GameObject lastOwner = null;
+            bool ownerResolved = false;
+            IStatProvider atk = null;
+            PlayerUpgradeManager pum = null;
+            int atkTeam = 0;
+
             try
             {
             foreach (var i in dp.instances)
             {
-                IStatProvider atk = i.owner != null && i.owner.TryGetComponent<IStatProvider>(out var osm) ? osm : null;
+                if (!ownerResolved || i.owner != lastOwner)
+                {
+                    ownerResolved = true;
+                    lastOwner = i.owner;
+                    atk = null;
+                    pum = null;
+                    atkTeam = 0;
+                    if (i.owner != null)
+                    {
+                        i.owner.TryGetComponent(out atk);
+                        i.owner.TryGetComponent(out pum);
+                        atkTeam = i.owner.TryGetComponent<ITeamMember>(out var oitm) ? oitm.TeamID : 0;
+                    }
+                }
 
                 var (dmg, sizeMult) = i.type switch
                 {
@@ -322,25 +359,24 @@ namespace CrystalFlux.EntitySystem
                     _ => Color.white
                 };
 
-                PlayerUpgradeManager pum = null;
-                if (i.owner != null) i.owner.TryGetComponent(out pum);
-
                 if (pum != null)
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTargetRecievedHit);
 
                 if (cpum != null && dmg > 0)
                     cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeDamage);
 
-                if (cpum != null && dmg > 0 && IsEnemyHit(dp, i))
+                bool enemyHit = dmg > 0 && IsEnemyHit(dp, i, atkTeam);
+
+                if (cpum != null && enemyHit)
                 {
                     cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeHit);
                     if (Projectile.ApplyingProjectileHit) tookProjectileHit = true;
                 }
 
-                if (dmg > 0 && Projectile.ApplyingProjectileHit && IsEnemyHit(dp, i))
+                if (enemyHit && Projectile.ApplyingProjectileHit)
                 {
                     TryThorns(i.owner, dmg);
-                    if (TryGetComponent<ICastHandler>(out var ch)) ch.CancelCast();
+                    if (castHandler != null) castHandler.CancelCast();
                 }
 
                 if (i.isCrit)
@@ -391,19 +427,17 @@ namespace CrystalFlux.EntitySystem
 
         private void TryThorns(GameObject attacker, float damageTaken)
         {
-            if (attacker == null || !TryGetComponent<IStatusEffectReceiver>(out var sem)) return;
-            if (sem.GetActiveFirstEffectOfType<Thorns>() is Thorns th) th.TryReflect(attacker, damageTaken);
+            if (attacker == null || ownSem == null) return;
+            if (ownSem.GetActiveFirstEffectOfType<Thorns>() is Thorns th) th.TryReflect(attacker, damageTaken);
         }
 
-        private bool IsEnemyHit(DamagePacket dp, DamageInstance i)
+        private bool IsEnemyHit(DamagePacket dp, DamageInstance i, int atkTeam)
         {
             if (dp.bypassIFrames) return false;
             if (i.type != DamageType.Physical && i.type != DamageType.Spell && i.type != DamageType.True) return false;
             if (i.owner == null || i.owner == gameObject) return false;
 
-            int ownTeam = TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
-            int atkTeam = i.owner.TryGetComponent<ITeamMember>(out var oitm) ? oitm.TeamID : 0;
-            return ownTeam != atkTeam;
+            return (ownTeam != null ? ownTeam.TeamID : 0) != atkTeam;
         }
 
         public bool ChangeHealth(float amount, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
@@ -499,16 +533,16 @@ namespace CrystalFlux.EntitySystem
         }
         private void UpdatePhase()
         {
-            if (!TryGetComponent<EnemyPhase>(out var ep)) return;
+            if (phase == null) return;
 
             float hpPct = (float)CurHp / MaxHp * 100f;
             int newPhase = 0;
-            for (int i = 0; i < ep.phaseThresholds.Length; i++)
+            for (int i = 0; i < phase.phaseThresholds.Length; i++)
             {
-                if (hpPct <= ep.phaseThresholds[i]) newPhase = i + 1;
+                if (hpPct <= phase.phaseThresholds[i]) newPhase = i + 1;
                 else break;
             }
-            ep.UpdatePhase(newPhase);
+            phase.UpdatePhase(newPhase);
         }
 
         private void RegenHp()
@@ -546,8 +580,8 @@ namespace CrystalFlux.EntitySystem
 
             TrySplit();
 
-            if (TryGetComponent<IStatusEffectReceiver>(out var sem))
-                sem.ClearAllEffects();
+            if (ownSem != null)
+                ownSem.ClearAllEffects();
 
             barRetired = true;
             PrefabPool.Release(ref healthBarInstance);

@@ -13,6 +13,8 @@ namespace CrystalFlux.StatusEffectSystem
         public float maxRed = 0.9f;
         public float minRed = 0f;
 
+        protected override void ResetRuntime() => currentActiveDebuff = null;
+
         public override void OnApply() => ApplyReduction();
         public override void OnStack()
         {

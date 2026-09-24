@@ -22,6 +22,7 @@ namespace CrystalFlux.EntitySystem
         private PlayerUpgradeManager pum;
         private IStatProvider esm;
         private RushState rush;
+        private float lastAnimSpd = -1f;
         private static Camera cachedMainCam;
         private static Camera MainCam => cachedMainCam != null ? cachedMainCam : cachedMainCam = Camera.main;
         private bool Dashing => esm.GetStat(StatType.IsDashing) > 0f;
@@ -104,7 +105,11 @@ namespace CrystalFlux.EntitySystem
             }
 
             if (inputMag > 0.1) animator.speed = Mathf.Max(inputMag * baseAnimSpeed, 0.01f);
-            animator.SetFloat(SpeedHash, inputMag);
+            if (inputMag != lastAnimSpd)
+            {
+                animator.SetFloat(SpeedHash, inputMag);
+                lastAnimSpd = inputMag;
+            }
         }
 
         private Vector2 GetKnockbackVelocity() => KnockbackHandler.UpdateForces(currentForces, Time.fixedDeltaTime);

@@ -24,7 +24,7 @@ namespace CrystalFlux.EntitySystem
         private Animator a;
         private bool isAttackingCoroutineRunning = false;
         private readonly List<int> availableIndexes = new();
-        private readonly HashSet<AttackData> chainVisited = new();
+        private AttackData queuedAttack;
         private bool movementHeld;
         private bool isCasting;
         private bool isCharging;
@@ -67,11 +67,22 @@ namespace CrystalFlux.EntitySystem
             if (attacks.Count == 0 || Target == null) return;
             if (globalCooldown > 0 && Time.time - lastAttackEndTime < globalCooldown) return;
 
+            if (isAttackingCoroutineRunning) return;
+
+            if (queuedAttack != null)
+            {
+                float d = (Target.transform.position - transform.position).sqrMagnitude;
+                if (d > queuedAttack.MaxRange * queuedAttack.MaxRange) return;
+
+                StartCoroutine(PerformAttack(queuedAttack, attacks.IndexOf(queuedAttack)));
+                return;
+            }
+
             int chosen = ChooseAttackIndex();
 
             if (chosen == -1) return;
 
-            if (!isAttackingCoroutineRunning) StartCoroutine(PerformAttack(attacks[chosen], chosen));
+            StartCoroutine(PerformAttack(attacks[chosen], chosen));
         }
 
         private int ChooseAttackIndex()
@@ -109,122 +120,12 @@ namespace CrystalFlux.EntitySystem
         {
             if (esm.GetStat(StatType.CanAttack) <= 0f || esm.GetStat(StatType.isAlive) <= 0f) yield break;
 
-            chainVisited.Clear();
-
-            AttackData current = attack;
-            int currentIndex = index;
+            queuedAttack = null;
 
             isAttackingCoroutineRunning = true;
             esm.AddStat(new(StatType.IsAttacking, 1));
 
-            while (current != null && chainVisited.Add(current))
-            {
-                float attackStartTime = Time.time;
-
-                if (!current.CanMoveDuringAttack && !current.Rushes)
-                {
-                    movementHeld = true;
-                    esm.AddStat(new(StatType.CanMove, -1));
-                }
-
-                if (a != null) a.SetInteger(AttackIndexHash, currentIndex);
-
-                float castTime = current.GetEffCastTime(esm);
-
-                if (castTime > 0f)
-                {
-                    isCasting = true;
-                    castCancelled = false;
-
-                    if (!current.CanMoveWhileCasting)
-                    {
-                        castMovementHeld = true;
-                        esm.AddStat(new StatBuff(StatType.CanMove, -1f));
-                    }
-
-                    CastBar.Acquire(castBarPrefab, castBarTextPrefab, out castBarInstance, out castBarTextInstance);
-
-                    float elapsed = 0f;
-
-                    while (elapsed < castTime)
-                    {
-                        if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
-                        else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
-
-                        if (castCancelled) break;
-
-                        CastBar.Tick(castBarInstance, castBarTextInstance, transform, castBarOffset, elapsed, castTime);
-
-                        yield return null;
-                        elapsed += Time.deltaTime;
-                    }
-
-                    bool interrupted = castCancelled;
-                    EndCast();
-
-                    if (interrupted)
-                    {
-                        if (currentIndex >= 0) cooldowns[currentIndex] = current.Cooldown;
-                        break;
-                    }
-
-                    attackStartTime = Time.time;
-                }
-
-                HandleOrbitInteractions(current);
-                HandleCleanse(current);
-
-                TryGetComponent<EnemyMovement>(out var em);
-                if (current.Rushes && em != null) em.StartRush(current);
-
-                if (current.ProjectilePrefab != null && !current.CanCharge)
-                {
-                    if (current.SpawnDelay > 0) yield return new WaitForSeconds(current.SpawnDelay);
-
-                    if (Target != null && ProjectileSpawner.Instance != null)
-                    {
-                        Vector2 dir = (Target.transform.position - transform.position).normalized;
-                        float dist = Vector2.Distance(Target.transform.position, transform.position);
-
-                        StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
-                            current.ProjectilePrefab,
-                            gameObject,
-                            transform.position,
-                            dir,
-                            dist > current.SpawnDistance ? current.SpawnDistance : dist
-                        ));
-                    }
-                }
-
-                if (current.SummonChance > 0f && current.SummonCondition == SummonCondition.OnCast && Random.value <= current.SummonChance)
-                {
-                    if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
-                        summonHandler.Summon();
-                }
-
-                if (currentIndex >= 0) cooldowns[currentIndex] = current.Cooldown;
-
-                if (current.CanCharge)
-                {
-                    yield return ChargeLoop(current);
-                    if (currentIndex >= 0 && !current.CooldownOnAttackStart) cooldowns[currentIndex] = current.Cooldown;
-                    if (castCancelled) { castCancelled = false; break; }
-                }
-
-                if (current.DisableAttacksWhileRushing && em != null)
-                    while (em.Rushing) yield return null;
-
-                if (current.AnimationLength > 0)
-                {
-                    float remaining = current.AnimationLength - (Time.time - attackStartTime);
-                    if (remaining > 0) yield return new WaitForSeconds(remaining);
-                }
-
-                ReleaseMovementHold();
-
-                current = current.NextAttack;
-                currentIndex = -1;
-            }
+            yield return RunAttack(attack, index);
 
             ReleaseMovementHold();
 
@@ -232,6 +133,114 @@ namespace CrystalFlux.EntitySystem
             esm.AddStat(new(StatType.IsAttacking, -1));
             lastAttackEndTime = Time.time;
             if (a != null) a.SetInteger(AttackIndexHash, -1);
+        }
+
+        private System.Collections.IEnumerator RunAttack(AttackData current, int currentIndex)
+        {
+            float attackStartTime = Time.time;
+
+            if (!current.CanMoveDuringAttack && !current.Rushes)
+            {
+                movementHeld = true;
+                esm.AddStat(new(StatType.CanMove, -1));
+            }
+
+            if (a != null) a.SetInteger(AttackIndexHash, currentIndex);
+
+            float castTime = current.GetEffCastTime(esm);
+
+            if (castTime > 0f)
+            {
+                isCasting = true;
+                castCancelled = false;
+
+                if (!current.CanMoveWhileCasting)
+                {
+                    castMovementHeld = true;
+                    esm.AddStat(new StatBuff(StatType.CanMove, -1f));
+                }
+
+                CastBar.Acquire(castBarPrefab, castBarTextPrefab, out castBarInstance, out castBarTextInstance);
+
+                float elapsed = 0f;
+
+                while (elapsed < castTime)
+                {
+                    if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
+                    else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
+
+                    if (castCancelled) break;
+
+                    CastBar.Tick(castBarInstance, castBarTextInstance, transform, castBarOffset, elapsed, castTime);
+
+                    yield return null;
+                    elapsed += Time.deltaTime;
+                }
+
+                bool interrupted = castCancelled;
+                EndCast();
+
+                if (interrupted)
+                {
+                    if (currentIndex >= 0) cooldowns[currentIndex] = current.Cooldown;
+                    yield break;
+                }
+
+                attackStartTime = Time.time;
+            }
+
+            HandleOrbitInteractions(current);
+            HandleCleanse(current);
+
+            TryGetComponent<EnemyMovement>(out var em);
+            if (current.Rushes && em != null) em.StartRush(current);
+
+            if (current.ProjectilePrefab != null && !current.CanCharge)
+            {
+                if (current.SpawnDelay > 0) yield return new WaitForSeconds(current.SpawnDelay);
+
+                if (Target != null && ProjectileSpawner.Instance != null)
+                {
+                    Vector2 dir = (Target.transform.position - transform.position).normalized;
+                    float dist = Vector2.Distance(Target.transform.position, transform.position);
+
+                    StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
+                        current.ProjectilePrefab,
+                        gameObject,
+                        transform.position,
+                        dir,
+                        dist > current.SpawnDistance ? current.SpawnDistance : dist
+                    ));
+                }
+            }
+
+            if (current.SummonChance > 0f && current.SummonCondition == SummonCondition.OnCast && Random.value <= current.SummonChance)
+            {
+                if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
+                    summonHandler.Summon();
+            }
+
+            if (currentIndex >= 0) cooldowns[currentIndex] = current.Cooldown;
+
+            if (current.CanCharge)
+            {
+                yield return ChargeLoop(current);
+                if (currentIndex >= 0 && !current.CooldownOnAttackStart) cooldowns[currentIndex] = current.Cooldown;
+                if (castCancelled) { castCancelled = false; yield break; }
+            }
+
+            if (current.DisableAttacksWhileRushing && em != null)
+                while (em.Rushing) yield return null;
+
+            if (current.AnimationLength > 0)
+            {
+                float remaining = current.AnimationLength - (Time.time - attackStartTime);
+                if (remaining > 0) yield return new WaitForSeconds(remaining);
+            }
+
+            ReleaseMovementHold();
+
+            queuedAttack = current.NextAttack;
         }
 
         private System.Collections.IEnumerator ChargeLoop(AttackData attack)
@@ -333,6 +342,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (isCharging && TryGetComponent<EntityProjectileHandler>(out var eph)) eph.EndChargeWindow();
             isCharging = false;
+            queuedAttack = null;
             EndCast();
 
             if (esm == null) return;

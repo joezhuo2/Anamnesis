@@ -35,7 +35,7 @@ namespace CrystalFlux.EntitySystem
         private static int OverlapCircle(Vector2 position, float radius)
         {
             ContactFilter2D filter = default;
-            filter.useTriggers = Physics2D.queriesHitTriggers;
+            filter.useTriggers = false;
 
             return Physics2D.OverlapCircle(position, radius, filter, overlapBuffer);
         }

@@ -231,13 +231,14 @@ namespace CrystalFlux.WaveSystem
         private GameObject GetRandomEnemy()
         {
             if (enemyPrefabs == null || enemyPrefabs.Count == 0) return null;
-            List<GameObject> available = new();
+            GameObject pick = null;
+            int n = 0;
             for (int i = 0; i < enemyPrefabs.Count; i++)
             {
-                if (enemyPrefabs[i].minWave <= currentWaveIndex)
-                    available.Add(enemyPrefabs[i].prefab);
+                if (enemyPrefabs[i].minWave <= currentWaveIndex && Random.Range(0, ++n) == 0)
+                    pick = enemyPrefabs[i].prefab;
             }
-            return available.Count > 0 ? available[Random.Range(0, available.Count)] : null;
+            return pick;
         }
 
         private GameObject GetRandomBoss()

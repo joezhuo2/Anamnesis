@@ -167,6 +167,10 @@
   `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
 - `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
+- Attack-button borders and status icons can react up to 0.1s late: the border turning red after an attack, and a dead entity's icons going back to the pool.
+- Since v0.6.3, homing, enemy follow-cursor and orbit-nearest projectiles can take up to 0.15s (`Projectile.retargetInterval`) to find a new target after losing one, and `DoTSpread` spreads land on a 0.1s grid.
+- Since v0.6.3, each enemy health bar and its text have their own nested `Canvas`. A move no longer rebuilds every bar, but the bars no longer batch together, so there can be up to two draw calls per visible bar. If draw calls turn out to cost more than the rebuilds did, switch to world-space `SpriteRenderer` bars parented to the enemy.
+- Since v0.6.3, `StatusEffect` runtime copies are pooled, so an expired effect is never Unity-null. Anything holding an effect reference must check `Released` or compare `Generation` (see `StatusEffectCooldownUI`, `DoTSpread`). A new `StatusEffect` subclass with private per-use state must clear it in `ResetRuntime()`.
 
 ### Available Colors 
 - **red**
@@ -220,6 +224,16 @@
 
 ## Performance Improvements
 
+### High
+
+- [ ] Physics layers: everything sits on `Default` and the 2D collision matrix is all-ones
+  (`ProjectSettings/Physics2DSettings.asset:56`). Projectile triggers pair with other projectiles, pickups and
+  walls, so dense barrages get O(n²) broadphase pairs, plus `OnTriggerEnter2D`/`OnTriggerStay2D` callbacks
+  every physics step (`Projectile.OnTriggerEnter2D`/`OnTriggerStay2D`: `hit.Contains` + interface `TryGetComponent` per pair per step).
+  Fix: add Player/Enemy/Projectile/Environment/Pickup layers, disable Projectile↔Projectile and
+  Projectile↔Pickup. The overlap queries in `Projectile`/`EntityProjectileHandler` already skip triggers (v0.6.3);
+  an entity LayerMask would also drop walls from them.
+
 ### Medium
 
 - [ ] Enemy pooling — documented as a deliberate deferral in Open Items; revisit when the three blockers
@@ -229,17 +243,39 @@
 
 ### Low
 
-- [ ] `EnemyMovement.cs:50-63,71-109` — per frame per enemy: `Vector2.Distance` (sqrt) for de-aggro, plus
-  `normalized` (second sqrt) on movement; `Start` (line 46) runs `FindGameObjectWithTag("Player")` per
-  spawn. Fix: compare `distSqr` against squared range; axis pick via `Mathf.Abs`; cache player reference.
-- [ ] `PlayerMovement.cs:72` — `animator.SetFloat(SpeedHash, ...)` every FixedUpdate even when unchanged
-  (dirty animator param 50×/sec). Fix: change-guard like `EnemyMovement.SetAnimator` already does.
-- [ ] `UnlimitedWaveManager.cs:233` — `List<GameObject> available = new()` per spawn (~1-3/sec in waves).
-  Fix: reuse a field buffer or reservoir-sample without a list.
-- [ ] Per-frame UI polling: `PlayerAttackCooldownUI.cs:88-120` re-runs `CanCast` (≈10 stat reads, 4 buttons
-  ≈ 40/frame) and `StatusEffectCooldownUI.cs:45-68` polls GetStat + recomputes fill per effect icon.
-  Fix: throttle to ~10 Hz or drive from cooldown-change events.
-- [ ] `TextIndicator.cs:54-68` — `WorldToScreenPoint` per indicator per frame; 100+ concurrent numbers = 100
-  screen-space transforms/frame. Fix: update screen pos only when world pos moved > ~1px.
-- [ ] `WaveManager.cs:228-241` — `$"Time Remaining: {tt.timeRemaining:F1}s"` string + TMP setter per frame
-  during Time Trial. Fix: rebuild when `FloorToInt(t * 10)` changes or description reference changes.
+- [ ] `Projectile.hit` is a `List<GameObject>` (`Projectile.cs:24`); `Contains` in `OnTriggerEnter2D`, `OnTriggerStay2D`, `FindClosestEnemyInDirection` and `FindClosestTargetInRange` is O(n)
+  per trigger pair per step, so high-pierce/AoE projectiles go O(n²). Fix: `HashSet<GameObject>`.
+- [ ] Pool/spawn lookups: `PrefabPool.InvokeHooks` (`PrefabPool.cs:135-155`) walks
+  `GetComponentsInChildren<IPoolable>` on every Acquire and Release; `Acquire<T>` adds a `GetComponent<T>`
+  (`:69`); `ProjectileSpawner.SpawnProjectile` does a `SetCap` dict write + `GetComponent<Rigidbody2D>` +
+  `TryGetComponent<Projectile>` per spawn (`ProjectileSpawner.cs:43-56`); `Projectile.Setup` repeats the rb
+  lookup (`Projectile.Setup`). Fix: cache IPoolable[] per instance on create, set cap once per prefab,
+  move the rb lookup to `Awake`.
+- [ ] Spawn coroutine garbage: every attack and on-hit chain (`Projectile.HandleAdditionalSpawns`,
+  `TryRetriggerChain`) allocates 3 nested enumerators (`SpawnFromPattern` → `SpawnFromPatternInternal` →
+  pattern), `new WaitForSeconds(ad.SpawnDelay)` (`ProjectileSpawner.cs:245`), a `params Vector2[]` (`:156`)
+  and a teleport closure (`:256`). Fix: spawn `Single` synchronously, cache the WaitForSeconds, drop `params`.
+- [ ] `ProjectileSnapshot.CaptureSnapshot` (`ProjectileSnapshot.cs:38`) runs `GetComponentInParent` +
+  `GetComponentInChildren<IOrbitRegister>` on every enemy projectile Setup and charge tick, because enemies
+  have no `EntityProjectileHandler`, even when `SpecialSclaing != Orbits`. Fix: resolve only for Orbits.
+- [ ] `TextIndicator.Initialize(int…)` (`TextIndicator.cs:29-38`) allocates 1-3 strings per damage number.
+  Fix: `text.SetText("{0}", val)` for plain numbers; build strings only for k/M/gold/xp.
+- [ ] `TextIndicatorSpawner._activeIndicators` (`TextIndicatorSpawner.cs:13,51,62,69`) is write-only, and its
+  `Remove` is O(n) per returned indicator with 100+ live. Fix: delete the list.
+- [ ] `EnemyAttackHandler.ChooseAttackIndex` (`EnemyAttackHandler.cs:88-114`) runs every frame per idle enemy
+  and recomputes hpPct (2 GetStat, `:100`) plus `TryGetComponent<EnemyPhase>` (`:107`) inside the per-attack
+  loop. Fix: hoist hpPct, cache EnemyPhase in `Awake`, skip when every cooldown is > 0.
+- [ ] `HoverScale.Update` (`HoverScale.cs:32-45`) writes `localScale` every frame on ~136 instances (all skill
+  nodes + HUD attack buttons) even when settled, dirtying their canvas. Fix: early-return once at goal.
+- [ ] Tooltip churn: `SkillTreeOpenButton.Update` (`SkillTreeOpenButton.cs:49-52`) rebuilds its tooltip every
+  hovered frame (List + 3 interpolations + `string.Join` + `GetBindingDisplayString` + TMP re-layout);
+  `TooltipUI.Update` (`TooltipUI.cs:38-42`) sets position every frame even when the mouse is still. Fix:
+  rebuild only when gold/skill points change; guard position on mouse delta.
+- [ ] `PlayerAttackHandler` closure/list allocs: `attacks.Find(atk => atk.type == type)` captures per call
+  (`PlayerAttackHandler.cs:208,657,676,715`, `:208` runs every attack); `AdvanceAllCooldowns` (`:705`)
+  copies the key set into a new List. Fix: use `FindAttackOfType`; iterate a reusable buffer.
+- [ ] `WaveManager.CleanEnemyList` (`WaveManager.cs:467-474`) runs `RemoveAll` with a Unity null check per
+  enemy every frame while at the enemy cap (`:345-349`). Fix: decrement on `EntityHealth.OnDeath`, or poll
+  at ~0.25s.
+- [ ] `EntityStatManager.TryApplyCountedFlag` (`EntityStatManager.cs:65-66`) does two `HashSet<StatType>`
+  lookups on every `AddStat`, which includes every hit's `currentHp` change. Fix: `switch` on StatType.

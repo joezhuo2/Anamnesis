@@ -13,11 +13,13 @@ public class DoTSpread : PlayerUpgrade
     [Tooltip("use the debuff's own tickInterval instead of spreadInterval")] public bool useTickInterval;
     [Range(0f, 100f)] public float spreadChance = 25f;
 
-    private readonly Dictionary<StatusEffect, float> nextSpread = new();
+    private readonly Dictionary<StatusEffect, (float time, int gen)> nextSpread = new();
     private readonly List<StatusEffect> staleKeys = new();
     private MonoBehaviour host;
     private Coroutine loop;
     private float nextPrune;
+    private const float tickRate = 0.1f;
+    private static readonly WaitForSeconds tickWait = new(tickRate);
 
     public override void OnUnlock(GameObject player)
     {
@@ -49,7 +51,7 @@ public class DoTSpread : PlayerUpgrade
     {
         while (player != null)
         {
-            yield return null;
+            yield return tickWait;
             if (Time.timeScale == 0f) continue;
             Tick(player);
         }
@@ -64,7 +66,9 @@ public class DoTSpread : PlayerUpgrade
         for (int i = 0; i < enemies.Count; i++)
         {
             var em = enemies[i];
-            if (em == null || !em.TryGetComponent<StatusEffectManager>(out var sem)) continue;
+            if (em == null) continue;
+            var sem = em.Sem;
+            if (sem == null) continue;
 
             var effects = sem.activeEffects;
             for (int j = effects.Count - 1; j >= 0; j--)
@@ -76,14 +80,14 @@ public class DoTSpread : PlayerUpgrade
                 float interval = useTickInterval && e.tickInterval > 0f ? e.tickInterval : spreadInterval;
                 if (interval <= 0f) continue;
 
-                if (!nextSpread.TryGetValue(e, out float t))
+                if (!nextSpread.TryGetValue(e, out var ns) || ns.gen != e.Generation)
                 {
-                    nextSpread[e] = now + interval;
+                    nextSpread[e] = (now + interval, e.Generation);
                     continue;
                 }
-                if (now < t) continue;
+                if (now < ns.time) continue;
 
-                nextSpread[e] = now + interval;
+                nextSpread[e] = (now + interval, e.Generation);
                 if (Random.Range(0f, 100f) >= spreadChance) continue;
 
                 Spread(e, em, player, r2, enemies);
@@ -105,8 +109,10 @@ public class DoTSpread : PlayerUpgrade
 
             Vector2 pos = other.transform.position;
             if ((pos - center).sqrMagnitude > r2) continue;
-            if (other.TryGetComponent<IStatProvider>(out var sp) && sp.GetStat(StatType.isAlive) <= 0f) continue;
-            if (!other.TryGetComponent<StatusEffectManager>(out var osem) || osem.HasEffect(asset)) continue;
+            var sp = other.Stats;
+            if (sp != null && sp.GetStat(StatType.isAlive) <= 0f) continue;
+            var osem = other.Sem;
+            if (osem == null || osem.HasEffect(asset)) continue;
 
             osem.Apply(asset, player, pos);
         }
@@ -117,7 +123,7 @@ public class DoTSpread : PlayerUpgrade
         nextPrune = now + 2f;
         staleKeys.Clear();
         foreach (var kv in nextSpread)
-            if (kv.Key == null) staleKeys.Add(kv.Key);
+            if (kv.Key == null || kv.Key.Released || kv.Key.Generation != kv.Value.gen) staleKeys.Add(kv.Key);
         for (int i = 0; i < staleKeys.Count; i++)
             nextSpread.Remove(staleKeys[i]);
         staleKeys.Clear();

@@ -27,6 +27,37 @@ namespace CrystalFlux.StatusEffectSystem
         [HideInInspector] public float potencyMultiplier = 1f;
         [HideInInspector] public StatusEffect origin;
 
+        public int Generation { get; private set; }
+        public bool Released { get; private set; }
+
+        public void Setup(StatusEffect src, GameObject tgt, GameObject srcObj, Vector2 loc)
+        {
+            Generation++;
+            Released = false;
+            duration = src.duration;
+            tickInterval = src.tickInterval;
+            potencyMultiplier = src.potencyMultiplier;
+            currentTime = 0f;
+            currentStacks = 1;
+            target = tgt;
+            source = srcObj;
+            location = loc;
+            origin = src.origin != null ? src.origin : src;
+            ResetRuntime();
+        }
+
+        public void Release()
+        {
+            Released = true;
+            target = null;
+            source = null;
+            currentStacks = 0;
+            currentTime = 0f;
+            ResetRuntime();
+        }
+
+        protected virtual void ResetRuntime() {}
+
         public virtual void OnTick() {}
         public virtual void OnApply() {}
         public virtual void OnExpire() {}

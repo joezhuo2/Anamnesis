@@ -17,6 +17,12 @@ namespace CrystalFlux.StatusEffectSystem
         [HideInInspector] public Vector2 pullCenter;
         private bool heldMovement;
 
+        protected override void ResetRuntime()
+        {
+            pullCenter = Vector2.zero;
+            heldMovement = false;
+        }
+
         public override void OnApply()
         {
             if (pullToSource && source != null) pullCenter = source.transform.position;

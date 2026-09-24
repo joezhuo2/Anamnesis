@@ -12,12 +12,19 @@ namespace CrystalFlux.StatusEffectSystem
         public Image iconImage;
 
         private StatusEffect cse;
+        private int cseGen;
         private IStatProvider cesm;
+        private const float PollInterval = 0.1f;
+        private float nextPollTime;
+        private float cachedEffDur;
 
         public void Setup(StatusEffect se, IStatProvider esm)
         {
             cse = se;
+            cseGen = se != null ? se.Generation : 0;
             cesm = esm;
+            nextPollTime = 0f;
+            cachedEffDur = 0f;
 
             if (iconImage != null) iconImage.sprite = cse != null ? cse.icon : null;
 
@@ -44,27 +51,30 @@ namespace CrystalFlux.StatusEffectSystem
 
         private void Update()
         {
-            if (cse == null || (cesm != null && cesm.GetStat(StatType.isAlive) <= 0f))
+            if (cse == null || cse.Released || cse.Generation != cseGen)
             {
                 ReturnToPool();
                 return;
             }
 
-            float effRes = cesm != null ? cesm.GetStat(StatType.EffectRes) : 0f;
-            float effDur = cse.isBuff ? cse.duration : cse.duration * (1f - (effRes * 0.01f));
+            if (Time.unscaledTime >= nextPollTime)
+            {
+                nextPollTime = Time.unscaledTime + PollInterval;
+
+                if (cesm != null && cesm.GetStat(StatType.isAlive) <= 0f)
+                {
+                    ReturnToPool();
+                    return;
+                }
+
+                float effRes = cesm != null ? cesm.GetStat(StatType.EffectRes) : 0f;
+                cachedEffDur = cse.isBuff ? cse.duration : cse.duration * (1f - (effRes * 0.01f));
+            }
 
             if (cooldownImage == null) return;
 
-            if (effDur <= 0f)
-            {
-                cooldownImage.fillAmount = 0f;
-                return;
-            }
-
-            float timeElapsed = cse.currentTime;
-            float cooldownRemainingPct = 1f - (timeElapsed / effDur);
-
-            cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+            float fill = cachedEffDur <= 0f ? 0f : Mathf.Clamp01(1f - (cse.currentTime / cachedEffDur));
+            if (cooldownImage.fillAmount != fill) cooldownImage.fillAmount = fill;
         }
 
         private void ReturnToPool()

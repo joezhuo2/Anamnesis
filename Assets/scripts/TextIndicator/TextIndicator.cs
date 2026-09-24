@@ -12,6 +12,7 @@ namespace CrystalFlux.Core
         public Vector2 maxRandomOffset = new(0.5f, 0.5f);
         private TextMeshProUGUI text;
         private Vector3 worldPos;
+        private Vector3 lastScreenPos;
         private Camera mainCam;
         private float timer;
         private float delayTimer;
@@ -49,7 +50,7 @@ namespace CrystalFlux.Core
                 0f
             );
 
-            if (mainCam != null) transform.position = mainCam.WorldToScreenPoint(worldPos);
+            if (mainCam != null) transform.position = lastScreenPos = mainCam.WorldToScreenPoint(worldPos);
 
             text.text = content;
             text.color = color;
@@ -73,7 +74,11 @@ namespace CrystalFlux.Core
             if (mainCam == null) return;
 
             Vector3 screenPos = mainCam.WorldToScreenPoint(worldPos);
-            transform.position = screenPos;
+            if ((screenPos - lastScreenPos).sqrMagnitude >= 1f)
+            {
+                transform.position = screenPos;
+                lastScreenPos = screenPos;
+            }
 
             worldPos += floatSpeed * Time.deltaTime * Vector3.up;
 

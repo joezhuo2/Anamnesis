@@ -14,6 +14,8 @@ namespace CrystalFlux.StatusEffectSystem
 
         private float lastProcTime = float.NegativeInfinity;
 
+        protected override void ResetRuntime() => lastProcTime = float.NegativeInfinity;
+
         public override void OnApply() => lastProcTime = float.NegativeInfinity;
 
         public void TryLifesteal(float damageDealt)

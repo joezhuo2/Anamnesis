@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.StatusEffectSystem;
 using UnityEngine;
 
 namespace CrystalFlux.EntitySystem
@@ -24,13 +25,21 @@ namespace CrystalFlux.EntitySystem
         private float nextTargetCheckTime = 0f;
         private Transform cTransform;
         private Vector3 cScale;
-        private GameObject cachedPlayer;
+        private static GameObject cachedPlayer;
         public GameObject target;
         private RushState rush;
 
         private static readonly List<EnemyMovement> active = new();
         public static IReadOnlyList<EnemyMovement> Active => active;
         public bool Rushing => rush != null && rush.Active;
+        public StatusEffectManager Sem { get; private set; }
+        public IStatProvider Stats => esm;
+
+        private void Awake()
+        {
+            esm = GetComponent<IStatProvider>();
+            Sem = GetComponent<StatusEffectManager>();
+        }
 
         private void OnEnable() => active.Add(this);
         private void OnDisable()
@@ -43,7 +52,6 @@ namespace CrystalFlux.EntitySystem
 
         private void Start()
         {
-            esm = GetComponent<IStatProvider>();
             a = GetComponent<Animator>();
             rb = GetComponent<Rigidbody2D>();
             rush = new RushState(gameObject, esm);
@@ -52,8 +60,6 @@ namespace CrystalFlux.EntitySystem
 
             cTransform = transform;
             cScale = cTransform.localScale;
-
-            cachedPlayer = GameObject.FindGameObjectWithTag("Player");
 
             UpdateTargeting();
         }
@@ -102,24 +108,31 @@ namespace CrystalFlux.EntitySystem
             if (target == null) return Vector2.zero;
 
             Vector2 dist = target.transform.position - cTransform.position;
-            float distMag = dist.magnitude;
+            float distSqr = dist.sqrMagnitude;
 
-            if (distMag > 0 && distMag <= stoppingDistance) return Vector2.zero;
+            float sd = Mathf.Max(0f, stoppingDistance);
+            if (distSqr > 0 && distSqr <= sd * sd) return Vector2.zero;
 
-            float detectionRange = esm.GetStat(StatType.DetectionRange);
-            if (canDeaggro && distMag > detectionRange)
+            if (canDeaggro)
             {
-                target = null;
-                return Vector2.zero;
+                float dr = Mathf.Max(0f, esm.GetStat(StatType.DetectionRange));
+                if (distSqr > dr * dr)
+                {
+                    target = null;
+                    return Vector2.zero;
+                }
             }
 
-            Vector2 dir = dist.normalized;
+            if (distSqr == 0f) return Vector2.zero;
+
+            Vector2 dir;
             if (cardinalOnly)
             {
-                dir = Mathf.Abs(dir.x) > Mathf.Abs(dir.y) ?
-                    new Vector2(Mathf.Sign(dir.x), 0) :
-                    new Vector2(0, Mathf.Sign(dir.y));
+                dir = Mathf.Abs(dist.x) > Mathf.Abs(dist.y) ?
+                    new Vector2(Mathf.Sign(dist.x), 0) :
+                    new Vector2(0, Mathf.Sign(dist.y));
             }
+            else dir = dist / Mathf.Sqrt(distSqr);
 
             Face(dir.x);
 
@@ -181,22 +194,12 @@ namespace CrystalFlux.EntitySystem
             if (Time.time < nextTargetCheckTime) return;
             nextTargetCheckTime = Time.time + targetCheckInterval;
 
-            if (cachedPlayer != null)
-            {
-                float dist = Vector2.Distance(transform.position, cachedPlayer.transform.position);
-                float detectionRange = esm.GetStat(StatType.DetectionRange);
-                if (dist <= detectionRange) target = cachedPlayer;
-            }
-            else
-            {
-                cachedPlayer = GameObject.FindGameObjectWithTag("Player");
-                if (cachedPlayer != null)
-                {
-                    float dist = Vector2.Distance(transform.position, cachedPlayer.transform.position);
-                    float detectionRange = esm.GetStat(StatType.DetectionRange);
-                    if (dist <= detectionRange) target = cachedPlayer;
-                }
-            }
+            if (cachedPlayer == null) cachedPlayer = GameObject.FindGameObjectWithTag("Player");
+            if (cachedPlayer == null) return;
+
+            float distSqr = ((Vector2)(cachedPlayer.transform.position - cTransform.position)).sqrMagnitude;
+            float dr = esm.GetStat(StatType.DetectionRange);
+            if (dr >= 0f && distSqr <= dr * dr) target = cachedPlayer;
         }
     }
 }

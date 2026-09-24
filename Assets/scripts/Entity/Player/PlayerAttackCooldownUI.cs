@@ -32,6 +32,9 @@ namespace CrystalFlux.EntitySystem
         private Vector2 cachedOffset;
 
         private static readonly Vector2 TooltipOffset = new(0, -100);
+        private const float PollInterval = 0.1f;
+        private float nextPollTime;
+        private float cachedEffCd;
 
         private Color normalBorderColor = Color.white;
         private bool borderColorCached;
@@ -72,6 +75,8 @@ namespace CrystalFlux.EntitySystem
             }
 
             lastCanCast = true;
+            nextPollTime = 0f;
+            cachedEffCd = 0f;
 
             RefreshTooltip();
 
@@ -89,23 +94,23 @@ namespace CrystalFlux.EntitySystem
         {
             if (cpah == null || cad == null) return;
 
-            UpdateBorder();
-
-            if (cooldownImage == null || !cpah.lastAttackTimes.ContainsKey(ctype)) return;
-
-            float effCd = PlayerAttackHandler.GetEffCd(cad, cesm);
-
-            if (effCd <= 0f)
+            if (Time.unscaledTime >= nextPollTime)
             {
-                cooldownImage.fillAmount = 0f;
+                nextPollTime = Time.unscaledTime + PollInterval;
+                cachedEffCd = PlayerAttackHandler.GetEffCd(cad, cesm);
+                UpdateBorder();
             }
-            else
-            {
-                float timeElapsed = Time.time - cpah.lastAttackTimes[ctype];
-                float cooldownRemainingPct = 1f - (timeElapsed / effCd);
 
-                cooldownImage.fillAmount = Mathf.Clamp01(cooldownRemainingPct);
+            if (cooldownImage == null || !cpah.lastAttackTimes.TryGetValue(ctype, out float lat)) return;
+
+            if (cachedEffCd <= 0f)
+            {
+                if (cooldownImage.fillAmount != 0f) cooldownImage.fillAmount = 0f;
+                return;
             }
+
+            float fill = Mathf.Clamp01(1f - ((Time.time - lat) / cachedEffCd));
+            if (cooldownImage.fillAmount != fill) cooldownImage.fillAmount = fill;
         }
 
         private void UpdateBorder()

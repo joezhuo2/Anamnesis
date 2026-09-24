@@ -7,6 +7,76 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.3] - 2026-09-23 ⚠️
+
+### Changed
+- **Enemy `nextAttack` now queues instead of chaining.** Before, `EnemyAttackHandler.PerformAttack` ran an
+  attack's `nextAttack` chain back-to-back inside one coroutine. Now it finishes the current attack and
+  stores `nextAttack` as `queuedAttack`. The next `TryAttack` fires it before picking a new attack, but only
+  once the global cooldown has passed and the target is inside the queued attack's `MaxRange`. Each attack
+  releases its movement hold and resets the animator index before the queued one starts. The old
+  `chainVisited` loop guard is gone, since chains now run one attack at a time. `OnDisable` clears the queue
+- **Projectile and orbit target searches ignore trigger colliders.** `Projectile.OverlapCircle` and
+  `EntityProjectileHandler.OverlapCircle` now build their `ContactFilter2D` with `useTriggers = false`
+  instead of `Physics2D.queriesHitTriggers`. Every entity uses a solid collider and every projectile and
+  pickup uses a trigger, so the searches no longer return projectiles or pickups. Walls still come back,
+  and the `ITeamMember` check skips them
+- **Projectiles re-search for a lost target at most every 0.15s** (`Projectile.retargetInterval`) instead
+  of every `FixedUpdate`. This covers homing (`TryHome`), enemy `FollowCursor` and orbits around the nearest
+  enemy (`HandleOrbitMovement`). The first search still runs on the spawn frame, and a target that is
+  deactivated is dropped right away. The timer resets in `Setup`
+- **`DoTSpread` runs at 10 Hz.** `SpreadLoop` waits on a cached `WaitForSeconds(0.1f)` instead of running
+  every frame, so a spread can land up to 0.1s later than its interval
+
+### Performance
+- **Projectile owner components are cached in `Setup`.** `Projectile.CacheOwner` looks up the owner's
+  `ITeamMember` team ID, `IStatProvider`, `ISummonTrigger`, `IResourcePool`, `IDamageable`,
+  `IAttackEffectSource` and `IOnHitEffect` list once, and `OnPoolRelease` clears them. `HandleHitEntity`,
+  `TryRetriggerChain`, `HandleSize`, `HandleDirection`, `HandleCursorFollow`, knockback and on-hit
+  resource gains use the cached copies, which removes about 10 lookups per hit. The `OwnTeam()` helper is
+  gone. `Projectile.CalculateStatGains` gained an `IStatProvider` overload, and the `GameObject` overload
+  now forwards to it. Both return zero gains when the `AttackData` is null
+- **`EntityHealth.TakeDamage` does fewer lookups per damage instance.** `Start` now caches the entity's
+  own `ITeamMember`, `ICastHandler`, `IStatusEffectReceiver` and `EnemyPhase`. Inside the loop, the
+  attacker's `IStatProvider`, `PlayerUpgradeManager` and team are only looked up again when
+  `DamageInstance.owner` changes. `IsEnemyHit` takes the attacker's team and runs once per instance
+  instead of twice. `UpdatePhase`, `TryThorns` and `StartDeathSequence` use the cached components
+- **Enemy health bars each get their own nested `Canvas`.** `EntityHealth.InitializeHealthBar` adds a
+  `Canvas` to each pooled bar and text instance (`EnsureOwnCanvas`, once per instance). Moving one enemy
+  now rebuilds only its own bar, not every bar on the shared `HealthBarCanvas`. The trade-off is up to two
+  extra draw calls per visible bar, because nested canvases do not batch with each other
+- **Status effect copies are pooled.** `StatusEffectManager.Apply` takes a runtime copy from a per-asset
+  pool (`AcquireRuntime`, keyed by `origin`) and only calls `Instantiate` when the pool is empty. Expiring,
+  cleansing, stack removal and `ClearAllEffects` return the copy through `ReleaseRuntime` instead of
+  calling `Destroy`. The pool keeps up to 64 copies per asset, destroys any extras, and is cleared on
+  `SubsystemRegistration`. Effects still in `activeEffects` at application quit are destroyed as before
+  - `StatusEffect.Setup(src, target, source, location)` resets every field the manager touches:
+    `duration`, `tickInterval` and `potencyMultiplier` come from the applied asset, time and stacks reset,
+    and `origin` is set. `Release()` clears the target and source and sets `Released`
+  - `Generation` goes up on every `Setup`. `StatusEffectCooldownUI` saves it and returns its icon to the
+    pool when the effect is `Released` or reused, since a pooled effect never becomes Unity-null
+  - New `protected virtual ResetRuntime()`, called by both `Setup` and `Release`, clears private per-use
+    state in `AttackReplacement`, `Lifesteal`, `Thorns`, `Pulled`, `SoulRend`, `StatBuffs` and
+    `StatReduction`
+- **`DoTSpread` uses cached components.** `EnemyMovement` now caches `StatusEffectManager` (`Sem`) and
+  `IStatProvider` (`Stats`) in a new `Awake`, which also takes over the `IStatProvider` lookup from `Start`.
+  `Tick` and `Spread` read them instead of calling `TryGetComponent` per enemy. `nextSpread` stores the
+  effect's `Generation`, so a reused copy starts a new timer, and `Prune` drops released or reused entries
+- **Faster enemy movement and targeting.** `EnemyMovement` caches the player in a static field, dropping
+  the `FindGameObjectWithTag` call from `Start`. Its de-aggro, stopping-distance and detection checks
+  compare squared distances, so they no longer call `Vector2.Distance`
+- **`PlayerMovement` only sets the animator `speed` float when it changes**, instead of on every
+  `FixedUpdate`
+- **`UnlimitedWaveManager` no longer allocates a list per spawn** when picking an enemy
+- **HUD polling is limited to 10 Hz.** `PlayerAttackCooldownUI` re-reads the effective cooldown and
+  border state, and `StatusEffectCooldownUI` re-reads effect resistance and the alive check, every 0.1s
+  (unscaled). The fill still updates every frame, but only writes when the value changes. Borders and a
+  dead entity's icons can react up to 0.1s late
+- **`TextIndicator` only moves when its screen position shifts by at least 1 px**
+- **`WaveManager` stops rebuilding anomaly text every frame.** The Time Trial countdown string is rebuilt
+  when the tenths digit changes, and other anomaly descriptions are assigned only when the reference
+  changes (`SetAnomalyInfo`)
+
 ## [v0.6.2] - 2026-09-22
 
 ### Added

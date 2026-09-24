@@ -11,6 +11,8 @@ namespace CrystalFlux.StatusEffectSystem
 
         private readonly List<StatBuff> curActiveBuff = new();
 
+        protected override void ResetRuntime() => curActiveBuff.Clear();
+
         public override void OnApply() => ApplyBuffs();
         public override void OnStack()
         {

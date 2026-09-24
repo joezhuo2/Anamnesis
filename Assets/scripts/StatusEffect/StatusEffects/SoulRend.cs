@@ -21,6 +21,16 @@ namespace CrystalFlux.StatusEffectSystem
         private StatBuff? currentCritDmgbuff = null;
         private StatBuff? currentUltDmgBuff = null;
 
+        protected override void ResetRuntime()
+        {
+            currentActiveAtkBuff = null;
+            currentDefShredBuff = null;
+            currentResPenBuff = null;
+            currentPhysDmgBuff = null;
+            currentCritDmgbuff = null;
+            currentUltDmgBuff = null;
+        }
+
         public override void OnApply() => ApplyBuffs();
         public override void OnStack()
         {
