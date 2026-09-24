@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ultrasonic
   m_EditorClassIdentifier: Assembly-CSharp::SpawnProjectile
   upgradeName: Ultrasonic
-  conditions: 0700000016000000
+  conditions: 070000001600000018000000
   chance: 100
   cooldown: 0
   delay: 0

@@ -222,6 +222,9 @@
 - damage res 
 - move spd pct
 
+### Status effects to add
+- Freeze (stun + no hp regen + immovable)
+
 ## Performance Improvements
 
 ### High

@@ -7,7 +7,26 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [v0.6.3] - 2026-09-23 ⚠️
+## [v0.6.4] - 2026-09-23
+
+### Added
+- **Subspace Blitz**, a rare-pool Skill and the first shipped attack that rushes. It carries the player
+  toward the cursor for 0.2s at 4x move speed. Attacks pressed during the rush are queued until it ends,
+  and the rush stops on collision. It fires one projectile (speed 10, 0.5s lifetime, pierce 8, size 2.5)
+  that deals 215% Phys + 14% True scaling off `EffAtk`, with a 60% chance on hit to apply `Freeze`
+  (Frozen for 2s). Costs 14 stamina and 9 mana on a 1.3s cooldown, and restores 2 stamina and 1 mana on
+  hit. It has 0.03s hit stop (0.5s cooldown) and 0.05 screen shake. Added to `WaveManager.rarePool` in both
+  `WaveManager` instances in `New.unity` with no unlock wave. The assets (`Subspace Blitz AD`/`PD`, prefab,
+  animator controller and clip) live in `Assets/data/PlayerData/Attacks/Rare Pool/Subspace Blitz/`
+
+### Changed
+- **Supersonic and Ultrasonic also fire when a rush ends.** Both upgrades gained the `OnRushEnd` trigger.
+  Supersonic now triggers on `OnEndDash` and `OnRushEnd` (still at most once per second), and Ultrasonic on
+  `OnEndDash`, `OnTeleport` and `OnRushEnd`
+- The Supersonic treasure reward text now reads "Dashing leaves 3 rippling echoes." It used to mention
+  teleporting, which only Ultrasonic reacts to
+
+## ⚠️ [v0.6.3] - 2026-09-23
 
 ### Changed
 - **Enemy `nextAttack` now queues instead of chaining.** Before, `EnemyAttackHandler.PerformAttack` ran an

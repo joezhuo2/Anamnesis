@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Supersonic
   m_EditorClassIdentifier: Assembly-CSharp::SpawnProjectile
   upgradeName: Supersonic
-  conditions: 07000000
+  conditions: 0700000018000000
   chance: 100
   cooldown: 1
   delay: 0

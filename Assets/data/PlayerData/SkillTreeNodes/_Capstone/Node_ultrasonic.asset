@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
   nodeName: Ultrasonic
   desc: Supersonic has no cooldown, spawns more projectiles, and triggers on teleport
+    and rush
   nodeID: ultrasonic
   icon: {fileID: 420764853, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0

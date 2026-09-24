@@ -53,7 +53,7 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
 
 # Rare Pool
 
-Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 20 entries below are present in
+Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 21 entries below are present in
 `WaveManager.rarePool`. Entries marked with an unlock wave carry a `minWave` on their
 `AttackReward` and cannot be rolled before that wave; the rest are available from wave 1.
 Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€” see
@@ -583,6 +583,28 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Follow Distance: 2
   - Delay: 0.15-0.35s between projectiles
   - Knockback: 2 force for 0.15s
+
+## Subspace Blitz
+- Asset: `Subspace Blitz AD`
+- Type: Skill
+- Cooldown: 1.3s
+- Pattern: Single (1 count)
+- Spawn: 0 dist
+- Animation: 0.5s
+- Costs: Stamina 14, Mana 9
+- Gains on hit: Stamina +2, Mana +1
+- Rush: toward the cursor for 0.2s at 4x move speed. Attacks pressed mid-rush are queued
+  until it ends, and the rush stops on collision.
+- Projectile:
+  - Speed: 10
+  - Lifetime: 0.5s
+  - Pierce: 8
+  - Size: 2.5
+  - Damage: 215% Phys, 14% True
+  - Scaling: EffAtk
+  - Rotation Offset: -45
+  - Effect: 60% on hit (Freeze 2, 2s, cannot move or attack)
+  - Knockback: 1 force for 0.15s
 
 ## Supernova
 - Asset: `Supernova AD`
@@ -1144,23 +1166,24 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 ## Supersonic
 - Asset: `Supersonic`
 - Type: SpawnProjectile
-- Conditions: OnEndDash
+- Conditions: OnEndDash, OnRushEnd
 - Chance: 100%
 - Cooldown: 1s
 - Delay: 0s
 - Projectile: `Supersonic.prefab`
-- Description: Ending a dash spawns 3 Supersonic projectiles, at most once per second.
+- Description: Ending a dash or a rush spawns 3 Supersonic projectiles, at most once per
+  second.`
 
 ## Ultrasonic (Capstone)
 - Asset: `Ultrasonic`
 - Type: SpawnProjectile
-- Conditions: OnEndDash, OnTeleport
+- Conditions: OnEndDash, OnTeleport, OnRushEnd
 - Chance: 100%
 - Cooldown: 0s
 - Delay: 0s
 - Projectile: `Ultrasonic.prefab`
-- Description: Ending a dash or teleporting through a `teleportToProjectile` attack spawns
-  7 Ultrasonic projectiles, with no cooldown.
+- Description: Ending a dash or a rush, or teleporting through a `teleportToProjectile`
+  attack, spawns 7 Ultrasonic projectiles, with no cooldown.
 - Unlocked by: `Node_ultrasonic` ("Ultrasonic" capstone, 3 skill points, prerequisites
   `Node_dd3` and `Node_dcr3`, requires the Supersonic upgrade). Unlocking it consumes
   Supersonic. Refunding the node returns Supersonic.
@@ -1249,7 +1272,7 @@ Folder: `Assets/data/StatusEffect`.
 Used by enemies rather than the player: `Crumbling 6 10 4` (Crab, and the Golem's Orbit),
 `Poison 2 0.5 1 20 Atk` (Slime), `Slow 8 2 30` (Lich), `Stun 6` (Cultist),
 `Vulnerable 6 6 5` (Bat Mark), `Stun 2` (also used by BallSpam), `Slow 4 15 5` and
-`Freeze 2` (Slime (Frost)'s Blizzard), `Overheat` (Slime (Magma)'s Eruption),
+`Freeze 2` (Slime (Frost)'s Blizzard, and the player's Subspace Blitz), `Overheat` (Slime (Magma)'s Eruption),
 `Slow 8 4 10` (the Golem's Orbit), `Stun 1` (the Reaper's Toss), `Vulnerable 8 2 20`
 (the Reaper's Strike), `Burn 8 1 6 15` (the Reaper's Spam).
 

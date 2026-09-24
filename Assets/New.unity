@@ -13135,6 +13135,11 @@ MonoBehaviour:
     attackName: Sacred Surge
     desc: Armor Heal Charge Cast
     minWave: -1
+  - newAttack: {fileID: 11400000, guid: 85c0531ceefabe643b8bf085c31052e5, type: 2}
+    icon: {fileID: 0}
+    attackName: Subspace Blitz
+    desc: Rush
+    minWave: -1
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -25077,6 +25082,11 @@ MonoBehaviour:
     attackName: Sacred Surge
     desc: Armor Heal Charge Cast
     minWave: -1
+  - newAttack: {fileID: 11400000, guid: 85c0531ceefabe643b8bf085c31052e5, type: 2}
+    icon: {fileID: 0}
+    attackName: Subspace Blitz
+    desc: Rush
+    minWave: -1
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -25133,7 +25143,7 @@ MonoBehaviour:
   - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
     icon: {fileID: 0}
     upgradeName: Supersonic
-    desc: Dashing or teleporting leaves 3 rippling echoes.
+    desc: Dashing leaves 3 rippling echoes.
     minWave: -1
   - upgrade: {fileID: 11400000, guid: 7b2d3c8a1b997e641985c551f65b361e, type: 2}
     icon: {fileID: 0}
@@ -29659,8 +29669,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 587400166}
   - {fileID: 1171801693}
+  - {fileID: 587400166}
   m_Father: {fileID: 1465221077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1388075257
