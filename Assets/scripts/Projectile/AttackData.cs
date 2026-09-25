@@ -61,6 +61,8 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private float rushImpactTime;
         [Tooltip("Impact damage as a multiplier of this attack's projectile data damage. 0 = no damage")]
         [SerializeField] private float impactDmgMult = 0.5f;
+        [Tooltip("Attack performed at the impact point each time the rush impacts an opposing entity. Null = none")]
+        [SerializeField] private AttackData impactAttack;
         [Tooltip("Enemy only. Aims at where the target will be when the rush reaches it, based on the target's velocity")]
         [SerializeField] private bool predictTarget;
 
@@ -190,6 +192,7 @@ namespace CrystalFlux.ProjectileSystem
         public float RushImpactForce => rushImpactForce;
         public float RushImpactTime => rushImpactTime;
         public float ImpactDmgMult => impactDmgMult;
+        public AttackData ImpactAttack => impactAttack;
         public bool PredictTarget => predictTarget;
         public bool Rushes => rushTypeVal > 0f && rushSpeedMult > 0f;
         public float AnimationLength => animationLength;

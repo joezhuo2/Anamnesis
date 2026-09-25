@@ -63,12 +63,20 @@ namespace CrystalFlux.EntitySystem
         private void OnEnable()
         {
             ProjectileSpawner.ProjectileSpawned += HandleProjectileSpawned;
+            ProjectileSpawner.PreTeleport += HandlePreTeleport;
             ProjectileSpawner.Teleported += HandleTeleported;
         }
         private void OnDisable()
         {
             ProjectileSpawner.ProjectileSpawned -= HandleProjectileSpawned;
+            ProjectileSpawner.PreTeleport -= HandlePreTeleport;
             ProjectileSpawner.Teleported -= HandleTeleported;
+        }
+
+        private void HandlePreTeleport(GameObject src, Vector2 pos)
+        {
+            if (src != gameObject) return;
+            TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnPreTeleport, pos);
         }
 
         private void HandleTeleported(GameObject src, Vector2 pos)

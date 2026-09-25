@@ -48,7 +48,8 @@ namespace CrystalFlux.EntitySystem
 
             rush = new RushState(gameObject, esm,
                 () => { if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnRushStart); },
-                () => { if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnRushEnd); });
+                () => { if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnRushEnd); },
+                (tgt, dmg) => { if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnRushImpact, tgt, dmg); });
 
             esm.AddStat(new StatBuff(StatType.CanMove, 1f));
             esm.AddStat(new StatBuff(StatType.CanDash, 1f));

@@ -10,6 +10,7 @@ namespace CrystalFlux.EntitySystem
         private readonly IStatProvider esm;
         private readonly System.Action onStart;
         private readonly System.Action onEnd;
+        private readonly System.Action<GameObject, float> onImpact;
         private float progress;
         private bool immuneHeld;
 
@@ -20,13 +21,15 @@ namespace CrystalFlux.EntitySystem
         public bool Unstoppable => Ad != null && Resist >= 2f;
         public float Speed => Ad == null ? 0f : GetSpeed(Ad, esm);
         private float Resist => esm == null ? 0f : esm.GetStat(StatType.interruptResist);
+        private float ImpactMult => esm == null ? 1f : Mathf.Max(0f, 1f + (esm.GetStat(StatType.rushImpactPct) * 0.01f));
 
-        public RushState(GameObject go, IStatProvider esm, System.Action onStart = null, System.Action onEnd = null)
+        public RushState(GameObject go, IStatProvider esm, System.Action onStart = null, System.Action onEnd = null, System.Action<GameObject, float> onImpact = null)
         {
             this.go = go;
             this.esm = esm;
             this.onStart = onStart;
             this.onEnd = onEnd;
+            this.onImpact = onImpact;
         }
 
         public bool Begin(AttackData ad, Vector2 origin, Vector2 aim, Vector2 fallback)
@@ -137,18 +140,30 @@ namespace CrystalFlux.EntitySystem
             if (go.TryGetComponent<ITeamMember>(out var own) && other.TryGetComponent<ITeamMember>(out var otm) && own.TeamID == otm.TeamID) return;
 
             AttackData ad = Ad;
+            float mult = ImpactMult;
+            float dealt = 0f;
+            Vector2 at = c.contactCount > 0 ? c.GetContact(0).point : (Vector2)other.transform.position;
 
             if (ad.ImpactDmgMult > 0f && ad.Pd != null && other.TryGetComponent<IDamageable>(out var eh))
             {
                 var snap = ProjectileSnapshot.CaptureSnapshot(ad.Pd, go);
                 if (snap.isValid)
                 {
-                    snap.specialMult *= ad.ImpactDmgMult;
+                    snap.specialMult *= ad.ImpactDmgMult * mult;
                     DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(ad.Pd, snap, true, go, false, 1f);
+                    dealt = dp.GetTotalDamage();
                     eh.TakeDamage(dp);
                     DamagePacket.Release(dp);
                 }
             }
+
+            if (ad.ImpactAttack != null && go != null && ProjectileSpawner.Instance != null)
+            {
+                ProjectileSpawner ps = ProjectileSpawner.Instance;
+                ps.StartCoroutine(ps.SpawnFromPattern(ad.ImpactAttack, go, at, Dir, ad.ImpactAttack.SpawnDistance));
+            }
+
+            onImpact?.Invoke(other, dealt);
 
             if (Ad == null || other == null) return;
 
@@ -157,7 +172,7 @@ namespace CrystalFlux.EntitySystem
                 Vector2 d = other.transform.position - go.transform.position;
                 if (d.sqrMagnitude < 0.0001f) d = Dir;
 
-                kb.ApplyKnockback(d.normalized, ad.RushImpactForce, ad.RushImpactTime);
+                kb.ApplyKnockback(d.normalized, ad.RushImpactForce * mult, ad.RushImpactTime);
             }
         }
 

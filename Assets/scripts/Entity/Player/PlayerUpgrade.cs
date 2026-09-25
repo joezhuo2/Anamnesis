@@ -32,7 +32,10 @@ namespace CrystalFlux.EntitySystem
             OnSpawnProjectile,
             OnTeleport,
             OnRushStart,
-            OnRushEnd
+            OnRushEnd,
+            OnRushImpact,
+            OnPreTeleport,
+            OnSummonMirage
         }
         public TriggerCondition[] conditions;
         public float chance;

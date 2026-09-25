@@ -12,6 +12,7 @@ namespace CrystalFlux.ProjectileSystem
         private const int ProjectilePoolCap = 256;
 
         public static event System.Action<GameObject, GameObject, Vector2> ProjectileSpawned;
+        public static event System.Action<GameObject, Vector2> PreTeleport;
         public static event System.Action<GameObject, Vector2> Teleported;
 
         private static Camera cachedMainCam;
@@ -319,6 +320,9 @@ namespace CrystalFlux.ProjectileSystem
             if (delay > 0f) yield return new WaitForSeconds(delay);
             if (src == null || proj == null || !proj.activeInHierarchy) yield break;
             if (proj.TryGetComponent<Projectile>(out var p) && p.ownerObj != src) yield break;
+
+            PreTeleport?.Invoke(src, src.transform.position);
+            if (src == null || proj == null || !proj.activeInHierarchy) yield break;
 
             Vector2 pos = proj.transform.position;
             if (src.TryGetComponent<Rigidbody2D>(out var rb)) rb.position = pos;

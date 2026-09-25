@@ -7,6 +7,34 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.7] - 2026-09-25
+
+### Added
+- **`rushImpactPct` stat** (`StatType` 97, CrystalFlux.Core). Scales both rush impact damage and rush impact
+  knockback force by `1 + rushImpactPct / 100` (floored at 0). Shown in game as "Rush Impact Strength"
+- **`AttackData.impactAttack`** (Rush section). An attack spawned at the contact point, in the rush
+  direction, every time the rush impacts an opposing entity. Null = none
+- **Three new `PlayerUpgrade` trigger conditions:**
+  - `OnRushImpact` — the player's rush hits an opposing entity. Fires after impact damage and the
+    `impactAttack` spawn, before knockback, and dispatches `(player, target, damageDealt)`
+  - `OnPreTeleport` — a `teleportToProjectile` attack is about to move the player. Dispatches
+    `(player, spawnCenter)` at the position the player is leaving. Backed by the new
+    `ProjectileSpawner.PreTeleport` event
+  - `OnSummonMirage` — an Ethereal Mirage clone is summoned for the player, once per clone (refilled
+    slots included). Dispatches `(player, spawnCenter)` at the clone's position
+- **Nitro Accelerator**, a capstone (`Node_nitroaccelerator`, 3 skill points, `undoCost` 50, prerequisite
+  `Node_ip4`) that upgrades Subspace Blitz. Faster, longer rush (0.3s at 8x), immune while rushing, and each
+  impact sets off **Nitro Explosion** (size 6, 235% Spell scaling off `EffAtk` + 35% `EffInt`, 60% chance
+  to apply `Vulnerable 6 3 8`, 3 force knockback). The projectile hits harder and stuns (70% `Stun 3`), but
+  every cast applies a stack of the new `Decay` debuff to yourself
+- **`Decay` status effect** (StatBuffs, 4s, 6 stacks): -8% `hpPct`, -14% `stRegPct` and +3% `resPen` per stack
+- **Skill tree nodes:** `Node_ip1`–`Node_ip4` (+2% Rush Impact Strength each, chained off `Node_dp23`) and
+  `Node_kbp1` (+3% `kbPct`, off `Node_ip2`) → `Node_kbp2` (+8% `kbPct`). The tree now has 229 nodes
+
+### Changed
+- `RushState` takes an optional `onImpact(target, damageDealt)` callback. `PlayerMovement` uses it to fire
+  `OnRushImpact`
+
 ## [v0.6.6] - 2026-09-25
 
 ### Added

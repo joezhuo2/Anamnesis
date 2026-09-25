@@ -90,6 +90,9 @@ namespace CrystalFlux.Core
         public float castTimeRedPct;
         public float interruptResist;
 
+        [Header("Rush")]
+        public float rushImpactPct;
+
         [Header("Levelling")]
         public int level;
         public float exp;
@@ -216,6 +219,7 @@ namespace CrystalFlux.Core
                 StatType.interruptResist => interruptResist,
                 StatType.overhealth => overhealth,
                 StatType.healingPct => healingPct,
+                StatType.rushImpactPct => rushImpactPct,
                 _ => 0f
             };
         }
@@ -316,6 +320,7 @@ namespace CrystalFlux.Core
                 case StatType.interruptResist: interruptResist += delta; break;
                 case StatType.overhealth: overhealth = Mathf.Max(0f, overhealth + delta); break;
                 case StatType.healingPct: healingPct += delta; break;
+                case StatType.rushImpactPct: rushImpactPct += delta; break;
                 default: break;
             }
         }

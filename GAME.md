@@ -596,7 +596,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
 - Rush: toward the cursor for 0.25s at 6x move speed. Attacks pressed mid-rush are queued
   until it ends, and the rush stops on collision.
 - Rush impact: an enemy the rush collides with takes 65% of the projectile's damage and
-  8 force knockback for 0.15s, resolved before the rush ends.
+  8 force knockback for 0.15s, resolved before the rush ends. Both scale with `rushImpactPct`.
 - Projectile:
   - Speed: 9
   - Lifetime: 0.5s
@@ -764,6 +764,51 @@ skill tree nodes.
   - Knockback: none
 - Unlocked by: `Node_astraldisjunction` ("Astral Disjunction" capstone, 3 skill points,
   `undoCost` 50, requires the base Astral Nova attack)
+
+## Nitro Accelerator (Capstone)
+- Asset: `Nitro Accelerator AD` (folder `Attacks/SkillTree/Nitro Accelerator`)
+- Type: Skill
+- Cooldown: 0.9s
+- Pattern: Single (1 count)
+- Spawn: 0 dist
+- Animation: 0.5s
+- Costs: Stamina 16, Mana 7
+- Gains on hit: Stamina +2, Mana +1
+- Rush: toward the cursor for 0.3s at 8x move speed, immune while rushing. Attacks pressed
+  mid-rush are queued until it ends, and the rush stops on collision.
+- Rush impact: an enemy the rush collides with takes 80% of the projectile's damage and
+  3 force knockback for 0.15s, and Nitro Explosion spawns at the contact point. Both damage
+  and knockback scale with `rushImpactPct`.
+- Projectile:
+  - Speed: 10
+  - Lifetime: 0.5s
+  - Pierce: 9
+  - Size: 2.5
+  - Damage: 285% Phys, 25% True
+  - Scaling: EffAtk + 60% moveSpeedPct
+  - Rotation Offset: -45
+  - Effect: 70% on hit (Stun, 3s) + 100% self on cast (Decay, 4s, max 6 stacks)
+  - Knockback: 1 force for 0.15s
+- Unlocked by: `Node_nitroaccelerator` ("Nitro Accelerator" capstone, 3 skill points,
+  `undoCost` 50, prerequisite `Node_ip4`, requires the base Subspace Blitz attack)
+
+## Nitro Explosion
+- Asset: `Nitro Explosion AD`
+- Type: Additional
+- Cooldown: 0s (spawned by Nitro Accelerator's rush impact via `impactAttack`)
+- Pattern: Single (1 count)
+- Spawn: 0 dist
+- Animation: 0.5s
+- Gains on hit: Stamina +3, Mana +3
+- Projectile:
+  - Speed: 0 (melee)
+  - Lifetime: 0.5s
+  - Pierce: 3000
+  - Size: 6
+  - Damage: 235% Spell
+  - Scaling: EffAtk + 35% EffInt
+  - Effect: 60% on hit (Vulnerable, 6s, max 3 stacks, -8% damageRes per stack)
+  - Knockback: 3 force for 0.15s
 
 ## Decoy Burst
 - Asset: `Decoy AD`
@@ -1289,6 +1334,7 @@ subfolders named after their class.
 | `Celestial Protection` | StatBuffs | Celestial Protection | 8s | - | 4 | +4% damageRes, +8 armor, +5% armorPct per stack (authored with `isBuff` off) |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
+| `Decay` | StatBuffs | Decay | 4s | - | 6 | -8% hpPct, -14% stRegPct, +3% resPen per stack |
 | `DotDetonator 0.5 2` | Detonator | (unnamed) | 0.5s | - | 1 | Detonates DoTs for 250% as True |
 | `Freeze` | Freeze | Frozen | 2s | - | 1 | Cannot move, attack or dash; no passive health regen; knockback and pulls do nothing, and any rush in progress ends |
 | `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
@@ -1330,8 +1376,9 @@ Used by enemies rather than the player: `Crumbling 6 10 4` (Crab, and the Golem'
 
 `Stun 3` and `AttackInc 14 2 40` are authored for the Golem's Charge and are both
 `selfApply`, so the Golem inflicts them on itself: the stun is guaranteed, the attack buff
-lands 40% of the time. `Vulnerable 6 3 8` is shared — Ignition Flash and the Golem's Cross
-both apply it.
+lands 40% of the time. The player's Nitro Accelerator also applies `Stun 3`, to enemies (70% on hit).
+`Vulnerable 6 3 8` is shared — Ignition Flash, Nitro Explosion and the Golem's Cross all apply it.
+`Decay` is self-applied on every Nitro Accelerator cast.
 
 `Slow 5 3 15` is authored but no longer referenced by any projectile — Blizzard moved to
 `Slow 6 15 5` in v0.3.9, which was reauthored as `Slow 4 15 5` (4s instead of 6s) in v0.4.1_2.

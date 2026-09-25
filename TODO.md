@@ -148,13 +148,6 @@
 - [ ] nameplates/titles
 - [ ] background/ambience (debris/wind)
 
-### Planned PlayerUpgrade trigger conditions
-- on rush impact
-- on summon mirage
-
-### Planned Stats
-- rush impact % (increases rush kb force, dmg)
-
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
 - **Superconductor** - chain lightning type attack OR upgrade, speed/atk dual scaling, stun + arc split, maybe additional attack with homing would work (no new mechanics)
@@ -188,17 +181,12 @@
   `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
 - `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
-- Attack-button borders and status icons can react up to 0.1s late: the border turning red after an attack, and a dead entity's icons going back to the pool.
-- Since v0.6.3, homing, enemy follow-cursor and orbit-nearest projectiles can take up to 0.15s (`Projectile.retargetInterval`) to find a new target after losing one, and `DoTSpread` spreads land on a 0.1s grid.
-- Since v0.6.3, each enemy health bar and its text have their own nested `Canvas`. A move no longer rebuilds every bar, but the bars no longer batch together, so there can be up to two draw calls per visible bar. If draw calls turn out to cost more than the rebuilds did, switch to world-space `SpriteRenderer` bars parented to the enemy.
 - Since v0.6.6, Ethereal Mirage clones are `Instantiate`d and `Destroy`ed rather than pooled, because `EntityHealth` only initialises in `Start()`. Clones do not repeat rushes, orbit interactions (`FireOrbits`, redirect, absorb, explode) or charge-window registration, so orbit-self and charged projectiles fired by a clone behave as plain projectiles. A clone is not alive (targetable, attack-repeating) until its `Start()` runs the frame after it spawns.
+- Since v0.6.7, a rush's `impactAttack` spawns on every impact with no cooldown of its own, so a bouncing rush (`bounceOnCollision`) with an `impactAttack` can chain several spawns in one rush. Mirage clones do not rush, so they never fire `OnRushImpact` or spawn impact attacks.
 - Since v0.6.6, enemies re-evaluate their target every 1-3s (`EnemyMovement.retargetInterval`), so a Decoy's spawn-time taunt can be dropped for a closer player or clone at the next check.
 - Since v0.6.3, `StatusEffect` runtime copies are pooled, so an expired effect is never Unity-null. Anything holding an effect reference must check `Released` or compare `Generation` (see `StatusEffectCooldownUI`, `DoTSpread`). A new `StatusEffect` subclass with private per-use state must clear it in `ResetRuntime()`.
 
 ## Misc
-
-### To-Do
-- preTeleport upgrade condition (triggers before starting teleport, occurs at the location where the player was right before teleporting)
 
 ### Available Colors
 - **red-pink**
@@ -227,7 +215,6 @@
 - basic dmg pct
 - skill dmg pct
 - ult dmg pct
-- kb pct
 - se pot pct
 - basic cd red pct
 - skill cd red pct
@@ -250,10 +237,9 @@
 - damage res 
 - move spd pct
 
-
 ## Performance Improvements
 
-### Open Items
+### Medium
 
 - [ ] Physics layers: everything sits on `Default` and the 2D collision matrix is all-ones
   (`ProjectSettings/Physics2DSettings.asset:56`). Projectile triggers pair with other projectiles, pickups and

@@ -82,6 +82,7 @@ namespace CrystalFlux.StatusEffectSystem
             mc.Setup(target, off, statShare, shareOverrides, opacity, copyMovement, copyAttacks);
 
             if (go.TryGetComponent<IDamageable>(out var dmg)) dmg.OnDeath += OnCloneDeath;
+            if (target.TryGetComponent<PlayerUpgradeManager>(out var pum)) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnSummonMirage, (Vector2)go.transform.position);
 
             return mc;
         }
