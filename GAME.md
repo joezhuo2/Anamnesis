@@ -73,7 +73,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 10.5s
   - Pierce: 3000
   - Size: 2
-  - Damage: 35% Spell
+  - Damage: 55% Spell
   - Scaling: EffInt
   - Time Before Same Enemy: 0.5s
   - Orbit: radius 1 (+1 random), orbits self, CCW
@@ -391,7 +391,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 3 dist
 - Animation: 0.5s
-- Costs: Mana 145 +10%
+- Costs: Mana 85
 - Gains on hit: Mana +4 +1%
 - Fires Orbits
 - Projectile:
@@ -399,9 +399,9 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 0.5s
   - Pierce: 3000
   - Size: 4
-  - Damage: 550% Spell
+  - Damage: 650% Spell
   - Scaling: EffInt
-  - Special: 0.2x per orbit (specialScaling Orbits)
+  - Special: 0.15x per orbit (specialScaling Orbits)
   - Knockback: 12 force for 0.15s
 
 ## Nocturnis
@@ -605,7 +605,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Damage: 235% Phys, 18% True
   - Scaling: EffAtk
   - Rotation Offset: -45
-  - Effect: 60% on hit (Freeze, 2s, cannot move, attack, dash or regen health)
+  - Effect: 45% on hit (Freeze, 2s, cannot move, attack, dash or regen health)
   - Knockback: 1 force for 0.15s
 
 ## Supernova
@@ -660,7 +660,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Speed: 0 (melee)
   - Lifetime: 1.5s
   - Pierce: 3000
-  - Size: 1.25
+  - Size: 1.5
   - Damage: 215% Spell
   - Scaling: EffInt
   - Time Before Same Enemy: 0.5s
@@ -752,7 +752,7 @@ skill tree nodes.
 - Animation: 0.5s
 - Teleport: `teleportToProjectile` on, 0 extra delay â€” the player is moved to the
   projectile once the spawn delay elapses, which also fires the `OnTeleport` upgrade trigger
-- Gains on hit: Stamina +5 +15%, Mana +5 +15%
+- Gains on hit: Stamina +5 +12%, Mana +5 +12%
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.75s
@@ -799,7 +799,7 @@ skill tree nodes.
   - Pierce: 3000
   - Size: 1.5
   - Damage: 170% True
-  - Scaling: moveSpeedPct
+  - Scaling: moveSpeedPct + 40% EffAtk
   - Effect: 40% on hit (Stun, 2s)
   - Knockback: 5 force for 0.15s
 - Used by: the `Ultrasonic` player upgrade, granted by `Node_ultrasonic`
@@ -822,7 +822,7 @@ player upgrades rather than attacks the player selects.
 - Projectile:
   - Speed: 6
   - Lifetime: 6s
-  - Pierce: 1 (destroys on max pierce)
+  - Pierce: 3 (destroys on max pierce)
   - Size: 2
   - Damage: 335% Phys
   - Scaling: EffArmor
@@ -913,7 +913,7 @@ player upgrades rather than attacks the player selects.
   - Pierce: 3000
   - Size: 1.5
   - Damage: 135% True
-  - Scaling: moveSpeedPct + 40% EffAtk
+  - Scaling: moveSpeedPct
   - Effects: 100% self on cast (Supersonic Cooldown, 3s)
   - Knockback: 4 force for 0.15s
 
@@ -923,13 +923,14 @@ player upgrades rather than attacks the player selects.
 
 The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an authored
 `StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
-again on `OnRemove`. Used by `Solar Wind` and `Shock Absorber`.
+again on `OnRemove`. Used by `Solar Wind`, `Shock Absorber` and `Ethereal Mirage`.
 
 The `Overhealth` and `AddChain` types are passive: they configure the player on `OnUnlock`
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
-`Oblivion` and `Ultrasonic` â€” the capstone-only upgrades â€” are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+`Oblivion` and `Ultrasonic` â€” the capstone-only upgrades â€” and the keystone-only `Ethereal Mirage` pair
+are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 ## Hypercarry
@@ -993,7 +994,8 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Cooldown Effect: Cosmic Afterimage (6s)
 - Projectile: None (base version does not detonate)
 - Description: Dashing spawns a decoy that taunts enemies within their detection range
-  for 4 seconds.
+  for 4 seconds. The decoy is a `Targetable`, so enemies keep it in their nearest-target
+  search; they can drift off it to a closer player or clone on their next 1-3s retarget.
 
 ## Decoy Upgraded (Capstone)
 - Asset: `Decoy Upgraded`
@@ -1012,6 +1014,39 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Unlocked by: `Node_decoy` ("Cosmic Superimposition", 3 skill points, prerequisite
   `Node_ms2`, requires the base Decoy upgrade, which it consumes on unlock and returns
   on refund)
+
+## Ethereal Mirage (Keystone)
+- Asset: `Ethereal Mirage` (folder `PlayerUpgrade/Keystone`)
+- Type: GrantStatusEffect
+- Conditions: OnUltAttack
+- Chance: 100%
+- Cooldown: 24s
+- Delay: 0s
+- Effect: `Mirage` (18s), 1 stack per trigger
+- Companion: `Ethereal Mirage Cooldown Indicator` (GrantStatusEffect, OnUltAttack, 24s
+  cooldown) applies the `Mirage Cooldown` Info marker (24s) so the cooldown shows in the
+  status bar
+- Description: Casting an Ultimate summons 3 translucent clones (60% opacity) in a ring
+  2 units around the player. They follow the player at their spawn offsets and repeat
+  every attack the player casts, firing the same way from their own positions. Each
+  living clone grants +12% `moveSpeedPct` and -15% `damagePct`, removed when it dies or
+  the effect ends.
+- Clones:
+  - Receive 50% of the player's flat stats (attack, Intelligence, max HP, armor, regen,
+    move speed and their `Eff` versions). Percent and chance stats copy at 100%
+  - Have their own health and take hits from enemy projectiles, but ignore knockback and
+    crowd control. Enemies target the nearest clone, decoy or player in range
+  - Repeat attacks for free: no cost, cooldown or cast bar. Rushes, orbit interactions and
+    the player's own on-cast upgrade triggers are not repeated
+  - Their hits count as the player's: on-hit, on-crit, on-deal-damage, overkill and on-kill
+    upgrades fire on the player (sharing its upgrade cooldowns), along with lifesteal,
+    resource gains on hit, XP and gold
+  - Vanish without effect when Mirage expires or the player dies. Re-triggering Mirage
+    refreshes it and refills any killed slots
+- Unlocked by: `Node_ethmirage` ("Ethereal Mirage" keystone, 5 skill points, `undoCost`
+  50, prerequisite any of `Attack/Armor`, `Health/Armor`, `Health/Intelligence` or
+  `Projectile Speed`). Grants both upgrades.
+- Not in `treasurePool` â€” keystone-only.
 
 ## Exsanguinate
 - Asset: `Exsanguinate`
@@ -1258,6 +1293,8 @@ subfolders named after their class.
 | `Freeze` | Freeze | Frozen | 2s | - | 1 | Cannot move, attack or dash; no passive health regen; knockback and pulls do nothing, and any rush in progress ends |
 | `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
+| `Mirage` | EtherealMirage | Ethereal Mirage | 18s | - | 1 | Summons 3 clones at 50% flat stats, 60% opacity, radius 2; each living clone gives +12% moveSpeedPct, -15% damagePct. See Ethereal Mirage above |
+| `Mirage Cooldown` | Info | Ethereal Mirage Cooldown | 24s | - | 1 | Cooldown marker |
 | `Overheat` | StatBuffs | Overheat | 7s | - | 5 | -8% atkPct, -12% stRegPct per stack |
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |
 | `Pulled 0.6 1 1.5 5 0.1` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 5 (+2/stack), 1.5 radius |

@@ -13,15 +13,21 @@ MonoBehaviour:
   m_Name: Nirvana A PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 5476f691af2c85c4a8f8e8344c5a487a, type: 2}
-  speed: 0
   lifetime: 0.5
-  numPierce: 3000
   size: 4
+  numPierce: 3000
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
-  spellMult: 5.5
+  spellMult: 6.5
   trueMult: 0
   scalingStat: 44
-  specialMult: 0.2
+  extraScalings: []
+  specialMult: 0.15
   specialSclaing: 1
   timeBeforeSameEnemy: 0
   followDistance: 0

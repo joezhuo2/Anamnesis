@@ -38,6 +38,7 @@ public class Decoy : PlayerUpgrade
         }
 
         decoyRenderer.color = tint;
+        decoy.AddComponent<Targetable>();
 
         var enemies = EnemyMovement.Active;
 

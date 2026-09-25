@@ -13,18 +13,25 @@ MonoBehaviour:
   m_Name: p_b_pd
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
-  speed: 0
   lifetime: 0.5
-  numPierce: 3
   size: 2.5
+  numPierce: 3
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 1.8
   spellMult: 0
   trueMult: 0
   scalingStat: 31
+  extraScalings: []
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 270
   maxBoomerangDist: 0
   angleOverride: 0

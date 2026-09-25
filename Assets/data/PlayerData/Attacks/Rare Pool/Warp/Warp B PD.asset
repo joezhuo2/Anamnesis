@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: Warp B PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: cde4c5f98bf9dd840b0ae19c9d77fa86, type: 2}
-  speed: 0
   lifetime: 1.5
+  size: 1.5
   numPierce: 3000
-  size: 1.25
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
   spellMult: 2.15
   trueMult: 0
   scalingStat: 44
+  extraScalings: []
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0.5

@@ -372,7 +372,11 @@ namespace CrystalFlux.EntitySystem
         private void SpawnAttack(AttackData ad)
         {
             ProjectileSpawner ps = ProjectileSpawner.Instance;
-            if (ps != null) StartCoroutine(ps.SpawnFromPattern(ad, gameObject, transform.position));
+            if (ps == null) return;
+
+            Vector2 c = transform.position;
+            StartCoroutine(ps.SpawnFromPattern(ad, gameObject, c));
+            MirageClone.NotifyCast(gameObject, ad, c);
         }
 
         public void PressAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)

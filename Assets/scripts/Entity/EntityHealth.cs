@@ -47,6 +47,7 @@ namespace CrystalFlux.EntitySystem
         private ICastHandler castHandler;
         private IStatusEffectReceiver ownSem;
         private EnemyPhase phase;
+        private bool isMirage;
         private Canvas cachedCanvas;
         public bool IsAlive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
         private bool Immune => esm != null && esm.GetStat(StatType.isImmune) > 0f;
@@ -74,7 +75,8 @@ namespace CrystalFlux.EntitySystem
             esm.AddStat(new StatBuff(StatType.isAlive, 1f));
             esm.AddStat(new StatBuff(StatType.CanGainHp, 1f));
 
-            if (TryGetComponent<PlayerUpgradeManager>(out var pum)) cpum = pum;
+            isMirage = TryGetComponent<MirageClone>(out _);
+            if (!isMirage && TryGetComponent<PlayerUpgradeManager>(out var pum)) cpum = pum;
             TryGetComponent(out ownTeam);
             TryGetComponent(out castHandler);
             TryGetComponent(out ownSem);
@@ -318,6 +320,7 @@ namespace CrystalFlux.EntitySystem
             IStatProvider atk = null;
             PlayerUpgradeManager pum = null;
             int atkTeam = 0;
+            GameObject src = OwnerProxy.Resolve(dp.source);
 
             try
             {
@@ -333,7 +336,7 @@ namespace CrystalFlux.EntitySystem
                     if (i.owner != null)
                     {
                         i.owner.TryGetComponent(out atk);
-                        i.owner.TryGetComponent(out pum);
+                        OwnerProxy.Resolve(i.owner).TryGetComponent(out pum);
                         atkTeam = i.owner.TryGetComponent<ITeamMember>(out var oitm) ? oitm.TeamID : 0;
                     }
                 }
@@ -388,13 +391,13 @@ namespace CrystalFlux.EntitySystem
 
                 if (dp.sizeOverride != 1f) sizeMult = dp.sizeOverride;
 
-                if (ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames, dp.source))
+                if (ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames, src) && !isMirage)
                 {
-                    if (GameSettings.Current.xpDropsEnabled && dp.source != null && dp.source.TryGetComponent<PlayerLevel>(out var pl))
+                    if (GameSettings.Current.xpDropsEnabled && src != null && src.TryGetComponent<PlayerLevel>(out var pl))
                         pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
-                    DropGold(dp.source);
+                    DropGold(src);
 
-                    if (dp.source != null && dp.source != gameObject && dp.source.TryGetComponent<PlayerUpgradeManager>(out var killPum))
+                    if (src != null && src != gameObject && src.TryGetComponent<PlayerUpgradeManager>(out var killPum))
                         killPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnKill);
                 }
 
@@ -405,7 +408,7 @@ namespace CrystalFlux.EntitySystem
                     _isTriggeringOnDealDamage = false;
                 }
 
-                if (dmg > 0 && i.owner != null && i.owner != gameObject) TryLifesteal(i.owner, dmg);
+                if (dmg > 0 && i.owner != null && i.owner != gameObject) TryLifesteal(OwnerProxy.Resolve(i.owner), dmg);
             }
             }
             finally

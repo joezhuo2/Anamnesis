@@ -21,8 +21,10 @@ namespace CrystalFlux.EntitySystem
         private Rigidbody2D rb;
         private Animator a;
         private bool wasMoving = false;
+        public Vector2 retargetInterval = new(1f, 3f);
         private readonly float targetCheckInterval = 0.25f;
         private float nextTargetCheckTime = 0f;
+        private float nextLostCheckTime = 0f;
         private Transform cTransform;
         private Vector3 cScale;
         private static GameObject cachedPlayer;
@@ -34,10 +36,12 @@ namespace CrystalFlux.EntitySystem
         public bool Rushing => rush != null && rush.Active;
         public StatusEffectManager Sem { get; private set; }
         public IStatProvider Stats => esm;
+        private ITeamMember team;
 
         private void Awake()
         {
             esm = GetComponent<IStatProvider>();
+            TryGetComponent(out team);
             Sem = GetComponent<StatusEffectManager>();
         }
 
@@ -199,17 +203,16 @@ namespace CrystalFlux.EntitySystem
         }
         private void UpdateTargeting()
         {
-            if (target != null) return;
+            float now = Time.time;
+            if (now < (target == null ? nextLostCheckTime : nextTargetCheckTime)) return;
 
-            if (Time.time < nextTargetCheckTime) return;
-            nextTargetCheckTime = Time.time + targetCheckInterval;
+            nextLostCheckTime = now + targetCheckInterval;
+            nextTargetCheckTime = now + Random.Range(retargetInterval.x, retargetInterval.y);
 
             if (cachedPlayer == null) cachedPlayer = GameObject.FindGameObjectWithTag("Player");
-            if (cachedPlayer == null) return;
 
-            float distSqr = ((Vector2)(cachedPlayer.transform.position - cTransform.position)).sqrMagnitude;
-            float dr = esm.GetStat(StatType.DetectionRange);
-            if (dr >= 0f && distSqr <= dr * dr) target = cachedPlayer;
+            GameObject t = Targetable.FindNearest(cTransform.position, esm.GetStat(StatType.DetectionRange), team != null ? team.TeamID : 0, cachedPlayer);
+            if (t != null) target = t;
         }
     }
 }

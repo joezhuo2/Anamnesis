@@ -187,11 +187,12 @@ namespace CrystalFlux.ProjectileSystem
             Vector2? center = null,
             Vector2? dirOverride = null,
             float? distOverride = null,
-            AttackData chainRoot = null
+            AttackData chainRoot = null,
+            bool fixedAim = false
         )
         {
             if (ad == null || ad.ProjectilePrefab == null) yield break;
-            yield return SpawnFromPatternInternal(ad.ProjectilePrefab, ad.Pd, ad, source, center, dirOverride, distOverride, chainRoot);
+            yield return SpawnFromPatternInternal(ad.ProjectilePrefab, ad.Pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim);
         }
 
         public IEnumerator SpawnFromPattern(
@@ -200,14 +201,29 @@ namespace CrystalFlux.ProjectileSystem
             Vector2? center = null,
             Vector2? dirOverride = null,
             float? distOverride = null,
-            AttackData chainRoot = null
+            AttackData chainRoot = null,
+            bool fixedAim = false
         )
         {
             if (prefab == null) yield break;
             Projectile p = prefab.GetComponent<Projectile>();
             ProjectileData pd = p != null ? p.pd : null;
             AttackData ad = pd != null ? pd.MainAttack : null;
-            yield return SpawnFromPatternInternal(prefab, pd, ad, source, center, dirOverride, distOverride, chainRoot);
+            yield return SpawnFromPatternInternal(prefab, pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim);
+        }
+
+        public static void ResolveAim(AttackData ad, GameObject source, Vector2 center, Vector2? dirOverride, float? distOverride, out Vector2 dir, out float dist)
+        {
+            bool aimsAtMouse = source != null && source.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1;
+
+            Vector2 mouse = center;
+            if (aimsAtMouse && MainCam != null) mouse = MainCam.ScreenToWorldPoint(InputState.mousePos);
+
+            dir = dirOverride ?? (aimsAtMouse ? (mouse - center).normalized : Vector2.right);
+            dist = distOverride ?? (ad != null ? ad.SpawnDistance : 0f);
+
+            if (ad != null && !ad.FixedDistance && aimsAtMouse)
+                dist = Mathf.Min(Vector2.Distance(center, mouse), dist);
         }
 
         private IEnumerator SpawnFromPatternInternal(
@@ -218,26 +234,23 @@ namespace CrystalFlux.ProjectileSystem
             Vector2? center = null,
             Vector2? dirOverride = null,
             float? distOverride = null,
-            AttackData chainRoot = null
+            AttackData chainRoot = null,
+            bool fixedAim = false
         )
         {
             if (source == null && center == null) yield break;
 
-            bool aimsAtMouse = source != null && source.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1;
-
             Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
 
-            Vector2 mouse = spawnCenter;
-            if (aimsAtMouse && MainCam != null) mouse = MainCam.ScreenToWorldPoint(InputState.mousePos);
+            Vector2 dir;
+            float finalDist;
 
-            Vector2 dir = dirOverride ?? (aimsAtMouse ? (mouse - spawnCenter).normalized : Vector2.right);
-            float finalDist = distOverride ?? (ad != null ? ad.SpawnDistance : 0f);
-
-            if (ad != null && !ad.FixedDistance && aimsAtMouse)
+            if (fixedAim && dirOverride.HasValue && distOverride.HasValue)
             {
-                float mouseDist = Vector2.Distance(spawnCenter, mouse);
-                finalDist = Mathf.Min(mouseDist, finalDist);
+                dir = dirOverride.Value;
+                finalDist = distOverride.Value;
             }
+            else ResolveAim(ad, source, spawnCenter, dirOverride, distOverride, out dir, out finalDist);
 
             Vector2 spawnPos = spawnCenter + (dir * finalDist);
 

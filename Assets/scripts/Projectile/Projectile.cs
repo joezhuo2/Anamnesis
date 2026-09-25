@@ -53,6 +53,7 @@ namespace CrystalFlux.ProjectileSystem
         private Vector3 defaultScale;
         private AttackData chainRoot;
         private bool chargeRegistered;
+        private GameObject proxyOwner;
         private IAttackEffectSource effectSource;
         private int ownerTeam;
         private IStatProvider ownerStats;
@@ -247,17 +248,20 @@ namespace CrystalFlux.ProjectileSystem
             ClearOwnerCache();
             if (ownerObj == null) return;
 
-            ownerObj.TryGetComponent(out effectSource);
+            proxyOwner = OwnerProxy.Resolve(ownerObj);
+
+            proxyOwner.TryGetComponent(out effectSource);
             ownerObj.TryGetComponent(out ownerStats);
-            ownerObj.TryGetComponent(out ownerSummon);
-            ownerObj.TryGetComponent(out ownerPool);
-            ownerObj.TryGetComponent(out ownerDmg);
-            ownerObj.GetComponents(onHitBuffer);
+            proxyOwner.TryGetComponent(out ownerSummon);
+            proxyOwner.TryGetComponent(out ownerPool);
+            proxyOwner.TryGetComponent(out ownerDmg);
+            proxyOwner.GetComponents(onHitBuffer);
             ownerTeam = ownerObj.TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
         }
 
         private void ClearOwnerCache()
         {
+            proxyOwner = null;
             effectSource = null;
             ownerStats = null;
             ownerSummon = null;
@@ -360,7 +364,7 @@ namespace CrystalFlux.ProjectileSystem
             hit.Add(target);
 
             for (int i = 0; i < onHitBuffer.Count; i++)
-                onHitBuffer[i].OnHit(ownerObj, target, transform.position);
+                onHitBuffer[i].OnHit(proxyOwner, target, transform.position);
             if (pd.MainAttack != null && pd.MainAttack.SummonCondition == SummonCondition.OnHit && Random.value <= pd.MainAttack.SummonChance)
             {
                 if (ownerSummon != null)

@@ -7,6 +7,61 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.6] - 2026-09-25
+
+### Added
+- **`EtherealMirage` status effect class** (`Status Effects/Buff/Ethereal Mirage`, Entity assembly). On apply
+  it summons `cloneCount` clones in a ring `spawnRadius` around the target, starting at `startAngle` and
+  spaced evenly. Configurable per asset: `clonePrefab` (optional; when empty a clone is built at runtime
+  from the base's sprite and collider), `opacity`, `copyMovement`, `copyAttacks`, `statShare` plus
+  per-stat `shareOverrides`, `perCloneBuffs` (applied to the base per living clone) and
+  `onCloneDeathEffects` (status effects applied to the base when a clone is killed). Re-applying
+  refreshes the duration and refills killed slots. On expiry, or when the base dies, the clones vanish
+  without triggering death effects. Works on enemies as well as the player
+- **`MirageClone` component.** Keeps the clone at its spawn offset from the base (or where it spawned, with
+  `copyMovement` off) and copies the base's sprite, flip, scale and colour at the set opacity. The clone is
+  a trigger hurtbox on a frozen dynamic body, so it takes hits but never blocks movement, and it ignores
+  knockback and crowd control. When the base casts an attack, every clone with `copyAttacks` fires the
+  same attack from its own position in the base's aim direction, at no cost and with no cooldown or cast bar
+- **`MirageStatManager`**, an `EntityStatManager` that reads the base's stats live. Flat stats (attack,
+  Intelligence, max HP, armor, regen, move speed and their `Eff` versions) are multiplied by `statShare`;
+  percent and chance stats copy at 100% unless overridden. Health, alive/immune state, gates and
+  XP/gold drops stay the clone's own, so killing an enemy's clone drops nothing
+- **Ethereal Mirage**, the first keystone (`Node_ethmirage`, 5 skill points, `undoCost` 50). It grants two
+  `GrantStatusEffect` upgrades on `OnUltAttack` with a 24s cooldown: `Ethereal Mirage` applies the new
+  `Mirage` effect (18s, 3 clones, radius 2, 60% opacity, 50% stat share, each clone +12% `moveSpeedPct`
+  and -15% `damagePct`), and `Ethereal Mirage Cooldown Indicator` applies the `Mirage Cooldown` Info
+  marker (24s). New `Node_ KEYSTONE` copyable node template
+- **`Targetable` component** that registers an object as something enemies can target. Mirage clones and
+  Decoys carry it
+- **`IOwnerProxy` / `OwnerProxy.Resolve`** (Projectile assembly). A projectile fired by a proxy (a clone)
+  credits its real owner: upgrade triggers (`OnTargetRecievedHit`, `OnCrit`, `OnDealDamage`,
+  `OnProjectileHit`, `OnOverkill`, `OnKill`), extra attack effects, on-hit summons, lifesteal, resource
+  gains on hit, XP and gold all go to the base. Upgrades fired this way share the base's upgrade cooldowns
+- `ProjectileSpawner.ResolveAim`, the aim/distance calculation pulled out of `SpawnFromPattern`, and a
+  `fixedAim` flag on `SpawnFromPattern` that uses the passed direction and distance as-is
+
+### Changed
+- **Enemy targeting.** Enemies now pick the nearest player, clone or decoy within detection range, with no
+  priority between them, and re-check every 1-3s at random (`EnemyMovement.retargetInterval`). An enemy
+  whose target is gone looks again after 0.25s. Before, an enemy kept its first target until it lost it
+- `EntityStatManager.GetStat` is now `virtual`
+- A clone's `EntityHealth` ignores any `PlayerUpgradeManager` on the clone itself
+
+### Balance
+
+#### Buffs
+- **Aphelion:** 35% → 55% Spell
+- **Nirvana:** mana cost 145 +10% → 85, damage 550% → 650% Spell. Orbit special scaling 0.2x → 0.15x per orbit
+- **Warp Rift** size 1.25 → 1.5
+- **Autopilot** pierce 1 → 3
+- **Ultrasonic** projectiles now also scale off 40% `EffAtk` on top of `moveSpeedPct`
+
+#### Nerfs
+- **Subspace Blitz** Freeze chance 60% → 45%
+- **Astral Disjunction:** stamina and mana gain on hit +15% → +12%
+- **Supersonic** no longer scales off `EffAtk` (moved to Ultrasonic)
+
 ## [v0.6.5] - 2026-09-24
 
 ### Added

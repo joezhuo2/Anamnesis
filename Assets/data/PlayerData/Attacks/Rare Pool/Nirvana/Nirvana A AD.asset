@@ -16,13 +16,27 @@ MonoBehaviour:
   cooldown: 24
   projectilePrefab: {fileID: 7236607404109697151, guid: 48c478ada976a6c4d8f908dd7f9e4ff5, type: 3}
   pd: {fileID: 11400000, guid: 11c383e7904eab24db5ec2ae3884aed1, type: 2}
-  pattern: 0
+  animationLength: 0.5
   castTime: 0
   canMoveWhileCasting: 1
-  spawnDelay: 0
-  spawnDistance: 3
-  fixedDistance: 0
-  animationLength: 0.5
+  teleportToProjectile: 0
+  teleportDelay: 0
+  rushDirection: 0
+  rushAngle: 0
+  omnidirectionalRush: 0
+  rushTurnRate: 0
+  rushType: 0
+  rushTypeVal: 0
+  rushSpeedMult: 1
+  immuneWhileRushing: 0
+  disableAttacksWhileRushing: 0
+  endRushOnCollision: 0
+  bounceOnCollision: 0
+  rushImpact: 0
+  rushImpactForce: 0
+  rushImpactTime: 0
+  impactDmgMult: 0.5
+  predictTarget: 0
   canCharge: 0
   chargeThreshold: 0.225
   minChargeTime: 0
@@ -30,6 +44,10 @@ MonoBehaviour:
   chargeTickInterval: 1
   cooldownOnAttackStart: 1
   chargeAttack: {fileID: 0}
+  pattern: 0
+  spawnDelay: 0
+  spawnDistance: 3
+  fixedDistance: 0
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -46,8 +64,8 @@ MonoBehaviour:
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 145
-  manaCostPct: 10
+  manaCost: 85
+  manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0

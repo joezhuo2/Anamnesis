@@ -204,13 +204,16 @@ namespace CrystalFlux.EntitySystem
                     Vector2 dir = (Target.transform.position - transform.position).normalized;
                     float dist = Vector2.Distance(Target.transform.position, transform.position);
 
+                    float d = dist > current.SpawnDistance ? current.SpawnDistance : dist;
+
                     StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
                         current.ProjectilePrefab,
                         gameObject,
                         transform.position,
                         dir,
-                        dist > current.SpawnDistance ? current.SpawnDistance : dist
+                        d
                     ));
+                    MirageClone.NotifyCast(gameObject, current.ProjectilePrefab, transform.position, dir, d);
                 }
             }
 
@@ -293,13 +296,16 @@ namespace CrystalFlux.EntitySystem
             Vector2 dir = (Target.transform.position - transform.position).normalized;
             float dist = Vector2.Distance(Target.transform.position, transform.position);
 
+            float d = dist > chargeSource.SpawnDistance ? chargeSource.SpawnDistance : dist;
+
             StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
                 chargeSource,
                 gameObject,
                 transform.position,
                 dir,
-                dist > chargeSource.SpawnDistance ? chargeSource.SpawnDistance : dist
+                d
             ));
+            MirageClone.NotifyCast(gameObject, chargeSource, transform.position, dir, d);
         }
 
         private void HandleCleanse(AttackData ad)

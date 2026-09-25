@@ -2,14 +2,14 @@
 
 # Anamnesis
 
-> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 221-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
+> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 222-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
 
 ![Unity](https://img.shields.io/badge/Unity-6000.4.6f1-000000?logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-.NET-512BD4?logo=dotnet&logoColor=white)
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.5-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.6-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.5** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.6** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -43,8 +43,8 @@ Current release: **v0.6.5** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage and knockback, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
 | **✨ Awakenings** | `PlayerUpgrade` assets driven by 25 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
-| **🌳 Skill Tree** | Pan/zoom tree of 221 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, and capstones that upgrade an owned attack or Awakening in place |
-| **🧪 Status Effects** | Stackable DoTs, stuns, stat buffs and reductions, attack replacement and cleansing, with cooldown UI |
+| **🌳 Skill Tree** | Pan/zoom tree of 222 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
+| **🧪 Status Effects** | Stackable DoTs, stuns, freezes, stat buffs and reductions, attack replacement, cleansing, and **Ethereal Mirage** clones that share your stats and repeat your attacks, with cooldown UI |
 | **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a five-boss **Boss Rush** gauntlet |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
@@ -82,8 +82,9 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova |
 | **Skills** | Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge, Subspace Blitz |
 | **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis |
-| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, plus capstone-only Solar Wind and Oblivion |
+| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, plus capstone-only Solar Wind and Oblivion, and keystone-only Ethereal Mirage |
 | **Capstones** | Warp, Hypernova and Astral Disjunction upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion and Ultrasonic upgrade their required Awakening |
+| **Keystones** | Ethereal Mirage: casting an Ultimate summons 3 clones that follow you and mimic your attacks |
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma) |
 | **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`) |
 | **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper) chaining into `BossRush Part 2` (the same five at Lv 105) |
@@ -127,6 +128,7 @@ Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a 
 
 - `OnSpawnProjectile` and `OnManaRegen` are reentrancy-guarded, but only for the immediate call — an upgrade with a non-zero `delay` that re-triggers its own condition still needs a cooldown.
 - A non-zero `delay` on a positional condition drops the position and calls the plain `(player)` overload, so position-sensitive upgrades should leave `delay` at 0.
+- Hits from Ethereal Mirage clones count as the player's: the hit, damage, crit, overkill and kill conditions fire on the player and share its upgrade cooldowns. Clones never re-fire the attack conditions (`OnAttack`, `OnBasicAttack`, `OnSkillAttack`, `OnUltAttack`).
 - Passive Awakenings leave `conditions` empty and install their effect in `OnUnlock`, reversing it in `OnRemove` — Exsanguinate and Terminal Cascade both work this way.
 
 ---

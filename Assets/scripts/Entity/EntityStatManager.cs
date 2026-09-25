@@ -48,7 +48,7 @@ namespace CrystalFlux.Core
             if (s != null) Destroy(s);
         }
 
-        public float GetStat(StatType type) => s == null ? 0f : s.GetValue(type);
+        public virtual float GetStat(StatType type) => s == null ? 0f : s.GetValue(type);
 
         public void AddStat(StatBuff b, bool isAdding = true)
         {

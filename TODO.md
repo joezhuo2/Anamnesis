@@ -148,6 +148,13 @@
 - [ ] nameplates/titles
 - [ ] background/ambience (debris/wind)
 
+### Planned PlayerUpgrade trigger conditions
+- on rush impact
+- on summon mirage
+
+### Planned Stats
+- rush impact % (increases rush kb force, dmg)
+
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
 - **Superconductor** - chain lightning type attack OR upgrade, speed/atk dual scaling, stun + arc split, maybe additional attack with homing would work (no new mechanics)
@@ -162,6 +169,11 @@
 - **Midas Touch** — passive. Every 500 gold held grants +2% `damagePct`
 - **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
 - **Event Horizon** (Ultimate) — a slow `Spiral` projectile that `Pulled`s nearby enemies and grows over its lifetime.
+- **Something** - awakening that grants thorns effect
+- **Mitosis Shot** (Basic) — each projectile splits into 3 smaller copies on hit
+- **Scatter Mine** (Basic) — random-direction (`randomDir`) mines that sit still and arm after 0.5s. Opens a trap/kiting playstyle. new `armDelay` (no collision until armed).
+- **Glacial Lance** (Skill) — applies `Freeze`; hitting a frozen enemy shatters it for bonus true damage and splashes `Slow` onto nearby enemies.
+- **Momentum** — passive. Dashes and rushes grant stacking `moveSpeedPct` and `rushImpactPct`
 
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
@@ -179,6 +191,8 @@
 - Attack-button borders and status icons can react up to 0.1s late: the border turning red after an attack, and a dead entity's icons going back to the pool.
 - Since v0.6.3, homing, enemy follow-cursor and orbit-nearest projectiles can take up to 0.15s (`Projectile.retargetInterval`) to find a new target after losing one, and `DoTSpread` spreads land on a 0.1s grid.
 - Since v0.6.3, each enemy health bar and its text have their own nested `Canvas`. A move no longer rebuilds every bar, but the bars no longer batch together, so there can be up to two draw calls per visible bar. If draw calls turn out to cost more than the rebuilds did, switch to world-space `SpriteRenderer` bars parented to the enemy.
+- Since v0.6.6, Ethereal Mirage clones are `Instantiate`d and `Destroy`ed rather than pooled, because `EntityHealth` only initialises in `Start()`. Clones do not repeat rushes, orbit interactions (`FireOrbits`, redirect, absorb, explode) or charge-window registration, so orbit-self and charged projectiles fired by a clone behave as plain projectiles. A clone is not alive (targetable, attack-repeating) until its `Start()` runs the frame after it spawns.
+- Since v0.6.6, enemies re-evaluate their target every 1-3s (`EnemyMovement.retargetInterval`), so a Decoy's spawn-time taunt can be dropped for a closer player or clone at the next check.
 - Since v0.6.3, `StatusEffect` runtime copies are pooled, so an expired effect is never Unity-null. Anything holding an effect reference must check `Released` or compare `Generation` (see `StatusEffectCooldownUI`, `DoTSpread`). A new `StatusEffect` subclass with private per-use state must clear it in `ResetRuntime()`.
 
 ## Misc
@@ -296,68 +310,76 @@
 
 ## Brainstorm: New Attacks & Awakenings
 
-Ideas only, none implemented. Each notes the playstyle it opens, what it connects to, and any new feature it needs.
-
 ### Attacks
-- [ ] **Hemorrhage Lance** (Skill) — `HpConsumed`-scaling piercing lance that costs 15% current HP and refunds the cost as overhealth for every enemy it kills.
-  *Connects:* Blood Pact / Exsanguinate health-spend builds, overhealth.
 - [ ] **Chakram** (Basic) — boomerang (`maxBoomerangDist`) that re-hits everything on the way back and speeds up per enemy pierced. Scales with `ProjSpd`, which almost nothing uses today.
-- [ ] **Puppeteer** (Skill) — `FollowCursor` orb that damages whatever it passes through while the button is held (chargeable), draining mana per tick. Opens a mouse-steered playstyle.
-  *Uses:* `FollowCursor` + charge (`IChargeRegister`).
-- [ ] **Bulwark** (Skill) — cast-time barrier. Grants overhealth plus a `Thorns` status for 5s, and reflected damage scales with armor. Opens an armor/tank build.
-  *Uses:* the unused `Thorns` effect.
 - [ ] **Siphon Chain** (Basic) — chain lightning (`additionalAttack` retarget) that applies `Lifesteal` to the player per hop. Pairs with sustain builds.
   *Uses:* the unused `Lifesteal` effect.
-- [ ] **Carpet Bomb** (Ultimate) — `TopDown`, `LeftRight` and `FullX` patterns fired in sequence over 2s, each wave covering the screen.
-  *Uses:* screen-fill patterns that currently only enemies use.
-- [ ] **Glacial Lance** (Skill) — applies `Freeze`; hitting a frozen enemy shatters it for bonus true damage and splashes `Slow` onto nearby enemies. Opens a control/true-damage playstyle.
-- [ ] **Echo Step** (Skill) — dash-cancelable rush that leaves a `Decoy` at its start point. When the rush ends, the decoy recasts your last basic attack.
-  *Connects:* Decoy, rush, `OnRushEnd`.
-- [ ] **Tithe** (Basic) — low-damage hit that doubles your `Stealing` stat against the enemy it hits; kills with it drop a Gold collectible. Opens an economy build.
-  *Connects:* the Stealing stat and collectibles.
-- [ ] **Mitosis Shot** (Basic) — each projectile splits into 2 smaller copies on hit, up to 3 generations. Mirrors enemy splitting on the player's side.
-  *New feature:* `splitGenerations` on `ProjectileData`, reusing `additionalAttack` with a depth counter.
-- [ ] **Sanctum** (Skill) — places a stationary zone for 6s. While you stand inside it, stamina and mana regen double and every `OnHealthRegen` tick pulses damage. Opens a positional/turret playstyle.
-  *New feature:* player-owned ground zones (a persistent, non-moving projectile with an owner-inside check).
-- [ ] **Requiem** (Ultimate) — damage scales with the number of *distinct* status effects on the target. Pays off Hex Cast and DoT-stacking builds.
-  *New feature:* `SpecialScalingAttribute.EffectCount`.
-- [ ] **Kinetic Slam** (Skill) — rush with high rush impact. An enemy knocked into another enemy deals the impact damage again to both. Scales with `kbPct`.
-  *New feature:* enemy-to-enemy collision damage from knockback in `KnockbackHandler`.
-- [ ] **Scatter Mine** (Basic) — random-direction (`randomDir`) mines that sit still and arm after 0.5s. Opens a trap/kiting playstyle.
-  *New feature:* projectile `armDelay` (no collision until armed).
-- [ ] **Mirror Volley** (Skill) — fires your last-used attack's projectiles from the cursor back toward you, converging.
-  *Connects:* `AttackReplacement` (a temporary replacement using the stored `ProjectileData`).
-- [ ] **Arsenal** (Ultimate) — equips a weapon `GearItem` for 20s that rolls random stat buffs from `potentialRolls`.
-  *Uses:* the unused `ItemSystem`, and prototypes gear before a full inventory exists.
 
 ### Awakenings (PlayerUpgrade)
 
 - [ ] **Ricochet Theory** — `OnProjectileHit`: 20% chance the projectile gains +1 pierce and retargets. Pairs with Chakram and pierce builds.
-- [ ] **Adrenaline** — `OnTakeHit`: for 3s, `attackSpeedPct` +30% and stamina costs drop to 0. Pays off aggressive, tanky play.
 - [ ] **Perfect Parry** — `OnCounterDodge`: reflects the incoming hit as a projectile toward its source and refunds the dash cooldown. Deepens dash play.
-- [ ] **Momentum** — passive. Dashes and rushes grant stacking `moveSpeedPct`, and each stack adds rush impact damage. Links dash and rush.
   *New feature:* stack counter on `PlayerUpgrade`.
 - [ ] **Scholar** — passive. Converts 50% of `Intelligence` into `spellDmgPct` and 25% into `manaGainPct`. Makes the Intelligence stat matter.
-- [ ] **Blood Money** — `OnKill`: gain gold equal to 1% of the enemy's max HP, scaled by Stealing. Pairs with Tithe for an economy build.
 - [ ] **Conduit** — `OnManaRegen`: every 50 mana gained fires the equipped skill at 40% damage for free. Links mana and skills.
-- [ ] **Hoarder** — collectibles gain +50% value but their on-ground lifetime is halved. `OnLevelUp` spawns a random collectible at your feet.
   *New feature:* `OnCollect` trigger condition.
 - [ ] **Contagion** — `OnKill`: status effects on the dying enemy spread to the 3 nearest enemies at 50% of their remaining duration. Generalizes `DoTSpread` to every effect.
-- [ ] **Syncopation** — each Basic → Skill → Basic → Ultimate cycle grants a stack of `attackSpeedPct`; repeating a slot resets the stacks. Counterpart to Resonance, and pairs with Gravemark.
-- [ ] **Thornmail Soul** — `OnTakeHit`: gain a short `Thorns` stack. While any thorns stacks are up, armor also counts toward `EffAtk`. Links Bulwark into a tank build.
 - [ ] **Vampiric Resonance** — `OnOverkill`: excess damage heals you, and healing past max HP converts to overhealth. Uses overkill and overhealth.
 - [ ] **Gravity Well** — `OnRushEnd`: spawns a small `Pulled` field at the rush endpoint. Links Riptide, Kinetic Slam and Subspace Blitz.
-- [ ] **Orbital Mechanics** — `OnSpawnProjectile`: every 5th projectile becomes an orbiter around you (`orbitSelf`) for 4s. Feeds Event Horizon and Aphelion's `Orbits` scaling.
-- [ ] **Chrono Debt** — `OnCalculateAttackCost`: attacks cost no resources for 10s, then the total cost comes due at once, taken from HP if you can't pay it. Links health-spend builds.
-  *New feature:* deferred-cost ledger on `PlayerResourcePool`.
-- [ ] **Anomaly Hunter** — passive. Completing an anomaly grants a permanent +1% `damagePct`; failing one grants a reroll. Ties anomalies into your build.
-  *New feature:* `OnAnomalyComplete` / `OnAnomalyFail` trigger conditions dispatched from `AnomalyInstance`.
 
-### New features implied
+---
 
-- New trigger conditions: `OnCollect`, `OnAnomalyComplete`, `OnAnomalyFail`, `OnStatusApplied`, `OnCleanse`.
-- New status effects: `Mark` (Detonator variant), and first real content for `Thorns` and `Lifesteal`.
-- New `SpecialScalingAttribute` values: `EffectCount`, `Gold`, `MissingHp`.
-- Projectile fields: `armDelay`, `splitGenerations`, `growOverLifetime`.
-- Player-owned ground zones, enemy-to-enemy knockback collision damage, a stack counter on `PlayerUpgrade`, and per-slot cast history.
-- First gameplay use of `ItemSystem` (`GearItem` rolls) through Arsenal, before building a full inventory.
+## Brainstorm: New Playstyle Sets
+
+### 2. Legion — player summoner
+
+The player fights through a squad of minions and buffs, sacrifices or commands them. Reuses the enemy-side `EntitySummonHandler`.
+
+*Core feature:* player-owned summons with an `EntityStats` block that scales off the player's stats, a minion cap, target-following AI that reuses `EnemyMovement` with the target set to the nearest enemy, and new `OnMinionSpawn` / `OnMinionDeath` trigger conditions.
+
+- [ ] **Conscript** (Basic) — a weak hit whose kills raise the slain enemy as a minion for 10s (up to the cap).
+- [ ] **Rally** (Skill) — every minion rushes to the cursor, using rush impact for its damage. Minions arriving together share their knockback.
+- [ ] **Grand Muster** (Ultimate) — fills the minion cap with elite minions that copy the player's equipped basic attack for 15s.
+- [ ] **Blood Tithe** (Awakening) — `OnMinionDeath`: heal 3% max HP and advance skill cooldown by 0.5s.
+- [ ] **Shared Vessel** (Awakening) — passive. Minions inherit 30% of the player's crit chance and status effects on hit, and 20% of the damage the player takes is redirected to the nearest minion.
+- [ ] **Martyr** (Awakening) — `OnTakeHit` while a minion exists: sacrifice the oldest minion to negate the hit, and it explodes for its remaining HP.
+
+### 3. Furnace — heat resource
+
+A fourth resource, Heat, fills as you attack and bleeds off over time. High heat makes attacks stronger but burns you; venting heat turns it into burst damage.
+
+*Core feature:* a `heat` / `maxHeat` stat in `PlayerResourcePool` plus a HUD bar, attack cost entries that *add* heat, burning the player above 80% heat, and a new `SpecialScalingAttribute.Heat`.
+
+- [ ] **Stoke** (Basic) — fast jab that adds 8 heat. Its damage scales with current heat.
+- [ ] **Vent** (Skill) — dumps all heat as a cone of fire. Damage scales with the heat spent, and it applies Burn stacks equal to heat/20.
+- [ ] **Meltdown** (Ultimate) — locks heat at max for 10s with no self-burn. When it ends, releases a full-screen explosion and you become `Overheat`ed.
+- [ ] **Heat Sink** (Awakening) — `OnTakeDamage`: converts 50% of the damage taken into heat instead of HP loss while below 80% heat.
+- [ ] **Thermal Runaway** (Awakening) — passive. Every 10 heat held grants +2% `attackSpeedPct`; the self-burn tick rate also scales with heat.
+- [ ] **Cooling Dash** (Awakening) — `OnStartDash`: vents 25 heat as a ring of `Slow`.
+
+### 4. Duality — stance switching
+
+The player swaps between two stances, Sol and Luna. Every attack has a different form in each stance, and switching mid-combo pays off.
+
+*Core feature:* a `Stance` state on the player with a swap binding, an alternate `ProjectileData` per stance on `AttackData` (swapped in the way `AttackReplacement` does), and a new `OnStanceSwap` trigger condition.
+
+- [ ] **Twin Moons** (Basic) — Sol: a single heavy physical slash. Luna: 3 spell needles in a spread that apply Vulnerable.
+- [ ] **Eclipse Step** (Skill) — swaps stance instantly and teleports behind the nearest enemy. The first attack in the new stance crits.
+- [ ] **Equinox** (Ultimate) — for 8s, both stances are active at once, so every attack fires both forms.
+- [ ] **Balance** (Awakening) — passive. Damage in Sol raises Luna's damage for 3s, and damage in Luna raises Sol's, so the bonuses alternate when you swap.
+- [ ] **Twilight Burst** (Awakening) — `OnStanceSwap`: releases a ring that deals damage and cleanses one debuff. 1.5s cooldown.
+- [ ] **Zenith** (Awakening) — `OnStanceSwap` after at least 5s in one stance: the next attack deals +150% damage.
+
+### 6. Tether — linked enemies
+
+The player links enemies together with chains. Damage, status effects and knockback travel along the links, so one target stands in for a whole group.
+
+*Core feature:* a `Tethered` status effect that stores a link to another entity and draws a line between them (pooled `LineRenderer`). Damage to either end copies a percentage to the other, with a reentrancy guard. Adds a new `OnTetherBreak` trigger condition.
+
+- [ ] **Chainlink** (Basic) — a projectile that tethers the first two enemies it pierces. Links last 5s and share 30% of damage.
+- [ ] **Drag Net** (Skill) — pulls every tethered enemy toward the center of its link, using `Pulled`. Enemies that collide take rush impact damage.
+- [ ] **Constellation** (Ultimate) — tethers every enemy on screen to its 2 nearest neighbours for 8s. Links share 60% of damage and every status effect applied.
+- [ ] **Load Bearing** (Awakening) — `OnTetherBreak`: the chain snaps and deals the damage it carried to both ends.
+- [ ] **Conductive Chains** (Awakening) — passive. DoT ticks travel along tethers, but can't travel back along the link they came from.
+- [ ] **Anchor** (Awakening) — passive. Tethering to a boss or elite makes that end immovable, so knockback on the other end is doubled.
+
