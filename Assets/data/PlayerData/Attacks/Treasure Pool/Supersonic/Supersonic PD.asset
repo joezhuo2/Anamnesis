@@ -26,6 +26,9 @@ MonoBehaviour:
   spellMult: 0
   trueMult: 1.35
   scalingStat: 24
+  extraScalings:
+  - stat: 31
+    weight: 0.4
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CrystalFlux.ProjectileSystem
 {
@@ -51,10 +52,15 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private bool endRushOnCollision;
         [Tooltip("Reflects the rush off anything it collides with. Ignored when endRushOnCollision is true")]
         [SerializeField] private bool bounceOnCollision;
-        [Tooltip("Knocks back opposing entities the rush collides with. Ignored when endRushOnCollision is true")]
-        [SerializeField] private bool rushKnockback;
-        [SerializeField] private float rushKnockbackForce;
-        [SerializeField] private float rushKnockbackTime;
+        [Tooltip("Damages and knocks back opposing entities the rush collides with. With endRushOnCollision, the impact resolves before the rush ends")]
+        [FormerlySerializedAs("rushKnockback")]
+        [SerializeField] private bool rushImpact;
+        [FormerlySerializedAs("rushKnockbackForce")]
+        [SerializeField] private float rushImpactForce;
+        [FormerlySerializedAs("rushKnockbackTime")]
+        [SerializeField] private float rushImpactTime;
+        [Tooltip("Impact damage as a multiplier of this attack's projectile data damage. 0 = no damage")]
+        [SerializeField] private float impactDmgMult = 0.5f;
         [Tooltip("Enemy only. Aims at where the target will be when the rush reaches it, based on the target's velocity")]
         [SerializeField] private bool predictTarget;
 
@@ -180,9 +186,10 @@ namespace CrystalFlux.ProjectileSystem
         public bool EndRushOnCollision => endRushOnCollision;
         public float RushTurnRate => rushTurnRate;
         public bool BounceOnCollision => bounceOnCollision;
-        public bool RushKnockback => rushKnockback;
-        public float RushKnockbackForce => rushKnockbackForce;
-        public float RushKnockbackTime => rushKnockbackTime;
+        public bool RushImpact => rushImpact;
+        public float RushImpactForce => rushImpactForce;
+        public float RushImpactTime => rushImpactTime;
+        public float ImpactDmgMult => impactDmgMult;
         public bool PredictTarget => predictTarget;
         public bool Rushes => rushTypeVal > 0f && rushSpeedMult > 0f;
         public float AnimationLength => animationLength;

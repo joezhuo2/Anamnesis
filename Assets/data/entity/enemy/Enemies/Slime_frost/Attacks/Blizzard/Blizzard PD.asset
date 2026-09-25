@@ -26,6 +26,7 @@ MonoBehaviour:
   spellMult: 0
   trueMult: 0.18
   scalingStat: 31
+  extraScalings: []
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 1
@@ -46,10 +47,10 @@ MonoBehaviour:
     selfApply: 0
     applyCondition: 0
     chance: 0.65
-  - effect: {fileID: 11400000, guid: 398b713c60e88bf4f8c34005481b424a, type: 2}
+  - effect: {fileID: 11400000, guid: 7fe8c3a58a6ba1f4ebcb195c4afdfc18, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.15
+    chance: 0.2
   orbitRadius: 1
   randOrbRadOffset: 1.5
   orbitSelf: 1

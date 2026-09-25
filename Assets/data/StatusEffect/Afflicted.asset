@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 411529bfca579104192ee5e7e49efaaf, type: 3}
-  m_Name: Vulnerable 6 6 5
+  m_Name: Afflicted
   m_EditorClassIdentifier: Assembly-CSharp::StatReduction
   currentTime: 0
   duration: 6

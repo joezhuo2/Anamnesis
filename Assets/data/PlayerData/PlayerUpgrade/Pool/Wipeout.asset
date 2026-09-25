@@ -17,7 +17,7 @@ MonoBehaviour:
   chance: 0
   cooldown: 0
   delay: 0
-  radius: 2
+  radius: 3
   spreadInterval: 1
   useTickInterval: 1
   spreadChance: 25

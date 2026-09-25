@@ -6,14 +6,14 @@
 **Bigger Things**
 - [ ] Audio (SFX + music buses + menu volume control)
 - [ ] more enemy projectile telegraphs (jellyfish ball)
-- [ ] Store page — description, screenshots, capsule art, controls
-- [ ] Window icon + splash
 
 **Smaller Things**
 - [ ] Confirm every `CREDITS.md` asset license permits redistribution inside a compiled build, not just use
 - [ ] In-game credits/attribution screen — some of those licenses want attribution in the build itself
 - [ ] Resolution/window options (currently a fixed 1920x1080 with `resizableWindow: 0`)
 - [ ] Clean-machine pass — fresh build, no `settings.json`, no Unity installed
+- [ ] Store page — description, screenshots, capsule art, controls
+- [ ] Window icon + splash
 
 ## Pre [v1.1.0] Checklist — Starlight Remnants
 *Enemies fight back with more than stats.*
@@ -22,6 +22,7 @@
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
 - [ ] contact damage
   - [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
+- [ ] attack stack count (allow multiple uses of attack when attack is on cooldown, cooldown restores stacks)
 
 **QoL & Polish**
 - [ ] Full stats display menu (in settings panel)
@@ -39,7 +40,7 @@
 *Every wave stops looking the same; the settings/stats menus catch up.*
 
 **Content**
-- [ ] Passive stat synergies between different build types (e.g. "Increases attack by 18% of max health") (new type of perm reward)
+- [ ] Passive stat synergies between different build types (e.g. "Increases attack by 18% of max health") (new type of perm reward - purple-blue color box, can appear)
 
 **Systems**
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
@@ -149,10 +150,18 @@
 
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
-
+- **Superconductor** - chain lightning type attack OR upgrade, speed/atk dual scaling, stun + arc split, maybe additional attack with homing would work (no new mechanics)
+- **Something** - counter dodging creates a shockwave
+- **Gravity Well** - ultimates create an extremely massive aoe attack that pulls enemies and debuffs them
+- **Gravemark** (Basic) — marks the target instead of damaging it; the next *different* attack slot that hits a marked enemy detonates every mark. Opens a slot-rotation playstyle.
+- **Riptide** (Skill) — rush that drags every enemy it passes through along with you (applies `Pulled` on contact), then drops them in a heap on `OnRushEnd`. Sets up AoE ultimates. (new rush dashing through enemies bool)
+- **Overclock** (Ultimate) — no damage. For 8s, every cast advances all other cooldowns by 50%, but each cast costs stamina. When the timer ends you get `Overheat`.
+- **Shatterpoint** — `OnCrit` against a stunned or frozen enemy: consumes the CC and deals 200% crit damage as true damage. 
+- **Resonance** — using the same attack slot 3 times in a row empowers the 4th cast
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
-- **Midas Touch** - *something* consumes `{x}` gold on every attack to increase its damage dealt by `{y}%`
+- **Midas Touch** — passive. Every 500 gold held grants +2% `damagePct`
 - **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
+- **Event Horizon** (Ultimate) — a slow `Spiral` projectile that `Pulled`s nearby enemies and grows over its lifetime.
 
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
@@ -172,8 +181,12 @@
 - Since v0.6.3, each enemy health bar and its text have their own nested `Canvas`. A move no longer rebuilds every bar, but the bars no longer batch together, so there can be up to two draw calls per visible bar. If draw calls turn out to cost more than the rebuilds did, switch to world-space `SpriteRenderer` bars parented to the enemy.
 - Since v0.6.3, `StatusEffect` runtime copies are pooled, so an expired effect is never Unity-null. Anything holding an effect reference must check `Released` or compare `Generation` (see `StatusEffectCooldownUI`, `DoTSpread`). A new `StatusEffect` subclass with private per-use state must clear it in `ResetRuntime()`.
 
-### Available Colors 
-- **red**
+## Misc
+
+### To-Do
+- preTeleport upgrade condition (triggers before starting teleport, occurs at the location where the player was right before teleporting)
+
+### Available Colors
 - **red-pink**
 - purple-blue
 - green-yellow
@@ -192,6 +205,7 @@
 - Starfury
 - Autopilot
 - Feedback Loop
+- Subspace Blitz => Nitro Accelerator (+immune while dashing, +bounce?, -cooldown, +explosion -dmg)
 
 ### Stats without skill tree nodes
 - add spl dmg pct
@@ -222,12 +236,10 @@
 - damage res 
 - move spd pct
 
-### Status effects to add
-- Freeze (stun + no hp regen + immovable)
 
 ## Performance Improvements
 
-### High
+### Open Items
 
 - [ ] Physics layers: everything sits on `Default` and the 2D collision matrix is all-ones
   (`ProjectSettings/Physics2DSettings.asset:56`). Projectile triggers pair with other projectiles, pickups and
@@ -236,9 +248,6 @@
   Fix: add Player/Enemy/Projectile/Environment/Pickup layers, disable Projectile↔Projectile and
   Projectile↔Pickup. The overlap queries in `Projectile`/`EntityProjectileHandler` already skip triggers (v0.6.3);
   an entity LayerMask would also drop walls from them.
-
-### Medium
-
 - [ ] Enemy pooling — documented as a deliberate deferral in Open Items; revisit when the three blockers
   (Destroy-bound cleanup with no `OnDisable` counterparts, non-idempotent `ScaleBaseStats`, fake-null kill
   counting) are resolved. Churn source: `EnemySpawner.cs:14-24`, `EntitySplitting.cs:21`,
@@ -282,3 +291,73 @@
   at ~0.25s.
 - [ ] `EntityStatManager.TryApplyCountedFlag` (`EntityStatManager.cs:65-66`) does two `HashSet<StatType>`
   lookups on every `AddStat`, which includes every hit's `currentHp` change. Fix: `switch` on StatType.
+
+---
+
+## Brainstorm: New Attacks & Awakenings
+
+Ideas only, none implemented. Each notes the playstyle it opens, what it connects to, and any new feature it needs.
+
+### Attacks
+- [ ] **Hemorrhage Lance** (Skill) — `HpConsumed`-scaling piercing lance that costs 15% current HP and refunds the cost as overhealth for every enemy it kills.
+  *Connects:* Blood Pact / Exsanguinate health-spend builds, overhealth.
+- [ ] **Chakram** (Basic) — boomerang (`maxBoomerangDist`) that re-hits everything on the way back and speeds up per enemy pierced. Scales with `ProjSpd`, which almost nothing uses today.
+- [ ] **Puppeteer** (Skill) — `FollowCursor` orb that damages whatever it passes through while the button is held (chargeable), draining mana per tick. Opens a mouse-steered playstyle.
+  *Uses:* `FollowCursor` + charge (`IChargeRegister`).
+- [ ] **Bulwark** (Skill) — cast-time barrier. Grants overhealth plus a `Thorns` status for 5s, and reflected damage scales with armor. Opens an armor/tank build.
+  *Uses:* the unused `Thorns` effect.
+- [ ] **Siphon Chain** (Basic) — chain lightning (`additionalAttack` retarget) that applies `Lifesteal` to the player per hop. Pairs with sustain builds.
+  *Uses:* the unused `Lifesteal` effect.
+- [ ] **Carpet Bomb** (Ultimate) — `TopDown`, `LeftRight` and `FullX` patterns fired in sequence over 2s, each wave covering the screen.
+  *Uses:* screen-fill patterns that currently only enemies use.
+- [ ] **Glacial Lance** (Skill) — applies `Freeze`; hitting a frozen enemy shatters it for bonus true damage and splashes `Slow` onto nearby enemies. Opens a control/true-damage playstyle.
+- [ ] **Echo Step** (Skill) — dash-cancelable rush that leaves a `Decoy` at its start point. When the rush ends, the decoy recasts your last basic attack.
+  *Connects:* Decoy, rush, `OnRushEnd`.
+- [ ] **Tithe** (Basic) — low-damage hit that doubles your `Stealing` stat against the enemy it hits; kills with it drop a Gold collectible. Opens an economy build.
+  *Connects:* the Stealing stat and collectibles.
+- [ ] **Mitosis Shot** (Basic) — each projectile splits into 2 smaller copies on hit, up to 3 generations. Mirrors enemy splitting on the player's side.
+  *New feature:* `splitGenerations` on `ProjectileData`, reusing `additionalAttack` with a depth counter.
+- [ ] **Sanctum** (Skill) — places a stationary zone for 6s. While you stand inside it, stamina and mana regen double and every `OnHealthRegen` tick pulses damage. Opens a positional/turret playstyle.
+  *New feature:* player-owned ground zones (a persistent, non-moving projectile with an owner-inside check).
+- [ ] **Requiem** (Ultimate) — damage scales with the number of *distinct* status effects on the target. Pays off Hex Cast and DoT-stacking builds.
+  *New feature:* `SpecialScalingAttribute.EffectCount`.
+- [ ] **Kinetic Slam** (Skill) — rush with high rush impact. An enemy knocked into another enemy deals the impact damage again to both. Scales with `kbPct`.
+  *New feature:* enemy-to-enemy collision damage from knockback in `KnockbackHandler`.
+- [ ] **Scatter Mine** (Basic) — random-direction (`randomDir`) mines that sit still and arm after 0.5s. Opens a trap/kiting playstyle.
+  *New feature:* projectile `armDelay` (no collision until armed).
+- [ ] **Mirror Volley** (Skill) — fires your last-used attack's projectiles from the cursor back toward you, converging.
+  *Connects:* `AttackReplacement` (a temporary replacement using the stored `ProjectileData`).
+- [ ] **Arsenal** (Ultimate) — equips a weapon `GearItem` for 20s that rolls random stat buffs from `potentialRolls`.
+  *Uses:* the unused `ItemSystem`, and prototypes gear before a full inventory exists.
+
+### Awakenings (PlayerUpgrade)
+
+- [ ] **Ricochet Theory** — `OnProjectileHit`: 20% chance the projectile gains +1 pierce and retargets. Pairs with Chakram and pierce builds.
+- [ ] **Adrenaline** — `OnTakeHit`: for 3s, `attackSpeedPct` +30% and stamina costs drop to 0. Pays off aggressive, tanky play.
+- [ ] **Perfect Parry** — `OnCounterDodge`: reflects the incoming hit as a projectile toward its source and refunds the dash cooldown. Deepens dash play.
+- [ ] **Momentum** — passive. Dashes and rushes grant stacking `moveSpeedPct`, and each stack adds rush impact damage. Links dash and rush.
+  *New feature:* stack counter on `PlayerUpgrade`.
+- [ ] **Scholar** — passive. Converts 50% of `Intelligence` into `spellDmgPct` and 25% into `manaGainPct`. Makes the Intelligence stat matter.
+- [ ] **Blood Money** — `OnKill`: gain gold equal to 1% of the enemy's max HP, scaled by Stealing. Pairs with Tithe for an economy build.
+- [ ] **Conduit** — `OnManaRegen`: every 50 mana gained fires the equipped skill at 40% damage for free. Links mana and skills.
+- [ ] **Hoarder** — collectibles gain +50% value but their on-ground lifetime is halved. `OnLevelUp` spawns a random collectible at your feet.
+  *New feature:* `OnCollect` trigger condition.
+- [ ] **Contagion** — `OnKill`: status effects on the dying enemy spread to the 3 nearest enemies at 50% of their remaining duration. Generalizes `DoTSpread` to every effect.
+- [ ] **Syncopation** — each Basic → Skill → Basic → Ultimate cycle grants a stack of `attackSpeedPct`; repeating a slot resets the stacks. Counterpart to Resonance, and pairs with Gravemark.
+- [ ] **Thornmail Soul** — `OnTakeHit`: gain a short `Thorns` stack. While any thorns stacks are up, armor also counts toward `EffAtk`. Links Bulwark into a tank build.
+- [ ] **Vampiric Resonance** — `OnOverkill`: excess damage heals you, and healing past max HP converts to overhealth. Uses overkill and overhealth.
+- [ ] **Gravity Well** — `OnRushEnd`: spawns a small `Pulled` field at the rush endpoint. Links Riptide, Kinetic Slam and Subspace Blitz.
+- [ ] **Orbital Mechanics** — `OnSpawnProjectile`: every 5th projectile becomes an orbiter around you (`orbitSelf`) for 4s. Feeds Event Horizon and Aphelion's `Orbits` scaling.
+- [ ] **Chrono Debt** — `OnCalculateAttackCost`: attacks cost no resources for 10s, then the total cost comes due at once, taken from HP if you can't pay it. Links health-spend builds.
+  *New feature:* deferred-cost ledger on `PlayerResourcePool`.
+- [ ] **Anomaly Hunter** — passive. Completing an anomaly grants a permanent +1% `damagePct`; failing one grants a reroll. Ties anomalies into your build.
+  *New feature:* `OnAnomalyComplete` / `OnAnomalyFail` trigger conditions dispatched from `AnomalyInstance`.
+
+### New features implied
+
+- New trigger conditions: `OnCollect`, `OnAnomalyComplete`, `OnAnomalyFail`, `OnStatusApplied`, `OnCleanse`.
+- New status effects: `Mark` (Detonator variant), and first real content for `Thorns` and `Lifesteal`.
+- New `SpecialScalingAttribute` values: `EffectCount`, `Gold`, `MissingHp`.
+- Projectile fields: `armDelay`, `splitGenerations`, `growOverLifetime`.
+- Player-owned ground zones, enemy-to-enemy knockback collision damage, a stack counter on `PlayerUpgrade`, and per-slot cast history.
+- First gameplay use of `ItemSystem` (`GearItem` rolls) through Arsenal, before building a full inventory.

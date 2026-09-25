@@ -7,6 +7,70 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.5] - 2026-09-24
+
+### Added
+- **`Freeze` status effect class** (`Status Effects/Debuff/Freeze`). While it is active, the target cannot
+  attack, move or dash (the same -1 `CanAttack`/`CanMove`/`CanDash` modifiers as `Stun`). It also stops
+  passive health regen and holds the target completely still. `StatusEffectManager` gained a depth-counted
+  `Frozen` flag (`SetFrozen`), so overlapping freezes only thaw once the last one expires. While frozen:
+  - `EntityHealth.RegenHp` skips the tick. Active heals and on-hit health gains still land
+  - `EnemyMovement` and `PlayerMovement` clear pending knockback forces, end any rush, zero the velocity
+    and skip their movement update. `ApplyKnockback` does nothing
+  - `Pulled` skips its pull tick
+- **`Freeze` asset** (Frozen, 2s, 1 stack, "You no longer feel able to move, attack or regen."), replacing
+  `Freeze 2`, which was a plain `Stun`. Subspace Blitz and Slime (Frost)'s Blizzard now apply it
+- **Shock Absorber**, a treasure-pool Awakening (`GrantStatusEffect`). Taking a hit (`OnTakeHit`) grants a
+  stack of the new `Voltaic Pulse` buff, at most once per second. Voltaic Pulse lasts 9s and stacks 4
+  times. Each stack gives +12% `physicalDmgPct` and +8% `moveSpeedPct`, and costs 5% `damageRes`. Added to
+  `treasurePool` in both `WaveManager` instances with no unlock wave
+- **Multi-stat scaling.** `ProjectileData` has a new `extraScalings` list of `StatScale` (`stat`,
+  `weight`) entries. `ProjectileSnapshot.CaptureSnapshot` adds `weight * stat` for each entry on top of
+  `scalingStat`, so an attack can scale off a weighted sum of stats. An empty list keeps the old behaviour
+- **Rush impact damage.** A rush that collides with an opposing entity can now damage it as well as knock
+  it back. The damage uses the attack's `ProjectileData` snapshot, multiplied by the new
+  `AttackData.impactDmgMult` (default 0.5, 0 = no damage). The impact now also resolves when
+  `endRushOnCollision` is on, before the rush ends. Before, knockback was skipped in that case
+
+### Changed
+- **Rush knockback fields renamed to rush impact:** `rushKnockback` → `rushImpact`, `rushKnockbackForce` →
+  `rushImpactForce`, `rushKnockbackTime` → `rushImpactTime`. `FormerlySerializedAs` keeps existing assets
+  working
+- Status effect assets for `Pulled`, `Slow`, `Stun` and `Vulnerable` moved into subfolders of
+  `Assets/data/StatusEffect/` (GUIDs kept). `Vulnerable 6 6 5` was renamed `Afflicted` to match its name
+  in game
+
+### Balance
+
+#### Rebalances
+- **Subspace Blitz:** rush 0.2s at 4x → 0.25s at 6x speed, and it now has rush impact (8 force for 0.15s,
+  65% damage). Stamina cost 14 → 16, mana cost 9 → 6. Projectile size 2.5 → 2, pierce 8 → 6, speed 10 → 9,
+  damage 215% Phys + 14% True → 235% Phys + 18% True. Hit stop 0.03s → 0.04s, screen shake 0.05 → 0.06
+- **Starfury:** 120% Spell + 20% True → 90% Spell + 15% True, and it now also scales off 60% `EffInt` on
+  top of `moveSpeedPct`
+
+#### Buffs
+- **Golem Rush** - The Golem's Charge now rushes: 0.2s toward the target at 6x speed, immune while rushing, leading a moving target (`predictTarget`)
+- **Longer Player i-frames** - The player's hurt i-frames went from 0.2s to 0.4s
+- **Supersonic** projectiles now also scale off 40% `EffAtk` on top of `moveSpeedPct`
+- **Blood Pact:** health gain on hit +4 +1% → +5 +2%, Bleed chance 40% → 70%
+- **Nocturnis (Held):** time before hitting the same enemy again 0.5s → 0.33s
+- **Warp:** mana cost 50 → 40. 
+- **Warp (Capstone):** mana cost 50 → 30, damage 60% → 70% Spell, Warp Rift chance 25% → 35%
+- **Feedback Loop:** 15% Spell + 4% True → 25% Spell + 8% True
+- **Reminiscence:** chance 25% → 35%, cooldown 4s → 2s
+- **Solar Wind:** chance 30% → 60%, cooldown 2s → 1s. Each stack now gives +4 `hpRegen` and +9% `hpRegPct` (was +3 and +8%)
+- **Wipeout** spread radius 2 → 3 tiles
+- **Slime (Frost)'s Blizzard** freeze chance 15% → 20%
+
+#### Nerfs
+- **Enemies no longer get i-frames when hit.** `EntityHealth.ChangeHealth` only triggers hurt i-frames on
+  the player. 
+- **Ultrasonic** projectiles spawn 0.25 units out (fixed) instead of on the player
+- **Exsanguinate** overhealth decay 20% → 25% per 0.5s. 
+- **Oblivion** decay 15% → 20% per 0.5s
+- **Terminal Cascade** retrigger chance 20% → 15%
+
 ## [v0.6.4] - 2026-09-23
 
 ### Added

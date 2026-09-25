@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a045d02bb19ae4344b0868beb80fa73c, type: 3}
-  m_Name: SolarWind
+  m_Name: Shock Absorber
   m_EditorClassIdentifier: CrystalFlux.Entity::GrantStatusEffect
-  upgradeName: Solar Wind
-  conditions: 08000000
-  chance: 60
+  upgradeName: Shock Absorber
+  conditions: 04000000
+  chance: 100
   cooldown: 1
   delay: 0
-  effect: {fileID: 11400000, guid: 304052d8888330e428df996d228f0a4b, type: 2}
+  effect: {fileID: 11400000, guid: a3f63a135539e3f4f941a20c691676af, type: 2}
   stacks: 1

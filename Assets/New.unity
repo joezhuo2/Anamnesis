@@ -13196,7 +13196,7 @@ MonoBehaviour:
   - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
     icon: {fileID: 0}
     upgradeName: Supersonic
-    desc: Dashing or teleporting leaves 3 rippling echoes.
+    desc: Dashing leaves 3 rippling echoes.
     minWave: -1
   - upgrade: {fileID: 11400000, guid: 7b2d3c8a1b997e641985c551f65b361e, type: 2}
     icon: {fileID: 0}
@@ -13233,6 +13233,12 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Chaos Theory
     desc: Teleporting creates a massive impact explosion.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 11cc298bdc258f1498d1f6b492c1632c, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Shock Absorber
+    desc: Taking damage increases physical damage and speed at the cost of taking
+      increased damage.
     minWave: -1
   mixedPool:
   - icon: {fileID: 0}
@@ -25180,6 +25186,12 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Chaos Theory
     desc: Teleporting creates a massive impact explosion.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 11cc298bdc258f1498d1f6b492c1632c, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Shock Absorber
+    desc: Taking damage increases physical damage and speed at the cost of taking
+      increased damage.
     minWave: -1
   mixedPool:
   - icon: {fileID: 0}
@@ -63640,7 +63652,7 @@ PrefabInstance:
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
+      objectReference: {fileID: 11400000, guid: b7975edc91dd67e42ba8ff6f75ccf0f5, type: 2}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[1]'
       value: 

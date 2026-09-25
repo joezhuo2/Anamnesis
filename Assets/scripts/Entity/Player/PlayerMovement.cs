@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.StatusEffectSystem;
 using UnityEngine;
 
 namespace CrystalFlux.EntitySystem
@@ -22,6 +23,8 @@ namespace CrystalFlux.EntitySystem
         private PlayerUpgradeManager pum;
         private IStatProvider esm;
         private RushState rush;
+        private StatusEffectManager sem;
+        private bool Frozen => sem != null && sem.Frozen;
         private float lastAnimSpd = -1f;
         private static Camera cachedMainCam;
         private static Camera MainCam => cachedMainCam != null ? cachedMainCam : cachedMainCam = Camera.main;
@@ -41,6 +44,7 @@ namespace CrystalFlux.EntitySystem
             rb = GetComponent<Rigidbody2D>();
             esm = GetComponent<IStatProvider>();
             pum = GetComponent<PlayerUpgradeManager>();
+            sem = GetComponent<StatusEffectManager>();
 
             rush = new RushState(gameObject, esm,
                 () => { if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnRushStart); },
@@ -61,6 +65,15 @@ namespace CrystalFlux.EntitySystem
         private void FixedUpdate()
         {
             if (Time.timeScale == 0f) return;
+
+            if (Frozen)
+            {
+                currentForces.Clear();
+                rush.End();
+                rb.linearVelocity = Vector2.zero;
+                animator.speed = baseAnimSpeed;
+                return;
+            }
 
             bool alive = esm.GetStat(StatType.isAlive) > 0f;
             bool canMove = alive && esm.GetStat(StatType.CanMove) > 0f;
@@ -116,6 +129,7 @@ namespace CrystalFlux.EntitySystem
 
         public void ApplyKnockback(Vector2 d, float f, float t)
         {
+            if (Frozen) return;
             if (rush != null && rush.OnKnockback()) return;
             KnockbackHandler.ApplyKnockback(currentForces, d, f, t, esm.GetStat(StatType.kbRes));
         }

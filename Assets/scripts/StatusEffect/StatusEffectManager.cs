@@ -15,6 +15,11 @@ namespace CrystalFlux.StatusEffectSystem
 
         [HideInInspector] public readonly List<StatusEffect> activeEffects = new();
         private IStatProvider cesm;
+        private int frozenDepth;
+
+        public bool Frozen => frozenDepth > 0;
+
+        public void SetFrozen(bool on) => frozenDepth = on ? frozenDepth + 1 : Mathf.Max(0, frozenDepth - 1);
 
         private static readonly Dictionary<StatusEffect, Stack<StatusEffect>> pool = new();
         private const int maxPooledPerAsset = 64;

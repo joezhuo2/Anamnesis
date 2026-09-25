@@ -23,8 +23,8 @@ MonoBehaviour:
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.15
-  trueMult: 0.04
+  spellMult: 0.25
+  trueMult: 0.08
   scalingStat: 44
   specialMult: 1
   specialSclaing: 0

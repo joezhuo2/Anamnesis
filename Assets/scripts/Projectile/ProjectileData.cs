@@ -36,6 +36,8 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private float spellMult;
         [SerializeField] private float trueMult;
         [SerializeField] private StatType scalingStat = StatType.EffAtk;
+        [Tooltip("Extra stats added to the scaling base: base = scalingStat + sum(weight * stat)")]
+        [SerializeField] private List<StatScale> extraScalings = new();
         [SerializeField] private float specialMult = 1f;
         [SerializeField] private SpecialScalingAttribute specialSclaing = SpecialScalingAttribute.None;
 
@@ -94,6 +96,7 @@ namespace CrystalFlux.ProjectileSystem
         public float SpellMult => spellMult;
         public float TrueMult => trueMult;
         public StatType ScalingStat => scalingStat;
+        public IReadOnlyList<StatScale> ExtraScalings => extraScalings;
         public float SpecialMult => specialMult;
         public SpecialScalingAttribute SpecialSclaing => specialSclaing;
         public float TimeBeforeSameEnemy => timeBeforeSameEnemy;
@@ -127,5 +130,12 @@ namespace CrystalFlux.ProjectileSystem
         public bool selfApply;
         public ApplyCondition applyCondition;
         [Range(0, 1)] public float chance;
+    }
+
+    [System.Serializable]
+    public struct StatScale
+    {
+        public StatType stat;
+        public float weight;
     }
 }

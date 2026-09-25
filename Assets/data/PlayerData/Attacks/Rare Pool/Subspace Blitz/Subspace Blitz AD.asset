@@ -26,15 +26,16 @@ MonoBehaviour:
   omnidirectionalRush: 0
   rushTurnRate: 0
   rushType: 0
-  rushTypeVal: 0.2
-  rushSpeedMult: 4
+  rushTypeVal: 0.25
+  rushSpeedMult: 6
   immuneWhileRushing: 0
   disableAttacksWhileRushing: 1
   endRushOnCollision: 1
   bounceOnCollision: 0
-  rushKnockback: 0
-  rushKnockbackForce: 0
-  rushKnockbackTime: 0
+  rushImpact: 1
+  rushImpactForce: 8
+  rushImpactTime: 0.15
+  impactDmgMult: 0.65
   predictTarget: 0
   canCharge: 0
   chargeThreshold: 0.225
@@ -59,11 +60,11 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 14
+  staminaCost: 16
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 9
+  manaCost: 6
   manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 2
@@ -80,8 +81,8 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  hitStop: 0.03
+  hitStop: 0.04
   hitStopCooldown: 0.5
-  screenShake: 0.05
+  screenShake: 0.06
   icon: {fileID: -1684452866, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   displayName: Subspace Blitz

@@ -34,7 +34,11 @@ namespace CrystalFlux.ProjectileSystem
             if (pd == null || source == null) return snapshot;
             if (!source.TryGetComponent<IStatProvider>(out var esm) || esm == null) return snapshot;
 
-            snapshot.scalingValue = esm.GetStat(pd.ScalingStat);
+            float sv = esm.GetStat(pd.ScalingStat);
+            var es = pd.ExtraScalings;
+            if (es != null)
+                for (int i = 0; i < es.Count; i++) sv += es[i].weight * esm.GetStat(es[i].stat);
+            snapshot.scalingValue = sv;
             var orbitReg = source.TryGetComponent<IOrbitRegister>(out var reg) ? reg : source.GetComponentInParent<IOrbitRegister>() ?? source.GetComponentInChildren<IOrbitRegister>();
             snapshot.specialMult = (pd.SpecialSclaing) switch
             {

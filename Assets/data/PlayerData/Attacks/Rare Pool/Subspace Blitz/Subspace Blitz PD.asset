@@ -14,18 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
   mainAttack: {fileID: 11400000, guid: 85c0531ceefabe643b8bf085c31052e5, type: 2}
   lifetime: 0.5
-  size: 2.5
-  numPierce: 8
+  size: 2
+  numPierce: 6
   destroyOnMaxPierce: 0
   movementType: 0
-  speed: 10
+  speed: 9
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
-  physicalMult: 2.15
+  physicalMult: 2.35
   spellMult: 0
-  trueMult: 0.14
+  trueMult: 0.18
   scalingStat: 31
+  extraScalings: []
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0
@@ -42,7 +43,7 @@ MonoBehaviour:
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects:
-  - effect: {fileID: 11400000, guid: 398b713c60e88bf4f8c34005481b424a, type: 2}
+  - effect: {fileID: 11400000, guid: 7fe8c3a58a6ba1f4ebcb195c4afdfc18, type: 2}
     selfApply: 0
     applyCondition: 0
     chance: 0.6

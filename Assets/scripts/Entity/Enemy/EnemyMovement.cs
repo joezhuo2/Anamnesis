@@ -69,6 +69,15 @@ namespace CrystalFlux.EntitySystem
 
             UpdateTargeting();
 
+            if (Sem != null && Sem.Frozen)
+            {
+                currentForces.Clear();
+                rush.End();
+                rb.linearVelocity = Vector2.zero;
+                SetAnimator(false);
+                return;
+            }
+
             Vector2 velocity = GetKnockbackVelocity();
 
             bool alive = esm.GetStat(StatType.isAlive) > 0f;
@@ -97,6 +106,7 @@ namespace CrystalFlux.EntitySystem
 
         public void ApplyKnockback(Vector2 d, float f, float t)
         {
+            if (Sem != null && Sem.Frozen) return;
             if (rush != null && rush.OnKnockback()) return;
             KnockbackHandler.ApplyKnockback(currentForces, d, f, t, esm.GetStat(StatType.kbRes));
         }

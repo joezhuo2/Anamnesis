@@ -26,7 +26,7 @@ namespace CrystalFlux.EntitySystem
         private float regenTimer;
         private const float regenInterval = 0.5f;
         private const float fullRegenFrequency = 5f;
-        private const float hurtIFrameDuration = 0.2f;
+        private const float hurtIFrameDuration = 0.4f;
         private float accumulatedRegen;
         private float overhealthConvPct;
         private float overhealthDecayPct;
@@ -513,7 +513,7 @@ namespace CrystalFlux.EntitySystem
                     hurtPending = true;
                     hurtResetTime = Time.time + esm.GetStat(StatType.HurtTime);
                 }
-                if (!bypassIFrames)
+                if (!bypassIFrames && isPlayerEntity)
                 {
                     if (_suppressHurtIFrames) _pendingHurtIFrames = true;
                     else TriggerIFrames(hurtIFrameDuration);
@@ -555,6 +555,7 @@ namespace CrystalFlux.EntitySystem
             regenTimer -= regenInterval;
 
             if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
+            if (ownSem is StatusEffectManager sm && sm.Frozen) return;
             if (CurHp >= MaxHp && !(regenOverHealth && overhealthConvPct > 0f)) return;
 
             float hpPerSecond = esm.GetStat(StatType.EffHpReg) / fullRegenFrequency;

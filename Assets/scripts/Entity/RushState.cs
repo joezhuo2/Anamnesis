@@ -113,32 +113,52 @@ namespace CrystalFlux.EntitySystem
         {
             if (Ad == null || c == null) return;
 
+            if (Ad.RushImpact) TryImpact(c);
+            if (Ad == null) return;
+
             if (Ad.EndRushOnCollision)
             {
                 End();
                 return;
             }
 
-            if (Ad.RushKnockback && Ad.RushKnockbackForce > 0f) TryKnockback(c);
-
-            if (Ad != null && Ad.BounceOnCollision && c.contactCount > 0)
+            if (Ad.BounceOnCollision && c.contactCount > 0)
             {
                 Vector2 n = c.GetContact(0).normal;
                 if (Vector2.Dot(Dir, n) < 0f) Dir = Vector2.Reflect(Dir, n).normalized;
             }
         }
 
-        private void TryKnockback(Collision2D c)
+        private void TryImpact(Collision2D c)
         {
             GameObject other = c.rigidbody != null ? c.rigidbody.gameObject : c.gameObject;
-            if (other == null || other == go || !other.TryGetComponent<IKnockbackable>(out var kb)) return;
+            if (other == null || other == go) return;
 
             if (go.TryGetComponent<ITeamMember>(out var own) && other.TryGetComponent<ITeamMember>(out var otm) && own.TeamID == otm.TeamID) return;
 
-            Vector2 d = other.transform.position - go.transform.position;
-            if (d.sqrMagnitude < 0.0001f) d = Dir;
+            AttackData ad = Ad;
 
-            kb.ApplyKnockback(d.normalized, Ad.RushKnockbackForce, Ad.RushKnockbackTime);
+            if (ad.ImpactDmgMult > 0f && ad.Pd != null && other.TryGetComponent<IDamageable>(out var eh))
+            {
+                var snap = ProjectileSnapshot.CaptureSnapshot(ad.Pd, go);
+                if (snap.isValid)
+                {
+                    snap.specialMult *= ad.ImpactDmgMult;
+                    DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(ad.Pd, snap, true, go, false, 1f);
+                    eh.TakeDamage(dp);
+                    DamagePacket.Release(dp);
+                }
+            }
+
+            if (Ad == null || other == null) return;
+
+            if (ad.RushImpactForce > 0f && other.TryGetComponent<IKnockbackable>(out var kb))
+            {
+                Vector2 d = other.transform.position - go.transform.position;
+                if (d.sqrMagnitude < 0.0001f) d = Dir;
+
+                kb.ApplyKnockback(d.normalized, ad.RushImpactForce, ad.RushImpactTime);
+            }
         }
 
         public void End()

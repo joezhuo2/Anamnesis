@@ -39,6 +39,7 @@ namespace CrystalFlux.StatusEffectSystem
         public override void OnTick()
         {
             if (target == null) return;
+            if (target.TryGetComponent<StatusEffectManager>(out var fsem) && fsem.Frozen) return;
 
             Vector2 targetPos = target.transform.position;
             Vector2 dir = pullCenter - targetPos;

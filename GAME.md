@@ -181,7 +181,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Spawn: 0.5 dist (fixed)
 - Animation: 0.5s
 - Costs: Health 5 +3%
-- Gains on hit: Stamina +2, Health +4 +1%, Mana +1
+- Gains on hit: Stamina +2, Health +5 +2%, Mana +1
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.5s
@@ -189,7 +189,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Size: 2.5
   - Damage: 35% Phys, 9% True
   - Scaling: EffMaxHp
-  - Effect: 40% on hit (Bleed, 3s, 0.5s tick, max 5 stacks, 8% EffMaxHp per tick as DoT)
+  - Effect: 70% on hit (Bleed, 3s, 0.5s tick, max 5 stacks, 8% EffMaxHp per tick as DoT)
   - Knockback: 4 force for 0.15s
 
 ## Exodus
@@ -441,7 +441,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Damage: 15% Phys, 40% Spell, 4% True
   - Scaling: EffMaxHp
   - Special: 2x multiplier scaling on HpConsumed
-  - Time Before Same Enemy: 0.5s
+  - Time Before Same Enemy: 0.33s
   - Use True Angle
   - Knockback: none
 
@@ -559,8 +559,8 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 1s
   - Pierce: 3000
   - Size: 4
-  - Damage: 120% Spell, 20% True
-  - Scaling: moveSpeedPct
+  - Damage: 90% Spell, 15% True
+  - Scaling: moveSpeedPct + 60% EffInt
   - Time Before Same Enemy: 0.1s
   - Knockback: none
 
@@ -591,19 +591,21 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 0 dist
 - Animation: 0.5s
-- Costs: Stamina 14, Mana 9
+- Costs: Stamina 16, Mana 6
 - Gains on hit: Stamina +2, Mana +1
-- Rush: toward the cursor for 0.2s at 4x move speed. Attacks pressed mid-rush are queued
+- Rush: toward the cursor for 0.25s at 6x move speed. Attacks pressed mid-rush are queued
   until it ends, and the rush stops on collision.
+- Rush impact: an enemy the rush collides with takes 65% of the projectile's damage and
+  8 force knockback for 0.15s, resolved before the rush ends.
 - Projectile:
-  - Speed: 10
+  - Speed: 9
   - Lifetime: 0.5s
-  - Pierce: 8
-  - Size: 2.5
-  - Damage: 215% Phys, 14% True
+  - Pierce: 6
+  - Size: 2
+  - Damage: 235% Phys, 18% True
   - Scaling: EffAtk
   - Rotation Offset: -45
-  - Effect: 60% on hit (Freeze 2, 2s, cannot move or attack)
+  - Effect: 60% on hit (Freeze, 2s, cannot move, attack, dash or regen health)
   - Knockback: 1 force for 0.15s
 
 ## Supernova
@@ -632,7 +634,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Circle (2 count +2 random)
 - Spawn: 0 dist (fixed)
 - Animation: 1s
-- Costs: Stamina 15, Mana 50 +15%
+- Costs: Stamina 15, Mana 40 +15%
 - Gains on hit: Mana +3
 - Projectile:
   - Speed: 0.8
@@ -702,18 +704,18 @@ skill tree nodes.
 - Pattern: Circle (3 count +3 random)
 - Spawn: 0 dist (fixed)
 - Animation: 1s
-- Costs: Stamina 15, Mana 50 +15%
+- Costs: Stamina 15, Mana 30 +15%
 - Gains on hit: Stamina +1, Mana +2 +2%
 - Projectile:
   - Speed: 1.4
   - Lifetime: 10s
   - Pierce: 3000
   - Size: 3
-  - Damage: 60% Spell
+  - Damage: 70% Spell
   - Scaling: EffInt
   - Time Before Same Enemy: 1.5s
   - Orbit: radius 1.25, orbits self, CCW
-  - Additional: 25% chance on hit to create Warp Rift
+  - Additional: 35% chance on hit to create Warp Rift
   - Knockback: 2 force for 0.15s
 - Unlocked by: `Node_warp` ("Warp" capstone, 3 skill points, prerequisite `Node_mm3`,
   requires the base Warp attack)
@@ -788,7 +790,7 @@ skill tree nodes.
 - Type: Additional
 - Cooldown: 0s (upgrade-spawned)
 - Pattern: Circle (7 count, 45 random spread)
-- Spawn: 0 dist
+- Spawn: 0.25 dist (fixed)
 - Animation: 1s
 - Gains on hit: Stamina +4, Mana +4
 - Projectile:
@@ -860,7 +862,7 @@ player upgrades rather than attacks the player selects.
   - Lifetime: 1.5s
   - Pierce: 4
   - Size: 2
-  - Damage: 15% Spell, 4% True
+  - Damage: 25% Spell, 8% True
   - Scaling: EffInt
   - Knockback: none
 
@@ -911,7 +913,7 @@ player upgrades rather than attacks the player selects.
   - Pierce: 3000
   - Size: 1.5
   - Damage: 135% True
-  - Scaling: moveSpeedPct
+  - Scaling: moveSpeedPct + 40% EffAtk
   - Effects: 100% self on cast (Supersonic Cooldown, 3s)
   - Knockback: 4 force for 0.15s
 
@@ -921,7 +923,7 @@ player upgrades rather than attacks the player selects.
 
 The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an authored
 `StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
-again on `OnRemove`. Used by `Solar Wind`.
+again on `OnRemove`. Used by `Solar Wind` and `Shock Absorber`.
 
 The `Overhealth` and `AddChain` types are passive: they configure the player on `OnUnlock`
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
@@ -1016,10 +1018,10 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Type: Overhealth
 - Conditions: none (applied on unlock)
 - Conversion: 50% of healing received at full health
-- Decay: 20% of the current pool per 0.5s
+- Decay: 25% of the current pool per 0.5s
 - Convert Regen: off (see note)
 - Description: While at full health, half of every heal becomes overhealth instead. Overhealth
-  sits above `EffMaxHp`, is spent before health when damage lands, and bleeds off 20% of what
+  sits above `EffMaxHp`, is spent before health when damage lands, and bleeds off 25% of what
   remains every 0.5s. Cleared on death.
 - Note: `convertRegen` is authored off, so health regen is *not* one of the heals that convert
   â€” regen stops at full health as usual. Before v0.4.9 the `RegenHp` guard ignored the flag
@@ -1052,11 +1054,11 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Type: Overhealth
 - Conditions: none (applied on unlock)
 - Conversion: 100% of healing received at full health
-- Decay: 15% of the current pool per 0.5s
+- Decay: 20% of the current pool per 0.5s
 - Convert Regen: on (see note)
 - Description: Exsanguinate with every number improved. At full health the entire heal â€”
   health regen included, which Exsanguinate no longer converts â€” becomes overhealth instead
-  of being wasted, and the pool bleeds off 15% every 0.5s rather than 20%. Cleared on death.
+  of being wasted, and the pool bleeds off 20% every 0.5s rather than 25%. Cleared on death.
 - Unlocked by: `Node_oblivion` ("Oblivion" capstone, 3 skill points, prerequisites `Node_h2`
   and `Node_h2a`, requires the Exsanguinate Awakening). Unlocking it consumes Exsanguinate â€”
   both upgrades write the same `EntityHealth.SetOverhealth` config, so they never stack.
@@ -1083,11 +1085,11 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Unlocks: wave 35
 - Type: Reminiscence
 - Conditions: OnCrit
-- Chance: 25%
-- Cooldown: 4s
+- Chance: 35%
+- Cooldown: 2s
 - Delay: 0.35s
 - Cooldown Effect: Reminiscence Cooldown (4s)
-- Description: 25% chance on a critical hit to immediately perform an extra attack of a
+- Description: 35% chance on a critical hit to immediately perform an extra attack of a
   randomly chosen equipped attack type.
 
 ## Serenade
@@ -1102,16 +1104,27 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Damage Type: True
 - Description: 35% chance to deal 24% of the damage dealt again as True damage.
 
+## Shock Absorber
+- Asset: `Shock Absorber`
+- Type: GrantStatusEffect
+- Conditions: OnTakeHit
+- Chance: 100%
+- Cooldown: 1s
+- Delay: 0s
+- Effect: `Voltaic Pulse` (9s, 4 stacks), 1 stack per trigger
+- Description: Taking a hit grants a stack of Voltaic Pulse, at most once per second. Each
+  stack gives +12% physicalDmgPct and +8% moveSpeedPct, and costs 5% damageRes.
+
 ## Solar Wind (Capstone)
 - Asset: `SolarWind`
 - Type: GrantStatusEffect
 - Conditions: OnHealthRegen
-- Chance: 30%
-- Cooldown: 3s
+- Chance: 60%
+- Cooldown: 1s
 - Delay: 0s
 - Effect: `Solar Wind` (8s, 6 stacks), 1 stack per trigger
-- Description: 30% chance on each health regen tick to gain a stack of Solar Wind, at
-  most once every 3s.
+- Description: 60% chance on each health regen tick to gain a stack of Solar Wind, at
+  most once every 1s.
 - Unlocked by: `Node_solarwind` ("Solar Wind" capstone, 3 skill points, prerequisite
   `Node_hprp5`, requires the Stellar Surge Awakening). Unlocking it consumes Stellar
   Surge â€” the Awakening is removed as Solar Wind is granted, so the health regen tick
@@ -1204,9 +1217,9 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 - Asset: `Terminal Cascade`
 - Type: AddChain
 - Conditions: none (applied on unlock)
-- Retrigger Chance: 20%
+- Retrigger Chance: 15%
 - Description: When a chain of `additionalAttack` spawns reaches its end â€” the last link
-  has no further additional attack, or its `additionalChance` roll fails â€” there is a 20%
+  has no further additional attack, or its `additionalChance` roll fails â€” there is a 15%
   chance to fire the attack that started the chain again, from the player and aimed at the
   cursor. The retrigger pays no cooldown or resource cost, and the new chain can loop again.
 
@@ -1214,11 +1227,11 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 - Asset: `Wipeout`
 - Type: DoTSpread
 - Conditions: none (passive loop while equipped)
-- Radius: 2 tiles
+- Radius: 3 tiles
 - Spread Chance: 25%
 - Spread Interval: the debuff's own `tickInterval` (`useTickInterval` on)
 - Description: Every player-sourced debuff on an active enemy has a 25% chance, on each of
-  its own ticks, to copy itself onto every living enemy within 2 tiles that does not
+  its own ticks, to copy itself onto every living enemy within 3 tiles that does not
   already carry it. Re-applied from the debuff's `origin` asset, so a spread chain never
   clones a clone. Per-debuff timers are pruned every 2s, and the loop sits out
   zero-timescale frames.
@@ -1227,7 +1240,8 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 
 # Status Effects
 
-Folder: `Assets/data/StatusEffect`.
+Folder: `Assets/data/StatusEffect`. `Pulled`, `Slow`, `Stun` and `Vulnerable` assets sit in
+subfolders named after their class.
 
 | Asset | Class | Name | Duration | Tick | Max stacks | Effect |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -1236,11 +1250,12 @@ Folder: `Assets/data/StatusEffect`.
 | `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 8% EffMaxHp per tick |
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
 | `Burn 8 1 6 15` | DoT | Burn | 8s | 1s | 5 | 15% EffAtk per tick |
+| `Afflicted` | StatReduction | Afflicted | 6s | - | 6 | -5% maxHp per stack |
 | `Celestial Protection` | StatBuffs | Celestial Protection | 8s | - | 4 | +4% damageRes, +8 armor, +5% armorPct per stack (authored with `isBuff` off) |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
 | `DotDetonator 0.5 2` | Detonator | (unnamed) | 0.5s | - | 1 | Detonates DoTs for 250% as True |
-| `Freeze 2` | Stun | Frozen | 2s | - | 1 | Cannot move or attack |
+| `Freeze` | Freeze | Frozen | 2s | - | 1 | Cannot move, attack or dash; no passive health regen; knockback and pulls do nothing, and any rush in progress ends |
 | `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
 | `Overheat` | StatBuffs | Overheat | 7s | - | 5 | -8% atkPct, -12% stRegPct per stack |
@@ -1255,7 +1270,7 @@ Folder: `Assets/data/StatusEffect`.
 | `Slow 4 15 5` | StatReduction | Slow | 4s | - | 15 | -5% moveSpeed per stack |
 | `Slow 8 2 30` | StatReduction | Slow | 8s | - | 2 | -30% moveSpeed per stack |
 | `Slow 8 4 10` | StatReduction | Slow | 8s | - | 4 | -10% moveSpeed per stack, capped at -90% |
-| `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +3 hpRegen, +8% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
+| `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +4 hpRegen, +9% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Spellworn` | StatBuffs | Spellworn | 4s | - | 2 | -15% spellRes per stack |
 | `Stun 1` | Stun | Stun | 1s | - | 1 | Cannot move or attack |
@@ -1265,14 +1280,14 @@ Folder: `Assets/data/StatusEffect`.
 | `Supersonic Cooldown` | Info | Supersonic Cooldown | 3s | - | 1 | Cooldown marker |
 | `Vulnerable 6 30` | StatBuffs | Vulnerable | 6s | - | 1 | -30% damageRes |
 | `Vulnerable 6 3 8` | StatBuffs | Vulnerable | 6s | - | 3 | -8% damageRes per stack |
-| `Vulnerable 6 6 5` | StatReduction | Afflicted | 6s | - | 6 | -5% maxHp per stack |
 | `Vulnerable 8 2 20` | StatBuffs | Vulnerable | 8s | - | 2 | -20% damageRes per stack |
+| `Voltaic Pulse` | StatBuffs | Voltaic Pulse | 9s | - | 4 | +12% physicalDmgPct, +8% moveSpeedPct, -5% damageRes per stack |
 | `Weaken 5 10 4` | StatReduction | Weaken | 5s | - | 4 | -10% attack per stack |
 
 Used by enemies rather than the player: `Crumbling 6 10 4` (Crab, and the Golem's Orbit),
 `Poison 2 0.5 1 20 Atk` (Slime), `Slow 8 2 30` (Lich), `Stun 6` (Cultist),
-`Vulnerable 6 6 5` (Bat Mark), `Stun 2` (also used by BallSpam), `Slow 4 15 5` and
-`Freeze 2` (Slime (Frost)'s Blizzard, and the player's Subspace Blitz), `Overheat` (Slime (Magma)'s Eruption),
+`Afflicted` (Bat Mark), `Stun 2` (also used by BallSpam), `Slow 4 15 5` and
+`Freeze` (Slime (Frost)'s Blizzard at 20%, and the player's Subspace Blitz), `Overheat` (Slime (Magma)'s Eruption),
 `Slow 8 4 10` (the Golem's Orbit), `Stun 1` (the Reaper's Toss), `Vulnerable 8 2 20`
 (the Reaper's Strike), `Burn 8 1 6 15` (the Reaper's Spam).
 

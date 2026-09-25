@@ -16,15 +16,26 @@ MonoBehaviour:
   cooldown: 0
   projectilePrefab: {fileID: 4259335642319083824, guid: 62d4bf9b297202449baec8af3531fded, type: 3}
   pd: {fileID: 11400000, guid: f168cff28f5ac704ea78b4a6d85b3f25, type: 2}
-  pattern: 2
+  animationLength: 1
   castTime: 0
   canMoveWhileCasting: 1
-  spawnDelay: 0
-  spawnDistance: 0
-  fixedDistance: 0
   teleportToProjectile: 0
   teleportDelay: 0
-  animationLength: 1
+  rushDirection: 0
+  rushAngle: 0
+  omnidirectionalRush: 0
+  rushTurnRate: 0
+  rushType: 0
+  rushTypeVal: 0
+  rushSpeedMult: 1
+  immuneWhileRushing: 0
+  disableAttacksWhileRushing: 0
+  endRushOnCollision: 0
+  bounceOnCollision: 0
+  rushKnockback: 0
+  rushKnockbackForce: 0
+  rushKnockbackTime: 0
+  predictTarget: 0
   canCharge: 0
   chargeThreshold: 0.225
   minChargeTime: 0
@@ -32,6 +43,10 @@ MonoBehaviour:
   chargeTickInterval: 1
   cooldownOnAttackStart: 1
   chargeAttack: {fileID: 0}
+  pattern: 2
+  spawnDelay: 0
+  spawnDistance: 0.25
+  fixedDistance: 1
   projectileCount: 7
   randomCount: 0
   spread: 0

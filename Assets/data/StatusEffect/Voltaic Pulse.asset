@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9891d8e133ce19e4280b96c8ab869ded, type: 3}
-  m_Name: Solar Wind
+  m_Name: Voltaic Pulse
   m_EditorClassIdentifier: CrystalFlux.StatusEffect::CrystalFlux.StatusEffectSystem.StatBuffs
   currentTime: 0
-  duration: 8
+  duration: 9
   tickInterval: 0
   isBuff: 1
-  icon: {fileID: -6420534950463556919, guid: 1a422c5f5436e5042861653928334be7, type: 3}
-  effName: Solar Wind
-  desc: Each stack grants +4 health regen, 9% health regen, and 6% movement speed
-  maxStacks: 6
-  loseAllStacksOnExpire: 1
+  icon: {fileID: -1370661682523340017, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Voltaic Pulse
+  desc: 'Increases physical damage by 12%, movement speed by 8%, and reduces damage
+    resistance by 5% per stack. '
+  maxStacks: 4
+  loseAllStacksOnExpire: 0
   target: {fileID: 0}
   source: {fileID: 0}
   location: {x: 0, y: 0}
@@ -28,9 +29,9 @@ MonoBehaviour:
   potencyMultiplier: 1
   origin: {fileID: 0}
   buffs:
-  - type: 14
-    value: 4
-  - type: 15
-    value: 9
+  - type: 4
+    value: 12
   - type: 24
-    value: 6
+    value: 8
+  - type: 18
+    value: -5
