@@ -7,6 +7,67 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.9] - 2026-09-26
+
+### Changed
+- **Decoy no longer taunts on spawn.** `Decoy.TriggerUpgradeEffect` used to call `SetTarget(decoy)` on every
+  enemy within its detection range. That loop is gone. The decoy is still a `Targetable`, so enemies pick it
+  up on their normal 1-3s retarget when it is the nearest target. Applies to Decoy and Decoy Upgraded
+- **`ProjectileSpawner.Spawn(...)` replaces `StartCoroutine(SpawnFromPattern(...))`** at every call site except
+  `Decoy`, which still `yield return`s `SpawnFromPattern`. A `Single` pattern with no `SpawnDelay`
+  spawns immediately, with no coroutine. Other patterns run on the optional `host` (enemies, the player and
+  Mirage clones pass themselves, so their patterns still stop when they are disabled) and fall back to the
+  spawner when `host` is null or inactive
+- **`teleportToProjectile` now goes to the first projectile spawned by that pattern call.** It used to hook
+  `ProjectileSpawned` and teleport to the first projectile from the same source, which another pattern
+  running at the same time could claim. The pattern methods take a `teleport` flag instead, and the
+  closure and event subscription are gone
+- **The wave spawn loop checks the enemy cap every 0.25s** instead of every frame, so at the cap a new
+  enemy can spawn up to 0.25s after a kill
+- **Floating damage numbers draw on their own canvas.** `TextIndicatorSpawner` creates a `TextIndicators`
+  child canvas under its `canvas` (`overrideSorting`, one sorting order above the parent) and pools
+  indicators there. Indicator text no longer takes raycasts
+
+### Fixed
+- **`StatusEffectManager.RemoveEffectAfterDelay<T>`** now remembers the effect and its `Generation` when
+  called, and only removes that copy if it is still live when the delay ends. Before, it removed whatever
+  effect of that type was active then, so Soul Rend's 0.3s removal could strip a freshly reapplied Soul Rend.
+  If no effect was active when it was called, it still removes by type
+- **Ethereal Mirage:** `OnCloneDeath` returns early once the effect is released, and `ResetRuntime()`
+  unsubscribes it from any remaining clones. A clone that outlives its effect can no longer call into a
+  pooled copy that has been reused
+
+### Performance
+- **`Projectile.hit` is a `HashSet<GameObject>`**, so the already-hit check in trigger callbacks and target
+  searches is O(1) instead of O(n)
+- **Projectile owner lookups are cached per owner.** The new `ProjectileOwnerCache` component is added to
+  an owner on its first projectile and holds its proxy owner, stats, summon, resource pool, damageable,
+  team, `IOnHitEffect` list and orbit and charge registers. `Projectile.CacheOwner`, orbit and charge
+  registration, and `UnregisterFromOwner` read from it instead of doing about 10 `TryGetComponent` calls per
+  spawn. The cache rebuilds if its proxy owner is destroyed
+- **`PrefabPool` caches each instance's `IPoolable[]`** when it is created, instead of calling
+  `GetComponentsInChildren` on every Acquire and Release. `Acquire<T>` caches its component per instance.
+  Both caches are cleared when an instance is destroyed and on scene unload. An `IPoolable` added to an
+  instance after it is created does not get pool hooks
+- **Projectile spawning allocates less.** The pool cap is set once per prefab, `Projectile` finds its
+  `Rigidbody2D` and sets `gravityScale = 0` in `Awake`, the pattern coroutines are one level shallower,
+  `WaitForSeconds` objects are cached by duration, and `SpawnOpposingLines` no longer takes a
+  `params Vector2[]`
+- **`ProjectileSnapshot.CaptureSnapshot` only looks for an `IOrbitRegister`** when the projectile scales
+  off orbits. It used to search the owner's parents and children on every enemy projectile spawn and
+  charge tick
+- **Damage numbers under 1000 no longer allocate strings.** `TextIndicator.Initialize(int…)` uses
+  `SetText("{0}", val)`. Strings are only built for k/M, gold and XP. `TextIndicatorSpawner` dropped its
+  write-only `_activeIndicators` list
+- **`EnemyAttackHandler`** caches `EnemyMovement` and `EnemyPhase` in `Awake`, reads HP % once per
+  attack choice instead of once per attack, and skips choosing an attack while every cooldown is running
+- **UI updates only when something changes.** `HoverScale` stops writing `localScale` once it reaches its
+  target. `SkillTreeOpenButton` rebuilds its tooltip only on pointer enter or when gold or skill points
+  change. `TooltipUI` only moves when the mouse or offset changes
+- **Smaller allocation fixes.** `PlayerAttackHandler` uses `FindAttackOfType` instead of `attacks.Find`
+  closures, and `AdvanceAllCooldowns` reuses a key buffer. `EntityStatManager.TryApplyCountedFlag` uses a
+  `switch` instead of two `HashSet` lookups on every `AddStat`
+
 ## [v0.6.8] - 2026-09-26
 
 ### Added

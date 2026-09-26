@@ -39,10 +39,9 @@ namespace CrystalFlux.ProjectileSystem
             if (es != null)
                 for (int i = 0; i < es.Count; i++) sv += es[i].weight * esm.GetStat(es[i].stat);
             snapshot.scalingValue = sv;
-            var orbitReg = source.TryGetComponent<IOrbitRegister>(out var reg) ? reg : source.GetComponentInParent<IOrbitRegister>() ?? source.GetComponentInChildren<IOrbitRegister>();
             snapshot.specialMult = (pd.SpecialSclaing) switch
             {
-                SpecialScalingAttribute.Orbits => orbitReg != null ? 1f + (orbitReg.Count * pd.SpecialMult) : 1f,
+                SpecialScalingAttribute.Orbits => OrbitMult(pd, source),
                 SpecialScalingAttribute.HpConsumed => DamageCalculator.CalculateHpConsumedMult(pd, esm),
                 _ => 1f
             };
@@ -63,6 +62,12 @@ namespace CrystalFlux.ProjectileSystem
             snapshot.isValid = true;
             snapshot.owner = source;
             return snapshot;
+        }
+
+        private static float OrbitMult(ProjectileData pd, GameObject source)
+        {
+            var orbitReg = source.TryGetComponent<IOrbitRegister>(out var reg) ? reg : source.GetComponentInParent<IOrbitRegister>() ?? source.GetComponentInChildren<IOrbitRegister>();
+            return orbitReg != null ? 1f + (orbitReg.Count * pd.SpecialMult) : 1f;
         }
     }
 }

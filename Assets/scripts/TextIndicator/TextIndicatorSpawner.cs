@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CrystalFlux.Core
@@ -10,7 +9,7 @@ namespace CrystalFlux.Core
         public Canvas canvas;
         public int initialPoolSize = 100;
 
-        private readonly List<TextIndicator> _activeIndicators = new();
+        private RectTransform root;
 
         void Awake()
         {
@@ -37,36 +36,54 @@ namespace CrystalFlux.Core
                 return;
             }
 
-            PrefabPool.Prewarm(prefab.gameObject, canvas.transform, initialPoolSize, initialPoolSize);
+            PrefabPool.Prewarm(prefab.gameObject, Root(), initialPoolSize, initialPoolSize);
+        }
+
+        private Transform Root()
+        {
+            if (root != null) return root;
+            if (canvas == null) return null;
+
+            GameObject go = new("TextIndicators", typeof(RectTransform), typeof(Canvas));
+            root = (RectTransform)go.transform;
+            root.SetParent(canvas.transform, false);
+            root.anchorMin = Vector2.zero;
+            root.anchorMax = Vector2.one;
+            root.offsetMin = Vector2.zero;
+            root.offsetMax = Vector2.zero;
+
+            Canvas c = go.GetComponent<Canvas>();
+            c.overrideSorting = true;
+            c.sortingLayerID = canvas.sortingLayerID;
+            c.sortingOrder = canvas.sortingOrder + 1;
+
+            return root;
         }
 
         public void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, TextType type)
         {
             if (prefab == null || canvas == null) return;
 
-            TextIndicator indicator = PrefabPool.Acquire(prefab, canvas.transform);
+            TextIndicator indicator = PrefabPool.Acquire(prefab, Root());
             if (indicator == null) return;
 
             indicator.Initialize(damage, sourcePos, color, scale, lifetime, floatSpeed, type, delay);
-            _activeIndicators.Add(indicator);
         }
 
         public void SpawnTextIndicator(string content, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay = 0f)
         {
             if (prefab == null || canvas == null || string.IsNullOrEmpty(content)) return;
 
-            TextIndicator indicator = PrefabPool.Acquire(prefab, canvas.transform);
+            TextIndicator indicator = PrefabPool.Acquire(prefab, Root());
             if (indicator == null) return;
 
             indicator.Initialize(content, sourcePos, color, scale, lifetime, floatSpeed, delay);
-            _activeIndicators.Add(indicator);
         }
 
         public void ReturnToPool(TextIndicator indicator)
         {
             if (indicator == null) return;
 
-            _activeIndicators.Remove(indicator);
             PrefabPool.Release(ref indicator);
         }
     }

@@ -34,13 +34,18 @@ namespace CrystalFlux.EntitySystem
         private TextMeshProUGUI castBarTextInstance;
         private float lastAttackEndTime;
         private IStatProvider esm;
-        private GameObject Target => TryGetComponent<EnemyMovement>(out var em) ? em.target : null;
+        private EnemyPhase ep;
+        private bool anyReady;
+        private EnemyMovement em;
+        private GameObject Target => em != null ? em.target : null;
 
         public bool IsCasting => isCasting || isCharging;
 
         private void Awake()
         {
             a = GetComponent<Animator>();
+            TryGetComponent(out ep);
+            TryGetComponent(out em);
 
             if (attacks == null) attacks = new List<AttackData>();
             else attacks.RemoveAll(atk => atk == null);
@@ -60,7 +65,12 @@ namespace CrystalFlux.EntitySystem
         }
         private void UpdateCooldowns()
         {
-            for (int i = 0; i < attacks.Count; i++) if (cooldowns[i] > 0f) cooldowns[i] -= Time.deltaTime;
+            anyReady = false;
+            for (int i = 0; i < attacks.Count; i++)
+            {
+                if (cooldowns[i] > 0f) cooldowns[i] -= Time.deltaTime;
+                if (cooldowns[i] <= 0f) anyReady = true;
+            }
         }
         private void TryAttack()
         {
@@ -78,6 +88,8 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
 
+            if (!anyReady) return;
+
             int chosen = ChooseAttackIndex();
 
             if (chosen == -1) return;
@@ -91,22 +103,18 @@ namespace CrystalFlux.EntitySystem
 
             availableIndexes.Clear();
 
+            float maxHp = esm.GetStat(StatType.EffMaxHp);
+            float hpPct = maxHp > 0f ? esm.GetStat(StatType.currentHp) / maxHp * 100f : 0f;
+
             for (int i = 0; i < attacks.Count; i++)
             {
                 AttackData a = attacks[i];
 
                 if (cooldowns[i] > 0f || dist > (a.MaxRange * a.MaxRange)) continue;
 
-                float maxHp = esm.GetStat(StatType.EffMaxHp);
-                float hpPct = maxHp > 0f ? esm.GetStat(StatType.currentHp) / maxHp * 100f : 0f;
-
                 if (a.MinHpPct > 0 && hpPct < a.MinHpPct) continue;
                 if (a.MaxHpPct < 100f && hpPct > a.MaxHpPct) continue;
-                if (a.PhaseReq >= 0)
-                {
-                    if (!TryGetComponent<EnemyPhase>(out var ep)) continue;
-                    if (ep.phase < a.PhaseReq) continue;
-                }
+                if (a.PhaseReq >= 0 && (ep == null || ep.phase < a.PhaseReq)) continue;
 
                 availableIndexes.Add(i);
             }
@@ -192,7 +200,6 @@ namespace CrystalFlux.EntitySystem
             HandleOrbitInteractions(current);
             HandleCleanse(current);
 
-            TryGetComponent<EnemyMovement>(out var em);
             if (current.Rushes && em != null) em.StartRush(current);
 
             if (current.ProjectilePrefab != null && !current.CanCharge)
@@ -206,13 +213,14 @@ namespace CrystalFlux.EntitySystem
 
                     float d = dist > current.SpawnDistance ? current.SpawnDistance : dist;
 
-                    StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
+                    ProjectileSpawner.Instance.Spawn(
                         current.ProjectilePrefab,
                         gameObject,
                         transform.position,
                         dir,
-                        d
-                    ));
+                        d,
+                        host: this
+                    );
                     MirageClone.NotifyCast(gameObject, current.ProjectilePrefab, transform.position, dir, d);
                 }
             }
@@ -298,13 +306,14 @@ namespace CrystalFlux.EntitySystem
 
             float d = dist > chargeSource.SpawnDistance ? chargeSource.SpawnDistance : dist;
 
-            StartCoroutine(ProjectileSpawner.Instance.SpawnFromPattern(
+            ProjectileSpawner.Instance.Spawn(
                 chargeSource,
                 gameObject,
                 transform.position,
                 dir,
-                d
-            ));
+                d,
+                host: this
+            );
             MirageClone.NotifyCast(gameObject, chargeSource, transform.position, dir, d);
         }
 

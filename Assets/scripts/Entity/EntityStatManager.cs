@@ -14,12 +14,6 @@ namespace CrystalFlux.Core
         public int CurrentAmount => s.gold;
         public int TeamID => teamID;
 
-        private static readonly HashSet<StatType> GateFlags = new()
-        {
-            StatType.CanMove, StatType.CanAttack, StatType.CanDash,
-            StatType.CanGainHp, StatType.CanGainMana, StatType.CanGainStamina
-        };
-        private static readonly HashSet<StatType> GrantFlags = new() { StatType.isImmune };
         private readonly Dictionary<StatType, int> flagDepth = new();
 
         protected virtual void Awake()
@@ -62,8 +56,23 @@ namespace CrystalFlux.Core
 
         private bool TryApplyCountedFlag(StatType type, float mod)
         {
-            bool isGate = GateFlags.Contains(type);
-            if (!isGate && !GrantFlags.Contains(type)) return false;
+            bool isGate;
+            switch (type)
+            {
+                case StatType.CanMove:
+                case StatType.CanAttack:
+                case StatType.CanDash:
+                case StatType.CanGainHp:
+                case StatType.CanGainMana:
+                case StatType.CanGainStamina:
+                    isGate = true;
+                    break;
+                case StatType.isImmune:
+                    isGate = false;
+                    break;
+                default:
+                    return false;
+            }
 
             if (mod == 0f) return true;
 

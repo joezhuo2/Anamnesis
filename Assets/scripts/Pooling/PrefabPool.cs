@@ -11,8 +11,9 @@ namespace CrystalFlux.Core
         private static readonly Dictionary<EntityId, Queue<GameObject>> pools = new();
         private static readonly Dictionary<EntityId, EntityId> origin = new();
         private static readonly Dictionary<EntityId, int> caps = new();
+        private static readonly Dictionary<EntityId, IPoolable[]> hooks = new();
+        private static readonly Dictionary<EntityId, Component> compCache = new();
         private static readonly List<IPoolable> hookBuffer = new();
-        private static bool hookBufferInUse;
         private static bool hooked;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -21,6 +22,8 @@ namespace CrystalFlux.Core
             pools.Clear();
             origin.Clear();
             caps.Clear();
+            hooks.Clear();
+            compCache.Clear();
 
             if (hooked) return;
 
@@ -32,6 +35,8 @@ namespace CrystalFlux.Core
         {
             pools.Clear();
             origin.Clear();
+            hooks.Clear();
+            compCache.Clear();
         }
 
         public static GameObject Acquire(GameObject prefab, Transform parent)
@@ -66,7 +71,14 @@ namespace CrystalFlux.Core
             if (prefab == null) return null;
 
             GameObject go = Acquire(prefab.gameObject, parent);
-            return go != null ? go.GetComponent<T>() : null;
+            if (go == null) return null;
+
+            EntityId id = go.GetEntityId();
+            if (compCache.TryGetValue(id, out var c) && c is T cached && cached != null) return cached;
+
+            T t = go.GetComponent<T>();
+            compCache[id] = t;
+            return t;
         }
 
         public static void Release(ref GameObject instance)
@@ -115,6 +127,7 @@ namespace CrystalFlux.Core
 
             if (!origin.TryGetValue(id, out EntityId key))
             {
+                Forget(id);
                 Object.Destroy(go);
                 return;
             }
@@ -124,6 +137,7 @@ namespace CrystalFlux.Core
             Queue<GameObject> pool = Pool(key);
             if (pool.Count >= Cap(key))
             {
+                Forget(id);
                 Object.Destroy(go);
                 return;
             }
@@ -132,30 +146,41 @@ namespace CrystalFlux.Core
             pool.Enqueue(go);
         }
 
+        private static void Forget(EntityId id)
+        {
+            hooks.Remove(id);
+            compCache.Remove(id);
+        }
+
+        private static IPoolable[] Hooks(GameObject go)
+        {
+            EntityId id = go.GetEntityId();
+            if (hooks.TryGetValue(id, out var arr)) return arr;
+
+            go.GetComponentsInChildren(true, hookBuffer);
+            arr = hookBuffer.ToArray();
+            hookBuffer.Clear();
+            hooks[id] = arr;
+            return arr;
+        }
+
         private static void InvokeHooks(GameObject go, bool acquire)
         {
-            List<IPoolable> buffer = hookBufferInUse ? new List<IPoolable>() : hookBuffer;
-            bool owned = !hookBufferInUse;
-            hookBufferInUse = true;
-
-            try
+            IPoolable[] arr = Hooks(go);
+            for (int i = 0; i < arr.Length; i++)
             {
-                go.GetComponentsInChildren(true, buffer);
-                for (int i = 0; i < buffer.Count; i++)
-                {
-                    if (acquire) buffer[i].OnPoolAcquire();
-                    else buffer[i].OnPoolRelease();
-                }
-            }
-            finally
-            {
-                buffer.Clear();
-                if (owned) hookBufferInUse = false;
+                if (arr[i] is Object o && o == null) continue;
+                if (acquire) arr[i].OnPoolAcquire();
+                else arr[i].OnPoolRelease();
             }
         }
 
         private static GameObject Create(GameObject prefab, Transform parent)
-            => parent != null ? Object.Instantiate(prefab, parent) : Object.Instantiate(prefab);
+        {
+            GameObject go = parent != null ? Object.Instantiate(prefab, parent) : Object.Instantiate(prefab);
+            Hooks(go);
+            return go;
+        }
 
         private static int Cap(EntityId key) => caps.TryGetValue(key, out int c) ? c : DefaultCap;
 

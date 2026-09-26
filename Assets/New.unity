@@ -64352,7 +64352,7 @@ PrefabInstance:
       objectReference: {fileID: 1535559042}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: activeUpgrades.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[0]'
@@ -64384,7 +64384,7 @@ PrefabInstance:
       objectReference: {fileID: 6961074376611238736, guid: 096da352af1b7ee4fbabc3c804c8d36b, type: 3}
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: starting.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'starting.Array.data[0]'
@@ -64397,7 +64397,7 @@ PrefabInstance:
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'starting.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 858bea3437e936045a1653e89167977e, type: 2}
+      objectReference: {fileID: 11400000, guid: 8ae4954fe1298164e9bbb55472f4165a, type: 2}
     - target: {fileID: 8884305214242378816, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: m_ScrollWheelAction
       value: 

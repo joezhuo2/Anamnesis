@@ -128,7 +128,7 @@ namespace CrystalFlux.EntitySystem
                 if (!mc.CanRepeat(caster)) continue;
 
                 Vector2 c = (Vector2)mc.transform.position + rel;
-                mc.StartCoroutine(ps.SpawnFromPattern(ad, mc.gameObject, c, dir, dist, null, true));
+                ps.Spawn(ad, mc.gameObject, c, dir, dist, null, true, mc);
             }
         }
 
@@ -147,7 +147,7 @@ namespace CrystalFlux.EntitySystem
                 if (!mc.CanRepeat(caster)) continue;
 
                 Vector2 c = (Vector2)mc.transform.position + rel;
-                mc.StartCoroutine(ps.SpawnFromPattern(prefab, mc.gameObject, c, dir, dist, null, true));
+                ps.Spawn(prefab, mc.gameObject, c, dir, dist, null, true, mc);
             }
         }
 

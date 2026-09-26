@@ -160,7 +160,7 @@ namespace CrystalFlux.EntitySystem
             if (ad.ImpactAttack != null && go != null && ProjectileSpawner.Instance != null)
             {
                 ProjectileSpawner ps = ProjectileSpawner.Instance;
-                ps.StartCoroutine(ps.SpawnFromPattern(ad.ImpactAttack, go, at, Dir, ad.ImpactAttack.SpawnDistance));
+                ps.Spawn(ad.ImpactAttack, go, at, Dir, ad.ImpactAttack.SpawnDistance);
             }
 
             onImpact?.Invoke(other, dealt);

@@ -40,19 +40,6 @@ public class Decoy : PlayerUpgrade
         decoyRenderer.color = tint;
         decoy.AddComponent<Targetable>();
 
-        var enemies = EnemyMovement.Active;
-
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            EnemyMovement em = enemies[i];
-            if (em == null || !em.TryGetComponent<IStatProvider>(out var esm)) continue;
-
-            float maxDist = esm.GetStat(StatType.DetectionRange);
-            float dist = Vector2.Distance(decoy.transform.position, em.transform.position);
-
-            if (dist < maxDist) em.SetTarget(decoy);
-        }
-
         if (cooldownEffect != null && player.TryGetComponent<IStatusEffectReceiver>(out var sem))
             sem.Apply(cooldownEffect, player);
 

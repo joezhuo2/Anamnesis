@@ -118,6 +118,7 @@ namespace CrystalFlux.WaveSystem
         protected readonly List<GameObject> activeRewardButtons = new();
         protected static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
         protected static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
+        protected static readonly WaitForSeconds _waitForSeconds0_25 = new(0.25f);
 
         protected void Awake()
         {
@@ -345,7 +346,7 @@ namespace CrystalFlux.WaveSystem
                 CleanEnemyList();
                 if (currentEnemies.Count >= maxCurrent)
                 {
-                    yield return null;
+                    yield return _waitForSeconds0_25;
                     continue;
                 }
 

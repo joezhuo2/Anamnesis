@@ -9,5 +9,6 @@
 - BDragon1727 - [Basic Pixel Health Bar and Scroll Bar](https://bdragon1727.itch.io/basic-pixel-health-bar-and-scroll-bar), [750 Effect and FX Pixel All](https://bdragon1727.itch.io/750-effect-and-fx-pixel-all), and additional effects/vfx and UI assets
 - tiopalada - [Tiny RPG - Mana Soul GUI](https://tiopalada.itch.io/tiny-rpg-mana-soul-gui)
 - Clembod - [Bringer Of Death (Free)](https://clembod.itch.io/bringer-of-death-free)
+- CodeManu - [Free Pixel Effects Pack](https://codemanu.itch.io/pixelart-effect-pack)
 
 - Fred Xu - designing boss (Reaper) attacks

@@ -34,6 +34,9 @@ namespace CrystalFlux.Utils
             if (target == null) return;
 
             Vector3 goal = hovered ? baseScale * hoverScale : baseScale;
+            Vector3 cur = target.localScale;
+            if (cur == goal) return;
+
             if (speed <= 0f)
             {
                 target.localScale = goal;
@@ -41,7 +44,8 @@ namespace CrystalFlux.Utils
             }
 
             float dt = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-            target.localScale = Vector3.Lerp(target.localScale, goal, 1f - Mathf.Exp(-speed * dt));
+            Vector3 next = Vector3.Lerp(cur, goal, 1f - Mathf.Exp(-speed * dt));
+            target.localScale = (next - goal).sqrMagnitude < 1e-6f ? goal : next;
         }
 
         public void OnPointerEnter(PointerEventData eventData) => hovered = true;

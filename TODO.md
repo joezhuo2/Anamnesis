@@ -180,10 +180,6 @@
   `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
 - `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
-- Since v0.6.6, Ethereal Mirage clones are `Instantiate`d and `Destroy`ed rather than pooled, because `EntityHealth` only initialises in `Start()`. Clones do not repeat rushes, orbit interactions (`FireOrbits`, redirect, absorb, explode) or charge-window registration, so orbit-self and charged projectiles fired by a clone behave as plain projectiles. A clone is not alive (targetable, attack-repeating) until its `Start()` runs the frame after it spawns.
-- Since v0.6.7, a rush's `impactAttack` spawns on every impact with no cooldown of its own, so a bouncing rush (`bounceOnCollision`) with an `impactAttack` can chain several spawns in one rush. Mirage clones do not rush, so they never fire `OnRushImpact` or spawn impact attacks.
-- Since v0.6.6, enemies re-evaluate their target every 1-3s (`EnemyMovement.retargetInterval`), so a Decoy's spawn-time taunt can be dropped for a closer player or clone at the next check.
-- Since v0.6.3, `StatusEffect` runtime copies are pooled, so an expired effect is never Unity-null. Anything holding an effect reference must check `Released` or compare `Generation` (see `StatusEffectCooldownUI`, `DoTSpread`). A new `StatusEffect` subclass with private per-use state must clear it in `ResetRuntime()`.
 
 ## Misc
 
@@ -246,45 +242,6 @@
   Fix: add Player/Enemy/Projectile/Environment/Pickup layers, disable Projectile↔Projectile and
   Projectile↔Pickup. The overlap queries in `Projectile`/`EntityProjectileHandler` already skip triggers (v0.6.3);
   an entity LayerMask would also drop walls from them.
-
-### Low
-
-- [ ] `Projectile.hit` is a `List<GameObject>` (`Projectile.cs:24`); `Contains` in `OnTriggerEnter2D`, `OnTriggerStay2D`, `FindClosestEnemyInDirection` and `FindClosestTargetInRange` is O(n)
-  per trigger pair per step, so high-pierce/AoE projectiles go O(n²). Fix: `HashSet<GameObject>`.
-- [ ] Pool/spawn lookups: `PrefabPool.InvokeHooks` (`PrefabPool.cs:135-155`) walks
-  `GetComponentsInChildren<IPoolable>` on every Acquire and Release; `Acquire<T>` adds a `GetComponent<T>`
-  (`:69`); `ProjectileSpawner.SpawnProjectile` does a `SetCap` dict write + `GetComponent<Rigidbody2D>` +
-  `TryGetComponent<Projectile>` per spawn (`ProjectileSpawner.cs:43-56`); `Projectile.Setup` repeats the rb
-  lookup (`Projectile.Setup`). Fix: cache IPoolable[] per instance on create, set cap once per prefab,
-  move the rb lookup to `Awake`.
-- [ ] Spawn coroutine garbage: every attack and on-hit chain (`Projectile.HandleAdditionalSpawns`,
-  `TryRetriggerChain`) allocates 3 nested enumerators (`SpawnFromPattern` → `SpawnFromPatternInternal` →
-  pattern), `new WaitForSeconds(ad.SpawnDelay)` (`ProjectileSpawner.cs:245`), a `params Vector2[]` (`:156`)
-  and a teleport closure (`:256`). Fix: spawn `Single` synchronously, cache the WaitForSeconds, drop `params`.
-- [ ] `ProjectileSnapshot.CaptureSnapshot` (`ProjectileSnapshot.cs:38`) runs `GetComponentInParent` +
-  `GetComponentInChildren<IOrbitRegister>` on every enemy projectile Setup and charge tick, because enemies
-  have no `EntityProjectileHandler`, even when `SpecialSclaing != Orbits`. Fix: resolve only for Orbits.
-- [ ] `TextIndicator.Initialize(int…)` (`TextIndicator.cs:29-38`) allocates 1-3 strings per damage number.
-  Fix: `text.SetText("{0}", val)` for plain numbers; build strings only for k/M/gold/xp.
-- [ ] `TextIndicatorSpawner._activeIndicators` (`TextIndicatorSpawner.cs:13,51,62,69`) is write-only, and its
-  `Remove` is O(n) per returned indicator with 100+ live. Fix: delete the list.
-- [ ] `EnemyAttackHandler.ChooseAttackIndex` (`EnemyAttackHandler.cs:88-114`) runs every frame per idle enemy
-  and recomputes hpPct (2 GetStat, `:100`) plus `TryGetComponent<EnemyPhase>` (`:107`) inside the per-attack
-  loop. Fix: hoist hpPct, cache EnemyPhase in `Awake`, skip when every cooldown is > 0.
-- [ ] `HoverScale.Update` (`HoverScale.cs:32-45`) writes `localScale` every frame on ~136 instances (all skill
-  nodes + HUD attack buttons) even when settled, dirtying their canvas. Fix: early-return once at goal.
-- [ ] Tooltip churn: `SkillTreeOpenButton.Update` (`SkillTreeOpenButton.cs:49-52`) rebuilds its tooltip every
-  hovered frame (List + 3 interpolations + `string.Join` + `GetBindingDisplayString` + TMP re-layout);
-  `TooltipUI.Update` (`TooltipUI.cs:38-42`) sets position every frame even when the mouse is still. Fix:
-  rebuild only when gold/skill points change; guard position on mouse delta.
-- [ ] `PlayerAttackHandler` closure/list allocs: `attacks.Find(atk => atk.type == type)` captures per call
-  (`PlayerAttackHandler.cs:208,657,676,715`, `:208` runs every attack); `AdvanceAllCooldowns` (`:705`)
-  copies the key set into a new List. Fix: use `FindAttackOfType`; iterate a reusable buffer.
-- [ ] `WaveManager.CleanEnemyList` (`WaveManager.cs:467-474`) runs `RemoveAll` with a Unity null check per
-  enemy every frame while at the enemy cap (`:345-349`). Fix: decrement on `EntityHealth.OnDeath`, or poll
-  at ~0.25s.
-- [ ] `EntityStatManager.TryApplyCountedFlag` (`EntityStatManager.cs:65-66`) does two `HashSet<StatType>`
-  lookups on every `AddStat`, which includes every hit's `currentHp` change. Fix: `switch` on StatType.
 
 ---
 
@@ -358,4 +315,3 @@ The player links enemies together with chains. Damage, status effects and knockb
 - [ ] **Load Bearing** (Awakening) — `OnTetherBreak`: the chain snaps and deals the damage it carried to both ends.
 - [ ] **Conductive Chains** (Awakening) — passive. DoT ticks travel along tethers, but can't travel back along the link they came from.
 - [ ] **Anchor** (Awakening) — passive. Tethering to a boss or elite makes that end immovable, so knockback on the other end is doubled.
-

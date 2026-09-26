@@ -215,8 +215,25 @@ namespace CrystalFlux.StatusEffectSystem
 
         public IEnumerator RemoveEffectAfterDelayInternal<T>(float delay) where T : EffectAsset
         {
+            StatusEffect e = GetActiveFirstEffectOfType<T>() as StatusEffect;
+            int gen = e != null ? e.Generation : 0;
+
             yield return new WaitForSeconds(delay);
-            RemoveEffect<T>();
+
+            if (e == null)
+            {
+                RemoveEffect<T>();
+                yield break;
+            }
+
+            if (e.Released || e.Generation != gen) yield break;
+
+            int i = activeEffects.IndexOf(e);
+            if (i < 0) yield break;
+
+            e.OnExpire();
+            activeEffects.RemoveAt(i);
+            ReleaseRuntime(e);
         }
 
         public void ClearAllEffects()

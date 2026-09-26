@@ -21,10 +21,11 @@ namespace CrystalFlux.ProjectileSystem
         [HideInInspector] public int pierced;
         private float effSpd;
         private float lifeRemaining;
-        private List<GameObject> hit;
+        private HashSet<GameObject> hit;
         private List<GameObject> hitExpiryTargets;
         private List<float> hitExpiryTimes;
-        private List<IOnHitEffect> onHitBuffer;
+        private ProjectileOwnerCache oc;
+        private IReadOnlyList<IOnHitEffect> onHit;
         private ProjectileDamageSnapshot damageSnapshot;
         private Transform followTarget;
         private Transform orbitTarget;
@@ -97,10 +98,11 @@ namespace CrystalFlux.ProjectileSystem
             hit = new();
             hitExpiryTargets = new();
             hitExpiryTimes = new();
-            onHitBuffer = new();
             canTriggerAdd = true;
             defaultPd = pd;
             defaultScale = transform.localScale;
+            rb = GetComponent<Rigidbody2D>();
+            if (rb != null) rb.gravityScale = 0f;
             CachePrefabMovement();
         }
 
@@ -121,13 +123,13 @@ namespace CrystalFlux.ProjectileSystem
 
         private void UnregisterFromOwner()
         {
-            if (pd != null && pd.OrbitRadius > 0 && pd.OrbitSelf && ownerObj != null &&
-                ownerObj.TryGetComponent<IOrbitRegister>(out var ior))
-                ior.UnregisterOrbitingProjectile(this);
+            bool live = ownerObj != null && oc != null;
 
-            if (chargeRegistered && ownerObj != null &&
-                ownerObj.TryGetComponent<IChargeRegister>(out var icr))
-                icr.UnregisterChargedProjectile(this);
+            if (live && pd != null && pd.OrbitRadius > 0 && pd.OrbitSelf && oc.Orbit != null)
+                oc.Orbit.UnregisterOrbitingProjectile(this);
+
+            if (live && chargeRegistered && oc.Charge != null)
+                oc.Charge.UnregisterChargedProjectile(this);
 
             chargeRegistered = false;
         }
@@ -148,7 +150,6 @@ namespace CrystalFlux.ProjectileSystem
             hit?.Clear();
             hitExpiryTargets?.Clear();
             hitExpiryTimes?.Clear();
-            onHitBuffer?.Clear();
             ownerObj = null;
             ClearOwnerCache();
             followTarget = null;
@@ -212,7 +213,6 @@ namespace CrystalFlux.ProjectileSystem
             HandleSize();
             HandleDirection();
 
-            rb = GetComponent<Rigidbody2D>();
             if (rb != null) rb.linearVelocity = Vector2.zero;
 
             InitBoomerang();
@@ -226,17 +226,13 @@ namespace CrystalFlux.ProjectileSystem
             if (castExtras != null)
                 for (int i = 0; i < castExtras.Count; i++) ApplyOnCast(castExtras[i]);
 
-            if (pd.OrbitRadius > 0 && pd.OrbitSelf && ownerObj != null &&
-                ownerObj.TryGetComponent<IOrbitRegister>(out var iog))
-            {
-                iog.RegisterOrbitingProjectile(this);
-            }
+            if (pd.OrbitRadius > 0 && pd.OrbitSelf && oc != null && oc.Orbit != null)
+                oc.Orbit.RegisterOrbitingProjectile(this);
 
-            if (pd.MainAttack != null && ownerObj != null &&
-                ownerObj.TryGetComponent<IChargeRegister>(out var icr) &&
-                icr.ActiveChargeSource == pd.MainAttack)
+            if (pd.MainAttack != null && oc != null && oc.Charge != null &&
+                oc.Charge.ActiveChargeSource == pd.MainAttack)
             {
-                icr.RegisterChargedProjectile(this);
+                oc.Charge.RegisterChargedProjectile(this);
                 chargeRegistered = true;
             }
 
@@ -248,15 +244,16 @@ namespace CrystalFlux.ProjectileSystem
             ClearOwnerCache();
             if (ownerObj == null) return;
 
-            proxyOwner = OwnerProxy.Resolve(ownerObj);
+            oc = ProjectileOwnerCache.Get(ownerObj);
 
-            proxyOwner.TryGetComponent(out effectSource);
-            ownerObj.TryGetComponent(out ownerStats);
-            proxyOwner.TryGetComponent(out ownerSummon);
-            proxyOwner.TryGetComponent(out ownerPool);
-            proxyOwner.TryGetComponent(out ownerDmg);
-            proxyOwner.GetComponents(onHitBuffer);
-            ownerTeam = ownerObj.TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
+            proxyOwner = oc.Proxy;
+            effectSource = oc.EffectSource;
+            ownerStats = oc.Stats;
+            ownerSummon = oc.Summon;
+            ownerPool = oc.Pool;
+            ownerDmg = oc.Dmg;
+            onHit = oc.OnHit;
+            ownerTeam = oc.Team;
         }
 
         private void ClearOwnerCache()
@@ -268,7 +265,8 @@ namespace CrystalFlux.ProjectileSystem
             ownerPool = null;
             ownerDmg = null;
             ownerTeam = 0;
-            onHitBuffer?.Clear();
+            oc = null;
+            onHit = null;
         }
 
         private bool RetargetReady()
@@ -363,8 +361,9 @@ namespace CrystalFlux.ProjectileSystem
             pierced++;
             hit.Add(target);
 
-            for (int i = 0; i < onHitBuffer.Count; i++)
-                onHitBuffer[i].OnHit(proxyOwner, target, transform.position);
+            if (onHit != null)
+                for (int i = 0; i < onHit.Count; i++)
+                    onHit[i].OnHit(proxyOwner, target, transform.position);
             if (pd.MainAttack != null && pd.MainAttack.SummonCondition == SummonCondition.OnHit && Random.value <= pd.MainAttack.SummonChance)
             {
                 if (ownerSummon != null)
@@ -431,11 +430,9 @@ namespace CrystalFlux.ProjectileSystem
                 return;
             }
 
-            ProjectileSpawner spawner = ProjectileSpawner.Instance;
-
             Vector2? addDir = pd.AdditionalFollowsMouse ? null : dir;
 
-            spawner.StartCoroutine(spawner.SpawnFromPattern(pd.AdditionalAttack, ownerObj, transform.position, addDir, pd.AdditionalAttack.SpawnDistance, ChainOrigin));
+            ProjectileSpawner.Instance.Spawn(pd.AdditionalAttack, ownerObj, transform.position, addDir, pd.AdditionalAttack.SpawnDistance, ChainOrigin);
         }
 
         private AttackData ChainOrigin => chainRoot != null ? chainRoot : (pd != null ? pd.MainAttack : null);
@@ -448,8 +445,7 @@ namespace CrystalFlux.ProjectileSystem
             if (ProjectileSpawner.Instance == null) return;
             if (Random.Range(0f, 100f) > ChainRetriggerChance) return;
 
-            ProjectileSpawner spawner = ProjectileSpawner.Instance;
-            spawner.StartCoroutine(spawner.SpawnFromPattern(chainRoot, ownerObj, null, null, null, chainRoot));
+            ProjectileSpawner.Instance.Spawn(chainRoot, ownerObj, null, null, null, chainRoot);
         }
 
         private void HandleSize()
@@ -843,9 +839,8 @@ namespace CrystalFlux.ProjectileSystem
         {
             if (pd.AdditionalAttack != null && pd.AdditionalAttack.ProjectilePrefab != null && ProjectileSpawner.Instance != null)
             {
-                ProjectileSpawner spawner = ProjectileSpawner.Instance;
                 Vector2? addDir = pd.AdditionalFollowsMouse ? null : dir;
-                spawner.StartCoroutine(spawner.SpawnFromPattern(pd.AdditionalAttack, ownerObj, transform.position, addDir, pd.AdditionalAttack.SpawnDistance, ChainOrigin));
+                ProjectileSpawner.Instance.Spawn(pd.AdditionalAttack, ownerObj, transform.position, addDir, pd.AdditionalAttack.SpawnDistance, ChainOrigin);
             }
             Despawn();
         }

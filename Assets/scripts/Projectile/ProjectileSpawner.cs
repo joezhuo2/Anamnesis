@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using CrystalFlux.Core;
 using UnityEngine;
 namespace CrystalFlux.ProjectileSystem
@@ -14,6 +15,9 @@ namespace CrystalFlux.ProjectileSystem
         public static event System.Action<GameObject, GameObject, Vector2> ProjectileSpawned;
         public static event System.Action<GameObject, Vector2> PreTeleport;
         public static event System.Action<GameObject, Vector2> Teleported;
+
+        private static readonly Dictionary<float, WaitForSeconds> waitCache = new();
+        private readonly HashSet<GameObject> cappedPrefabs = new();
 
         private static Camera cachedMainCam;
         private static Camera MainCam => cachedMainCam != null ? cachedMainCam : cachedMainCam = Camera.main;
@@ -41,27 +45,42 @@ namespace CrystalFlux.ProjectileSystem
         {
             if (prefab == null) return null;
 
-            PrefabPool.SetCap(prefab, ProjectilePoolCap);
+            if (cappedPrefabs.Add(prefab)) PrefabPool.SetCap(prefab, ProjectilePoolCap);
 
             GameObject proj = PrefabPool.Acquire(prefab, null);
             if (proj == null) return null;
 
             proj.transform.SetPositionAndRotation(spawnPos, Quaternion.identity);
 
-            Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
-            if (rb != null) rb.gravityScale = 0f;
-
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             if (rotateToDir) proj.transform.rotation = Quaternion.Euler(0, 0, angle);
 
             if (proj.TryGetComponent<Projectile>(out var p)) p.Setup(dir, sourceObj, pdOverride, chainRoot);
+            else if (proj.TryGetComponent<Rigidbody2D>(out var rb)) rb.gravityScale = 0f;
 
             ProjectileSpawned?.Invoke(sourceObj, proj, spawnPos);
 
             return proj;
         }
 
-        public IEnumerator SpawnCircle(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 center, float radius, GameObject sourceObj = null, AttackData chainRoot = null)
+        private static WaitForSeconds Wait(float t)
+        {
+            if (!waitCache.TryGetValue(t, out var w))
+            {
+                w = new WaitForSeconds(t);
+                waitCache[t] = w;
+            }
+            return w;
+        }
+
+        private bool TeleportOnce(bool pending, AttackData ad, GameObject src, GameObject proj)
+        {
+            if (!pending || proj == null) return pending;
+            StartCoroutine(TeleportToProjectile(src, proj, ad.TeleportDelay));
+            return false;
+        }
+
+        public IEnumerator SpawnCircle(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 center, float radius, GameObject sourceObj = null, AttackData chainRoot = null, bool teleport = false)
         {
             int finalCount = Mathf.Max(1, ad.ProjectileCount + Random.Range(0, ad.RandomCount + 1));
             float startAngle = ad.Spread + Random.Range(-ad.RandomSpread / 2f, ad.RandomSpread / 2f);
@@ -73,13 +92,13 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 dir = new(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
                 Vector2 spawnPos = center + (dir * radius);
 
-                SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot);
+                teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot));
                 float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
                 do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 
-        public IEnumerator SpawnSpread(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, float dist, GameObject sourceObj = null, AttackData chainRoot = null)
+        public IEnumerator SpawnSpread(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, float dist, GameObject sourceObj = null, AttackData chainRoot = null, bool teleport = false)
         {
             int finalCount = ad.ProjectileCount + Random.Range(0, ad.RandomCount + 1);
 
@@ -95,14 +114,14 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 targetDir = Quaternion.Euler(0, 0, angle - baseAngle) * dir.normalized;
                 Vector2 spawnPos = origin + (targetDir * dist);
 
-                SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd, chainRoot);
+                teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd, chainRoot));
 
                 float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
                 do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 
-        public IEnumerator SpawnSpreadBarrage(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, float dist, GameObject sourceObj = null, AttackData chainRoot = null)
+        public IEnumerator SpawnSpreadBarrage(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, float dist, GameObject sourceObj = null, AttackData chainRoot = null, bool teleport = false)
         {
             int finalCount = ad.ProjectileCount + Random.Range(0, ad.RandomCount + 1);
             float baseAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -117,14 +136,14 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 targetDir = Quaternion.Euler(0, 0, angle - baseAngle) * dir.normalized;
                 Vector2 spawnPos = origin + (targetDir * dist);
 
-                SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd, chainRoot);
+                teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd, chainRoot));
 
                 float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
                 do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 
-        public IEnumerator SpawnBarrage(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, GameObject sourceObj, AttackData chainRoot = null)
+        public IEnumerator SpawnBarrage(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, Vector2 dir, GameObject sourceObj, AttackData chainRoot = null, bool teleport = false)
         {
             int finalCount = ad.ProjectileCount + Random.Range(0, ad.RandomCount + 1);
 
@@ -133,41 +152,39 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 randomOffset = Random.insideUnitCircle * ad.Spread;
                 Vector2 spawnPos = origin + randomOffset;
 
-                SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot);
+                teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot));
                 float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
                 do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
         }
 
-        public IEnumerator SpawnTopDown(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null)
-            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, Vector2.down);
+        public IEnumerator SpawnTopDown(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null, bool teleport = false)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, teleport, Vector2.down, default, 1);
 
-        public IEnumerator SpawnLeftRight(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null)
-            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, Vector2.right);
+        public IEnumerator SpawnLeftRight(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null, bool teleport = false)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, teleport, Vector2.right, default, 1);
 
-        public IEnumerator SpawnDiagonal(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null)
-            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, new Vector2(1f, 1f));
+        public IEnumerator SpawnDiagonal(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null, bool teleport = false)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, teleport, new Vector2(1f, 1f), default, 1);
 
-        public IEnumerator SpawnDiagonalReverse(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null)
-            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, new Vector2(1f, -1f));
+        public IEnumerator SpawnDiagonalReverse(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null, bool teleport = false)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, teleport, new Vector2(1f, -1f), default, 1);
 
-        public IEnumerator SpawnFullX(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null)
-            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, new Vector2(1f, 1f), new Vector2(1f, -1f));
+        public IEnumerator SpawnFullX(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null, bool teleport = false)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, teleport, new Vector2(1f, 1f), new Vector2(1f, -1f), 2);
 
-        private IEnumerator SpawnOpposingLines(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot, params Vector2[] travelDirs)
+        private IEnumerator SpawnOpposingLines(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot, bool teleport, Vector2 d0, Vector2 d1, int dirCount)
         {
-            if (travelDirs == null || travelDirs.Length == 0) yield break;
-
             int perSide = Mathf.Max(1, ad.ProjectileCount + Random.Range(0, ad.RandomCount + 1));
             float halfExtent = ad.Spread / 2f;
-            int lineCount = travelDirs.Length * 2;
+            int lineCount = dirCount * 2;
 
             for (int i = 0; i < perSide * lineCount; i++)
             {
                 int slot = i / lineCount;
                 int line = i % lineCount;
 
-                Vector2 travel = travelDirs[line / 2].normalized;
+                Vector2 travel = (line / 2 == 0 ? d0 : d1).normalized;
                 float sideSign = line % 2 == 0 ? 1f : -1f;
 
                 float offset = (perSide == 1 ? 0f : (slot / (float)(perSide - 1)) - 0.5f) * ad.Spread;
@@ -176,10 +193,41 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 dir = travel * sideSign;
                 Vector2 spawnPos = origin + (Vector2.Perpendicular(travel) * offset) - (dir * halfExtent);
 
-                SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot);
+                teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot));
                 float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
                 do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
             }
+        }
+
+        public void Spawn(
+            AttackData ad,
+            GameObject source,
+            Vector2? center = null,
+            Vector2? dirOverride = null,
+            float? distOverride = null,
+            AttackData chainRoot = null,
+            bool fixedAim = false,
+            MonoBehaviour host = null
+        )
+        {
+            if (ad == null || ad.ProjectilePrefab == null) return;
+            SpawnInternal(ad.ProjectilePrefab, ad.Pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim, host);
+        }
+
+        public void Spawn(
+            GameObject prefab,
+            GameObject source,
+            Vector2? center = null,
+            Vector2? dirOverride = null,
+            float? distOverride = null,
+            AttackData chainRoot = null,
+            bool fixedAim = false,
+            MonoBehaviour host = null
+        )
+        {
+            if (prefab == null) return;
+            ResolvePrefab(prefab, out var pd, out var ad);
+            SpawnInternal(prefab, pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim, host);
         }
 
         public IEnumerator SpawnFromPattern(
@@ -193,7 +241,8 @@ namespace CrystalFlux.ProjectileSystem
         )
         {
             if (ad == null || ad.ProjectilePrefab == null) yield break;
-            yield return SpawnFromPatternInternal(ad.ProjectilePrefab, ad.Pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim);
+            if (!Aim(ad, source, center, dirOverride, distOverride, fixedAim, out var pos, out var dir, out var dist)) yield break;
+            yield return RunPattern(ad.ProjectilePrefab, ad.Pd, ad, source, pos, dir, dist, chainRoot);
         }
 
         public IEnumerator SpawnFromPattern(
@@ -207,10 +256,21 @@ namespace CrystalFlux.ProjectileSystem
         )
         {
             if (prefab == null) yield break;
-            Projectile p = prefab.GetComponent<Projectile>();
-            ProjectileData pd = p != null ? p.pd : null;
-            AttackData ad = pd != null ? pd.MainAttack : null;
-            yield return SpawnFromPatternInternal(prefab, pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim);
+            ResolvePrefab(prefab, out var pd, out var ad);
+            if (!Aim(ad, source, center, dirOverride, distOverride, fixedAim, out var pos, out var dir, out var dist)) yield break;
+
+            if (ad == null)
+            {
+                SpawnProjectile(prefab, pos, dir, true, source, pd, chainRoot);
+                yield break;
+            }
+            yield return RunPattern(prefab, pd, ad, source, pos, dir, dist, chainRoot);
+        }
+
+        private static void ResolvePrefab(GameObject prefab, out ProjectileData pd, out AttackData ad)
+        {
+            pd = prefab.TryGetComponent<Projectile>(out var p) ? p.pd : null;
+            ad = pd != null ? pd.MainAttack : null;
         }
 
         public static void ResolveAim(AttackData ad, GameObject source, Vector2 center, Vector2? dirOverride, float? distOverride, out Vector2 dir, out float dist)
@@ -227,97 +287,112 @@ namespace CrystalFlux.ProjectileSystem
                 dist = Mathf.Min(Vector2.Distance(center, mouse), dist);
         }
 
-        private IEnumerator SpawnFromPatternInternal(
-            GameObject prefab,
-            ProjectileData pd,
+        private static bool Aim(
             AttackData ad,
             GameObject source,
-            Vector2? center = null,
-            Vector2? dirOverride = null,
-            float? distOverride = null,
-            AttackData chainRoot = null,
-            bool fixedAim = false
+            Vector2? center,
+            Vector2? dirOverride,
+            float? distOverride,
+            bool fixedAim,
+            out Vector2 spawnPos,
+            out Vector2 dir,
+            out float dist
         )
         {
-            if (source == null && center == null) yield break;
+            spawnPos = default;
+            dir = default;
+            dist = 0f;
+            if (source == null && center == null) return false;
 
             Vector2 spawnCenter = center ?? (Vector2)source.transform.position;
-
-            Vector2 dir;
-            float finalDist;
 
             if (fixedAim && dirOverride.HasValue && distOverride.HasValue)
             {
                 dir = dirOverride.Value;
-                finalDist = distOverride.Value;
+                dist = distOverride.Value;
             }
-            else ResolveAim(ad, source, spawnCenter, dirOverride, distOverride, out dir, out finalDist);
+            else ResolveAim(ad, source, spawnCenter, dirOverride, distOverride, out dir, out dist);
 
-            Vector2 spawnPos = spawnCenter + (dir * finalDist);
+            spawnPos = spawnCenter + (dir * dist);
+            return true;
+        }
 
-            if (ad != null && ad.SpawnDelay > 0)
-                yield return new WaitForSeconds(ad.SpawnDelay);
+        private void SpawnInternal(
+            GameObject prefab,
+            ProjectileData pd,
+            AttackData ad,
+            GameObject source,
+            Vector2? center,
+            Vector2? dirOverride,
+            float? distOverride,
+            AttackData chainRoot,
+            bool fixedAim,
+            MonoBehaviour host
+        )
+        {
+            if (!Aim(ad, source, center, dirOverride, distOverride, fixedAim, out var pos, out var dir, out var dist)) return;
 
             if (ad == null)
             {
-                SpawnProjectile(prefab, spawnPos, dir, true, source, pd, chainRoot);
-                yield break;
+                SpawnProjectile(prefab, pos, dir, true, source, pd, chainRoot);
+                return;
             }
 
-            System.Action<GameObject, GameObject, Vector2> onSpawn = null;
-            if (ad.TeleportToProjectile && source != null)
+            if (ad.SpawnDelay <= 0 && ad.Pattern == ProjectilePattern.Single)
             {
-                onSpawn = (src, proj, _) =>
-                {
-                    if (src != source || proj == null) return;
-                    ProjectileSpawned -= onSpawn;
-                    onSpawn = null;
-                    StartCoroutine(TeleportToProjectile(source, proj, ad.TeleportDelay));
-                };
-                ProjectileSpawned += onSpawn;
+                TeleportOnce(ad.TeleportToProjectile && source != null, ad, source, SpawnProjectile(prefab, pos, dir, true, source, pd, chainRoot));
+                return;
             }
+
+            MonoBehaviour h = host != null && host.isActiveAndEnabled ? host : this;
+            h.StartCoroutine(RunPattern(prefab, pd, ad, source, pos, dir, dist, chainRoot));
+        }
+
+        private IEnumerator RunPattern(GameObject prefab, ProjectileData pd, AttackData ad, GameObject source, Vector2 spawnPos, Vector2 dir, float finalDist, AttackData chainRoot)
+        {
+            if (ad.SpawnDelay > 0) yield return Wait(ad.SpawnDelay);
+
+            bool tp = ad.TeleportToProjectile && source != null;
 
             switch (ad.Pattern)
             {
                 case ProjectilePattern.Single:
-                    SpawnProjectile(prefab, spawnPos, dir, true, source, pd, chainRoot);
+                    TeleportOnce(tp, ad, source, SpawnProjectile(prefab, spawnPos, dir, true, source, pd, chainRoot));
                     break;
                 case ProjectilePattern.Spread:
-                    yield return SpawnSpread(prefab, pd, ad, spawnPos, dir, finalDist, source, chainRoot);
+                    yield return SpawnSpread(prefab, pd, ad, spawnPos, dir, finalDist, source, chainRoot, tp);
                     break;
                 case ProjectilePattern.Circle:
-                    yield return SpawnCircle(prefab, pd, ad, spawnPos, finalDist, source, chainRoot);
+                    yield return SpawnCircle(prefab, pd, ad, spawnPos, finalDist, source, chainRoot, tp);
                     break;
                 case ProjectilePattern.Barrage:
-                    yield return SpawnBarrage(prefab, pd, ad, spawnPos, dir, source, chainRoot);
+                    yield return SpawnBarrage(prefab, pd, ad, spawnPos, dir, source, chainRoot, tp);
                     break;
                 case ProjectilePattern.SpreadBarrage:
-                    yield return SpawnSpreadBarrage(prefab, pd, ad, spawnPos, dir, finalDist, source, chainRoot);
+                    yield return SpawnSpreadBarrage(prefab, pd, ad, spawnPos, dir, finalDist, source, chainRoot, tp);
                     break;
                 case ProjectilePattern.TopDown:
-                    yield return SpawnTopDown(prefab, pd, ad, spawnPos, source, chainRoot);
+                    yield return SpawnTopDown(prefab, pd, ad, spawnPos, source, chainRoot, tp);
                     break;
                 case ProjectilePattern.LeftRight:
-                    yield return SpawnLeftRight(prefab, pd, ad, spawnPos, source, chainRoot);
+                    yield return SpawnLeftRight(prefab, pd, ad, spawnPos, source, chainRoot, tp);
                     break;
                 case ProjectilePattern.Diagonal:
-                    yield return SpawnDiagonal(prefab, pd, ad, spawnPos, source, chainRoot);
+                    yield return SpawnDiagonal(prefab, pd, ad, spawnPos, source, chainRoot, tp);
                     break;
                 case ProjectilePattern.DiagonalReverse:
-                    yield return SpawnDiagonalReverse(prefab, pd, ad, spawnPos, source, chainRoot);
+                    yield return SpawnDiagonalReverse(prefab, pd, ad, spawnPos, source, chainRoot, tp);
                     break;
                 case ProjectilePattern.FullX:
-                    yield return SpawnFullX(prefab, pd, ad, spawnPos, source, chainRoot);
+                    yield return SpawnFullX(prefab, pd, ad, spawnPos, source, chainRoot, tp);
                     break;
                 default: break;
             }
-
-            if (onSpawn != null) ProjectileSpawned -= onSpawn;
         }
 
         private IEnumerator TeleportToProjectile(GameObject src, GameObject proj, float delay)
         {
-            if (delay > 0f) yield return new WaitForSeconds(delay);
+            if (delay > 0f) yield return Wait(delay);
             if (src == null || proj == null || !proj.activeInHierarchy) yield break;
             if (proj.TryGetComponent<Projectile>(out var p) && p.ownerObj != src) yield break;
 

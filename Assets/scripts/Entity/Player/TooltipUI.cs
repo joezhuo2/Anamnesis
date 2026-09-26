@@ -15,6 +15,8 @@ namespace CrystalFlux.UISystem
         public Vector2 offset;
 
         private RectTransform crt;
+        private Vector2 lastPos;
+        private bool posDirty = true;
 
         private void Awake()
         {
@@ -37,20 +39,30 @@ namespace CrystalFlux.UISystem
 
         private void Update()
         {
+            Vector2 p = InputState.mousePos + offset;
+            if (!posDirty && p == lastPos) return;
+
             CacheRectTransform();
-            crt.position = InputState.mousePos + offset;
+            crt.position = p;
+            lastPos = p;
+            posDirty = false;
         }
 
         public void ShowTooltip(string title, string description, Vector2 os)
         {
             gameObject.SetActive(true);
 
+            if (offset != os) posDirty = true;
             offset = os;
             if (titleText != null) titleText.text = title;
             if (descriptionText != null) descriptionText.text = description;
         }
 
-        public void HideTooltip() => gameObject.SetActive(false);
+        public void HideTooltip()
+        {
+            posDirty = true;
+            gameObject.SetActive(false);
+        }
         private void CacheRectTransform()
         {
             if (crt == null) crt = GetComponent<RectTransform>();

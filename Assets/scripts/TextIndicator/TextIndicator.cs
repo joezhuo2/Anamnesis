@@ -21,11 +21,19 @@ namespace CrystalFlux.Core
         private void Awake()
         {
             text = GetComponent<TextMeshProUGUI>();
+            text.raycastTarget = false;
             baseFontSize = text.fontSize;
         }
 
         public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, TextType textType, float delay = 0f)
         {
+            if (textType == TextType.Standard && val < 1_000)
+            {
+                text.SetText("{0}", val);
+                Show(sourcePos, color, scale, lifetime, floatSpeed, delay);
+                return;
+            }
+
             string result = val >= 1_000_000 ? (val / 1_000_000f).ToString("0.#") + "M"
               : val >= 1_000     ? (val / 1_000f).ToString("0.#") + "k"
               : val.ToString();
@@ -42,6 +50,12 @@ namespace CrystalFlux.Core
 
         public void Initialize(string content, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay = 0f)
         {
+            text.text = content;
+            Show(sourcePos, color, scale, lifetime, floatSpeed, delay);
+        }
+
+        private void Show(Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay)
+        {
             mainCam = mainCam != null ? mainCam : Camera.main;
 
             worldPos = sourcePos + new Vector3(
@@ -52,7 +66,6 @@ namespace CrystalFlux.Core
 
             if (mainCam != null) transform.position = lastScreenPos = mainCam.WorldToScreenPoint(worldPos);
 
-            text.text = content;
             text.color = color;
             text.fontSize = baseFontSize * scale;
 

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
 using UnityEngine;
@@ -23,10 +22,14 @@ namespace CrystalFlux.SkillTree
         private ICurrencyHolder ich;
         private ISkillPointHolder isph;
         private bool hovered;
+        private ITooltipDisplay td;
+        private int lastGold = int.MinValue;
+        private int lastSp = int.MinValue;
 
         private void Awake()
         {
             btn = GetComponent<Button>();
+            TryGetComponent(out td);
             if (treeUI == null) treeUI = FindAnyObjectByType<SkillTreeUI>(FindObjectsInactive.Include);
         }
 
@@ -43,12 +46,17 @@ namespace CrystalFlux.SkillTree
         {
             hovered = false;
             if (btn != null) btn.onClick.RemoveListener(HandleClick);
-            if (TryGetComponent<ITooltipDisplay>(out var td)) td.HideTooltip();
+            if (td != null) td.HideTooltip();
         }
 
         private void Update()
         {
-            if (hovered) RefreshTooltip();
+            if (!hovered) return;
+
+            ResolveHolders();
+            int g = ich != null ? ich.CurrentAmount : int.MinValue;
+            int sp = isph != null ? isph.SkillPoints : int.MinValue;
+            if (g != lastGold || sp != lastSp) RefreshTooltip();
         }
 
         private GameObject ResolvePlayer()
@@ -72,7 +80,7 @@ namespace CrystalFlux.SkillTree
             if (treeUI == null) return;
 
             treeUI.Toggle(ResolvePlayer());
-            if (TryGetComponent<ITooltipDisplay>(out var td)) td.HideTooltip();
+            if (td != null) td.HideTooltip();
             hovered = false;
         }
 
@@ -85,12 +93,12 @@ namespace CrystalFlux.SkillTree
         public void OnPointerExit(PointerEventData eventData)
         {
             hovered = false;
-            if (TryGetComponent<ITooltipDisplay>(out var td)) td.HideTooltip();
+            if (td != null) td.HideTooltip();
         }
 
         private void RefreshTooltip()
         {
-            if (!TryGetComponent<ITooltipDisplay>(out var td)) return;
+            if (td == null) return;
 
             var (tt, st, os) = GetSkillTreeTooltip();
             td.ShowTooltip(tt, st, os);
@@ -100,12 +108,14 @@ namespace CrystalFlux.SkillTree
         {
             ResolveHolders();
 
-            List<string> lines = new() { $"Open with <color=#FFFFFF>{GetToggleKeyLabel()}</color>" };
+            lastGold = ich != null ? ich.CurrentAmount : int.MinValue;
+            lastSp = isph != null ? isph.SkillPoints : int.MinValue;
 
-            if (ich != null) lines.Add($"<color=#FFD700>Gold: {ich.CurrentAmount}</color>");
-            if (isph != null) lines.Add($"<color=#66CCFF>Skill Points: {isph.SkillPoints}</color>");
+            string s = $"Open with <color=#FFFFFF>{GetToggleKeyLabel()}</color>";
+            if (ich != null) s += $"\n<color=#FFD700>Gold: {lastGold}</color>";
+            if (isph != null) s += $"\n<color=#66CCFF>Skill Points: {lastSp}</color>";
 
-            return (tooltipTitle, string.Join("\n", lines), tooltipOffset);
+            return (tooltipTitle, s, tooltipOffset);
         }
 
         private static string GetToggleKeyLabel()

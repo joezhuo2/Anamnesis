@@ -40,6 +40,7 @@ namespace CrystalFlux.EntitySystem
         private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
         [HideInInspector] public List<AttackData> attacks = new();
         [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
+        private readonly List<AttackType> cdKeyBuffer = new();
 
         private bool isCasting;
         private bool castCancelled;
@@ -205,7 +206,7 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
 
-            AttackData selected = attacks.Find(atk => atk.type == type);
+            AttackData selected = FindAttackOfType(type);
             if (selected == null) return;
 
             if (!bypassCooldown)
@@ -375,7 +376,7 @@ namespace CrystalFlux.EntitySystem
             if (ps == null) return;
 
             Vector2 c = transform.position;
-            StartCoroutine(ps.SpawnFromPattern(ad, gameObject, c));
+            ps.Spawn(ad, gameObject, c, host: this);
             MirageClone.NotifyCast(gameObject, ad, c);
         }
 
@@ -658,7 +659,7 @@ namespace CrystalFlux.EntitySystem
             if (newAttack == null) return;
 
             AttackType type = newAttack.type;
-            AttackData current = attacks.Find(atk => atk.type == type);
+            AttackData current = FindAttackOfType(type);
 
             if (current != null) attacks.Remove(current);
 
@@ -677,7 +678,7 @@ namespace CrystalFlux.EntitySystem
 
         public void RemoveAttack(AttackType type)
         {
-            AttackData current = attacks.Find(atk => atk.type == type);
+            AttackData current = FindAttackOfType(type);
             if (current != null) attacks.Remove(current);
             lastAttackTimes.Remove(type);
 
@@ -706,8 +707,9 @@ namespace CrystalFlux.EntitySystem
 
         public void AdvanceAllCooldowns(float pctAmt)
         {
-            var keys = new List<AttackType>(lastAttackTimes.Keys);
-            foreach (var type in keys) AdvanceCooldown(type, pctAmt);
+            cdKeyBuffer.Clear();
+            foreach (var type in lastAttackTimes.Keys) cdKeyBuffer.Add(type);
+            for (int i = 0; i < cdKeyBuffer.Count; i++) AdvanceCooldown(cdKeyBuffer[i], pctAmt);
         }
 
         public void AdvanceCooldown(AttackType type, float pctAmt)
@@ -716,7 +718,7 @@ namespace CrystalFlux.EntitySystem
 
             float lastTime = lastAttackTimes[type];
 
-            var effCd = GetEffCd(attacks.Find(a => a.type == type), esm);
+            var effCd = GetEffCd(FindAttackOfType(type), esm);
 
             if (effCd <= 0f) return;
 

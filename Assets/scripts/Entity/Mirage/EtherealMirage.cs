@@ -34,6 +34,9 @@ namespace CrystalFlux.StatusEffectSystem
 
         protected override void ResetRuntime()
         {
+            for (int i = 0; i < clones.Count; i++)
+                if (clones[i] != null && clones[i].TryGetComponent<IDamageable>(out var dmg)) dmg.OnDeath -= OnCloneDeath;
+
             clones.Clear();
             buffed.Clear();
         }
@@ -90,6 +93,7 @@ namespace CrystalFlux.StatusEffectSystem
         private void OnCloneDeath(GameObject go)
         {
             if (go.TryGetComponent<IDamageable>(out var dmg)) dmg.OnDeath -= OnCloneDeath;
+            if (Released) return;
 
             int i = -1;
             for (int j = 0; j < clones.Count; j++)

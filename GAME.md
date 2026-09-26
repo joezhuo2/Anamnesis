@@ -1038,9 +1038,9 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Tint: White (61% alpha)
 - Cooldown Effect: Cosmic Afterimage (6s)
 - Projectile: None (base version does not detonate)
-- Description: Dashing spawns a decoy that taunts enemies within their detection range
-  for 4 seconds. The decoy is a `Targetable`, so enemies keep it in their nearest-target
-  search; they can drift off it to a closer player or clone on their next 1-3s retarget.
+- Description: Dashing spawns a decoy that lasts 4 seconds. The decoy is a `Targetable`,
+  so enemies chase it when it is the nearest target on their next 1-3s retarget. It does
+  not taunt on spawn (removed in v0.6.9).
 
 ## Decoy Upgraded (Capstone)
 - Asset: `Decoy Upgraded`
@@ -1054,7 +1054,7 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Tint: White (78% alpha)
 - Cooldown Effect: Cosmic Afterimage (6s)
 - Projectile: `Decoy.prefab` (Decoy Burst)
-- Description: Dashing spawns a decoy that taunts for 6 seconds, then detonates at its
+- Description: Dashing spawns a decoy that draws enemies for 6 seconds, then detonates at its
   own position for 225% Spell damage and applies Vulnerable.
 - Unlocked by: `Node_decoy` ("Cosmic Superimposition", 3 skill points, prerequisite
   `Node_ms2`, requires the base Decoy upgrade, which it consumes on unlock and returns
