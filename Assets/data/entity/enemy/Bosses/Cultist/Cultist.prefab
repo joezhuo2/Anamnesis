@@ -108,6 +108,7 @@ MonoBehaviour:
   canDeaggro: 1
   stoppingDistance: 1
   flipRotation: 0
+  retargetInterval: {x: 1, y: 3}
   target: {fileID: 0}
 --- !u!114 &8195867897408456428
 MonoBehaviour:
@@ -299,7 +300,7 @@ MonoBehaviour:
   - type: 24
     value: 15
   - type: 14
-    value: 8
+    value: 12
 --- !u!114 &5398183733611375506
 MonoBehaviour:
   m_ObjectHideFlags: 0

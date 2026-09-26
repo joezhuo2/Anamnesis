@@ -715,7 +715,7 @@ skill tree nodes.
   - Scaling: EffInt
   - Time Before Same Enemy: 1.5s
   - Orbit: radius 1.25, orbits self, CCW
-  - Additional: 35% chance on hit to create Warp Rift
+  - Additional: 20% chance on hit to create Warp Rift
   - Knockback: 2 force for 0.15s
 - Unlocked by: `Node_warp` ("Warp" capstone, 3 skill points, prerequisite `Node_mm3`,
   requires the base Warp attack)
@@ -772,7 +772,7 @@ skill tree nodes.
 - Pattern: Single (1 count)
 - Spawn: 0 dist
 - Animation: 0.5s
-- Costs: Stamina 16, Mana 7
+- Costs: Stamina 15, Mana 11
 - Gains on hit: Stamina +2, Mana +1
 - Rush: toward the cursor for 0.3s at 8x move speed, immune while rushing. Attacks pressed
   mid-rush are queued until it ends, and the rush stops on collision.
@@ -784,7 +784,7 @@ skill tree nodes.
   - Lifetime: 0.5s
   - Pierce: 9
   - Size: 2.5
-  - Damage: 285% Phys, 25% True
+  - Damage: 245% Phys, 25% True
   - Scaling: EffAtk + 60% moveSpeedPct
   - Rotation Offset: -45
   - Effect: 70% on hit (Stun, 3s) + 100% self on cast (Decay, 4s, max 6 stacks)
@@ -799,13 +799,13 @@ skill tree nodes.
 - Pattern: Single (1 count)
 - Spawn: 0 dist
 - Animation: 0.5s
-- Gains on hit: Stamina +3, Mana +3
+- Gains on hit: Stamina +2, Mana +2
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.5s
   - Pierce: 3000
   - Size: 6
-  - Damage: 235% Spell
+  - Damage: 115% Spell
   - Scaling: EffAtk + 35% EffInt
   - Effect: 60% on hit (Vulnerable, 6s, max 3 stacks, -8% damageRes per stack)
   - Knockback: 3 force for 0.15s
@@ -837,14 +837,14 @@ skill tree nodes.
 - Pattern: Circle (7 count, 45 random spread)
 - Spawn: 0.25 dist (fixed)
 - Animation: 1s
-- Gains on hit: Stamina +4, Mana +4
+- Gains on hit: Stamina +3, Mana +3
 - Projectile:
   - Speed: 14
   - Lifetime: 0.75s
   - Pierce: 3000
   - Size: 1.5
-  - Damage: 170% True
-  - Scaling: moveSpeedPct + 40% EffAtk
+  - Damage: 110% True
+  - Scaling: moveSpeedPct + 30% EffAtk
   - Effect: 40% on hit (Stun, 2s)
   - Knockback: 5 force for 0.15s
 - Used by: the `Ultrasonic` player upgrade, granted by `Node_ultrasonic`
@@ -968,7 +968,7 @@ player upgrades rather than attacks the player selects.
 
 The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an authored
 `StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
-again on `OnRemove`. Used by `Solar Wind`, `Shock Absorber` and `Ethereal Mirage`.
+again on `OnRemove`. Used by `Solar Wind`, `Shock Absorber`, `Momentum` and `Ethereal Mirage`.
 
 The `Overhealth` and `AddChain` types are passive: they configure the player on `OnUnlock`
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
@@ -1128,6 +1128,17 @@ their `PlayerUpgradeReward` and cannot be rolled before that wave.
 - Delay: 0s
 - Description: Marker upgrade with no trigger logic of its own; allows Health to replace
   Stamina for attack costs.
+
+## Momentum
+- Asset: `Momentum`
+- Type: GrantStatusEffect
+- Conditions: OnStartDash, OnRushStart
+- Chance: 100%
+- Cooldown: 0s
+- Delay: 0s
+- Effect: `Momentum` (11s), 1 stack per trigger
+- Description: Starting a dash or a rush grants Momentum: +6% moveSpeedPct and +14%
+  rushImpactPct.
 
 ## Oblivion (Capstone)
 - Asset: `Oblivion`
@@ -1297,9 +1308,9 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 - Asset: `Terminal Cascade`
 - Type: AddChain
 - Conditions: none (applied on unlock)
-- Retrigger Chance: 15%
+- Retrigger Chance: 12%
 - Description: When a chain of `additionalAttack` spawns reaches its end — the last link
-  has no further additional attack, or its `additionalChance` roll fails — there is a 15%
+  has no further additional attack, or its `additionalChance` roll fails — there is a 12%
   chance to fire the attack that started the chain again, from the player and aimed at the
   cursor. The retrigger pays no cooldown or resource cost, and the new chain can loop again.
 
@@ -1334,13 +1345,14 @@ subfolders named after their class.
 | `Celestial Protection` | StatBuffs | Celestial Protection | 8s | - | 4 | +4% damageRes, +8 armor, +5% armorPct per stack (authored with `isBuff` off) |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
-| `Decay` | StatBuffs | Decay | 4s | - | 6 | -8% hpPct, -14% stRegPct, +3% resPen per stack |
+| `Decay` | StatBuffs | Decay | 4s | - | 6 | -12% hpPct, -14% stRegPct, +4% resPen per stack |
 | `DotDetonator 0.5 2` | Detonator | (unnamed) | 0.5s | - | 1 | Detonates DoTs for 250% as True |
 | `Freeze` | Freeze | Frozen | 2s | - | 1 | Cannot move, attack or dash; no passive health regen; knockback and pulls do nothing, and any rush in progress ends |
 | `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
 | `Mirage` | EtherealMirage | Ethereal Mirage | 18s | - | 1 | Summons 3 clones at 50% flat stats, 60% opacity, radius 2; each living clone gives +12% moveSpeedPct, -15% damagePct. See Ethereal Mirage above |
 | `Mirage Cooldown` | Info | Ethereal Mirage Cooldown | 24s | - | 1 | Cooldown marker |
+| `Momentum` | StatBuffs | Momentum | 11s | - | 1 | +6% moveSpeedPct, +14% rushImpactPct |
 | `Overheat` | StatBuffs | Overheat | 7s | - | 5 | -8% atkPct, -12% stRegPct per stack |
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |
 | `Pulled 0.6 1 1.5 5 0.1` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 5 (+2/stack), 1.5 radius |

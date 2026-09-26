@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9891d8e133ce19e4280b96c8ab869ded, type: 3}
-  m_Name: Decay
+  m_Name: Momentum
   m_EditorClassIdentifier: CrystalFlux.StatusEffect::CrystalFlux.StatusEffectSystem.StatBuffs
   currentTime: 0
-  duration: 4
+  duration: 11
   tickInterval: 0
-  isBuff: 0
-  icon: {fileID: 226702753830753226, guid: 1a422c5f5436e5042861653928334be7, type: 3}
-  effName: Decay
-  desc: Reduces max health by 12% and stamina regen by 14% every stack, but increases
-    resistance penetration by 4%.
-  maxStacks: 6
+  isBuff: 1
+  icon: {fileID: -8276262488406422588, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Momentum
+  desc: Increases movement speed by 6% and rush impact by 14% per stack, max 3 stacks.
+  maxStacks: 1
   loseAllStacksOnExpire: 0
   target: {fileID: 0}
   source: {fileID: 0}
@@ -29,9 +28,7 @@ MonoBehaviour:
   potencyMultiplier: 1
   origin: {fileID: 0}
   buffs:
-  - type: 13
-    value: -12
-  - type: 27
-    value: -14
-  - type: 10
-    value: 4
+  - type: 24
+    value: 6
+  - type: 97
+    value: 14

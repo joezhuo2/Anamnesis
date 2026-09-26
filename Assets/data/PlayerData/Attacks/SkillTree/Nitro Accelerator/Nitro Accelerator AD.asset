@@ -61,11 +61,11 @@ MonoBehaviour:
   maxHpPct: 100
   phaseReq: -1
   nextAttack: {fileID: 0}
-  staminaCost: 16
+  staminaCost: 15
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 7
+  manaCost: 11
   manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 2

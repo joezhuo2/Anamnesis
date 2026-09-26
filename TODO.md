@@ -150,23 +150,22 @@
 
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
-- **Superconductor** - chain lightning type attack OR upgrade, speed/atk dual scaling, stun + arc split, maybe additional attack with homing would work (no new mechanics)
 - **Something** - counter dodging creates a shockwave
-- **Gravity Well** - ultimates create an extremely massive aoe attack that pulls enemies and debuffs them
+- **Gravity Well** - *something* create an extremely massive aoe attack that pulls enemies and debuffs them
 - **Gravemark** (Basic) — marks the target instead of damaging it; the next *different* attack slot that hits a marked enemy detonates every mark. Opens a slot-rotation playstyle.
-- **Riptide** (Skill) — rush that drags every enemy it passes through along with you (applies `Pulled` on contact), then drops them in a heap on `OnRushEnd`. Sets up AoE ultimates. (new rush dashing through enemies bool)
+- **Riptide** (Ultimate) — rush that drags every enemy it passes through along with you (applies `Pulled` on contact), then drops them in a heap on `OnRushEnd`. Sets up AoE ultimates. (new rush dashing through enemies bool)
 - **Overclock** (Ultimate) — no damage. For 8s, every cast advances all other cooldowns by 50%, but each cast costs stamina. When the timer ends you get `Overheat`.
 - **Shatterpoint** — `OnCrit` against a stunned or frozen enemy: consumes the CC and deals 200% crit damage as true damage. 
 - **Resonance** — using the same attack slot 3 times in a row empowers the 4th cast
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
-- **Midas Touch** — passive. Every 500 gold held grants +2% `damagePct`
+- **Midas Touch** — passive. Every 250 gold held grants +1% `damagePct`
 - **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
 - **Event Horizon** (Ultimate) — a slow `Spiral` projectile that `Pulled`s nearby enemies and grows over its lifetime.
-- **Something** - awakening that grants thorns effect
+- **Something** - something that grants thorns effect
+- **Something** - something that grants life steal effect
 - **Mitosis Shot** (Basic) — each projectile splits into 3 smaller copies on hit
 - **Scatter Mine** (Basic) — random-direction (`randomDir`) mines that sit still and arm after 0.5s. Opens a trap/kiting playstyle. new `armDelay` (no collision until armed).
 - **Glacial Lance** (Skill) — applies `Freeze`; hitting a frozen enemy shatters it for bonus true damage and splashes `Slow` onto nearby enemies.
-- **Momentum** — passive. Dashes and rushes grant stacking `moveSpeedPct` and `rushImpactPct`
 
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
@@ -207,7 +206,6 @@
 - Starfury
 - Autopilot
 - Feedback Loop
-- Subspace Blitz => Nitro Accelerator (+immune while dashing, +bounce?, -cooldown, +explosion -dmg)
 
 ### Stats without skill tree nodes
 - add spl dmg pct
@@ -248,10 +246,6 @@
   Fix: add Player/Enemy/Projectile/Environment/Pickup layers, disable Projectile↔Projectile and
   Projectile↔Pickup. The overlap queries in `Projectile`/`EntityProjectileHandler` already skip triggers (v0.6.3);
   an entity LayerMask would also drop walls from them.
-- [ ] Enemy pooling — documented as a deliberate deferral in Open Items; revisit when the three blockers
-  (Destroy-bound cleanup with no `OnDisable` counterparts, non-idempotent `ScaleBaseStats`, fake-null kill
-  counting) are resolved. Churn source: `EnemySpawner.cs:14-24`, `EntitySplitting.cs:21`,
-  `EntitySummonHandler.cs:50`, per-spawn `EntityStats` clone (`EntityStatManager.cs:27`).
 
 ### Low
 
@@ -303,12 +297,8 @@
 
 ### Awakenings (PlayerUpgrade)
 
-- [ ] **Ricochet Theory** — `OnProjectileHit`: 20% chance the projectile gains +1 pierce and retargets. Pairs with Chakram and pierce builds.
 - [ ] **Perfect Parry** — `OnCounterDodge`: reflects the incoming hit as a projectile toward its source and refunds the dash cooldown. Deepens dash play.
   *New feature:* stack counter on `PlayerUpgrade`.
-- [ ] **Scholar** — passive. Converts 50% of `Intelligence` into `spellDmgPct` and 25% into `manaGainPct`. Makes the Intelligence stat matter.
-- [ ] **Conduit** — `OnManaRegen`: every 50 mana gained fires the equipped skill at 40% damage for free. Links mana and skills.
-  *New feature:* `OnCollect` trigger condition.
 - [ ] **Contagion** — `OnKill`: status effects on the dying enemy spread to the 3 nearest enemies at 50% of their remaining duration. Generalizes `DoTSpread` to every effect.
 - [ ] **Vampiric Resonance** — `OnOverkill`: excess damage heals you, and healing past max HP converts to overhealth. Uses overkill and overhealth.
 - [ ] **Gravity Well** — `OnRushEnd`: spawns a small `Pulled` field at the rush endpoint. Links Riptide, Kinetic Slam and Subspace Blitz.

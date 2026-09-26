@@ -26,6 +26,7 @@ MonoBehaviour:
   spellMult: 0.7
   trueMult: 0
   scalingStat: 44
+  extraScalings: []
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 1.5
@@ -38,7 +39,7 @@ MonoBehaviour:
   bypassIFrames: 0
   randomDir: 0
   additionalAttack: {fileID: 11400000, guid: cde4c5f98bf9dd840b0ae19c9d77fa86, type: 2}
-  additionalChance: 0.35
+  additionalChance: 0.2
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   effects: []

@@ -81,6 +81,7 @@ MonoBehaviour:
   dashShouldApplyIFrame: 1
   castTimeRedPct: 0
   interruptResist: 0
+  rushImpactPct: 0
   level: 1
   exp: 0
   expBonus: 0

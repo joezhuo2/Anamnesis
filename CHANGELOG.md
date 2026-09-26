@@ -7,6 +7,29 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.8] - 2026-09-26
+
+### Added
+- **Momentum**, a treasure-pool Awakening (`GrantStatusEffect`). Starting a dash or a rush (`OnStartDash`,
+  `OnRushStart`) grants the new `Momentum` buff (11s): +6% `moveSpeedPct` and +14% `rushImpactPct`. Added
+  to `treasurePool` in both `WaveManager` instances with no unlock wave
+
+### Balance
+
+#### Buffs
+- **Cultist:** Summon cooldown 16s → 12s, and each living summon now gives the Cultist +12 `hpRegen` (was +8)
+
+#### Nerfs
+- **Enemy level scaling:** attack growth per level 1.05x → 1.04x, armor growth 1.08x → 1.07x
+  (`EnemyStatManager.ScaleBaseStats`). Enemies are now weaker at high levels
+- **Nitro Accelerator:** 285% → 245% Phys, mana cost 7 → 11 (stamina cost 16 → 15). Nitro Explosion 235% →
+  115% Spell, stamina and mana gain on hit +3 → +2
+- **Decay** (Nitro Accelerator's self-debuff) now costs -12% `hpPct` per stack (was -8%). Its `resPen` bonus
+  rises to +4% per stack (was +3%)
+- **Ultrasonic:** 170% → 110% True, `EffAtk` scaling 40% → 30%, stamina and mana gain on hit +4 → +3
+- **Warp (Capstone):** Warp Rift chance 35% → 20%
+- **Terminal Cascade:** retrigger chance 15% → 12%
+
 ## [v0.6.7] - 2026-09-25
 
 ### Added

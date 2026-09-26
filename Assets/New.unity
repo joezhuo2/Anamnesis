@@ -13101,7 +13101,7 @@ MonoBehaviour:
   rewardTitleText: {fileID: 426405453}
   rewardTitleWrapper: {fileID: 277514208}
   rewardTitle: Choose your reward
-  anomalyTitle: Select anomaly reward
+  anomalyTitle: Select Anamoly
   baseBuffPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -13434,6 +13434,11 @@ MonoBehaviour:
     desc: Taking damage increases physical damage and speed at the cost of taking
       increased damage.
     minWave: -1
+  - upgrade: {fileID: 11400000, guid: 3ca78201d7ca54e4d9c9f5a27794f11b, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Momentum
+    desc: Dashing and rushing increases movement speed and rush impact
+    minWave: -1
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -13545,6 +13550,11 @@ MonoBehaviour:
       type: 96
       value: 3
     weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 97
+      value: 3
+    weight: 1
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.4392157, g: 0.4392157, b: 0.4392157, a: 1}
@@ -25462,7 +25472,7 @@ MonoBehaviour:
   rewardTitleText: {fileID: 426405453}
   rewardTitleWrapper: {fileID: 277514208}
   rewardTitle: Choose your reward
-  anomalyTitle: Select anomaly reward
+  anomalyTitle: Select Anamoly
   baseBuffPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -25795,6 +25805,11 @@ MonoBehaviour:
     desc: Taking damage increases physical damage and speed at the cost of taking
       increased damage.
     minWave: -1
+  - upgrade: {fileID: 11400000, guid: 3ca78201d7ca54e4d9c9f5a27794f11b, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Momentum
+    desc: Dashing and rushing increases movement speed and rush impact
+    minWave: -1
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -25906,6 +25921,11 @@ MonoBehaviour:
       type: 96
       value: 3
     weight: 2
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 97
+      value: 3
+    weight: 1
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.4392157, g: 0.4392157, b: 0.4392157, a: 1}
@@ -64332,12 +64352,12 @@ PrefabInstance:
       objectReference: {fileID: 1535559042}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: activeUpgrades.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: a438f63948bfae542820227698da4e21, type: 2}
+      objectReference: {fileID: 11400000, guid: f108d8577b8b2f64694a460e1e3aa532, type: 2}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[1]'
       value: 

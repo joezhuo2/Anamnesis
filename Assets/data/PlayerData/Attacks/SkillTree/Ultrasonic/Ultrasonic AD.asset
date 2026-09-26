@@ -32,9 +32,11 @@ MonoBehaviour:
   disableAttacksWhileRushing: 0
   endRushOnCollision: 0
   bounceOnCollision: 0
-  rushKnockback: 0
-  rushKnockbackForce: 0
-  rushKnockbackTime: 0
+  rushImpact: 0
+  rushImpactForce: 0
+  rushImpactTime: 0
+  impactDmgMult: 0.5
+  impactAttack: {fileID: 0}
   predictTarget: 0
   canCharge: 0
   chargeThreshold: 0.225
@@ -66,11 +68,11 @@ MonoBehaviour:
   manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 4
+  staminaGainOnHit: 3
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 4
+  manaGainOnHit: 3
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
