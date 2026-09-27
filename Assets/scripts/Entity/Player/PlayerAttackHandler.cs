@@ -40,6 +40,7 @@ namespace CrystalFlux.EntitySystem
         private readonly Dictionary<AttackType, GameObject> spawnedUIElements = new();
         [HideInInspector] public List<AttackData> attacks = new();
         [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
+        private readonly Dictionary<AttackType, int> stackCounts = new();
         private readonly List<AttackType> cdKeyBuffer = new();
 
         private bool isCasting;
@@ -209,14 +210,10 @@ namespace CrystalFlux.EntitySystem
             AttackData selected = FindAttackOfType(type);
             if (selected == null) return;
 
-            if (!bypassCooldown)
+            if (!bypassCooldown && RefreshStacks(type, selected) <= 0)
             {
-                float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
-                if (Time.time - lastTime < GetEffCd(selected, esm))
-                {
-                    NotifyBlocked(type);
-                    return;
-                }
+                NotifyBlocked(type);
+                return;
             }
 
             float castTime = selected.GetEffCastTime(esm);
@@ -238,7 +235,7 @@ namespace CrystalFlux.EntitySystem
 
             if (castTime > 0f)
             {
-                if (stampCooldownNow) lastAttackTimes[type] = Time.time;
+                if (stampCooldownNow) ConsumeStack(type, selected);
 
                 StartCoroutine(CastRoutine(selected, type, castTime, noCost, triggerUpgrades, bypassCooldown, costUpgradesTriggered));
                 return;
@@ -250,7 +247,7 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
 
-            if (stampCooldownNow) lastAttackTimes[type] = Time.time;
+            if (stampCooldownNow) ConsumeStack(type, selected);
 
             ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown, costUpgradesTriggered);
         }
@@ -507,7 +504,7 @@ namespace CrystalFlux.EntitySystem
             castCancelled = false;
 
             if (!bypassCooldown && (chargingAttack == null || !chargingAttack.CooldownOnAttackStart))
-                lastAttackTimes[type] = Time.time;
+                ConsumeStack(type, chargingAttack != null ? chargingAttack : FindAttackOfType(type));
 
             chargingAttack = null;
 
@@ -597,10 +594,65 @@ namespace CrystalFlux.EntitySystem
             AttackData selected = FindAttackOfType(type);
             if (selected == null) return false;
 
-            float lastTime = lastAttackTimes.ContainsKey(type) ? lastAttackTimes[type] : -Mathf.Infinity;
-            if (Time.time - lastTime < GetEffCd(selected, esm)) return false;
+            if (RefreshStacks(type, selected) <= 0) return false;
 
             return CanAfford(selected);
+        }
+
+        public int GetStacks(AttackType type)
+        {
+            AttackData selected = FindAttackOfType(type);
+            return selected == null ? 0 : RefreshStacks(type, selected);
+        }
+
+        private int RefreshStacks(AttackType type, AttackData attack)
+        {
+            int max = attack.Stacks;
+
+            if (!lastAttackTimes.TryGetValue(type, out float start))
+            {
+                stackCounts.Remove(type);
+                return max;
+            }
+
+            int count = stackCounts.TryGetValue(type, out int stored) ? Mathf.Min(stored, max - 1) : 0;
+            float effCd = GetEffCd(attack, esm);
+
+            if (effCd <= 0f) count = max;
+            else
+            {
+                while (count < max && Time.time - start >= effCd)
+                {
+                    count++;
+                    start += effCd;
+                }
+            }
+
+            if (count >= max)
+            {
+                lastAttackTimes.Remove(type);
+                stackCounts.Remove(type);
+                return max;
+            }
+
+            lastAttackTimes[type] = start;
+            stackCounts[type] = count;
+            return count;
+        }
+
+        private void ConsumeStack(AttackType type, AttackData attack)
+        {
+            if (attack == null)
+            {
+                lastAttackTimes[type] = Time.time;
+                stackCounts[type] = 0;
+                return;
+            }
+
+            int count = RefreshStacks(type, attack);
+
+            if (count >= attack.Stacks || count <= 0) lastAttackTimes[type] = Time.time;
+            stackCounts[type] = Mathf.Max(0, count - 1);
         }
 
         public bool CanAfford(AttackData attack)
@@ -681,6 +733,7 @@ namespace CrystalFlux.EntitySystem
             AttackData current = FindAttackOfType(type);
             if (current != null) attacks.Remove(current);
             lastAttackTimes.Remove(type);
+            stackCounts.Remove(type);
 
             if (spawnedUIElements.ContainsKey(type))
             {
@@ -716,11 +769,13 @@ namespace CrystalFlux.EntitySystem
         {
             if (!lastAttackTimes.ContainsKey(type)) return;
 
-            float lastTime = lastAttackTimes[type];
-
-            var effCd = GetEffCd(FindAttackOfType(type), esm);
+            AttackData attack = FindAttackOfType(type);
+            var effCd = GetEffCd(attack, esm);
 
             if (effCd <= 0f) return;
+
+            RefreshStacks(type, attack);
+            if (!lastAttackTimes.TryGetValue(type, out float lastTime)) return;
 
             float timeElapsed = Time.time - lastTime;
             float cooldownRemainingPct = 1f - (timeElapsed / effCd);
@@ -728,6 +783,7 @@ namespace CrystalFlux.EntitySystem
             float newLastTime = Time.time - ((1f - newCooldownRemainingPct) * effCd);
 
             lastAttackTimes[type] = newLastTime;
+            RefreshStacks(type, attack);
         }
 
         public static float GetEffCd(AttackData attack, IStatProvider esm)

@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Enemy/EnemyAttackHandler.cs": {
-    "mtime": 1790346597.0437162,
-    "seen": 1790348884.544642,
-    "ast_hash": "94935bca25ad11efc0283c92b4f2ee26",
+    "mtime": 1790463325.011222,
+    "seen": 1790463576.4166594,
+    "ast_hash": "4807734d5d517c9f020a12605acb0cc9",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Enemy/EnemyMovement.cs": {
@@ -288,9 +288,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityStatManager.cs": {
-    "mtime": 1790346507.9099324,
-    "seen": 1790348884.5446596,
-    "ast_hash": "61319276e4a9e9b9784294eaf1c06c55",
+    "mtime": 1790462462.7220304,
+    "seen": 1790463576.4166772,
+    "ast_hash": "b543bdc0271f4671a1b75ae79be42ea7",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/EntityStats.cs": {
@@ -324,9 +324,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerAttackHandler.cs": {
-    "mtime": 1790346597.0437162,
-    "seen": 1790348884.5446875,
-    "ast_hash": "3920cd6279453df2f342fe3a52631d48",
+    "mtime": 1790462437.6635633,
+    "seen": 1790463576.4167085,
+    "ast_hash": "1ac35df08b9982d49ac3bcb5a570a6e0",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerControls.cs": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrades/Decoy.cs": {
-    "mtime": 1790347244.2054791,
-    "seen": 1790348884.544714,
-    "ast_hash": "781ac4ed2c6f17eb456eea10850de5ff",
+    "mtime": 1790462819.0874472,
+    "seen": 1790463576.4167373,
+    "ast_hash": "fd0fbe7a48b18f2be6c52a3ac7cbef3f",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrades/GainMana.cs": {
@@ -420,15 +420,15 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrades/SoulRendPU.cs": {
-    "mtime": 1788898816.2297626,
-    "seen": 1788899881.8364747,
-    "ast_hash": "137e7a3ec1d1375029113e7f7b04e9c0",
+    "mtime": 1790462159.8780887,
+    "seen": 1790463576.416754,
+    "ast_hash": "d9cf900b95feefeeada2f46553e7ae4e",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrades/SpawnProjectile.cs": {
-    "mtime": 1788142679.696972,
-    "seen": 1788143852.878289,
-    "ast_hash": "e775b07b1ac06185c49a6f5977fe5742",
+    "mtime": 1790462159.8780887,
+    "seen": 1790463576.4167557,
+    "ast_hash": "4bd55ac28ab41600c69fe75f3b0c488d",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerUpgrades/StellarSurge.cs": {
@@ -444,9 +444,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/TooltipUI.cs": {
-    "mtime": 1788142688.890803,
-    "seen": 1788143852.8782935,
-    "ast_hash": "1c01b355714058a1b6f6307a84c0905a",
+    "mtime": 1790462382.7325654,
+    "seen": 1790463576.4167662,
+    "ast_hash": "b390018b93c63078a845d85ca8d5411a",
     "semantic_hash": ""
   },
   "Assets/scripts/Items/Gear.cs": {
@@ -480,9 +480,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/Projectile.cs": {
-    "mtime": 1790346401.456535,
-    "seen": 1790348884.5448015,
-    "ast_hash": "e1929bd46de97cd277fb66f2d2b901c4",
+    "mtime": 1790463315.5633872,
+    "seen": 1790463576.416827,
+    "ast_hash": "ba011a74c787465f3e275d8613017cdb",
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/ProjectileData.cs": {
@@ -492,9 +492,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/ProjectileSpawner.cs": {
-    "mtime": 1790358394.8425062,
-    "seen": 1790361125.8918242,
-    "ast_hash": "0af92c7fbda791a2952e4995fbc352a5",
+    "mtime": 1790462134.4111648,
+    "seen": 1790463576.4168394,
+    "ast_hash": "0c499a2b2060eedb8be7cd46a7a35319",
     "semantic_hash": ""
   },
   "Assets/scripts/SkillTree/PlayerSkillTree.cs": {
@@ -558,9 +558,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/StatusEffect/StatusEffectManager.cs": {
-    "mtime": 1790300233.5539613,
-    "seen": 1790301145.5085611,
-    "ast_hash": "00b9165abc1404b5ff7002e40e57d5ba",
+    "mtime": 1790462883.315863,
+    "seen": 1790463576.4168897,
+    "ast_hash": "a91b3c5f72b92a56f3f9fdf92d00f130",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/Anomaly/AnomalyData.cs": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveManager.cs": {
-    "mtime": 1790162249.9089916,
-    "seen": 1790211668.296814,
-    "ast_hash": "32aa1f47a5bccbffd572614890e6f56c",
+    "mtime": 1790462450.8214276,
+    "seen": 1790463576.4169962,
+    "ast_hash": "3dceffbd48a63cc60c732ce9c973cfd7",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/WaveQuality.cs": {
@@ -690,9 +690,9 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790439123.4677365,
-    "seen": 1790439213.9795175,
-    "ast_hash": "c92b057e5ff795305bd0c85254348463",
+    "mtime": 1790463506.0207434,
+    "seen": 1790463576.4170852,
+    "ast_hash": "9ac66a0ac35ca7722f059c14f98a3944",
     "semantic_hash": ""
   },
   "ProjectSettings/ProjectVersion.txt": {
@@ -702,21 +702,21 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790438951.5973432,
-    "seen": 1790439213.9795349,
-    "ast_hash": "a902c52659cd18b988d787eae93bc999",
+    "mtime": 1790463483.8014657,
+    "seen": 1790463576.4171019,
+    "ast_hash": "85c2ede05003170ec867d5475e6f842e",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
-    "mtime": 1790439124.474374,
-    "seen": 1790439213.9795384,
-    "ast_hash": "6def719f33dc455599f94f09bad4ab2c",
+    "mtime": 1790463507.1408195,
+    "seen": 1790463576.4171047,
+    "ast_hash": "6d64679b77e7afcc0212c9e01e1b042e",
     "semantic_hash": ""
   },
   "TODO.md": {
-    "mtime": 1790438679.768241,
-    "seen": 1790439213.9795418,
-    "ast_hash": "92baa84eee4173105963c8e6f529bf1a",
+    "mtime": 1790463235.3781815,
+    "seen": 1790463576.4171073,
+    "ast_hash": "83dbf5bd639bbfbaa0c9f35ffd3d3dc4",
     "semantic_hash": ""
   },
   "Assets/TextMesh Pro/Examples & Extras/Sprites/Default Sprites.png": {
@@ -822,15 +822,15 @@
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicator.cs": {
-    "mtime": 1790162232.9920743,
-    "seen": 1790211668.2967746,
-    "ast_hash": "f8229e322071c05841e57886f9dddf24",
+    "mtime": 1790463343.7311134,
+    "seen": 1790463576.416935,
+    "ast_hash": "d72a1cb56c21db25a43270b80bad4b46",
     "semantic_hash": ""
   },
   "Assets/scripts/TextIndicator/TextIndicatorSpawner.cs": {
-    "mtime": 1790041882.5429196,
-    "seen": 1790043182.297009,
-    "ast_hash": "d92fdeb30bea55c86c56a0b03237d6c9",
+    "mtime": 1790463343.7450752,
+    "seen": 1790463576.416938,
+    "ast_hash": "7b90ad84711fe8b2dcdc7482d3a2877e",
     "semantic_hash": ""
   },
   ".github/copilot-instructions.md": {
@@ -840,9 +840,9 @@
     "semantic_hash": ""
   },
   "CREDITS.md": {
-    "mtime": 1789309464.5869038,
-    "seen": 1789335075.423669,
-    "ast_hash": "d22d793c0141af607f87123d9e7ef447",
+    "mtime": 1790457114.4195125,
+    "seen": 1790463576.4170923,
+    "ast_hash": "f3487412eae78f0b56e0ac38168a4576",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/KnockbackHandler.cs": {
@@ -858,9 +858,9 @@
     "semantic_hash": ""
   },
   "GAME.md": {
-    "mtime": 1790439112.0761778,
-    "seen": 1790439213.9795282,
-    "ast_hash": "85d3d340a40f9b6630b93a3fd370d0d3",
+    "mtime": 1790463517.6926365,
+    "seen": 1790463576.4170952,
+    "ast_hash": "90cbdceaf74aa8ce7b239875c40c0c2f",
     "semantic_hash": ""
   },
   "Assets/scripts/Wave/UnlimitedWaveManager.cs": {
@@ -1194,9 +1194,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Projectile/ProjectileSnapshot.cs": {
-    "mtime": 1790300109.266422,
-    "seen": 1790301145.5085285,
-    "ast_hash": "3ee7e9e85d26d0c5675840f3dd7e4e6a",
+    "mtime": 1790462193.7905216,
+    "seen": 1790463576.4168365,
+    "ast_hash": "b67cadcaab85222b43f816240fc1882f",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/PlayerResourcePool.cs": {
@@ -1356,9 +1356,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Misc/HoverScale.cs": {
-    "mtime": 1788208321.918696,
-    "seen": 1788208906.9331071,
-    "ast_hash": "0ba66a2de1ca588e90d7300d2cbdeadb",
+    "mtime": 1790462382.7325654,
+    "seen": 1790463576.4167945,
+    "ast_hash": "83d82fffaf76906b04df3837635c575b",
     "semantic_hash": ""
   },
   "Assets/scripts/StatusEffect/StatusEffects/Lifesteal.cs": {
@@ -1422,9 +1422,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Pooling/PrefabPool.cs": {
-    "mtime": 1788290524.5119512,
-    "seen": 1788291721.187208,
-    "ast_hash": "8fbd9dbe9729e2b11547986b15d0ce0c",
+    "mtime": 1790462178.0990238,
+    "seen": 1790463576.4168086,
+    "ast_hash": "714603d1fd41e21546bb48297e157e77",
     "semantic_hash": ""
   },
   ".claude/settings.local.json": {
@@ -2304,9 +2304,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Player/SkillTreeOpenButton.cs": {
-    "mtime": 1788780837.9780245,
-    "seen": 1788781959.2928455,
-    "ast_hash": "c7dd84987d3aaac92776780a00f77d0d",
+    "mtime": 1790462419.2671046,
+    "seen": 1790463576.4167624,
+    "ast_hash": "bfe59ce7f3b3964b5524fde03ff2ece6",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/NumberFormat.cs": {
@@ -2466,9 +2466,9 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/RushState.cs": {
-    "mtime": 1790358364.3545334,
-    "seen": 1790361125.8917038,
-    "ast_hash": "72b16603f3b94a1054bc825197f5cf9d",
+    "mtime": 1790462159.8759148,
+    "seen": 1790463576.416771,
+    "ast_hash": "eb98b610a1b9cf03db5ca2f6471ae333",
     "semantic_hash": ""
   },
   "Assets/data/PlayerData/Attacks/Rare Pool/Subspace Blitz/448.png": {
@@ -2484,15 +2484,15 @@
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Mirage/EtherealMirage.cs": {
-    "mtime": 1790358394.8463318,
-    "seen": 1790361125.891541,
-    "ast_hash": "620f412e72b026d9d072a64ec3088abe",
+    "mtime": 1790462885.8703358,
+    "seen": 1790463576.4166903,
+    "ast_hash": "9d0eb21af57a4587d0b814ff237dd396",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Mirage/MirageClone.cs": {
-    "mtime": 1790347244.2044747,
-    "seen": 1790348884.5446732,
-    "ast_hash": "6f218324c4bcfbb499e8582ce37767b0",
+    "mtime": 1790462159.8732119,
+    "seen": 1790463576.4166927,
+    "ast_hash": "0160f69f1c89c15070649916ac10cf02",
     "semantic_hash": ""
   },
   "Assets/scripts/Entity/Mirage/MirageStatManager.cs": {
@@ -2517,6 +2517,18 @@
     "mtime": 1782075400.7713583,
     "seen": 1790361125.8925242,
     "ast_hash": "68c910767e93d2d6b53bc95ce0798b33",
+    "semantic_hash": ""
+  },
+  "Assets/scripts/Projectile/ProjectileOwnerCache.cs": {
+    "mtime": 1790463313.6372447,
+    "seen": 1790463576.4168332,
+    "ast_hash": "88620ea27b18739b37a4bb01f9ad4cdd",
+    "semantic_hash": ""
+  },
+  "Assets/data/PlayerData/Attacks/SkillTree/Aeternus (PUT ON HOLD)/aeternus.png": {
+    "mtime": 1790457132.0656059,
+    "seen": 1790463576.417419,
+    "ast_hash": "54a0811066d986ca98109b879f05655c",
     "semantic_hash": ""
   }
 }

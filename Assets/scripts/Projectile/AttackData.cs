@@ -13,6 +13,8 @@ namespace CrystalFlux.ProjectileSystem
     {
         [Header("Basic")]
         [SerializeField] private float cooldown;
+        [Tooltip("Player only. Number of uses that can be stored. Each use spends one stack, and the cooldown restores one stack at a time. 1 = a normal cooldown")]
+        [Min(1)] [SerializeField] private int stacks = 1;
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private ProjectileData pd;
         [Tooltip("Time after attack is performed before resetting the attack animation")]
@@ -167,6 +169,7 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private string displayName;
 
         public float Cooldown => cooldown;
+        public int Stacks => Mathf.Max(1, stacks);
         public GameObject ProjectilePrefab => projectilePrefab;
         public ProjectileData Pd => pd;
         public ProjectilePattern Pattern => pattern;
@@ -257,6 +260,7 @@ namespace CrystalFlux.ProjectileSystem
         {
             lines.Add($"Type: {type} ({pattern})");
             if (cooldown > 0f) lines.Add($"Cooldown: {cooldown:F1}s");
+            if (Stacks > 1) lines.Add($"Stacks: {Stacks}");
             if (castTime > 0f) lines.Add($"Cast Time: {castTime:F1}s{(canMoveWhileCasting ? string.Empty : " (rooted)")}");
             if (canCharge) lines.Add($"Hold {chargeThreshold:F2}s to charge (max {maxChargeTime:F1}s, drains every {chargeTickInterval:F1}s)");
             if (canCharge && chargeAttack != null) lines.Add($"Held: {chargeAttack.displayName}");

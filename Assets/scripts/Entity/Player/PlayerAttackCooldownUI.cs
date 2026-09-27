@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
 using CrystalFlux.UISystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,6 +15,12 @@ namespace CrystalFlux.EntitySystem
         public Image cooldownImage;
         public Image iconImage;
         public Image borderImage;
+
+        [Header("Stacks")]
+        [Tooltip("Border color for attacks that can store more than one stack")]
+        public Color stackedBorderColor = new(0.3f, 0.85f, 0.35f, 1f);
+        [Tooltip("Optional. Shows the stored stack count on attacks with more than one stack")]
+        public TextMeshProUGUI stackText;
 
         [Header("Blocked Feedback")]
         public Color blockedBorderColor = new(0.85f, 0.15f, 0.15f, 1f);
@@ -41,6 +48,10 @@ namespace CrystalFlux.EntitySystem
         private bool lastCanCast = true;
         private bool pressed;
         private Coroutine flashRoutine;
+        private int lastStacks = -1;
+
+        private bool IsStacked => cad != null && cad.Stacks > 1;
+        private Color IdleBorderColor => IsStacked ? stackedBorderColor : normalBorderColor;
 
         public void Setup(PlayerAttackHandler pah, AttackType type, IStatProvider esm)
         {
@@ -71,12 +82,14 @@ namespace CrystalFlux.EntitySystem
                     normalBorderColor = borderImage.color;
                     borderColorCached = true;
                 }
-                borderImage.color = normalBorderColor;
+                borderImage.color = IdleBorderColor;
             }
 
             lastCanCast = true;
             nextPollTime = 0f;
             cachedEffCd = 0f;
+            lastStacks = -1;
+            if (stackText != null) stackText.gameObject.SetActive(IsStacked);
 
             RefreshTooltip();
 
@@ -99,11 +112,12 @@ namespace CrystalFlux.EntitySystem
                 nextPollTime = Time.unscaledTime + PollInterval;
                 cachedEffCd = PlayerAttackHandler.GetEffCd(cad, cesm);
                 UpdateBorder();
+                UpdateStackText();
             }
 
-            if (cooldownImage == null || !cpah.lastAttackTimes.TryGetValue(ctype, out float lat)) return;
+            if (cooldownImage == null) return;
 
-            if (cachedEffCd <= 0f)
+            if (cachedEffCd <= 0f || !cpah.lastAttackTimes.TryGetValue(ctype, out float lat))
             {
                 if (cooldownImage.fillAmount != 0f) cooldownImage.fillAmount = 0f;
                 return;
@@ -121,7 +135,18 @@ namespace CrystalFlux.EntitySystem
             if (canCast == lastCanCast) return;
 
             lastCanCast = canCast;
-            if (flashRoutine == null) borderImage.color = canCast ? normalBorderColor : blockedBorderColor;
+            if (flashRoutine == null) borderImage.color = canCast ? IdleBorderColor : blockedBorderColor;
+        }
+
+        private void UpdateStackText()
+        {
+            if (stackText == null || !IsStacked) return;
+
+            int stacks = cpah.GetStacks(ctype);
+            if (stacks == lastStacks) return;
+
+            lastStacks = stacks;
+            stackText.SetText("{0}", stacks);
         }
 
         public void FlashBlocked()
@@ -147,7 +172,7 @@ namespace CrystalFlux.EntitySystem
 
             flashRoutine = null;
             lastCanCast = cpah != null && cpah.CanCast(ctype);
-            borderImage.color = lastCanCast ? normalBorderColor : blockedBorderColor;
+            borderImage.color = lastCanCast ? IdleBorderColor : blockedBorderColor;
         }
 
         private void OnDisable()
@@ -160,7 +185,7 @@ namespace CrystalFlux.EntitySystem
                 flashRoutine = null;
             }
 
-            if (borderImage != null && borderColorCached) borderImage.color = normalBorderColor;
+            if (borderImage != null && borderColorCached) borderImage.color = IdleBorderColor;
             lastCanCast = true;
         }
 
@@ -211,6 +236,7 @@ namespace CrystalFlux.EntitySystem
 
             List<string> lines = new() { $"{cad.type}" };
             if (effCd != 0f) lines.Add($"Cooldown: {effCd:F1}s");
+            if (cad.Stacks > 1) lines.Add($"Stacks: {cpah.GetStacks(ctype)}/{cad.Stacks}");
             if (hp != 0f || hpg != 0f) lines.Add($"Health: -{hp:F0} +{hpg:F0} +{cad.HealthPctGainOnHit:F1}%");
             if (sp != 0f || spg != 0f) lines.Add($"Stamina: -{sp:F0} +{spg:F0} +{cad.StaminaPctGainOnHit:F1}%");
             if (mp != 0f || mpg != 0f) lines.Add($"Mana: -{mp:F0} +{mpg:F0} +{cad.ManaPctGainOnHit:F1}%");

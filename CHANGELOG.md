@@ -7,6 +7,29 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.10] - 2026-09-27
+
+### Added
+- **Attack stacks.** `AttackData` has a new `stacks` field (Basic header, minimum 1, default 1). It sets how many
+  uses the player can store. Each use spends one stack. While any stack is missing, the cooldown runs and restores
+  one stack each time it finishes, and time left over after a stack is restored carries into the next one. An
+  attack with `stacks = 1` behaves as before. Enemies ignore the field
+- **`PlayerAttackHandler.GetStacks(AttackType)`** returns the number of stacks ready for that slot
+- **Green border for stacked attacks.** `PlayerAttackCooldownUI` uses the new `stackedBorderColor` (green) in
+  place of its normal border color when the attack has more than one stack. The red blocked color and the
+  blocked flash are unchanged
+- **Optional stack counter.** `PlayerAttackCooldownUI.stackText` (TextMeshProUGUI) shows the ready stack count on
+  attacks with more than one stack and is hidden on the others. Leave it empty to skip the counter
+- The attack cooldown tooltip shows `Stacks: ready/max`, and `AttackData` tooltip lines show `Stacks: max`, for
+  attacks with more than one stack
+
+### Changed
+- **`lastAttackTimes` now holds the start of the current stack recharge.** The entry is removed once every stack
+  is ready, so the cooldown overlay clears instead of reading an old timestamp. Stamping the cooldown (at attack
+  start, cast start or charge end, as before) now spends a stack
+- **`AdvanceCooldown` / `AdvanceAllCooldowns`** (Cooldown Advance) advance the stack that is recharging. An advance
+  that finishes it restores that stack and carries nothing over to the next one
+
 ## [v0.6.9] - 2026-09-26
 
 ### Changed
