@@ -13170,14 +13170,9 @@ MonoBehaviour:
     weight: 6
   - icon: {fileID: 0}
     baseBuff:
-      type: 21
-      value: 1
-    weight: 2
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 22
-      value: 1
-    weight: 2
+      type: 102
+      value: 2
+    weight: 6
   - icon: {fileID: 0}
     baseBuff:
       type: 24
@@ -13226,6 +13221,11 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 61
+      value: 2
+    weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 102
       value: 2
     weight: 3
   rarePool:
@@ -13457,11 +13457,6 @@ MonoBehaviour:
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
-      type: 18
-      value: 2
-    weight: 1
-  - icon: {fileID: 0}
-    baseBuff:
       type: 28
       value: 3
     weight: 2
@@ -13555,6 +13550,11 @@ MonoBehaviour:
       type: 97
       value: 3
     weight: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 98
+      value: 2
+    weight: 3
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.4392157, g: 0.4392157, b: 0.4392157, a: 1}
@@ -13616,7 +13616,7 @@ MonoBehaviour:
       value: 40
     - type: 3
       value: 25
-    - type: 18
+    - type: 98
       value: -30
     weight: 1
     variance: 0.15
@@ -13629,7 +13629,7 @@ MonoBehaviour:
       value: 30
     - type: 17
       value: -50
-    - type: 22
+    - type: 102
       value: -30
     weight: 1
     variance: 0.15
@@ -13677,7 +13677,7 @@ MonoBehaviour:
     baseStatBuffs:
     - type: 17
       value: 60
-    - type: 18
+    - type: 98
       value: 20
     - type: 24
       value: -40
@@ -13688,7 +13688,7 @@ MonoBehaviour:
   - rewardName: Arcane Shield
     displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
     baseStatBuffs:
-    - type: 22
+    - type: 102
       value: 40
     - type: 41
       value: 25
@@ -13752,7 +13752,7 @@ MonoBehaviour:
       value: 20
     - type: 17
       value: -30
-    - type: 18
+    - type: 98
       value: -20
     weight: 1
     variance: 0.15
@@ -25573,14 +25573,9 @@ MonoBehaviour:
     weight: 6
   - icon: {fileID: 0}
     baseBuff:
-      type: 21
-      value: 1
-    weight: 2
-  - icon: {fileID: 0}
-    baseBuff:
-      type: 22
-      value: 1
-    weight: 2
+      type: 102
+      value: 2
+    weight: 6
   - icon: {fileID: 0}
     baseBuff:
       type: 24
@@ -25629,6 +25624,11 @@ MonoBehaviour:
   - icon: {fileID: 0}
     baseBuff:
       type: 61
+      value: 2
+    weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 102
       value: 2
     weight: 3
   rarePool:
@@ -25860,11 +25860,6 @@ MonoBehaviour:
     weight: 2
   - icon: {fileID: 0}
     baseBuff:
-      type: 18
-      value: 2
-    weight: 1
-  - icon: {fileID: 0}
-    baseBuff:
       type: 28
       value: 3
     weight: 2
@@ -25958,6 +25953,11 @@ MonoBehaviour:
       type: 97
       value: 3
     weight: 1
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 98
+      value: 2
+    weight: 3
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.4392157, g: 0.4392157, b: 0.4392157, a: 1}
@@ -26010,7 +26010,7 @@ MonoBehaviour:
       value: 30
     - type: 13
       value: 20
-    - type: 18
+    - type: 98
       value: 15
     - type: 24
       value: -50
@@ -26025,7 +26025,7 @@ MonoBehaviour:
       value: 25
     - type: 93
       value: 30
-    - type: 18
+    - type: 98
       value: -60
     weight: 1
     variance: 0.15
@@ -26038,7 +26038,7 @@ MonoBehaviour:
       value: 30
     - type: 17
       value: -50
-    - type: 22
+    - type: 102
       value: -30
     weight: 1
     variance: 0.15
@@ -26088,7 +26088,7 @@ MonoBehaviour:
     baseStatBuffs:
     - type: 17
       value: 70
-    - type: 18
+    - type: 98
       value: 30
     - type: 24
       value: -40
@@ -26099,7 +26099,7 @@ MonoBehaviour:
   - rewardName: Arcane Shield
     displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
     baseStatBuffs:
-    - type: 22
+    - type: 102
       value: 40
     - type: 41
       value: 25
@@ -26165,7 +26165,7 @@ MonoBehaviour:
       value: 20
     - type: 17
       value: -30
-    - type: 18
+    - type: 98
       value: -20
     weight: 1
     variance: 0.15

@@ -16,7 +16,7 @@ namespace CrystalFlux.ItemSystem
             StatType.critChance, StatType.critDamage, StatType.aoePct,
             StatType.maxHp, StatType.hpPct, StatType.hpRegen, StatType.hpRegPct,
             StatType.armor, StatType.armorPct,
-            StatType.damageRes, StatType.physicalRes, StatType.spellRes,
+            StatType.defense, StatType.defensePct, StatType.arcaneShield, StatType.arcaneShieldPct,
             StatType.dodgeChance, StatType.dodgeResPct,
             StatType.moveSpeed, StatType.moveSpeedPct, StatType.attackSpeedPct,
             StatType.defShred, StatType.resPen,

@@ -27,6 +27,8 @@ namespace CrystalFlux.StatusEffectSystem
             StatType.EffAtk => StatType.attack,
             StatType.EffMaxHp => StatType.maxHp,
             StatType.EffArmor => StatType.armor,
+            StatType.EffDefense => StatType.defense,
+            StatType.EffArcaneShield => StatType.arcaneShield,
             StatType.EffSpd => StatType.moveSpeed,
             StatType.EffInt => StatType.Intelligence,
             StatType.EffHpReg => StatType.hpRegen,

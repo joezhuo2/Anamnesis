@@ -2536,5 +2536,17 @@
     "seen": 1790539452.989717,
     "ast_hash": "8c776c186de4761e786892ce63038a2f",
     "semantic_hash": ""
+  },
+  "Assets/Resources/PerformanceTestRunInfo.json": {
+    "mtime": 1790542300.1445334,
+    "seen": 1790542381.9507813,
+    "ast_hash": "969f058997da3d080cc9aff313852509",
+    "semantic_hash": ""
+  },
+  "Assets/Resources/PerformanceTestRunSettings.json": {
+    "mtime": 1790542300.1455321,
+    "seen": 1790542381.9507868,
+    "ast_hash": "2184b7dbb6a1bb19b601e68687cb1391",
+    "semantic_hash": ""
   }
 }

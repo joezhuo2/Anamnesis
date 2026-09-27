@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Subspace Blitz AD
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
   type: 1
-  cooldown: 1.3
+  cooldown: 1.5
+  stacks: 2
   projectilePrefab: {fileID: 1388074473146687369, guid: 4ab4af7260cdb974e8cfdf5f17c453ac, type: 3}
   pd: {fileID: 11400000, guid: e8407f056dd5949459928db8b9fa30c8, type: 2}
   animationLength: 0.5
@@ -36,6 +37,7 @@ MonoBehaviour:
   rushImpactForce: 8
   rushImpactTime: 0.15
   impactDmgMult: 0.65
+  impactAttack: {fileID: 0}
   predictTarget: 0
   canCharge: 0
   chargeThreshold: 0.225

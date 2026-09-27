@@ -45,6 +45,10 @@ namespace CrystalFlux.Core
         [HideInInspector] public float overhealth;
         public int armor;
         public float armorPct;
+        public int defense;
+        public float defensePct;
+        public int arcaneShield;
+        public float arcaneShieldPct;
         [Range(-200f, 100f)] public float damageRes;
         [Range(0f, 100f)] public float dodgeChance;
         [Range(0f, 100f)] public float dodgeResPct;
@@ -215,6 +219,14 @@ namespace CrystalFlux.Core
                 StatType.EffDashDistance => Mathf.Max(0f, dashDistance * (1f + (dashDistancePct * 0.01f))),
                 StatType.DashShouldApplyIFrame => dashShouldApplyIFrame ? 1f : 0f,
                 StatType.ArmorRes => (armor * (1f + (armorPct * 0.01f))) / ((armor * (1f + (armorPct * 0.01f))) + 100f),
+                StatType.defense => defense,
+                StatType.defensePct => defensePct,
+                StatType.EffDefense => defense * (1f + (defensePct * 0.01f)),
+                StatType.DefenseRes => (defense * (1f + (defensePct * 0.01f))) / ((defense * (1f + (defensePct * 0.01f))) + 100f),
+                StatType.arcaneShield => arcaneShield,
+                StatType.arcaneShieldPct => arcaneShieldPct,
+                StatType.EffArcaneShield => arcaneShield * (1f + (arcaneShieldPct * 0.01f)),
+                StatType.ArcaneShieldRes => (arcaneShield * (1f + (arcaneShieldPct * 0.01f))) / ((arcaneShield * (1f + (arcaneShieldPct * 0.01f))) + 100f),
                 StatType.castTimeRedPct => castTimeRedPct,
                 StatType.interruptResist => interruptResist,
                 StatType.overhealth => overhealth,
@@ -316,6 +328,12 @@ namespace CrystalFlux.Core
                 case StatType.EffMaxStamina: maxStamina += Mathf.RoundToInt(delta); break;
                 case StatType.EffMaxMana: maxMana += Mathf.RoundToInt(delta); break;
                 case StatType.EffArmor: armor += Mathf.RoundToInt(delta); break;
+                case StatType.defense: defense += Mathf.RoundToInt(delta); break;
+                case StatType.defensePct: defensePct += delta; break;
+                case StatType.EffDefense: defense += Mathf.RoundToInt(delta); break;
+                case StatType.arcaneShield: arcaneShield += Mathf.RoundToInt(delta); break;
+                case StatType.arcaneShieldPct: arcaneShieldPct += delta; break;
+                case StatType.EffArcaneShield: arcaneShield += Mathf.RoundToInt(delta); break;
                 case StatType.castTimeRedPct: castTimeRedPct += delta; break;
                 case StatType.interruptResist: interruptResist += delta; break;
                 case StatType.overhealth: overhealth = Mathf.Max(0f, overhealth + delta); break;

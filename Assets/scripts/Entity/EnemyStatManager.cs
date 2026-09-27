@@ -42,6 +42,7 @@ namespace CrystalFlux.Core
             s.maxHp = Mathf.RoundToInt(s.maxHp * hpMult);
             s.hpRegen *= hprMult;
             s.armor = Mathf.RoundToInt(s.armor * armorMult);
+            s.arcaneShield = Mathf.RoundToInt(s.arcaneShield * armorMult);
 
             s.aoePct *= utilMult;
             s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct * utilMult, -100f, 100f);

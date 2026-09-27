@@ -7,6 +7,36 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.12] - 2026-09-27
+
+### Added
+- **Defense** (`defense`, `defensePct`, `EffDefense`, `DefenseRes`). A flat stat that reduces damage of every
+  type, using the armor formula (`100 / (EffDefense + 100)`). It stacks multiplicatively with armor and arcane
+  shield, and `defShred` does not reduce it
+- **Arcane Shield** (`arcaneShield`, `arcaneShieldPct`, `EffArcaneShield`, `ArcaneShieldRes`). The spell-damage
+  counterpart of armor: same formula, same `defShred` reduction, applied only to spell damage
+- Enemies scale `arcaneShield` with the same level multiplier as armor (`armorGrowth` 1.07 per level)
+- The player resources tooltip shows Arcane Shield and Defense lines with their damage reduction
+- Defense and Arcane Shield (flat and %) are rollable gear stats, count as flat stats for mirage clones,
+  and are supported by stat synergies, `StatReduction` and the reward preview line
+- **CrystalFlux-Core 0.12.0**, which appends the new `StatType` members after `rushImpactPct` so existing
+  serialized `StatBuff` assets keep their mappings
+
+### Changed
+- `damageRes`, `physicalRes` and `spellRes` are no longer in the player stat pools. They still work, but only
+  come from status effect buffs/debuffs (Vulnerable, Holy Bounty, Celestial Protection, ...), enemy presets
+  and skill tree nodes
+- `WaveManager` pools (regular and unlimited):
+  - Base pool: the `physicalRes` entry is removed, and the `spellRes` entry is now `arcaneShield` (+2, weight 6)
+  - Mixed pool: `damageRes` +2 is now `defense` +2
+  - Milestone rewards: every `damageRes` value becomes `defense` and every `spellRes` value becomes
+    `arcaneShield`, with the same numbers (for example Iron Wall now gives +20 defense, and the Arcane Shield
+    milestone gives +40 arcane shield)
+- Gear rolls replace `damageRes` / `physicalRes` / `spellRes` with `defense`, `defensePct`, `arcaneShield`
+  and `arcaneShieldPct`
+- The armor multiplier is now the shared `DamageCalculator.DefenseMult(effDef)`, which armor, arcane shield
+  and defense all use
+
 ## [v0.6.11] - 2026-09-27
 
 ### Added

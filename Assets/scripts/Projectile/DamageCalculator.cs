@@ -20,12 +20,16 @@ namespace CrystalFlux.ProjectileSystem
             float effRes = Mathf.Max(-100f, esm.GetStat(StatType.damageRes) + typeRes - resPen);
             float resMult = 1f - (effRes * 0.01f);
 
-            float effArmor = esm.GetStat(StatType.EffArmor) - defShred;
-            float armorMult = 1f;
-            if (type == DamageType.Physical)
-                armorMult = effArmor >= 0f ? 100f / (effArmor + 100f) : 3f - (100f / (100f - effArmor));
+            float typeDef = type switch
+            {
+                DamageType.Physical => esm.GetStat(StatType.EffArmor),
+                DamageType.Spell => esm.GetStat(StatType.EffArcaneShield),
+                _ => 0f
+            };
+            float armorMult = type is DamageType.Physical or DamageType.Spell ? DefenseMult(typeDef - defShred) : 1f;
+            float defMult = DefenseMult(esm.GetStat(StatType.EffDefense));
 
-            float finalDamage = rawDamage * resMult * armorMult;
+            float finalDamage = rawDamage * resMult * armorMult * defMult;
             float size = 1f;
 
             float dc = esm.GetStat(StatType.dodgeChance) * 0.01f;
@@ -39,6 +43,9 @@ namespace CrystalFlux.ProjectileSystem
 
             return (finalDamage, size);
         }
+
+        public static float DefenseMult(float effDef)
+            => effDef >= 0f ? 100f / (effDef + 100f) : 3f - (100f / (100f - effDef));
 
         public static float GetAdditionalScaling(ProjectileDamageSnapshot snapshot, DamageType type) => type switch
         {

@@ -692,6 +692,24 @@ the pool for the rest of the run. Full stats for each attack are in the sections
 
 ---
 
+# Damage Mitigation
+
+`DamageCalculator.CalculateDamageTaken` multiplies incoming damage by each of these, then rolls dodge.
+`DefenseMult(x)` is `100 / (x + 100)` for `x >= 0` and `3 - 100 / (100 - x)` below 0.
+
+| Layer | Applies to | Value | Reduced by |
+| --- | --- | --- | --- |
+| Resistance | All types | `1 - (damageRes + physicalRes/spellRes - resPen) %`, floored at -100% | `resPen` |
+| Armor | Physical | `DefenseMult(EffArmor - defShred)` | `defShred` |
+| Arcane Shield | Spell | `DefenseMult(EffArcaneShield - defShred)` | `defShred` |
+| Defense | All types | `DefenseMult(EffDefense)` | - |
+
+`damageRes`, `physicalRes` and `spellRes` are not in any reward pool or gear roll. They only come from
+status effects, enemy presets and skill tree nodes. Enemies above level 1 multiply `armor` and
+`arcaneShield` by `1.07^(level - 1)`.
+
+---
+
 # Stat Synergies
 
 Serialized in `WaveManager.synergyStatPool` and the `synergy*` fields next to it (set separately

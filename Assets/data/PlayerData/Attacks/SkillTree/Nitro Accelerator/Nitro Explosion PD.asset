@@ -23,12 +23,12 @@ MonoBehaviour:
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.95
+  spellMult: 0.6
   trueMult: 0
   scalingStat: 31
   extraScalings:
   - stat: 44
-    weight: 0.35
+    weight: 0.25
   specialMult: 1
   specialSclaing: 0
   timeBeforeSameEnemy: 0

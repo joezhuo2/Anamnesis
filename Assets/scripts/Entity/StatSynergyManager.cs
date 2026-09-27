@@ -26,6 +26,8 @@ namespace CrystalFlux.Core
             StatType.EffMaxHp => "Max Health",
             StatType.EffAtk => "Attack",
             StatType.EffArmor => "Armor",
+            StatType.EffDefense => "Defense",
+            StatType.EffArcaneShield => "Arcane Shield",
             StatType.EffInt => "Intelligence",
             StatType.EffHpReg => "HP Regen",
             StatType.EffStReg => "Stamina Regen",
@@ -40,6 +42,8 @@ namespace CrystalFlux.Core
             StatType.attack or StatType.atkPct => StatType.EffAtk,
             StatType.maxHp or StatType.hpPct => StatType.EffMaxHp,
             StatType.armor or StatType.armorPct => StatType.EffArmor,
+            StatType.defense or StatType.defensePct => StatType.EffDefense,
+            StatType.arcaneShield or StatType.arcaneShieldPct => StatType.EffArcaneShield,
             StatType.Intelligence or StatType.IntPct => StatType.EffInt,
             StatType.hpRegen or StatType.hpRegPct => StatType.EffHpReg,
             StatType.staminaRegen or StatType.stRegPct => StatType.EffStReg,
@@ -52,6 +56,7 @@ namespace CrystalFlux.Core
         public static bool IsWholeStat(StatType t) => t switch
         {
             StatType.attack or StatType.EffAtk or StatType.maxHp or StatType.EffMaxHp or StatType.armor or StatType.EffArmor
+                or StatType.defense or StatType.EffDefense or StatType.arcaneShield or StatType.EffArcaneShield
                 or StatType.Intelligence or StatType.EffInt or StatType.maxStamina or StatType.EffMaxStamina
                 or StatType.maxMana or StatType.EffMaxMana or StatType.defShred => true,
             _ => false

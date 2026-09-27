@@ -24,10 +24,10 @@ namespace CrystalFlux.Core
 
         private static readonly HashSet<StatType> FlatStats = new()
         {
-            StatType.attack, StatType.Intelligence, StatType.maxHp, StatType.hpRegen, StatType.armor,
+            StatType.attack, StatType.Intelligence, StatType.maxHp, StatType.hpRegen, StatType.armor, StatType.defense, StatType.arcaneShield,
             StatType.maxStamina, StatType.staminaRegen, StatType.maxMana, StatType.defShred, StatType.moveSpeed,
             StatType.EffAtk, StatType.EffInt, StatType.EffMaxHp, StatType.EffHpReg, StatType.EffStReg,
-            StatType.EffArmor, StatType.EffSpd, StatType.EffMaxMana, StatType.EffMaxStamina
+            StatType.EffArmor, StatType.EffDefense, StatType.EffArcaneShield, StatType.EffSpd, StatType.EffMaxMana, StatType.EffMaxStamina
         };
 
         private IStatProvider src;

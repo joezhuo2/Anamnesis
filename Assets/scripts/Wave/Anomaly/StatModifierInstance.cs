@@ -34,6 +34,8 @@ public class StatModifierInstance : AnomalyInstance
             StatType.atkPct => "Attack",
             StatType.hpPct => "Health",
             StatType.armorPct => "Armor",
+            StatType.arcaneShieldPct => "Arcane Shield",
+            StatType.defensePct => "Defense",
             StatType.damagePct => "Damage",
             StatType.moveSpeedPct => "Move Speed",
             _ => type.ToString()
