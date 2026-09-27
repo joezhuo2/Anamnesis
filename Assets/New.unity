@@ -13814,6 +13814,38 @@ MonoBehaviour:
     variance: 0.15
   milestoneInterval: 25
   milestoneRewardChoices: 3
+  synergyStatPool:
+  - stat: 1
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  - stat: 12
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  - stat: 16
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  - stat: 42
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  - stat: 36
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  - stat: 25
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  minSynergyConversion: 8
+  maxSynergyConversion: 20
+  synergyChoices: 3
+  synergyMinWave: 15
+  synergyBaseChance: 2
+  synergyChanceGrowth: 2
+  synergyTitle: Choose a synergy
   availableAnomalies:
   - {fileID: 11400000, guid: c57fdda8c6062df4ab1ccc303187118d, type: 2}
   - {fileID: 11400000, guid: cd15acce3a0ad044ba2eeb6762e2c971, type: 2}
@@ -26195,6 +26227,30 @@ MonoBehaviour:
     variance: 0.15
   milestoneInterval: 15
   milestoneRewardChoices: 4
+  synergyStatPool:
+  - stat: 1
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  - stat: 12
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  - stat: 16
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  - stat: 42
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 1
+  minSynergyConversion: 8
+  maxSynergyConversion: 20
+  synergyChoices: 3
+  synergyMinWave: 15
+  synergyBaseChance: 2
+  synergyChanceGrowth: 2
+  synergyTitle: Choose a synergy
   availableAnomalies:
   - {fileID: 11400000, guid: 2d711879a2a363d4eaa7b524885bc3e6, type: 2}
   - {fileID: 11400000, guid: 0431cb6a2efc82a4f8e28b30e65b6b31, type: 2}

@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.9-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.11-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.9** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.11** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -39,7 +39,7 @@ Current release: **v0.6.9** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
 | **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave. Hovering a choice shows its rules and completion reward |
-| **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, and once-per-wave corruption with a 4% chance of a *Corrupted* special attack |
+| **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, once-per-wave corruption with a 4% chance of a *Corrupted* special attack, and rare *Stat Synergy* offers (a rising per-wave chance from wave 10) that convert a live percentage of one stat into another |
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage, knockback and attacks, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
 | **✨ Awakenings** | `PlayerUpgrade` assets driven by 25 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |

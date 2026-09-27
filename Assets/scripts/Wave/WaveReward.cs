@@ -84,4 +84,22 @@ namespace CrystalFlux.WaveSystem
             return string.Join("\n", lines);
         }
     }
+
+    [System.Serializable]
+    public class SynergyStatOption
+    {
+        public StatType stat;
+        public bool canBeSource = true;
+        public bool canBeTarget = true;
+        public float weight = 1f;
+    }
+
+    [System.Serializable]
+    public class SynergyRewardData
+    {
+        public StatSynergy sy;
+
+        public string Title => $"{StatSynergy.StatName(sy.source)} → {StatSynergy.StatName(sy.target)}";
+        public string GetDescription() => sy.GetDescription();
+    }
 }

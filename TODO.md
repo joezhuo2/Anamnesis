@@ -36,9 +36,6 @@
 ## Pre [v1.2.0] Checklist — Threads of Fate
 *Every wave stops looking the same; the settings/stats menus catch up.*
 
-**Content**
-- [ ] Passive stat synergies between different build types (e.g. "Increases attack by 18% of max health") (new type of perm reward - purple-blue color box, new appearance unlock: no clue, but def not in any existing pools, on corruption, or every x waves)
-
 **Systems**
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for `X` waves, can also occur randomly at the start of every wave

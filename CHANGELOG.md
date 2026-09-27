@@ -7,6 +7,32 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.11] - 2026-09-27
+
+### Added
+- **Stat synergies**, a new permanent reward type. Each one converts a percentage of one stat into another,
+  for example "Increases Attack by 18% of Max Health". The bonus is live: `StatSynergyManager` recomputes it
+  every frame from the current source value and applies only the difference, so it grows and shrinks with
+  the source stat for the rest of the run instead of being fixed at the moment of claiming
+- **`StatSynergyManager`** (Entity). Added to the player on the first synergy claim. Flat targets (Attack,
+  Max Health, Armor, Intelligence, Max Mana, Max Stamina) are floored to whole numbers. A source and target
+  in the same stat family (for example `attack` and `atkPct`) are rejected, which prevents self-feeding loops
+- **Synergy offers.** Synergies are not in any reward pool, not on corruption and not on a fixed wave
+  interval. After each wave from `synergyMinWave` (10), a hidden roll of `synergyBaseChance` (4%) plus an
+  accumulated bonus decides whether a synergy panel follows the wave's normal reward. Every miss adds
+  `synergyChanceGrowth` (4%) to the bonus, and an offer resets it. The panel opens after the regular reward
+  (and after any anomaly reward) is claimed or skipped
+- **New `WaveManager` synergy settings**, set separately on the regular and unlimited managers:
+  `synergyStatPool` (allowed stats, each with `canBeSource`, `canBeTarget` and `weight`),
+  `minSynergyConversion` / `maxSynergyConversion` (8-20%), `synergyChoices` (3), `synergyMinWave`,
+  `synergyBaseChance`, `synergyChanceGrowth` and `synergyTitle`. Both managers ship with Attack, Max Health,
+  Armor, Intelligence, Max Mana and Max Stamina in the pool
+- Each offer rolls a random source and target from the pool with a conversion between the min and max,
+  rounded to 0.1%. The same pair is never offered twice in one roll or once the player already owns it.
+  Sources read the effective stat (`EffAtk`, `EffMaxHp`, ...), and targets add to the flat stat
+- **`RewardType.Synergy`** and a purple-blue `RewardButton.SynergyColor` border. The card shows the current
+  bonus the synergy would give (`Now: +N Stat`), and the panel can be rerolled or skipped but not corrupted
+
 ## [v0.6.10] - 2026-09-27
 
 ### Added

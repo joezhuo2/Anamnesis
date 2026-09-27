@@ -103,7 +103,7 @@ repomix-output.xml
 diff_output.txt
 
 ## graphify generated output (graph, report, AST cache)
-/graphify-out/
+graphify-out/
 
 # Visual Scripting auto-generated files
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db

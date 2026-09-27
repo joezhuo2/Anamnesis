@@ -73,6 +73,16 @@ namespace CrystalFlux.WaveSystem
         public int milestoneInterval = 25;
         public int milestoneRewardChoices = 3;
 
+        [Header("Synergy Settings")]
+        public List<SynergyStatOption> synergyStatPool = new();
+        public float minSynergyConversion = 8f;
+        public float maxSynergyConversion = 20f;
+        public int synergyChoices = 3;
+        public int synergyMinWave = 10;
+        public float synergyBaseChance = 4f;
+        public float synergyChanceGrowth = 4f;
+        public string synergyTitle = "Choose a synergy";
+
         [Header("Anomaly Settings")]
         public List<AnomalyData> availableAnomalies = new();
         public GameObject anomalyPrefab = null;
@@ -116,6 +126,10 @@ namespace CrystalFlux.WaveSystem
         protected int pendingAnomalyRerolls = -1;
         protected int pendingAnomalySkillPoints = -1;
         protected readonly List<GameObject> activeRewardButtons = new();
+        protected readonly List<StatSynergy> synergiesThisRoll = new();
+        protected StatSynergyManager cssm;
+        protected float synergyChanceBonus = 0f;
+        protected bool pendingSynergy = false;
         protected static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
         protected static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
         protected static readonly WaitForSeconds _waitForSeconds0_25 = new(0.25f);
@@ -482,6 +496,7 @@ namespace CrystalFlux.WaveSystem
         protected void EndWave()
         {
             WaveCleanup();
+            RollSynergyOffer(GetCurrentWave());
 
             OpenRewardButtons();
             UpdateOccasionalWaveRewards(GetCurrentWave());
@@ -948,6 +963,134 @@ namespace CrystalFlux.WaveSystem
 
             return data;
         }
+        protected void RollSynergyOffer(int w)
+        {
+            if (pendingSynergy || w < synergyMinWave || !HasSynergyChoices()) return;
+
+            if (Random.Range(0f, 100f) < synergyBaseChance + synergyChanceBonus)
+            {
+                pendingSynergy = true;
+                synergyChanceBonus = 0f;
+            }
+            else synergyChanceBonus += synergyChanceGrowth;
+        }
+
+        protected bool CanOfferSynergy(StatType src, StatType tgt)
+        {
+            if (StatSynergy.Effective(src) == StatSynergy.Effective(tgt)) return false;
+            if (cssm != null && cssm.HasSynergy(StatSynergy.Effective(src), tgt)) return false;
+
+            for (int i = 0; i < synergiesThisRoll.Count; i++)
+                if (synergiesThisRoll[i].source == StatSynergy.Effective(src) && synergiesThisRoll[i].target == tgt) return false;
+
+            return true;
+        }
+
+        protected bool HasSynergyChoices()
+        {
+            if (synergyStatPool == null || synergyStatPool.Count < 2) return false;
+            CachePlayerSynergy();
+            synergiesThisRoll.Clear();
+
+            foreach (var a in synergyStatPool)
+            {
+                if (a == null || !a.canBeSource || a.weight <= 0f) continue;
+                foreach (var b in synergyStatPool)
+                    if (b != null && b.canBeTarget && b.weight > 0f && CanOfferSynergy(a.stat, b.stat)) return true;
+            }
+            return false;
+        }
+
+        protected SynergyStatOption PickSynergyOption(bool asSource, StatType? src = null)
+        {
+            SynergyStatOption chosen = null;
+            float total = 0f;
+
+            foreach (var o in synergyStatPool)
+            {
+                if (o == null || o.weight <= 0f) continue;
+                if (asSource ? !o.canBeSource : !o.canBeTarget) continue;
+                if (src.HasValue && !CanOfferSynergy(src.Value, o.stat)) continue;
+
+                total += o.weight;
+                if (Random.Range(0f, total) < o.weight) chosen = o;
+            }
+
+            return chosen;
+        }
+
+        protected SynergyRewardData GenerateSynergyRewardData()
+        {
+            for (int attempt = 0; attempt < 20; attempt++)
+            {
+                SynergyStatOption src = PickSynergyOption(true);
+                if (src == null) return null;
+
+                SynergyStatOption tgt = PickSynergyOption(false, src.stat);
+                if (tgt == null) continue;
+
+                float lo = Mathf.Min(minSynergyConversion, maxSynergyConversion);
+                float hi = Mathf.Max(minSynergyConversion, maxSynergyConversion);
+                float pct = Mathf.Round(Random.Range(lo, hi) * 10f) * 0.1f;
+
+                StatSynergy sy = new(StatSynergy.Effective(src.stat), tgt.stat, pct);
+                synergiesThisRoll.Add(sy);
+                return new SynergyRewardData { sy = sy };
+            }
+
+            return null;
+        }
+
+        protected void GenerateSynergyRewards()
+        {
+            type = RewardType.Synergy;
+            PanelSetup();
+            CachePlayerStatManager();
+            CachePlayerSynergy();
+            synergiesThisRoll.Clear();
+
+            int choices = Mathf.Max(1, synergyChoices);
+
+            for (int i = 0; i < choices; i++)
+            {
+                SynergyRewardData data = GenerateSynergyRewardData();
+                if (data == null) break;
+
+                GameObject btnObj = GetOrCreateRewardButton();
+                if (btnObj == null) continue;
+
+                string changeLine = "";
+                if (cpsm != null)
+                {
+                    float gain = cpsm.GetStat(data.sy.source) * data.sy.pct * 0.01f;
+                    if (StatSynergy.IsWholeStat(data.sy.target)) gain = Mathf.Floor(gain);
+                    changeLine = $"Now: +{gain:0.##} {StatSynergy.StatName(data.sy.target)}";
+                }
+
+                if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(data, OnSynergyRewardClaimed, changeLine);
+            }
+        }
+
+        protected void OnSynergyRewardClaimed(SynergyRewardData chosen)
+        {
+            CloseRewardUI();
+
+            CachePlayerSynergy(true);
+            if (cssm != null && chosen?.sy != null) cssm.AddSynergy(chosen.sy);
+
+            ResumeGameLoop();
+        }
+
+        protected void CachePlayerSynergy(bool create = false)
+        {
+            if (cssm != null) return;
+
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player == null) return;
+
+            if (!player.TryGetComponent(out cssm) && create) cssm = player.AddComponent<StatSynergyManager>();
+        }
+
         protected void OnMilestoneRewardClaimed(MilestoneRewardData chosenReward)
         {
             CloseRewardUI();
@@ -1001,14 +1144,19 @@ namespace CrystalFlux.WaveSystem
         {
             if (rewardTitleText == null || rewardTitleWrapper == null) return;
             if (rewardTitleWrapper != null) rewardTitleWrapper.SetActive(true);
-            rewardTitleText.text = type == RewardType.Anomaly ? anomalyTitle : rewardTitle;
+            rewardTitleText.text = type switch
+            {
+                RewardType.Anomaly => anomalyTitle,
+                RewardType.Synergy => synergyTitle,
+                _ => rewardTitle
+            };
         }
 
         private void UpdateCorruptButton()
         {
             if (corruptButton == null) return;
 
-            bool allowed = !IronmanSelector.Enabled && type != RewardType.Anomaly && type != RewardType.Milestone && type != RewardType.PreRun && GetCurrentWave() % 5 != 0;
+            bool allowed = !IronmanSelector.Enabled && type != RewardType.Anomaly && type != RewardType.Milestone && type != RewardType.PreRun && type != RewardType.Synergy && GetCurrentWave() % 5 != 0;
             corruptButton.gameObject.SetActive(allowed);
         }
 
@@ -1088,6 +1236,7 @@ namespace CrystalFlux.WaveSystem
 
             if (type == RewardType.Anomaly && !HasAnomalyChoices()) return;
             if (type == RewardType.PreRun && !HasPreRunChoices()) return;
+            if (type == RewardType.Synergy && !HasSynergyChoices()) return;
 
             if (rerolls > 0)
                 rerolls--;
@@ -1106,6 +1255,7 @@ namespace CrystalFlux.WaveSystem
                 case RewardType.Treasure: GenerateTreasurePool(); break;
                 case RewardType.Mixed: GenerateMixedPool(); break;
                 case RewardType.Milestone: GenerateMilestoneRewards(); break;
+                case RewardType.Synergy: GenerateSynergyRewards(); break;
                 default: break;
             }
         }
@@ -1272,6 +1422,13 @@ namespace CrystalFlux.WaveSystem
             if (pendingStandardRewards)
             {
                 TriggerStandardRewards(GetCurrentWave());
+            }
+            else if (pendingSynergy)
+            {
+                pendingSynergy = false;
+                OpenRewardButtons();
+                UpdateRerollUI();
+                GenerateSynergyRewards();
             }
             else
             {

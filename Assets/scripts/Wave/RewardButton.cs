@@ -7,7 +7,7 @@ using CrystalFlux.Core;
 
 namespace CrystalFlux.WaveSystem
 {
-    public enum RewardType { Mixed, Basic, Rare, Treasure, Anomaly, Milestone, PreRun }
+    public enum RewardType { Mixed, Basic, Rare, Treasure, Anomaly, Milestone, PreRun, Synergy }
 
     public class RewardButton : MonoBehaviour
     {
@@ -18,17 +18,20 @@ namespace CrystalFlux.WaveSystem
         public Image iconImage;
 
         public static readonly Color CorruptedSpecialColor = Color.darkBlue;
+        public static readonly Color SynergyColor = new(0.45f, 0.35f, 1f);
 
         [HideInInspector] public GeneratedReward gr;
         private AttackReward ar;
         private PlayerUpgradeReward pur;
         private MilestoneRewardData mrd;
+        private SynergyRewardData srd;
         private RewardType type = RewardType.Basic;
         private bool isCorrupted;
         private Action<GeneratedReward> onStatClaimedCallback;
         private Action<AttackReward> onAttackClaimedCallback;
         private Action<PlayerUpgradeReward> onPlayerUpgradeClaimedCallback;
         private Action<MilestoneRewardData> onMilestoneClaimedCallback;
+        private Action<SynergyRewardData> onSynergyClaimedCallback;
 
         public void Setup(GeneratedReward reward, Action<GeneratedReward> claimCallback, string statChangeLine)
         {
@@ -160,6 +163,30 @@ namespace CrystalFlux.WaveSystem
             LinkButtonComponent();
         }
 
+        public void Setup(SynergyRewardData synergyReward, Action<SynergyRewardData> claimCallback, string statChangeLine)
+        {
+            srd = synergyReward;
+            gr = null;
+            onSynergyClaimedCallback = claimCallback;
+            type = RewardType.Synergy;
+
+            if (titleText != null) titleText.text = synergyReward.Title;
+            if (descriptionText != null)
+                descriptionText.text = string.IsNullOrEmpty(statChangeLine) ? synergyReward.GetDescription() : $"{synergyReward.GetDescription()}\n{statChangeLine}";
+
+            if (borderHighlight != null) borderHighlight.color = SynergyColor;
+
+            if (iconImage != null) iconImage.sprite = null;
+
+            if (TryGetComponent<ITooltipDisplay>(out var td))
+            {
+                var (tt, st, os) = GetSynergyRewardTooltip();
+                td.ShowTooltip(tt, st, os);
+            }
+
+            LinkButtonComponent();
+        }
+
         private void LinkButtonComponent()
         {
             if (TryGetComponent<Button>(out var btn))
@@ -177,6 +204,7 @@ namespace CrystalFlux.WaveSystem
                 case RewardType.Basic: onStatClaimedCallback?.Invoke(gr); break;
                 case RewardType.Treasure: onPlayerUpgradeClaimedCallback?.Invoke(pur); break;
                 case RewardType.Milestone: onMilestoneClaimedCallback?.Invoke(mrd); break;
+                case RewardType.Synergy: onSynergyClaimedCallback?.Invoke(srd); break;
                 default: break;
             }
         }
@@ -187,10 +215,12 @@ namespace CrystalFlux.WaveSystem
             onAttackClaimedCallback = null;
             onPlayerUpgradeClaimedCallback = null;
             onMilestoneClaimedCallback = null;
+            onSynergyClaimedCallback = null;
             gr = null;
             ar = null;
             pur = null;
             mrd = null;
+            srd = null;
             type = RewardType.Basic;
             isCorrupted = false;
 
@@ -210,6 +240,20 @@ namespace CrystalFlux.WaveSystem
             List<string> lines = new() { mrd.GetDescription() };
 
             return (mrd.rewardName, string.Join("\n", lines), new(100, -100));
+        }
+
+        private (string title, string subtitle, Vector2 offset) GetSynergyRewardTooltip()
+        {
+            if (srd == null || srd.sy == null) return ("", "", Vector2.zero);
+
+            List<string> lines = new()
+            {
+                srd.GetDescription(),
+                "Updates dynamically as the source stat changes.",
+                "Permanent."
+            };
+
+            return (srd.Title, string.Join("\n", lines), new(100, -100));
         }
 
         private (string title, string subtitle, Vector2 offset) GetStatRewardTooltip()

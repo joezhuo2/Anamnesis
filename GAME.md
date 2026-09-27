@@ -692,6 +692,40 @@ the pool for the rest of the run. Full stats for each attack are in the sections
 
 ---
 
+# Stat Synergies
+
+Serialized in `WaveManager.synergyStatPool` and the `synergy*` fields next to it (set separately
+on the regular and unlimited managers; both currently use the same values). A synergy converts a
+percentage of a source stat into a flat bonus on a target stat. `StatSynergyManager` on the player
+recomputes every synergy each frame from the current source value, so the bonus tracks the source
+for the rest of the run.
+
+Offer roll: after every wave at or past `synergyMinWave`, roll `synergyBaseChance` plus the
+accumulated bonus. A miss adds `synergyChanceGrowth` to the bonus; a hit queues a synergy panel after
+that wave's regular reward and resets the bonus. Synergies never appear in other pools or on corruption.
+
+| Setting | Value |
+| --- | --- |
+| `synergyMinWave` | 10 |
+| `synergyBaseChance` | 4% |
+| `synergyChanceGrowth` | +4% per wave without an offer |
+| `synergyChoices` | 3 |
+| `minSynergyConversion` / `maxSynergyConversion` | 8% / 20% |
+
+| Stat (pool entry) | Read as source | Can be source | Can be target | Weight |
+| --- | --- | --- | --- | --- |
+| `attack` | `EffAtk` | Yes | Yes | 1 |
+| `maxHp` | `EffMaxHp` | Yes | Yes | 1 |
+| `armor` | `EffArmor` | Yes | Yes | 1 |
+| `Intelligence` | `EffInt` | Yes | Yes | 1 |
+| `maxMana` | `EffMaxMana` | Yes | Yes | 1 |
+| `maxStamina` | `EffMaxStamina` | Yes | Yes | 1 |
+
+Rules: source and target must be from different stat families; a pair already owned or already on
+another card in the same roll is skipped; flat targets are floored to whole numbers.
+
+---
+
 # Skill Tree Attacks
 
 Folder: `Assets/data/PlayerData/Attacks/SkillTree`. Not in any reward pool; granted by
