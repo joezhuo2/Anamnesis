@@ -205,7 +205,6 @@
 - basic dmg pct
 - skill dmg pct
 - ult dmg pct
-- se pot pct
 - basic cd red pct
 - skill cd red pct
 - ult cd red pct
