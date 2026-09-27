@@ -13339,11 +13339,6 @@ MonoBehaviour:
     attackName: Subspace Blitz
     desc: Rush
     minWave: -1
-  - newAttack: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
-    icon: {fileID: 0}
-    attackName: Nocturnis
-    desc: 
-    minWave: 25
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -25752,11 +25747,6 @@ MonoBehaviour:
     attackName: Subspace Blitz
     desc: Rush
     minWave: -1
-  - newAttack: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
-    icon: {fileID: 0}
-    attackName: Nocturnis
-    desc: 
-    minWave: 25
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -26281,12 +26271,12 @@ MonoBehaviour:
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
-  anomalyChance: 15
+  anomalyChance: 20
   anomalyGlobalMinWave: 3
   duelBossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
   duelStatusEffectPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
   spawnLocation: {x: 0, y: 0}
-  maxCurrentEnemies: 10
+  maxCurrentEnemies: 12
   baseMaxTotalEnemies: 1
   baseEnemyLevel: 1
   minSpawnFrequency: 2
@@ -26297,8 +26287,8 @@ MonoBehaviour:
   bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
   statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
   bossWaveChance: 15
-  bossWaveChanceIfPreviousNotBoss: 7
-  minWavesBetweenBossWaves: 5
+  bossWaveChanceIfPreviousNotBoss: 12
+  minWavesBetweenBossWaves: 4
   enemyPrefabs:
   - prefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
     minWave: 10
