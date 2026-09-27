@@ -25440,7 +25440,7 @@ MonoBehaviour:
   spawnRadius: 4
   killSpawnSpeedup: 0.3
   enableExtraSpawns: 0
-  totalWaves: 1024
+  totalWaves: 128
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
   waveText: {fileID: 1154343300}
@@ -64449,7 +64449,7 @@ PrefabInstance:
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'starting.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: f10bd05eee2452a49b1b155e844a61e5, type: 2}
+      objectReference: {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'starting.Array.data[2]'
       value: 
