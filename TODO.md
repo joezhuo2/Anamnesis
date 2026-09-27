@@ -29,7 +29,6 @@
 - [ ] enemy status effect overlay on common enemies
 - [ ] wave track - show upcoming bosses/special rewards/milestones
 - [ ] Status Effect vfx
-- [ ] sort attack cooldown ui by basic - skill - ult instead of whatever was obtained first
 - [ ] map debris/decor
 - [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
 

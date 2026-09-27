@@ -187,6 +187,27 @@ namespace CrystalFlux.EntitySystem
 
             if (uiObj.TryGetComponent<PlayerAttackCooldownUI>(out var pacui))
                 pacui.Setup(this, attack.type, esm);
+
+            SortButtonUI();
+        }
+
+        private static readonly AttackType[] UIOrder = (AttackType[])Enum.GetValues(typeof(AttackType));
+
+        private void SortButtonUI()
+        {
+            int idx = int.MaxValue;
+            foreach (var kvp in spawnedUIElements)
+            {
+                if (kvp.Value != null && kvp.Value.transform.parent == objContainer)
+                    idx = Mathf.Min(idx, kvp.Value.transform.GetSiblingIndex());
+            }
+            if (idx == int.MaxValue) return;
+
+            for (int i = 0; i < UIOrder.Length; i++)
+            {
+                if (!spawnedUIElements.TryGetValue(UIOrder[i], out var uiObj) || uiObj == null || uiObj.transform.parent != objContainer) continue;
+                uiObj.transform.SetSiblingIndex(idx++);
+            }
         }
 
         public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)

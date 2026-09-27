@@ -17,5 +17,5 @@ MonoBehaviour:
   chance: 100
   cooldown: 0
   delay: 0
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: 150cbb7db704ff943b3e118c010f9092, type: 2}
   stacks: 1

@@ -406,7 +406,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 
 ## Nocturnis
 - Asset: `Nocturnis T AD` / `Nocturnis T PD`
-- Unlocks: wave 45 (wave 25 in `corruptionSpecialPool`)
+- Unlocks: wave 25 (two `rarePool` entries, wave 25 and wave 45; wave 25 in `corruptionSpecialPool`)
 - Type: Ultimate
 - Cooldown: 14s (stamped on press, ticks down during the hold)
 - Pattern: Single (1 count)
@@ -688,7 +688,7 @@ the pool for the rest of the run. Full stats for each attack are in the sections
 | Revelation | 15 | 35 |
 | Nirvana | 15 | 35 |
 | Luminaria | 15 | 35 |
-| Nocturnis | 25 | 45 |
+| Nocturnis | 25 | 25 and 45 |
 
 ---
 

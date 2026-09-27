@@ -13228,6 +13228,11 @@ MonoBehaviour:
       type: 102
       value: 2
     weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 103
+      value: 3
+    weight: 3
   rarePool:
   - newAttack: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
     icon: {fileID: 0}
@@ -13334,6 +13339,11 @@ MonoBehaviour:
     attackName: Subspace Blitz
     desc: Rush
     minWave: -1
+  - newAttack: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
+    icon: {fileID: 0}
+    attackName: Nocturnis
+    desc: 
+    minWave: 25
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -13555,6 +13565,11 @@ MonoBehaviour:
       type: 98
       value: 2
     weight: 3
+  - icon: {fileID: 0}
+    baseBuff:
+      type: 99
+      value: 3
+    weight: 2
   rarityData:
   - rarityName: Common
     displayColor: {r: 0.4392157, g: 0.4392157, b: 0.4392157, a: 1}
@@ -25737,6 +25752,11 @@ MonoBehaviour:
     attackName: Subspace Blitz
     desc: Rush
     minWave: -1
+  - newAttack: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
+    icon: {fileID: 0}
+    attackName: Nocturnis
+    desc: 
+    minWave: 25
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -26165,8 +26185,8 @@ MonoBehaviour:
       value: 20
     - type: 17
       value: -30
-    - type: 98
-      value: -20
+    - type: 99
+      value: -30
     weight: 1
     variance: 0.15
   - rewardName: Blood Mage
@@ -26291,7 +26311,7 @@ MonoBehaviour:
   - prefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
     minWave: 15
   - prefab: {fileID: 7457594691964507130, guid: ed6d4b1b71927f8408ba7d44890b6322, type: 3}
-    minWave: 20
+    minWave: 25
   bossPrefabs:
   - {fileID: 7457594691964507130, guid: 24bacf361cba81f488717cc41f41440e, type: 3}
   - {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}

@@ -18,7 +18,7 @@ namespace CrystalFlux.WaveSystem
         public Image iconImage;
 
         public static readonly Color CorruptedSpecialColor = Color.darkBlue;
-        public static readonly Color SynergyColor = new(0.45f, 0.35f, 1f);
+        public static readonly Color SynergyColor = Color.blueViolet;
 
         [HideInInspector] public GeneratedReward gr;
         private AttackReward ar;

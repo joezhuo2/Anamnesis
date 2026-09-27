@@ -7,6 +7,29 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.13] - 2026-09-27
+
+### Added
+- Regular `WaveManager` pools gain percent versions of the new defensive stats:
+  - Base pool: `arcaneShieldPct` +3 (weight 3)
+  - Mixed pool: `defensePct` +3 (weight 2)
+- **Cultist Clone** now has an `EnemyPhase`: at 80% HP it gains +40 `damagePct`, and at 50% HP it gains
+  +16 `hpRegen`. It also retargets every 1-3s (`retargetInterval`)
+
+### Changed
+- The attack cooldown UI is now sorted by attack type (Basic, then Skill, then Ultimate) instead of the order the
+  attacks were obtained. The order is kept when an attack is gained or replaced
+- Stat synergy offers use `Color.blueViolet` instead of the old custom purple-blue
+- **Nocturnis** has a second `rarePool` entry at wave 25 on both managers. The original wave 45 entry is still
+  there, so from wave 45 on it is twice as likely to roll
+- Unlimited `WaveManager`:
+  - The **Ascendant** milestone's debuff is now -30 `defensePct` (was -20 `defense`)
+  - Cultist Clone enemy spawns start at wave 25 (was 20)
+
+### Fixed
+- The **Momentum** player upgrade had no `effect` assigned, so it granted nothing. It now grants the `Momentum`
+  status effect on dash/rush start as described
+
 ## [v0.6.12] - 2026-09-27
 
 ### Added

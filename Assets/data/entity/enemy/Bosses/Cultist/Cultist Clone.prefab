@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 375165746433560564}
   - component: {fileID: 404276272350105028}
   - component: {fileID: 8131594440183024660}
+  - component: {fileID: 5966799241746324505}
   m_Layer: 0
   m_Name: Cultist Clone
   m_TagString: Enemy
@@ -106,6 +107,7 @@ MonoBehaviour:
   canDeaggro: 1
   stoppingDistance: 4
   flipRotation: 0
+  retargetInterval: {x: 1, y: 3}
   target: {fileID: 0}
 --- !u!114 &8195867897408456428
 MonoBehaviour:
@@ -282,3 +284,28 @@ MonoBehaviour:
   currentBuffs: []
   teamID: 0
   displayName: Cultist Clone
+--- !u!114 &5966799241746324505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7457594691964507130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc860c2b7d6883a45affc61eaae86e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrystalFlux.Entity::CrystalFlux.EntitySystem.EnemyPhase
+  phaseThresholds:
+  - 80
+  - 50
+  phaseBuffs:
+  - buff:
+      type: 0
+      value: 40
+    phaseReq: 1
+  - buff:
+      type: 14
+      value: 16
+    phaseReq: 2
+  phase: 0
