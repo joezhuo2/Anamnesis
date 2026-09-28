@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297bbbdd6d89891478a5b68d3b4873cd, type: 3}
+  m_Name: Box Slime
+  m_EditorClassIdentifier: CrystalFlux.Collectible::CrystalFlux.CollectibleSystem.CollectibleData
+  sprite: {fileID: 295014693, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  type: 7
+  lightColor: {r: 1, g: 0.20157912, b: 0, a: 1}
+  minVal: 1
+  maxVal: 1
+  chance: 2
+  cooldown: 45
+  maxTime: 45
+  ambushEnemies:
+  - {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+  - {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+  - {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+  ambushMin: 3
+  ambushMax: 8
+  ambushRadius: 3
+  ambushLevelBonus: 2
+  rewards:
+  - data: {fileID: 11400000, guid: 802859c6b3b334b46836adf266506a67, type: 2}
+    weight: 6
+  - data: {fileID: 11400000, guid: 14fb9188e5eebd1418c6f67ef28403dc, type: 2}
+    weight: 5
+  - data: {fileID: 11400000, guid: d2d059a491f33c846861a44db27cf176, type: 2}
+    weight: 2
+  - data: {fileID: 11400000, guid: 44f57e13d9679554fae52f1f8bf2fa14, type: 2}
+    weight: 1
+  rewardMin: 2
+  rewardMax: 5
+  rewardRadius: 2

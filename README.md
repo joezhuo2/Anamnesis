@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.14-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.15-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,14 +17,14 @@
 
 </div>
 
-Current release: **v0.6.14** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.15** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
 ## 🔁 Core Loop
 
 1. **Pick a difficulty and a gamemode** — **Easy**, **Normal** or **Hard**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
-2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls.
+2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them.
 3. **Choose a reward** — buffs, rare attacks or treasure-pool Awakenings. Lock one reward and reroll the rest, pay 200 gold when out of rerolls, or corrupt the rewards for a bigger gamble.
 4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*) that trade risk for rerolls and skill points.
 5. **Spend skill points and gold** — unlock skill tree nodes, refund them for gold, level up from XP, and repeat.
@@ -48,7 +48,7 @@ Current release: **v0.6.14** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a five-boss **Boss Rush** gauntlet |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
-| **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman |
+| **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman. `SpawnerBox` pickups start an ambush of configurable enemies that joins the wave, then drop a weighted batch of collectibles once it is cleared |
 | **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, quit buttons, a *You Died* screen, and the build version on the home screen — all persisted to `settings.json` |
 | **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, red borders and flashes on blocked attacks, and unscaled hover scaling that animates while paused |
 
@@ -89,7 +89,7 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`) |
 | **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper) chaining into `BossRush Part 2` (the same five at Lv 105) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission* — separate Regular and Unlimited lists |
-| **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint` |
+| **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
 In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel* and *Fission* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.
@@ -185,7 +185,7 @@ Assets/
 ├── New.unity                  # Main game scene (WaveManager, SkillTree, Player UI)
 ├── data/                      # ScriptableObject data
 │   ├── _example/              # Template attack folder (AD/PD/controller/prefab) to copy when authoring
-│   ├── Collectibles/          # CollectibleData assets (XP, Gold, Health, Stamina, Mana, Reroll, SkillPoint)
+│   ├── Collectibles/          # CollectibleData assets (XP, Gold, Health, Stamina, Mana, Reroll, SkillPoint, spawner boxes)
 │   ├── Difficulty/            # Easy / Normal / Hard DifficultyData assets
 │   ├── entity/                # Enemy/Player base stats, attacks, animation data, prefabs
 │   │   └── enemy/             # Split into Bosses/ and Enemies/

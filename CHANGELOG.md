@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.15] - 2026-09-27
+
+### Added
+- **Spawner boxes**: a new `SpawnerBox` collectible type. Touching the box starts an ambush around it, and
+  once every ambush enemy is dead a batch of collectibles drops where the box stood
+  - Ambush settings: `ambushEnemies` (random pick per enemy), `ambushMin`/`ambushMax`, `ambushRadius`,
+    `ambushLevelBonus`
+  - Reward settings: `rewards` (weighted `SpawnerBoxReward` entries, rolled with replacement), `rewardMin`/`rewardMax`,
+    `rewardRadius`
+  - Ambush enemies use the current wave's enemy level plus `ambushLevelBonus`, receive the active anomaly's buffs
+    and hooks, and join the wave's enemy count, so the wave can't end until they are dead
+  - A box only triggers while a wave is active; otherwise it stays on the ground
+  - Reward drops ignore the spawner's `maxConcurrent` cap and use their own lifetime. Rewards never roll another
+    spawner box, and skip Reroll pickups in Ironman Mode
+  - Four boxes in the `CollectibleSpawner`: **Box Slime**, **Box Bat**, **Box Crab** and **Box Cult**
+
 ## [v0.6.14] - 2026-09-27
 
 ### Added

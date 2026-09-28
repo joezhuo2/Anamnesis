@@ -127,12 +127,21 @@ namespace CrystalFlux.CollectibleSystem
             GameObject p = other.attachedRigidbody != null ? other.attachedRigidbody.gameObject : other.gameObject;
             if (!p.CompareTag("Player")) return;
 
+            bool box = data.type == CollectibleType.SpawnerBox;
+            if (box && !TryStartAmbush()) return;
+
             collected = true;
             if (col != null) col.enabled = false;
 
-            data.Apply(p, value);
+            if (!box) data.Apply(p, value);
             SpawnIndicator();
             ReleaseSelf();
+        }
+
+        private bool TryStartAmbush()
+        {
+            CollectibleSpawner cs = CollectibleSpawner.Active;
+            return cs != null && cs.StartAmbush(data, transform.position);
         }
 
         private void SpawnIndicator()

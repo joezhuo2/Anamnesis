@@ -40,7 +40,6 @@
 - [ ] Permenant version of Anamolies (active until run ends) or one thats active for `X` waves, can also occur randomly at the start of every wave
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 - [ ] attack combo chains
-- [ ] in-world spawner boxes - spawns a small group of enemies for some rewardd (that can be picked up)
 
 **Content**
 - [ ] wave events - random events that can randomly occur during waves
@@ -339,12 +338,9 @@ The player links enemies together with chains. Damage, status effects and knockb
 - [ ] **Constellation tracing**: stars light up across the map mid-wave; touch them in the drawn order before they fade to complete a constellation, which grants a named buff for the rest of the wave (a different one for each constellation, each with a lore line). Pulls the player around the map instead of kiting in circles.
 
 *Wave events & side objectives (candidates for the v1.2 wave events pool)*
-- [ ] **Whispers**: short timed micro-objectives that pop up during a wave, like "kill 10 burning enemies in 20s", "take no damage for 15s" or "crit the elite 3 times". Each completed whisper pays a small reward, and a streak of them pays a bigger one.
 - [ ] **Resonance pillars**: three pillars that each have to be hit by a different attack slot (Basic, Skill, Ultimate) within a short window. Lighting all three releases a shockwave and drops a reward. Rewards slot rotation over spamming one attack.
-- [ ] **Meteorfall**: telegraphed meteors crash onto the map, damaging whatever is under them (enemies included). Each crater leaves a crystal that you can break open for gold, or leave to charge into a temporary buff zone. Lets you bait enemies into impacts.
+- [ ] **Meteorfall**: telegraphed meteors crash onto the map, damaging whatever is under them (enemies included). Each crater leaves a crystal that you can break open for **a new type of reward**
 - [ ] **Lost wisp escort**: a friendly wisp appears and drifts slowly toward a beacon while enemies switch to target it. Get it there alive for a reward, with a bigger reward if it arrives above 50% HP. The mirror image of the planned defend/destroy beacon.
-- [ ] **Rift trial**: a rift tears open for 10s; step in to be pulled into a short pocket arena with an elite pack while the main wave is frozen. Clear it within the time limit to come back with a guaranteed rare reward; fail and you come back with a debuff.
-- [ ] **Eclipse**: the screen darkens to a light radius around the player, and enemies outside it only show as glowing eyes. Lanterns scattered around the map widen the radius when lit, and enemies killed in the dark drop double gold.
 
 *New ways to earn rewards*
 - [ ] **Blind draw**: a reward panel variant with face-down cards and better rarity odds. You commit to a card before seeing it.

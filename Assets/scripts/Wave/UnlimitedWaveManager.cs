@@ -248,6 +248,7 @@ namespace CrystalFlux.WaveSystem
         }
 
         private int GetEnemyLevel(int wave) => EnemyLevel(baseEnemyLevel + (wave - 1));
+        protected override int CurrentEnemyLevel() => GetEnemyLevel(GetCurrentWave());
         private float GetMinSpawnFrequency(int wave) => Mathf.Max(0.1f, minSpawnFrequency - (spawnSpeedIncreasePerWave * (wave - 1)));
         private float GetMaxSpawnFrequency(int wave) => Mathf.Max(0.1f, maxSpawnFrequency - (spawnSpeedIncreasePerWave * (wave - 1)));
     }

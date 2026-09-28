@@ -1,11 +1,21 @@
+using System;
+using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace CrystalFlux.CollectibleSystem
 {
-    public enum CollectibleType { Heal, Xp, Stamina, Mana, Gold, SkillPoints, Rerolls }
+    public enum CollectibleType { Heal, Xp, Stamina, Mana, Gold, SkillPoints, Rerolls, SpawnerBox }
+
+    [Serializable]
+    public class SpawnerBoxReward
+    {
+        public CollectibleData data;
+        public float weight = 1f;
+    }
 
     [CreateAssetMenu(fileName = "Collectible", menuName = "Data/Collectible")]
     public class CollectibleData : ScriptableObject
@@ -24,6 +34,71 @@ namespace CrystalFlux.CollectibleSystem
         public float cooldown = 10f;
         public float maxTime = 20f;
 
+        [Header("Spawner Box")]
+        public List<GameObject> ambushEnemies = new();
+        public int ambushMin = 3;
+        public int ambushMax = 5;
+        public float ambushRadius = 3f;
+        public int ambushLevelBonus = 2;
+
+        [Header("Spawner Box Rewards")]
+        public List<SpawnerBoxReward> rewards = new();
+        public int rewardMin = 2;
+        public int rewardMax = 4;
+        public float rewardRadius = 2f;
+
+        public bool HasAmbush => ambushEnemies != null && ambushEnemies.Count > 0;
+
+        public int RollAmbushCount() => Random.Range(Mathf.Max(0, Mathf.Min(ambushMin, ambushMax)), Mathf.Max(ambushMin, ambushMax) + 1);
+
+        public int RollRewardCount() => Random.Range(Mathf.Max(0, Mathf.Min(rewardMin, rewardMax)), Mathf.Max(rewardMin, rewardMax) + 1);
+
+        public GameObject PickAmbushEnemy()
+        {
+            if (!HasAmbush) return null;
+
+            for (int i = 0; i < ambushEnemies.Count; i++)
+            {
+                GameObject e = ambushEnemies[Random.Range(0, ambushEnemies.Count)];
+                if (e != null) return e;
+            }
+
+            return null;
+        }
+
+        public CollectibleData PickReward(bool ironman)
+        {
+            if (rewards == null || rewards.Count == 0) return null;
+
+            float total = 0f;
+            for (int i = 0; i < rewards.Count; i++)
+                if (IsValidReward(rewards[i], ironman)) total += rewards[i].weight;
+
+            if (total <= 0f) return null;
+
+            float roll = Random.value * total;
+            for (int i = 0; i < rewards.Count; i++)
+            {
+                SpawnerBoxReward r = rewards[i];
+                if (!IsValidReward(r, ironman)) continue;
+
+                roll -= r.weight;
+                if (roll <= 0f) return r.data;
+            }
+
+            for (int i = rewards.Count - 1; i >= 0; i--)
+                if (IsValidReward(rewards[i], ironman)) return rewards[i].data;
+
+            return null;
+        }
+
+        private static bool IsValidReward(SpawnerBoxReward r, bool ironman)
+        {
+            if (r == null || r.data == null || r.weight <= 0f) return false;
+            if (r.data.type == CollectibleType.SpawnerBox) return false;
+            return !(ironman && r.data.type == CollectibleType.Rerolls);
+        }
+
         public int RollValue() => Random.Range(Mathf.Min(minVal, maxVal), Mathf.Max(minVal, maxVal) + 1);
 
         public string BuildDesc(int v)
@@ -37,6 +112,7 @@ namespace CrystalFlux.CollectibleSystem
                 CollectibleType.Gold => $"+{v} Gold",
                 CollectibleType.SkillPoints => $"+{v} Skill Point{(v == 1 ? "" : "s")}",
                 CollectibleType.Rerolls => $"+{v} Reroll{(v == 1 ? "" : "s")}",
+                CollectibleType.SpawnerBox => "Ambush!",
                 _ => $"+{v}"
             };
         }

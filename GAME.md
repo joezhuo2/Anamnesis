@@ -1490,7 +1490,7 @@ The `Radiation 4 0.25 8 2 CritDmg` asset name is likewise stale: it now runs 5s 
 # Collectibles
 
 Folder: `Assets/data/Collectibles`. Spawned by the `CollectibleSpawner` in `New.unity`,
-which holds all seven assets, prewarms 8 pickups, ticks every 2s, caps the field at 8 live
+which holds all eleven assets, prewarms 8 pickups, ticks every 2s, caps the field at 8 live
 pickups and places them 4–8 units from the player.
 
 | Asset | Type | Pays | Roll | Chance | Cooldown | Lifetime | Color |
@@ -1502,6 +1502,10 @@ pickups and places them 4–8 units from the player.
 | `Mana` | Mana | % of `EffMaxMana` | 3–15% | 3% | 15s | 25s | blue |
 | `Reroll` | Rerolls | rerolls | 1 | 2% | 15s | 20s | teal |
 | `SkillPoint` | SkillPoints | skill points | 1 | 1% | 20s | 20s | purple |
+| `Box Slime` | SpawnerBox | ambush | — | 2% | 45s | 45s | orange |
+| `Box Bat` | SpawnerBox | ambush | — | 1% | 45s | 45s | orange |
+| `Box Crab` | SpawnerBox | ambush | — | 1% | 45s | 45s | orange |
+| `Box Cult` | SpawnerBox | ambush | — | 0.5% | 60s | 60s | orange |
 
 **Chance** is rolled per spawner tick (2s), not per second, and only one pickup can spawn
 per tick: candidates are filtered (chance above 0, not on cooldown), shuffled, and the
@@ -1518,3 +1522,28 @@ flat counts. `Reroll` pickups are skipped entirely while Ironman Mode is on, and
 Each pickup bobs in place, pulses a glow tinted with its `lightColor`, and shows what it
 will pay as a world-space label (`+35 Gold`, `+8% HP`, `+1 Skill Point`). The same string
 pops as a floating indicator on pickup.
+
+## Spawner Boxes
+
+A `SpawnerBox` pickup reads "Ambush!". Touching it spawns `ambushMin`–`ambushMax` enemies,
+each a random pick from `ambushEnemies`, within `ambushRadius` of the box. They use the
+current wave's enemy level (the `WaveData` level on the regular manager, the wave-scaled
+level on Unlimited) plus `ambushLevelBonus`, get the active anomaly's buffs and spawn hooks,
+and are added to the wave's enemy count like split enemies, so the wave can't end until
+they are dead. The box only triggers while a wave is active; outside one it stays put.
+
+When the last ambush enemy dies, `rewardMin`–`rewardMax` collectibles drop within
+`rewardRadius` of the box. Each drop is an independent weighted roll over `rewards`
+(duplicates allowed) and rolls its own value and lifetime. Drops ignore the spawner's
+live cap, but count toward it while on the ground. Other spawner boxes are never rolled,
+and `Reroll` entries are skipped in Ironman Mode.
+
+| Box | Enemies | Count | Level | Drops |
+| --- | --- | --- | --- | --- |
+| `Box Slime` | Slime, Frost Slime, Magma Slime | 3–8 | +2 | 2–5 |
+| `Box Bat` | Bat | 2–5 | +2 | 2–5 |
+| `Box Crab` | Crab | 2–6 | +2 | 2–5 |
+| `Box Cult` | Cultist Clone | 1–4 | +2 | 3–6 |
+
+All four boxes spawn enemies within 3 units, drop rewards within 2 units, and share one
+reward table: `XP` (weight 6), `Gold` (5), `Reroll` (2), `SkillPoint` (1).

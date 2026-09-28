@@ -22,7 +22,15 @@ namespace CrystalFlux.CollectibleSystem
         public int maxConcurrent = 5;
         public float tickInterval = 1f;
 
+        private class Ambush
+        {
+            public CollectibleData data;
+            public Vector2 pos;
+            public readonly List<GameObject> enemies = new();
+        }
+
         private readonly List<Collectible> live = new();
+        private readonly List<Ambush> ambushes = new();
         private readonly Dictionary<CollectibleData, float> cooldowns = new();
         private readonly List<CollectibleData> rollBuffer = new();
         private float tickTimer;
@@ -63,6 +71,7 @@ namespace CrystalFlux.CollectibleSystem
 
             float dt = Time.deltaTime;
             TickCooldowns(dt);
+            TickAmbushes();
 
             if (!WaveManager.WaveActive) return;
 
@@ -84,8 +93,29 @@ namespace CrystalFlux.CollectibleSystem
             PrefabPool.Release(ref c);
         }
 
+        public bool StartAmbush(CollectibleData d, Vector2 pos)
+        {
+            if (d == null || !d.HasAmbush || !WaveManager.WaveActive) return false;
+
+            Ambush a = new() { data = d, pos = pos };
+            int n = d.RollAmbushCount();
+
+            for (int i = 0; i < n; i++)
+            {
+                GameObject e = WaveManager.SpawnAmbushEnemy(d.PickAmbushEnemy(), pos, d.ambushRadius, d.ambushLevelBonus);
+                if (e != null) a.enemies.Add(e);
+            }
+
+            if (a.enemies.Count == 0) return false;
+
+            ambushes.Add(a);
+            return true;
+        }
+
         public void ReleaseAll()
         {
+            ambushes.Clear();
+
             for (int i = live.Count - 1; i >= 0; i--)
             {
                 Collectible c = live[i];
@@ -114,6 +144,35 @@ namespace CrystalFlux.CollectibleSystem
             rollBuffer.Clear();
         }
 
+        private void TickAmbushes()
+        {
+            for (int i = ambushes.Count - 1; i >= 0; i--)
+            {
+                Ambush a = ambushes[i];
+                a.enemies.RemoveAll(e => e == null);
+                if (a.enemies.Count > 0) continue;
+
+                ambushes.RemoveAt(i);
+                SpawnRewards(a);
+            }
+        }
+
+        private void SpawnRewards(Ambush a)
+        {
+            if (prefab == null || a.data == null) return;
+
+            bool ironman = IronmanSelector.Enabled;
+            int n = a.data.RollRewardCount();
+
+            for (int i = 0; i < n; i++)
+            {
+                CollectibleData d = a.data.PickReward(ironman);
+                if (d == null) continue;
+
+                SpawnAt(d, a.pos + (Random.insideUnitCircle * a.data.rewardRadius));
+            }
+        }
+
         private void TrySpawnOne()
         {
             GameObject p = Player();
@@ -128,6 +187,7 @@ namespace CrystalFlux.CollectibleSystem
                 if (d == null || d.chance <= 0f) continue;
                 if (cooldowns.ContainsKey(d)) continue;
                 if (d.type == CollectibleType.Rerolls && IronmanSelector.Enabled) continue;
+                if (d.type == CollectibleType.SpawnerBox && !d.HasAmbush) continue;
 
                 rollBuffer.Add(d);
             }
@@ -149,14 +209,19 @@ namespace CrystalFlux.CollectibleSystem
 
         private void Spawn(CollectibleData d, Vector2 center)
         {
-            Collectible c = PrefabPool.Acquire(prefab, null);
-            if (c == null) return;
-
             float min = Mathf.Min(minSpawnDist, maxSpawnDist);
             float max = Mathf.Max(minSpawnDist, maxSpawnDist);
             float dist = Random.Range(min, max);
             float ang = Random.Range(0f, Mathf.PI * 2f);
             Vector2 pos = center + (new Vector2(Mathf.Cos(ang), Mathf.Sin(ang)) * dist);
+
+            SpawnAt(d, pos);
+        }
+
+        private void SpawnAt(CollectibleData d, Vector2 pos)
+        {
+            Collectible c = PrefabPool.Acquire(prefab, null);
+            if (c == null) return;
 
             c.transform.SetPositionAndRotation(pos, Quaternion.identity);
             c.Setup(d, d.RollValue());

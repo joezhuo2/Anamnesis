@@ -527,6 +527,34 @@ namespace CrystalFlux.WaveSystem
             ActiveManager.UpdateWaveText();
         }
 
+        public static GameObject SpawnAmbushEnemy(GameObject prefab, Vector2 pos, float radius, int levelBonus)
+        {
+            WaveManager wm = ActiveManager;
+            if (prefab == null || wm == null || !wm.isWaveActive) return null;
+
+            int level = Mathf.Max(1, wm.CurrentEnemyLevel() + levelBonus);
+            GameObject enemy = EnemySpawning.SpawnEnemy(prefab, pos, radius, level);
+            if (enemy == null) return null;
+
+            if (wm.currentAnomaly != null)
+            {
+                if (enemy.TryGetComponent<IStatProvider>(out var esm)) wm.currentAnomaly.ApplyEnemyBuffs(esm);
+                wm.currentAnomaly.OnEnemySpawned(enemy, prefab, level);
+            }
+
+            RegisterSplitEnemy(enemy);
+            return enemy;
+        }
+
+        protected virtual int CurrentEnemyLevel()
+        {
+            if (currentSequence == null || currentSequence.waves == null || currentSequence.waves.Count == 0) return EnemyLevel(1);
+
+            int i = Mathf.Clamp(currentWaveIndex - 1, 0, currentSequence.waves.Count - 1);
+            WaveData c = currentSequence.waves[i];
+            return EnemyLevel(c != null ? c.enemyLevel : 1);
+        }
+
         protected void CleanEnemyList()
         {
             int removed = currentEnemies.RemoveAll(enemy => enemy == null);
