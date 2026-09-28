@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Time Trial I
   desc: Complete the wave in at most 90 seconds
   minWave: 0
-  maxWave: 1024
+  maxWave: 128
   anomalyType: 0
   anomalyValue: 90
   anomalyMinVal: 0

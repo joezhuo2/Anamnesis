@@ -7,6 +7,38 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.17] - 2026-09-28
+
+### Added
+- **Sealed anomaly** (`AnomalyType.Sealed`, `SealedInstance`): one random attack slot (Basic, Skill or Ultimate)
+  is sealed for the wave, and the other two gain `+x%` cooldown reduction (`basicCdRedPct` / `skillCdRedPct` /
+  `ultCdRedPct`), rolled from `anomalyMinVal`..`anomalyMaxVal`. No fail condition
+  - The sealed slot is picked from the slots the player has an attack in, when the choices are rolled, so the
+    anomaly button already names it
+  - The seal and the cooldown reduction are removed in `Cleanup()` at the end of the wave
+  - Assets: `Regular/Sealed` (waves 10–105, 15–30%) and `Unlimited/USealed` (waves 0–128, 5–30%), both
+    allowed on boss waves
+- `PlayerAttackHandler.IsSlotLocked` / `SetSlotLocked`: a per-slot lock. A locked slot fails `CanCast`, and
+  `PerformAttack` refuses it (including upgrade-triggered casts) and flashes the button red. Locking a slot drops
+  its queued attacks. Its cooldown keeps recovering while locked
+- **Doppelganger** enemy (`Assets/data/entity/enemy/Enemies/doppelganger`): a regular enemy with a `MirrorBoss`
+  component that copies the player's attacks and Awakenings, on the weaker `Doppelganger base` stats
+  (225 HP, 2 attack, 70 armor, 10% damage, 15% crit chance, 40% crit damage, 10% damage resistance, 15% dodge,
+  10% spell resistance, 10 effect resistance; drops 22 XP and 8 gold). Joins the Unlimited roster from wave 40
+- Attack cooldown button states (`PlayerAttackCooldownUI`):
+  - **Ready flash**: the border flashes green (`readyFlashColor`, 2 flashes) whenever the attack regains a
+    stack, whether from the cooldown or a cooldown advance. Attacks with an effective cooldown under
+    `minReadyFlashCooldown` (0.5s) don't flash
+  - **Partial stacks**: the border turns yellow (`partialStackBorderColor`) while a stacked attack holds more
+    than 0 but fewer than max stacks
+  - **Sealed**: grey icon (`lockedIconColor`) and border (`lockedBorderColor`), a full cooldown fill, a "Sealed"
+    tooltip line, and an optional `lockOverlay` object
+  - Border priority: sealed, then red when the attack can't be cast, then yellow, then the idle color
+
+### Changed
+- The border check now runs the frame a cooldown finishes, not on the next 0.1s poll
+- Unlimited: every anomaly's `maxWave` is now 128 (was 1024), and Cultist Clone spawns from wave 30 (was 25)
+
 ## [v0.6.16] - 2026-09-27
 
 ### Added

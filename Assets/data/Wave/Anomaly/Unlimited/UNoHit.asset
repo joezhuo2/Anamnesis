@@ -15,8 +15,9 @@ MonoBehaviour:
   anomalyName: No Hit
   desc: 'Complete the wave without getting hit. '
   minWave: 0
-  maxWave: 1024
+  maxWave: 128
   anomalyType: 1
   anomalyValue: 0
   anomalyMinVal: 0
   anomalyMaxVal: 0
+  disallowOnBossWave: 0

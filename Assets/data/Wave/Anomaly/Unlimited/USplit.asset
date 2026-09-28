@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Fission
   desc: Slain enemies tear apart into weaker copies of themselves.
   minWave: 0
-  maxWave: 1024
+  maxWave: 128
   anomalyType: 5
   anomalyValue: 50
   anomalyMinVal: 3

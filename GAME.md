@@ -1520,6 +1520,63 @@ Player stats, synergies and gear are never copied. The boss uses the `mirror bas
 
 `globalCooldown` is 1s. The prefab reuses the player's animator controller.
 
+## Doppelganger
+
+Folder: `Assets/data/entity/enemy/Enemies/doppelganger`. A regular enemy built on the same `MirrorBoss`
+component (`copyAttacks` and `copyUpgrades` on, `maxUpgrades` 0 = all, `fallbackRange` 6, `globalCooldown` 1s),
+so every Doppelganger copies the player's attacks and Awakenings when it spawns. It joins the Unlimited
+`enemyPrefabs` roster from wave 40 and uses the `Doppelganger base` stats (values before level scaling):
+
+| Stat | Value | Stat | Value |
+| --- | --- | --- | --- |
+| `maxHp` | 225 | `damageRes` | 10 |
+| `attack` | 2 | `dodgeChance` | 15 |
+| `damagePct` | 10 | `dodgeResPct` | 50 |
+| `critChance` | 15 | `spellRes` | 10 |
+| `critDamage` | 40 | `effectRes` | 10 |
+| `armor` | 70 | `detectionRange` | 15 |
+| `moveSpeed` | 0.85 | | |
+| `xpDrop` | 22 | `goldDrop` | 8 |
+
+# Sealed Anomaly
+
+`AnomalyType.Sealed`, run by `SealedInstance`. No fail condition; it pays the standard anomaly reward.
+
+- One attack slot (Basic, Skill or Ultimate) is sealed for the wave. The slot is picked from the slots the player
+  has an attack in when the anomaly choices are rolled, so the anomaly button names it.
+- The other two slots gain `+x%` of their cooldown reduction stat (`basicCdRedPct`, `skillCdRedPct`,
+  `ultCdRedPct`), with `x` rolled from `anomalyMinVal`..`anomalyMaxVal` and rounded.
+- The seal goes through `PlayerAttackHandler.SetSlotLocked`. A sealed slot fails `CanCast`, and `PerformAttack`
+  refuses it, upgrade-triggered casts included. Its cooldown keeps recovering while sealed.
+- `Cleanup()` removes the seal and the cooldown reduction at the end of the wave.
+
+| Asset | Waves | Cooldown reduction | Boss waves |
+| --- | --- | --- | --- |
+| `Regular/Sealed` | 10–105 | 15–30% | allowed |
+| `Unlimited/USealed` | 0–128 | 5–30% | allowed |
+
+All Unlimited anomaly assets now cap at `maxWave` 128.
+
+# Attack Cooldown Buttons
+
+`PlayerAttackCooldownUI` sets the button's border color from the attack's state, highest priority first:
+
+| State | Border | Field |
+| --- | --- | --- |
+| Sealed | grey, plus a grey icon, a full cooldown fill and the optional `lockOverlay` | `lockedBorderColor`, `lockedIconColor` |
+| Can't cast (on cooldown, can't afford, can't attack) | red | `blockedBorderColor` |
+| Stacked attack with more than 0 but fewer than max stacks | yellow | `partialStackBorderColor` |
+| Ready | green for stacked attacks, otherwise the prefab's border color | `stackedBorderColor` |
+
+Flashes interrupt the border for a moment:
+
+- **Blocked**: 3 red flashes (`flashBorderColor`, 0.06s) when a cast is refused, sealed slots included.
+- **Ready**: 2 green flashes (`readyFlashColor`, 0.08s) whenever the attack regains a stack, whether from the
+  cooldown or a cooldown advance. Attacks with an effective cooldown under `minReadyFlashCooldown` (0.5s)
+  skip it. The check runs the frame the cooldown finishes.
+
+A sealed button's tooltip gains a "Sealed" line.
+
 # Collectibles
 
 Folder: `Assets/data/Collectibles`. Spawned by the `CollectibleSpawner` in `New.unity`,

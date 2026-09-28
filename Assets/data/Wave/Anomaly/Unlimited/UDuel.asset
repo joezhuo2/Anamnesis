@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Duel
   desc: A single empowered enemy stands against you.
   minWave: 0
-  maxWave: 1024
+  maxWave: 128
   anomalyType: 4
   anomalyValue: 0
   anomalyMinVal: 50

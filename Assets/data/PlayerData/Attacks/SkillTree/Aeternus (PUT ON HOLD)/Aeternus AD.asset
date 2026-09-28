@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
   type: 2
   cooldown: 28
+  stacks: 1
   projectilePrefab: {fileID: 1225193988873089607, guid: 4b3ff19599186824fb077ad1a5c0916e, type: 3}
   pd: {fileID: 11400000, guid: 9266e12749c4e1b449ce88e89acf5e40, type: 2}
   animationLength: 0
@@ -68,12 +69,12 @@ MonoBehaviour:
   manaCost: 80
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 2
-  staminaPctGainOnHit: 1
+  staminaGainOnHit: 1
+  staminaPctGainOnHit: 0.5
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 2
-  manaPctGainOnHit: 1
+  manaGainOnHit: 1
+  manaPctGainOnHit: 0.5
   summonChance: 0
   summonCondition: 0
   cleanseDebuffs: 1

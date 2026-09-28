@@ -42,6 +42,7 @@ namespace CrystalFlux.EntitySystem
         [HideInInspector] public readonly Dictionary<AttackType, float> lastAttackTimes = new();
         private readonly Dictionary<AttackType, int> stackCounts = new();
         private readonly List<AttackType> cdKeyBuffer = new();
+        private readonly HashSet<AttackType> lockedSlots = new();
 
         private bool isCasting;
         private bool castCancelled;
@@ -210,8 +211,30 @@ namespace CrystalFlux.EntitySystem
             }
         }
 
+        public bool IsSlotLocked(AttackType type) => lockedSlots.Contains(type);
+
+        public void SetSlotLocked(AttackType type, bool locked)
+        {
+            if (!locked)
+            {
+                lockedSlots.Remove(type);
+                return;
+            }
+
+            if (!lockedSlots.Add(type)) return;
+
+            for (int i = attackQueue.Count - 1; i >= 0; i--)
+                if (attackQueue[i].type == type) attackQueue.RemoveAt(i);
+        }
+
         public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
         {
+            if (lockedSlots.Contains(type))
+            {
+                NotifyBlocked(type);
+                return;
+            }
+
             if (isCasting || isCharging || RushLocked)
             {
                 EnqueueAttack(type, bypassCooldown, noCost, triggerUpgrades);
@@ -610,6 +633,7 @@ namespace CrystalFlux.EntitySystem
 
         public bool CanCast(AttackType type)
         {
+            if (lockedSlots.Contains(type)) return false;
             if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f) return false;
 
             AttackData selected = FindAttackOfType(type);

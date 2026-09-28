@@ -253,7 +253,8 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.StatModifier:
                         case AnomalyType.Swarm:
                         case AnomalyType.Duel:
-                        case AnomalyType.Split: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.Split:
+                        case AnomalyType.Sealed: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }

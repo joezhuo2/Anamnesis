@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd68465f6c90387408c88945c62be307, type: 3}
-  m_Name: UStatMod
-  m_EditorClassIdentifier: Assembly-CSharp::AnomalyData
-  anomalyName: Augment
-  desc: All enemies in the wave gain +0% Health
+  m_Name: USealed
+  m_EditorClassIdentifier: CrystalFlux.Wave::AnomalyData
+  anomalyName: Sealed
+  desc: 
   minWave: 0
   maxWave: 128
-  anomalyType: 2
+  anomalyType: 6
   anomalyValue: 0
-  anomalyMinVal: 25
-  anomalyMaxVal: 400
+  anomalyMinVal: 5
+  anomalyMaxVal: 30
   disallowOnBossWave: 0

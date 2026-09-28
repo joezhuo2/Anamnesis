@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.16-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.17-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.16** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.17** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -26,7 +26,7 @@ Current release: **v0.6.16** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 1. **Pick a difficulty and a gamemode** — **Easy**, **Normal** or **Hard**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
 2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them.
 3. **Choose a reward** — buffs, rare attacks or treasure-pool Awakenings. Lock one reward and reroll the rest, pay 200 gold when out of rerolls, or corrupt the rewards for a bigger gamble.
-4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*) that trade risk for rerolls and skill points.
+4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*) that trade risk for rerolls and skill points.
 5. **Spend skill points and gold** — unlock skill tree nodes, refund them for gold, level up from XP, and repeat.
 
 ---
@@ -38,7 +38,7 @@ Current release: **v0.6.16** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **🎚️ Difficulty** | Easy / Normal / Hard as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks). The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
-| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave. Hovering a choice shows its rules and completion reward |
+| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave; *Sealed* locks one attack slot and speeds up the other two. Hovering a choice shows its rules and completion reward |
 | **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, a reward lock that survives one reroll, once-per-wave corruption with a 4% chance of a *Corrupted* special attack, and rare *Stat Synergy* offers (a rising per-wave chance from wave 15) that convert a live percentage of one stat into another |
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage, knockback and attacks, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
@@ -50,7 +50,7 @@ Current release: **v0.6.16** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
 | **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman. `SpawnerBox` pickups start an ambush of configurable enemies that joins the wave, then drop a weighted batch of collectibles once it is cleared |
 | **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, quit buttons, a *You Died* screen, and the build version on the home screen — all persisted to `settings.json` |
-| **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, red borders and flashes on blocked attacks, and unscaled hover scaling that animates while paused |
+| **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, cooldown buttons that flash red when blocked and green when ready, yellow while partly restocked and grey while sealed, and unscaled hover scaling that animates while paused |
 
 Full detail for every system lives in [GAME.md](GAME.md).
 
@@ -85,14 +85,14 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, Momentum, plus capstone-only Solar Wind and Oblivion, and keystone-only Ethereal Mirage |
 | **Capstones** | Warp, Hypernova, Astral Disjunction and Nitro Accelerator upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion and Ultrasonic upgrade their required Awakening |
 | **Keystones** | Ethereal Mirage: casting an Ultimate summons 3 clones that follow you and mimic your attacks |
-| **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma) |
+| **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma), Cultist Clone, Doppelganger (copies your attacks and Awakenings, Unlimited only) |
 | **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`), Mirror (copies your attacks and Awakenings, Unlimited only) |
 | **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper) chaining into `BossRush Part 2` (the same five at Lv 105) |
-| **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission* — separate Regular and Unlimited lists |
+| **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed* — separate Regular and Unlimited lists |
 | **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
-In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel* and *Fission* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.
+In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20, Cultist Clone from 30, Doppelganger from 40. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel*, *Fission* and *Sealed* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.
 
 ### Awakening trigger conditions
 

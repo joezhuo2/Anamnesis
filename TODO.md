@@ -351,3 +351,14 @@ The player links enemies together with chains. Damage, status effects and knockb
 - [ ] **Recollection (meta progression)**: every run pays a persistent currency based on waves cleared, bosses killed and difficulty. Spent on permanent unlocks: new attacks entering the reward pools, an extra starting reroll, extra pre-run picks, new starting kits. Pairs with the v1.4 Memory collectibles.
 - [ ] **Codex**: an encyclopedia of enemies, bosses, attacks, Awakenings and status effects, with undiscovered entries shown as silhouettes. Completion itself becomes a goal and doubles as in-game documentation.
 - [ ] **Unlimited mutations**: every 25 waves in Unlimited, choose one of three permanent enemy mutations in exchange for a stacking score/reward multiplier. Keeps endless runs changing instead of just scaling numbers.
+
+---
+
+## Brainstorm: New Anomalies
+- [ ] **Blackout** (no fail) - vision shrinks to a radius around the player; enemies outside it are hidden except for their attack telegraphs and projectiles. Each kill briefly widens the radius. *New feature:* a vision mask / URP 2D light overlay, which later doubles as groundwork for the screen-edge indicators in v1.3.
+
+*Current pool: Time Trial, No Hit, Stat Modifier, Swarm, Duel, Fission. Every anomaly pays the same completion reward from `GetAnomalyRewardLine()` today.*
+
+- [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
+- [ ] **Volatile** (no fail) - enemies explode on death after a short telegraph, damaging everything nearby, player and enemies alike. Chain reactions reward grouping enemies up, but punish meleeing a pack. *Uses:* the `AnomalySplitter` death hook pattern via `OnEnemySpawned`, the enemy telegraph system.
+- [ ] **Stagnation** (no fail) - standing still for more than 1.5s stacks a DoT on the player that clears once you move again. Anti-turret pressure for stationary cast builds. *New feature:* a player idle timer and a new `Stagnation` status effect; *uses:* `DoT`.
