@@ -296,25 +296,10 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **Twilight Burst** (Awakening) — `OnStanceSwap`: releases a ring that deals damage and cleanses one debuff. 1.5s cooldown.
 - [ ] **Zenith** (Awakening) — `OnStanceSwap` after at least 5s in one stance: the next attack deals +150% damage.
 
-### 6. Tether — linked enemies
-
-The player links enemies together with chains. Damage, status effects and knockback travel along the links, so one target stands in for a whole group.
-
-*Core feature:* a `Tethered` status effect that stores a link to another entity and draws a line between them (pooled `LineRenderer`). Damage to either end copies a percentage to the other, with a reentrancy guard. Adds a new `OnTetherBreak` trigger condition.
-
-- [ ] **Chainlink** (Basic) — a projectile that tethers the first two enemies it pierces. Links last 5s and share 30% of damage.
-- [ ] **Drag Net** (Skill) — pulls every tethered enemy toward the center of its link, using `Pulled`. Enemies that collide take rush impact damage.
-- [ ] **Constellation** (Ultimate) — tethers every enemy on screen to its 2 nearest neighbours for 8s. Links share 60% of damage and every status effect applied.
-- [ ] **Load Bearing** (Awakening) — `OnTetherBreak`: the chain snaps and deals the damage it carried to both ends.
-- [ ] **Conductive Chains** (Awakening) — passive. DoT ticks travel along tethers, but can't travel back along the link they came from.
-- [ ] **Anchor** (Awakening) — passive. Tethering to a boss or elite makes that end immovable, so knockback on the other end is doubled.
-
 ---
 
-### Planned
-- [ ] **Boss relics**: each boss drops a choice between two unique, boss-themed Awakenings that can only come from that boss (e.g. a Golem armor-to-rush-impact relic, a Reaper execute relic). Makes each boss kill memorable instead of just another reward panel.
-
 ## Brainstorm: QoL, Gameplay & Replayability
+- [ ] **Boss relics**: each boss drops a choice between two unique, boss-themed Awakenings that can only come from that boss (e.g. a Golem armor-to-rush-impact relic, a Reaper execute relic). Makes each boss kill memorable instead of just another reward panel.
 
 ### QoL
 - [ ] **Banish**: a limited per-run charge that removes a reward from its pool for the rest of the run. Allowed in Ironman since it is not a take-back.
@@ -323,17 +308,12 @@ The player links enemies together with chains. Damage, status effects and knockb
 - [ ] **Quick retry**: a death screen button (and hotkey) that restarts straight into the same gamemode, difficulty and Ironman setting, skipping the home screen.
 - [ ] **Owned upgrades list**: a pause menu tab listing every Awakening, capstone and synergy owned this run with full tooltips, so it is possible to check what the build actually does mid-run.
 - [ ] **Damage number filters**: settings to hide DoT ticks, merge rapid hits on one target into a running total, or show only crits/big hits.
-- [ ] **Cooldown ready cue**: a short flash (and sound once audio lands) on the HUD button when an Ultimate or stacked attack comes off cooldown.
 - [ ] **First-run hints**: one-time contextual tips (first dash, first corruption, first anomaly, first skill point) that can be reset in settings. Fits v1.0 "a stranger can play it".
 
 ### Gameplay
-- [ ] **Tempo bonus**: each wave has a par time; clearing under par pays bonus gold/XP scaled by how far under. Rewards aggressive builds and gives a reason to push.
-- [ ] **Bounty target**: one enemy per wave is marked and flees or buffs itself over time; killing it before it escapes drops a guaranteed collectible or reroll.
-- [ ] **Hunter**: if a wave drags on too long, an elite spawns that relentlessly chases the player and drops a rare reward if killed. Anti-stall pressure with an upside.
 - [ ] **Awakening fusions**: specific Awakening pairs fuse into a stronger combined version when both are owned (e.g. Supersonic + Chaos Theory). Hidden recipes the player discovers, a concrete form of the v1.6 synergy bonuses.
 
 *Theme: memory & recollection*
-- [ ] **Echo of a past self**: a rare mini-boss that uses your *previous* run's attacks and Awakenings (read from the saved loadout). Defeating it lets you take one of its rewards into this run. Every run leaves something behind for the next one.
 - [ ] **Deja vu**: a wave replays an earlier wave's exact spawns while a faint ghost trail shows how you moved last time. Beat your earlier clear time for a bonus reward, and it quietly shows how much stronger the build has become.
 - [ ] **Constellation tracing**: stars light up across the map mid-wave; touch them in the drawn order before they fade to complete a constellation, which grants a named buff for the rest of the wave (a different one for each constellation, each with a lore line). Pulls the player around the map instead of kiting in circles.
 
@@ -356,8 +336,6 @@ The player links enemies together with chains. Damage, status effects and knockb
 
 ## Brainstorm: New Anomalies
 - [ ] **Blackout** (no fail) - vision shrinks to a radius around the player; enemies outside it are hidden except for their attack telegraphs and projectiles. Each kill briefly widens the radius. *New feature:* a vision mask / URP 2D light overlay, which later doubles as groundwork for the screen-edge indicators in v1.3.
-
-*Current pool: Time Trial, No Hit, Stat Modifier, Swarm, Duel, Fission. Every anomaly pays the same completion reward from `GetAnomalyRewardLine()` today.*
 
 - [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
 - [ ] **Volatile** (no fail) - enemies explode on death after a short telegraph, damaging everything nearby, player and enemies alike. Chain reactions reward grouping enemies up, but punish meleeing a pack. *Uses:* the `AnomalySplitter` death hook pattern via `OnEnemySpawned`, the enemy telegraph system.

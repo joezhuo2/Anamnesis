@@ -17966,6 +17966,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b97cfae859ab88438944d997ecafcd7, type: 2}
   - {fileID: 11400000, guid: 121516d3c52ca3948a71c5f3a3ed5253, type: 2}
   - {fileID: 11400000, guid: 4c4af91f9f3e5524d8f6708a5fd667a9, type: 2}
+  - {fileID: 11400000, guid: 4c0962552bd156d41ba5e8bec2199a23, type: 2}
   prewarmCount: 8
   minSpawnDist: 3
   maxSpawnDist: 6
@@ -26751,9 +26752,9 @@ MonoBehaviour:
   - prefab: {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
     minWave: 15
   - prefab: {fileID: 7457594691964507130, guid: ed6d4b1b71927f8408ba7d44890b6322, type: 3}
-    minWave: 30
+    minWave: 25
   - prefab: {fileID: 5022662664612179253, guid: 275fe0d431115f14d93590566111a1ef, type: 3}
-    minWave: 40
+    minWave: 30
   bossPrefabs:
   - {fileID: 7457594691964507130, guid: 24bacf361cba81f488717cc41f41440e, type: 3}
   - {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}

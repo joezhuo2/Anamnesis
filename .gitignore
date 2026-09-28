@@ -134,8 +134,11 @@ graphify-out/
 
 /build/
 
+## ai agent instructions
 .copilotignore
 .claudeignore
 AGENTS.md
 CLAUDE.md
 copilot-instructions.md
+
+.vscode/

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297bbbdd6d89891478a5b68d3b4873cd, type: 3}
+  m_Name: Box Doppelganger
+  m_EditorClassIdentifier: CrystalFlux.Collectible::CrystalFlux.CollectibleSystem.CollectibleData
+  sprite: {fileID: 561022439, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  type: 7
+  lightColor: {r: 1, g: 0.20157912, b: 0, a: 1}
+  minVal: 1
+  maxVal: 1
+  chance: 0.25
+  cooldown: 45
+  maxTime: 45
+  ambushEnemies:
+  - {fileID: 5022662664612179253, guid: 275fe0d431115f14d93590566111a1ef, type: 3}
+  ambushMin: 1
+  ambushMax: 3
+  ambushRadius: 3
+  ambushLevelBonus: 2
+  rewards:
+  - data: {fileID: 11400000, guid: 802859c6b3b334b46836adf266506a67, type: 2}
+    weight: 2
+  - data: {fileID: 11400000, guid: 14fb9188e5eebd1418c6f67ef28403dc, type: 2}
+    weight: 3
+  - data: {fileID: 11400000, guid: d2d059a491f33c846861a44db27cf176, type: 2}
+    weight: 4
+  - data: {fileID: 11400000, guid: 44f57e13d9679554fae52f1f8bf2fa14, type: 2}
+    weight: 3
+  rewardMin: 2
+  rewardMax: 7
+  rewardRadius: 2
