@@ -130,6 +130,8 @@ namespace CrystalFlux.WaveSystem
         protected StatSynergyManager cssm;
         protected float synergyChanceBonus = 0f;
         protected bool pendingSynergy = false;
+        protected RewardButton keptReward;
+        protected int LockedSlots => keptReward != null ? 1 : 0;
         protected static readonly WaitForSeconds _waitForSeconds1_5 = new(1.5f);
         protected static readonly WaitForSeconds _waitForSeconds0_5 = new(0.5f);
         protected static readonly WaitForSeconds _waitForSeconds0_25 = new(0.25f);
@@ -214,7 +216,7 @@ namespace CrystalFlux.WaveSystem
             if (!IronmanSelector.Enabled)
             {
                 if (rerollButton != null && rerollButton.TryGetComponent<ITooltipDisplay>(out var td))
-                    td.ShowTooltip("Reroll", $"Rerolls all reward choices.\nCost: 1 reroll token or {RerollGoldCost} gold if none are available.");
+                    td.ShowTooltip("Reroll", $"Rerolls all unlocked reward choices.\nCost: 1 reroll token or {RerollGoldCost} gold if none are available.");
                 if (corruptButton != null && corruptButton.TryGetComponent<ITooltipDisplay>(out var td2))
                     td2.ShowTooltip("Corrupt", "Chance to corrupt any rewards massively increase or decrease their values.\nCan only be used once per wave and removes all other options.");
             }
@@ -296,7 +298,53 @@ namespace CrystalFlux.WaveSystem
             GameObject btnObj = PrefabPool.Acquire(rewardButtonPrefab, targetParent);
 
             if (btnObj != null) activeRewardButtons.Add(btnObj);
+            RefreshLockButtons();
             return btnObj;
+        }
+
+        protected RewardButton GetLockedReward()
+        {
+            for (int i = 0; i < activeRewardButtons.Count; i++)
+            {
+                GameObject go = activeRewardButtons[i];
+                if (go != null && go.TryGetComponent<RewardButton>(out var rb) && rb.IsLocked) return rb;
+            }
+            return null;
+        }
+
+        protected void RefreshLockButtons()
+        {
+            bool show = !IronmanSelector.Enabled && type != RewardType.Anomaly && activeRewardButtons.Count > 1;
+            RewardButton lk = show ? GetLockedReward() : null;
+
+            for (int i = 0; i < activeRewardButtons.Count; i++)
+            {
+                GameObject go = activeRewardButtons[i];
+                if (go == null || !go.TryGetComponent<RewardButton>(out var rb)) continue;
+
+                rb.SetupLock(show, OnRewardLockToggled);
+                rb.SetLockInteractable(lk == null || lk == rb);
+            }
+        }
+
+        protected void HideLockButtons()
+        {
+            for (int i = 0; i < activeRewardButtons.Count; i++)
+            {
+                GameObject go = activeRewardButtons[i];
+                if (go != null && go.TryGetComponent<RewardButton>(out var rb)) rb.SetupLock(false, null);
+            }
+        }
+
+        protected void OnRewardLockToggled(RewardButton rb)
+        {
+            if (IronmanSelector.Enabled || rb == null) return;
+
+            RewardButton lk = GetLockedReward();
+            if (lk != null && lk != rb) return;
+
+            rb.SetLocked(!rb.IsLocked);
+            RefreshLockButtons();
         }
 
         public virtual void StartNextWave()
@@ -814,7 +862,7 @@ namespace CrystalFlux.WaveSystem
             type = RewardType.PreRun;
             PanelSetup();
 
-            int picks = Mathf.Max(1, D.preRunPickCount);
+            int picks = Mathf.Max(1, D.preRunPickCount) - LockedSlots;
 
             for (int i = 0; i < picks; i++)
             {
@@ -856,6 +904,7 @@ namespace CrystalFlux.WaveSystem
             {
                 AttackReward candidate = availableRarePool[i];
                 if (candidate == null || candidate.minWave > wave) continue;
+                if (keptReward != null && keptReward.Attack == candidate) continue;
 
                 eligible++;
                 if (Random.Range(0, eligible) == 0) chosen = candidate;
@@ -891,6 +940,7 @@ namespace CrystalFlux.WaveSystem
             {
                 PlayerUpgradeReward candidate = availableTreasurePool[i];
                 if (candidate == null || candidate.minWave > wave) continue;
+                if (keptReward != null && keptReward.Upgrade == candidate) continue;
 
                 eligible++;
                 if (Random.Range(0, eligible) == 0) chosen = candidate;
@@ -901,7 +951,7 @@ namespace CrystalFlux.WaveSystem
         protected void GenerateMilestoneRewards()
         {
             type = RewardType.Milestone;
-            int rewardChoices = Mathf.Min(Mathf.Max(1, milestoneRewardChoices + D.milestoneRewardChoicesAdd), milestoneRewards.Count);
+            int rewardChoices = Mathf.Min(Mathf.Max(1, milestoneRewardChoices + D.milestoneRewardChoicesAdd), milestoneRewards.Count) - LockedSlots;
 
             PanelSetup();
 
@@ -922,6 +972,11 @@ namespace CrystalFlux.WaveSystem
         {
             var result = new List<MilestoneReward>();
             var available = new List<MilestoneReward>(milestoneRewards);
+            if (keptReward != null && keptReward.Milestone != null)
+            {
+                string kn = keptReward.Milestone.rewardName;
+                available.RemoveAll(r => r.rewardName == kn);
+            }
 
             for (int i = 0; i < count && available.Count > 0; i++)
             {
@@ -1048,8 +1103,9 @@ namespace CrystalFlux.WaveSystem
             CachePlayerStatManager();
             CachePlayerSynergy();
             synergiesThisRoll.Clear();
+            if (keptReward != null && keptReward.Synergy?.sy != null) synergiesThisRoll.Add(keptReward.Synergy.sy);
 
-            int choices = Mathf.Max(1, synergyChoices);
+            int choices = Mathf.Max(1, synergyChoices) - LockedSlots;
 
             for (int i = 0; i < choices; i++)
             {
@@ -1122,7 +1178,7 @@ namespace CrystalFlux.WaveSystem
                 rewardChoices = 1;
             }
 
-            rewardChoices = Mathf.Max(1, rewardChoices + D.rewardChoicesAdd);
+            rewardChoices = Mathf.Max(1, rewardChoices + D.rewardChoicesAdd) - LockedSlots;
 
             PanelSetup();
 
@@ -1244,6 +1300,11 @@ namespace CrystalFlux.WaveSystem
 
             UpdateRerollUI();
 
+            keptReward = GetLockedReward();
+            int ki = keptReward != null ? activeRewardButtons.IndexOf(keptReward.gameObject) : -1;
+            if (ki >= 0) activeRewardButtons.RemoveAt(ki);
+            else keptReward = null;
+
             ClearRewardButtons();
 
             switch (type)
@@ -1258,6 +1319,26 @@ namespace CrystalFlux.WaveSystem
                 case RewardType.Synergy: GenerateSynergyRewards(); break;
                 default: break;
             }
+
+            RestoreKeptReward(ki);
+        }
+
+        protected void RestoreKeptReward(int ki)
+        {
+            if (keptReward == null) return;
+
+            RewardButton kr = keptReward;
+            keptReward = null;
+            kr.SetLocked(false);
+
+            int idx = Mathf.Clamp(ki, 0, activeRewardButtons.Count);
+            if (idx < activeRewardButtons.Count && activeRewardButtons[idx] != null)
+                kr.transform.SetSiblingIndex(activeRewardButtons[idx].transform.GetSiblingIndex());
+            else
+                kr.transform.SetAsLastSibling();
+
+            activeRewardButtons.Insert(idx, kr.gameObject);
+            RefreshLockButtons();
         }
 
         public void OnCorruptButtonClicked()
@@ -1281,9 +1362,9 @@ namespace CrystalFlux.WaveSystem
 
             foreach (GameObject rb in activeRewardButtons)
             {
-                if (Random.value > (cChance * 0.01f)) continue;
+                if (!rb.TryGetComponent<RewardButton>(out var grb) || grb.IsLocked) continue;
 
-                if (!rb.TryGetComponent<RewardButton>(out var grb)) continue;
+                if (Random.value > (cChance * 0.01f)) continue;
 
                 GeneratedReward gr = grb.gr;
                 if (gr == null) continue;
@@ -1307,6 +1388,8 @@ namespace CrystalFlux.WaveSystem
 
                 grb.CorruptButton(changeLine, corruptMult);
             }
+
+            HideLockButtons();
 
             if (rerollButton != null) rerollButton.gameObject.SetActive(false);
             if (corruptButton != null) corruptButton.gameObject.SetActive(false);

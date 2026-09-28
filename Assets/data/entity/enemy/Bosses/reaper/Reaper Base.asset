@@ -40,8 +40,8 @@ MonoBehaviour:
   basicCdRedPct: 0
   skillCdRedPct: 0
   ultCdRedPct: 0
-  currentHp: 450
-  maxHp: 450
+  currentHp: 625
+  maxHp: 625
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0
@@ -49,6 +49,10 @@ MonoBehaviour:
   overhealth: 0
   armor: 200
   armorPct: 0
+  defense: 0
+  defensePct: 0
+  arcaneShield: 0
+  arcaneShieldPct: 0
   damageRes: 35
   dodgeChance: 0
   dodgeResPct: 0
@@ -81,6 +85,7 @@ MonoBehaviour:
   dashShouldApplyIFrame: 0
   castTimeRedPct: 0
   interruptResist: 0
+  rushImpactPct: 0
   level: 0
   exp: 0
   expBonus: 0

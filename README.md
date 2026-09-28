@@ -2,14 +2,14 @@
 
 # Anamnesis
 
-> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 222-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
+> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 236-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
 
 ![Unity](https://img.shields.io/badge/Unity-6000.4.6f1-000000?logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-.NET-512BD4?logo=dotnet&logoColor=white)
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.13-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.14-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.13** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.14** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -25,7 +25,7 @@ Current release: **v0.6.13** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 
 1. **Pick a difficulty and a gamemode** — **Easy**, **Normal** or **Hard**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
 2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls.
-3. **Choose a reward** — buffs, rare attacks or treasure-pool Awakenings. Reroll, pay 200 gold when out of rerolls, or corrupt the rewards for a bigger gamble.
+3. **Choose a reward** — buffs, rare attacks or treasure-pool Awakenings. Lock one reward and reroll the rest, pay 200 gold when out of rerolls, or corrupt the rewards for a bigger gamble.
 4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*) that trade risk for rerolls and skill points.
 5. **Spend skill points and gold** — unlock skill tree nodes, refund them for gold, level up from XP, and repeat.
 
@@ -39,11 +39,11 @@ Current release: **v0.6.13** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
 | **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave. Hovering a choice shows its rules and completion reward |
-| **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, once-per-wave corruption with a 4% chance of a *Corrupted* special attack, and rare *Stat Synergy* offers (a rising per-wave chance from wave 10) that convert a live percentage of one stat into another |
+| **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, a reward lock that survives one reroll, once-per-wave corruption with a 4% chance of a *Corrupted* special attack, and rare *Stat Synergy* offers (a rising per-wave chance from wave 15) that convert a live percentage of one stat into another |
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage, knockback and attacks, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
 | **✨ Awakenings** | `PlayerUpgrade` assets driven by 25 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
-| **🌳 Skill Tree** | Pan/zoom tree of 229 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
+| **🌳 Skill Tree** | Pan/zoom tree of 236 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
 | **🧪 Status Effects** | Stackable DoTs, stuns, freezes, stat buffs and reductions, attack replacement, cleansing, and **Ethereal Mirage** clones that share your stats and repeat your attacks, with cooldown UI |
 | **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a five-boss **Boss Rush** gauntlet |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |

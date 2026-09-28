@@ -208,7 +208,6 @@
 - basic cd red pct
 - skill cd red pct
 - ult cd red pct
-- max stamina
 - max mana
 - dash spd mult
 - dash stamina cost red pct
@@ -310,3 +309,49 @@ The player links enemies together with chains. Damage, status effects and knockb
 - [ ] **Load Bearing** (Awakening) — `OnTetherBreak`: the chain snaps and deals the damage it carried to both ends.
 - [ ] **Conductive Chains** (Awakening) — passive. DoT ticks travel along tethers, but can't travel back along the link they came from.
 - [ ] **Anchor** (Awakening) — passive. Tethering to a boss or elite makes that end immovable, so knockback on the other end is doubled.
+
+---
+
+### Planned
+- [ ] **Boss relics**: each boss drops a choice between two unique, boss-themed Awakenings that can only come from that boss (e.g. a Golem armor-to-rush-impact relic, a Reaper execute relic). Makes each boss kill memorable instead of just another reward panel.
+
+## Brainstorm: QoL, Gameplay & Replayability
+
+### QoL
+- [ ] **Banish**: a limited per-run charge that removes a reward from its pool for the rest of the run. Allowed in Ironman since it is not a take-back.
+- [ ] **Reward compare**: hovering a reward shows `current -> new` for every stat it touches, and attack replacements show cooldown/damage/scaling side by side with the attack they replace.
+- [ ] **Capstone path badge**: rewards that satisfy a capstone or keystone requirement in the skill tree get a small badge so players can spot build-defining picks without memorizing the tree.
+- [ ] **Quick retry**: a death screen button (and hotkey) that restarts straight into the same gamemode, difficulty and Ironman setting, skipping the home screen.
+- [ ] **Owned upgrades list**: a pause menu tab listing every Awakening, capstone and synergy owned this run with full tooltips, so it is possible to check what the build actually does mid-run.
+- [ ] **Damage number filters**: settings to hide DoT ticks, merge rapid hits on one target into a running total, or show only crits/big hits.
+- [ ] **Cooldown ready cue**: a short flash (and sound once audio lands) on the HUD button when an Ultimate or stacked attack comes off cooldown.
+- [ ] **First-run hints**: one-time contextual tips (first dash, first corruption, first anomaly, first skill point) that can be reset in settings. Fits v1.0 "a stranger can play it".
+
+### Gameplay
+- [ ] **Tempo bonus**: each wave has a par time; clearing under par pays bonus gold/XP scaled by how far under. Rewards aggressive builds and gives a reason to push.
+- [ ] **Bounty target**: one enemy per wave is marked and flees or buffs itself over time; killing it before it escapes drops a guaranteed collectible or reroll.
+- [ ] **Hunter**: if a wave drags on too long, an elite spawns that relentlessly chases the player and drops a rare reward if killed. Anti-stall pressure with an upside.
+- [ ] **Awakening fusions**: specific Awakening pairs fuse into a stronger combined version when both are owned (e.g. Supersonic + Chaos Theory). Hidden recipes the player discovers, a concrete form of the v1.6 synergy bonuses.
+
+*Theme: memory & recollection*
+- [ ] **Echo of a past self**: a rare mini-boss that uses your *previous* run's attacks and Awakenings (read from the saved loadout). Defeating it lets you take one of its rewards into this run. Every run leaves something behind for the next one.
+- [ ] **Deja vu**: a wave replays an earlier wave's exact spawns while a faint ghost trail shows how you moved last time. Beat your earlier clear time for a bonus reward, and it quietly shows how much stronger the build has become.
+- [ ] **Constellation tracing**: stars light up across the map mid-wave; touch them in the drawn order before they fade to complete a constellation, which grants a named buff for the rest of the wave (a different one for each constellation, each with a lore line). Pulls the player around the map instead of kiting in circles.
+
+*Wave events & side objectives (candidates for the v1.2 wave events pool)*
+- [ ] **Whispers**: short timed micro-objectives that pop up during a wave, like "kill 10 burning enemies in 20s", "take no damage for 15s" or "crit the elite 3 times". Each completed whisper pays a small reward, and a streak of them pays a bigger one.
+- [ ] **Resonance pillars**: three pillars that each have to be hit by a different attack slot (Basic, Skill, Ultimate) within a short window. Lighting all three releases a shockwave and drops a reward. Rewards slot rotation over spamming one attack.
+- [ ] **Meteorfall**: telegraphed meteors crash onto the map, damaging whatever is under them (enemies included). Each crater leaves a crystal that you can break open for gold, or leave to charge into a temporary buff zone. Lets you bait enemies into impacts.
+- [ ] **Lost wisp escort**: a friendly wisp appears and drifts slowly toward a beacon while enemies switch to target it. Get it there alive for a reward, with a bigger reward if it arrives above 50% HP. The mirror image of the planned defend/destroy beacon.
+- [ ] **Rift trial**: a rift tears open for 10s; step in to be pulled into a short pocket arena with an elite pack while the main wave is frozen. Clear it within the time limit to come back with a guaranteed rare reward; fail and you come back with a debuff.
+- [ ] **Eclipse**: the screen darkens to a light radius around the player, and enemies outside it only show as glowing eyes. Lanterns scattered around the map widen the radius when lit, and enemies killed in the dark drop double gold.
+
+*New ways to earn rewards*
+- [ ] **Blind draw**: a reward panel variant with face-down cards and better rarity odds. You commit to a card before seeing it.
+- [ ] **Transmute altar**: sacrifice an owned reward to reroll it into a random reward one rarity tier higher from the same pool. A risky upgrade path that is separate from corruption.
+- [ ] **Overkill cache**: overkill damage fills a hidden meter; when it is full a crystal cache drops at the last enemy's position. Makes overkill-heavy nuke builds pay out beyond the kill itself.
+
+### Replayability
+- [ ] **Recollection (meta progression)**: every run pays a persistent currency based on waves cleared, bosses killed and difficulty. Spent on permanent unlocks: new attacks entering the reward pools, an extra starting reroll, extra pre-run picks, new starting kits. Pairs with the v1.4 Memory collectibles.
+- [ ] **Codex**: an encyclopedia of enemies, bosses, attacks, Awakenings and status effects, with undiscovered entries shown as silhouettes. Completion itself becomes a goal and doubles as in-game documentation.
+- [ ] **Unlimited mutations**: every 25 waves in Unlimited, choose one of three permanent enemy mutations in exchange for a stacking score/reward multiplier. Keeps endless runs changing instead of just scaling numbers.

@@ -7,6 +7,25 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.14] - 2026-09-27
+
+### Added
+- **Reward lock**: each reward card has a lock button (`RewardLockButton`, a child of the reward button prefab
+  with locked/unlocked icons). Rerolling keeps the locked card in its slot and only replaces the others
+  - One card can be locked at a time; click it again to unlock and lock a different card
+  - The lock is released after each reroll
+  - The reroll never re-offers the locked attack, Awakening, milestone or synergy
+  - Corrupt skips the locked card and hides the lock buttons
+  - Hidden in Ironman Mode, on the anomaly panel, and when there is only one choice
+- Skill tree nodes (236 total now):
+  - **Status Effect Potency** path: 3 nodes of +3% `sePotPct`, branching from Projectile Speed (`ps1`)
+  - **Maximum Stamina** path: 4 nodes of +4 `maxStamina`, branching from Damage I (`dp6`)
+- Unlimited `WaveManager` synergy pool gains `arcaneShield` (6), `defense` (5), `critDamage` (4) and `hpRegen` (4) as source and target, plus target-only `critChance` (3), `ProjSpd` (2), `defShred` (1), `resPen` (1) and `EffectRes` (1)
+
+### Changed
+- Unlimited `WaveManager` synergy weights for `attack`, `maxHp`, `armor` and `Intelligence` raised from 1 to 6
+- The Reroll tooltip now reads "Rerolls all unlocked reward choices"
+
 ## [v0.6.13] - 2026-09-27
 
 ### Added

@@ -17,6 +17,9 @@ namespace CrystalFlux.WaveSystem
         public Image borderHighlight;
         public Image iconImage;
 
+        [Header("Lock")]
+        public RewardLockButton lockButton;
+
         public static readonly Color CorruptedSpecialColor = Color.darkBlue;
         public static readonly Color SynergyColor = Color.blueViolet;
 
@@ -32,6 +35,35 @@ namespace CrystalFlux.WaveSystem
         private Action<PlayerUpgradeReward> onPlayerUpgradeClaimedCallback;
         private Action<MilestoneRewardData> onMilestoneClaimedCallback;
         private Action<SynergyRewardData> onSynergyClaimedCallback;
+        private Action<RewardButton> onLockToggledCallback;
+
+        public bool IsLocked { get; private set; }
+        public AttackReward Attack => ar;
+        public PlayerUpgradeReward Upgrade => pur;
+        public MilestoneRewardData Milestone => mrd;
+        public SynergyRewardData Synergy => srd;
+
+        public void SetupLock(bool show, Action<RewardButton> toggleCallback)
+        {
+            onLockToggledCallback = toggleCallback;
+            if (!show) IsLocked = false;
+
+            if (lockButton == null) lockButton = GetComponentInChildren<RewardLockButton>(true);
+            if (lockButton != null) lockButton.Setup(show, IsLocked, HandleLockClick);
+        }
+
+        public void SetLocked(bool locked)
+        {
+            IsLocked = locked;
+            if (lockButton != null) lockButton.SetLocked(locked);
+        }
+
+        public void SetLockInteractable(bool interactable)
+        {
+            if (lockButton != null) lockButton.SetInteractable(interactable);
+        }
+
+        private void HandleLockClick() => onLockToggledCallback?.Invoke(this);
 
         public void Setup(GeneratedReward reward, Action<GeneratedReward> claimCallback, string statChangeLine)
         {
@@ -216,6 +248,9 @@ namespace CrystalFlux.WaveSystem
             onPlayerUpgradeClaimedCallback = null;
             onMilestoneClaimedCallback = null;
             onSynergyClaimedCallback = null;
+            onLockToggledCallback = null;
+            IsLocked = false;
+            if (lockButton != null) lockButton.ResetForPooling();
             gr = null;
             ar = null;
             pur = null;

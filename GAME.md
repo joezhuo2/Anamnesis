@@ -677,7 +677,8 @@ managers). When the Corrupt button is pressed, every reward button that passes t
 `corruptChance` roll then rolls `corruptionSpecialChance` (4%). On a hit the stat reward is
 replaced outright by one of these attacks instead of receiving a value multiplier. The same
 special cannot appear on two buttons in one corruption pass, and claiming one removes it from
-the pool for the rest of the run. Full stats for each attack are in the sections above.
+the pool for the rest of the run. A [locked](#reward-lock) reward is skipped by corruption. Full
+stats for each attack are in the sections above.
 
 | Attack | Unlock wave here | Unlock wave in `rarePool` |
 | --- | --- | --- |
@@ -689,6 +690,22 @@ the pool for the rest of the run. Full stats for each attack are in the sections
 | Nirvana | 15 | 35 |
 | Luminaria | 15 | 35 |
 | Nocturnis | 25 | 25 and 45 |
+
+---
+
+# Reward Lock
+
+Each `RewardButton` has a `RewardLockButton` child that toggles a lock on that card
+(`lockedIcon` / `unlockedIcon`). Rerolling keeps the locked card in its slot and only generates
+the remaining choices.
+
+- Only one card can be locked at a time. While one is locked, the other lock buttons are
+  disabled; click the locked card's button again to unlock it and lock a different one.
+- The lock is released after each reroll, so it has to be set again before the next one.
+- A reroll rolls the choice count as usual, then subtracts one for the locked card.
+- The reroll never re-offers the locked attack, Awakening, milestone or synergy.
+- Corrupt skips the locked card, then hides every lock button.
+- Hidden in Ironman Mode, on the anomaly panel, and when the panel has only one choice.
 
 ---
 
@@ -713,7 +730,7 @@ status effects, enemy presets and skill tree nodes. Enemies above level 1 multip
 # Stat Synergies
 
 Serialized in `WaveManager.synergyStatPool` and the `synergy*` fields next to it (set separately
-on the regular and unlimited managers; both currently use the same values). A synergy converts a
+on the regular and unlimited managers; the settings match, the stat pools differ). A synergy converts a
 percentage of a source stat into a flat bonus on a target stat. `StatSynergyManager` on the player
 recomputes every synergy each frame from the current source value, so the bonus tracks the source
 for the rest of the run.
@@ -724,11 +741,13 @@ that wave's regular reward and resets the bonus. Synergies never appear in other
 
 | Setting | Value |
 | --- | --- |
-| `synergyMinWave` | 10 |
-| `synergyBaseChance` | 4% |
-| `synergyChanceGrowth` | +4% per wave without an offer |
+| `synergyMinWave` | 15 |
+| `synergyBaseChance` | 2% |
+| `synergyChanceGrowth` | +2% per wave without an offer |
 | `synergyChoices` | 3 |
 | `minSynergyConversion` / `maxSynergyConversion` | 8% / 20% |
+
+Regular manager:
 
 | Stat (pool entry) | Read as source | Can be source | Can be target | Weight |
 | --- | --- | --- | --- | --- |
@@ -738,6 +757,24 @@ that wave's regular reward and resets the bonus. Synergies never appear in other
 | `Intelligence` | `EffInt` | Yes | Yes | 1 |
 | `maxMana` | `EffMaxMana` | Yes | Yes | 1 |
 | `maxStamina` | `EffMaxStamina` | Yes | Yes | 1 |
+
+Unlimited manager:
+
+| Stat (pool entry) | Read as source | Can be source | Can be target | Weight |
+| --- | --- | --- | --- | --- |
+| `attack` | `EffAtk` | Yes | Yes | 6 |
+| `maxHp` | `EffMaxHp` | Yes | Yes | 6 |
+| `armor` | `EffArmor` | Yes | Yes | 6 |
+| `Intelligence` | `EffInt` | Yes | Yes | 6 |
+| `arcaneShield` | `EffArcaneShield` | Yes | Yes | 6 |
+| `defense` | `EffDefense` | Yes | Yes | 5 |
+| `critDamage` | `critDamage` | Yes | Yes | 4 |
+| `hpRegen` | `EffHpReg` | Yes | Yes | 4 |
+| `critChance` | - | No | Yes | 3 |
+| `ProjSpd` | - | No | Yes | 2 |
+| `defShred` | - | No | Yes | 1 |
+| `resPen` | - | No | Yes | 1 |
+| `EffectRes` | - | No | Yes | 1 |
 
 Rules: source and target must be from different stat families; a pair already owned or already on
 another card in the same roll is skipped; flat targets are floored to whole numbers.
