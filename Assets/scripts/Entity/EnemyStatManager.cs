@@ -1,0 +1,52 @@
+using UnityEngine;
+
+namespace CrystalFlux.Core
+{
+    public class EnemyStatManager : EntityStatManager
+    {
+        public string displayName;
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            if (s != null && s.level > 1) ScaleBaseStats(s.level);
+        }
+
+        public void ScaleStatsToLevel(int targetLevel)
+        {
+            if (s == null) return;
+
+            s.level = targetLevel;
+
+            if (s.level > 1) ScaleBaseStats(s.level);
+        }
+        private void ScaleBaseStats(int currentLevel)
+        {
+            int levelOffset = currentLevel - 1;
+            if (levelOffset <= 0) return;
+
+            const float atkGrowth = 1.04f;
+            const float hpGrowth = 1.1f;
+            const float armorGrowth = 1.07f;
+            const float utilityGrowth = 1.04f;
+
+            float atkMult = Mathf.Pow(atkGrowth, levelOffset);
+            float hpMult = Mathf.Pow(hpGrowth, levelOffset);
+            float hprMult = Mathf.Pow(hpGrowth, levelOffset * 0.3f);
+            float armorMult = Mathf.Pow(armorGrowth, levelOffset);
+            float utilMult = Mathf.Pow(utilityGrowth, levelOffset);
+
+            s.attack = Mathf.RoundToInt(s.attack * atkMult);
+            s.critDamage *= atkMult;
+            s.maxHp = Mathf.RoundToInt(s.maxHp * hpMult);
+            s.hpRegen *= hprMult;
+            s.armor = Mathf.RoundToInt(s.armor * armorMult);
+            s.arcaneShield = Mathf.RoundToInt(s.arcaneShield * armorMult);
+
+            s.aoePct *= utilMult;
+            s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct * utilMult, -100f, 100f);
+            s.critChance = Mathf.Clamp(s.critChance * utilMult, 0f, 100f);
+        }
+    }
+}

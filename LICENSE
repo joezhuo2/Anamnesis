@@ -1,0 +1,99 @@
+Anamnesis Source-Available License
+Copyright (c) 2026 Joe Zhuo. All rights reserved.
+
+This is NOT an open source license. The source code for Anamnesis is made
+publicly visible so that others may read, study, and learn from it. It is not
+placed in the public domain, and no right to redistribute it or to publish
+modified versions of it is granted.
+
+1. DEFINITIONS
+
+   "Software" means the source code, project files, configuration, and
+   documentation contained in this repository, EXCLUDING the Third-Party
+   Assets described in Section 5.
+
+   "You" means any person or entity exercising the permissions granted below.
+
+2. PERMISSIONS
+
+   Subject to the conditions below, You may:
+
+   a) View, read, and study the Software for any purpose, including personal
+      education and evaluation.
+
+   b) Clone or download the Software and compile it in order to run and play
+      Anamnesis privately, on hardware You own or control.
+
+   c) Modify Your own local copy of the Software for private experimentation
+      and learning.
+
+   d) Quote short excerpts of the Software in reviews, commentary, tutorials,
+      academic work, or technical discussion, with attribution.
+
+3. RESTRICTIONS
+
+   Except as expressly permitted in Section 2, You may NOT, without prior
+   written permission from the copyright holder:
+
+   a) Redistribute, publish, host, mirror, sublicense, rent, or sell the
+      Software or any compiled build of it, in whole or in part, whether
+      modified or unmodified, and whether for a fee or free of charge.
+
+   b) Publish, distribute, or otherwise make available to any third party a
+      modified version, fork, port, reskin, remake, or other derivative work
+      based on the Software.
+
+   c) Incorporate the Software, or any substantial portion of it, into another
+      game, product, service, or asset package, whether commercial or
+      non-commercial.
+
+   d) Use the name "Anamnesis", or any associated logos or branding, to
+      identify any product or project other than this one.
+
+   e) Remove, obscure, or alter any copyright, attribution, or license notice
+      contained in the Software.
+
+4. CONTRIBUTIONS
+
+   If You submit a pull request, patch, or other contribution to this
+   repository, You grant the copyright holder a perpetual, worldwide,
+   non-exclusive, royalty-free, irrevocable license to use, reproduce, modify,
+   distribute, and relicense that contribution as part of the Software. You
+   represent that You have the right to grant this license.
+
+5. THIRD-PARTY ASSETS
+
+   This repository contains art, audio, fonts, and other assets created by
+   third parties and used under their own separate licenses. These are listed
+   in CREDITS.md.
+
+   Such assets are NOT covered by this license and are NOT licensed to You by
+   the copyright holder of the Software. Your right to use them, if any, comes
+   only from their original creators and their original license terms. If You
+   wish to use any of those assets, obtain them from their original source and
+   comply with the terms attached to them there.
+
+   The same applies to Unity, its packages, and any other third-party
+   libraries or dependencies referenced by this project, which remain subject
+   to their respective licenses.
+
+6. NO WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL
+   THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY,
+   WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF,
+   OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+7. TERMINATION
+
+   Any rights granted to You under Section 2 terminate automatically if You
+   breach any term of this license. Upon termination You must cease all use of
+   the Software and destroy all copies in Your possession.
+
+8. PERMISSIONS BEYOND THIS LICENSE
+
+   For permission to use the Software in ways not covered here, contact the
+   copyright holder.

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
+  m_Name: Meteor Shower AD
+  m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  type: 1
+  cooldown: 5
+  projectilePrefab: {fileID: 3588655541012956898, guid: 826a3a6d9a42df6408142471b47b3921, type: 3}
+  pd: {fileID: 11400000, guid: 412f8be2b5e9b4c4f81bd9fa7f64531f, type: 2}
+  pattern: 3
+  castTime: 1
+  canMoveWhileCasting: 0
+  spawnDelay: 0
+  spawnDistance: 5
+  fixedDistance: 0
+  animationLength: 0.5
+  projectileCount: 48
+  randomCount: 28
+  spread: 3
+  randomSpread: 0
+  minDelay: 0.05
+  maxDelay: 0.12
+  maxRange: 0
+  canMoveDuringAttack: 0
+  minHpPct: 0
+  maxHpPct: 100
+  phaseReq: -1
+  nextAttack: {fileID: 0}
+  staminaCost: 15
+  staminaCostPct: 0
+  healthCost: 0
+  healthCostPct: 0
+  manaCost: 48
+  manaCostPct: 0
+  basedOnDmgDealt: 1
+  staminaGainOnHit: 2
+  staminaPctGainOnHit: 0
+  healthGainOnHit: 0
+  healthPctGainOnHit: 0
+  manaGainOnHit: 5
+  manaPctGainOnHit: 0
+  summonChance: 0
+  summonCondition: 0
+  fireOrbits: 0
+  absorbOrbitPct: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
+  redirectCount: 0
+  icon: {fileID: 7527729127935020893, guid: 15c1414434655b74ead2b00304bced6f, type: 3}
+  displayName: Meteor Shower

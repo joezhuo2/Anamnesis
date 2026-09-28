@@ -1,0 +1,18 @@
+{
+    "name": "CrystalFlux.Projectile",
+    "rootNamespace": "CrystalFlux.ProjectileSystem",
+    "references": [
+        "CrystalFlux.Pooling",
+        "CrystalFlux.Core",
+        "CrystalFlux.Settings"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

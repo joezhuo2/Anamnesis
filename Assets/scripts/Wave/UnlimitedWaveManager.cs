@@ -1,0 +1,255 @@
+using System.Collections;
+using System.Collections.Generic;
+using CrystalFlux.Core;
+using UnityEngine;
+
+namespace CrystalFlux.WaveSystem
+{
+    [System.Serializable]
+    public struct EnemySpawnInfo
+    {
+        public GameObject prefab;
+        public int minWave;
+    }
+
+    public class UnlimitedWaveManager : WaveManager
+    {
+        [Header("Wave Scaling")]
+        public Vector2 spawnLocation;
+        public int maxCurrentEnemies = 10;
+        public int baseMaxTotalEnemies = 20;
+        public int baseEnemyLevel = 1;
+        public float minSpawnFrequency = 1f;
+        public float maxSpawnFrequency = 3f;
+        public float spawnSpeedIncreasePerWave = 0.05f;
+        public int minRewardChoices = 2;
+        public int maxRewardChoices = 4;
+
+        [Header("Boss Settings")]
+        public GameObject bossBarPrefab;
+        public GameObject statusEffectDisplayPrefab;
+        public float bossWaveChance = 5f;
+        public float bossWaveChanceIfPreviousNotBoss = 10f;
+        public int minWavesBetweenBossWaves = 5;
+
+        [Header("Enemy Pools")]
+        public List<EnemySpawnInfo> enemyPrefabs = new();
+        public List<GameObject> bossPrefabs = new();
+
+        private int lastBossWave;
+        private bool isBossWave = false;
+        private int maxTotalEnemies;
+
+        protected override void Start()
+        {
+            base.Start();
+            lastBossWave = -minWavesBetweenBossWaves;
+            maxTotalEnemies = Mathf.Max(1, baseMaxTotalEnemies + D.maxTotalEnemiesAdd);
+        }
+
+        public override void ApplyDifficulty(DifficultyData d)
+        {
+            base.ApplyDifficulty(d);
+            maxTotalEnemies = Mathf.Max(1, baseMaxTotalEnemies + d.maxTotalEnemiesAdd);
+        }
+
+        public override void StartNextWave()
+        {
+            if (isWaveActive) return;
+
+            ActiveManager = this;
+
+            totalSpawned = 0;
+            currentEnemies.Clear();
+
+            isBossWave = ShouldBeBossWave(currentWaveIndex + 1);
+
+            if (!RollAndGenerateAnomaly()) BeginWave();
+        }
+
+        protected override bool NextWaveIsBoss() => isBossWave;
+
+        protected override void BeginWave()
+        {
+            isWaveActive = true;
+            currentWaveIndex++;
+
+            int wave = GetCurrentWave();
+            if (isBossWave) lastBossWave = wave;
+
+            if (wave > 1) maxTotalEnemies += Random.Range(1, 3);
+            if (wave % 10 == 0) maxTotalEnemies += Random.Range(1, 4);
+
+            enemiesKilled = 0;
+            waveMaxTotalEnemies = isBossWave || IsDuel ? 1 : ScaleEnemyCount(maxTotalEnemies);
+
+            waveInfoPanel.SetActive(true);
+            UpdateWaveText();
+
+            HandleWave();
+        }
+
+        private void HandleWave()
+        {
+            if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
+            spawnCoroutine = StartCoroutine(WaveSpawnRoutine());
+        }
+
+        private IEnumerator WaveSpawnRoutine()
+        {
+            int wave = GetCurrentWave();
+            int maxCurrent = isBossWave || IsDuel ? 1 : ScaleEnemyCount(maxCurrentEnemies + D.maxCurrentEnemiesAdd);
+
+            while (totalSpawned < waveMaxTotalEnemies)
+            {
+                CleanEnemyList();
+                if (currentEnemies.Count >= maxCurrent)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                SpawnEnemies();
+
+                float spawnDelay = Random.Range(GetMinSpawnFrequency(wave), GetMaxSpawnFrequency(wave));
+                yield return WaitForNextSpawn(spawnDelay);
+            }
+            while (currentEnemies.Count > 0)
+            {
+                CleanEnemyList();
+                yield return _waitForSeconds0_5;
+            }
+
+            if (showCompletionMessage)
+            {
+                if (activeBossBar != null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
+                else if (currentAnomaly != null && currentAnomaly.isActive) GameController?.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
+                else GameController?.SetTitleForDuration($"Wave {wave} Complete", 0.5f, 0.25f, 0.25f);
+            }
+
+            RollAndAnnounceWaveRewards();
+
+            if (showCompletionMessage) yield return _waitForSeconds1_5;
+
+            EndWave();
+        }
+
+        private void SpawnEnemies()
+        {
+            if (isBossWave || IsDuel)
+            {
+                SpawnEnemy();
+                return;
+            }
+
+            int wave = GetCurrentWave();
+            int spawnCount = enableExtraSpawns ? Mathf.Min(Mathf.RoundToInt(wave / 10) + 1, waveMaxTotalEnemies - totalSpawned) : 1;
+            for (int i = 0; i < spawnCount; i++) SpawnEnemy();
+        }
+
+        private void SpawnEnemy()
+        {
+            int wave = GetCurrentWave();
+            int level = GetEnemyLevel(wave);
+
+            GameObject prefab = isBossWave ? GetRandomBoss() : GetRandomEnemy();
+            if (prefab == null) return;
+
+            var enemy = EnemySpawning.SpawnEnemy(prefab, spawnLocation, spawnRadius, level);
+            if (enemy == null) return;
+
+            bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
+
+            if (hasStats && currentAnomaly != null) currentAnomaly.ApplyEnemyBuffs(esm);
+            if (currentAnomaly != null) currentAnomaly.OnEnemySpawned(enemy, prefab, level);
+
+            GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(bossBarPrefab) : (isBossWave ? bossBarPrefab : null);
+
+            if (hasStats && bossBarSource != null && activeBossBar == null)
+            {
+                Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
+                activeBossBar = Instantiate(bossBarSource, spawnParent);
+
+                if (activeBossBar.TryGetComponent<IBossBar>(out var bossBarScript))
+                    bossBarScript.Setup(DuelTitle(enemy, prefab, level), esm);
+            }
+
+            GameObject statusSource = IsDuel ? DuelStatusEffectPrefab(statusEffectDisplayPrefab) : (lastBossWave == wave ? statusEffectDisplayPrefab : null);
+
+            if (statusSource != null && enemy.TryGetComponent<IStatusEffectReceiver>(out var sem))
+            {
+                Transform spawnParent = statusEffectDisplayContainer != null ? statusEffectDisplayContainer : waveInfoPanel.transform.parent;
+                sem.DisplayPrefab = statusSource;
+                sem.DisplayContainer = spawnParent;
+            }
+
+            totalSpawned++;
+            currentEnemies.Add(enemy);
+        }
+
+        protected override void TriggerStandardRewards(int w)
+        {
+            pendingStandardRewards = false;
+            if (currentAnomaly != null) currentAnomaly.Cleanup();
+
+            currentAnomaly = null;
+
+            if (w % milestoneInterval == 0) GenerateMilestoneRewards();
+            else if (w % 5 == 0) GenerateMixedPool();
+            else if (Random.Range(0f, 100f) < 15f) GenerateMixedPool();
+            else GenerateRewards();
+        }
+
+        protected override void OnAnomalyButtonClicked(AnomalyInstance instance)
+        {
+            CloseRewardUI();
+            Time.timeScale = 1f;
+
+            if (instance != null)
+            {
+                currentAnomaly = instance;
+                currentAnomaly.StartAnomaly();
+            }
+
+            BeginWave();
+        }
+
+        public override int GetCurrentWave() => currentWaveIndex;
+
+        private bool ShouldBeBossWave(int wave)
+        {
+            if (wave <= minWavesBetweenBossWaves) return false;
+            if (bossPrefabs == null || bossPrefabs.Count == 0) return false;
+            if (wave - lastBossWave < minWavesBetweenBossWaves) return false;
+
+            float chance = bossWaveChance;
+            if (lastBossWave != wave - 1) chance += bossWaveChanceIfPreviousNotBoss;
+
+            return Random.Range(0f, 100f) < chance;
+        }
+
+        private GameObject GetRandomEnemy()
+        {
+            if (enemyPrefabs == null || enemyPrefabs.Count == 0) return null;
+            GameObject pick = null;
+            int n = 0;
+            for (int i = 0; i < enemyPrefabs.Count; i++)
+            {
+                if (enemyPrefabs[i].minWave <= currentWaveIndex && Random.Range(0, ++n) == 0)
+                    pick = enemyPrefabs[i].prefab;
+            }
+            return pick;
+        }
+
+        private GameObject GetRandomBoss()
+        {
+            if (bossPrefabs == null || bossPrefabs.Count == 0) return null;
+            return bossPrefabs[Random.Range(0, bossPrefabs.Count)];
+        }
+
+        private int GetEnemyLevel(int wave) => EnemyLevel(baseEnemyLevel + (wave - 1));
+        protected override int CurrentEnemyLevel() => GetEnemyLevel(GetCurrentWave());
+        private float GetMinSpawnFrequency(int wave) => Mathf.Max(0.1f, minSpawnFrequency - (spawnSpeedIncreasePerWave * (wave - 1)));
+        private float GetMaxSpawnFrequency(int wave) => Mathf.Max(0.1f, maxSpawnFrequency - (spawnSpeedIncreasePerWave * (wave - 1)));
+    }
+}

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf47b81b6e65f3499ecdccea4f0bde0, type: 3}
+  m_Name: BuffedPlayer
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  damagePct: 50
+  physicalDmgPct: 80
+  spellDmgPct: 80
+  attack: 100
+  atkPct: 50
+  attackSpeedPct: 40
+  critChance: 70
+  critDamage: 300
+  aoePct: 40
+  defShred: 200
+  resPen: 30
+  addPhysDmgPct: 20
+  addSplDmgPct: 20
+  basicDmgPct: 0
+  skillDmgPct: 0
+  ultDmgPct: 0
+  currentHp: 500
+  maxHp: 500
+  hpPct: 120
+  hpRegen: 40
+  hpRegPct: 50
+  armor: 500
+  armorPct: 50
+  damageRes: 20
+  dodgeChance: 5
+  dodgeResPct: 0.4
+  physicalRes: 30
+  spellRes: 30
+  hurtTime: 0.3
+  effectRes: 0
+  moveSpeed: 1.5
+  moveSpeedPct: 50
+  currentStamina: 100
+  maxStamina: 100
+  staminaRegen: 35
+  stRegPct: 50
+  currentMana: 100
+  maxMana: 100
+  canGainMana: 0
+  dashSpeedMult: 5
+  dashCooldown: 3
+  dashDistance: 1.5
+  dashStaminaCost: 30
+  dashShouldApplyIFrame: 1
+  isDashing: 0
+  canDash: 0
+  canGainStamina: 0
+  level: 1
+  isAlive: 1
+  isImmune: 0
+  canAttack: 1
+  isAttacking: 0
+  canMove: 1
+  canGainHp: 0

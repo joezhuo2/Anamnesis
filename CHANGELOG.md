@@ -1,0 +1,2876 @@
+# Changelog
+
+All *notable* changes to Anamnesis are documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project *roughly* follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+⚠️ Represents potentially unstable/low-tested version.
+
+## [v0.6.16] - 2026-09-27
+
+### Added
+- **Mirror boss**: a new `MirrorBoss` boss (`Assets/data/entity/enemy/Bosses/mirror`) that fights with a copy of
+  the player's current attacks and Awakenings, but uses its own `mirror base` enemy stats
+  - `MirrorBoss` component: `copyAttacks`, `copyUpgrades`, and `maxUpgrades` (random subset, `0` = all). The copy
+    is taken once, when the boss spawns
+  - Only attacks and `PlayerUpgrade`s are copied. Player stats, synergies and gear are not
+  - Copied attack cooldowns use the player cooldown formula (cooldown reduction, attack speed) against the
+    boss's own stats, and copied casts fire the boss's `OnAttack` / `OnBasicAttack` / `OnSkillAttack` /
+    `OnUltAttack` upgrades
+  - Base stats: 700 HP, 3 attack, 100 armor, 15% crit chance, 40% crit damage, 20% damage resistance,
+    20% dodge, 15% spell resistance, 10 effect resistance; drops 800 XP and 80 gold
+  - Reuses the player animator controller
+  - Added to the Unlimited `bossPrefabs` pool
+- `PlayerUpgrade.noMirror`: excludes an upgrade from mirror bosses. Set on **Hypercarry**, **Hex Cast**,
+  **Starlit Reflexes**, **Cosmic Afterimage** and **Cosmic Superimposition**
+- `EnemyAttackHandler.fallbackRange`: the range used for attacks with no max range (`0` = never chosen).
+  `MirrorBoss` uses 6
+- `IAimProvider`: lets a non-player caster aim its projectiles. `EnemyMovement` aims at its current target, so
+  aimed attacks cast by enemies now point at, and clamp their spawn distance to, the target instead of
+  firing to the right
+
+### Changed
+- `CollectibleSpawner` places pickups 3–6 units from the player (was 4–8) and allows 10 live pickups (was 8)
+- `PlayerUpgradeManager` only registers itself as the singleton on the object tagged `Player`, so enemies can
+  carry their own
+
+## [v0.6.15] - 2026-09-27
+
+### Added
+- **Spawner boxes**: a new `SpawnerBox` collectible type. Touching the box starts an ambush around it, and
+  once every ambush enemy is dead a batch of collectibles drops where the box stood
+  - Ambush settings: `ambushEnemies` (random pick per enemy), `ambushMin`/`ambushMax`, `ambushRadius`,
+    `ambushLevelBonus`
+  - Reward settings: `rewards` (weighted `SpawnerBoxReward` entries, rolled with replacement), `rewardMin`/`rewardMax`,
+    `rewardRadius`
+  - Ambush enemies use the current wave's enemy level plus `ambushLevelBonus`, receive the active anomaly's buffs
+    and hooks, and join the wave's enemy count, so the wave can't end until they are dead
+  - A box only triggers while a wave is active; otherwise it stays on the ground
+  - Reward drops ignore the spawner's `maxConcurrent` cap and use their own lifetime. Rewards never roll another
+    spawner box, and skip Reroll pickups in Ironman Mode
+  - Four boxes in the `CollectibleSpawner`: **Box Slime**, **Box Bat**, **Box Crab** and **Box Cult**
+
+## [v0.6.14] - 2026-09-27
+
+### Added
+- **Reward lock**: each reward card has a lock button (`RewardLockButton`, a child of the reward button prefab
+  with locked/unlocked icons). Rerolling keeps the locked card in its slot and only replaces the others
+  - One card can be locked at a time; click it again to unlock and lock a different card
+  - The lock is released after each reroll
+  - The reroll never re-offers the locked attack, Awakening, milestone or synergy
+  - Corrupt skips the locked card and hides the lock buttons
+  - Hidden in Ironman Mode, on the anomaly panel, and when there is only one choice
+- Skill tree nodes (236 total now):
+  - **Status Effect Potency** path: 3 nodes of +3% `sePotPct`, branching from Projectile Speed (`ps1`)
+  - **Maximum Stamina** path: 4 nodes of +4 `maxStamina`, branching from Damage I (`dp6`)
+- Unlimited `WaveManager` synergy pool gains `arcaneShield` (6), `defense` (5), `critDamage` (4) and `hpRegen` (4) as source and target, plus target-only `critChance` (3), `ProjSpd` (2), `defShred` (1), `resPen` (1) and `EffectRes` (1)
+
+### Changed
+- Unlimited `WaveManager` synergy weights for `attack`, `maxHp`, `armor` and `Intelligence` raised from 1 to 6
+- The Reroll tooltip now reads "Rerolls all unlocked reward choices"
+
+## [v0.6.13] - 2026-09-27
+
+### Added
+- Regular `WaveManager` pools gain percent versions of the new defensive stats:
+  - Base pool: `arcaneShieldPct` +3 (weight 3)
+  - Mixed pool: `defensePct` +3 (weight 2)
+- **Cultist Clone** now has an `EnemyPhase`: at 80% HP it gains +40 `damagePct`, and at 50% HP it gains
+  +16 `hpRegen`. It also retargets every 1-3s (`retargetInterval`)
+
+### Changed
+- The attack cooldown UI is now sorted by attack type (Basic, then Skill, then Ultimate) instead of the order the
+  attacks were obtained. The order is kept when an attack is gained or replaced
+- Stat synergy offers use `Color.blueViolet` instead of the old custom purple-blue
+- **Nocturnis** has a second `rarePool` entry at wave 25 on both managers. The original wave 45 entry is still
+  there, so from wave 45 on it is twice as likely to roll
+- Unlimited `WaveManager`:
+  - The **Ascendant** milestone's debuff is now -30 `defensePct` (was -20 `defense`)
+  - Cultist Clone enemy spawns start at wave 25 (was 20)
+
+### Fixed
+- The **Momentum** player upgrade had no `effect` assigned, so it granted nothing. It now grants the `Momentum`
+  status effect on dash/rush start as described
+
+## [v0.6.12] - 2026-09-27
+
+### Added
+- **Defense** (`defense`, `defensePct`, `EffDefense`, `DefenseRes`). A flat stat that reduces damage of every
+  type, using the armor formula (`100 / (EffDefense + 100)`). It stacks multiplicatively with armor and arcane
+  shield, and `defShred` does not reduce it
+- **Arcane Shield** (`arcaneShield`, `arcaneShieldPct`, `EffArcaneShield`, `ArcaneShieldRes`). The spell-damage
+  counterpart of armor: same formula, same `defShred` reduction, applied only to spell damage
+- Enemies scale `arcaneShield` with the same level multiplier as armor (`armorGrowth` 1.07 per level)
+- The player resources tooltip shows Arcane Shield and Defense lines with their damage reduction
+- Defense and Arcane Shield (flat and %) are rollable gear stats, count as flat stats for mirage clones,
+  and are supported by stat synergies, `StatReduction` and the reward preview line
+- **CrystalFlux-Core 0.12.0**, which appends the new `StatType` members after `rushImpactPct` so existing
+  serialized `StatBuff` assets keep their mappings
+
+### Changed
+- `damageRes`, `physicalRes` and `spellRes` are no longer in the player stat pools. They still work, but only
+  come from status effect buffs/debuffs (Vulnerable, Holy Bounty, Celestial Protection, ...), enemy presets
+  and skill tree nodes
+- `WaveManager` pools (regular and unlimited):
+  - Base pool: the `physicalRes` entry is removed, and the `spellRes` entry is now `arcaneShield` (+2, weight 6)
+  - Mixed pool: `damageRes` +2 is now `defense` +2
+  - Milestone rewards: every `damageRes` value becomes `defense` and every `spellRes` value becomes
+    `arcaneShield`, with the same numbers (for example Iron Wall now gives +20 defense, and the Arcane Shield
+    milestone gives +40 arcane shield)
+- Gear rolls replace `damageRes` / `physicalRes` / `spellRes` with `defense`, `defensePct`, `arcaneShield`
+  and `arcaneShieldPct`
+- The armor multiplier is now the shared `DamageCalculator.DefenseMult(effDef)`, which armor, arcane shield
+  and defense all use
+
+## [v0.6.11] - 2026-09-27
+
+### Added
+- **Stat synergies**, a new permanent reward type. Each one converts a percentage of one stat into another,
+  for example "Increases Attack by 18% of Max Health". The bonus is live: `StatSynergyManager` recomputes it
+  every frame from the current source value and applies only the difference, so it grows and shrinks with
+  the source stat for the rest of the run instead of being fixed at the moment of claiming
+- **`StatSynergyManager`** (Entity). Added to the player on the first synergy claim. Flat targets (Attack,
+  Max Health, Armor, Intelligence, Max Mana, Max Stamina) are floored to whole numbers. A source and target
+  in the same stat family (for example `attack` and `atkPct`) are rejected, which prevents self-feeding loops
+- **Synergy offers.** Synergies are not in any reward pool, not on corruption and not on a fixed wave
+  interval. After each wave from `synergyMinWave` (10), a hidden roll of `synergyBaseChance` (4%) plus an
+  accumulated bonus decides whether a synergy panel follows the wave's normal reward. Every miss adds
+  `synergyChanceGrowth` (4%) to the bonus, and an offer resets it. The panel opens after the regular reward
+  (and after any anomaly reward) is claimed or skipped
+- **New `WaveManager` synergy settings**, set separately on the regular and unlimited managers:
+  `synergyStatPool` (allowed stats, each with `canBeSource`, `canBeTarget` and `weight`),
+  `minSynergyConversion` / `maxSynergyConversion` (8-20%), `synergyChoices` (3), `synergyMinWave`,
+  `synergyBaseChance`, `synergyChanceGrowth` and `synergyTitle`. Both managers ship with Attack, Max Health,
+  Armor, Intelligence, Max Mana and Max Stamina in the pool
+- Each offer rolls a random source and target from the pool with a conversion between the min and max,
+  rounded to 0.1%. The same pair is never offered twice in one roll or once the player already owns it.
+  Sources read the effective stat (`EffAtk`, `EffMaxHp`, ...), and targets add to the flat stat
+- **`RewardType.Synergy`** and a purple-blue `RewardButton.SynergyColor` border. The card shows the current
+  bonus the synergy would give (`Now: +N Stat`), and the panel can be rerolled or skipped but not corrupted
+
+## [v0.6.10] - 2026-09-27
+
+### Added
+- **Attack stacks.** `AttackData` has a new `stacks` field (Basic header, minimum 1, default 1). It sets how many
+  uses the player can store. Each use spends one stack. While any stack is missing, the cooldown runs and restores
+  one stack each time it finishes, and time left over after a stack is restored carries into the next one. An
+  attack with `stacks = 1` behaves as before. Enemies ignore the field
+- **`PlayerAttackHandler.GetStacks(AttackType)`** returns the number of stacks ready for that slot
+- **Green border for stacked attacks.** `PlayerAttackCooldownUI` uses the new `stackedBorderColor` (green) in
+  place of its normal border color when the attack has more than one stack. The red blocked color and the
+  blocked flash are unchanged
+- **Optional stack counter.** `PlayerAttackCooldownUI.stackText` (TextMeshProUGUI) shows the ready stack count on
+  attacks with more than one stack and is hidden on the others. Leave it empty to skip the counter
+- The attack cooldown tooltip shows `Stacks: ready/max`, and `AttackData` tooltip lines show `Stacks: max`, for
+  attacks with more than one stack
+
+### Changed
+- **`lastAttackTimes` now holds the start of the current stack recharge.** The entry is removed once every stack
+  is ready, so the cooldown overlay clears instead of reading an old timestamp. Stamping the cooldown (at attack
+  start, cast start or charge end, as before) now spends a stack
+- **`AdvanceCooldown` / `AdvanceAllCooldowns`** (Cooldown Advance) advance the stack that is recharging. An advance
+  that finishes it restores that stack and carries nothing over to the next one
+
+## [v0.6.9] - 2026-09-26
+
+### Changed
+- **Decoy no longer taunts on spawn.** `Decoy.TriggerUpgradeEffect` used to call `SetTarget(decoy)` on every
+  enemy within its detection range. That loop is gone. The decoy is still a `Targetable`, so enemies pick it
+  up on their normal 1-3s retarget when it is the nearest target. Applies to Decoy and Decoy Upgraded
+- **`ProjectileSpawner.Spawn(...)` replaces `StartCoroutine(SpawnFromPattern(...))`** at every call site except
+  `Decoy`, which still `yield return`s `SpawnFromPattern`. A `Single` pattern with no `SpawnDelay`
+  spawns immediately, with no coroutine. Other patterns run on the optional `host` (enemies, the player and
+  Mirage clones pass themselves, so their patterns still stop when they are disabled) and fall back to the
+  spawner when `host` is null or inactive
+- **`teleportToProjectile` now goes to the first projectile spawned by that pattern call.** It used to hook
+  `ProjectileSpawned` and teleport to the first projectile from the same source, which another pattern
+  running at the same time could claim. The pattern methods take a `teleport` flag instead, and the
+  closure and event subscription are gone
+- **The wave spawn loop checks the enemy cap every 0.25s** instead of every frame, so at the cap a new
+  enemy can spawn up to 0.25s after a kill
+- **Floating damage numbers draw on their own canvas.** `TextIndicatorSpawner` creates a `TextIndicators`
+  child canvas under its `canvas` (`overrideSorting`, one sorting order above the parent) and pools
+  indicators there. Indicator text no longer takes raycasts
+
+### Fixed
+- **`StatusEffectManager.RemoveEffectAfterDelay<T>`** now remembers the effect and its `Generation` when
+  called, and only removes that copy if it is still live when the delay ends. Before, it removed whatever
+  effect of that type was active then, so Soul Rend's 0.3s removal could strip a freshly reapplied Soul Rend.
+  If no effect was active when it was called, it still removes by type
+- **Ethereal Mirage:** `OnCloneDeath` returns early once the effect is released, and `ResetRuntime()`
+  unsubscribes it from any remaining clones. A clone that outlives its effect can no longer call into a
+  pooled copy that has been reused
+
+### Performance
+- **`Projectile.hit` is a `HashSet<GameObject>`**, so the already-hit check in trigger callbacks and target
+  searches is O(1) instead of O(n)
+- **Projectile owner lookups are cached per owner.** The new `ProjectileOwnerCache` component is added to
+  an owner on its first projectile and holds its proxy owner, stats, summon, resource pool, damageable,
+  team, `IOnHitEffect` list and orbit and charge registers. `Projectile.CacheOwner`, orbit and charge
+  registration, and `UnregisterFromOwner` read from it instead of doing about 10 `TryGetComponent` calls per
+  spawn. The cache rebuilds if its proxy owner is destroyed
+- **`PrefabPool` caches each instance's `IPoolable[]`** when it is created, instead of calling
+  `GetComponentsInChildren` on every Acquire and Release. `Acquire<T>` caches its component per instance.
+  Both caches are cleared when an instance is destroyed and on scene unload. An `IPoolable` added to an
+  instance after it is created does not get pool hooks
+- **Projectile spawning allocates less.** The pool cap is set once per prefab, `Projectile` finds its
+  `Rigidbody2D` and sets `gravityScale = 0` in `Awake`, the pattern coroutines are one level shallower,
+  `WaitForSeconds` objects are cached by duration, and `SpawnOpposingLines` no longer takes a
+  `params Vector2[]`
+- **`ProjectileSnapshot.CaptureSnapshot` only looks for an `IOrbitRegister`** when the projectile scales
+  off orbits. It used to search the owner's parents and children on every enemy projectile spawn and
+  charge tick
+- **Damage numbers under 1000 no longer allocate strings.** `TextIndicator.Initialize(int…)` uses
+  `SetText("{0}", val)`. Strings are only built for k/M, gold and XP. `TextIndicatorSpawner` dropped its
+  write-only `_activeIndicators` list
+- **`EnemyAttackHandler`** caches `EnemyMovement` and `EnemyPhase` in `Awake`, reads HP % once per
+  attack choice instead of once per attack, and skips choosing an attack while every cooldown is running
+- **UI updates only when something changes.** `HoverScale` stops writing `localScale` once it reaches its
+  target. `SkillTreeOpenButton` rebuilds its tooltip only on pointer enter or when gold or skill points
+  change. `TooltipUI` only moves when the mouse or offset changes
+- **Smaller allocation fixes.** `PlayerAttackHandler` uses `FindAttackOfType` instead of `attacks.Find`
+  closures, and `AdvanceAllCooldowns` reuses a key buffer. `EntityStatManager.TryApplyCountedFlag` uses a
+  `switch` instead of two `HashSet` lookups on every `AddStat`
+
+## [v0.6.8] - 2026-09-26
+
+### Added
+- **Momentum**, a treasure-pool Awakening (`GrantStatusEffect`). Starting a dash or a rush (`OnStartDash`,
+  `OnRushStart`) grants the new `Momentum` buff (11s): +6% `moveSpeedPct` and +14% `rushImpactPct`. Added
+  to `treasurePool` in both `WaveManager` instances with no unlock wave
+
+### Balance
+
+#### Buffs
+- **Cultist:** Summon cooldown 16s → 12s, and each living summon now gives the Cultist +12 `hpRegen` (was +8)
+
+#### Nerfs
+- **Enemy level scaling:** attack growth per level 1.05x → 1.04x, armor growth 1.08x → 1.07x
+  (`EnemyStatManager.ScaleBaseStats`). Enemies are now weaker at high levels
+- **Nitro Accelerator:** 285% → 245% Phys, mana cost 7 → 11 (stamina cost 16 → 15). Nitro Explosion 235% →
+  115% Spell, stamina and mana gain on hit +3 → +2
+- **Decay** (Nitro Accelerator's self-debuff) now costs -12% `hpPct` per stack (was -8%). Its `resPen` bonus
+  rises to +4% per stack (was +3%)
+- **Ultrasonic:** 170% → 110% True, `EffAtk` scaling 40% → 30%, stamina and mana gain on hit +4 → +3
+- **Warp (Capstone):** Warp Rift chance 35% → 20%
+- **Terminal Cascade:** retrigger chance 15% → 12%
+
+## [v0.6.7] - 2026-09-25
+
+### Added
+- **`rushImpactPct` stat** (`StatType` 97, CrystalFlux.Core). Scales both rush impact damage and rush impact
+  knockback force by `1 + rushImpactPct / 100` (floored at 0). Shown in game as "Rush Impact Strength"
+- **`AttackData.impactAttack`** (Rush section). An attack spawned at the contact point, in the rush
+  direction, every time the rush impacts an opposing entity. Null = none
+- **Three new `PlayerUpgrade` trigger conditions:**
+  - `OnRushImpact` — the player's rush hits an opposing entity. Fires after impact damage and the
+    `impactAttack` spawn, before knockback, and dispatches `(player, target, damageDealt)`
+  - `OnPreTeleport` — a `teleportToProjectile` attack is about to move the player. Dispatches
+    `(player, spawnCenter)` at the position the player is leaving. Backed by the new
+    `ProjectileSpawner.PreTeleport` event
+  - `OnSummonMirage` — an Ethereal Mirage clone is summoned for the player, once per clone (refilled
+    slots included). Dispatches `(player, spawnCenter)` at the clone's position
+- **Nitro Accelerator**, a capstone (`Node_nitroaccelerator`, 3 skill points, `undoCost` 50, prerequisite
+  `Node_ip4`) that upgrades Subspace Blitz. Faster, longer rush (0.3s at 8x), immune while rushing, and each
+  impact sets off **Nitro Explosion** (size 6, 235% Spell scaling off `EffAtk` + 35% `EffInt`, 60% chance
+  to apply `Vulnerable 6 3 8`, 3 force knockback). The projectile hits harder and stuns (70% `Stun 3`), but
+  every cast applies a stack of the new `Decay` debuff to yourself
+- **`Decay` status effect** (StatBuffs, 4s, 6 stacks): -8% `hpPct`, -14% `stRegPct` and +3% `resPen` per stack
+- **Skill tree nodes:** `Node_ip1`–`Node_ip4` (+2% Rush Impact Strength each, chained off `Node_dp23`) and
+  `Node_kbp1` (+3% `kbPct`, off `Node_ip2`) → `Node_kbp2` (+8% `kbPct`). The tree now has 229 nodes
+
+### Changed
+- `RushState` takes an optional `onImpact(target, damageDealt)` callback. `PlayerMovement` uses it to fire
+  `OnRushImpact`
+
+## [v0.6.6] - 2026-09-25
+
+### Added
+- **`EtherealMirage` status effect class** (`Status Effects/Buff/Ethereal Mirage`, Entity assembly). On apply
+  it summons `cloneCount` clones in a ring `spawnRadius` around the target, starting at `startAngle` and
+  spaced evenly. Configurable per asset: `clonePrefab` (optional; when empty a clone is built at runtime
+  from the base's sprite and collider), `opacity`, `copyMovement`, `copyAttacks`, `statShare` plus
+  per-stat `shareOverrides`, `perCloneBuffs` (applied to the base per living clone) and
+  `onCloneDeathEffects` (status effects applied to the base when a clone is killed). Re-applying
+  refreshes the duration and refills killed slots. On expiry, or when the base dies, the clones vanish
+  without triggering death effects. Works on enemies as well as the player
+- **`MirageClone` component.** Keeps the clone at its spawn offset from the base (or where it spawned, with
+  `copyMovement` off) and copies the base's sprite, flip, scale and colour at the set opacity. The clone is
+  a trigger hurtbox on a frozen dynamic body, so it takes hits but never blocks movement, and it ignores
+  knockback and crowd control. When the base casts an attack, every clone with `copyAttacks` fires the
+  same attack from its own position in the base's aim direction, at no cost and with no cooldown or cast bar
+- **`MirageStatManager`**, an `EntityStatManager` that reads the base's stats live. Flat stats (attack,
+  Intelligence, max HP, armor, regen, move speed and their `Eff` versions) are multiplied by `statShare`;
+  percent and chance stats copy at 100% unless overridden. Health, alive/immune state, gates and
+  XP/gold drops stay the clone's own, so killing an enemy's clone drops nothing
+- **Ethereal Mirage**, the first keystone (`Node_ethmirage`, 5 skill points, `undoCost` 50). It grants two
+  `GrantStatusEffect` upgrades on `OnUltAttack` with a 24s cooldown: `Ethereal Mirage` applies the new
+  `Mirage` effect (18s, 3 clones, radius 2, 60% opacity, 50% stat share, each clone +12% `moveSpeedPct`
+  and -15% `damagePct`), and `Ethereal Mirage Cooldown Indicator` applies the `Mirage Cooldown` Info
+  marker (24s). New `Node_ KEYSTONE` copyable node template
+- **`Targetable` component** that registers an object as something enemies can target. Mirage clones and
+  Decoys carry it
+- **`IOwnerProxy` / `OwnerProxy.Resolve`** (Projectile assembly). A projectile fired by a proxy (a clone)
+  credits its real owner: upgrade triggers (`OnTargetRecievedHit`, `OnCrit`, `OnDealDamage`,
+  `OnProjectileHit`, `OnOverkill`, `OnKill`), extra attack effects, on-hit summons, lifesteal, resource
+  gains on hit, XP and gold all go to the base. Upgrades fired this way share the base's upgrade cooldowns
+- `ProjectileSpawner.ResolveAim`, the aim/distance calculation pulled out of `SpawnFromPattern`, and a
+  `fixedAim` flag on `SpawnFromPattern` that uses the passed direction and distance as-is
+
+### Changed
+- **Enemy targeting.** Enemies now pick the nearest player, clone or decoy within detection range, with no
+  priority between them, and re-check every 1-3s at random (`EnemyMovement.retargetInterval`). An enemy
+  whose target is gone looks again after 0.25s. Before, an enemy kept its first target until it lost it
+- `EntityStatManager.GetStat` is now `virtual`
+- A clone's `EntityHealth` ignores any `PlayerUpgradeManager` on the clone itself
+
+### Balance
+
+#### Buffs
+- **Aphelion:** 35% → 55% Spell
+- **Nirvana:** mana cost 145 +10% → 85, damage 550% → 650% Spell. Orbit special scaling 0.2x → 0.15x per orbit
+- **Warp Rift** size 1.25 → 1.5
+- **Autopilot** pierce 1 → 3
+- **Ultrasonic** projectiles now also scale off 40% `EffAtk` on top of `moveSpeedPct`
+
+#### Nerfs
+- **Subspace Blitz** Freeze chance 60% → 45%
+- **Astral Disjunction:** stamina and mana gain on hit +15% → +12%
+- **Supersonic** no longer scales off `EffAtk` (moved to Ultrasonic)
+
+## [v0.6.5] - 2026-09-24
+
+### Added
+- **`Freeze` status effect class** (`Status Effects/Debuff/Freeze`). While it is active, the target cannot
+  attack, move or dash (the same -1 `CanAttack`/`CanMove`/`CanDash` modifiers as `Stun`). It also stops
+  passive health regen and holds the target completely still. `StatusEffectManager` gained a depth-counted
+  `Frozen` flag (`SetFrozen`), so overlapping freezes only thaw once the last one expires. While frozen:
+  - `EntityHealth.RegenHp` skips the tick. Active heals and on-hit health gains still land
+  - `EnemyMovement` and `PlayerMovement` clear pending knockback forces, end any rush, zero the velocity
+    and skip their movement update. `ApplyKnockback` does nothing
+  - `Pulled` skips its pull tick
+- **`Freeze` asset** (Frozen, 2s, 1 stack, "You no longer feel able to move, attack or regen."), replacing
+  `Freeze 2`, which was a plain `Stun`. Subspace Blitz and Slime (Frost)'s Blizzard now apply it
+- **Shock Absorber**, a treasure-pool Awakening (`GrantStatusEffect`). Taking a hit (`OnTakeHit`) grants a
+  stack of the new `Voltaic Pulse` buff, at most once per second. Voltaic Pulse lasts 9s and stacks 4
+  times. Each stack gives +12% `physicalDmgPct` and +8% `moveSpeedPct`, and costs 5% `damageRes`. Added to
+  `treasurePool` in both `WaveManager` instances with no unlock wave
+- **Multi-stat scaling.** `ProjectileData` has a new `extraScalings` list of `StatScale` (`stat`,
+  `weight`) entries. `ProjectileSnapshot.CaptureSnapshot` adds `weight * stat` for each entry on top of
+  `scalingStat`, so an attack can scale off a weighted sum of stats. An empty list keeps the old behaviour
+- **Rush impact damage.** A rush that collides with an opposing entity can now damage it as well as knock
+  it back. The damage uses the attack's `ProjectileData` snapshot, multiplied by the new
+  `AttackData.impactDmgMult` (default 0.5, 0 = no damage). The impact now also resolves when
+  `endRushOnCollision` is on, before the rush ends. Before, knockback was skipped in that case
+
+### Changed
+- **Rush knockback fields renamed to rush impact:** `rushKnockback` → `rushImpact`, `rushKnockbackForce` →
+  `rushImpactForce`, `rushKnockbackTime` → `rushImpactTime`. `FormerlySerializedAs` keeps existing assets
+  working
+- Status effect assets for `Pulled`, `Slow`, `Stun` and `Vulnerable` moved into subfolders of
+  `Assets/data/StatusEffect/` (GUIDs kept). `Vulnerable 6 6 5` was renamed `Afflicted` to match its name
+  in game
+
+### Balance
+
+#### Rebalances
+- **Subspace Blitz:** rush 0.2s at 4x → 0.25s at 6x speed, and it now has rush impact (8 force for 0.15s,
+  65% damage). Stamina cost 14 → 16, mana cost 9 → 6. Projectile size 2.5 → 2, pierce 8 → 6, speed 10 → 9,
+  damage 215% Phys + 14% True → 235% Phys + 18% True. Hit stop 0.03s → 0.04s, screen shake 0.05 → 0.06
+- **Starfury:** 120% Spell + 20% True → 90% Spell + 15% True, and it now also scales off 60% `EffInt` on
+  top of `moveSpeedPct`
+
+#### Buffs
+- **Golem Rush** - The Golem's Charge now rushes: 0.2s toward the target at 6x speed, immune while rushing, leading a moving target (`predictTarget`)
+- **Longer Player i-frames** - The player's hurt i-frames went from 0.2s to 0.4s
+- **Supersonic** projectiles now also scale off 40% `EffAtk` on top of `moveSpeedPct`
+- **Blood Pact:** health gain on hit +4 +1% → +5 +2%, Bleed chance 40% → 70%
+- **Nocturnis (Held):** time before hitting the same enemy again 0.5s → 0.33s
+- **Warp:** mana cost 50 → 40. 
+- **Warp (Capstone):** mana cost 50 → 30, damage 60% → 70% Spell, Warp Rift chance 25% → 35%
+- **Feedback Loop:** 15% Spell + 4% True → 25% Spell + 8% True
+- **Reminiscence:** chance 25% → 35%, cooldown 4s → 2s
+- **Solar Wind:** chance 30% → 60%, cooldown 2s → 1s. Each stack now gives +4 `hpRegen` and +9% `hpRegPct` (was +3 and +8%)
+- **Wipeout** spread radius 2 → 3 tiles
+- **Slime (Frost)'s Blizzard** freeze chance 15% → 20%
+
+#### Nerfs
+- **Enemies no longer get i-frames when hit.** `EntityHealth.ChangeHealth` only triggers hurt i-frames on
+  the player. 
+- **Ultrasonic** projectiles spawn 0.25 units out (fixed) instead of on the player
+- **Exsanguinate** overhealth decay 20% → 25% per 0.5s. 
+- **Oblivion** decay 15% → 20% per 0.5s
+- **Terminal Cascade** retrigger chance 20% → 15%
+
+## [v0.6.4] - 2026-09-23
+
+### Added
+- **Subspace Blitz**, a rare-pool Skill and the first shipped attack that rushes. It carries the player
+  toward the cursor for 0.2s at 4x move speed. Attacks pressed during the rush are queued until it ends,
+  and the rush stops on collision. It fires one projectile (speed 10, 0.5s lifetime, pierce 8, size 2.5)
+  that deals 215% Phys + 14% True scaling off `EffAtk`, with a 60% chance on hit to apply `Freeze`
+  (Frozen for 2s). Costs 14 stamina and 9 mana on a 1.3s cooldown, and restores 2 stamina and 1 mana on
+  hit. It has 0.03s hit stop (0.5s cooldown) and 0.05 screen shake. Added to `WaveManager.rarePool` in both
+  `WaveManager` instances in `New.unity` with no unlock wave. The assets (`Subspace Blitz AD`/`PD`, prefab,
+  animator controller and clip) live in `Assets/data/PlayerData/Attacks/Rare Pool/Subspace Blitz/`
+
+### Changed
+- **Supersonic and Ultrasonic also fire when a rush ends.** Both upgrades gained the `OnRushEnd` trigger.
+  Supersonic now triggers on `OnEndDash` and `OnRushEnd` (still at most once per second), and Ultrasonic on
+  `OnEndDash`, `OnTeleport` and `OnRushEnd`
+- The Supersonic treasure reward text now reads "Dashing leaves 3 rippling echoes." It used to mention
+  teleporting, which only Ultrasonic reacts to
+
+## ⚠️ [v0.6.3] - 2026-09-23
+
+### Changed
+- **Enemy `nextAttack` now queues instead of chaining.** Before, `EnemyAttackHandler.PerformAttack` ran an
+  attack's `nextAttack` chain back-to-back inside one coroutine. Now it finishes the current attack and
+  stores `nextAttack` as `queuedAttack`. The next `TryAttack` fires it before picking a new attack, but only
+  once the global cooldown has passed and the target is inside the queued attack's `MaxRange`. Each attack
+  releases its movement hold and resets the animator index before the queued one starts. The old
+  `chainVisited` loop guard is gone, since chains now run one attack at a time. `OnDisable` clears the queue
+- **Projectile and orbit target searches ignore trigger colliders.** `Projectile.OverlapCircle` and
+  `EntityProjectileHandler.OverlapCircle` now build their `ContactFilter2D` with `useTriggers = false`
+  instead of `Physics2D.queriesHitTriggers`. Every entity uses a solid collider and every projectile and
+  pickup uses a trigger, so the searches no longer return projectiles or pickups. Walls still come back,
+  and the `ITeamMember` check skips them
+- **Projectiles re-search for a lost target at most every 0.15s** (`Projectile.retargetInterval`) instead
+  of every `FixedUpdate`. This covers homing (`TryHome`), enemy `FollowCursor` and orbits around the nearest
+  enemy (`HandleOrbitMovement`). The first search still runs on the spawn frame, and a target that is
+  deactivated is dropped right away. The timer resets in `Setup`
+- **`DoTSpread` runs at 10 Hz.** `SpreadLoop` waits on a cached `WaitForSeconds(0.1f)` instead of running
+  every frame, so a spread can land up to 0.1s later than its interval
+
+### Performance
+- **Projectile owner components are cached in `Setup`.** `Projectile.CacheOwner` looks up the owner's
+  `ITeamMember` team ID, `IStatProvider`, `ISummonTrigger`, `IResourcePool`, `IDamageable`,
+  `IAttackEffectSource` and `IOnHitEffect` list once, and `OnPoolRelease` clears them. `HandleHitEntity`,
+  `TryRetriggerChain`, `HandleSize`, `HandleDirection`, `HandleCursorFollow`, knockback and on-hit
+  resource gains use the cached copies, which removes about 10 lookups per hit. The `OwnTeam()` helper is
+  gone. `Projectile.CalculateStatGains` gained an `IStatProvider` overload, and the `GameObject` overload
+  now forwards to it. Both return zero gains when the `AttackData` is null
+- **`EntityHealth.TakeDamage` does fewer lookups per damage instance.** `Start` now caches the entity's
+  own `ITeamMember`, `ICastHandler`, `IStatusEffectReceiver` and `EnemyPhase`. Inside the loop, the
+  attacker's `IStatProvider`, `PlayerUpgradeManager` and team are only looked up again when
+  `DamageInstance.owner` changes. `IsEnemyHit` takes the attacker's team and runs once per instance
+  instead of twice. `UpdatePhase`, `TryThorns` and `StartDeathSequence` use the cached components
+- **Enemy health bars each get their own nested `Canvas`.** `EntityHealth.InitializeHealthBar` adds a
+  `Canvas` to each pooled bar and text instance (`EnsureOwnCanvas`, once per instance). Moving one enemy
+  now rebuilds only its own bar, not every bar on the shared `HealthBarCanvas`. The trade-off is up to two
+  extra draw calls per visible bar, because nested canvases do not batch with each other
+- **Status effect copies are pooled.** `StatusEffectManager.Apply` takes a runtime copy from a per-asset
+  pool (`AcquireRuntime`, keyed by `origin`) and only calls `Instantiate` when the pool is empty. Expiring,
+  cleansing, stack removal and `ClearAllEffects` return the copy through `ReleaseRuntime` instead of
+  calling `Destroy`. The pool keeps up to 64 copies per asset, destroys any extras, and is cleared on
+  `SubsystemRegistration`. Effects still in `activeEffects` at application quit are destroyed as before
+  - `StatusEffect.Setup(src, target, source, location)` resets every field the manager touches:
+    `duration`, `tickInterval` and `potencyMultiplier` come from the applied asset, time and stacks reset,
+    and `origin` is set. `Release()` clears the target and source and sets `Released`
+  - `Generation` goes up on every `Setup`. `StatusEffectCooldownUI` saves it and returns its icon to the
+    pool when the effect is `Released` or reused, since a pooled effect never becomes Unity-null
+  - New `protected virtual ResetRuntime()`, called by both `Setup` and `Release`, clears private per-use
+    state in `AttackReplacement`, `Lifesteal`, `Thorns`, `Pulled`, `SoulRend`, `StatBuffs` and
+    `StatReduction`
+- **`DoTSpread` uses cached components.** `EnemyMovement` now caches `StatusEffectManager` (`Sem`) and
+  `IStatProvider` (`Stats`) in a new `Awake`, which also takes over the `IStatProvider` lookup from `Start`.
+  `Tick` and `Spread` read them instead of calling `TryGetComponent` per enemy. `nextSpread` stores the
+  effect's `Generation`, so a reused copy starts a new timer, and `Prune` drops released or reused entries
+- **Faster enemy movement and targeting.** `EnemyMovement` caches the player in a static field, dropping
+  the `FindGameObjectWithTag` call from `Start`. Its de-aggro, stopping-distance and detection checks
+  compare squared distances, so they no longer call `Vector2.Distance`
+- **`PlayerMovement` only sets the animator `speed` float when it changes**, instead of on every
+  `FixedUpdate`
+- **`UnlimitedWaveManager` no longer allocates a list per spawn** when picking an enemy
+- **HUD polling is limited to 10 Hz.** `PlayerAttackCooldownUI` re-reads the effective cooldown and
+  border state, and `StatusEffectCooldownUI` re-reads effect resistance and the alive check, every 0.1s
+  (unscaled). The fill still updates every frame, but only writes when the value changes. Borders and a
+  dead entity's icons can react up to 0.1s late
+- **`TextIndicator` only moves when its screen position shifts by at least 1 px**
+- **`WaveManager` stops rebuilding anomaly text every frame.** The Time Trial countdown string is rebuilt
+  when the tenths digit changes, and other anomaly descriptions are assigned only when the reference
+  changes (`SetAnomalyInfo`)
+
+## [v0.6.2] - 2026-09-22
+
+### Added
+- **Rush attacks** — any `AttackData` can now move its owner. An attack rushes when `rushTypeVal`
+  and `rushSpeedMult` are both above 0 (`AttackData.Rushes`). The rush starts when the attack
+  resolves, alongside its projectiles, and runs until its duration or distance is used up. No
+  shipped attack uses it yet, so this release changes no existing gameplay. New fields under a
+  `Rush` inspector header:
+  - **`rushDirection`** (`RushDirection`) — `TowardCursor`, `WorldAngle` (`rushAngle` degrees, 0 =
+    right, counter-clockwise) or `CursorRelativeAngle` (`rushAngle` offset from the cursor
+    direction). Enemies treat their target as the cursor. When the aim point sits on the entity,
+    the rush falls back to its facing direction
+  - **`omnidirectionalRush`** + **`rushTurnRate`** — when on, movement input steers the rush while it
+    is active (enemies steer toward their target). `rushTurnRate` caps the turn in degrees per
+    second through `Mathf.MoveTowardsAngle`; 0 turns instantly. Off, the direction locks at start
+  - **`rushType`** (`RushType.Duration` / `Distance`) + **`rushTypeVal`** — seconds or world units.
+    Distance only accrues while the entity is actually moving
+  - **`rushSpeedMult`** — rush speed as a multiple of `EffSpd`, so speed buffs and slows apply
+  - **`immuneWhileRushing`** — holds `isImmune` for the length of the rush
+  - **`disableAttacksWhileRushing`** — the player's attacks pressed mid-rush are queued until it
+    ends; an enemy's attack chain waits for the rush to finish before moving on
+  - **`endRushOnCollision`** — any non-trigger collision ends the rush. When on, the bounce and
+    knockback options below are ignored
+  - **`bounceOnCollision`** — reflects the rush direction off the contact normal
+  - **`rushKnockback`** + **`rushKnockbackForce`** + **`rushKnockbackTime`** — knocks back any
+    `IKnockbackable` the rush collides with, skipping entities on the owner's team
+  - **`predictTarget`** — enemy only. Leads the target by its `Rigidbody2D` velocity over the
+    time the rush needs to reach it, capped at the rush's own duration or distance
+- **`RushState`** (`Entity/RushState.cs`) — a plain class shared by `PlayerMovement` and
+  `EnemyMovement` that owns the rush lifecycle: direction, steering, progress, the immunity buff,
+  collision handling and interruption. Both movement components forward `OnCollisionEnter2D` to it
+  and end the rush on disable and on death
+- **Interrupt resistance tiers for rushes**, read from `interruptResist`:
+
+  | `interruptResist` | Immobilized (`CanMove` ≤ 0) | Knocked back |
+  | --- | --- | --- |
+  | < 1 | Rush ends | Rush ends, knockback applies |
+  | ≥ 1 | Rush survives but stops moving until freed | Rush continues, knockback applies |
+  | ≥ 2 (unstoppable) | Rush keeps moving | Knockback is ignored |
+
+- **`OnRushStart` / `OnRushEnd` trigger conditions** — two new `PlayerUpgrade.TriggerCondition`
+  values, both dispatched to the `(player)` overload. `OnRushEnd` fires however the rush ends —
+  timeout, collision, interruption, a dash or death
+- **Anomaly tooltips** — `AnomalyButtonPrefab` gained a `TooltipTrigger`, and
+  `AnomalyButtonUI.Setup` now fills it with the anomaly's name, its description, a type-specific
+  line (*Time Trial*: `Time Limit: 45s`; *No Hit*: `Fails if you take any damage`) and the
+  completion reward. The tooltip is cleared when the button is pooled. `tooltipOffset` defaults to
+  `(100, -100)`
+- **`WaveManager.GetAnomalyRewardLine()`** — builds that reward line once per anomaly panel from
+  the live difficulty offsets, e.g. *"Completion Reward: +1-3 Rerolls, +1 Skill Point, Increased
+  Reward Quality"*. The reroll range is left out in Ironman Mode
+
+### Changed
+- **`AttackData` inspector regrouped** — new `Casting` and `Teleportation` headers; `Charging` is now
+  `Charged Attacks`; `pattern`, `spawnDelay`, `spawnDistance` and `fixedDistance` moved under
+  `Spawn Logic`; `animationLength` moved up next to `pd`. Fields keep their names, so existing assets
+  are unaffected
+- **Attack tooltips** list the rush when an attack has one: `Rush: 0.4s at 3.0x speed (immune)`,
+  with `u` in place of `s` for distance rushes
+- **Rushes are exempt from movement locks** — `PlayerAttackHandler`'s charge routine no longer
+  applies the `canMoveWhileCasting` root to a rushing attack, and `EnemyAttackHandler` no longer
+  applies the `canMoveDuringAttack` hold to one, so the attack cannot freeze its own rush
+- **Dashing cancels a rush** — `PlayerMovement.TryStartDash` ends any active rush before the dash
+  starts
+- **Facing follows the rush** — the player and enemies turn to face the rush direction while it is
+  active. `EnemyMovement`'s sprite flip was pulled out into `Face(float)` so movement and rushes share
+  it
+- **`README.md`** — version badge 0.6.0 → 0.6.2 (it had missed v0.6.1), trigger condition count
+  23 → 25, `OnRushStart` / `OnRushEnd` rows added to the trigger table, rushes listed under
+  data-driven attacks, and anomaly hover tooltips noted in the Anomalies row
+- Player `bundleVersion` 0.6.1 → 0.6.2
+
+## [v0.6.1] - 2026-09-22
+
+### Added
+- **Split anomaly (*Fission*)** — a sixth `AnomalyType`. Enemies that spawn while the anomaly is
+  active carry an `AnomalySplitter`, and on death each rolls `anomalyValue`% to burst into
+  `2`–`anomalyMaxVal` copies of its own prefab, spawned within 0.5 world units of the corpse at
+  `level - anomalyMinVal` (floored at level 1), so the copies inherit the full stat block of that
+  enemy type, scaled down. There is no failure condition — the anomaly always pays out — but every
+  copy counts toward the wave:
+  - **`AnomalyInstance.OnEnemySpawned(GameObject, GameObject, int)`** — a new virtual hook called by
+    `WaveManager.SpawnEnemy` and `UnlimitedWaveManager.SpawnEnemy` right after `ApplyEnemyBuffs`,
+    handing the anomaly the spawned enemy, the prefab it came from and its level. Empty on the base
+    class, so the other five anomalies are unaffected
+  - **`SplitInstance`** — reuses the generic `AnomalyData` fields rather than adding new ones:
+    `anomalyValue` is the split chance, `anomalyMinVal` the level reduction, `anomalyMaxVal` the
+    maximum copies (clamped to a minimum of 2, `SplitInstance.MinSplits`). It builds the in-game
+    description from those values and attaches the splitter on every spawn
+  - **`AnomalySplitter`** — subscribes to `EntityHealth.OnDeath`, unsubscribing on setup and on
+    destroy so a pooled or re-used enemy cannot split twice. It refuses to spawn when the wave is
+    no longer active (`WaveManager.WaveActive`), so a wave-clearing kill cannot leave orphans on the
+    field. Copies are spawned through `EnemySpawning.SpawnEnemy`, which bypasses the
+    `OnEnemySpawned` hook — so copies never receive a splitter, and a split cannot chain
+  - **`WaveManager.RegisterSplitEnemy(GameObject)`** — a static that adds a copy to the active
+    manager's `currentEnemies`, increments `totalSpawned` and `waveMaxTotalEnemies`, and refreshes
+    the wave text, so the live counter grows as enemies split (`Wave 7/68 (12/30)` → `(12/33)`) and
+    the wave is not cleared until every copy is dead
+- **Three `Fission` anomaly assets**, all with `disallowOnBossWave` on:
+
+  | Asset | List | Waves | Split chance | Level reduction | Max copies |
+  | --- | --- | --- | --- | --- | --- |
+  | `Split 10 50` | Regular | 10–50 | 30% | 5 | 3 |
+  | `Split 50 105` | Regular | 50–105 | 50% | 3 | 4 |
+  | `USplit` | Unlimited | 0–1024 | 50% | 3 | 5 |
+
+- **Chaos Theory** — a new treasure-pool Awakening (`SpawnProjectile`, `OnTeleport`, 100% chance, no
+  cooldown) that drops a heavy explosion on the player after every teleport, landing 0.15s after the
+  blink so it catches whatever followed. `Chaos Theory AD` is a single Additional projectile —
+  3.5 size, 0.75s lifetime, effectively unlimited pierce, 360% Spell + 60% True off `EffInt`,
+  6 knockback force, and +3 stamina / +5 mana on hit. Its projectile applies **Spellworn** on every
+  hit and **Stun** (2s) 40% of the time. Added to the `treasurePool` of both wave managers in
+  `New.unity`
+- **`Spellworn` status effect** — `StatBuffs` debuff, 4s, up to 2 stacks, −15% `spellRes` per stack,
+  so a second hit from a Chaos Theory explosion lands into −30% spell resistance
+
+### Changed
+- **`WaveManager`'s anomaly banner** handles `AnomalyType.Split`, printing the generated description
+  (*"Enemies have a 30% chance to split into 2-3 copies of themselves on death, each 5 levels lower.
+  Split enemies cannot split again, but all of them must be killed to clear the wave"*)
+- **Documentation resynced** — `GAME.md` gained the Chaos Theory attack and Awakening entries and the
+  `Spellworn` status effect row; `README.md` picked up *Fission* in the core loop, feature table and
+  content rows, and Chaos Theory in the Awakenings row
+- **`TODO.md` restructured** — *splitting anomaly* is closed; *attack combo chains*, *in-world
+  spawners* (now *spawner boxes*) and *passive stat synergies* moved to their real milestones; the
+  *Chaos Theory* planned ability is closed; *Planned - Unknown* split into **Will do sometime** and
+  **Will Consider**; and queued skill point spending, the node undo grace window, achievements,
+  leaderboards, the node search bar, a beacon objective and kill streaks were re-filed
+- Player `bundleVersion` 0.6.0 → 0.6.1
+
+## [v0.6.0] - 2026-09-21 - Impact & Efficiency (Release Summary)
+
+*This release adds the first reward source that is not a between-wave panel: environmental collectibles — glowing pickups that appear around the player mid-wave and pay out health, XP, stamina, mana, gold, skill points or rerolls, each on its own roll chance, cooldown and on-ground lifetime.*
+
+It also caps the development arc from `v0.5.0_1` through `v0.5.7`. Over that period Anamnesis gained the weight behind a hit — per-attack hit stop and screen shake, authored across ten attacks — while a fifth boss shipped, attacks learned to teleport their caster to the projectile they fired (with two capstones built on it), the pause menu learned to open itself, and four passes took coroutines, allocations and per-frame stat reads out of the combat hot path.
+
+### Highlights
+
+- **The Grim Reaper (`v0.5.1`)** — a fifth boss on the *Bringer of Death* sprite sheet with attacks designed by Fred Xu: Toss (stuns) above 60% HP, Strike (Vulnerable) above 30%, Balls from phase 2, and Spam, a slow wall of long-lived burning projectiles. It reached the wave sets in `v0.5.3_1`, as the Lv 75 capstone of the new `ws_5` sequence and a fifth boss in both Boss Rush parts
+- **Hit stop and screen shake (`v0.5.3`, `v0.5.3_1`)** — every `AttackData` gained an *Impact Feedback* block: `hitStop` freezes the game on hit (at `timeScale` 0.001, so pause checks and input stay live) with a `hitStopCooldown` so rapid hits cannot lock it up, and `screenShake` fires a Cinemachine impulse that `CombatFeedback` wires up on its own. Both default to 0 and were then authored per attack across Cyclone Cleave, Cosmic Blaze, Exodus (A/B/C), Luminaria, Nebula, Nirvana, Nocturnis, Revelation and Shattered Singularity. Freezes step aside for the pause menu, skill tree and reward panel instead of fighting them over `timeScale`
+- **Teleport to projectile, and two capstones on it (`v0.5.5`, `v0.5.6`)** — `AttackData.teleportToProjectile` / `teleportDelay` move the caster to its first spawned projectile once the spawn delay elapses. **Astral Disjunction** turns Astral Nova into a longer-range blink nuke; `ProjectileSpawner` then exposed a static `Teleported` event, `PlayerUpgrade` gained an `OnTeleport` trigger, and **Ultrasonic** replaced Supersonic with 7 stunning projectiles on every dash end *and* every teleport, with no cooldown. Two 3-node chains (Dash Cooldown Reduction, Dash Distance) lead to it
+- **Leaner combat hot path (`v0.5.4`, `v0.5.4_1`, `v0.5.7`)** — the per-hit coroutines are gone (damage numbers, hurt resets, i-frames and projectile re-hit windows run on timers), `DamagePacket` is pooled through `DamagePacket.Get` / `Release` (CrystalFlux Core 0.10.0), `StatusEffectManager` reads effect resistance once per frame instead of once per effect and skips paused frames, upgrades are dispatched from a `Dictionary<TriggerCondition, List<PlayerUpgrade>>` instead of a full scan per trigger, health regen reads its stats on its 0.5s tick rather than every frame, health bars skip frames where neither the entity nor the camera moved, and barrages count their inter-shot delay down manually instead of allocating a `WaitForSeconds` per shot
+- **Quit, build version and auto-pause (`v0.5.2`, `v0.5.5_1`)** — the pause menu and death screen gained a Quit button that saves `settings.json` before exiting through `GameRestart.QuitGame`, the home screen shows `Application.version` through `BuildVersionLabel` so playtest reports name their build, and `pauseOnFocusLoss` opens the pause panel when the game window loses focus (skipped while dead, restarting, or already paused)
+- **Environmental collectibles (`v0.6.0`)** — the new `CrystalFlux.Collectible` assembly, seven authored `CollectibleData` assets and a scene spawner, detailed below
+
+### Added
+- **`CrystalFlux.Collectible` — a new assembly under `Assets/scripts/Collectible/`** (references `Core`, `Pooling`, `Entity`, `Wave`, `TextIndicator`, TextMeshPro) holding three types:
+  - **`CollectibleData`** (`Data/Collectible`) — the authored asset: `sprite`, `CollectibleType` (`Heal`, `Xp`, `Stamina`, `Mana`, `Gold`, `SkillPoints`, `Rerolls`), `lightColor`, a `minVal`–`maxVal` roll range, and the spawn triple `chance` / `cooldown` / `maxTime`. `RollValue()` rolls the range inclusively, `BuildDesc(int)` builds the pickup's label from the type (`+35 Gold`, `+1 Skill Point`, `+5% XP`), and `Apply(GameObject, int)` pays out through the `Core` interfaces — `ICurrencyHolder.AddCurrency`, `ISkillPointHolder.AddSkillPoints`, `IResourcePool.TryGain`, `EntityHealth.ChangeHealth`, `PlayerLevel.GainExp`, `WaveManager.GrantRerolls`. Every path is `TryGetComponent`-guarded and returns a bool, so a payout that cannot land is refused rather than silently lost
+  - **`Collectible`** — the pooled world object (`IPoolable`, `CircleCollider2D` trigger). Bobs on `visualRoot` (`bobAmp` 0.15, `bobSpeed` 2), pulses a `glow` renderer tinted with `lightColor` between `glowMinAlpha` and `glowMaxAlpha`, and carries a world-space `TextMeshPro` label showing what it will pay. Picked up on trigger contact with a `Player`-tagged collider (resolved through `attachedRigidbody` first), which applies the value, spawns a text indicator and releases the object. Both `Update` loops early-return while `Time.timeScale == 0f`
+  - **`CollectibleSpawner`** — one per scene (`Active` static). Every `tickInterval` while `WaveManager.WaveActive`, it prunes the live list, and if it is under `maxConcurrent` it builds the candidate list (skipping zero-chance assets, assets on cooldown, and `Rerolls` while `IronmanSelector.Enabled`), shuffles it, and spawns the first asset to pass its own `chance` roll — one spawn per tick at most — then puts that asset on its `cooldown`. Placement is a random angle at `minSpawnDist`–`maxSpawnDist` from the player's current position. Cooldowns tick down even between waves; `OnDisable` releases every live pickup and clears them
+- **Percentage payouts for the four scaling types** — `Heal`, `Xp`, `Stamina` and `Mana` treat the rolled value as a percentage of a live stat (`EffMaxHp`, `XpReq`, `EffMaxStamina`, `EffMaxMana`), so a pickup is worth the same fraction of the player's kit at wave 5 and at wave 75. `Gold`, `SkillPoints` and `Rerolls` are flat counts
+- **Collectibles hold their remaining time across a wave break** — `maxTime` is only counted down while `WaveManager.WaveActive`, so a pickup left on the ground when the wave ends is still there, with the same time left, once the next wave starts. It fades out over the last `fadeTime` (0.5s) of its life
+- **Seven `CollectibleData` assets** under `Assets/data/Collectibles/`, drawn from the existing `icons.png` sheet:
+
+  | Asset | Pays | Roll | Chance / tick | Cooldown | Lifetime |
+  | --- | --- | --- | --- | --- | --- |
+  | `XP` | % of `XpReq` | 3–15% | 8% | 10s | 30s |
+  | `Gold` | gold | 5–65 | 6% | 5s | 25s |
+  | `Health` | % of `EffMaxHp` | 3–20% | 4% | 10s | 25s |
+  | `Stamina` | % of `EffMaxStamina` | 3–15% | 4% | 15s | 25s |
+  | `Mana` | % of `EffMaxMana` | 3–15% | 3% | 15s | 25s |
+  | `Reroll` | rerolls | 1 | 2% | 15s | 20s |
+  | `SkillPoint` | skill points | 1 | 1% | 20s | 20s |
+
+- **`Collectible` prefab** (`Assets/data/prefabs/`) — sprite, glow (built-in circle sprite at `glowScaleMult` 2, alpha 0.15 → 0.4 at `glowPulseSpeed` 2), a `TextMeshPro` label and a 0.13-radius trigger collider
+- **`CollectibleSpawner` in `New.unity`** — all seven assets listed, `prewarmCount` 8, `tickInterval` 2s, `maxConcurrent` 8, spawn ring 4–8 units
+- **`WaveManager.WaveActive`** — a static read of the active manager's `isWaveActive`, so systems outside the `Wave` assembly can tell whether a wave is running
+- **`WaveManager.GrantRerolls(int)`** — adds rerolls and refreshes the reroll UI, refusing the grant outright while `IronmanSelector.Enabled`, so the Ironman rule holds even if a reroll pickup reaches the player some other way
+- **`TextIndicator.Initialize(string, …)` and `TextIndicatorSpawner.SpawnTextIndicator(string, …)`** — string-content overloads of the floating-number path, so a pickup can pop `+35 Gold` through the same pooled indicator that damage numbers use
+
+### Changed
+- **`TextIndicator.Initialize` split into two overloads** — the existing `int` overload now only does the `k`/`M` abbreviation and the `TextType` prefix, then forwards to the new string overload, which owns the camera lookup, the random offset, the screen-space placement and the TMP writes. Existing callers (damage, XP, gold, heals) are unchanged
+- **Text indicator lifetime 0.7s → 0.9s** for collectible pickups, since their labels are words rather than a number
+- **Documentation resynced against the assets.** `GAME.md` gained the `# Collectibles` section, the **Astral Disjunction** capstone attack (`v0.5.5`) and the **Wipeout** upgrade (`v0.5.6`, asset authored in `v0.5.7`), and its Astral Nova entry had a stale spawn distance corrected (3 → 5, matching the asset). `README.md` picked up the collectible feature and content rows, the `Collectible` assembly in the project tree and boundary diagram, the `OnTeleport` trigger row (22 → 23 conditions), the two capstones missing from the capstone row, the skill tree node count (210 → 221) and the post-`v0.5.3_1` boss facts — the Grim Reaper is the Lv 75 capstone of `ws_5`, and Boss Rush is a five-boss gauntlet at Lv 85 / Lv 105. `ROADMAP.md`'s `v0.5.6` entry no longer says Wipeout has no asset
+- Player `bundleVersion` 0.5.7 → 0.6.0
+- **`TODO.md`** — *environmental collectible items (mana, xp, hp, gold)* is closed and removed from the pre-v1.1.0 *Starlight Remnants* checklist
+
+### Rebalance
+- **Player Default Dash Buff** - mult 4 → 5 cooldown 4 → 2 cost 35 → 20
+- `PlayerStats.asset` was re-serialized in the same edit, so every stat field added since it was last written (`sePotPct`, `manaGainPct`, the per-slot cooldown reductions, `healingPct`, `overhealth`, `seDurPct`, `seTickRatePct`, `maxStaminaPct`, `maxManaPct`, `castTimeRedPct`, `interruptResist`, `goldDrop`, `gold`, `stealing`, `globalDoTCanCrit`, `detectionRange`) is now present at its default value
+
+## [v0.5.7] - 2026-09-21
+
+### Changed
+- **Upgrade triggers are indexed by condition** — `PlayerUpgradeManager` keeps a `Dictionary<TriggerCondition, List<PlayerUpgrade>>` built in `Start` and maintained by `AddUpgrade` / `RemoveUpgrade`, so each of the three `TriggerUpgrades` overloads walks only the upgrades that actually listen for that condition instead of scanning every active upgrade and its `conditions` array. A single hit raises up to six trigger events (`EntityHealth.TakeDamage`), so a late-game build of ~25 upgrades went from roughly 150-300 iteration steps per hit to one dictionary lookup plus the matching upgrades
+- **`EntityHealth.RegenHp` runs its stat reads on the 0.5s cadence** — the timer is accumulated first and the five `GetStat` calls (`isAlive`, `CanGainHp`, `currentHp`, `EffMaxHp`, `EffHpReg`) only happen on a tick, instead of every frame per entity. The timer now advances even while regen is ineligible, so an entity that becomes eligible mid-interval can tick immediately rather than waiting a fresh 0.5s
+- **`EntityHealth.MoveHealthBar` skips stationary frames** — the method returns immediately when the entity has no bar and cannot have one, and otherwise skips `WorldToScreenPoint` and the transform writes while both the entity and the camera are within `1e-6` sq units of their last sampled positions. The per-frame `RefreshHealthBar()` call is gone; `AddOverhealth` now refreshes the bar so overhealth decay still updates the readout (the HP paths already refreshed directly). A 50-enemy wave drops ~400-500 stat dispatches and ~50 screen-space transforms per frame
+- **`EntityHealth.DecayOverhealth` checks its config before reading the stat** — the `overhealthDecayPct` / `overhealthDecayInterval` field checks moved ahead of the `overhealth` `GetStat`, so entities that never gain overhealth cost nothing
+- **`ProjectileSpawner` no longer allocates per shot** — all five spawn patterns (`SpawnCircle`, `SpawnSpread`, `SpawnSpreadBarrage`, `SpawnBarrage`, `SpawnOpposingLines`) replaced `yield return new WaitForSeconds(Random.Range(ad.MinDelay, ad.MaxDelay))` with a manual `do { yield return null; wait -= Time.deltaTime; } while (wait > 0f)` countdown. A 20-shot barrage stops producing 20 garbage objects, and the minimum one-frame gap of `WaitForSeconds(0)` is preserved. Delays remain scaled by `Time.timeScale`, so pausing still halts a barrage mid-flight
+
+### Fixed
+- **Delayed upgrades lost their spawn center** — `TriggerUpgrades(condition, Vector2 spawnCenter)` used to route upgrades with a `delay > 0` through the no-argument `TriggerWithDelay`, calling `TriggerUpgradeEffect(GameObject)` and dropping the spawn position. A `TriggerWithDelay(PlayerUpgrade, Vector2)` overload now carries it through, so delayed `OnSpawnProjectile` and `OnProjectileHit` upgrades behave like their instant counterparts
+
+## [v0.5.6] - 2026-09-18
+
+### Added
+- **`OnTeleport` upgrade trigger** — `PlayerUpgrade.TriggerCondition` gained `OnTeleport`. `ProjectileSpawner` exposes a static `Teleported(GameObject src, Vector2 pos)` event, invoked at the end of the `TeleportToProjectile` coroutine once both `Rigidbody2D.position` and `transform.position` are moved. `PlayerUpgradeManager` subscribes in `OnEnable`/`OnDisable` and fires `OnTeleport` upgrades only when the teleporting source is the player
+- **Ultrasonic capstone** — new skill tree node (`Node_ultrasonic`, 3 SP, `undoCost` 50) under `_Capstone/`. Prerequisites: `Node_dd3` and `Node_dcr3`; requires the Supersonic upgrade, which it replaces with the `Ultrasonic` `SpawnProjectile` upgrade:
+  - Triggers on `OnEndDash` **and** `OnTeleport`, 100% chance, no cooldown (Supersonic: `OnEndDash` only, 1s cooldown)
+  - **Ultrasonic AD**: 7 projectiles (Supersonic: 3), 45 random spread, stamina +4 and mana +4 on hit (Supersonic: +3 each)
+  - **Ultrasonic PD**: speed 9 → 14, lifetime 1s → 0.75s, true multiplier 1.35 → 1.7, knockback 4 → 5, 40% chance to Stun (2s) on hit. No Supersonic Cooldown self-apply
+- **Dash Cooldown Reduction chain** — `Node_dcr1`–`Node_dcr3` (1 SP each), +2% dash cooldown reduction per node, branching off `Node_msp1`
+- **Dash Distance chain** — `Node_dd1`–`Node_dd3` (1 SP each), +3% dash distance per node, branching off `Node_dp5`
+- **DoTSpread player upgrade (Wipeout)** — `PlayerUpgrade/DoTSpread`. While equipped, a coroutine hosted on `PlayerUpgradeManager` checks every player-sourced debuff on active enemies (`EnemyMovement.Active`). Every `spreadInterval` seconds (or the debuff's own `tickInterval` when `useTickInterval` is set), each debuff has `spreadChance`% to apply itself to every living enemy within `radius` tiles that does not already carry it. Per-debuff timers live in a dictionary that is pruned of destroyed effects every 2s. The loop skips zero-timescale frames. Can be obtained through the treasure pool
+- `StatusEffectManager.HasEffect(StatusEffect)` — `IsSameEffect` check against the active list
+- `StatusEffect.origin` — runtime clones now remember the authored asset they came from (`Apply` keeps the first origin through re-application), so a spread debuff is re-applied from the original asset instead of a clone of a clone
+
+### Changed
+- **Supersonic** — true multiplier 1.1 → 1.35, random spread 45 → 0, and the 60% on-hit Slow was removed. The self-applied Supersonic Cooldown stays
+
+## [v0.5.5_1] - 2026-09-18
+
+### Added
+- **Auto-pause on focus loss** — `SettingsMenuInputToggle` gained `pauseOnFocusLoss` (default on). `OnApplicationFocus(false)` opens the settings panel through `SettingsPanelUI.Toggle`, which pushes `MenuPause`. Skipped while the player is dead, a restart is in flight, the skill tree is open, a menu already holds `MenuPause`, or `Time.timeScale` is already 0. Regaining focus does not resume; the player closes the menu as usual
+
+### Fixed
+- **Enemy sustained projectiles expired early** — `EnemyAttackHandler.ChargeLoop` now calls `EntityProjectileHandler.BeginChargeWindow(chargeSource)` before spawning the charge source and `EndChargeWindow()` when the loop exits (release, interrupt or death). `OnDisable` also closes the window if a charge was in progress. Enemy charged projectiles register again, so `TickChargedProjectiles` keeps them alive for the full charge instead of letting them expire at their authored `lifetime`
+
+## [v0.5.5] - 2026-09-17
+
+### Added
+- **Teleport to projectile mechanic** — `AttackData` gained `teleportToProjectile` (bool) and `teleportDelay` (float) fields. When enabled, the attacker teleports to its first spawned projectile's position after the spawn delay + optional additional delay. Implemented in `ProjectileSpawner.SpawnFromPatternInternal` via a one-shot `ProjectileSpawned` callback that fires a coroutine to perform the teleport (moves both `Rigidbody2D.position` and `transform.position`). The callback unsubscribes itself after firing
+- **Astral Disjunction capstone** — new skill tree node (`Node_astraldisjunction`, 3 SP, `undoCost` 50) under `_Capstone/` that upgrades **Astral Nova** → **Astral Disjunction**. Prerequisite: the Astral Nova node. Unlocks the `Astral Disjunction AD` / `PD` attack pair:
+  - **Astral Disjunction AD**: cooldown 3 → 4, spawn delay 1.5s → 0.5s, spawn distance 5 → 8, `teleportToProjectile` enabled. Adds flat stamina +5 and mana +5 on hit (on top of existing 15% each)
+  - **Astral Disjunction PD**: size 2 → 2.5, spell multiplier 2.8 → 3.6, true multiplier 0.3 → 0.6, effect apply chance 80% → 100%. Lifetime, pierce, knockback unchanged
+
+### Changed
+- **Astral Nova (base)** — `teleportToProjectile` and `teleportDelay` fields now serialized (default false/0) so the upgrade can flip them without asset replacement
+
+## [v0.5.4_1] - 2026-09-16
+
+### Changed
+- **`StatusEffectManager.Update` tightened** — the effect-resistance stat is now read once per frame (as a duration multiplier) instead of once per active effect, which removes roughly 300 wasted `GetStat` dispatches per frame in a 40-enemy swarm with a handful of effects each
+- `StatusEffectManager.Update` returns early while `Time.timeScale == 0f`, following the project pause convention. Effects no longer tick, age or expire during zero-timescale frames
+- The per-iteration index bounds re-check is gone. The list is only re-validated right after `OnTick`, which can mutate it (a lethal DoT tick triggers `ClearAllEffects`, `Detonator` removes DoTs); if it changed, the loop index is clamped to the new count
+- On expiry the effect is removed by index only when that slot still holds it, otherwise by reference, so an `OnExpire` that shifts the list can no longer remove the wrong effect
+- **`StatusEffectManager.Apply` no longer allocates** — the `activeEffects.Find(e => ...)` lambda (a closure capturing the incoming effect on every apply) is replaced with a plain `for` loop
+- `IsSameEffect` short-circuits on `ReferenceEquals` for the effects themselves and for their `effName` strings before falling back to the case-insensitive compare. Runtime effects are `Instantiate` clones that share the asset's name string, so re-applying the same effect now skips the string compare entirely. Type lookups are cached once per call. Matching rules are unchanged: named effects still match by name only, so two different effects of the same class (such as two `DoT` assets) still stack separately
+
+## [v0.5.4] - 2026-09-16
+
+### Changed
+- **Per-hit coroutines removed** — the combat hot path no longer starts a coroutine (plus a `WaitForSeconds`) for every damage number, hurt, i-frame window or projectile re-hit window:
+  - `TextIndicatorSpawner.SpawnTextIndicator` acquires the indicator immediately and passes the spawn delay to `TextIndicator.Initialize`, which keeps the text hidden and counts the delay down in its existing `Update` before the lifetime starts
+  - `EntityHealth` tracks `hurtResetTime` and `immunityEndTime` and clears them in `Update`. `TriggerIFrames` grants `isImmune` once and extends the end time when a longer window overlaps, instead of stacking a grant per call. `TriggerIFramesCoroutine` is removed
+  - `Projectile` records `(target, expiry)` pairs for `TimeBeforeSameEnemy` and drops expired targets from its hit history in `Update`; the pairs are cleared in `Setup` and on pool release
+- **`DamagePacket` pooling** — CrystalFlux Core bumped to **0.10.0** (`7d6d068`). `DamagePacketBuilder` and `DamageRoll.Build` rent packets from `DamagePacket.Get`, and every consumer (`Projectile`, `EntityProjectileHandler`, `PlayerAttackHandler`, `PlayerAttackCooldownUI`, `AdditionalDamage`, `StellarSurge`, `DoT`, `Detonator`, `Thorns`, `Lifesteal`) returns them with `DamagePacket.Release` once `TakeDamage` has consumed them. `instances` is preallocated with capacity 3
+- `Projectile` fills a cached `List<IOnHitEffect>` via `GetComponents(List<T>)` instead of allocating an array per hit
+
+## [v0.5.3_1] - 2026-09-14
+
+### Added
+- **Impact feedback authored** across 10 player attacks — hit stop and screen shake values tuned per attack:
+  - **Cyclone Cleave** — 0.06s freeze, 0.08 shake
+  - **Cosmic Blaze** — 0.12s, 0.15
+  - **Exodus** (A/B/C) — 0.08s, 0.10–0.15 shake
+  - **Luminaria** — 0.15s, 0.15
+  - **Nebula** — 0.06s, 0.10
+  - **Nirvana** — 0.15s, 0.15
+  - **Nocturnis** — 0.15s, 0.15
+  - **Revelation** — 0.15s, 0.15
+  - **Shattered Singularity** — 0.20s, 0.15
+- **`ws_5`** — a new wave sequence covering waves 61–75 (`waveOffset` 60), all Slime (Magma) at levels 61–74 with 54→71 total and 22→27 concurrent enemies, capped by a Lv 75 Grim Reaper boss at wave 75. `ws_4.nextSequence` now points at `ws_5` instead of `BossRush`, and `ws_5.nextSequence` points at `BossRush`
+
+### Changed
+- **Boss Rush levels increased** — all four bosses (Lich, Jellyfish, Cultist, Golem) bumped from Lv 70 to Lv 85 in `BossRush.asset`, and the Grim Reaper is now a fifth Lv 85 boss. In `BossRush Part 2.asset` the Reaper appears as a fifth Lv 105 boss
+- **Golem Orbit** `castTime` 1s → 0 — the move no longer locks the Golem in place before firing, making it immediately available below 40% HP
+- **Cultist Ball** `spread` 10u → 12u
+
+## [v0.5.3] - 2026-09-14
+
+### Added
+- **Hit stop** - `AttackData` gained an *Impact Feedback* section. `hitStop` is how many real-time seconds the game freezes when a projectile from that attack hits, and `hitStopCooldown` is how long after a freeze ends before another can start. Both default to 0, so no existing attack freezes until it is authored. Overlapping hits extend the current freeze rather than stacking it
+- **Screen shake** - `AttackData.screenShake` (default 0) fires a Cinemachine impulse on hit, in a random direction, clamped by `CombatFeedback.maxShake`. A shake requested during a hit stop is held and plays once the freeze ends, because the camera follows a physics-driven target and does not update while `timeScale` is frozen. The player also shakes the camera when hurt (`CombatFeedback.playerHurtShake`, default 0.25), with an optional `playerHurtHitStop`
+- `HitFeedback` (Settings assembly) - a static that owns the freeze and relays shake requests. A freeze drops `timeScale` to 0.001 rather than 0, so pause checks (`timeScale == 0`) and input stay live, and it runs on unscaled time from a hidden `[HitFeedback]` runner
+- `CombatFeedback` - bootstraps itself after the first scene load if none is placed, adds a `CinemachineImpulseSource` to itself and a `CinemachineImpulseListener` to the scene's `CinemachineCamera`, and sets the impulse manager to ignore time scale so shakes play through a freeze. Place one in the scene to tune its values
+
+### Changed
+- `MenuPause.Push` and `SkillTreeUI.Open` cancel an active freeze before they record the time scale to restore, so closing a menu never restores the freeze scale
+- A freeze only restores `timeScale` if it is still at the freeze value, so a reward panel or pause that sets `timeScale` to 0 mid-freeze stays paused
+- `CrystalFlux.Projectile` now references `CrystalFlux.Settings`
+- Player `bundleVersion` 0.5.2 → 0.5.3
+
+## [v0.5.2] - 2026-09-13
+
+### Added
+- **Quit button** on the pause menu and the death screen. `SettingsPanelUI.QuitGame()` and `DeathScreenUI`'s new `quitButton` both save `settings.json` first, then hand off to `GameRestart.QuitGame()`, which resets the `MenuPause` depth and `timeScale` before calling `Application.Quit()` (or leaving Play mode in the editor). Both ignore the press while their panel is closed or a restart is in progress
+- **Build version on the home screen** - the new `BuildVersionLabel` component writes `Application.version` into a `TextMeshProUGUI` using an authorable `format` (default `v{0}`), with an optional `(editor)` / `(dev)` suffix, so playtest reports and screenshots name the build they came from. It sits on the home canvas as `VersionText`
+- `DifficultySelector.hideOnLockIn` - a list of extra objects deactivated when a difficulty is locked in and the run starts. The version label is hidden this way
+
+### Changed
+- Player `bundleVersion` 0.5.0 → 0.5.2, so `Application.version` matches the release
+
+## [v0.5.1] - 2026-09-13
+
+### Added
+- **The Grim Reaper** - a fifth boss under `Assets/data/entity/enemy/Bosses/reaper/`, built on the Clembod *Bringer of Death* sprite sheet with idle, move, attack, attack2, hurt and death animations. `Reaper Base` stats: 11 attack, 25% crit chance, 80% crit damage, 30 defense shred, 10 resistance penetration, 0.65 move speed. `EnemyPhase` thresholds at 60% and 30% HP, with a +40 phase buff from phase 2. Four attacks, 1s global cooldown:
+  - **Toss** - 3 physical projectiles (35% Phys) in a 30° spread, 5 range, 5s cooldown; 80% chance to apply `Stun 1`. Only used above 60% HP
+  - **Strike** - a single melee hit (160% Spell, size 3.5), 6 range, 7s cooldown; always applies `Vulnerable 8 2 20`. Only used above 30% HP
+  - **Balls** - 12 spell projectiles (35% Spell) in a 45° spread, 8 range, 7s cooldown. Phase 2 and later
+  - **Spam** - 20 slow, long-lived piercing projectiles (45% Spell, 14s lifetime), 10 range, 14s cooldown; always applies `Burn 8 1 6 15`
+- The Reaper is not yet part of any Regular, Unlimited or Boss Rush wave set; only the `test` wave spawns it
+- **`Burn 8 1 6 15`** - an 8s Burn (1s tick, 5 stacks, 15% EffAtk per tick), authored for the Reaper's Spam
+- **`Stun 1`** - a 1s Stun, authored for the Reaper's Toss
+- `CREDITS.md`: Clembod (*Bringer Of Death*) and Fred Xu (Reaper attack design)
+
+### Changed
+- **Difficulty assets moved** from `Assets/data/Wave/difficulties/` to `Assets/data/Difficulty/`. GUIDs were kept, so every `DifficultyData` reference still resolves
+- **Cultist Ball** - range 6 → 8, and it is now available from phase 1 instead of phase 2
+- `Cultist` and `Cultist Clone` prefabs re-serialized: `displayName` is now authored on both (the boss bar shows "Cultist" / "Cultist Clone"), and the clone picked up the current `EnemyAttackHandler` cast bar fields and `EntityHealth.deathAnimTime`
+- `test` wave now spawns the Reaper
+
+### Rebalance
+- **Sacred Surge** - cooldown 14s → 16s, physical multiplier 345% → 290%, time before same enemy 0.9s → 0.8s
+- **Hypernova** - physical multiplier 215% → 190%, spell multiplier 60% → 55%, health gain on hit 5% → 3 +1%, Celestial Protection self-apply chance 40% → 30%, Stun chance 30% → 20%
+
+### Fixed
+- `Burn 6 1 5 15` description said 15% of attack per stack; it now says 35%, matching its actual tick damage
+
+## [v0.5.0_5] - 2026-09-13
+
+### Updated
+- readme is now more modern
+
+## [v0.5.0_4] - 2026-09-11
+
+### Fixed
+- **Escape menu locked out after death** - pressing Escape during the delay between the player dying and the death screen appearing could open the settings menu. `SettingsMenuInputToggle` and `SettingsPanelUI.Toggle` now ignore the request while the player is dead (death screen pending or open) or a restart is in progress
+
+### Added
+- `DeathScreenUI.IsPlayerDead` - true from the moment the player dies until the death screen closes, covering the `showDelay` window that `IsOpen` missed
+
+## [v0.5.0_3] - 2026-09-11
+
+### Fixed
+- **Death screen releases its pause** - `DeathScreenUI` pushed `MenuPause` when it opened and never popped it, relying on `GameRestart.ToHomeScreen` resetting the depth. It now tracks its own push and pops it exactly once when it closes or is destroyed, so any dismiss path other than restart no longer leaves the game frozen at `timeScale` 0
+
+### Added
+- `DeathScreenUI.Hide()` - closes the death screen and releases its `MenuPause` push. The restart button now goes through it before handing off to `GameRestart.ToHomeScreen`
+
+## [v0.5.0_2] - 2026-09-11
+
+### Fixed
+- **On-screen attack buttons now release charged attacks** - the cooldown button spawned by `PlayerAttackHandler.CreateButtonUI` only listened to `Button.onClick`, which never registered as a held input, so a chargeable attack started from the button charged until `maxChargeTime`. `PlayerAttackCooldownUI` now implements `IPointerDownHandler` / `IPointerUpHandler` and routes left-click press and release through `PressAttack` / `ReleaseAttack`, the same path the keyboard bindings use. Holding the button charges, letting go fires. The press is also released when the button is disabled or destroyed (attack swap, `RemoveAttack`) or re-`Setup()`, so a charge can't get stuck held
+
+### Changed
+- On-screen attack buttons fire on pointer **down** instead of on click (pointer up over the button). Dragging off the button before letting go still releases the charge instead of cancelling the attack
+- `PlayerAttackHandler` no longer adds or clears `onClick` listeners on the cooldown button; the `Button` component stays on the prefab for its pressed/highlight transitions only
+
+## [v0.5.0_1] - 2026-09-11
+
+### Fixed
+- **Project Settings** - `companyName` being `defaultCompany` and `bundleVersion` being the default `1.0`, fixed to being `CrystalFlux` and `0.5.0` respectively
+
+## [v0.5.0] - 2026-09-10 - Feel & Foundations (Release Summary)
+
+*This release closes the pre-v0.5.0 "Feel & Foundations" checklist on the repository side: Anamnesis now ships with an explicit license, a contribution surface, and the agent-facing documentation the engineering skills read before touching the codebase.*
+
+It also caps the development arc from `v0.4.0_1` through `v0.4.11`. Over that period Anamnesis gained the shell a run is played inside — a settings menu with rebindable keys, a difficulty selector, Ironman mode, a restart path and a death screen — while a fourth boss shipped, anomalies grew from a stat-modifier roll into wave-shaping events, the skill tree went from 137 to 210 nodes, and every attack and projectile asset stopped being cloned at runtime.
+
+### Highlights
+
+- **Settings menu (`v0.4.1`)** — a pause-aware settings panel with a controls page, persistent settings, gameplay toggles and full keybind rebinding, all sitting on the new `MenuPause` depth counter so nested pages pause and unpause exactly once. One shared `PlayerControls` instance replaced the per-component ones
+- **Difficulty selector (`v0.4.3`, `v0.4.3_1`)** — `DifficultyData` assets drive a pre-run selector with three shipped difficulties, applied through `WaveManager.ApplyDifficulty` and a pre-run free pick. Hard was retuned in the follow-up, which also added attack-blocked feedback (`CanCast` / `CanAfford`) and a reward panel title
+- **Ironman Mode (`v0.4.4`)** — a locked-in run modifier that removes rerolls outright rather than merely making them unspendable, and takes corruption and skill-node refunds with it. Starting nodes became undoable in the same version
+- **Golem, the fourth boss (`v0.4.5`)** — a four-attack boss (Slam, Cross, Charge, Orbit) with its own `Stun` / `Slow` / `AttackInc` effect assets and a wave-set entry, added to the Unlimited rotation. Enemy assets were split by role at the same time, and `WaveManager`'s rarity table was resynced with `UnlimitedWaveManager`'s
+- **Anomalies became wave events (`v0.4.8`, `v0.4.8_1`)** — Swarm and Duel joined the pool, backed by `AnomalyInstance.ApplyEnemyBuffs`, `AnomalyData.disallowOnBossWave`, `WaveManager.NextWaveIsBoss()` and `ScaleEnemyCount(int)`. Duel ships its own boss bar and status effect prefabs, `EnemyStatManager.displayName` feeds the Unlimited boss bar, and six new anomaly assets moved out of the scripts tree
+- **Overhealth and the Exsanguinate line (`v0.4.2`, `v0.4.5_3`, `v0.4.9`)** — healing past full converts into a decaying pool. Exsanguinate, Terminal Cascade, `StatType.healingPct`, Cresendo and Tempo shipped first; `convertRegen` became load-bearing later, and the Oblivion capstone (100% conversion, 15% decay per 0.5s) closed the line out behind the Exsanguinate Awakening
+- **Hypernova, the Supernova capstone (`v0.4.6`)** — a capstone that pulls on every hit (`Pulled`) and stacks `Celestial Protection` on the caster, rebalanced in `v0.4.8_1`
+- **Skill tree: 137 to 210 nodes (`v0.4.0_1`, `v0.4.6`, `v0.4.7`, `v0.4.8_1`, `v0.4.9`)** — grown in five passes (12, 9, 41, 8 and 13 stat nodes, plus two capstones), alongside a **Refund All** button with its own API on `PlayerSkillTree`, a `Node_ MEDIUM` authoring template so a node's frame size reads as its strength, and an on-screen skill tree open button whose tooltip carries gold, skill points and the bound key
+- **Restart and death (`v0.4.9`, `v0.4.9_2`)** — a restart button and confirmation page in the settings panel, the `GameRestart` static that reloads the scene while resetting pause depth and time scale, and a `DeathScreenUI` that takes over on death, blocks the pause menu behind it, and hands off to the same restart path. `NumberFormat` abbreviated every health, resource and XP label (`1.2k` / `3.4M`) and made overhealth visible on the HUD
+- **Attack assets are no longer cloned at runtime (`v0.4.10`)** — the whole runtime-copy machinery (deep cloning, live-data reference counting, deferred destruction, summon re-instantiation) was deleted; entities read the authored `AttackData` / `ProjectileData` directly, with every serialized field now `private` behind read-only properties. Owners contribute effects through the new `IAttackEffectSource` registry on `PlayerUpgradeManager` instead of mutating shared assets, so a slot-bound buff like Soul Rend survives an attack swap
+- **Source-available license and contribution surface (`v0.5.0`)** — the repository now carries an explicit license, PR and issue templates, and the agent-facing docs detailed below
+
+### Added
+- **`LICENSE` — the Anamnesis Source-Available License.** The source is public to be read and learned from, not to be redistributed. Section 2 grants the right to view and study the Software, to clone and compile it in order to play Anamnesis privately on your own hardware, to modify a local copy for private experimentation, and to quote short excerpts with attribution. Section 3 withholds everything else without written permission — redistribution or hosting of the source or of any compiled build, publishing forks/ports/reskins/remakes or any other derivative, incorporating the Software into another game or asset package, using the *Anamnesis* name or branding for anything else, and stripping license or attribution notices. Section 4 takes an inbound contribution license on pull requests, Section 5 carves the third-party art, audio, fonts, Unity packages and other dependencies **out** of the license entirely — those are covered only by their own terms, as listed in `CREDITS.md`, and must be obtained from their original source — and Sections 6–8 carry the no-warranty disclaimer, automatic termination on breach, and a contact route for permissions beyond the license
+- **`.github/pull_request_template.md`** — a PR form built around the parts of Unity work that do not review well as a diff. *Summary* (with a `Closes #`), *Changes*, a **Scene / asset impact** block confirming that no prefabs, scenes or ScriptableObjects were destroyed or recreated rather than edited in place, that `.meta` files for added/removed assets are included, and that serialized-field changes are backwards compatible with existing assets or come with a described migration; a *Testing* block asking for the Unity version, the scenes/prefabs exercised, and the result; a *Checklist* mirroring the project's own rules (reuse existing patterns over new classes, pooled components fully reset in `Setup()`, player/enemy update loops early-return on `Time.timeScale == 0f`, null checks / `TryGet` / early returns on external lookups, `CHANGELOG.md` updated when the change is user-visible); and *Notes for reviewers*
+- **Four issue forms under `.github/ISSUE_TEMPLATE/`**, all auto-labelled `needs-triage`:
+  - `bug_report.yml` — reproduction steps, expected vs actual, Unity version, build type, frequency, and the affected area
+  - `feature_request.yml` — problem before proposal, the area it lands in, and an explicit prompt to say which existing system should be reused rather than duplicated
+  - `balance_or_content.yml` — for tuning an existing asset (attack, upgrade, node, enemy, wave): the asset, current values, proposed values, the rationale, and the knock-on effects on other content
+  - `config.yml` — keeps blank issues enabled and points open-ended design questions at GitHub Discussions instead
+- **`docs/agents/` — the agent-facing repo contract**, referenced from `CLAUDE.md`:
+  - `issue-tracker.md` — GitHub Issues via the `gh` CLI is the tracker. Documents create/read/list/comment/label/close, marks PRs as *not* a request surface for triage, and specifies the wayfinding model: a `wayfinder:map` issue with child tickets as sub-issues, blocking expressed through GitHub's native issue dependencies (by numeric database id, with a `Blocked by: #n` body line as the fallback), and the frontier query that skips blocked or assigned tickets
+  - `triage-labels.md` — maps the five canonical triage roles (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`) onto this tracker's label strings
+  - `domain.md` — declares the repo **single-context**: one root `CONTEXT.md` glossary plus `docs/adr/`. Agents read both before exploring, proceed silently when they don't exist (they are created lazily, when a term or decision is actually resolved), name domain concepts using the glossary's vocabulary rather than drifting to synonyms, and surface — rather than silently override — any output that contradicts an existing ADR
+
+### Changed
+- **`TODO.md` — the pre-v0.5.0 checklist is closed and removed.** Its licensing/templates item is shipped above; **Background Overlays** (reward menu, home screen, settings menu, scroll menu, death menu) was not, and moves into the pre-v0.6.0 *Combat Depth* checklist alongside the other presentation work (wave track, map debris/decor, screen shake and hit-stop, status effect VFX)
+
+## [v0.4.11] - 2026-09-10
+
+### Added
+- **Tilemap Colliders** - a new Walls map that prevents the player from moving out of bounds (uses a water sprite), there will be an extension later, right now it is just a border
+
+### Rebalance
+- Crab: nerfed disk size from 2 to 1.75
+
+## [v0.4.10] - 2026-09-08
+
+### Added
+- **`IAttackEffectSource`** in `Assets/scripts/Projectile/` (`CrystalFlux.ProjectileSystem`) — a one-method contract, `IReadOnlyList<EffectData> GetExtraEffects(AttackType type)`, that lets an owner contribute status effects to whatever attack currently fills a slot without touching the attack's own asset. `Projectile.Setup` resolves it off the owner (`TryGetComponent`) once per spawn and clears it on release
+- **An attack effect registry on `PlayerUpgradeManager`**, which now implements `IAttackEffectSource`. `RegisterAttackEffect(AttackType, EffectData)` appends into a per-`AttackType` list, ignoring a null `effect` and de-duplicating on the `EffectAsset` reference; `UnregisterAttackEffect(AttackType, EffectAsset)` removes every entry using that asset; `GetExtraEffects` returns the slot's list or a shared static empty one, so the hot path never allocates. The dictionary is cleared in `OnDestroy` alongside the existing upgrade collections
+- **An explicit charge window on `IChargeRegister`** — a new `AttackData ActiveChargeSource { get; }` member, implemented on `EntityProjectileHandler` with `BeginChargeWindow(AttackData)` / `EndChargeWindow()` and reset in `OnDestroy`. `PlayerAttackHandler.ChargeRoutine` opens the window with the resolved `chargeSource` immediately before the sustained attack spawns, and `EndCharge` closes it
+- **Read-only property surfaces on `AttackData` and `ProjectileData`** — every serialized field now has a matching expression-bodied getter (`Cooldown`, `ProjectilePrefab`, `Pd`, `Pattern`, `CastTime`, `ChargeAttack`, `NextAttack`, `Icon`, `DisplayName`, …; `Speed`, `Lifetime`, `NumPierce`, `MainAttack`, `AdditionalAttack`, `KbForce`, …). `ProjectileData.Effects` is exposed as `IReadOnlyList<EffectData>`, so the list can be read but not appended to from outside the asset
+
+### Changed
+- **Attack and projectile assets are no longer cloned at runtime.** Every entity now holds and reads the authored `AttackData` / `ProjectileData` asset directly:
+  - `PlayerAttackHandler.UpdateAttack` stores the incoming asset instead of `Instantiate`-ing it, renaming it and deep-cloning its `pd` / `effects` / `chargeAttack` / `nextAttack` graph
+  - `EnemyAttackHandler.Awake` no longer rebuilds `attacks` out of runtime copies; it null-strips the authored list (`RemoveAll(atk => atk == null)`, allocating an empty list when the field is unset) and sizes `cooldowns` off that
+  - `EntitySummonHandler` no longer re-instantiates a summon's attack assets after spawning it — summons share the same authored data as everything else
+  - `AttackReplacement.OnApply` keeps a plain reference to the attack it displaced rather than a deep-cloned copy of it
+- **All serialized fields on `AttackData` and `ProjectileData` are `[SerializeField] private`.** Authoring in the inspector is unchanged (same names, same order, same tooltips, same `[Range]` / `[Header]` decoration), but nothing outside the asset can write to them any more — the point of the change, now that the assets are shared and live for the whole run. Every consumer moved to the new properties: `Projectile`, `ProjectileSpawner`, `ProjectileSnapshot`, `DamageCalculator`, `DamagePacketBuilder`, `PlayerAttackHandler`, `EnemyAttackHandler`, `EntityProjectileHandler`, `PlayerAttackCooldownUI`, and `AttackData.GetTooltipLines` itself
+- **`PlayerAttackHandler.UpdateAttack` dropped its `AttackType` parameter** and reads `newAttack.type` instead, so the slot an attack lands in is always the one it was authored for. The explicit `IAttackHandler.UpdateAttack(AttackType, AttackAsset)` implementation still satisfies the `Core` contract but ignores the type it is handed. `Start` seeds the starting attacks through the one-argument form, and `WaveManager.OnAttackRewardClaimed` now null-checks `chosenAttack.newAttack` and passes the asset's own type
+- **`SoulRendPU` registers its buff on the player rather than on two attack assets.** `OnUnlock` builds the `EffectData` once (`selfApply`, `OnHit`, 100%) and calls `pum.RegisterAttackEffect` for `AttackType.Basic` and `AttackType.Skill`; the new `OnRemove` override unregisters both. The effect therefore follows the *slots* — swap the Basic attack mid-run and Soul Rend keeps applying — and it is torn down when the upgrade is removed
+- **`Projectile` applies effects from two sources.** The inline `foreach` loops in `Setup` and `HandleHitEntity` became `ApplyOnCast(EffectData)` and `ApplyOnHit(EffectData, GameObject)`, each run first over `pd.Effects` and then over the owner's `GetExtraEffects(pd.MainAttack.type)` list. The extras are fetched once per call through a private `ExtraEffects()` helper that returns null when there is no source, no `pd`, or no `MainAttack`
+- **Charged projectiles register against the attack actually being held.** Registration used to fire for any projectile whose `pd.mainAttack.canCharge` was true, which caught every projectile of a chargeable attack including taps and follow-ups. It now requires `icr.ActiveChargeSource == pd.MainAttack`, and the projectile remembers the outcome in a `chargeRegistered` bool that `UnregisterFromOwner` reads, instead of re-deriving the condition from `pd` at teardown time
+- **`ProjectileData.effects` is initialized to `new()`** so the list is never null; `Projectile` and `AttackData` still null-check it
+- **`AttackReplacement.OnExpire` restores by the stored attack's own type** (`originalAttack.type`) rather than the replacement's, and clears the reference afterwards
+- The UTF-8 BOM was dropped from `PlayerAttackHandler.cs` and `ProjectileData.cs`
+- `Warp AA PD.asset` re-serialized: `size` now precedes `numPierce`, matching the reordered field declarations, and `destroyOnMaxPierce: 0` is written out explicitly
+
+### Removed
+- **The whole runtime-copy machinery.** `AttackData.InitializeRuntimeCopy`, the recursive `DeepCloneInternal` (which walked `pd`, `pd.effects`, `pd.additionalAttack`, `chargeAttack` and `nextAttack` behind a `HashSet<AttackData>` cycle guard) and the matching `OnDestroy` teardown are gone. `DeepClone` is now an empty override and `IsRuntimeCopy` returns `false`, both kept only to satisfy the abstract members on `Core`'s `AttackAsset`
+- **`Projectile`'s live-data reference counting** — the static `Dictionary<ProjectileData, int> liveDataRefs`, `IsDataLive`, `RegisterData`, `UnregisterData`, and the `liveDataRefs.Clear()` line in the `SubsystemRegistration` static reset. Nothing needs to know whether an asset is still in flight when the asset is never destroyed
+- **`PlayerAttackHandler`'s deferred destruction path** — `pendingDestroy`, `DestroyAttackDeferred`, the `DestroyWhenUnused` coroutine, `IsAttackDataInUse` / `IsAttackDataInUseInternal`, and the static `inUseVisited` set. `OnDestroy` now just clears the list, and `RemoveAttack` just removes the entry
+- **`EnemyAttackHandler.OnDestroy`'s destroy loop**, leaving the expression-bodied `OnDestroy() => EndCast()`
+- **`EntitySummonHandler.InstantiateRuntimeScriptableObjects`**, the static that re-cloned a summon's `EnemyAttackHandler.attacks` and `PlayerAttackHandler.attacks` entries after `Instantiate`
+- **`SoulRendPU.AddOnce`**, which appended into a live `pd.effects` list, and the now-unused `System.Collections.Generic` import
+- **`AttackReplacement.OnDestroy`**, which existed only to destroy the cloned original
+- **`AttackReward.type`** in `WaveReward.cs` — the reward's slot is read off the attack asset, so the parallel authored field was a second source of truth
+
+### Fixed
+- **The Warp capstone's projectiles were paying out the base Warp's on-hit gains.** `Warp AA PD`'s `mainAttack` pointed at `Warp A AD` (the rare-pool Warp) instead of `Warp AA AD` (the capstone), so every orbiting Warp projectile from the capstone resolved its resource gains and its cost-derived `HpConsumed` scaling against the wrong asset — granting the base attack's Mana +3 rather than the capstone's Stamina +1 / Mana +2 +2%. Both attacks are `Skill`, so the attack-type damage bonus was unaffected
+
+
+## [v0.4.9_2] - 2026-09-08
+
+### Added
+- **Death screen.** `DeathScreenUI` in `Assets/scripts/Misc/` (`CrystalFlux.SettingsSystem`) — a panel that takes over when the player dies. `Awake` caches itself into a static `instance` (reset by a `SubsystemRegistration` hook), wires the restart button, seeds the label text, deactivates `panelRoot`, and spins up a private `CoroutineHost` on its own `[DeathScreenUI] Runner` GameObject. That host runs `BindPlayer`, which polls `FindGameObjectWithTag("Player")` every frame until it can subscribe to `EntityHealth.OnDeath` — the host exists precisely because the panel deactivates itself, so it cannot run coroutines of its own. On death the panel waits `showDelay` (authored `1`s, counted in `Time.unscaledDeltaTime` so it still elapses while paused), then `Show()` closes the restart-confirm page, the controls page and the settings panel, activates itself, calls `MenuPause.Push()`, and hands the `EventSystem` its `firstSelected` (falling back to the restart button) so the panel is controller/keyboard navigable. `OnRestart` hides the panel and hands off to `GameRestart.ToHomeScreen()`; every entry point early-returns on `GameRestart.IsRestarting`, and `OnDestroy` unsubscribes the death handler, the button listener, and destroys the host
+- **`DeathScreenUI` scene object** under `GlobalCanvas` in `New.unity`, holding three children: `TitleText` (600×150 at `(0, 200)`, 90pt, *You Died*), `MessageText` (800×150 at `(0, 125)`, 40pt, *The waves claim another.*) and `RestartButton` (150×150, `Image` + `Button` + `LayoutElement`, using a frame from `Assets/data/images/Buttons/20250423helmetFrame-Sheet.png` — the same sheet the pause-page restart button draws from). `title`/`message` are authored on the component and `SetText(title, message)` can rewrite both at runtime
+- **`NumberFormat`** in `Assets/scripts/Entity/` (`CrystalFlux.EntitySystem`) — a static holding the two formatters the bars now share. `Abbrev(int)` returns `0.0M` above a million, `0.0k` above a thousand, and the plain number below that (sign-safe, since it thresholds on `Mathf.Abs`). `Bar(cur, max, over = 0)` composes them into `{cur+over}(+{over})/{max}` when overhealth is present and `{cur}/{max}` when it is not
+
+### Changed
+- **Every health, resource and XP label now abbreviates.** `EntityHealth.RefreshHealthBar`, `PlayerUI.SetBar` and `PlayerUI.UpdateXpBar` all build their text through `NumberFormat.Bar` instead of inline interpolation, so five- and six-digit late-run numbers read as `1.2k` / `3.4M` on enemy bars, boss bars and the player's own health, mana, stamina and XP readouts
+- **The player's health label now shows overhealth explicitly.** `PlayerUI.SetBar` used to fold the pool in silently as `{value+over}/{max}`; it now matches the entity health bar's `{cur+over}(+{over})/{max}`, so an Exsanguinate or Oblivion pool is visible on the HUD rather than only inferable from a bar that reads past full
+- **The XP label lost its `F0` formatting** in favour of the shared abbreviation — same values, `k`/`M` past a thousand
+- **`SettingsPanelUI.Toggle` refuses to open behind the death screen.** A new `if (!isOpen && DeathScreenUI.IsOpen) return;` guard sits ahead of the existing paused-but-not-by-a-menu guard, so `Escape` cannot stack the pause page on top of a finished run
+- **`UnlimitedWaveManager.totalWaves` authored `0` → `1024`** in `New.unity`. Unlimited overrides the wave counter's display, so this is cosmetic bookkeeping on the serialized field rather than a cap
+- **`RestartConfirmPanel`'s `ConfirmText` regrown** — moved `(0, 150)` → `(0, 200)` and resized 300×50 → 500×200, so the two-line *Restart run? / All progress will be lost.* message fits its box
+
+## [v0.4.9_1] - 2026-09-07
+
+### Added
+- **`SkillTreeOpenButton`** in `Assets/scripts/Entity/Player/` — an on-screen skill tree open button (`CrystalFlux.SkillTree` namespace, `RequireComponent(Button)`). It wires its `onClick` in `OnEnable` to `SkillTreeUI.Toggle(player)` and hides the tooltip on click, resolves `treeUI`/`player` on demand (`FindAnyObjectByType` for the tree, `FindWithTag("Player")` for the player), and resolves `ICurrencyHolder` / `ISkillPointHolder` from the player the first time the tooltip needs them. The hover tooltip shows the bound toggle key (from `GameInput.Controls.UI.ToggleSkillTree`, falling back to `"K"`), the player's gold and skill points, and refreshes every `Update` while hovered. Keep `ITooltipDisplay` and `HoverScale` on the same object
+- **`SkillTreeButton` in `New.unity`** — a new UI object on the `SkillTree` root (`RectTransform`, `Image` with the `emptybutton` sprite, `Button`, `TooltipTrigger`, `HoverScale`, and the new component), sized 150×150 at `(121.6, -280)` with `treeUI` wired in. Its `Icon` child uses a sprite from `Assets/data/images/UI/icons.png`
+- **`WaveManager.totalWaves`** — a serialized `int` on the base class, authored at `68` for the regular wave manager and `0` for Unlimited (Unlimited overrides display logic but the field is serialized alongside `enableExtraSpawns` for completeness). The on-screen wave counter now reads `Wave {current}/{totalWaves} ({killed}/{max})` instead of `Wave {current} ({killed}/{max})`
+
+### Changed
+- **Gold and skill points moved out of the resource tooltip.** `PlayerResourceUI.Setup(IStatProvider, ICurrencyHolder, ISkillPointHolder)` dropped its two holder arguments — the resource tooltip's `Gold: N` and `Skill Points: N` lines are removed. `PlayerUI` no longer resolves `ICurrencyHolder` or `ISkillPointHolder`, and passes only the `IStatProvider` into `Setup`. The lines now live on the new skill tree button's own tooltip, so the resource hover sticks to stats alone
+- **Boss Rush extended and levelled up.** `BossRush.asset` bumps its three bosses (Lich, Jellyfish, Cultist) from Lv 50 to **Lv 70**, restores a missing `statusEffectDisplayPrefab` reference on the Cultist entry, adds Golem as a fourth Lv 70 wave, and chains its `nextSequence` into the new `BossRush Part 2.asset` — a second wave holding the same four bosses (Lich, Jellyfish, Cultist, Golem) at **Lv 105**. Part 2's `nextSequence` is unset, so the run ends after it
+
+## [v0.4.9] - 2026-09-06
+
+### Added
+- **Restart run.** A `RestartButton` now sits in the settings panel's `ActionButtons` row, between `CloseButton` and `ControlsButton`, using a frame from the new `Assets/data/images/Buttons/20250423helmetFrame-Sheet.png` sprite sheet. Pressing it calls the new `SettingsPanelUI.OpenRestartPanel()`, which opens the confirmation panel and closes the pause page behind it
+- **`RestartConfirmPanelUI`** in `Assets/scripts/Misc/` — a third settings page holding a message, a Confirm and a Cancel button. `Toggle()` pushes/pops `MenuPause` the same way the other pages do, and `ShowMessage` rewrites the label, which `Awake` seeds with the default `Restart run?\nAll progress will be lost.` Cancel routes through `SettingsPanelUI.HandleEscape()` so backing out reopens the pause page rather than dropping straight into the run; Confirm hides the panel and hands off to `GameRestart`. The panel finds its `SettingsPanelUI` itself when the reference is left unset, and wires both buttons' `onClick` in `Awake`
+- **`GameRestart`** in `Assets/scripts/Misc/` — a static that reloads the active scene single-mode to return to the home screen. `ToHomeScreen()` early-returns while `restarting` is set, then calls `MenuPause.ResetDepth()` and forces `Time.timeScale` back to 1 before the load, and repeats both once `sceneLoaded` fires (unsubscribing itself first). `IsRestarting` is public so the confirm button cannot double-fire
+- **`MenuPause.ResetDepth()`** — an `internal` reset of the pause depth counter and the stored restore time scale, shared by `ResetStatics` and `GameRestart`. Without it a restart taken from a pause page would reload the scene with a non-zero depth and a 0 time scale
+- **`SettingsPanelUI.restartConfirmPanel`** — `HandleEscape` now checks the confirm panel before the controls page, so `Escape` still backs out exactly one page at a time across all three
+- **Oblivion.** A new `Overhealth` upgrade asset (`Assets/data/PlayerData/PlayerUpgrade/Oblivion.asset`) that converts 100% of healing received at full health into overhealth, decays 15% of the pool per 0.5s, and sets `convertRegen`. It is not in the treasure pool — the only way to get it is the capstone node below
+- **`Node_oblivion`** — a capstone under `_Capstone/`, 3 skill points and `undoCost` 50, with prerequisites `Node_h2` and `Node_h2a`. It requires the Exsanguinate Awakening and grants Oblivion, so the usual capstone rule applies: Exsanguinate is consumed on unlock and returned on refund, and the two overhealth configs never coexist
+- **13 new stat nodes**, 1 skill point each, `undoCost` 50:
+  - `Node_dc1` through `dc6` — *Dodge Chance*, +1% `dodgeChance` each, forming a closed 6-node ring. `dc1` hangs off `Node_drp1`, `dc2`-`dc5` chain in order, and `dc6` requires both `dc5` and `dc1` to close the loop
+  - `Node_drp3` — *Dodge Resistance*, +5% `dodgeResPct`, off `Node_dc4`
+  - `Node_sedp1` / `sedp2` / `sedp3` — *Status Effect Duration*, +2% / +2% / +6% `seDurPct`. `sedp1` hangs off `Node_spr1` and the rest chain in order
+  - `Node_setr1` / `setr2` / `setr3` — *Status Effect Tick Rate*, +1% / +1% / +4% `seTickRatePct`, chained the same way off `Node_spr1`
+  - All 14 new nodes (the capstone included) are registered in `SkillTreeDefinition.allNodes`, taking it from 196 to 210, and placed in the skill tree panel in `New.unity`
+- **`Node_ MEDIUM` authoring template** under `__Copyable/` — the existing blank `Node_` template at 1.25x scale with the larger frame sprite from the same sheet. The higher-value new nodes (`sedp3`, `setr3`, `drp3`) use it, so a node's frame size now reads as its strength; the capstone stays at 1.5x
+
+### Changed
+- **`convertRegen` is now load-bearing.** `EntityHealth.RegenHp` used to early-out on `CurHp >= MaxHp && overhealthConvPct <= 0f && !regenOverHealth`, so regen converted into overhealth for any upgrade with a non-zero conversion percent whether or not the flag was set. It is now two guards — `!regenOverHealth || overhealthConvPct <= 0f`, then `CurHp >= MaxHp`. ⚠️ As written this also gates *all* health regeneration behind an active Overhealth upgrade: `regenOverHealth` is `false` and `overhealthConvPct` is 0 on every entity until `SetOverhealth` runs, and only `Overhealth.OnUnlock` calls it, so enemies and un-upgraded players regenerate nothing. The second guard also returns at full health before any conversion can happen, which is the case `convertRegen` exists to serve. See Notes
+- **Exsanguinate nerfed.** `decayPct` 10 → 20, so the pool now bleeds off twice as fast per 0.5s tick. Conversion stays at 50%. This is also what gives Oblivion's "lower decay" something to improve on
+- **Terminal Cascade trimmed.** `retriggerChance` 25% → 20%
+
+### Fixed
+- **Swarm's on-screen description understated its own spawn increase.** `SwarmInstance` built its description from `penaltyAmount` where the count multiplier is `1 + penalty / 50`, so a 30 roll advertised "30% more" against an actual 60%. The description now reads `{penaltyAmount * 2}%`, matching what the wave actually spawns
+- **`Projectile` statics leaked across a scene reload.** `ChainRetriggerChance`, `ApplyingProjectileHit` and the `liveDataRefs` map were only reset by `[RuntimeInitializeOnLoadMethod]`, which does not run on a scene load. `ResetStatics` now also subscribes `SceneManager.sceneUnloaded` (once, guarded by `hooked`) to a shared `ClearStatics`, so a restart no longer carries the previous run's Terminal Cascade chance into the next one
+
+## [v0.4.8_1] - 2026-09-05
+
+### Added
+- **Eight new stat nodes**, 1 skill point each, `undoCost` 50, hanging off the existing stat branches and tying into the outer Damage I ring:
+  - `Node_drp1` / `Node_drp2` — *Dodge Resistance*, +1% `dodgeResPct` each. `drp1` sits off `Node_hparmor2`; `drp2` requires `drp1` plus `Node_dp10`
+  - `Node_spr1` / `Node_spr2` — *Spell Resistance*, +1% `spellRes` each. `spr1` off `Node_hpint1`; `spr2` requires `spr1` plus `Node_dp16`
+  - `Node_msp1` / `Node_msp2` — *Maximum Stamina*, +3% `maxStaminaPct` each. `msp1` off `Node_atkarmor2`; `msp2` requires `msp1` plus `Node_dp4`
+  - `Node_ps1` / `Node_ps2` — *Projectile Speed*, +3% `ProjSpd` each. `ps1` off `Node_intatk1` and `Node_intatk2`; `ps2` requires `ps1` plus `Node_dp22`
+  - All eight are registered in `SkillTreeDefinition.allNodes` (188 → 196) and placed in the skill tree panel in `New.unity`
+- **Jellyfish phase buffs.** The Jellyfish prefab gains an authored `EnemyPhase` (`phaseThresholds` `70` / `50`): phase 1 grants +40% `moveSpeedPct`, phase 2 adds +30% `aoePct` and +15% `hpRegPct`. All three are `UnlockEffect` buffs on its `currentBuffs`, applied through the same phase system the Cultist and Golem use — the TODO checkbox that had the Jellyfish still pending is now done
+
+### Changed
+- **Hypernova rebalance.** On `Hypernova AD`: cooldown 3s → 2.2s, and gains on hit shifted toward health — stamina 3 → 2, mana 3 → 2, health 4% → 5%. On `Hypernova PD`: damage re-split 225% physical + 30% true → 215% physical + 60% spell (true damage removed), and the self-apply chance of `Celestial Protection` dropped 50% → 40%
+- **`Celestial Protection` trimmed.** Duration 8s → 6s, per-stack `damageRes` 4% → 3%, `armor` 8 → 6, `armorPct` 5% → 4%, with the description updated to match
+- **Duel now strengthens armor too.** `DuelInstance.ApplyEnemyBuffs` adds `armorPct` at the same rolled boost as `hpPct` / `atkPct`, and the anomaly description reads `+{boost}% Attack, Health, and Armor`
+- **Unlimited anomaly balance.** `UDuel`'s roll max `anomalyMaxVal` 400 → 600; `USwarm`'s range 30-80 → 20-60; `UTime`'s time trial `anomalyValue` 60 → 90 (its `disallowOnBossWave` field, previously absent, is now serialized as off)
+
+## [v0.4.8] - 2026-09-05
+
+### Added
+- **Swarm anomaly.** `AnomalyType.Swarm` / `SwarmInstance` — rolls a `penaltyAmount` from the asset's `anomalyMinVal`..`anomalyMaxVal` and rounds it. Every enemy spawned during the wave takes `-penalty%` `hpPct` and `-penalty%` `damagePct`, while both the wave's total and concurrent enemy counts are multiplied by `CountMultiplier`, which is `1 + penalty / 50` — twice the rolled percentage, so a 30 roll spawns 160% of the usual count against enemies at 70% health and damage. The on-screen description reads `-{penalty}% Health and Damage, but {penalty}% more of them spawn`, which understates the actual count increase by half
+- **Duel anomaly.** `AnomalyType.Duel` / `DuelInstance` — rolls a `boostAmount` the same way and spawns exactly one enemy for the wave, with `+boost%` `hpPct` and `+boost%` `atkPct`. Both `waveMaxTotalEnemies` and the concurrent cap are forced to 1 the way a boss wave is, and the single enemy gets a boss bar and a status effect display even on a normal wave
+- **`AnomalyInstance.ApplyEnemyBuffs(IStatProvider)`** — a virtual hook called on every spawn, overridden by `StatModifierInstance`, `SwarmInstance` and `DuelInstance`. Both wave managers now call `currentAnomaly.ApplyEnemyBuffs(esm)` instead of type-testing for `StatModifierInstance` and reading `GetBuff()` themselves
+- **`AnomalyData.disallowOnBossWave`** — a per-asset flag that keeps an anomaly out of the offer when the wave about to start is a boss wave. Both `HasAnomalyChoices()` and `GenerateAnomalyChoices()` filter on it. Set on the four Swarm/Duel assets and on `UDuel` / `USwarm`; `UStatMod` is authored with it off, and the older Regular assets (`NoHit`, `StatMod *`, `Time *`) predate the field and default to off
+- **`WaveManager.NextWaveIsBoss()`** — a virtual that reports whether the wave the player is about to enter is a boss wave. The base reads `IsBossWave` off `currentSequence.waves[currentWaveIndex]` with bounds checks; `UnlimitedWaveManager` overrides it to return its pre-rolled `isBossWave`
+- **`WaveManager.ScaleEnemyCount(int)`** — `Mathf.Max(1, RoundToInt(baseCount * EnemyCountMult))`, replacing the bare `Mathf.Max(1, …)` guards on both enemy-count calculations in both managers. `EnemyCountMult` is 1 unless an active `SwarmInstance` is running, so nothing changes without a Swarm
+- **`duelBossBarPrefab` and `duelStatusEffectPrefab`** on `WaveManager` — the boss bar and status effect display used for a Duel enemy, each falling back to the wave's own prefab when unset (`DuelBossBarPrefab` / `DuelStatusEffectPrefab`). Both wave managers in `New.unity` are wired to `LichBossBarPrefab` and `StatusEffectUIPrefab`
+- **`WaveManager.DuelTitle(enemy, prefab, level)`** — builds the `[Lv. N] Name` boss-bar title from `EnemyStatManager.displayName`, falling back to the prefab name
+- **`EnemyStatManager.displayName`** — a serialized human-readable name, authored on the five regular enemies: Bat, Crab, Slime, Frost Slime, Magma Slime
+- **Six new anomaly assets** — `Swarm 20 40` (waves 5-40), `Swarm 30 80` (40-80), `Duel 30 80` (5-40) and `Duel 50 150` (40-80) under `Assets/data/Wave/Anomaly/Regular/`, plus `USwarm` (30-80) and `UDuel` (50-400) under `Unlimited/`. All six are registered in the matching wave manager's `availableAnomalies` in `New.unity` and all six carry `disallowOnBossWave`
+
+### Changed
+- **Anomaly assets moved out of the scripts tree.** `Assets/scripts/Wave/Anomaly/Anomalies/` is gone; the assets now live under `Assets/data/Wave/Anomaly/`, split into `Regular/` and `Unlimited/` beside the rest of the authored data. The `.meta` GUIDs were preserved, so every existing scene reference still resolves
+- **`UnlimitedWaveManager` rolls the boss wave earlier.** `isBossWave = ShouldBeBossWave(currentWaveIndex + 1)` now runs in `StartNextWave`, before the anomaly offer, instead of in `BeginWave`. The boss roll is therefore known while anomaly choices are being filtered, which is what makes `disallowOnBossWave` work in Unlimited. `lastBossWave` is still assigned in `BeginWave`
+- **The Unlimited boss bar reads `displayName`.** It used to title itself `[Lv. N] {prefab.name}`; it now goes through `DuelTitle`, so an authored display name wins over the prefab name for bosses as well as duels
+- **The Unlimited status effect display** is now chosen through the same fallback helper as the boss bar, so a Duel enemy gets one on any wave rather than only when `lastBossWave == wave`
+- `Wave.asmdef` references `CrystalFlux.Entity` — needed for the `EnemyStatManager` lookup in `DuelTitle`
+- The UTF-8 BOM was dropped from `WaveManager.cs`
+
+### Notes
+- Swarm and Duel have no failure condition — nothing calls `FailAnomaly` on them — so they always complete and always pay the anomaly reroll and skill-point bonus. They are a trade on the wave's shape, not a challenge
+- A Duel on a Regular wave still ends after a single kill, regardless of the `maxTotalEnemies` the wave sequence asks for
+
+## [v0.4.7] - 2026-09-05
+
+### Added
+- **Skill TreeRefund All button.** `SkillTreeRefundAllButton` in `Assets/scripts/SkillTree/` — a `Button` in the skill tree panel that undoes every unlocked node in one press. Hovering shows a tooltip with the unlocked node count, the total gold cost and the skill points returned, plus the reason when the refund is unavailable. The background tints `availableColor` (red) when the refund is affordable and `blockedColor` (grey) when it is not, the button is non-interactable in that state, and the whole object hides itself in Ironman Mode
+- **Refund-all API on `PlayerSkillTree`** — `UnlockedNodeCount`, `GetRefundAllCost()` (sum of `undoCost` over unlocked nodes), `GetRefundAllPoints()` (sum of their `cost`), `CanRefundAll()` returning a `(bool canRefund, string failMessage)` pair, and `RefundAll()`. A refund spends the total gold through `ICurrencyHolder.TrySpend`, clears `unlockedNodes`, resets `choseStarting` so a starting node can be picked again, then refunds the points and runs `RemoveNodeEffects` / `RestoreNodeRequirements` per node. It refuses in Ironman Mode, with no unlocked nodes, with no `ICurrencyHolder` on the player, or when gold is short — each with its own message. `SkillTreeManager` forwards all five members with null-safe fallbacks, and `SkillTreeUI` keeps a `refundAllButton` reference (auto-found in children), wires the button's `manager` / `treeUI` back-references, and refreshes it on `BuildTree` and on every `OnNodeStateChanged`
+- **41 new stat nodes**, 1 skill point each, `undoCost` 50, all registered in `SkillTreeDefinition.allNodes` (now 188 nodes) and placed in the skill tree panel in `New.unity`:
+  - `Node_dp1` through `Node_dp24` — *Damage I*, +1% `damagePct` each. They form a closed 24-node ring (`dp1`'s prerequisite is `dp24`) that wraps around the outside of the tree; the ring has no prerequisite of its own, so it is only reachable through the new branches that hang off it
+  - `Node_as1` through `as4` — *Attack Speed*, +2% `attackSpeedPct` each. `as1` off `Node_atk3bb`, `as2` off `Node_atk3ab`, and `as3` / `as4` close the pair back together, with `as3` also joining the ring at `dp1`
+  - `Node_cs1`, `cs2`, `cs2a` — *Cast Speed*, +2% each. The stat granted is `castTimeRedPct`, i.e. cast-time reduction rather than a cast-speed multiplier. `cs1` bridges `Node_int3ab` and `Node_int3bb`; `cs2` and `cs2a` join the ring at `dp18` and `dp20`
+  - `Node_h1`, `h2`, `h2a`, `h3`, `h3a` — *Healing*, +2% `healingPct` each. `h1` bridges `Node_hp3aa` and `Node_hp3ba`, then splits into `h2` / `h2a`, which join the ring at `dp14` and `dp12`
+  - `Node_kbr1` through `kbr5` — *Knockback Resistance*, +2% `kbRes` each, a closed five-node loop (`kbr1`'s prerequisites include `kbr5`) anchored on `Node_armor3ab` and `Node_armor3bb` and joining the ring at `dp8` and `dp6`
+- `Node_armor3c` — *Defense III*, +3 `armor` and +2% `armorPct`, off `Node_armor3ba`. The asset is authored but inert: it is not in `SkillTreeDefinition.allNodes`, its prefab is not placed in `New.unity`, and its `nodeID` is `armor3bb`, which `Node_armor3bb` already uses
+
+## [v0.4.6] - 2026-09-05
+
+### Added
+- **Hypernova — the Supernova capstone.** `Hypernova AD` / `Hypernova PD` in `Assets/data/PlayerData/Attacks/SkillTree/Hypernova/`, with its own `Hypernova AC` controller, `Hypernova Clip` and prefab. It keeps Supernova's shape — a melee (speed 0) Basic attack on a 3s cooldown, spawned 1 unit out at a fixed distance, 0.75s lifetime, scaling off `EffArmor` — and scales every number up: size 5 (from 4), 14 pierce (from 9), 225% physical + 30% true (from 160% / 20%), and Weaken at 65% instead of 40%. On top of that it pulls: `Pulled 0.6 1 15 3` lands on every hit, `Celestial Protection` is `selfApply` at 50%, and `Stun 2` lands 30% of the time. Gains on hit are Stamina +3, Health +4%, Mana +3, and it has no knockback
+- **`Node_hypernova`** — a capstone node ("Hypernova", 3 skill points, `undoCost` 50) whose prerequisite is `Node_apdp3` and whose `NodeRequirement` is the base Supernova attack. Its `UnlockEffect` grants `Hypernova AD`, upgrading Supernova in place the same way the Warp capstone does
+- **Nine new stat nodes**, 1 skill point each, `undoCost` 50:
+  - `Node_armor3a` / `3aa` / `3ab` and `Node_armor3b` / `3ba` / `3bb` — *Defense III*, +3 `armor` and +2% `armorPct` each. The `a` chain hangs off `Node_armor2ba` and the `b` chain off `Node_armor2b`; `Node_armor3ab` and `Node_armor3bb` each take two prerequisites, their own chain plus `Node_pr2`, so the armor and regen branches meet
+  - `Node_apdp1` / `2` / `3` — *Added Physical Damage*, +3% `addPhysDmgPct` each, a straight chain off `Node_armor2b` that terminates in the Hypernova capstone
+  - All ten node assets are registered in `SkillTreeDefinition.allNodes` (now 148 entries / 147 unique — `Node_intatk3` is listed twice, which has been true since before this version) and placed in the skill tree panel in `New.unity`
+- **`Celestial Protection`** — a `StatBuffs` asset, 8s, 4 stacks, granting +4% `damageRes`, +8 `armor` and +5% `armorPct` per stack. Applied by Hypernova to the caster. It is authored with `isBuff` off, so it is presented as a debuff despite being a buff
+- **`Pulled 0.6 1 15 3`** — a `Pulled` asset, 0.6s, 0.016s tick, 1 stack, pull speed 15 (+2 per stack) with a 3-unit full-speed radius and a 0.1 dead zone. It pulls toward the projectile rather than the caster (`pullToSource` off) and does not disable movement. Applied by Hypernova on every hit
+
+### Fixed
+- Golem's Charge attack stunning itself instead of the player
+
+## [v0.4.5_3] - 2026-09-05
+
+- **`Overhealth.convertRegen`** — a serialized flag on the `Overhealth` upgrade, threaded through `EntityHealth.SetOverhealth(convPct, decayPct, decayInterval, convertRegen)`. It is meant to decide whether health regen keeps ticking (and therefore keeps converting) at full health. As wired, `RegenHp` only returns early when `CurHp >= MaxHp && overhealthConvPct <= 0f && !regenOverHealth`, so any upgrade with a non-zero conversion percent keeps regenerating regardless of the flag — Exsanguinate's `convertRegen: 0` currently changes nothing
+
+### Changed
+- Enemy attack scaling per level went from 1.03 to 1.05 in `EnemyStatManager.ScaleBaseStats`. HP (1.1), armor (1.08) and utility (1.04) growth are unchanged
+- `UnlimitedWaveManager.BeginWave` adds a second bump of 1-3 `maxTotalEnemies` on every tenth wave, on top of the 1-2 it already added each wave past the first
+- `Exsanguinate`'s overhealth decay went from 3% to 10% of the remaining pool per 0.5s, and its new `convertRegen` flag is authored off
+
+### Rebalance
+- **Cyclone Cleave** (`p_s_pd`): true damage 55% -> 85%
+- **Cosmic Blaze** (`Blaze A1`): `castTime` 0.5s -> 1s, physical 685% -> 600%, true 30% -> 0%, chance to chain into Blaze Hyperspark 40% -> 60%, and stamina gain on hit moved off the percentage (2 +1% -> 3 flat)
+- **Blaze Spark** (`Blaze B PD`): physical 185% -> 255%
+- **Blaze Hyperspark** (`Blaze B1`): physical 215% -> 310%, true 12% -> 18%, stamina gain 2 +2% -> 3 flat, mana gain 1 -> 2
+- **Sacred Surge**: cooldown 12s -> 14s, stamina gain on hit 3 -> 2, mana gain on hit 2 -> 1
+
+## [v0.4.5_2] - 2026-09-05
+
+### Added
+- **`UI/ScrollWheel`** — a `Vector2` action bound to `<Mouse>/scroll`, added to `PlayerControls.inputactions` and the generated `PlayerControls.cs`. Nothing subscribes to it yet; skill tree zoom still polls `Mouse.current` directly
+
+### Changed
+- **`Escape` now closes the skill tree instead of opening the settings menu.** `SkillTreeInputToggle` subscribes to `UI.Pause.performed` and calls `SkillTreeUI.CloseFromEscape` when a tree is open; `SettingsMenuInputToggle.ToggleMenu` early-returns while `SkillTreeUI.IsAnyOpen` or `SkillTreeUI.EscapeConsumedThisFrame`, so the single `Escape` press that closes the tree cannot also open the pause panel
+- `SkillTreeUI.Toggle` was split into `Open()` / `Close()` / `CloseFromEscape()`, each idempotent, with `Toggle` now closing when open and refusing to open while `Time.timeScale` is already 0. The class tracks the open panel in a static `openInstance` (cleared in `OnDestroy`) and the consuming frame in `escapeConsumedFrame`, exposed as `IsOpen`, `IsAnyOpen` and `EscapeConsumedThisFrame`; both statics are reset from a `RuntimeInitializeOnLoadMethod(SubsystemRegistration)` hook so domain reload settings cannot leak them between play sessions
+
+## [v0.4.5_1] - 2026-09-04
+
+### Added
+- **Cultist phase buffs.** The Cultist's `phaseBuffs` list was empty even though its `phaseThresholds` (`70` and `40`) were already set, so both escalations did nothing. Phase 1 now grants +30% `attackSpeedPct` and phase 2 grants +40% `moveSpeedPct` — it starts casting faster, then starts repositioning faster
+- **`PlayerAttackHandler.PressAttack(AttackType, bool, bool, bool)`** — a press-side entry point that records the input in a new `heldInputs` set before forwarding to `PerformAttack` with the same arguments. `ReleaseAttack` clears the type from that set. `PerformAttack` is unchanged and still the right call for scripted attacks that have no held button behind them (`Reminiscence`, the on-screen attack buttons, the queued-attack drain)
+
+### Changed
+- `PlayerInputHandler`'s four `performed` callbacks (`Basic`, `Skill`, `Ultimate`, `Technique`) call `PressAttack` instead of `PerformAttack`. The `canceled` callbacks still call `ReleaseAttack`
+- The Golem's `castBarOffset` override was dropped from `(0, -1.2, 0)` back to `(0, -0.7, 0)`, matching the new `EnemyAttackHandler` default
+- `WaveRewardImage` moved from y `450` to y `400` in `New.unity`
+- The Cultist prefab picked up serialized values for the fields added in v0.4.5 — `castBarPrefab` / `castBarTextPrefab` left empty, `castBarOffset` at the `(0, -0.7, 0)` default, and `EntityHealth.deathAnimTime` at its `1` default. No behaviour change
+
+### Fixed
+- **Charge attacks fired on a tap instead of hanging.** `ChargeRoutine` unconditionally reset `chargeReleaseRequested` to `false` on entry, so a release that arrived before the routine started — a quick tap, or any frame where cast setup ran ahead of the input — was thrown away and the charge held until some later release. It now seeds `chargeReleaseRequested` from `!heldInputs.Contains(type)`, so a button that is already up starts the routine in the released state and the charge resolves immediately
+
+## [v0.4.5] - 2026-09-04 — Golem Update
+
+### Added
+- **Golem — the fourth boss.** A slow (`moveSpeed` 0.5), heavily armoured bruiser built around a two-stage `EnemyPhase` escalation: 500 HP, 300 armor, 50 `damageRes`, 15 `spellRes`, 35% crit chance / 90% crit damage, 15 detection range, 800 XP and 40 gold on death. `phaseThresholds` are `80` and `40`, and each phase adds a buff — phase 1 grants +30% `moveSpeedPct`, phase 2 adds another +30% `moveSpeedPct` and +20 `damageRes`. All of it lives in `Assets/data/entity/enemy/Bosses/Golem/`, with a `Golem AC` controller covering Idle / Move / Hurt / Death and four attack clips, and the prefab overrides `castBarOffset` to `(0, -1.2, 0)` so the cast bar clears its larger sprite. `globalCooldown` is 2s
+- **Golem — Slam** (`slam ad`, cooldown 4s, `maxRange` 12): a `Circle` pattern of 6–12 boulders (`projectileCount` 6 + `randomCount` 6) thrown after a 0.25s `spawnDelay`. Each is size 3, speed 6, `followDistance` 0.5 so it homes loosely, deals 70% `EffAtk` as physical, pierces once and is destroyed on that hit
+- **Golem — Cross** (`cross ad`, cooldown 3s, `maxRange` 6): a `Single` zero-damage marker spawned 6 units out (`useTrueAngle`, 0.5s lifetime) whose only job is to chain — `additionalChance` is 1 and `addAttackRequiresHit` is off, so it always spawns `cross_proj ad`, a `FullX` volley with `spread` 3 dealing 160% `EffAtk` as physical with a 65% chance of `Vulnerable 6 3 8`
+- **Golem — Charge** (`charge ad`, `phaseReq` 1, cooldown 6s, `maxRange` 10): unlocked once the Golem drops below 80% HP. A speed-10, 0.75s-lifetime body slam that pierces everything for 220% `EffAtk` as physical with 5 knockback force. Both of its effects are `selfApply`, so they land on the Golem: `Stun 3` always, and `AttackInc 14 2 40` 40% of the time — it always over-commits and is left open, but sometimes comes out of the recovery hitting much harder
+- **Golem — Orbit** (`Orbit AD`, `phaseReq` 2, `castTime` 1s, cooldown 8s, `maxRange` 8): the desperation move, unlocked below 40% HP. A 1s uninterruptible-by-movement cast (`canMoveWhileCasting` off) that puts 4–6 stones into a self-orbit (`orbitSelf`, `orbitRadius` 1, `randOrbRadOffset` 3) for 20s, each dealing 40% `EffAtk` physical + 25% spell with a 1s re-hit window, a 60% chance of `Crumbling 6 10 4` and a 30% chance of `Slow 8 4 10`
+- **`Stun 3`** — a `Stun` asset, 3s, 1 stack. Used by the Golem's charge on itself
+- **`Slow 8 4 10`** — a `StatReduction` asset, 8s, 4 stacks, -10% `moveSpeed` per stack, capped at -90%. Used by the Golem's orbit
+- **`AttackInc 14 2 40`** — a `StatBuffs` asset named *Sharpened Instincts*, 14s, 2 stacks, +40% `atkPct` per stack. Used by the Golem's charge on itself
+- **`ws_4`** — a fifth wave sequence covering waves 46–60 (`waveOffset` 45). Waves 46–59 are Slime (Magma) at levels 46–59, ramping 34→~48 total and 20→21 concurrent enemies with 2–6 reward choices; wave 60 is a single level-60 Golem with the boss bar. `ws_3.nextSequence` now points at `ws_4`, and `ws_4.nextSequence` points at `BossRush`, so the pre-existing chain is extended rather than rerouted
+- **Golem is in the Unlimited rotation** — added to `UnlimitedWaveManager.bossPrefabs` as the fourth entry, so boss waves can now roll it
+- **`Assets/data/_example/_proj/`** — a template attack folder (`example ad`, `example pd`, `example.controller`, `example.prefab`) to copy when authoring a new attack
+- **`Assets/data/Wave/waves/test/test.asset`** — a one-wave development sequence that spawns a single Golem with its boss bar and no `nextSequence`. Not referenced by either wave manager
+
+### Changed
+- **Enemy assets are now split by role.** Everything under `Assets/data/entity/enemy/` moved into `Bosses/` (Cultist, Euphoric Golem, Golem, Jellfyish, Lich) and `Enemies/` (Bat, Crab, Slime, Slime_frost, Slime_magma). Only folder paths changed — GUIDs are preserved, so no prefab or asset reference was rebound
+- **`WaveManager`'s rarity table was resynced with `UnlimitedWaveManager`'s**, which had drifted ahead of it. Weights: Common 600 → 700, Uncommon 350 → 300, Rare 200 → 175, Epic 100 → 90, Legendary 50 → 40, Mythic 15 → 10, Celestial 3 → 2.97. Multipliers: Celestial 16 → 15, Transcendent 20 → 15. Epic, Legendary, Celestial and Transcendent display colours were brought over too. The two tables are now identical
+- `UnlimitedWaveManager`'s rarity table fixes the `Celstial` → `Celestial` spelling and repaints Epic and Celestial
+- `EnemyAttackHandler.castBarOffset` now defaults to `(0, -0.7, 0)` instead of `Vector3.zero`, so a newly added handler puts its cast bar under the entity rather than on top of it
+
+## [v0.4.4] - 2026-09-04 — Ironman Update
+
+### Added
+- **Ironman Mode** — an opt-in run modifier toggled on the home screen that strips every take-back out of a run: no rerolls, no corruption, and no skill node refunds. `IronmanSelector` owns the toggle button, swaps between `toggleOnSprite` / `toggleOffSprite`, and drives a tooltip that shows the current state as `Ironman Mode [ON]` / `[OFF]`. The choice persists to `settings.json` and every system reads it through the static `IronmanSelector.Enabled`
+- **`IronmanSelector.LockIn()`** — both `RegularWaveButtonController` and `UnlimitedWaveButtonController` call it when a gamemode button is pressed, which latches the toggle and hides its `root` for the rest of the run, matching how the difficulty selector locks in
+- **`GameSettings.ironmanMode`** — a new persisted `bool`, defaulting to `false`. `GameSettings.CurrentVersion` bumped `2` → `3`; existing settings files load and are re-stamped, so the field simply takes its default
+- **`PlayerAttackHandler.HandleOnCastSummon(AttackData)`** — the `SummonCondition.OnCast` roll extracted out of `ExecuteAttack` into one helper, so the charge paths can run the same roll instead of duplicating it
+
+### Changed
+- **Rerolls are gone in Ironman, not merely unspendable.** `ApplyDifficulty` forces `rerolls` to 0 and skips `startingRerollsAdd`, `RollAnomalyRerolls` returns 0, `RollOccasionalWaveRewards` clears `pendingOccasionalRerolls`, `UpdateRerollUI` hides both the reroll button and its count text and returns before any of the gold-reroll bookkeeping, and `OnRerollButtonClicked` early-returns. The reroll and corrupt tooltips are not registered at all, so a stale tooltip cannot describe a button that is no longer there
+- **Corruption is unavailable in Ironman.** `UpdateCorruptButton` folds `!IronmanSelector.Enabled` into its `allowed` check, and `OnCorruptButtonClicked` early-returns
+- **Skill node refunds are unavailable in Ironman.** `PlayerSkillTree.CanUndo` returns `(false, "Disabled in Ironman Mode")` ahead of every other check, and `SkillNodeUI` gates its refund path on the same flag
+- **Starting nodes can now be undone** outside Ironman. The `isStartingNode` guard came out of both `CanUndo` and `SkillNodeUI.OnPointerClick`, and `UndoNode` clears `choseStarting` when the node it removes is a starting node, so the starting choice can be re-picked instead of being permanent for the run
+- `SkillTree.asmdef` now references `CrystalFlux.Settings`
+- UI button sprites moved from `Assets/data/images/UI/` to `Assets/data/images/Buttons/` (`Border All 6`, `ControlsButton`, `closeButton`, `emptybutton`, `exitButton`), joined by the new `ironman` sprite
+
+### Fixed
+- **Orbit interactions and the `SummonCondition.OnCast` roll fired on press, before the tap/hold split was known**, so starting a hold on a chargeable attack consumed the caster's orbits and burned the summon roll even though the tap itself was skipped. Both now run inside the `!selected.canCharge` branch of `ExecuteAttack`, and the two charge resolution paths in `ChargeRoutine` — the early release and the sustained charge — run them alongside their own `SpawnAttack`, so each resolved attack pays for its orbits and rolls its summon exactly once
+
+## [v0.4.3_2] - 2026-09-03
+
+### Added
+- **Skill points in the resource tooltip** — `PlayerResourceUI.Setup` now also takes an `ISkillPointHolder`, and the tooltip appends a `Skill Points: N` line whenever the holder reports more than zero. `PlayerUI` resolves the holder with `GetComponent<ISkillPointHolder>()` alongside its existing lookups and passes it through, so the count sits with the other resources instead of needing the skill tree open
+
+### Changed
+- **Deferred-cost attacks are priced before they start.** An attack with a cast time or `canCharge` now fires the `OnCalculateAttackCost` upgrades and runs `CanAfford` inside `PerformAttack`; if the cost cannot be paid it calls `NotifyBlocked(type)` and returns, so nothing plays. Previously the animation started and the cast only failed once `HandleStatChanges` ran at the end of `CastRoutine`
+- `HandleStatChanges` splits into the public one-argument entry point and a private `HandleStatChanges(AttackData, bool triggerCostUpgrades)` overload. A `costUpgradesTriggered` flag threads through `CastRoutine`, `ExecuteAttack` and `ChargeRoutine` and is cleared the moment it is consumed, so the up-front pricing pass and the later spending pass together trigger the `OnCalculateAttackCost` upgrades exactly once per attack
+
+## [v0.4.3_1] - 2026-09-03
+
+### Added
+- **Attack blocked feedback** — `PlayerAttackCooldownUI` takes a `borderImage` and recolors it to `blockedBorderColor` whenever the attack cannot be cast, restoring `normalBorderColor` (cached from the prefab on first `Setup`) when it can. A refused press also runs a `flashCount` x `flashInterval` flash to `flashBorderColor` on unscaled time, so it still reads while the game is paused. The routine is stopped and the border reset in `Setup` and `OnDisable`, keeping the pooled indicator clean
+- **`PlayerAttackHandler.CanCast(AttackType)`** — the single predicate the border reads: alive, `CanAttack`, the attack exists, its effective cooldown has elapsed, and `CanAfford` passes
+- **`PlayerAttackHandler.CanAfford(AttackData)`** — resolves the attack's costs through `GetCosts` and `HandleHexCast`, then compares them against current stamina, health and mana without spending anything. It is the read-only half of `HandleStatChanges`, so a HexCast build is priced the way it will actually be charged
+- **Reward panel title** — `WaveManager` gains `rewardTitleText` / `rewardTitleWrapper` plus the `rewardTitle` ("Choose your reward") and `anomalyTitle` ("Select anomaly reward") strings. `PanelSetup` picks the string from the panel's `RewardType`, and the wrapper is hidden at `Start` and on `CloseRewardUI`
+
+### Changed
+- `PerformAttack` no longer folds every refusal into one guard. Death and a paused game still return silently, but a blocked `CanAttack`, an unfinished cooldown and an unaffordable cost each call `NotifyBlocked`, which looks the attack's spawned UI element up in `spawnedUIElements` and flashes its indicator
+- `PlayerAttackCooldownUI.Update` runs the border check before the `lastAttackTimes` lookup, so an attack that has never been cast still shows its blocked state; the cooldown fill keeps its old early-out
+- Unlimited waves grow by `Random.Range(1, 3)` instead of `Random.Range(0, 3)` per wave, removing the roll that added no enemies at all
+- **Hard difficulty** rebalanced: `maxTotalEnemiesAdd` 5 → 3 and `qualityBonusAdd` -0.1 → -0.3, with anomalies made both more frequent and more rewarding — `anomalyChanceAdd` 15 → 20, `anomalyRerollMinAdd` +1, `anomalyRerollMaxAdd` +2, `anomalySkillPointAdd` +1, `anomalyQualityAdd` +0.2
+
+## [v0.4.3] - 2026-09-03 — Difficulty Selector Update
+
+### Added
+- **Difficulty selector** — a cycler on the home screen (left/right arrow buttons, framed header sprite, tooltip preview) that picks the run's difficulty before the gamemode button is pressed. The choice persists to `settings.json` (`difficultyIndex`, default 1 = Normal) and locks in the moment a wave manager starts, hiding the selector for the rest of the run
+- **`DifficultyData`** (`Data/Difficulty` ScriptableObject) — every difficulty is authored data, not code. It carries identity (display name, description, frame sprite, name color) plus additive offsets for enemy scaling (`enemyLevelAdd`, `enemyLevelPerWaveAdd`, `maxTotalEnemiesAdd`, `maxCurrentEnemiesAdd`), rewards (`rewardChoicesAdd`, `qualityBonusAdd`, `milestoneRewardChoicesAdd`), occasional wave rewards (`occasionalRerollChanceAdd`, `occasionalSkillPointChanceAdd`), anomalies (chance, min/max counts, min/max rerolls, skill points, quality), corruption (chance, positive chance, max boost), economy (`rerollGoldCostAdd`, `startingRerollsAdd`, `startingSkillPointsAdd`) and the pre-run free pick (`preRunPickCount`, `preRunTreasureChance`). `BuildTooltipDescription()` renders only the non-zero offsets, signed, so the tooltip is generated from the asset rather than hand-written
+- **Three shipped difficulties** — *Easy*, *Normal* (the untouched baseline, all offsets zero) and *Hard*
+  - **Easy**: +1 reward choice, +0.25 reward quality, +1 milestone choice, +15% bonus reroll and skill point chance, +1 min/max anomaly choice, +1/+2 anomaly rerolls, +1 anomaly skill point, +0.25 anomaly quality, +15% corrupt chance / positive chance / max boost, +5 starting rerolls, +3 starting skill points, and 3 pre-run free picks
+  - **Hard**: +3 enemy level and +0.25 enemy level per wave, +5 total and +2 concurrent enemies, -0.1 reward quality, -20% bonus reroll and skill point chance, +15% anomaly chance, -10% corrupt positive chance, +50g reroll cost
+- **Pre-run free pick** — a difficulty with `preRunPickCount > 0` opens a reward panel before wave 1 offering that many choices drawn from the rare and treasure pools (`preRunTreasureChance` decides which pool each slot rolls, defaulting to the rare pool when a roll comes up empty). It reuses the existing reward panel, reroll button and claim flow end-to-end; claiming or skipping starts wave 1. Corrupt is hidden on this panel, and reroll is refused when neither pool has a `minWave`-eligible entry. Backed by the new `RewardType.PreRun`
+- **`WaveManager.ApplyDifficulty(DifficultyData)`** — applies the one-shot offsets (starting rerolls, starting skill points) and stores the asset. `UnlimitedWaveManager` overrides it to fold `maxTotalEnemiesAdd` into its accumulating `maxTotalEnemies`, which is the only field that cannot be read per use
+
+### Changed
+- Difficulty offsets are read at the point of use through the protected `D` accessor, never written back into the serialized `WaveManager` fields. `D` falls back to `DifficultyData.Neutral` — an all-zero, hidden singleton — so a run with no difficulty assigned behaves exactly as it did before, and applying a difficulty twice cannot stack. Enemy level goes through `EnemyLevel()`, reward quality through `Quality`, reroll cost through `RerollGoldCost`
+- `GameSettings.CurrentVersion` bumped `1` → `2` for the new `difficultyIndex` field. Existing settings files load and are re-stamped to the current version, so the field simply takes its default
+- Wave assets moved from `Assets/data/WaveData/` to `Assets/data/Wave/waves/` (with the profiling sequence under `waves/test/`), and difficulty assets live alongside them in `Assets/data/Wave/difficulties/`
+
+### Fixed
+- `HandleAnomalyRewards` guarded the pending anomaly skill point count on the *reroll* field (`pendingAnomalyRerolls >= 0 ? pendingAnomalySkillPoints : 1`), so a rolled value of 0 was indistinguishable from "not rolled". `pendingAnomalySkillPoints` now defaults to and resets to `-1`, matching `pendingAnomalyRerolls`, and guards on itself
+- The pre-run panel routed reroll / skip / corrupt clicks through the static `ActiveManager`, which is normally assigned in `StartNextWave()` — a method the pre-run panel runs before. `TryStartPreRunPicks` now sets `ActiveManager = this`. In unlimited mode the null had let the regular `WaveManager` handle the reroll: it generated normal-pool rewards, never cleared the pre-run button, and decremented its own reroll count, making the shared reroll text jump
+
+## [v0.4.2_2] - 2026-09-03
+
+### Added
+- **Sacred Surge** (`Sacred Surge AD`) — a new rare-pool Skill built around armor. 14s cooldown, 1s cast time that can be moved through, spawns 4 units out for 320% Phys + 110% Spell scaling off `EffArmor` across a 3000-pierce, size-2 field that re-hits the same enemy every 0.9s. Costs Stamina 8 +4%, and returns Stamina +3, Health +1 +2%, Mana +2 on hit. It has `cleanseDebuffs` (max 1) - strips the caster's debuffs on cast, and holding past the 0.225s threshold sustains the projectile for up to 8s on a 0.9s tick interval rather than spawning a separate charge attack. No `minWave`, so it can roll from wave 1. Reuses the retired Luminaria (`Priest_skill2`) sprites
+- **Attack input buffering** — `PlayerAttackHandler` queues an attack pressed during a cast or charge instead of dropping it, then fires it the frame the previous attack ends. Tunable through `maxQueuedAttacks` (default 1) and `queueExpiry` (default 0.3s); a repeat press of an already-queued type refreshes its expiry rather than adding a second entry. The queue is cleared on death, on losing `CanAttack`, and by `EndAllAttackStates`, and does not advance while `Time.timeScale == 0f`
+- **`WaveManager.enableExtraSpawns`** — when off, a spawn tick always spawns exactly one enemy instead of the `wave / 10 + 1` batch. Inherited by `UnlimitedWaveManager`. On for the regular wave manager, off for unlimited waves
+- **`TextType`** (`Standard` / `Gold` / `Exp`) — replaces the two `xpWrapperText` / `isGold` bools that `TextIndicator` and `TextIndicatorSpawner` threaded through five overloads, so the three indicator kinds are now one exclusive choice at the call site
+- `StatType.healingPct` added to the reward buff pool (+3, weight 2) on both wave managers — it shipped in v0.4.2 with no way to roll it
+
+### Changed
+- Floating numbers abbreviate at scale: `1234` reads `1.2k` and `1234567` reads `1.2M`, applied before the gold/XP suffix so those read `+1.2k g` and `+1.2k xp`
+- `TextIndicator.Initialize` and all three `TextIndicatorSpawner.SpawnTextIndicator` overloads take a trailing `TextType` in place of the two trailing bools. Call sites in `EntityHealth` (damage and gold) and `PlayerLevel` (XP) updated
+- **Luminaria** re-animated onto the `Priest_skill3` sprite sheet — 12 frames over ~1s, replacing the 11-frame `Priest_skill2` clip — with the prefab sprite and collider bounds repointed
+- `RewardButton.CorruptedSpecialColor` changed from purple `(0.65, 0.15, 0.9)` to `Color.darkBlue`
+
+### Rebalance
+- **Supernova** — reworked into a no-cost Basic Attack, paid for with weaker numbers
+  - staminaCost: 20 → 0
+  - staminaCostPct: 10 → 0
+  - manaCost: 5 → 0
+  - staminaGainOnHit: 4 → 3
+  - healthPctGainOnHit: 5 → 3
+  - manaGainOnHit: 0 → 2
+  - physicalMult: 190% → 160%
+  - trueMult: 30% → 20%
+- **`UnlimitedWaveManager`** — extra spawns disabled and the reward rarity curve flattened, so late unlimited waves stop dumping the whole spawn budget at once. The regular wave manager is untouched
+  - enableExtraSpawns: on → off (one enemy per spawn tick regardless of wave)
+  - spawnSpeedIncreasePerWave: 0.1 → 0.12
+  - Common weight: 600 → 700
+  - Uncommon weight: 350 → 300
+  - Rare weight: 200 → 175
+  - Epic weight: 100 → 90
+  - Legendary weight: 50 → 40
+  - Mythic weight: 15 → 10
+  - Celestial: mult 16 → 15, weight 3 → 2.97
+  - Transcendent: mult 20 → 15
+
+## [v0.4.2] - 2026-09-02
+
+### Added
+- **Overhealth** — a pool of health held *above* `EffMaxHp`. It is spent before `currentHp` when damage lands, is never clamped by max health, and is cleared on death. Backed by the new `StatType.overhealth` (Core v0.9.0), so buffs, status effects and gear can move the pool directly; `EntityHealth` owns the gain/decay rules and exposes `SetOverhealth(convPct, decayPct, interval)`. Damage absorbed by overhealth still runs the hurt animation, i-frames, the damage number and the `OnTakeHit` triggers, so a fully-absorbed hit does not hand out free invulnerability
+- **Exsanguinate** (`Overhealth`) — a passive `PlayerUpgrade` that converts 50% of any healing received *while already at full health* (health regen included) into overhealth, which then decays 3% of what remains every 0.5s. `RegenHp` no longer early-returns at full health while the conversion is active, so regen is the main feed. In the treasure pool
+- **Terminal Cascade** (`AddChain`) — a passive `PlayerUpgrade` giving a 25% chance, when a chain of `additionalAttack` spawns ends, to fire the attack that *started* the chain again from the player. Projectiles now carry a `chainRoot`: an attack's own projectiles have none, the additional attacks they spawn inherit `pd.mainAttack` as the root, and deeper links keep propagating it, so `A → B → C` all resolve back to `A`. The end of the chain is a rooted projectile that spawns nothing further — no `additionalAttack`, or a failed `additionalChance` roll — checked on hit, on lifetime expiry when `addAttackRequiresHit` is false, and from `Explode`. Fires at most once per projectile, player team only. Retriggers pay no cooldown or resource cost. In the treasure pool
+- **`StatType.healingPct`** (Core v0.9.0) — scales incoming healing before it is applied, so it covers every heal path (lifesteal, on-hit resource gains, Stellar Surge, regen) and stacks in front of the overhealth conversion. Clamped at `>= 0`, so a -100% roll zeroes healing rather than inverting it into damage. Not yet on any reward, gear or skill tree node
+- **Cresendo** (`CooldownAdvance`) — basic attacks advance the Ultimate cooldown by 8%, at most once per second. In the treasure pool
+- **Tempo** (`CooldownAdvance`) — every attack advances the dash cooldown by 18%. In the treasure pool
+- `CooldownAdvanceType.Dash` — `CooldownAdvance` can now target the dash cooldown through `PlayerMovement.AdvanceDash`, alongside the existing All/Basic/Skill/Ult targets
+
+### Changed
+- Health bar text (both the world-space bar and the player HUD) reads `cur(+over)/max` while overhealth is held, and falls back to `cur/max` at zero. The slider itself still tops out at max health
+- `ProjectileSpawner.SpawnProjectile`, both `SpawnFromPattern` overloads and every pattern helper take an optional trailing `AttackData chainRoot`; `Projectile.Setup` takes an optional `chainRootOverride`. All existing call sites are unaffected
+- `Projectile` gained a `ResetStatics` domain-reload hook, which also clears `liveDataRefs` and `ApplyingProjectileHit`
+- `com.crystalflux.core` repinned from `a8c06b2` (v0.8.0) to `3284d28` (v0.9.0)
+
+### Rebalance
+- **Luminaria** cost reworked from Stamina 15 + Health 10% + Mana 60 to Health 35 + 25% + Mana 30
+- Unlimited waves only: `corruptChance` 40 → 45, `corruptPositiveChance` 35 → 30, `maxCorruptBoost` 110 → 135. The regular wave manager is untouched at 40 / 40 / 80
+
+## [v0.4.1_2] - 2026-09-02
+
+### Added
+- **Attack cleanse** — `AttackData.cleanseDebuffs` removes that many active debuffs from the attacker the moment the attack is performed. Backed by a new `StatusEffectManager.RemoveDebuffs(int)`, which walks `activeEffects` newest-first, skips anything flagged `isBuff`, and runs each removed effect's `OnExpire` before destroying it. Wired into both `PlayerAttackHandler.ExecuteAttack` and `EnemyAttackHandler.PerformAttack`, so enemies can cleanse themselves too. The tooltip gains a *Cleanses N debuff(s)* line. No shipped attack asset sets it yet — the field defaults to `0` (disabled)
+
+### Changed
+- **Status effect stacking now matches on `effName` first.** `Apply` compared runtime types, so two effects sharing a base class merged into one and two distinct assets of the same class could never coexist. `IsSameEffect` now compares `effName` case-insensitively when both effects name themselves, and only falls back to the old type/subclass check when one does not
+
+### Fixed
+- **Swapping an attack could destroy `AttackData` still being read by live projectiles.** `UpdateAttack` and `RemoveAttack` destroyed the outgoing runtime copy immediately, while any projectile already in flight kept a reference to its `ProjectileData` — the next frame's read hit a destroyed object. `Projectile` now refcounts live `ProjectileData` in a static table (registered in `Setup`, released in `OnPoolRelease` and `OnDestroy`), and `DestroyAttackDeferred` parks the copy in `pendingDestroy` and waits until nothing live references it — following `chargeAttack`, `nextAttack` and `pd.additionalAttack` chains, with a visited set so a cyclic chain cannot loop forever. Anything still pending is destroyed outright in `OnDestroy`
+- Armor in the player resource tooltip printed its raw float; it is now formatted `F0` like the other stats
+
+### Rebalance
+- Enemy per-level HP growth lowered from `1.12x` to `1.10x` in `EnemyStatManager.ScaleBaseStats`.
+  - To compensate, Slime base HP 80 → 90 and Crab base HP 90 → 100
+- `Slow 6 15 5` replaced by `Slow 4 15 5` — the same 5%-per-stack, 15-stack slow with its duration cut from 6s to 4s
+- **Frost slime - Blizzard**: 
+  - cooldown 5s → 7s 
+  - random spawn count 3 → 2 (2-5 → 2-4)
+- **Nebula**: 
+  - physical 440% → 320% 
+  - cooldown 2s → 2.5s
+  - Radiation: duration 4s → 5s, max stacks 8 → 10, damage per tick (% of critDmg, per stack) 3 → 5
+- **Lifeforce** 
+  - (first): mana gain on hit 3 → 2, spawn distance 1 → 2 
+  - (third): knockback 8 → 6 
+- **Nocturnis** 
+  - Tap
+    - phys 60% → 85%
+    - spell 110% → 130%
+    - true 14% → 22%
+    - heal: flat 2 → 4, 1% → 3%
+  - Hold: 
+    - speed 0.6 → 0.8
+
+## [v0.4.1_1] - 2026-09-01
+
+- forgot to save scene
+
+## [v0.4.1] - 2026-09-01 — Settings Menu
+
+### Added
+- **Settings menu** — a new `SettingsCanvas` in `New.unity`, opened with `Escape` (`SettingsMenuInputToggle`, driven by a new `Pause` action in the `UI` map). It is a two-page flow: `SettingsPanelUI` is the outer pause page, and a button on it opens `ControlsPanelUI`, which holds the four gameplay toggles, the keybind list, a *Reset* button, a *Close* button and a status line. `Escape` backs out one page at a time rather than closing everything at once
+- **`MenuPause`** — a refcounted, single-owner freeze shared by both settings pages. The first `Push` records the live `Time.timeScale` and zeroes it; the last `Pop` restores it. Panels no longer capture and restore the timescale individually, so they can open, close and hand off to each other in any order without corrupting the saved value
+- **Persistent settings** — new `CrystalFlux.Settings` assembly with `GameSettings`, a versioned JSON blob written to `Application.persistentDataPath/settings.json` through a temp-file-and-replace so a crash mid-write cannot leave a truncated file. Malformed or missing JSON silently falls back to defaults. `GameSettingsLifecycle` bootstraps it at `AfterSceneLoad` on a `DontDestroyOnLoad` object and flushes on application pause and quit; the panel also saves on close. `GameSettings.Changed` lets systems react live
+- **Gameplay toggles** — *enemy health bars*, *XP drops*, *gold drops*, *damage numbers*, and *wave completion message*. All five apply immediately, with no restart:
+  - Enemy health bars gate `EntityHealth.InitializeHealthBar` and release the pooled bar/text pair back to `PrefabPool` when switched off mid-run, re-acquiring them when switched back on. The player's own bar is exempt. Boss bars are a separate system and unaffected
+  - XP and gold are gated at the kill site in `EntityHealth.TakeDamage` and at the top of `DropGold`; their floating indicators are suppressed with them
+  - Damage numbers are gated in `EntityHealth.ChangeHealth`, at the one `SpawnTextIndicator` call that is neither XP nor gold. XP and gold keep their own toggles. Visibility only; the indicator size stays fixed
+  - `WaveManager.showCompletionMessage` is no longer a serialized field — it now reads the setting, for both `WaveManager` and `UnlimitedWaveManager`
+- **Keybind rebinding** — every keyboard binding across both action maps gets a row (`RebindButtonUI` on `RebindRowPrefab`), including each of `Move`'s eight WASD/arrow part bindings individually. Clicking a row starts `PerformInteractiveRebinding`, restricted to keyboard controls (mouse, pen, touch and gamepad are excluded) and cancelable with `Escape`. Binding to a key already in use reverts the change and reports the clash rather than silently unbinding the other action. Overrides are saved into `settings.json` as the Input System's own override JSON; *Reset* clears them all
+- `Assets/data/images/UI/` gains `closeButton`, `exitButton`, `emptybutton`, `emptyframe` and `titleWrapper` sprites for the panel
+
+### Changed
+- **One shared `PlayerControls` instance.** `PlayerInputHandler` and `SkillTreeInputToggle` each constructed their own, and the generated wrapper builds a fresh `InputActionAsset` rather than loading the imported one — together with the `InputSystemUIInputModule` on the player's `EventSystem`, that was three disjoint copies of the binding data, so a rebind could never have reached all of them. The new static `GameInput` owns the single instance, applies stored overrides on construction, and exposes `SaveOverrides` / `ResetAllBindings`
+  - Both consumers dropped their `OnDestroy() => controls?.Dispose()`; `Dispose` destroys the shared asset, so the first component to die would have taken input down for everything else
+  - Map enable/disable is now refcounted through `GameInput.EnablePlayerMap` / `DisablePlayerMap` / `EnableUIMap` / `DisableUIMap`. Previously the player dying ran `SkillTreeInputToggle.OnDisable` and disabled the `UI` map for every other consumer
+  - `UIInputBindingSync` on the `EventSystem` child of `Player.prefab` registers the UI module's action asset with `GameInput`, so rebinding `Move` also moves UI navigation off the old keys
+- `Entity` and `Wave` now reference the `CrystalFlux.Settings` assembly
+- Icon sprites moved from `Assets/data/images/UI/icons/` to `Assets/data/images/icons/`, and `feather.png` was added
+
+### Fixed
+- Wave completion messages were serialized off in `New.unity`; the new setting defaults to **on**, so they now appear for anyone without a settings file
+- **`Escape` could not close the controls page.** It was wired directly to the settings page's `Toggle`, so the controls page had no `Escape` path at all and stayed open, with `isOpen` still `true`, while the settings page toggled around it. A second press reopened the settings page and the stranded controls page reappeared with it. `Escape` now routes through `SettingsPanelUI.HandleEscape`, which closes the top-most open page
+- **Opening the controls page could leave the game frozen with no menu open.** Each page captured and restored `Time.timeScale` independently, which breaks as soon as one page hands off to another: the controls page captured the already-frozen `0`, the settings page then restored `1` and left the game running behind the open menu, and closing the controls page restored its captured `0`. `MenuPause` now owns the freeze, so the timescale only returns to normal once the last page closes
+
+## [v0.4.0_1] - 2026-09-01
+
+### Added
+- **Skill tree grows 125 → 137 nodes** — twelve new single-point stat nodes, 50g each to refund:
+  - Six **Attack III** nodes split into two three-node chains, each granting **+3 Attack and +2% `atkPct`**: `atk3a` → `atk3aa` → `atk3ab` extending `Node_atk2b`, and `atk3b` → `atk3ba` → `atk3bb` extending `Node_atk2ba`
+  - Six **movement-speed nodes** (`ms3` → `ms8`) chaining off `Node_atk3b`, each granting **+2% `moveSpeedPct`**. `ms8` also lists `ms3` as a prerequisite (alongside `ms7`) so the six close into a ring that can be entered from either end
+- All twelve nodes are wired into the skill tree canvas in `New.unity`, bracketing the existing attack branch
+
+### Rebalance
+- **Enemy HP regen no longer tracks HP growth.** `EnemyStatManager.ScaleBaseStats` previously applied the full per-level `hpGrowth` (12%) to `hpRegen` as well as `maxHp`; regen now compounds at `hpGrowth ^ (0.3 × levelOffset)`, roughly **3% per level** instead of 12%, so late-game enemies regenerate far less relative to their growing health pools - (Jellyfish was unkillable without enough dps :/)
+- **Player level-ups grant +2 armor** (`PlayerLevel.LevelUp`), alongside the existing +5 max HP, +2 Attack, +2 Intelligence and +0.008 move speed
+- **Unlimited-wave concurrent-cap growth softened** — `UnlimitedWaveManager.BeginWave` bumps `maxTotalEnemies` by `Random.Range(0, 3)` instead of `Random.Range(1, 3)`, so the ceiling compounds more slowly over a long run
+- **Solar Wind** — buff duration `6` → **8**s.
+- **Cyclone Cleave reworked** — cooldown `6` → **5**s, cast time `0.5` → **0.3**s, and damage split `635% Phys + 185% Spell` → **545% Phys + 55% True**. The starting skill now leans on hybrid physical-and-true damage (and its 55% True cuts through armor) rather than spell scaling.
+- **Blaze** — spawn delay `0.25` → **0**, and the projectile's `timeBeforeSameEnemy` `0.5` → **0** so a single Blaze hit re-triggers every frame the target stays in the AoE instead of once per half-second
+
+## [v0.4.0] - 2026-09-01 — Object Pooling Update (Release Summary)
+
+This release covers the full development arc from `v0.3.0` through `v0.3.13_1`, and closes with the pooling work documented below. Over this period `Core` was extracted into its own package, projectiles gained authored flight paths, attacks gained windups and hold-to-charge, the skill tree grew from 104 to 125 nodes, and the highest-churn `Instantiate`/`Destroy` sites in the game were moved onto a shared object pool.
+
+### Highlights
+
+- **`Core` as a package (`v0.3.2`)** — `Assets/scripts/Core` was extracted to [joezhuo2/CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) and is imported from its git URL. `Wave` was decoupled onto `Core` alone via `IBossBar`, `EnemySpawning`, `PlayerEvents` and the `GetTooltipLines` hooks, so it orchestrates a run without naming a single concrete system type
+- **Projectile movement patterns (`v0.3.3`)** — `MovementType` (`Wave` / `Spiral`) on `ProjectileData` gives projectiles authored flight paths that coexist with homing, plus five screen-wide converging-line spawn patterns (`TopDown`, `LeftRight`, `Diagonal`, `DiagonalReverse`, `FullX`)
+- **Capstone skill nodes (`v0.3.3_2`, `v0.3.11`)** — nodes gated on owning an attack that swap it for an upgraded variant, starting with Warp; the Autopilot Awakening and a working `OnTakeDamage` upgrade trigger shipped alongside. Capstones now consume the Awakening they require
+- **Skill tree expansion (`v0.3.5`, `v0.3.10`, `v0.3.11`)** — 104 to 125 nodes across the Luminaria, Cosmic Superimposition, Solar Wind, Intelligence and AOE branches
+- **Enemy variants & wave gating (`v0.3.8`)** — Magma and Frost slime variants; rewards and enemies both gained a `minWave`, so the pools open up as a run progresses
+- **Cast time (`v0.3.12`)** — interruptible attack windups with a pooled, entity-following cast bar. `castTime` and `canMoveWhileCasting` on `AttackData`, plus the `castTimeRedPct` and `interruptResist` stats (Core v0.8.0)
+- **Charged attacks (`v0.3.13`)** — hold-to-charge attacks via the `AttackData` charging block (`canCharge`, `chargeThreshold`, `minChargeTime`/`maxChargeTime`, `chargeTickInterval`, `chargeAttack`), sustained by ticked projectile lifetimes and the new `IChargeRegister`; plus `MovementType.FollowCursor`, the `corruptionSpecialPool` corruption outcome, and the chargeable Ultimate Nocturnis
+- **Object pooling (`v0.4.0`)** — an audit of every `Instantiate` and `new GameObject` call found seven spawn sites with meaningful runtime churn and three independent hand-rolled pools with no shared abstraction. All of them now go through one static `PrefabPool`: health bars, status effect icons, cast bars, damage numbers, reward and anomaly buttons, and projectiles. Projectiles were the largest win by far, since every projectile of every pattern funnels through a single spawn call. The migration also surfaced eight latent bugs that were live before pooling existed, listed under **Fixed** below
+
+### Added
+- **`PrefabPool`** — a static, prefab-keyed object pool in the new `CrystalFlux.Pooling` assembly. `Acquire`/`Release` (with both `GameObject` and `Component` overloads), `Prewarm`, `SetCap` and `CountInactive`. Instances are keyed by prefab `EntityId` with an instance-to-prefab origin map, so releasing an object the pool never handed out destroys it rather than pooling it. A per-prefab retention cap (`DefaultCap` 64) destroys past the cap instead of growing forever. Pools clear on `SubsystemRegistration` and on `sceneUnloaded`. It has no MonoBehaviour, no scene object and no serialized state, so nothing needed wiring in the Editor
+- **`IPoolable`** — optional `OnPoolAcquire()` / `OnPoolRelease()` hooks invoked by `PrefabPool` through the non-allocating `GetComponentsInChildren` overload. Release hooks fire while the object is still active, acquire hooks fire after reactivation, and both run on the freshly-created path so a first spawn and a reuse behave identically
+- **`Projectile.Setup(Vector2 direction, GameObject owner, ProjectileData pdOverride)`** — the per-spawn initializer, replacing `Start`. It also resets everything a fresh `Instantiate` used to zero for free: the hit history, `canTriggerAdd`, the five orbit fields, the four boomerang fields, `followTarget`/`sourceRb`, the pattern accumulators and the rigidbody velocity
+- **`AnomalyButtonUI.ResetForPooling()`** — mirrors `RewardButton.ResetForPooling`, nulling the select callback and cached `AnomalyInstance`, removing `onClick` listeners and clearing the title and description
+
+### Changed
+- **Health bars are pooled.** `EntityHealth` acquires and releases its `Slider` and `TextMeshProUGUI` instead of instantiating and destroying them per entity
+- **Status effect icons are pooled.** `StatusEffectManager.CreateDisplayUI` acquires from the pool, and `StatusEffectCooldownUI` returns itself on expiry instead of self-destructing. The existing expiry mechanism is unchanged — the runtime `StatusEffect` clone is destroyed, `cse` goes null, and the icon releases on the next frame
+- **`CastBar` now delegates to `PrefabPool`.** Its two prefab-keyed queues, origin maps and `Rent`/`Pool` helpers were deleted. `Acquire`, `Release` and `Tick` keep identical signatures, so the nine call sites in `PlayerAttackHandler` and `EnemyAttackHandler` are untouched
+- **`TextIndicatorSpawner` now delegates to `PrefabPool`.** Its manual prewarm loop became `Prewarm`, and the pool is capped at `initialPoolSize`
+- **Reward buttons now use `PrefabPool`,** and anomaly buttons join them. The old `List`-based free list could not tell the two prefabs apart, so anomaly buttons were excluded from it and hard-destroyed on every reward screen; prefab-keyed pooling makes the distinction free
+- **Projectiles are pooled.** `ProjectileSpawner.SpawnProjectile` acquires from the pool and calls `Projectile.Setup`; the four `Destroy(gameObject)` sites in `Projectile` route through a `Despawn` helper. `Projectile.Start` was deleted outright rather than left in place, since a surviving `Start` would re-run the whole initializer at end of frame on a first spawn. `CachePrefabMovement` deliberately stays in `Awake` — it has to capture the prefab's `pd` before the spawner assigns an override. The per-prefab cap is raised to 256, since the default 64 is far too low for circle and barrage patterns
+- **`EntityProjectileHandler` liveness checks widened.** Orbit and charge registration was `Destroy`-symmetric on both sides; the handler's filters now also reject `!activeInHierarchy`, and its two `Destroy` calls (over-cap orbiter eviction and `AbsorbOrbits`) release to the pool instead
+- **New `CrystalFlux.Pooling` assembly.** `Pooling` references nothing and is referenced by `Entity`, `Projectile`, `StatusEffect`, `Wave` and `TextIndicator`. A standalone assembly was necessary because `TextIndicator` previously referenced only `Unity.TextMeshPro`, and `Core` ships as an external package
+
+### Fixed
+- **Health bars were destroyed and re-instantiated every frame whenever the canvas went inactive.** `EntityHealth.MoveHealthBar` runs from `Update` and re-entered `InitializeHealthBar` on any canvas loss, so the cost was paid per living entity per frame. It now bails early instead of churning
+- **The damage-number pool grew without bound.** `TextIndicatorSpawner` instantiated an overflow instance on a pool miss and enqueued every returned instance unconditionally, so a single burst permanently raised the pool's floor and it never trimmed. The retention cap now destroys past the cap
+- **A reused status effect icon kept the previous effect's sprite.** `StatusEffectCooldownUI.Setup` only assigned `iconImage.sprite` when the new effect had a non-null icon
+- **`AnomalyButtonUI.Setup` left stale title and description text** when handed a null instance, because it early-returned before writing either field
+- **A projectile silently inherited the previous attack's `ProjectileData`.** `pd` is permanently overwritten by `pdOverride`, so any later spawn passing no override reused whatever the last override had been. `Awake` now caches the prefab's own `pd` and `Setup` falls back to it
+- **`HandleSize` leaked size between spawns and zeroed `localScale.z`.** It writes `localScale` from a `Vector2`, and it early-returns when the owner has no `IStatProvider`, so a projectile could keep a previous owner's scale. `Awake` caches the prefab scale and `Setup` restores it before sizing
+- **`orbitCancelled` was set in `Launch` and reset nowhere**, so a released orbiter could never orbit again once its instance was reused
+- **The max-pierce branch of `OnTriggerEnter2D` had no `return` after its `Destroy`.** Harmless under `Destroy`'s end-of-frame semantics, but `SetActive(false)` is immediate, so the rest of the method would keep processing a hit on a despawned projectile. The projectile no longer lands one extra hit on the frame it maxes pierce
+- **`TextIndicator.Initialize` never wrote `transform.position`,** so a reused indicator could render for a frame at the previous one's screen position
+
+### Updated
+- **`TODO.md`** — a new Open Item records why enemy pooling was deliberately left out: cleanup is `Destroy`-bound across eight components with no `OnDisable` counterparts, `EnemyStatManager.ScaleBaseStats` is non-idempotent so level scaling compounds on a reused stat clone, and `WaveManager.CleanEnemyList` counts kills purely by Unity fake-null, which a deactivated enemy never satisfies
+
+## [v0.3.13_1] - 2026-09-01
+
+### Rebalance
+- **Corruption special chance** - `corruptionSpecialChance` 8 to **4** on both `WaveManager` and `UnlimitedWaveManager`, halving how often a corrupted stat reward is replaced by an attack from `corruptionSpecialPool`
+- **Unlimited waves concurrent enemy cap** - `UnlimitedWaveManager.maxCurrentEnemies` 10 to **6**, so pressure comes from enemy strength rather than crowd size
+- **Enemy base attack lowered across the roster** - Slime `6` to **3**, Magma Slime `9` to **5**, Frost Slime `4` to **3**, Bat `5` to **4**, Crab `7` to **6**, Jellyfish `9` to **8**, Lich `12` to **11**. The Slime line takes the largest cut because its contact damage applies most often
+- **Cyclone Cleave** - projectile `physicalMult` `5.65` to **6.35** and `spellMult` `1.25` to **1.85**
+- **Solar Wind** - proc cooldown `3` to **2**
+- **Blaze** - `castTime` `1` to **0**, removing the windup added in v0.3.12; the attack fires immediately again
+
+### Fixed
+- **Enemy base stat assets were missing the v0.3.12 stat fields.** `castTimeRedPct` and `interruptResist` were declared on the stat asset but never serialized into Bat, Crab, Cultist, Cultist Clone, Jellyfish, Lich, Slime, Frost Slime and Magma Slime, so the values were resolved from defaults rather than from the asset. All nine are re-serialized with both fields present at `0`
+- **`Blaze A AD` was missing the v0.3.13 charging block.** The asset now serializes `canCharge`, `chargeThreshold`, `minChargeTime`, `maxChargeTime`, `chargeTickInterval`, `cooldownOnAttackStart` and `chargeAttack`. `canCharge` is `false`, so Blaze's behavior is unchanged
+
+### Changed
+- **Roadmap checklists restructured in `TODO.md`.** The remaining Pre [v0.4.0] items were folded into later milestones and the plan now runs through **v0.11.0**, with each milestone given a theme: v0.5.0 Feel & Foundations, v0.6.0 Combat Depth, v0.7.0 Run Variety, v0.8.0 Player Power & Maps, v0.9.0 Gear & Items, v0.10.0 Elemental Core, v0.11.0 Gear & Elemental Expansion. Gear and elemental work is split so each system ships standalone before crafting, set bonuses and reactions build on top of it
+
+## [v0.3.13] - 2026-09-01 - Charged Attacks Update
+
+### Added
+- **`AttackData` charging block** - `canCharge`, `chargeThreshold`, `minChargeTime`, `maxChargeTime`, `chargeTickInterval`, `cooldownOnAttackStart` and `chargeAttack`. A chargeable attack is held down to sustain it after it resolves; every field is inert while `canCharge` is false, so existing attack assets are unaffected
+- **Tap / hold split** - `chargeThreshold` (default `0.225`) is the only discriminator. A chargeable attack spawns nothing and pays nothing on press, it only plays its animation and waits out the threshold. Released sooner, the press resolves as a plain tap and the base attack's cost is paid at that moment; held longer, the tap is skipped entirely and never charged. A tap therefore costs `chargeThreshold` of latency, which is the deliberate resolution of a three-way tradeoff between instant taps, no tap-on-hold, and no spawn flicker - only two of the three are possible, and retracting already-spawned projectiles was worse
+- **Charge phase** - the hold pays `chargeAttack`'s cost on confirm and again every `chargeTickInterval`. Each drain tick refreshes the lifetime of the sustained projectiles and re-captures their damage snapshot, so buffs and resources earned during one tick cycle carry into the next. `minChargeTime` (default `0`) queues a voluntary release until it elapses; an interrupt always breaks immediately. Both `minChargeTime` and `maxChargeTime` measure the charge itself, not the time since press
+- **`AttackData.chargeAttack`** - an optional full `AttackData` for the hold variant, with its own prefab, projectile data, pattern, count, spread, spawn delay and costs. It is the only thing that spawns on a hold and the only thing a tick sustains; its `canCharge` is forced true on the runtime clone so its projectiles self-register as sustainable. Left null, the charge spawns and sustains the base attack instead, at its own cost
+- **`AttackData.cooldownOnAttackStart`** (default `true`) - stamps the cooldown when the attack is performed so it ticks down during the hold, meaning a long charge is not punished twice. Set false to stamp it when the charge ends instead, which makes short charges cycle faster than long ones. The flag affects chargeable attacks only; everything else always stamps on performance
+- **`IChargeRegister`** - `RegisterChargedProjectile` / `UnregisterChargedProjectile`, implemented by `EntityProjectileHandler` alongside `IOrbitRegister`. Sustained projectiles register themselves against their owner on spawn and unregister on destroy, and `TickChargedProjectiles(AttackData)` refreshes only the ones whose `pd.mainAttack` matches the charge source
+- **`PlayerAttackHandler.ReleaseAttack(AttackType)`** plus `canceled` bindings for all four attack actions on `PlayerInputHandler`, so a key release ends the matching charge. `IsCharging` is exposed and `IsCasting` now reports true while charging, so the existing cast interrupts cover charges unchanged
+- **`MovementType.FollowCursor`** - steers a projectile toward the cursor every physics step at full speed with no turn smoothing, clamping the final step so it settles on the cursor rather than oscillating. Enemy-owned projectiles have no cursor, so they chase the nearest player-team target instead, using `followDistance` as the search radius and falling back to `50` when it is `0`
+- **`WaveManager.corruptionSpecialChance`** (default `8`) and **`corruptionSpecialPool`** - a per-button roll made *before* the usual multiplier corruption. On a hit the stat reward is replaced outright by an `AttackReward` drawn from the pool; on a miss the existing positive/negative multiplier applies unchanged. Only buttons holding a `GeneratedReward` are eligible, so attack, treasure and milestone buttons are untouched. Both fields live on the base class, so `UnlimitedWaveManager` inherits the behavior with no extra wiring
+- **`RewardButton.Setup(AttackReward, callback, corrupted)`** - the new optional `corrupted` flag clears the stale `GeneratedReward`, marks the button corrupted so it cannot be corrupted twice, tints the border with the new `RewardButton.CorruptedSpecialColor` (violet, distinct from rare red and from the darkRed/darkGreen of value corruption), and appends a `Corrupted` line to the description
+- **Nocturnis** - a chargeable Ultimate. The tap is a melee burst; holding past the threshold spawns a cursor-following scythe sustained for up to 6s, draining health every second and scaling its damage off health consumed. Enters `rarePool` at wave 45 and `corruptionSpecialPool` at wave 25
+- **`ProjectileData` "Angle Overrides" header** grouping `angleOverride`, `useTrueAngle` and `bypassIFrames`
+- **Dark Caster** - new milestone reward 
+
+### Changed
+- **Projectile lifetime is now a ticked `lifeRemaining` counter in `Update`** rather than a fire-and-forget `WaitForSeconds` coroutine. Expiry behavior is identical, but the remaining time can now be refreshed mid-flight, which is what makes charge sustain possible
+- **`Projectile.HandleDirection` and the new cursor follow share `GetSpriteAngle`**, so a projectile with `useTrueAngle` stays locked to `angleOverride` while still tracking the cursor, and one without it faces its travel direction plus `rotationOffset`
+- **`HandlePatternMovement`** switched to a `switch` expression that falls back to the projectile's own position, so an unhandled `MovementType` holds still instead of being treated as a wave
+- **Enemies commit instantly.** `EnemyAttackHandler` has no button, so it skips `chargeThreshold` entirely: the base spawn is suppressed, the charge source is spawned once up front aimed at the target, and the enemy rolls 50/50 on every tick to keep holding or stop, with `minChargeTime` as its guaranteed hold before the first roll
+- **Rare pool unlock waves raised** - Exodus, Shattered Singularity, Solar Collapse and Starfury from wave 20 to **25**; Luminaria, Nirvana and Revelation from wave 20 to **35**
+- **Blood Pact rebalanced** - health cost `9 +5%` to `5 +3%`, health gain on hit `6 +3%` to `4 +1%`, damage `50% Phys / 15% True` to `35% Phys / 9% True`, and its `Bleed 5 1 3 30 EffAtk` tick from `15%` to `8%` of `EffMaxHp`
+- **Lifeforce Burst rebalanced** - health gain on hit `4` to `5`, knockback force `14` to `8`
+- **Level-up stat rewards increased** - per level `maxHp` `3` to `5`, `attack` `1` to `2`, `Intelligence` `1` to `2`, `moveSpeed` `0.005` to `0.008`
+
+### Fixed
+- **Corrupting a reward re-fetched the same `RewardButton` component twice** per button and skipped the `GeneratedReward` null check on one path. `OnCorruptButtonClicked` now resolves the component once and bails early when it is missing
+- **`PlayerAttackHandler` leaked attack state on teardown.** `OnDisable` / `OnDestroy` called `EndCast` only, which left an in-progress charge holding its `CanMove` and `IsAttacking` decrements. Both now call `EndAllAttackStates`, which ends the charge first
+
+
+## [v0.3.12] - 2026-08-31 - Cast Time Update
+
+### Added
+- **`AttackData.castTime`** (default `0`, seconds) - an interruptible windup that runs before the attack resolves. At `0` the attack fires immediately, exactly as before, so every existing attack asset is unaffected. Distinct from `spawnDelay`, which still delays only the projectile spawn *after* the attack has already committed
+- **`AttackData.canMoveWhileCasting`** (default `true`) - when false the caster holds `CanMove` for the duration of the cast window only. The enemy-only `canMoveDuringAttack` keeps covering the post-cast attack and animation window; the two holds nest safely because `EntityStatManager` ref-counts gate flags
+- **Pooled cast bar** on both `PlayerAttackHandler` and `EnemyAttackHandler` - a `castBarPrefab` (`Slider`), a `castBarTextPrefab` (`TextMeshProUGUI`) showing remaining cast time, and a `castBarOffset` from the entity's center. Bars appear only while casting and follow the caster every frame, so they track an entity that moves mid-cast
+- **`CastBar`** - a static pool keyed by prefab instance ID, parented under the shared `HealthBarCanvas` that `EntityHealth` already resolves. Instances are reset and reused rather than instantiated per cast, so repeated casting does not grow the canvas
+- **`ICastHandler`** - `IsCasting` / `CancelCast()`, implemented by both attack handlers, giving `EntityHealth` one hook to interrupt whichever handler an entity has
+- **`StatType.castTimeRedPct`** - percentage reduction applied to cast time via `AttackData.GetEffCastTime`, clamped so a cast can never fall below 10% of its authored length. Cast time deliberately does **not** scale with `attackSpeedPct`
+- **`StatType.interruptResist`** - cumulative interruption resistance. `>= 1` ignores projectile hits, `>= 2` additionally ignores `CanAttack` dropping mid-cast (stun). Death always interrupts
+
+### Changed
+- **`PlayerAttackHandler.PerformAttack`** now branches on cast time. An attack with no cast time keeps its original order exactly - cost, then cooldown stamp, then `ExecuteAttack`. A cast stamps the cooldown up front to stop windup spam, but defers `HandleStatChanges` until the cast finishes, so an **interrupted cast costs nothing but its cooldown**. Costs are not pre-checked either, so a cast that can no longer be afforded when it lands simply fires nothing. Everything after the cost check moved into `ExecuteAttack`, and the animator block into `ApplyAttackAnimator`, which the cast routine also calls up front so the windup animation plays during the cast
+- **`EnemyAttackHandler.PerformAttack`** runs the same cast phase inside its `nextAttack` chain, after the animator is set and before orbit interactions, so an interrupted cast fires nothing. An interrupt still puts the attack on cooldown and breaks the chain. `animationLength` is now measured from the moment the cast resolves rather than from the start of the windup
+- **`EntityHealth.TakeDamage`** cancels an in-progress cast alongside the existing `TryThorns` call, reusing the condition that already isolates real enemy projectile hits
+- **`EntityHealth.ResolveHealthBarCanvas`** is now `internal` so `CastBar` can share the same canvas instead of creating a second one
+- **Package `com.crystalflux.core`** repinned to **v0.8.0** for the two new `StatType` members, appended to the end of the enum so existing serialized `StatBuff` assets keep their integer mappings
+
+### Fixed
+- **`EnemyAttackHandler` could permanently freeze an enemy.** The `canMoveDuringAttack` movement hold was released only at the end of each chain iteration, so any early exit from the chain leaked a `CanMove` decrement. The hold is now also released after the loop
+
+
+## [v0.3.11_1] - 2026-08-31
+
+### Added
+- **Lifesteal Effect** with configurable proc chance, amount healed, proc cooldown, and indicator color, that grants the user a portion of damage dealt while they have the status effect.
+- **Thorns Effect** with configurable proc chance, amount reflected, proc cooldown, damage type, and indicator color, that grants the user a chance to reflect a portion of damage taken by enemy projectiles
+
+## [v0.3.11] - 2026-08-31
+
+### Added
+- **New skill tree nodes**, taking the tree from 114 to **125**:
+  - **Five `AOE %` nodes** (`Node_aoe1` through `Node_aoe5`) in the new `aoep/` folder, **+3% `aoePct`** each for 1 skill point. They branch off `Node_intatk3` and chain `aoe1 - aoe2 - aoe3 - aoe4 - aoe5`, with `aoe5` also listing `aoe1` as a prerequisite so the five close into a ring that can be entered from either end
+  - **Six `Intelligence III` nodes** in `int/`, **+3 `Intelligence` and +2% `IntPct`** each for 1 skill point: `int3a` - `int3aa` - `int3ab` extending `Node_int2ba`, and `int3b` - `int3ba` - `int3bb` extending `Node_int2b`
+- **`Node_int3ab` is now a second prerequisite of `Node_mm3`**, connecting the intelligence branch into the movement branch that leads to the Warp capstone
+
+### Fixed
+- **`Node_mm3`'s `UnlockEffect` `SerializeReference` binding** named the `Assembly-CSharp` assembly rather than `CrystalFlux.SkillTree`, left over from the v0.3.2 package extraction. It also carried a stale empty `statBuffs` field that `SkillNodeDef` no longer declares
+- **Heartburn's description** claimed +18% stamina cost while the asset serialized `15`. The value is now 18 and the two agree
+
+### Rebalance
+- **Enemy attack scaling** — per-level attack growth 5% to **3%** (`EnemyStatManager.atkGrowth`), partly walking back the HP and armor scaling increases from v0.3.8_1
+- **Heartburn** — duration 8s to **6s**, max stacks 10 to **15**, and per stack: `damagePct` +6% to **+4%**, `critDamage` +20% to **+12%**, `stCostPct` +15% to **+18%**, `hpRegPct` -12% to **-16%**. Shorter and harsher per stack, but now higher limits
+- **Blaze Soul** — duration 8s to **6s**, so the Cosmic Blaze replacement window matches Heartburn's
+- **Cosmic Blaze** — stamina cost 20 +10% to **18 +8%**, stamina gain on hit +3 +2% to **+2 +1%**
+- **Blaze Hyperspark** — stamina gain on hit +3 to **+2**, and it now returns **+1 mana** on hit
+- **Blood Pact** — health cost 11 +7% to **9 +5%**, health gain on hit +6 +6% to **+6 +3%**, mana gain on hit 2 to **1**, and the projectile 60% Physical + 20% True to **50% Physical + 15% True**
+- **Cultist Summon** — `maxRange` 4 to **12**, so the Cultist summons clones from across the arena instead of only in melee range
+
+### Changed
+- **Capstone nodes now consume the Awakening they require.** `NodeRequirement` gained `Consume` and `Restore`, and `PlayerSkillTree.UnlockNode` calls `Consume` on every `NodeRequirement` before applying the node's unlock effects, so the required `PlayerUpgrade` is stripped from the player as the upgraded one is granted. `UndoNode` calls `Restore` after removing the node's effects, so refunding a capstone hands the original Awakening back instead of leaving the player with neither. Affects `Node_solarwind` (consumes Stellar Surge) and `Node_decoy` (consumes Decoy); `Node_warp` requires an *attack*, which `UnlockEffect` already swaps in place through `UpdateAttack`, and is unchanged
+- **`Node_solarwind` icon** swapped for a different sprite in the shared node sheet
+
+## [v0.3.10] - 2026-08-31
+
+### Added
+- **Solar Wind capstone node** — `Node_solarwind` (3 skill points, 50g refund) hangs off `Node_hprp5` and requires the Stellar Surge Awakening, granting Solar Wind alongside it
+- **Solar Wind Awakening** — `SolarWind.asset`, the first asset built on the `GrantStatusEffect` type added in v0.3.9. Fires on `OnHealthRegen` with a **30%** chance and a 3s cooldown, granting one stack of the new `Solar Wind` effect. It can only be obtained from its capstone node
+- **`Solar Wind` status effect** in `Assets/data/StatusEffect/` — `StatBuffs`, 6s, up to 6 stacks, granting **+3 `hpRegen`**, **+8% `hpRegPct`** and **+6% `moveSpeedPct`** per stack, and dropping all stacks at once when the duration runs out rather than decaying one at a time
+- **New skill tree nodes**, taking the tree from 108 to **114**: `Node_hp3a` and `Node_hp3aa` extend the health branch past `Node_hp2ba`, `Node_hp3b` and `Node_hp3ba` extend it past `Node_hp2b`, and `Node_hprp5` (**+3% `hpRegPct`**, 1 point) leads into the Solar Wind capstone
+
+### Changed
+- **Decoy Burst** projectile size 2.5 to **4**
+
+## [v0.3.9] - 2026-08-31
+
+### Added
+- **`GrantStatusEffect` player upgrade** — a `PlayerUpgrade` type (`PlayerUpgrade/GrantStatusEffect`) that applies an authored `StatusEffect` to the player when its trigger fires, with a `stacks` count applied one `Apply` call at a time. It overrides all three `TriggerUpgradeEffect` overloads, so it works under every trigger condition regardless of which overload that condition dispatches to, and its `OnRemove` strips the effect again when the upgrade is removed. Its tooltip lists the effect name, the stack count when above 1, the duration and the effect's own description
+- **`HoverScale` UI component** (`Assets/scripts/Misc/HoverScale.cs`) — scales a target transform to `hoverScale` (default 1.1) while the pointer is over it, easing at `speed` (default 12) on unscaled time so it keeps animating while the game is paused. It handles both `IPointerEnter/ExitHandler` for UI and `OnMouseEnter/Exit` for colliders, resets to the base scale on enable and disable so pooled buttons never come back mid-animation, and exposes `SetHoverScale` for runtime tuning. Added to the reward, anomaly, cooldown-indicator and skill-node prefabs and to 113 objects in the scene
+- **`WaveManager.showCompletionMessage`** — a serialized toggle (default `true`, and disabled on both wave managers in the scene) that suppresses the "Wave N Complete" / "Boss Defeated" / "Anomaly Complete" subtitle, the reroll and skill-point announcement, and the 1.5s pause that followed them. With it off, `EndWave` runs immediately after rewards are rolled instead of waiting out the title. Honoured by both `WaveManager` and `UnlimitedWaveManager`
+- **Lich phase buffs** — `Lich.prefab` carries an `EnemyPhase` with a single 40% HP threshold that grants **+40% `moveSpeedPct`** and **+20% `attackSpeedPct`**, the first enemy rebuilt onto the new phase system
+- **New UI sprite sheet** — `Assets/data/images/UI/20250420manaSoulHeaderB-Sheet.png`
+
+### Changed
+- **Button prefabs moved** into `Assets/data/prefabs/Buttons/` — `AnomalyButtonPrefab`, `CooldownIndicatorPrefab`, `RewardButtonPrefab` and `SkillNodePrefab` keep their GUIDs, so every existing reference still resolves. `SkillNodePrefab`'s button transition switched from ColorTint to None now that `HoverScale` carries the hover feedback, and `CooldownIndicatorPrefab` dropped its stale `borderImage` reference
+- **Blizzard applies `Slow 6 15 5`** instead of `Slow 5 3 15` — the same total slow ceiling, but built out of 15 stacks of 5% rather than 3 stacks of 15%, so the field ramps up gradually as a target lingers in it. `Slow 6 15 5` was authored in v0.3.8 and previously unreferenced
+
+### Fixed
+- **`Overheat` description** read "reduces attack by 6%" while the asset serialized `atkPct: -8`. The text now matches the value
+
+### Rebalance
+- **Cultist** — base attack 18 to 14, clone attack 12 to 11. `Summon PD` 80% Physical to **115% Physical + 40% Spell**; `Wave PD` 110% Spell to **75% Spell**
+- **Jellyfish** — base attack 5 to 9. `BallSpam PD` 65% to **80% Physical**; `Ripple PD` 35% to **65% Spell**; `SplashB PD` 35% True to **35% Physical + 45% Spell**
+- **Lich** — global cooldown 3s to 2s, with every attack's own cooldown raised to compensate: Wave 3s to 4s, Whirl 6s to 7s, Plant 8s to 9s. Wave 25% to **55% Spell**, Whirl 45% to **90% Physical**, Plant 30% to **45% True**
+
+## [v0.3.8_1] - 2026-08-31
+
+### Fixed
+- **ApplyingProjectileHit** - static flag, set around the TakeDamage call in HandleHitEntity (saved/restored, so nested damage cascades don't leak state).
+- **PlayerEvents.RaisePlayerTakeDamage** - now fires only when a damage instance passed IsEnemyHit (enemy team, non-DoT, dmg > 0, not iframe-bypass) and came from a projectile. DoT ticks, self-damage from attack costs, Consume/Heal packets, and dashing through a projectile with iframes no longer fail the trial.
+- **Enemy Scaling** - magma and frost slime stayed at level 1.
+
+### Added
+- Kill accelerates next spawn by 15%
+
+### Rebalance
+- increased hp scaling (10% > 12%)
+- increased armor scaling (5% > 8%)
+
+## [v0.3.8] - 2026-08-31
+
+### Added
+- **Two new slime variants**, each with its own attack, animator, sprites and stat asset under `Assets/data/entity/enemy/`:
+  - **Slime (Frost)** — `Slime_frost.prefab` / `slime frost base`. 80 HP, 4 attack, 15% crit chance, 30% crit damage, 60 armor, 30% `damageRes`, 5% `physicalRes`, 15% `spellRes`, 35 `effectRes`, 55 `kbRes`, 0.7 move speed, 9 detection range, 16 XP and 6 gold on death. Its attack **Blizzard** (`Blizzard AD`) is a 5s-cooldown Circle of 2 (+3 random) projectiles at 6 range with a 0.35s spawn delay: a slow-drifting (speed 1.2) 12s field of size 2 with effectively unlimited pierce, re-hitting the same target at most once per second, dealing **18% True** scaled off `EffAtk` and applying `Slow 5 3 15` at **65%** and the new `Freeze 2` at **15%**
+  - **Slime (Magma)** — `Slime_magma.prefab` / `slime magma base`. 45 HP, 9 attack, 25% crit chance, 70% crit damage, 60 armor, 15% `damageRes`, 15% `physicalRes`, 5% `spellRes`, 20 `effectRes`, 40 `kbRes`, 0.55 move speed, 5 detection range, 18 XP and 7 gold on death. Its attack **Eruption** (`Eruption AD`) is a 4s-cooldown Circle of 4 (+3 random) projectiles at 3 range with 45° random spread and a 0.65s spawn delay: 0.5s bursts of speed 4, size 2, 4 pierce, dealing **70% Physical + 15% True** scaled off `EffAtk` and applying the new `Overheat` at **85%**
+- **Three status effects** in `Assets/data/StatusEffect/`:
+  - `Freeze 2` — `Stun`, 2s, single stack, shown as *Frozen*. Applied by Blizzard
+  - `Overheat` — `StatBuffs`, 7s, up to 5 stacks, **-8% `atkPct`** and **-12% `stRegPct`** per stack. Applied by Eruption
+  - `Slow 6 15 5` — `StatReduction`, 6s, up to 15 stacks, **-5% `moveSpeed`** per stack, capped at 90% reduction. Authored but not yet referenced by any projectile
+- **Wave gating on rewards.** `AttackReward` and `PlayerUpgradeReward` carry a `minWave` (default `-1`, always eligible), and the rare and treasure pools now draw only from entries whose `minWave` is at or below the current wave. Seven rare-pool attacks are gated to **wave 20** — Shattered Singularity, Solar Collapse, Starfury, Revelation, Nirvana, Exodus and Luminaria — and five Awakenings to **wave 35** — Paradox, Soul Rend, Reminiscence, Serenade and Dash Advance. Everything else stays available from wave 1
+- **Wave gating on enemies.** `UnlimitedWaveManager.enemyPrefabs` is now a `List<EnemySpawnInfo>` pairing each prefab with a `minWave`, and `GetRandomEnemy` picks only from the prefabs unlocked at the current wave: Slime at 0, Crab at 5, Slime (Magma) at 10, Bat at 15, Slime (Frost) at 20. An empty eligible set returns `null` rather than indexing the list
+- **`EntityHealth.deathAnimTime`** — the death-animation delay is serialized per entity instead of the hardcoded 1s, and a value of `0` skips the animated death path entirely
+
+### Changed
+- **Enemy health bars resolve their own canvas.** `EntityHealth` previously grabbed whatever `FindAnyObjectByType<Canvas>()` returned first, which could be a world-space or unrelated canvas. It now looks for a screen-space canvas named `HealthBarCanvas` and, failing that, creates one at sorting order `-1`, copying its `CanvasScaler` settings from an existing screen-space canvas so bar sizing matches the rest of the UI. The bar is created lazily on the first `Update` rather than in `Start`, and is rebuilt if its canvas is destroyed or disabled mid-run
+- **Boss waves spawn exactly one enemy.** `IsBossWave` (a wave carrying a `bossBarPrefab`) clamps both `waveMaxTotalEnemies` and the concurrent-enemy cap to 1 in `WaveManager` and `UnlimitedWaveManager`, and the multi-spawn burst is skipped on boss waves. Previously a boss wave used the wave's normal caps and could spawn the boss prefab several times
+- **Unlimited-mode boss pacing** — `maxSpawnFrequency` `4` → `3`, `minWavesBetweenBossWaves` `6` → `4`
+- **Tuning:**
+  - **Autopilot** — `physicalMult` `2.95` → `3.35`; on-hit gains changed from a flat `staminaGainOnHit: 4` / `healthGainOnHit: 6` to `staminaGainOnHit: 2` and `healthPctGainOnHit: 3`, so its healing scales with max HP
+  - **Feedback Loop** — `trueMult` `0.08` → `0.04`
+  - **Slime** — `EnemyMovement.stoppingDistance` `0.85` → `1.2`
+- **`Vulnerable 4 30` renamed to `Vulnerable 6 30`**, duration `4` → `6`s. The `.meta` GUID is unchanged, so the Decoy expiry burst still resolves it
+- **Dash Advance's reward description** now reads *"Dashing advances all cooldowns by 12%."*, matching the `amt` `15` → `12` change made in v0.3.7
+
+### Fixed
+- **Wave spawn bursts could overshoot the wave's enemy budget.** `SpawnEnemies` spawned `wave / 10 + 1` enemies without checking how many the wave had left, so a wave capped at 3 could spawn 4 or more. The burst count is now clamped to `waveMaxTotalEnemies - totalSpawned`. `UnlimitedWaveManager.HandleWave` also looped against the raw `maxTotalEnemies` field instead of the per-wave `waveMaxTotalEnemies`, which is what the boss-wave clamp writes to
+- **Rerolling an anomaly could consume the reroll and return nothing.** The reroll routed back through `RollAndGenerateAnomaly`, which re-rolls `anomalyChance` and re-checks the active-anomaly guard, so a paid reroll could legitimately produce an empty menu. Choice generation is split out into `GenerateAnomalyChoices`, which the reroll now calls directly, and a new `HasAnomalyChoices` check refuses the reroll — before spending a reroll charge or gold — when no anomaly is eligible for the current wave
+- **Reward generation silently produced fewer buttons than requested.** The mixed, rare and treasure pool generators indexed their lists directly and `continue`d or `break`ed on an empty pool. Selection moved into `PickRareReward` / `PickTreasureReward`, which walk the pool once with reservoir sampling, skip `null` entries and honour `minWave`, returning `null` only when nothing is eligible
+- **Health bars leaked and drifted.** A bar is now destroyed with its owner in `OnDestroy`, a `barRetired` flag stops a dead or destroyed entity from re-creating one, the shared canvas reference is cleared on `SubsystemRegistration` so it does not survive a domain-reload-disabled play session, and a bar whose owner is behind the camera (`screenPos.z <= 0`) is hidden instead of being drawn at a mirrored screen position. Bar value and text are refreshed through a single `RefreshHealthBar` that early-outs when neither current nor max HP changed
+- **`EntityHealth` no longer null-references when no `IStatProvider` is present.** `Start` logs an error naming the offending object and returns instead of throwing on the first `AddStat`
+
+## [v0.3.7] - 2026-08-31
+
+### Changed
+- **Occasional skill points can drop on any wave.** `RollOccasionalWaveRewards` hardcoded `pendingOccasionalSkillPoints` to `0` on every non-milestone wave, so the only skill point the wave-reward roll ever granted was the guaranteed one on each fifth wave. Non-milestone waves now roll it at **50%**, matching the reroll roll beside it
+- **`GAME.md` re-synced against the assets.** It is now a generated-style reference over `Assets/data/PlayerData/` and the `WaveManager` reward pools serialized in `Assets/New.unity`, split into Starting Attacks, Rare Pool (18), Skill Tree Attacks, Treasure Pool Attacks, Player Upgrades and Status Effects. Each entry names its `AttackData`/`ProjectileData` asset, states damage multipliers as percentages, and uses the exact `StatType` enum name for scaling. Costs and on-hit gains are now separated (they were previously merged into one signed list), several scaling stats that had drifted from the assets are corrected, and follow-up forms are filed under their real names — `Blaze Soul` is documented as the `Cosmic Blaze` replacement attack, and `Autopilot` moved out of the rare pool
+- **Tuning:**
+  - **Cyclone Cleave** — `numPierce` `6` → `8`, `physicalMult` `5.4` → `5.65`, and a new `spellMult` `1.25`
+  - **Aphelion** — cooldown `1.6` → `2.2`s
+  - **Blood Pact** — `healthCost` `14` → `11`, `healthCostPct` `11` → `7`
+  - **Stellar Maelstrom** — `staminaCost` `40` → `30`, `staminaCostPct` `44` → `24`, `manaCost` `18` → `14`, `manaCostPct` `52` → `42`
+  - **Warp** — `projectileCount` and `randomCount` `2` → `3`, `staminaCost` `40` → `15`, `manaCost` `60` → `50`, `manaCostPct` `20` → `15`. `Node_warp` now reads *"Increases Warp's speed, size, count, and chance to spawn a rift"* — the capstone no longer raises the attack's cost
+  - **Feedback Loop** — new `trueMult` `0.08` alongside its `0.15` spell multiplier
+  - **Dash Advance** — `amt` `15` → `12`
+  - **Serenade** — `chance` `40` → `35`
+
+### Fixed
+- **A multi-instance damage packet applied only its first instance.** `EntityHealth.TakeDamage` walks each `DamageInstance` in the packet through `ChangeHealth`, which triggers hurt i-frames on any damaging hit; the i-frames then blocked every later instance in the *same* packet, so a projectile authored with Physical + Spell + True damage landed only its Physical portion. The trigger is now deferred: instances are processed with the hurt i-frame suppressed, and a single i-frame window is opened once the packet is finished. Nested `TakeDamage` calls (reflect and thorns Awakenings re-entering during a packet) merge their pending trigger into the outer packet rather than opening a window mid-packet
+- Six authoring bugs turned up while re-syncing `GAME.md`, all corrected in the assets:
+  - **`Supernova PD` pointed at a deleted status effect** (guid `e6076c0291862a842aa9b9e05e87f1e5`), so its 40% on-hit effect never applied. It now references `Weaken 5 10 4` — **-10% attack per stack**, 4 stacks, 5s
+  - **`Starlit Reflexes` serialized `pctAmt: 6`** next to `amount: 10`, but `GainMana` only reads `amount`, so the 6% max-mana portion was inert. The percentage is dropped and the flat amount is raised `10` → `18`
+  - **`Lifeforce PD` had `specialMult: 0.5` with `specialSclaing: None`**, so the multiplier did nothing. `specialSclaing` is now `HpConsumed`, which is what the attack's `30 +40%` max-HP cost was written for — Lifeforce scales with the health it spends
+  - **`Supersonic Cooldown` was referenced by nothing.** `Supersonic PD` now applies it to the caster at 100% on cast, so the 3s marker actually lands
+  - **`Exodus C` was inconsistent with its siblings.** `Exodus C AD` is typed `Additional` rather than `Technique`, matching `Exodus B AD`, and `Exodus C PD` scales off `critDamage` instead of `resPen`
+  - **`Ignotion Flash` renamed to `Ignition Flash`** — the folder and its `AD`, `PD`, prefab, clip and controller assets. Every `.meta` GUID is unchanged, so the rare-pool entry and prefab references still resolve
+
+## [v0.3.6] - 2026-08-30
+
+### Added
+- **Reference-counted stat gates** — `EntityStatManager` now tracks `CanMove`, `CanAttack`, `CanDash`, `CanGainHp`, `CanGainMana`, `CanGainStamina` and `isImmune` by depth instead of summing raw ±1 writes. Two overlapping holders (a Stun landing during a Pulled, a stun landing mid attack wind-up) can no longer release each other's hold, and a stray release cannot push a gate past its resting state
+- **`EnemyMovement.Active`** — static list of enabled enemies maintained in `OnEnable`/`OnDisable`. Decoy taunting walks it instead of `GameObject.FindGameObjectsWithTag("Enemy")`, so it no longer depends on the tag being set and no longer allocates an array per cast
+- **Skill-tree adjacency map and undo reachability check** — `PlayerSkillTree` builds `nodesById`/`neighbours` once per runtime-node generation and reuses them for both `CanUnlock` and the new `WouldStrandDependents`, a BFS from the unlocked starting nodes. Undoing a node that would leave other unlocked nodes disconnected is now refused with *"Other unlocked nodes depend on this one"*
+- **`AnomalyInstance.Description`** — virtual description on the instance, overridden by `StatModifierInstance` with its rolled stat and value. `AnomalyButtonUI` and `WaveManager` read it instead of `AnomalyData.desc`
+- **`Slow 5 3 15`** — new `StatReduction` asset (`data/StatusEffect/`): **-15% move speed per stack**, 3 stacks, 5s. Applied by the Supersonic projectile at 60% on hit
+- **`EntityGearManager.RollableStats`** — explicit whitelist of the stats a `PureRandomStatAndRoll` gear roll may pick. The roll previously indexed the whole `StatType` enum, so it could roll flags and derived values (`isAlive`, `CanMove`, `EffAtk`) as gear stats
+- **`StatType.Gold` is readable** — `EntityStats.GetValue` returns `gold`; it previously fell through the switch and reported 0
+
+### Changed
+- **Status-effect content moved out of the scripts tree.** The nine effect scripts are flattened into `Assets/scripts/StatusEffect/StatusEffects/` (one file per effect, no per-effect folder), and all 25 authored effect assets moved to a new `Assets/data/StatusEffect/` folder next to the rest of the data. GUIDs are unchanged, so every existing reference still resolves
+- **Knockback resistance is applied once, on impact.** `KnockbackHandler.UpdateForces` multiplied each live force by `1 - kbRes%` *every frame*, compounding resistance until the force decayed to nothing. Resistance is now folded in by `ApplyKnockback`, and `UpdateForces` takes an explicit `dt` — `Time.fixedDeltaTime` from `PlayerMovement` (a `FixedUpdate` caller, which was reading `Time.deltaTime`) and `Time.deltaTime` from `EnemyMovement`
+- **Awakenings are runtime copies.** `PlayerUpgradeManager` instantiates every upgrade in `activeUpgrades` on `Start` and every upgrade passed to `AddUpgrade`, and destroys the copy on removal or teardown. Per-upgrade runtime state no longer writes back into the shared project asset. `EntitySummonHandler` no longer does this copying itself
+- **Upgrades are matched by name everywhere.** `HasUpgrade` and `RemoveUpgrade` go through one `FindActive` name lookup, so a skill-tree undo removes the runtime copy of the asset it granted rather than failing a reference comparison. `Start` logs an error when two upgrades on the same holder share a name, since the name is the identity
+- **Enemy attack chains iterate instead of recursing.** `EnemyAttackHandler.PerformAttack` walks `nextAttack` in a loop with a visited set, so a cyclic chain terminates instead of nesting coroutines forever. The `CanMove` hold is taken and released per step (and only when `canMoveDuringAttack` is false), and `OnDisable` releases whatever is still held
+- **Non-allocating overlap queries.** `Projectile` and `EntityProjectileHandler` targeting use `Physics2D.OverlapCircle` with a shared buffer and a `ContactFilter2D` instead of `OverlapCircleAll`, and both cache `Camera.main`
+- **Orbit lists drain synchronously.** `ReleaseOrbits`, `AbsorbOrbits`, `RedirectOrbits` and `ExplodeOrbits` now remove projectiles from the registry as they take them, replacing a `ClearOrbitsAfterDelay(0.1f)` coroutine that wiped the whole list 0.1s later regardless of how many were taken. `AbsorbOrbits` returns the count actually absorbed instead of the count requested
+- **Skill-tree connector lines are pooled.** `SkillTreeLineRenderer` reuses its `Image` objects across redraws and deactivates the leftovers instead of destroying and recreating every line whenever a node changes. It collects node UIs with `FindObjectsInactive.Include`, and walks prerequisites only — the second reverse pass drew the same undirected connections a second time
+- **The skill tree builds in `Awake` and restores the previous `Time.timeScale`** when it closes, instead of forcing `1`. Closing the tree while the game was paused for another reason no longer resumes it
+- **`StatReduction` writes to base stats.** `EffAtk`, `EffMaxHp`, `EffArmor`, `EffSpd`, `EffInt`, `EffHpReg`, `EffStReg`, `EffMaxMana` and `EffMaxStamina` are mapped to their base counterparts before the debuff is applied; writing to a derived stat wrote into a value that is recomputed from the base
+- **`StatBuffs` tracks applied buffs in a list.** The old `Dictionary<StatBuff, StatBuff>` keyed on the authored struct, so two entries buffing the same stat by the same amount collapsed into one and only one was ever undone
+- **`Detonator` fires one packet.** It sums remaining damage across every active DoT, removes them once, skips DoTs with a zero tick interval, and does nothing when the total is 0 — previously it built a packet per DoT and called `RemoveEffect<DoT>()` inside the loop, so later iterations read effects that were already gone
+- **`AttackData` runtime copies clean up fully** — `OnDestroy` destroys the runtime `pd.effects` copies and `pd.additionalAttack` alongside `pd` and `nextAttack`
+- **Statics clear themselves.** `ProjectileSpawner`, `TooltipUI`, `TextIndicatorSpawner`, `PlayerUpgradeManager`, `WaveManager.ActiveManager` and `IAnnouncer.Current` null their static references in `OnDestroy`, and `EnemySpawner` resets `EnemySpawning.Spawn` on subsystem registration so a domain reload cannot leave a dead delegate installed. `TooltipUI` and `TextIndicatorSpawner` destroy the duplicate and bail instead of half-initialising it
+- **`Entity` requires `EntityStatManager`** rather than `IStatProvider` — `RequireComponent` cannot take an interface, so the old attribute enforced nothing. `EnemyStatManager` overrides the now-`virtual` `Awake`/`Start` instead of shadowing them
+- **`EntitySplitting.splitChance` is a 0-1 `[Range]`**, matching `summonChance` and `EffectData.chance`. It was authored on a 0-100 scale but multiplied by `0.01` before the roll in the one place that used it
+- **Tuning:**
+  - **Autopilot** — `staminaGainOnHit` `10` → `4`, `healthGainOnHit` `15` → `6`, projectile `speed` `12` → `6`, homing `followDistance` `1.5` → `0.5`
+  - **Supersonic** — `trueMult` `0.85` → `1.1`, the projectile now applies `Slow 5 3 15` at 60% on hit, and the Awakening's cooldown drops `3` → `1`s
+  - **`Node_ms2` now hangs off `Node_ms1`** instead of `Node_atkarmor2`, so the movement-speed branch is a chain rather than two siblings on the same parent
+
+### Fixed
+- **Resistance penetration and armor shred were read from the victim.** `DamageCalculator.CalculateDamageTaken` pulled `resPen` and `defShred` off the entity *taking* the damage, so the player's penetration did nothing to enemies while an enemy's shred reduced its own effective armor. Both now come from the attacker, which `EntityHealth` resolves from each damage instance's owner and passes in. Armor also reads `EffArmor` (armor plus `armorPct`) instead of the raw `armor` field, and the negative-armor curve tops out at **3x** rather than 2x
+- **`_isTriggeringOnDealDamage` was `static`.** One entity inside an `OnDealDamage` trigger suppressed the trigger for every other entity in the scene. It is now per-instance
+- **An immune target dropped the rest of the damage packet.** `TakeDamage` returned on the first instance blocked by i-frames, so True, Heal and Consume instances behind it in the same packet never applied. It now skips that instance and continues
+- **Health and stamina gains were swapped in the attack tooltip.** `PlayerAttackCooldownUI` destructured `Projectile.CalculateStatGains` as `(spg, hpg, mpg)`; it returns `(hp, stamina, mana)`
+- **Enemy attack HP gates compared a fraction against a percentage.** `ChooseAttackIndex` computed `currentHp / EffMaxHp` (0-1) and tested it against `minHpPct`/`maxHpPct` (0-100), so any attack with `minHpPct > 0` was unreachable and every `maxHpPct < 100` gate passed. It also treated `phaseReq` as satisfied on enemies with no `EnemyPhase` component at all
+- **Projectile and orbit targeting picked the wrong team.** `Projectile.FindClosestEnemyInDirection` hardcoded team 0 as the target and `EntityProjectileHandler.FindNearestEnemy` skipped team 0, so enemy-owned projectiles searched for other enemies. Both now target the team opposite their owner. The "skip dead targets" test in all three search sites required `isAlive <= 0` **and** `currentHp <= 0` — nearly never true — and is now an `or`
+- **Cooldown reduction was clamped to a maximum of `0.9`.** `GetEffCd` clamped `1 - cdrPct%` to `[0.1, 0.9]`, so an attack on an entity with *no* cooldown reduction still came back 10% early. The upper bound is now `1`
+- **Zero-multiplier damage instances were still built.** `DamagePacketBuilder` added a `Physical`, `Spell` and `True` instance for every attack regardless of its multipliers, producing stray `0` damage numbers. An instance is skipped when both its multiplier and its additional scaling are 0
+- **`StatModifierInstance` wrote its rolled description into the shared `AnomalyData` asset**, permanently overwriting the authored text with the last roll
+- **`AnomalyButtonUI.Setup` dereferenced a null instance** — its guard returned early only when `instance != null && instance.amd == null`, which is the one case where the fields were safe to read
+- **Anomaly selection ran the wave twice.** `OnAnomalyButtonClicked` called `BeginWave()` and then `HandleWave()` on the same wave data
+- **The corrupt button showed on panels that cannot be corrupted.** Visibility is now decided in one place (`PanelSetup` → `UpdateCorruptButton`), which hides the button on anomaly and milestone panels and on every fifth wave; `RewardType` is set before the panel is built so the check sees the right type
+- **Occasional rerolls were credited to `ActiveManager`** rather than to the manager processing the wave
+- **`additionalQuality` never reached the mixed reward pool** and was never cleared, so the bonus quality earned by skipping accumulated across waves and only applied to one pool. Both pools now pass it and reset it after use
+- **`AttackReplacement` left a phantom attack.** When the replaced slot was empty on apply, expiry called `UpdateAttack(type, null)`; it now removes the attack instead, and clears `setAttack` so expiry runs once
+- **`Pulled` could permanently freeze its target.** It released `CanMove` only if the target was not already immobilised when the pull landed, which lost the release whenever two sources overlapped. It now tracks its own hold and pairs with the reference-counted gates
+- **`SoulRendPU.OnUnlock` appended its effect every time it ran**, stacking duplicate Soul Rend applications on the basic and skill attacks. `AddOnce` checks for the effect first, and creates the `effects` list if it is missing
+- **`Reminiscence` could recurse** — the random attack it casts can re-raise the condition that triggered it. Guarded with an `isCasting` flag
+- **Summon lifetime expiry skipped death bookkeeping.** `Destroy(summon, lifetime)` removed the object without unsubscribing `OnDeath`, clearing `activeSummons`, or undoing per-summon buffs; an `ExpireSummon` coroutine now runs `OnSummonDeath` first
+- **Runtime `ScriptableObject`s were destroyed with `DestroyImmediate`** in `PlayerAttackHandler`, `EnemyAttackHandler` and `PlayerSkillTree`, which is an editor call and unsafe during play teardown
+- **`PlayerSkillTree` aliased the definition asset's node list** instead of copying it, so runtime changes to `allNodes` reached the `SkillTreeDefinition` asset
+- **Fractional regen was rounded away.** `EntityStats.Apply` rounded `staminaRegen` and `EffStReg` to an int, and enemy level scaling rounded `hpRegen`, so any authored value below 1 became 0
+- **`SpawnCircle` could spawn nothing** when `projectileCount` was 0; the final count is clamped to at least 1
+- **Health bars initialised to full.** `BossBarUI.Setup` and `EntityHealth.InitializeHealthBar` set the slider value to max HP rather than current HP, so a pre-damaged or scaled spawn showed a full bar until its first hit
+- **`StatusEffectManager` ran teardown on application quit**, expiring effects against half-destroyed objects. On quit it now just destroys the runtime copies
+- **`UnlockEffect.Remove` removed an attack slot it never granted** — it now checks `HasAttack` first, and both `Apply` and `Remove` null-guard the target
+- **Boss bars spawned for enemies with no stats** in both wave managers; the bar is only created when the enemy has an `IStatProvider` to feed it
+- **`TriggerUpgradeEffect(GameObject, Vector2?)` had a default argument**, making it ambiguous with the single-parameter overload at every one-argument call site. The default is removed
+- **`PlayerMovement` assumed the player starts facing right** (it now reads `localScale.x`), and a dash with zero speed or distance spun an endless coroutine
+- **`Decoy` was tagged `"Player"`**, so player-tag lookups elsewhere could pick it up. Taunting no longer needs the tag
+- **Null-safety pass across UI and spawners** — `BossBarUI`, `PlayerUI` (via a shared `SetBar`), `PlayerResourceUI`, `RewardButton`, `TooltipUI`, `GameController`'s UI panel, `WaveManager`'s reroll/corrupt/skip buttons, `EntityGearManager.available`, `EnemySpawner`'s prefab, `TextIndicatorSpawner` (which now requires a prefab and canvas and logs when either is missing), `EntityHealth.DropGold` when the killer is gone or has no stats, `EntityHealth`'s health bar when only the text prefab is absent, `Projectile` with no `ProjectileData` (logs and self-destructs) and `ProjectileSpawner.SpawnFromPattern` with no camera or source
+
+## [v0.3.5] - 2026-08-30 - Content Expansion Update
+
+### Added
+- **Luminaria** — new rare-pool Ultimate (`Attacks/Rare Pool/Luminaria/`, with its own prefab, controller, clip, `AttackData`, `ProjectileData` and an 11-frame `Priest_skill2` sprite sheet). 18s cooldown, single stationary projectile (`speed 0`, `useTrueAngle`), 1s lifetime, size 3, effectively unlimited pierce (`numPierce 3000`), 8 knockback force over 0.3s. Deals **270% True** damage scaling off `EffHpReg` — the first attack in the game to scale off health regen. Costs 15 stamina, 10% max health and 60 mana; returns 2 stamina and 3 mana on hit. On cast it applies **Holy Bounty** to the player (100%) and has a 40% chance to apply **Stun** for 2s. Registered in the `rarePool` of both the regular and the Unlimited reward manager in `New.unity`
+- **Cosmic Superimposition** — second capstone skill node (`SkillTreeNodes/_Capstone/Node_decoy.asset` + node prefab, placed in `New.unity` at `(-67.1, -228.8)`). Requires the player to already own the **Cosmic Afterimage** (Decoy) Awakening via `NodeRequirement.requiredAwakenings`, hangs off `Node_ms2`, costs 3 skill points and 50g to refund, and its `UnlockEffect` swaps the owned Awakening for **Decoy Upgraded**
+- **Decoy Upgraded** — capstone version of the Decoy Awakening (`PlayerUpgrade/Decoy Upgraded.asset`). Against the base version: lifetime `4` → `6`s, cooldown `6` → `5`s, tint alpha `0.61` → `0.78`, and it carries a `projectilePrefab` so the decoy detonates on expiry instead of quietly disappearing
+- **Decoy expiry burst** — attack set under `Attacks/SkillTree/Decoy/` (prefab, controller, clip, `Decoy AD`, `Decoy PD`, `1225.png`) fired at the decoy's last position when its lifetime runs out. `Additional` type, no cooldown and no resource cost; the projectile is a stationary 1s burst, size 2.5, `numPierce 3000`, dealing **225% Spell** scaling off `EffAtk` with 5 knockback force, applying **Vulnerable** on hit (100%) and returning 3 stamina and 3 mana on hit (`basedOnDmgDealt`)
+- **Two movement-speed skill nodes** — `SkillTreeNodes/ms/Node_ms1` and `Node_ms2` (+ node prefabs in `New.unity` at `(-23.1, -252.9)` and `(-30.3, -219.9)`), each granting **+2% `moveSpeedPct`** for 1 skill point / 50g refund. Both hang off `Node_atkarmor2`; `Node_ms2` is what gates the new Cosmic Superimposition capstone
+- **`Holy Bounty`** — 24s single-stack buff (`StatusEffects/StatBuff/Holy Bounty.asset`) granting **+80% `addDmgPct`**, **+30% `resPen`** and **+15% `damageRes`**. Applied to the player on Luminaria cast
+- **`Vulnerable 4 30`** — 4s single-stack debuff (`StatusEffects/StatBuff/Vulnerable 4 30.asset`) applying **-30% `damageRes`**. Applied by the Decoy expiry burst
+- **`Decoy.projectilePrefab`** — optional prefab on the `Decoy` upgrade. When set, the decoy spawns that attack's full pattern at its own position the moment it expires; when null the decoy just disappears, so the base Awakening is unchanged
+
+### Changed
+- **Decoy lifetime is now a coroutine rather than a delayed `Destroy`.** `Decoy` is a `ScriptableObject` and cannot run coroutines itself, so the routine is hosted on `ProjectileSpawner.Instance` — the same object that has to spawn the expiry burst anyway. The routine waits out the lifetime, snapshots the decoy's position, destroys it, then hands that position to `ProjectileSpawner.SpawnFromPattern`. If there is no `ProjectileSpawner` in the scene it falls back to the old `Destroy(decoy, lifetime)` path, and it bails out early if the decoy was already destroyed
+- **`DamageCalculator` resistance and armor model reworked.** Three changes, all of which shift damage numbers:
+  - **Type resistance now shares one pool with `damageRes`.** `physicalRes` / `spellRes` used to be a separate multiplier applied after the `damageRes` one, which meant `resPen` could never touch it. They are now summed into a single `effRes` that `resPen` is subtracted from, so resistance penetration finally works against type resistance, and stacking `damageRes` with type resistance is additive instead of multiplicative
+  - **Penetration overflow is now a damage bonus.** Because the combined pool is floored at `-100` (not at 0), penetrating past an enemy's total resistance drives `effRes` negative and multiplies damage up to a hard **2×** cap
+  - **Armor may now go negative from `defShred` overflow.** `effArmor` is no longer clamped at 0. The positive side is the same diminishing curve rewritten as `100 / (effArmor + 100)`; the negative side mirrors it as `2 - 100 / (100 - effArmor)`, so over-shredding ramps physical damage toward the same **2×** ceiling instead of stopping dead at 1×
+- **Autopilot retuned** — trigger changed from `OnTakeDamage` to `OnTakeHit`, so it now only answers direct hostile hits rather than every DoT tick and self-inflicted health cost. Cooldown `3` → `2`s, and the attack fires a `Circle` pattern of **3** projectiles instead of a `Single` one
+- **Warp capstone cost `1` → `3` skill points**, matching the new Cosmic Superimposition capstone
+- **Base Decoy tint alpha `0.75` → `0.61`**, making the untrained decoy more obviously a ghost
+- **Blaze B1 `staminaGainOnHit` `2` → `3`.** The asset was also re-serialized against the current `AttackData` layout (`absorbOrbits` → `absorbOrbitPct`, `redirectCount` added, `type` moved into field order); no behaviour change from the re-serialization
+- **Skill tree grew 105 → 108 nodes** (`Node_ms1`, `Node_ms2`, `Node_decoy` added to `SkillTreeDefinition.asset`)
+
+### Fixed
+- **Skill-tree connector lines were coloured as if connections were directed.** `CanUnlock` walks prerequisites both ways, so either endpoint can be the one you unlock — but `GetLineColor` only ever asked whether the *child* was unlocked and whether the *child* could be unlocked. A line whose child was unlocked and whose prereq was not showed as fully unlocked, and a line that was available in the prereq→child direction only never showed as available. It now returns `unlockedColor` only when **both** endpoints are unlocked; when exactly one is unlocked it asks `CanUnlock` about the *other* endpoint, so the available colour follows whichever end is actually reachable
+
+## [v0.3.4] - 2026-08-30
+
+### Added
+- **Seven `PlayerUpgrade.TriggerCondition` values are now wired up.** They existed on the enum but nothing ever raised them, so any Awakening authored against one was inert. Each now has exactly one firing site:
+  - **`OnTakeHit`** — `EntityHealth.TakeDamage`, alongside the existing `OnTakeDamage`. Deliberately narrower than `OnTakeDamage`: it fires only for a direct hit from a hostile entity. A new `IsEnemyHit` helper rejects the instance unless the damage type is `Physical`, `Spell` or `True` (so DoT ticks, heals and `Consume` health costs are out), the packet does **not** set `bypassIFrames` (which is what a DoT tick and every self-inflicted sustain packet sets), the instance owner is neither null nor the victim itself, and the owner's `ITeamMember.TeamID` differs from the victim's
+  - **`OnKill`** — `EntityHealth.TakeDamage`, in the branch that already handles XP and gold when `ChangeHealth` reports the victim died. Fires on the killer's `PlayerUpgradeManager`, and skips the case where the packet source is the victim, so bleeding out on an attack's own health cost is not counted as a kill
+  - **`OnDeath`** — `EntityHealth.StartDeathSequence`, immediately after `isAlive` drops and before the health bar, status effects and GameObject are torn down. An upgrade whose `delay` outlasts the 1s death animation is cut off with the object
+  - **`OnStaminaRegen`** — `PlayerResourcePool.RegenStamina`, on each tick that actually credits at least 1 stamina. Mirrors how `OnHealthRegen` fires from `EntityHealth.RegenHp`
+  - **`OnManaRegen`** — `PlayerResourcePool.ChangeMana`, on any gain that actually lands (`amount > 0` and a non-zero applied change). There is no passive mana regen loop and no mana-regen stat, so unlike health and stamina this covers every mana gain rather than a periodic tick
+  - **`OnLevelUp`** — `PlayerLevel.LevelUp`. Because `GainExp` loops while the XP pool clears the requirement, one large XP pickup that crosses several thresholds fires the trigger once per level
+  - **`OnSpawnProjectile`** — raised once per projectile that reaches the scene, and dispatched through the `(player, spawnCenter)` overload with the projectile's spawn position, matching `OnProjectileHit`
+- **`ProjectileSpawner.ProjectileSpawned`** — static `Action<GameObject, GameObject, Vector2>` raised at the end of `SpawnProjectile` with the source, the spawned projectile and its spawn position. Static rather than instance-scoped so listeners do not have to race `Instance` during `Awake`. This is how `OnSpawnProjectile` crosses the assembly boundary: `CrystalFlux.Projectile` cannot see `PlayerUpgradeManager`, and `CrystalFlux.Core` is an external package, so the notification travels the one direction the asmdefs already allow — `CrystalFlux.Entity` subscribing to `CrystalFlux.Projectile`
+- **README gained an `Awakening trigger conditions` table** documenting all 22 conditions, what raises each one, and which `TriggerUpgradeEffect` overload it dispatches to — an upgrade that overrides the wrong overload silently does nothing, which was previously undocumented
+
+### Changed
+- **`PlayerUpgradeManager` subscribes to projectile spawns** in `OnEnable`/`OnDisable` and filters the event down to projectiles the player itself owns
+- **`PlayerResourcePool` and `PlayerLevel` now cache a `PlayerUpgradeManager`** in `Start`, the same pattern `EntityHealth` already used for `cpum`. Both stay null-safe on entities without one
+
+### Fixed
+- **Reentrancy guards on the two self-feeding triggers.** An `OnSpawnProjectile` upgrade that spawns a projectile, or an `OnManaRegen` upgrade that grants mana, would otherwise re-enter its own trigger without bound. Both follow the existing `_isTriggeringOnDealDamage` pattern. The guard covers the immediate call only — an upgrade with a non-zero `delay` that re-triggers its own condition still needs a cooldown, and this is called out in the README
+
+## [v0.3.3_2] - 2026-08-30
+
+### Added
+- **Autopilot** — new treasure-pool Awakening (`PlayerUpgrade/Autopilot.asset`, a `SpawnProjectile` upgrade) that fires a homing projectile when the player takes damage. 100% chance, 3s cooldown, 0.25s delay. The projectile spirals outward at speed 12 (`spiralSpacing` 2), lives 6s, is size 2, pierces once and then destroys itself, homes onto targets within 1.5, deals 295% Physical scaling off `EffArmor`, and knocks back with 8 force. Its `AttackData` returns 15 health and 10 stamina on hit (both `basedOnDmgDealt`), so the upgrade doubles as armor-build sustain. Registered in the `treasurePool` of both the regular and the Unlimited reward manager in `New.unity`, with its own prefab, controller, clip and `Bullet 24x24 Part 9A Free` sprite sheet under `Attacks/Treasure Pool/Autopilot/`
+- **Warp capstone skill node** — `SkillTreeNodes/_Capstone/Node_warp.asset` (+ node prefab, placed in `New.unity` under the skill tree canvas at `(-359.3, 293.3)`) is the first *capstone* node: it requires the player to already own **Warp** (`NodeRequirement.requiredAttacks`), hangs off `Node_mm3` as its prerequisite, costs 1 skill point / 50g to refund, and its `UnlockEffect` swaps the owned attack for the upgraded **Warp AA**. Added to `SkillTreeDefinition.asset`, bringing the tree to 105 nodes
+- **Warp AA** — upgraded Warp attack set under `Attacks/SkillTree/Warp/` (own prefab, controller, clip, `AttackData`, `ProjectileData`). Against base Warp: projectile speed `0.8` → `1.4`, size `2` → `3`, Warp Rift proc chance `15%` → `25%`, and, as the trade-off the node description promises, stamina cost `15` → `40` and mana cost `50 / 15%` → `60 / 20%`. On-hit returns shift from `+3` mana to `+1` stamina and `+2 / +2%` mana
+- **`destroyOnMaxPierce` on `ProjectileData`** — when set, a projectile that has spent its pierce budget destroys itself on its next trigger contact instead of lingering as an inert collider for the rest of its lifetime. `numPierce` moved out of `Basic` into a new `Piercing` header alongside it
+- **`pullToSource` on `Pulled`** — forces the pull center onto the source's transform even when the effect was authored with an explicit `location`. Previously `location` always won and the source was only the fallback
+- **`PlayerAttackHandler.NormalizeAttackName(string)`** — public static helper that trims and strips stacked `(Clone)` suffixes off an attack name
+
+### Changed
+- **`randomDir` now randomizes travel, not just facing** — `Projectile.HandleDirection` folded the random angle into `finalAngle`, which only set `transform.rotation`; `dir` kept the spawn/aim direction, so a "random direction" projectile flew straight at the target while pointing elsewhere. The random branch now runs first, derives `dir` from the rolled angle, applies `rotationOffset` to the rotation, and returns early
+- **Corrupted rewards colour by sign** — `RewardButton.CorruptButton` picks `Color.darkGreen` when `corruptMult >= 0` and `Color.darkRed` otherwise (was unconditionally dark red, even for beneficial corruptions)
+- **Serenade** — `pctAmt` `16` → `24` (additional True damage per proc; chance stays 40%)
+- **Aphelion resprite** — sprite sheet swapped from `Bullet 24x24 Part 9B Free` to `Bullet 24x24 Part 5B Free` (the 9B sheet is deleted). `Aphelion Clip` retimed across its 8 frames, stop time `0.51666665` → `0.76666665`, and the prefab's sprite draw size `0.24 × 0.24` → `0.2 × 0.21`
+- **Starting attacks moved to `Assets/data/PlayerData/Attacks/Base/`** — `Cyclone Cleave` and `Lacerate` relocated wholesale (assets byte-identical, GUIDs preserved), separating starting kit from the reward pools
+- **Skill-tree rejection message no longer leaks internals** — `PlayerSkillTree` returns `Requirement not met` instead of `Requirement not met: {req.GetType().Name}`
+- **Player prefab instance in `New.unity`** carries an `activeUpgrades` override with Autopilot in slot 0 and array size `0` — the reference is wired but the array is empty, so nothing is granted at runtime (editor test wiring)
+- `graphify-out/` regenerated against the current source
+- **`TODO.md` Content Updates split into `Major` / `Minor`** — gear, shop/chest, and the elemental damage / affinity / reaction line items grouped under `Major` alongside a new **Finish Gear/Item system** entry; the rest stay under `Minor`. The standalone Rune/Enchantment item is dropped (folded into the gear work). Docs also record the first capstone node against the Pre-v0.4.0 capstone checklist item
+
+### Fixed
+- **`OnTakeDamage` upgrade trigger never fired** — the `PlayerUpgrade.TriggerCondition` member existed but no system raised it, so any upgrade authored against it was inert. `EntityHealth.TakeDamage` now triggers it on the victim's own `PlayerUpgradeManager` whenever the resolved damage is positive. Autopilot is the first upgrade to use it
+- **`HasAttack` missed runtime copies** — equipped attacks are `Instantiate`d, so their names carry a `(Clone)` suffix (nested clones stack it) while requirement checks compare against the source asset name; the comparison only trimmed whitespace, so a node gated on an owned attack (such as the new Warp capstone) could never match. Both sides now go through `NormalizeAttackName`, null entries in the list are skipped, and `UpdateAttack` writes the normalized name onto the runtime copy it creates
+
+### Removed
+- **`statBuffs` from `SkillNodeDef`** — the legacy `List<StatBuff>` field marked `// TODO: Remove`, superseded by `[SerializeReference] unlockEffects`
+- Unused `using CrystalFlux.StatusEffectSystem;` in `EntityHealth` and `using CrystalFlux.ProjectileSystem;` in `PlayerUpgradeManager`
+- Stale comment in `Projectile` describing the prefab-movement override that the code below it already documents
+
+## [v0.3.3_1] - 2026-08-30
+
+### Added
+- **Wave progress indicator** — the wave label now reads `Wave {n} ({killed}/{total})` instead of just `Wave {n}`. `WaveManager.CleanEnemyList` returns the number of entries it removed and folds that into a new `enemiesKilled` counter, so the count advances as corpses are reaped rather than needing a separate death hook. `enemiesKilled` and `waveMaxTotalEnemies` reset in `BeginWave` (both `WaveManager` and `UnlimitedWaveManager`), and all label writes go through the shared `UpdateWaveText()`, which null-guards `waveText`
+- **End-of-wave reward announcement** — new `RollAndAnnounceWaveRewards()` runs when the last enemy of a wave dies, before the 1.5s wind-down. It rolls the occasional wave rewards and the anomaly-completion rewards up front, sums them, and announces the total as a single subtitle (`+2 Rerolls, +1 Skill Point`, correctly singular/plural) via `GameController.SetSubtitleForDuration`. Nothing is announced when the wave grants neither
+- **Reward panel title in Unlimited mode** — `UnlimitedWaveManager.TriggerStandardRewards` sets the `GameController` title to `Choose Wave Reward` when the standard reward panel opens
+
+### Changed
+- **Wave rewards are rolled once, then applied** — the roll and the grant were previously the same step, so announcing early would have double-rolled. Occasional rewards moved into `RollOccasionalWaveRewards(wave)` writing `pendingOccasionalRerolls` / `pendingOccasionalSkillPoints`; `UpdateOccasionalWaveRewards` now only spends those pending values (rolling lazily if `RollAndAnnounceWaveRewards` never ran) and resets them afterward. `HandleAnomalyRewards` does the same with `pendingAnomalyRerolls` / `pendingAnomalySkillPoints`, falling back to its own `Random.Range(1, 4)` roll when there is no pending value
+- **`HandleAnomalyRewards` no longer announces on its own** — its `You gained 1 skill point and {c} reroll tokens!` subtitle is superseded by the combined end-of-wave announcement, so the two no longer compete for the subtitle slot. It also skips `AddSkillPoints` when the pending skill-point count is `0`
+- **Spawn loop reaps dead enemies every tick** — `CleanEnemyList()` moved above the `currentEnemies.Count >= maxCurrent` check in both spawn routines (was only called inside the "at capacity" branch). Dead entries are now cleared before the capacity test, so a freed slot is refilled on the same frame instead of one frame later — and the progress counter updates continuously rather than only while the spawner is saturated
+- **Boss Rush order** — `BossRush.asset` now runs Lich → Jellyfish → Cultist (was Cultist → Lich → Jellyfish), putting the reworked Cultist attack set last
+- **Wave label layout** (`New.unity`) — font size 36 → 30 and width 200 → 250 so the `(killed/total)` suffix fits without wrapping
+- **`TODO.md` restructured** — priority buckets (`High` / `Medium` / `Low`) replaced with milestone checklists: **Pre [v0.4.0]**, **Pre [v0.5.0]**, and **Content Updates**. Existing items redistributed; pause menu, map borders, and tilemaps pulled forward into the v0.4.0 list
+
+### Fixed
+- **Unlimited waves showed a stale enemy count** — `UnlimitedWaveManager.BeginWave` never seeded the per-wave counters, so the new progress label would have carried the previous wave's totals
+
+### Removed
+- **Unused `using CrystalFlux.UISystem;` in `GameController`**
+
+### Credits
+- **tiopalada** — [Tiny RPG - Mana Soul GUI](https://tiopalada.itch.io/tiny-rpg-mana-soul-gui) added to `CREDITS.md`
+- `Packages/packages-lock.json` — `CrystalFlux-Core` git dependency hash bumped
+
+## [v0.3.3] - 2026-08-30 — Projectile Movement Patterns & Screen-Wide Spawn Lines
+
+Projectiles gain authored flight paths independent of their spawn pattern, and the spawner gains five screen-wide line patterns for bullet-hell style attacks.
+
+### Added
+- **`MovementType` on `ProjectileData`** — new `Default` / `Wave` / `Spiral` enum under a dedicated `Movement` header (which `speed` moved into). `Default` keeps the existing orbit / homing / boomerang behavior; the other two drive a parametric path
+  - **Wave** — travels along its launch direction while oscillating sideways. `waveAmplitude` is the peak sideways offset in world units, `waveFrequency` is full sine cycles per second
+  - **Spiral** — travels an Archimedean spiral outward from its spawn point. `spiralSpacing` is the world-unit gap between consecutive rings; the existing `rotateClockwise` flag picks the winding direction. The angular step is computed from arc length, so travel speed stays constant as the radius grows
+- **`Projectile.HandlePatternMovement`** — pattern projectiles integrate position analytically (`patternOrigin` plus elapsed `patternTime`) and drive the rigidbody by setting `linearVelocity` to the delta over `Time.fixedDeltaTime`, so they still collide through the physics system rather than teleporting. The path is re-anchored in `Launch`, so pooled instances never inherit a previous flight
+- **Homing coexists with patterns** — a pattern projectile with `followDistance > 0` suspends its path while it holds a target. When that target dies or leaves range, the path re-anchors to the current position and heading (`patternSuspended`) so it resumes forward instead of snapping back toward the spawn point
+- **Five spawn patterns for screen-wide lines** — `TopDown`, `LeftRight`, `Diagonal`, `DiagonalReverse`, and `FullX` on `ProjectilePattern`, all built on a shared `SpawnOpposingLines` helper. Each fires two opposing walls of projectiles that converge on the origin (`FullX` fires four, both diagonals): `projectileCount + Random(0, randomCount)` projectiles per side, distributed across `spread` world units perpendicular to travel, jittered by `randomSpread`, offset back by `spread / 2` along their travel direction, and staggered by the usual `minDelay`–`maxDelay` wait
+
+### Changed
+- **`Projectile.HandleMovement`** — homing extracted to `TryHome()`, which returns whether a target was acquired and followed. Removes a nesting level and lets the pattern path reuse the same acquisition logic instead of duplicating it
+- **Cultist Attack Overhaul** - now uses many of the new attack types - go find them out
+
+### Fixed
+- **`StatusEffectManager` no longer throws without an `IStatProvider`** — `cesm` is only assigned if a sibling component implements the interface, but `Update` dereferenced it unconditionally to read `EffectRes`. Effect resistance now falls back to `0` when absent, and `Awake` logs an error naming the GameObject instead of failing silently at the first tick
+- **Status effects are cleared on destroy** — `StatusEffectManager.OnDestroy` calls `ClearAllEffects()`, so an entity destroyed mid-effect tears down its display objects and effect state instead of leaking them
+- **`StatusEffectCooldownUI` null-guards its stat provider and image** — the same missing-`IStatProvider` case threw from `Update` on both the `isAlive` check and the `EffectRes` duration scale; `cooldownImage` is also null-checked before it is written
+- status effect tooltips not updating after stacking
+- health and stamina cost calculations on attacks being reversed
+
+## [v0.3.2_1] - 2026-08-29
+
+### Fixed
+- **Overhealing no longer exceeds Max HP** — `EntityHealth.ChangeHealth` computed a clamped `targetChange` but then applied the raw `finalAmount` to `currentHp`, so any heal past full permanently inflated the stat (health bar read `120/100`) and stalled regeneration. The stat is now clamped to `MaxHp` when healing, matching the `PlayerResourcePool` idiom
+- **`Projectile.HandleSize` no longer throws when the owner has no `IStatProvider`** — the condition `!TryGetComponent(...) && esm.GetStat(aoePct)` dereferenced a null `esm` whenever the owner lacked a stat manager, firing an NRE from `Start()` on every such projectile. It now null-guards `ownerObj`/`pd` and early-returns, keeping the base size
+- **`DamagePacketBuilder` no longer throws on projectiles with no `mainAttack`** — `ProjectileData.mainAttack` is optional (e.g. pure `SpawnProjectile` upgrades), but its `.type` was dereferenced unconditionally, crashing the damage pipeline on hit. The attack-type bonus is now computed once and skipped (multiplier `1`) when `mainAttack` is null
+- **Gold reroll no longer decrements token counter** — `WaveManager.OnRerollButtonClicked` spent a reroll token (`rerolls--`) even when the player paid gold (`cich.TrySpend`). Now only decrements when a free token is actually used; also null-guards `cich`/`cpsm` in reroll and corrupt flows
+- **`PlayerUpgrade.chance` tooltip now matches authoring scale** — tooltip read `chance` as 0–1 (`chance*100%`) but trigger used 0–100; now both are 0–100, matching all authored upgrade assets (`Paradox: 0`, `StellarSurge: 20`, `Supersonic: 100`)
+- **Cooldown NRE after attack removed** — `PlayerAttackHandler.RemoveAttack` now clears `lastAttackTimes` for the removed type, and `GetEffCd` null-guards its inputs
+- **Input subscription leaks fixed** — `PlayerInputHandler` and `SkillTreeInputToggle` now unsubscribe individual callbacks in `OnDisable` and dispose `controls` in `OnDestroy`
+- **Pause-safe regen loops** — `PlayerResourcePool.Update`, `PlayerMovement.FixedUpdate`, and `EntityHealth.RegenHp` now early-return when `Time.timeScale == 0f`, matching the project convention followed by other AI/player loops
+- **Decoy upgrade no longer aborts on one bad enemy** — `Decoy.TriggerUpgradeEffect` changed `return` to `continue`; `PlayerLevel` now null-guards `TextIndicatorSpawner.Instance` and `ISkillPointHolder`
+- **`StatReduction` now works on `Eff*` stats** — added missing `Apply` cases in `EntityStats` for `EffAtk`, `EffMaxHp`, `EffHpReg`, `EffStReg`, `EffSpd`, `EffInt`, `EffMaxStamina`, `EffMaxMana`, `EffArmor`, they instead reduce the base stat.
+- **`ArmorRes` now computes physical mitigation** — was a copy-paste of `EffSpd` (move speed); now returns `EffArmor / (EffArmor + 100)` matching `DamageCalculator`
+- **`Paradox.globalDoTCanCrit` wired for inspector upgrades** — added `OnRemove` hook + `Start()` seeding of `OnUnlock` for pre-assigned upgrades; symmetric revocation on removal
+
+## [v0.3.2] - 2026-08-29 — Core Extracted to a Package, Wave Decoupled
+
+`v0.3.1` enforced the assembly boundaries; this release moves `Core` out of the repo entirely and cuts the last system that still reached across one. `Wave` now compiles against `CrystalFlux.Core` alone, which means every system except `Entity` depends on contracts and nothing else.
+
+### Added
+- **`com.crystalflux.core` package** — `Assets/scripts/Core` is gone; Unity imports the contracts from [joezhuo2/CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) via the git URL in `Packages/manifest.json`. The package ships `.meta` files carrying the original GUIDs, so nothing re-imported as a new asset
+- **`IBossBar`** — `Core` contract for `BossBarUI`, whose `Setup(string, IStatProvider)` already spoke only in `Core` types
+- **`EnemySpawning`** — `Core` spawn hook. `EnemySpawner` registers itself through `[RuntimeInitializeOnLoadMethod]`, so `Wave` can spawn without naming the spawner. Spawn sites now null-check, since an unregistered hook returns `null`
+- **`PlayerEvents.OnPlayerTakeDamage`** — relocated from `EntityHealth`'s own `static event`, typed over `IDamageable`. `NoDamageTrialInstance` subscribes here now
+- **`AttackAsset.GetTooltipLines` / `UpgradeAsset.GetTooltipLines`** — abstract description hooks. `RewardButton` was reading ~24 concrete fields off `AttackData` and `PlayerUpgrade` (and its nested `ProjectileData`) to format tooltips; each system now describes its own data instead of exporting its stat schema
+
+### Changed
+- **`Wave` references only `Core`** (plus TextMeshPro and uGUI) — down from `Core`, `Entity`, `Projectile`, `StatusEffect`, and `SkillTree`. Its concrete references were swapped for the `Core` interfaces those classes already implemented: `PlayerAttackHandler`→`IAttackHandler`, `PlayerUpgradeManager`→`IUpgradeHolder`, `PlayerSkillTree`→`ISkillPointHolder`, `StatusEffectManager`→`IStatusEffectReceiver`, `BossBarUI`→`IBossBar`
+- **`WaveReward`** — `newAttack` and `upgrade` widened from `AttackData`/`PlayerUpgrade` to their `Core` bases `AttackAsset`/`UpgradeAsset`. Widening to a base keeps existing serialized asset references intact
+- **`IStatusEffectReceiver`** — gained `DisplayPrefab` / `DisplayContainer` setters, replacing direct writes to `StatusEffectManager`'s public fields
+- **`Core` is a single namespace** — everything the package ships is in `CrystalFlux.Core`. The old per-system namespaces it used to contribute (`CrystalFlux.EntitySystem`, `.ProjectileSystem`, `.StatusEffectSystem`, `.UISystem`) no longer exist there
+
+### Fixed
+- **Dead `using` directives after the move** — 13 across 10 files. The old local `Core` assembly also declared `CrystalFlux.EntitySystem`, `.ProjectileSystem`, `.StatusEffectSystem`, and `.UISystem`, so assemblies referencing only `Core` were resolving those imports through `Core`'s contribution to them. Folding the package into one namespace left them pointing nowhere
+- **Package `.meta` coverage** — `package.json`, `README.md`, and `CHANGELOG.md` shipped without `.meta` files, so Unity logged "has no meta file, but it's in an immutable folder" for each on import
+
+
+## [v0.3.1] - 2026-08-29 — Compiler-Enforced Assembly Boundaries
+
+The interface-driven decoupling from `v0.3.0` was convention-only — nothing stopped a system from reaching into another. This release splits the codebase into seven assemblies so those boundaries are enforced by the compiler: `Projectile`, `StatusEffect`, and `SkillTree` can now reference **only** `Core`, and an illegal dependency fails the build instead of accumulating silently.
+
+### Added
+- **Assembly definitions** — `CrystalFlux.Core`, `.Projectile`, `.StatusEffect`, `.SkillTree`, `.Entity`, `.Wave`, `.TextIndicator`. Dependency graph (verified from compiled assembly metadata):
+  ```
+  Core ──┬─ TextIndicator ─┐
+         ├─ Projectile ────┤
+         ├─ StatusEffect ──┼─→ Entity ──→ Wave
+         └─ SkillTree ─────┘
+  ```
+- **Cross-assembly asset contracts** — `AttackAsset`, `UpgradeAsset`, and `EffectAsset`: thin abstract `ScriptableObject` bases in `Core` that `AttackData`, `PlayerUpgrade`, and `StatusEffect` derive from. Unity cannot serialize interface-typed asset fields, so a shared base is what lets `List<AttackData>` cross a boundary without breaking existing asset references — the concrete types keep their assemblies and GUIDs
+- **`IAttackHandler` / `IUpgradeHolder`** — `Core` interfaces for `PlayerAttackHandler` and `PlayerUpgradeManager`, implemented explicitly so existing Entity call sites keep their concrete signatures
+- **`InputState`** — `Core` holder for the shared mouse position, replacing `PlayerInputHandler.mousePos`. The assembly split exposed that `Projectile` was reading this `public static` field directly out of `Entity`
+- **`DamageRoll`** — `Core` home for `RollCrits` and flat damage-packet assembly, so `StatusEffect` no longer needs `Projectile` to deal damage
+
+### Changed
+- **`Core` is now contracts only** — gained `AttackType`, `SummonCondition`, `ResourceType`, `StatType`, `StatBuff`, `InputState`, `DamageRoll`, and the new asset bases; `IDamageable` / `IKnockbackable` / `IResourcePool` / `IStatusEffectReceiver` returned to it. Namespaces were deliberately left unchanged (e.g. `AttackAsset` stays in `CrystalFlux.ProjectileSystem`), so only assembly membership moved and no `using` directives churned
+- **`IStatusEffectReceiver`** — retyped over `EffectAsset`; `StatusEffectManager`'s generic constraints relaxed to match, narrowing to `StatusEffect` internally
+- **`DamagePacketBuilder` / `DamageCalculator`** — flat-damage and crit-roll paths now delegate to `Core.DamageRoll`
+- **`Paradox`** — the `DoT` crit check moved from `HasUpgradeOfType<Paradox>()` to the `StatType.globalDoTCanCrit` stat (previously declared but never wired), since `StatusEffect` can no longer name concrete upgrades. `EntityStats` now backs the stat and `Paradox.OnUnlock` grants it
+- **`SkillTreeInputToggle`** — moved to `Entity/Player/` so it can still reach the generated `PlayerControls`
+
+### Fixed
+- **Skill tree node deserialization** — added `[MovedFrom(sourceAssembly: "Assembly-CSharp")]` to `UnlockEffect` and `NodeRequirement`. `[SerializeReference]` records a literal `{class, ns, asm}` triplet, so moving these types into `CrystalFlux.SkillTree` orphaned the reference in all 104 node assets ("Missing types referenced from component SkillNodeDef")
+- **Duplicate `SummonCondition`** — the enum existed in both `Core` and `EntitySummonHandler`, producing `Operator '==' cannot be applied to 'SummonCondition' and 'SummonCondition'`
+- **`EntityStatManager.AddStat`** — dropped a dead `IsUnityNull()` guard on `StatBuff`; the extension takes `object`, so the struct boxed and the check was always `false`
+
+
+## [v0.3.0] - 2026-08-29 — System Refactor & QoL Update (Release Summary)
+
+This release covers the full development arc from `v0.2.0` through `v0.2.19`. Over this period Anamnesis went through a major architectural refactor — nearly every combat, stat, resource, and UI system was decoupled from concrete components onto small interfaces — while the skill tree nearly doubled, two gamemodes were wired into a selector, enemy scaling was reworked, and new attacks shipped.
+
+### Highlights
+
+- **Interface-driven decoupling (`v0.2.9`–`v0.2.19`)** — the core systems were steadily refactored off direct component references onto focused interfaces:
+  - **`IStatProvider` / `ICurrencyHolder`** — `EntityStatManager` is no longer referenced directly anywhere (v0.2.10)
+  - **`IDamageable`** — unified take-damage / heal / consume pipeline via `DamagePacket`, adding `DamageType.Heal` / `DamageType.Consume`, `bypassIFrames`, and `sizeOverride` (v0.2.11)
+  - **`IStatusEffectReceiver`** — status effect application centralized through the `StatusEffectManager` (v0.2.12)
+  - **`ITooltipDisplay`** — the entire tooltip system migrated off `TooltipTrigger` onto UI components (v0.2.13)
+  - **`IResourcePool` / `IKnockbackable` / `IUnlockEffect`** — plus the unified `PlayerResourcePool` replacing separate `PlayerStamina`/`PlayerMana` (v0.2.14)
+  - **`ITeamMember`**, **`IAnnouncer`**, **`ISkillPointHolder`**, **`IUnlockRequirement`**, **`ISummonTrigger`**, **`IOnHitEffect`** — remaining concrete references replaced across the codebase (v0.2.15–v0.2.19)
+- **Namespaces (`v0.2.17`)** — most classes now live in `CrystalFlux.Core`, `.EntitySystem`, `.ProjectileSystem`, `.StatusEffectSystem`, `.WaveSystem`, and `.UISystem`
+- **Skill tree overhaul (`v0.2.2`, `v0.2.6`, `v0.2.18`)** — nodes grew from 78 → 104; strict AND-based prerequisites became a bidirectional OR connections system; per-node skill-point costs added. The headline change reworked `SkillNodeDef` onto scriptable data: `[SerializeReference] List<IUnlockEffect> unlockEffects` (`StatBuffEffect`/`PlayerUpgradeEffect`/`AttackUpgradeEffect`) and `List<IUnlockRequirement> requirements`, with a custom `TypeSelector` inspector — all 104 node assets now store their effects as data, and unlock/undo logic lives on the effects themselves
+- **Unlimited Waves gamemode (`v0.2.3`–`v0.2.4`)** — new `UnlimitedWaveManager` (infinite scaling, faster spawns, periodic boss waves, mixed/milestone reward flow) plus a gamemode selector with `RegularWaveButtonController` / `UnlimitedWaveButtonController`, and tooltip support for the corrupt/reroll/skip action buttons
+- **Enemy scaling rework (`v0.2.7`)** — linear → exponential per-level scaling (ATK 5%, HP/regen 10%, armor 5%, move/crit/aoe 4%, resistances 3% per level) so base stats matter; fixed the `levelOffset % 5 == 0` bug that only scaled on every 5th level
+- **Stat system overhaul (`v0.2.5`–`v0.2.9`)** — get/set routed through `GetStat(StatType)` / `AddStat(StatBuff)` on `EntityStatManager`; split into player/enemy stat managers (enemies scale to level); new status-effect, resource, and per-attack CDR stats added
+- **New attacks & content (`v0.2.1`)** — Ignition Flash (DoT basic that debuffs enemies) and Lifeforce (HP-scaling spell nuke); subtitle feedback when gaining skill points / reroll tokens
+- **Robustness & pooling (`v0.2.11`–`v0.2.19`)** — `AttackData.IsRuntimeCopy` so runtime-upgrade copies are never confused with source assets (original ScriptableObjects are never destroyed); skill-tree undo cost/refund and requirement checks fixed; reward buttons fully reset on pooling; crash-level fixes (level system, `PoolPreSetup` on unlimited mode)
+
+## [v0.2.19] - 2026-08-29
+
+### Added
+- **`ISummonTrigger` interface** — new interface with `TrySummon(Vector2 position)`; `EntitySummonHandler` implements it, decoupling summon-on-hit from the concrete handler type
+- **`DamagePacketBuilder`** — new static class extracting the `BuildDamagePacket` methods from `DamagePacket`, which is now a pure data container
+- **`IStatusEffectReceiver.RemoveStacks`** — interface now declares `RemoveStacks<T>(int)`, matching the existing `StatusEffectManager` implementation
+
+### Changed
+- **`DamagePacket` / `DamageInstance` / `DamageType`** — moved from `CrystalFlux.ProjectileSystem` to `CrystalFlux.Core` (files relocated `Assets/scripts/Projectile/` → `Assets/scripts/Core/`)
+- **`IOnHitEffect`** — moved from `CrystalFlux.ProjectileSystem` to `CrystalFlux.Core`
+- **`Projectile`** — no longer implements `IOnHitEffect`; hits now notify ALL `IOnHitEffect` components on the owner, so any owner component can react to projectile hits
+- **`PlayerUpgradeManager`** — now implements `IOnHitEffect`, triggering `OnProjectileHit` upgrades through the shared on-hit pipeline
+- **Summon-on-hit** — routed through `ISummonTrigger` instead of a direct `EntitySummonHandler` reference
+
+### Updated
+- **All 104 skill node assets** — `statBuffs` converted to `UnlockEffect` entries in `unlockEffects` (buffs / attacks / awakenings); `statBuffs` is now empty on every node (field still on `SkillNodeDef`, marked TODO: Remove)
+
+## [v0.2.18_1] - 2026-08-28
+
+## Updated
+- scene assets to use the new files
+- 1 skill node with the new system (to test, it works)
+
+## ⚠️ [v0.2.18] - 2026-08-28
+
+### Added
+- **`IUnlockRequirement` interface** — new core interface with `Has(GameObject target)` for unified skill node unlock requirements
+- **`UnlockEffects`** — new serializable `IUnlockEffect` wrappers (`StatBuffEffect`, `PlayerUpgradeEffect`, `AttackUpgradeEffect`) for `[SerializeReference]` lists on `SkillNodeDef`
+- **`TypeSelectorAttribute` / `TypeSelectorDrawer`** — inspector dropdown for null `[SerializeReference]` elements on `SkillNodeDef.requirements`/`unlockEffects`, so added elements can be assigned a concrete implementation (e.g. `UnlockEffect`) and configured
+- **`AttackData.IsRuntimeCopy`** — non-serialized flag set during `DeepClone`, exposing whether an instance is a runtime copy
+- **`PlayerUpgrade` / `AttackData`** — now implement `IUnlockEffect` and `IUnlockRequirement`; `Apply`/`Remove`/`Has` route through `PlayerUpgradeManager`/`PlayerAttackHandler`
+
+### Changed
+- **`SkillNodeDef`** — replaced `requiredAttacks`/`requiredPlayerUpgrades` with `[SerializeReference] List<IUnlockRequirement> requirements`; replaced `attackUpgrades`/`playerUpgrades` with `[SerializeReference] List<IUnlockEffect> unlockEffects`; removed `Apply`/`Remove` and all upgrade/downgrade handling (logic now lives on the effects); `statBuffs` deprecated (TODO: remove); `cost`/`undoCost` regrouped under a Costs header with tooltips
+- **`PlayerSkillTree`** — `CanUnlock` validates `node.requirements` via `Has()`; `UnlockNode`/`UndoNode` iterate `node.unlockEffects`; removed manual deep-instantiation of node attack/player upgrades in `GenerateRuntimeNodes`/`CleanupNodes`
+- **`IUnlockEffect`** — wrapped in `CrystalFlux.Core` namespace
+
+### Fixed
+- **Original asset destruction** — `PlayerAttackHandler` (`UpdateAttack`/`RemoveAttack`/`OnDestroy`), `EnemyAttackHandler` (`OnDestroy`), and `AttackReplacement` (`OnDestroy`) now only destroy `AttackData` marked `IsRuntimeCopy`, so source assets are never destroyed at runtime
+- **`PlayerUpgradeManager.HasUpgrade`** — name comparison now trims and ignores case, fixing requirement checks failing on name mismatches
+- **`PlayerSkillTree.CanUndo`** — always returned false (fallthrough returned "No stat manager found" even on success); now returns true when the player can afford the undo cost
+- **`PlayerSkillTree.UndoNode`** — effects were removed even when the gold refund failed; removal now only happens on a successful undo
+- **`PlayerSkillTree.CanUnlock`** — null-guarded `node.requirements` (all existing node assets deserialize it as null, crashing every check)
+- **`NodeRequirement.Has`** — requirements silently passed when the target lacked `PlayerAttackHandler`/`PlayerUpgradeManager`; now fail, with null-entry guards
+- **Legacy `statBuffs`** — still applied on unlock/undo until assets are migrated to `unlockEffects` (all 60+ existing node assets store buffs in the deprecated field)
+
+## ⚠️ [v0.2.17] - 2026-08-28
+
+### Added
+- **Namespaces** - most classes now use namespaces from one of the following: `CrystalFlux.Core`, `CrystalFlux.EntitySystem`, `CrystalFlux.ProjectileSystem`, `CrystalFlux.StatusEffectSystem`, `CrystalFlux.WaveSystem`, and `CrystalFlux.UISystem`.
+
+## ⚠️ [v0.2.16] - 2026-08-27
+
+### Added
+- **`IAnnouncer` interface** — new core interface for unified title/subtitle announcements (`SetTitleForDuration`, `SetSubtitleForDuration`)
+- **`ISkillPointHolder` interface** — new core interface for skill point management (`SkillPoints`, `AddSkillPoints`, `TrySpend`)
+- **`SkillNodeDef.cost`** — per-node skill point cost (default 1) replacing fixed cost
+
+### Changed
+- **`GameController`** — now implements `IAnnouncer`; announcements route through `IAnnouncer.Current` instead of singleton
+- **`PlayerSkillTree`** — implements `ISkillPointHolder`; `skillPoints` field → `SkillPoints` property; unlock cost now uses `node.cost`; added `AddSkillPoints`/`TrySpend` methods
+- **`WaveManager`** — references `IAnnouncer` instead of `GameController`; uses `ISkillPointHolder` for skill point rewards; null-conditional calls for announcements
+- **`PlayerLevel`** — uses `IAnnouncer.Current` for level-up announcements
+- **`PlayerInputHandler`** — removed `PlayerSkillTree` reference and skill tree toggle logic (moved to UI layer)
+- **`PlayerAttackCooldownUI`** — added null-safety check for `cooldownImage`
+
+### Fixed
+- **Skill tree refund** — now refunds `node.cost` skill points instead of fixed 1
+- **Wave reward skill points** — now uses `AddSkillPoints(1)` via interface
+
+## ⚠️ [v0.2.15_1] - 2026-08-27
+
+### Removed
+- code counter
+- unused recovery assets
+
+## ⚠️ [v0.2.15] - 2024-08-27
+
+### Added
+- **`ITeamMember` interface** - replaces `CompareTag` checks
+
+## ⚠️ [v0.2.14_1] - 2024-08-27
+
+### Fixed
+- tooltip not updating when the player gets new stats (now updates whenever the player hovers over the tooltip)
+- special orbit scaling not working
+- level system not working and instead crashing the game
+
+## ⚠️ [v0.2.14] - 2026-08-27
+### Added
+- **`PlayerResourcePool`** — new unified resource management component implementing `IResourcePool`; consolidates stamina and mana gain/spend/regen logic into a single component (replaces separate `PlayerStamina` and `PlayerMana`)
+- **`IKnockbackable` interface** — new core interface with `ApplyKnockback(Vector2 direction, float force, float duration)` for unified knockback handling on players and enemies
+- **`IUnlockEffect` interface** - new core interface for unified skill node unlock effects through `Apply` and `Remove` 
+
+### Changed
+- **`IResourcePool`** — `Gain` → `TryGain` returning `bool` for consistency with `TrySpend`; removed `Health` from `ResourceType` enum (health now handled via `IDamageable`)
+- **`Player`** — requires `PlayerResourcePool` instead of `PlayerStamina`; resource costs/gains now route through `IResourcePool`
+- **`PlayerAttackHandler`** — uses `IResourcePool.TrySpend` for stamina/mana costs; removed direct `PlayerStamina`/`PlayerMana` references
+- **`PlayerMovement`** — implements `IKnockbackable` for knockback handling
+- **`EnemyMovement`** — implements `IKnockbackable`; removed `Unity.Mathematics` dependency
+- **`EntityProjectileHandler`** — uses `IResourcePool.TryGain` for stamina/mana gains on projectile hits
+- **`Projectile`** — knockback now uses `IKnockbackable` interface; stat gains use `IResourcePool.TryGain`
+- **`GainMana` upgrade** — uses `IResourcePool.TryGain(ResourceType.Mana, amount)` instead of `PlayerMana.ChangeMana`
+- **`TooltipUI`** — added null-safety checks in `ShowTooltip`/`HideTooltip`
+- **`SkillNodeDef`** — now implements `IUnlockEffect`
+- **`PlayerSkillTree`** — now calls the `Apply` or `Remove` methods from the selected `SkillNodeDef` instead of handling upgrade/remove logic
+
+### Removed
+- **`PlayerStamina`** — entire component removed; logic migrated to `PlayerResourcePool`
+- **`PlayerMana`** — entire component removed; logic migrated to `PlayerResourcePool`
+- **`ResourceType.Health`** — health no longer treated as a spendable/gainable resource
+
+## ⚠️ [v0.2.13] - 2026-08-27 
+### Added
+- **`ITooltipDisplay` interface** — new core interface with `ShowTooltip(string title, string subtitle, Vector2 offset)` and `HideTooltip()` for unified tooltip display
+- **Tooltip methods on UI components** — `GetSkillTreeTooltip()`, `GetStatusEffectTooltip()`, `GetAttackTooltip()`, `GetDashTooltip()`, `GetStatRewardTooltip()`, `GetAttackRewardTooltip()`, `GetPlayerUpgradeTooltip()`, `GetMilestoneRewardTooltip()` returning `(title, subtitle, offset)` tuples
+
+### Changed
+- **Complete tooltip system migration** — replaced `TooltipTrigger` with `ITooltipDisplay` across all UI components:
+  - `PlayerAttackCooldownUI`, `PlayerDashCooldownUI`, `PlayerUI` — attack/dash/skill tooltips via `GetAttackTooltip()`/`GetDashTooltip()`/`GetSkillTooltip()`
+  - `SkillNodeUI` — skill tree node tooltips with unlock/undo info via `GetSkillTreeTooltip()`
+  - `StatusEffectCooldownUI` — status effect tooltips via `GetStatusEffectTooltip()`
+  - `RegularWaveButtonController`, `UnlimitedWaveButtonController` — gamemode button tooltips
+  - `RewardButton` — comprehensive tooltips for all reward types (stat, attack, player upgrade, milestone)
+  - `WaveManager` — action button tooltips (reroll, corrupt, skip) using `ITooltipDisplay`
+- **`RewardButton` refactor** — renamed fields (`statRewardData`→`gr`, `attackRewardData`→`ar`, `playerUpgradeRewardData`→`pur`, `milestoneRewardData`→`mrd`); added dedicated tooltip methods per reward type with detailed stat/attack/upgrade info
+- **`TooltipTrigger`** — simplified to implement `ITooltipDisplay`; removed old `SetupTooltipData` overloads
+
+### Removed
+- Direct `TooltipTrigger` references and `SetupTooltipData` calls throughout codebase
+- `TooltipTrigger` component from `SkillNodeUI` (replaced with `ITooltipDisplay`)
+
+## ⚠️ [v0.2.12] - 2026-08-26
+
+### Added
+- **`IStatusEffectReceiver` interface** — new core interface with `Apply(StatusEffect, GameObject, Vector2)`, `ClearAllEffects()`, `GetActiveFirstEffectOfType<T>()`, `GetActiveEffectsOfType<T>(List<T>)`, `RemoveEffectAfterDelay<T>(float)`, `RemoveEffect<T>()`
+- **`StatusEffect.location`** — replaced `projectile` field with `Vector2 location` for effect application position tracking
+
+### Changed
+- **`StatusEffectManager` implements `IStatusEffectReceiver`** — unified status effect application through `Apply()`; removed `AddEffectAfterDelay`, `AddEffect`, `GetEffect`, `RemoveEffect(StatusEffect)`; `projectile` param removed from effect runtime
+- **All status effect consumers migrated to `IStatusEffectReceiver`** — `EntityHealth`, `EntitySummonHandler`, `PlayerUpgrades` (Decoy, Reminiscence, SoulRendPU), `Projectile`, `Detonator`, `Pulled`
+- **`EntitySummonHandler` on-death effects** — now use `Apply()` instead of `AddEffectAfterDelay`
+- **`Projectile` effect application** — uses `Apply()` with location; removed delay coroutine
+- **`Detonator`** — uses `GetActiveEffectsOfType<DoT>()` and `RemoveEffect<DoT>()` via interface
+- **`Pulled`** — uses `location` for pull center; uses `RemoveEffect<Pulled>()` via interface
+- **`SoulRendPU`** — uses `GetActiveFirstEffectOfType<SoulRend>()` and `RemoveEffectAfterDelay<SoulRend>()` via interface
+
+### Removed
+- `StatusEffect.projectile` field (replaced by `location`)
+- `StatusEffectManager.AddEffectAfterDelay`, `AddEffectAfterDelayCoroutine`, `GetEffect`, `RemoveEffect(StatusEffect)` methods
+- Direct `StatusEffectManager` references throughout codebase (replaced with `IStatusEffectReceiver`)
+
+### Fixed
+- not being able to heal on attack hits
+
+## ⚠️ [v0.2.11] - 2026-08-26 
+
+### Added
+- **`IDamageable` interface** — new core interface with `TakeDamage(DamagePacket)`, `TriggerIFrames(float)`, `IsAlive` property, and `OnDeath` event
+- **`DamageType.Heal` and `DamageType.Consume`** — new damage types for healing and resource consumption
+- **`DamagePacket` enhancements** — added `source`, `bypassIFrames`, `sizeOverride` fields; updated `BuildDamagePacket` signatures to include bypass/size params
+
+### Changed
+- **`EntityHealth` implements `IDamageable`** — unified damage/heal/consume flow through `TakeDamage`; `Alive` → `IsAlive`; `TriggerIFrames` returns `Coroutine`; healing/consuming now use `DamagePacket`
+- **All damage consumers migrated to `IDamageable`** — `EntityProjectileHandler`, `EntitySummonHandler`, `PlayerAttackHandler`, `PlayerMovement`, `PlayerUpgrades` (AdditionalDamage, StellarSurge), `Projectile`, `DoT`, `Detonator`
+- **`PlayerAttackHandler` resource costs** — health/stamina/mana costs now use `DamagePacket` (Consume type) via `IDamageable.TakeDamage`
+- **`TooltipTrigger`** — updated preview damage packet call with new signature
+- **`StatusEffectManager`** — removed `[RequireComponent(typeof(IStatProvider))]`
+
+### Fixed
+- Dash iframes now correctly use `IDamageable.TriggerIFrames`
+- Summon death events use `IDamageable.OnDeath` event
+- Damage packet size override and iframe bypass properly propagated
+
+## ⚠️ [v0.2.10] - 2026-08-26
+
+### Changed
+- **Complete Decoupling** - `EntityStatManager` is no longer referenced, and replaced by `ICurrencyHolder` and `IStatProvider`
+
+## ⚠️ [v0.2.9] - 2026-08-26 - Stat System Refactor
+
+### Changed
+- **Complete stat system overhaul** — replaced direct field access (`esm.s.field`) with `GetStat(StatType)` and `AddStat(StatBuff)` across all entity scripts
+- `EntityStatManager` now centralizes stat retrieval/modification; `EntityStats` holds base values and computed getters
+- `DamageCalculator.BuildDamagePacket` and `DamagePacket` updated to use new stat API (removed `EntityStats` param, added `canCrit`, `resPen`, `defShred`)
+- Status effects (`DoT`, `Detonator`, `Stun`, `Pulled`) now use `GetStat`/`AddStat` for resistances, penetration, shred, and movement/attack/dash flags
+- Projectile system (`Projectile.cs`, `EntityProjectileHandler.cs`) migrated to new stat API
+- `WaveManager` gold reroll logic simplified using `TrySpend`/`CurrentAmount` on `ICurrencyHolder`
+- `PlayerSkillTree` node undo/refund uses `TrySpend` and `CurrentAmount`
+- `EntityHealth` major refactor (172 lines) — unified damage/heal flow with new stat system
+- `TooltipTrigger` and `PlayerUI` updated for new stat display
+
+### Removed
+- Direct `EntityStats` field access patterns throughout codebase (`esm.s.maxHp`, `esm.s.gold`, `esm.s.canMove`, etc.)
+
+### Fixed
+- Gold reroll button interactable state now correctly reflects `TrySpend` result
+- Status effect duration/resistance calculations now use `EffectRes` and `seDurPct` via `GetStat`
+
+## ⚠️ [v0.2.8_2] - 2026-08-26
+
+### Updated
+- folder structure in `README.md`
+- folder structure in `data/entity/player`
+
+### Removed
+- unlimited wave manager tooltips that area already self explanatory
+
+### Changed
+- split `EntityStatManager` into `EntityStatManager` and `EnemyStatManager` (one used for players, the other used for scaling enemies to their level)
+
+## [v0.2.8_1] - 2026-08-26
+
+### Updated
+- cleaned up folder structure for wave/anomaly system
+
+## [v0.2.8] - 2026-08-26
+
+### Removed
+- deprecated status effects (old debuffs migrated to the new system)
+
+### Updated
+- folder structure to be cleaner
+- slime now has the same folder structure as the other enemies
+
+## [v0.2.7] - 2026-08-26 - Enemy Scaling Overhaul
+
+### Changed
+- **Enemy stat scaling changed from linear to exponential** - base stats now matter significantly
+- Attack scales at 5% per level (was +3 flat)
+- Max HP and health regen scales at 10% per level (was +12 flat)
+- Armor scales at 5% per level (was +4 flat)
+- All percentage stats no longer scale (they will be self-buffed)
+- Move speed, crit chance, and aoe % scale at 4% per level
+- Resistances scale at 3% per level
+- **Fixed levelOffset % 5 == 0 bug** - all stats now scale every level instead of only on levels divisible by 5
+
+### Updated
+- increased base spawning speed for unlimited wave mode
+
+### Fixed
+- mixed pools turning into normal pools on reroll
+- cosmic aftermiage not having an indicator`
+- status effect indicators appear for normal enemies
+
+## [v0.2.6_1] - 2026-08-26
+
+### Rebalance
+
+## [v0.2.6] - 2026-08-26 - Skill Tree Enhancement Update
+
+### Added
+- a *couple* of new skill tree nodes in each section (78 → 104 nodes), introducing many new stats
+- subtitle text to inform you when you get skill points/reroll tokens 
+
+### Rebalance
+- Bat
+ - stopping range (1.5 → 3)
+ - attack (2 → 3)
+ - Mark size (2 → 2.5)
+- Crab
+ - Defense Shred (0 → 35)
+ - Attack (4 → 3)
+ - Attack % (0 → 15)
+
+## [v0.2.5] - 2026-08-25
+
+### Added
+- `IOrbitRegister` to replace old orbit registering method
+- safety checks in wave manager
+
+### Changed
+- get/update stat values now live in entity stats, but can be called by entity stat manager
+
+### Removed
+- random visualscripting imports
+
+### Updated
+- cleaned up syntax in damage calculator
+- cleaned up search in projectile
+
+## [v0.2.4_3] - 2026-08-25
+
+### Updated
+- the navbar thing
+
+## [v0.2.4_2] - 2026-08-25
+
+### Updated
+- the navbar thing
+
+## [v0.2.4_1] - 2026-08-25
+
+### Added
+- something like a navbar near the top of the readme
+
+## [v0.2.4] - 2026-08-25 - Gamemode Selector Update
+
+### Added
+- `TooltipTrigger` support for action buttons (corrupt, reroll, skip)
+- **`UnlimitedWaveButtonController`** - a button (active by default, placed under `buttonContainer`) that starts unlimited waves mode
+- **Unlimited Waves mode** starts via `UnlimitedWaveManager.StartNextWave()` instead of the regular sequence. 
+- New `TooltipTrigger` describing the unlimited wave system (infinite scaling, faster spawns, periodic boss waves, endless rewards). Disables itself and the regular wave button once pressed. Never enables themselves again.
+- **`RegularWaveButtonController`** - a button (active by default, placed under `buttonContainer`) that starts the regular wave mode.
+- **Regular wave mode** starts via the base `WaveManager.StartNextWave()`. 
+- New `TooltipTrigger` describing the standard sequence. Disables itself and the unlimited wave button once pressed. Never enables  themselves again.
+- `WaveManager` now has access to the action button container, and the individual action buttons
+
+### Fixed
+- boss waves being a possiblity in the first wave (unlimited mode)
+- `PoolPreSetup()` causing a crash, and not using unlimited wave configuration in that mode
+- rerolls consuming more than 1 reroll token
+- both the regular and unlimited wave managers being active at once
+
+### Update
+- player actions are now enabled in the lobby
+
+### Removed
+- `Instance` in wave manager - was unused
+- skip button once corrupt button was used
+- skip button on game start
+- random override methods in `UnlimitedWaveManager` that was the same as the original method
+- unecessary `virtual` signatures in `WaveManager`
+
+## [v0.2.3] - 2026-08-25 - Unlimited Waves Update
+
+### Added
+- **`UnlimitedWaveManager`** - a new unlimited waves system (implemented only, NOT *yet* wired up to the scene). Inherits from `WaveManager` so all shared settings (reroll cost, wave info, action buttons, corruption, reward panel, reward pools, milestone rewards, anomalies) are reused exactly as configured on the existing `WaveManager` — no reconfiguration needed.
+- **Configurable options**: max current enemies, base max total enemies (increases by 1-2 randomly every wave), base enemy level (+1 per wave), min/max spawn frequency with spawn speed increase per wave, min/max reward choices, boss bar prefab / status effect display prefab (used for all bosses), auto-generated boss bar name (`[Lv. {LEVEL}] {BOSSNAME}`), list of all spawnable enemies, list of all spawnable bosses, boss wave chance, additional boss wave chance if previous wave wasn't a boss wave, min waves between boss waves.
+- **Wave flow**: every 5 waves spawns mixed rewards only, unless every 25 waves which spawns milestone rewards. No `WaveSequence` used.
+
+### Changed
+- `WaveManager` fields/methods made `protected`/`virtual` to support inheritance by `UnlimitedWaveManager` (no behavior change to the existing wired-up system).
+
+## [v0.2.2_1] - 2026-08-25
+
+### Added
+- `GAME.md` - summarizes all attacks and player upgrades
+- many files (`CLAUDE.md`, `copilot-instructions.md`, `.copilotignore`, `.claudeignore`) to (hopefully) improve ai workflows
+
+## [v0.2.2] - 2026-08-25 - Skill Tree Expansion Update
+
+### Added
+- a **TON** of skill nodes (now 78 total nodes), including new starting nodes, connecting nodes, and node bundles for new special stats
+
+### Changed
+- **Skill Tree Prerequisites → Connections System**: Overhauled the skill tree unlock logic from a strict AND-based prerequisite system to a flexible bidirectional connections system with OR logic:
+  - **Bidirectional connections**: If node A lists node B as a prerequisite, you can now unlock A when B is unlocked **OR** unlock B when A is unlocked
+  - **OR logic for multiple connections**: When a node has multiple connected nodes (e.g., B and C both connect to A), only **one** connected node needs to be unlocked (B **OR** C), not all of them
+  - **Reverse connections automatically work**: No need to duplicate connections in both directions; the system checks both forward (node's prerequisites list) and reverse (nodes that have this node in their prerequisites)
+  - **Improved tooltip feedback**: Fail messages now show "Requires one of: [Node1, Node2, ...]" listing all connected nodes
+  - **Field name unchanged**: Still uses `prerequisites` field in `SkillNodeDef` for defining connections
+
+### Fixed
+- Nodes with no connections now properly show "Node has no connections" instead of incorrectly requiring prerequisites
+
+### Rebalance
+- nerfed a lot of skill nodes
+
+## [v0.2.1] - 2026-08-25
+
+### Added
+- `TooltipTrigger` for all reward button types
+- Ignition Flash - new DoT basic attack that also debuffs enemies
+- Lifeforce - hp scaling spell damage skill nuke, deals more damage based on hp consumed
+
+### Fixed
+- enemy health bars being invisible
+- reward buttons showing the tooltip of the previously shown attack/player upgrade
+- stealing and exp bonus stat rewards not working correctly
+- max mana/stamina % increases not showing before and after values of stamina, not stamina %
+
+## [v0.2.0] - 2026-08-24 — Progression, Economy & Milestones Update (Release Summary)
+
+This release covers the full development arc from `v0.1.0` through `v0.1.13_1`. Over this period Anamnesis evolved from a wave-based action game with a basic skill tree into a deep roguelite with layered progression systems, a full currency economy, milestone rewards, and significantly expanded build-crafting depth.
+
+### Highlights
+
+- **Level & Progression System (v0.1.9)** — Enemies now drop XP; collecting XP levels up the player, granting HP, ATK, INT, SPD increases and a skill point per level. Bosses drop significantly more XP. An `EXP Bonus` stat in reward pools accelerates leveling. Level-up indicator added.
+- **Gold/Currency Economy (v0.1.11)** — Enemies drop gold on death (15% variance, scaling with Stealing stat). Gold funds skill-node refunds (default 50g, configurable per node) and serves as a fallback reroll currency (200g) when rerolls are exhausted. Floating gold text indicators added.
+- **Milestone Rewards (v0.1.12)** — Every 25 waves (25, 50, 75, 100…) players choose from 3 synergistic reward bundles (`MilestoneReward` struct) that combine powerful buffs with meaningful drawbacks. Uses existing reward UI with custom colors; supports rerolls.
+- **Stats Extension (v0.1.13)** — Major stat system expansion:
+  - **Status Effect Stats**: `sePotPct` (potency %), `seDurPct` (duration %), `seTickRatePct` (tick rate %, min 0.1s interval).
+  - **Resource Stats**: `manaGainPct`, `maxManaPct` (via `EffMaxMana`), `maxStaminaPct` (via `EffMaxStamina`).
+  - **Per-Attack-Type CDR**: `basicCdRedPct`, `skillCdRedPct`, `ultCdRedPct` (multiplicative with attack speed).
+  - `potencyMultiplier` field on `StatusEffect` base class; all new stats integrated into `StatType`, `EntityStatManager`, reward pools, and tooltips.
+- **Enemy Splitting & Global Spawner (v0.1.10)** — Enemies can now split into more enemies with configurable settings (count, HP scaling, delay, inheritance). Centralized `GlobalEnemySpawner` for consistent spawn logic.
+- **Boss Rush (v0.1.12_1)** — After wave 45, level 50 bosses begin spawning in an endless gauntlet.
+- **Corruption System (v0.1.7)** — Once per wave, players can corrupt the reward pool: each button has a 40% chance to become "corrupted," gaining a stat multiplier of +80% to -180%.
+- **Title & Subtitle System (v0.1.6)** — Dynamic game title/subtitle with fade in/out, font/color configuration. Wave-complete and boss-killed titles integrated into `WaveManager`.
+- **New Attacks & Enemies** — Exodus ultimate (3-stage, ATK/INT/ARMOR scaling, phys/spl/true damage), Supersonic treasure attack, spread barrage pattern, Cultist clone summon & large ball attacks.
+- **Skill Tree Polish** — Tier 2 nodes added; node icons overridable per `SkillNodeDef`; undo cost shown in tooltips; right-click → left-click refund; border highlight fixes.
+- **Technical Hardening** — Deep-cloning for enemy `AttackData`/skill nodes on spawn; pooled damage/text indicators with fixed sizing; `RewardButton`/`WaveManager` cleanup on destroy; anomaly stat-mod bug fixed (was granting +0%); typo fixes (anamoly → anomaly).
+- **Rebalancing Passes** — Multiple waves: enemy HP/speed scaling curves flattened; XP formula nerfed; XP gain nerfed; gold/XP variance increased; Warp, Aphelion, Nirvana, Feedback Loop, Reminiscence, Exodus rebalanced; anomaly chance raised (5% → 15%); Lich buffed.
+- **Tooltip & UI Improvements** — Resource tooltip hover zone expanded; status effect display repositioned; speed rounding fixed; skill tree undo cost display; attack/upgrade tooltips on reward buttons.
+
+### Rebalance
+- **Nirvana**
+  - 620%S > 550%S
+  - +30%S/orbit > +20%S/orbit
+  - kbForce: 8 > 12
+
+## [v0.1.13_1] - 2026-08-24
+
+### Added
+- credits section
+
+## [v0.1.13] - 2026-08-24 - Stats Extension Update
+
+### Added
+- **New Status Effect Stats**:
+  - `sePotPct` (Status Effect Potency %): Increases damage/severity of all status effects the player applies
+  - `seDurPct` (Status Effect Duration %): Increases duration of status effects the player applies
+  - `seTickRatePct` (Status Effect Tick Rate %): Makes status effects trigger OnTick() more frequently (reduces tickInterval multiplicatively, min 0.1s)
+- **New Resource Stats**:
+  - `manaGainPct` (Mana Gain %): Increases all mana gain by a percentage amount
+  - `maxManaPct` (Max Mana %): Increases max mana by a percentage; uses new `EffMaxMana` computed property
+  - `maxStaminaPct` (Max Stamina %): Increases max stamina by a percentage; uses new `EffMaxStamina` computed property
+- **New Cooldown Reduction Stats** (per attack type, multiplicative with attackSpeedPct):
+  - `basicCdRedPct` (Basic Attack Cooldown Reduction %)
+  - `skillCdRedPct` (Skill Cooldown Reduction %)
+  - `ultCdRedPct` (Ultimate Cooldown Reduction %)
+- `potencyMultiplier` field to `StatusEffect` base class for effects to use
+- All new stats to `StatType` enum, `EntityStatManager.GetStat/AddStat`, and `StatBuff.ToString()`
+- All new stats added to either the standard/mixed modifier pools
+- Torturer milestone reward (massive dot damage buff)
+- fixed some formatting on changelog entries
+
+### Updated
+- `PlayerAttackHandler`, `PlayerMana`, `PlayerStamina`, `PlayerUI`, `TooltipTrigger` now use new `EffMaxMana`/`EffMaxStamina` stats
+- `StatusEffectManager` now applies source's `sePotPct`, `seDurPct`, `seTickRatePct` when applying effects
+- split certain larger files into smaller ones
+- code counter
+- graphify nodes
+
+## [v0.1.12_1] - 2026-08-24
+
+### Rebalance
+- **Warp** 
+  - count: 3-5 > 2-4
+  - dura 11s > 10s
+  - cd 8s > 9s
+  - size 2.5 > 2
+  - orbit rad 1 > 1.25
+- **Warp Rift**
+  - 265%s > 215%s
+  - size 1.5 > 1.25
+- **Aphelion**
+  - cd 1.4s > 1.6s
+  - dura 12s > 10.5s
+  - size 2.25 > 2
+  - 45%s > 35%s
+- **Feedback Loop**
+  - speed 14 > 16
+  - 20%s > 15%s
+- **Reminiscence**
+  - chance 30% > 25%
+  - cooldown 3s > 4s
+  - delay 0.25s > 0.35s
+- **Feedback Loop**
+  - cooldown 0.2s > 0.3s
+  - chance 100% > 70%
+  - increased cultist and cultist clone health
+
+### Added
+- boss rush now starts at the end of wave 45 (lv. 50 bosses)
+
+## [v0.1.12] - 2026-08-24 - Milestone Rewards Update
+
+### Added
+- **Milestone Rewards system**: Every 25 waves (25, 50, 75, 100...), players choose from 3 synergistic reward bundles that combine powerful buffs with meaningful drawbacks
+- `MilestoneReward` struct (serializable, inspector-friendly) with base stat buffs, display color, icon, weight, and variance (±15% default)
+- Milestone rewards replace regular rewards at milestone waves, using the existing reward UI with custom colors
+- Reroll support for milestone rewards
+- old anamolies (i removed for testing) back into the anamoly pool
+
+### Rebalance
+- increased enemy attack and armor scaling with level
+- increased xp required to level up
+- increased anomaly chance (5 > 15)
+- buffed lich
+
+### Fixed
+- anamoly (stat mod in particular) having no value (always grants `+0%` stats)
+- text indicators having their size changing relative to previous indicator size (since they are pooled) instead of scaling with default size
+
+## [v0.1.11_1] - 2026-08-24
+
+### Rebalance
+- xp dropped nerfed, but variance increased (15% > 20%)
+- xp required for levelling up increased
+- gold variance increased (15% > 30%)
+
+### Updated
+- resource tooltip ui hover zone
+- status effect display location
+
+### Fixed
+- speed rounding in `TooltipTrigger`
+- not being able to undo unlocked nodes (revamped right click to left click)
+
+## [v0.1.11] - 2026-08-24 - Currency Update
+
+### Added
+- Gold/Currency system: enemies now drop gold on death (15% variance, same as XP); gold used to refund skill tree nodes and buy rerolls when out of rerolls
+- Stealing stat:increases gold drop rate by `{stealing}%` from all enemies; obtainable from the mixed reward pool
+- Gold text indicators: floating `"+{gold}g"` text in gold color when earning gold
+- Reroll with gold: spend 200 gold to reroll rewards when no rerolls remain; reroll button shows "200g" when affordable
+- Skill node undo cost display: tooltip shows undo cost at bottom for unlocked nodes (default 50g, configurable per node)
+
+### Updated
+- `EntityHealth.cs` - gold drop logic on enemy death with stealing bonus
+- `TextIndicator.cs` and `TextIndicatorSpawner.cs` - gold indicator support
+- `WaveManager.cs` - gold reroll fallback and UI update
+- `TooltipTrigger.cs` / `SkillNodeUI.cs` - undo cost in skill tree tooltips
+
+## [v0.1.10_3] - 2026-08-24
+
+### Added
+- claude mem
+
+### Updated
+- readme
+- roadmap
+- graphify nodes
+
+## [v0.1.10_2] - 2026-08-23
+
+### Rebalance
+- massively nerfed xp gain from all enemies (roughly 75% nerf on common enemies, 25% on bosses)
+- enemy xp formula: `base * 1.1^(level - 1)` > `base * 1.07^(level - 1)` (nerf)
+- nerfed chance to get and strength of xp bonus stat from reward pools (was too op)
+- increased xp required as level increases
+
+### Fixed
+- skill node dependencies
+
+### Update
+- renamed damage indicator to text indicator
+- graphify nodes
+- cleaned up changelog (# => ##, ## > ###, added `` to references)
+
+### Added
+- xp wrapper option for damage indicators
+- xp gain indicator when xp is gained (on enemy kill)
+
+## [v0.1.10_1] - 2026-08-23
+
+### Added 
+- option for projectiles to follow their source objects exactly
+
+### Updated
+- graphify nodes
+
+## [v0.1.10] - 2026-08-23
+
+### Added
+- enemy splitting behavior: enemies can now split into more enemies (with many configurable settings)
+- global enemy spawner
+
+## [v0.1.9_2] - 2026-08-23
+
+### Changed
+- increased default pool size for damage indicators
+
+## [v0.1.9_1] - 2026-08-23 
+
+### Added
+- `ROADMAP.md` to act as a summarized versiopn of `CHANGELOG.md` that summarizes major updates
+
+### Updated
+- `README.md` now references `ROADMAP.md`
+
+### Fixed
+- skill node border highlights not updating when a node is clicked
+
+### Removed
+- entries on `TODO.md` that are already completed
+
+## [v0.1.9] - 2026-08-23 - Level Update
+
+### Added
+- level system: enemies drop xp, collect xp to level up, levelling up increases hp, atk, and int, and speed by small amounts, and grant a skill point
+- enemies now drop xp: common wave enemies do not drop a ton of xp, but bosses do, and there is also a 15% randomness from enemy base exp. 
+- take the exp bonus stat from reward pools (mixed/standard) to gain even more xp to level up faster
+- level up indicator
+- more enemies spawn after wave 10, as they spawn in larger chunks
+- tier 2 skill tree nodes
+
+#### Updated
+- graphify nodes
+- readme
+- todo list
+- number of enemies that spawn at once is now less
+
+#### Fixed
+- player skill tree reference in `PlayerInputHandler` being assignable
+- max current enemies not being fixed
+
+## [v0.1.8_6] - 2026-08-22
+
+### Added
+- new planned features
+- removed testing conditions
+- graphify cache
+
+## [v0.1.8_5] - 2026-08-22
+
+### Fixed
+- enemies now deep clone and use runtime instance of SO when they spawn
+- player attack data is now cleaned up when destroyed
+- skill tree nodes are now cleaned up before creation and when destroyed
+- reward button pooling now resets all data
+- wave manager cleans up anomalies, stops courotines, and clears reward buttons when destroyed
+- fixed cultist animations (did not have transition from attack to idle) and removed test settings (fireball dealt no damage)
+- slime not being able to attack
+
+### Changed
+- moved damage indicator spawner and projectile spawner to GameController
+
+## [v0.1.8_4] - 2026-08-22
+
+### Fixed
+- enemies now cache player, meaning that unless the player they are targeting dies, they will be locked onto that player (they choose the closest player at spawn/target death)
+- added `KnockbackHandler` to prevent duplicate knockback handling
+- canvas caching for entity health bars
+- pooled damage indicators
+- fixed typo in anamoly => anomaly word
+
+## [v0.1.8_3] - 2026-08-19
+
+### Fixed
+- animationLength not being measured from the attack start, causing enemies not moving after attacking to stay in the attack animation loop
+- readme
+
+## [v0.1.8_2] - 2026-08-18
+
+### Fixed
+- rewards being corrupted but not showing stat modifiers
+- being able to reroll after corrupting
+- max health increasing health regen by 1% per 1 hp over 100 (enemies would have insane health regen if they had any base health regen at all) - now completely removed
+
+## [v0.1.8_1] - 2026-08-18
+
+### Fixed
+- enemies having too much health regen
+- nerfed jellyfish and cultist
+
+## [v0.1.8] - 2026-08-18 - Content Update v3 - Part II
+
+### Added
+- spread barrage attack type
+- cultist spawn clone attack, and large ball attack
+
+## [v0.1.7_2] - 2026-08-18
+
+### Updated
+- code counter
+- performance test
+
+#### Note
+- ignore the incorrect version labels on `v1.0.7` and `v1.0.7_1`, they are emeant to be `v0.1.7` and `v0.1.7_1`, respectively :/
+
+## [v0.1.7_1] - 2026-08-18
+
+### Fixed
+- being able to use the corruption button on rare reward and awakening stages (multiples of 5)
+- player UI being shown without the game starting
+- tooltip sections not showing up for anything except the skill tree
+
+## [v0.1.7] - 2026-08-18
+
+### Added
+- Corruption button: can be used once per wave. When used, each button has a 40% chance to become "corrupt," recieving a stat boost by up to +80%, but downwards of -180%.
+- Game start button and title screen.
+
+## [v0.1.6_1] - 2026-08-15
+
+### Fixed
+- game objects meant to be disabled at the start are now done so in the editor as well
+- updated title and subtitle texts in the editor to have respective texts to make them easier to find
+- fixed changelog header format from bigger for less important > smaller for less important
+- code redundency in `TooltipTrigger.cs`
+- attacks that absorb orbits rely on a set multiplier by the player, and not the attack
+- removed redundent method in `EntityProjectileHandler.cs` and renamed Count to OrbitCount for clarity
+- reroll and skip buttons having set locations, updated to use a horizontal layout group
+
+## [v0.1.6] - 2026-08-13 - The Titles Update
+
+### Rebalance
+#### Exodus
+- Cooldown: 8s > 90s
+- Stamina Cost: 0 > 40, 40% > 55%
+- Mana Cost: 60% > 40%
+- First: 550%P > 1365%P
+- Second Chance: 30% > 60%
+- Second: 380%S > 880%S
+- Third Chance: 30% > 40%
+- Third: 110%T > 560%T
+- Third Scaling: EffArmor > ResPen
+
+### Added
+- Game title and subtitle, with methods to update each text seperately, and options for fading in/out, and configure font and text color
+- wave manager now has wave completed and boss killed title texts
+- WaveManager now has an instance
+
+### Update
+- WaveManager's EndWave method is now cleaner, having some functions split into sub methods
+- methods in wave manager that did not need to be public are now private
+
+## [v0.1.5] - 2026-08-10
+
+### Rebalance 
+**Enemies**
+- hp% per level: 8 > 4
+- move speed %: +10 per 5 waves (add) > +3% per wave (multiply) 
+- max move speed %: 200% > 100%
+
+### Added
+- a to-do list for upcoming features
+- stat modifier anamoly (+5-30% for waves 5-50, +10%-60% for waves 51-105) that grants all enemies in the wave a percentage buff to a common stat (attack, hp, move speed, armor, damage)
+
+### Fixed
+- enemies that have negative base walk speed % instantly jumping to 0% because of level scaling
+
+## [v0.1.4] - 2026-08-10
+
+### Added
+- player gains a skill point every 5 waves
+- New Ultimate: Exodus (atk/int/armor scaling, respectively), deals (phys/spl/true damage, respectively), 30% chance to trigger next stage (3 stages total) on each stage, size increases with each stage, added to Rare Pool
+
+## [v0.1.3] - 2026-08-10
+
+### Added
+- stat reward buttons now show before and after stat values
+
+### Fixed
+- reward button name and description texts overlapping with long stat names
+
+## [v0.1.2] - 2026-08-10
+
+### Added
+- Skill Tree node icons can now be set either by changing the icon image in the prefab (old) OR changing the icon image in the skill node def (new, overrides old)
+- 4 new skill nodes
+- option for status effects to remove all stacks when the timer expires (default false)
+
+### Fixed
+- Projectiles with non-zero `timeBeforeSameEnemy` not being able to trigger additional attacks multiple times as well
+- Heartburn stacks decreasing one by one
+
+### Removed
+- node prefab (duplicate a pair of node GO + node def to create new nodes instead)
+
+## [v0.1.1_1] - 2026-08-09
+
+### Fixed
+- Skill tree not closing when pressing the toggle skill tree button
+- Blaze replacing skill instead of basic attack
+
+## [v0.1.1] - 2026-08-09 
+
+### Added
+- README.md file
+
+## [v0.1.0] - 2026-08-09 — Release Summary
+
+This release covers the full development arc from the initial `v0.0.1` build through `v0.1.0-PR3`. Over this period Anamnesis grew from a core wave-based combat prototype into a much deeper action game with a full progression system.
+
+**Highlights:**
+
+- **Initial combat foundation (v0.0.1)** — Launched with the Warp, Blaze, Reminiscence, and Serenade abilities, the Attack Replacement / Blaze Soul / Heartburn status effects, the Cultist enemy with clone summoning, stun mechanics, and crit-based upgrade triggers.
+- **Status effect & data robustness (v0.0.2 – v0.0.9)** — Added delayed effect application to fix initialization null-reference bugs, deep-cloning for `AttackData`, random projectile directions, and enemy retargeting fixes.
+- **Reward & anomaly tuning (v0.0.9 – v0.0.9_2)** — Reworked reward pools and rebalanced anomaly frequency and counts.
+- **Upgrade system expansion (v0.0.10 – v0.0.13)** — Player upgrades no longer require inheritance, added dash/attack cooldown advancement upgrades, and removed attack speed from the pool.
+- **Wave & combat depth (v0.0.12 – v0.0.19)** — Extra enemy spawns every 10 waves for better clearing (was too slow), randomized damage indicators time, configurable orbit interactions, one-time additional-attack triggers, rare stat pool rework, and new additional-attack damage scaling.
+- **Dash & Knockback systems (v0.0.16 – v0.0.21)** — Rebalanced the dash and added a full knockback system for players and enemies, including knockback resistance and knockback % stats.
+- **New content & balance (v0.0.22 – v0.0.23_3)** — Added the Supersonic attack, cooldown indicators, Astral Nova vulnerability debuff, and numerous balance changes.
+- **Skill Tree Update (v0.1.0-PR1 – PR3)** — The headline feature: a fully interactive skill tree currently with 5 nodes, prerequisites, skill-point currency, pan/zoom navigation, tooltips, and connector lines, plus pause-safe behavior and build fixes.
+
+### Fixed
+- Skill tree pan/zoom now works. Root causes: the `SkillTreePanZoom` GameObject had no raycastable `Graphic` (so the EventSystem never delivered drag/scroll events), its `contentRect` pointed at its own `RectTransform` instead of the `NodesContainer`, and the `InputSystemUIInputModule` had no scroll-wheel/right-click/middle-click actions bound. `SkillTreePanZoom` now reads the mouse directly via the Input System (`Mouse.current`) in `Update()` — Alt+Left / Alt+Right / Middle drag to pan, mouse wheel zooms (with zoom-to-cursor), and the node container is auto-resolved. Debug logs are enabled via the `debugLogs` field.
+
+## [v0.1.0-PR3_1] - 2026-08-09
+
+### Fixed
+- Reparented the player HUD canvas into the main scene canvas hierarchy so the UI renders correctly in the built game.
+
+## [v0.1.0-PR3] - 2026-08-09
+
+### Fixed
+- Skill tree can no longer be opened while the game is already paused (e.g. during reward/anomaly menus).
+- Skill tree tooltip no longer draws behind skill nodes.
+- Null-safe guard on skill tree line re-render calls.
+
+## [v0.1.0-PR2] - 2026-08-09
+
+### Fixed
+- Player can no longer dash while the skill tree is open.
+- Enemies can no longer move or attack while the skill tree is open (paused).
+- Game no longer renders a blank screen in the built version.
+- Wave counter misalignment in the top right.
+- Resource bar alignment in the top left.
+
+### Added
+- Windows build profile (`Assets/Settings/Build Profiles/Windows.asset`).
+- Updated Universal Render Pipeline settings for builds.
+
+## [v0.1.0-PR1] - 2026-08-09 — Skill Tree Update
+
+### Added
+- Fully functional skill tree system:
+  - New `SkillTreeManager`, `PlayerSkillTree`, `SkillTreeUI`, `SkillNodeUI`, `SkillTreeLineRenderer`, `SkillTreePanZoom`, `SkillTreeDefinition`, and `SkillNodeDef` components.
+  - Progression with 5 skill node features, prerequisites, required attacks/upgrades, and incompatible nodes.
+  - Node unlocks grant stat buffs, attack upgrades, and player upgrades.
+  - Interactive UI with tooltips, locked/available/unlocked visuals, and connector lines.
+  - Pan & zoom navigation over the skill tree.
+  - New "skill point" currency.
+- Player input now routes skill-tree open/close.
+
+## [v0.0.23_3] - 2026-08-06
+
+### Changed
+- Nerfed enemy stat scaling.
+
+## [v0.0.23_2] - 2026-08-06
+
+### Changed
+- Reward buff updates and rarity buffs.
+- Astral Nova now applies vulnerability (-20% damage resistance, max 2 stacks).
+
+## [v0.0.23_1] - 2026-08-06
+
+### Changed
+- Blaze moved from skill to basic attack.
+
+## [v0.0.23] - 2026-08-06
+
+### Added
+- Supersonic cooldown indicator.
+- Reminiscence cooldown image.
+
+### Changed
+- Heartburn max stacks: 15 → 10.
+- Fixed text issues.
+
+## [v0.0.22] - 2026-08-06
+
+### Added
+- New "Supersonic" player attack (Treasure Pool) with animation, projectile data, and prefab.
+
+### Changed
+- Lich balance: stopping distance 1.5 → 3; wave range 3 → 8; plant range 3 → 2; ball range 5 → 2.
+- Renamed the "Exodus" attack-replacement status effect to "Blaze Soul".
+
+## [v0.0.21] - 2026-08-05 — Knockback Update Part 2
+
+### Added
+- Knockback resistance and knockback % stats.
+- New stats added to the reward pool and new stat localization.
+
+### Changed
+- Movement scripts updated to handle the new stats.
+
+## [v0.0.20] - 2026-08-05 — Knockback Update
+
+### Added
+- Knockback implemented for all attacks that should have it, for both players and enemies.
+- All enemies and players now use a dynamic Rigidbody2D so they can receive knockback.
+
+## [v0.0.19] - 2026-08-05
+
+### Changed
+- Negative health regeneration is now allowed.
+
+### Added
+- New stat that increases damage dealt by additional attacks.
+
+## [v0.0.18] - 2026-08-05 — Rare Stats Update
+
+### Changed
+- Rare stats moved into mixed reward pools.
+- Fixed anomalies starting to generate at wave 7 (wave 5 was intended).
+- Rarities from Rare and beyond are now rarer.
+
+## [v0.0.17] - 2026-08-05
+
+### Fixed
+- Additional attacks can now only trigger the first time a projectile hits an entity.
+
+## [v0.0.16_2] - 2026-08-05 — Dash Update Part 2
+
+### Added
+- Added a method for dash advancement.
+
+## [v0.0.16] - 2026-08-05 — Dash Update
+
+### Changed
+- Default dash balance: multiplier 6 → 4; cooldown 2.5s → 4s; distance 1.75 → 1.5; stamina cost 25 → 35.
+
+## [v0.0.15] - 2026-08-04
+
+### Changed
+- Minor balance tweaks (Blaze projectile, entity health/stats, Heartburn).
+
+## [v0.0.14] - 2026-08-03
+
+### Changed
+- Number of orbit projectiles interacted with can now be configured (default: all).
+
+## [v0.0.13] - 2026-07-31
+
+### Added
+- Dash action advance (`DashAdvance`).
+- `CooldownAdvance` player upgrade (advance all/basic/skill/ultimate cooldowns).
+
+### Changed
+- Removed attack speed from the reward pool.
+- Refactored "advance all cooldowns" to reuse the single-cooldown advance logic.
+- Fixed Crumbling effect: reduces armor by 10% per stack (previously displayed 10% but applied 15%).
+
+### Fixed
+- "Advance all cooldowns" no longer throws `InvalidOperationException` (now snapshots attack type keys).
+
+## [v0.0.12] - 2026-07-31
+
+### Changed
+- Heartburn max stacks: 30 → 15.
+- Blaze stamina cost: 17 + 8% → 20 + 10%.
+- Every 10 waves, each spawn tick now spawns 1 additional enemy.
+- Damage indicator options (size, lifetime, speed, delay) now have a small amount of randomness.
+
+## [v0.0.11] - 2026-07-30
+
+### Changed
+- Maximum attack cooldown reduction from attack speed nerfed from 90% to 70%.
+- Minor wave manager method changes.
+
+## [v0.0.10] - 2026-07-30
+
+### Changed
+- Player upgrades no longer need to inherit anything (refactor).
+
+## [v0.0.9_2] - 2026-07-29
+
+### Changed
+- Anomaly chance nerfed to 15%; anomaly count 2–5 → 1–6.
+
+## [v0.0.9_1] - 2026-07-29
+
+### Added
+- Reward pool updates.
+
+### Changed
+- Anomaly chance reduced from 20% to 15%.
+
+## [v0.0.9] - 2026-07-29
+
+### Changed
+- Scene and config tweaks (Serenade config, Pulled status effect asset).
+
+## [v0.0.8_2] - 2026-07-29
+
+### Changed
+- Exodus & Heartburn duration: 5s → 8s.
+- Heartburn is now a buff (buff: false → true).
+
+## [v0.0.7_1] - 2026-07-29
+
+### Fixed
+- Enemies can now retarget after their current target moves out of detection range.
+
+## [v0.0.7] - 2026-07-29
+
+### Changed
+- Blaze: hits 1 → 2 (0.5s hit rate); size 2 → 2.5.
+
+## [v0.0.6] - 2026-07-29
+
+### Changed
+- Added a small delay to damage indicator spawns to make damage bursts more satisfying.
+
+## [v0.0.5] - 2026-07-29
+
+### Added
+- "Add effect after delay" function to the status effect manager.
+
+### Fixed
+- All status effects now apply with a 0.1s delay, fixing null reference errors when effects were added before the entity finished initializing.
+- Fixes AttackReplacement instantly replacing an attack dealing no damage.
+
+## [v0.0.4] - 2026-07-29
+
+### Added
+- `AttackData` deep clone method that clones all related ScriptableObjects and references.
+- Skill tree and AttackReplacement now use the deep clone.
+
+## [v0.0.3] - 2026-07-29
+
+### Changed
+- Aphelion balance: stamina gain 2 → 1; mana gain 1 → 2%; 60%S → 45%S.
+
+## [v0.0.2] - 2026-07-29
+
+### Added
+- Random direction option.
+
+### Fixed
+- Status effect manager no longer tries to remove null effects.
+
+## [v0.0.1_1] - 2026-07-29
+
+### Changed
+- Pushed Exodus and Heartburn changes.
+
+## [v0.0.1] - 2026-07-29 — Initial Release
+
+### Added
+- Warp ability (with rift chance).
+- Blaze, Reminiscence, Serenade (additional damage upgrade), Attack Replacement, Exodus, and Heartburn status effects.
+- New stats: additional true damage, stamina cost %, and on-crit upgrade trigger condition.
+- Feedback loop upgrade (grants mana, deals less damage).
+- Cultist enemy with clone summoning, basic projectile attack, and stun-on-summon-death.
+- Stun prevents enemy movement/attacks/animations.
+- Projectile spawn fixes for CIRCLE pattern and orbit-self attacks.
+
+### Changed
+- Warp nerf: rift chance 20% → 15%.

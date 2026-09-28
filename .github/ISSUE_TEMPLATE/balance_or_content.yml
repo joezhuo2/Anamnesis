@@ -1,0 +1,44 @@
+name: Balance / content tweak
+description: A numbers or content change — stats, drop rates, wave composition, upgrade values.
+title: "[Balance]: "
+labels: ["needs-triage"]
+body:
+  - type: input
+    id: target
+    attributes:
+      label: What is being tuned?
+      description: Name the asset or entity.
+      placeholder: "Assets/data/entity/enemy/Enemies/Crab/Attacks/Disc/Crab B PD.asset"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current values
+      description: The values as they exist today.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed values
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why?
+      description: What plays badly right now, and what should change about it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: knockon
+    attributes:
+      label: Knock-on effects
+      description: Other encounters, upgrades, or systems this could destabilise.
+    validations:
+      required: false

@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
+  m_Name: Node_decoy
+  m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
+  nodeName: Cosmic Superimposition
+  desc: 'Increases Cosmic Afterimage''s uptime and causes an explosion on expiry. '
+  nodeID: decoy
+  icon: {fileID: 252617365, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  isStartingNode: 0
+  prerequisites:
+  - {fileID: 11400000, guid: b5944244d7a91ba49bc5823ea3612e76, type: 2}
+  incompatibleNodes: []
+  requirements:
+  - rid: 678176172131221594
+  unlockEffects:
+  - rid: 678176144140534001
+  cost: 3
+  undoCost: 50
+  references:
+    version: 2
+    RefIds:
+    - rid: 678176144140534001
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        buffs: []
+        attacks: []
+        awakenings:
+        - {fileID: 11400000, guid: 3babb4b8643ae954c96f0016b35ec1e7, type: 2}
+    - rid: 678176172131221594
+      type: {class: NodeRequirement, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        requiredAttacks: []
+        requiredAwakenings:
+        - {fileID: 11400000, guid: 1bb0ed8e066ed0043a3ee4a9b47f53a7, type: 2}

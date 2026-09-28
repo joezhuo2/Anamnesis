@@ -1,0 +1,17 @@
+{
+    "name": "CrystalFlux.TextIndicator",
+    "rootNamespace": "",
+    "references": [
+        "CrystalFlux.Pooling",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

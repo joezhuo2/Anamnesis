@@ -1,0 +1,25 @@
+{
+    "name": "CrystalFlux.Entity",
+    "rootNamespace": "CrystalFlux.EntitySystem",
+    "references": [
+        "CrystalFlux.Pooling",
+        "CrystalFlux.Core",
+        "CrystalFlux.Settings",
+        "CrystalFlux.TextIndicator",
+        "CrystalFlux.Projectile",
+        "CrystalFlux.StatusEffect",
+        "CrystalFlux.SkillTree",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

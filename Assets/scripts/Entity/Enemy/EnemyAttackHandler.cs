@@ -1,0 +1,453 @@
+using System.Collections.Generic;
+using CrystalFlux.Core;
+using CrystalFlux.ProjectileSystem;
+using CrystalFlux.StatusEffectSystem;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace CrystalFlux.EntitySystem
+{
+    public class EnemyAttackHandler : MonoBehaviour, ICastHandler
+    {
+        public Vector2 projSpawnOffset;
+        public List<AttackData> attacks;
+        public float globalCooldown;
+        [Tooltip("Range used for attacks with no max range. 0 = those attacks are never chosen")] public float fallbackRange;
+
+        [Header("Cast Bar")]
+        public Slider castBarPrefab;
+        public TextMeshProUGUI castBarTextPrefab;
+        public Vector3 castBarOffset = new(0f, -0.7f, 0f);
+
+        private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
+        private float[] cooldowns;
+        private Animator a;
+        private bool isAttackingCoroutineRunning = false;
+        private readonly List<int> availableIndexes = new();
+        private AttackData queuedAttack;
+        private bool movementHeld;
+        private bool isCasting;
+        private bool isCharging;
+        private bool castCancelled;
+        private bool castMovementHeld;
+        private Slider castBarInstance;
+        private TextMeshProUGUI castBarTextInstance;
+        private float lastAttackEndTime;
+        private IStatProvider esm;
+        private EnemyPhase ep;
+        private bool anyReady;
+        private EnemyMovement em;
+        private PlayerUpgradeManager pum;
+        private bool mirrored;
+        private GameObject Target => em != null ? em.target : null;
+
+        public bool IsCasting => isCasting || isCharging;
+
+        private void Awake()
+        {
+            a = GetComponent<Animator>();
+            TryGetComponent(out ep);
+            TryGetComponent(out em);
+            TryGetComponent(out pum);
+
+            if (attacks == null) attacks = new List<AttackData>();
+            else attacks.RemoveAll(atk => atk == null);
+
+            cooldowns = new float[attacks.Count];
+            for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].Cooldown;
+        }
+
+        private void Start()
+        {
+            if (esm == null) esm = GetComponent<IStatProvider>();
+        }
+
+        public void SetAttacks(List<AttackData> src)
+        {
+            if (esm == null) esm = GetComponent<IStatProvider>();
+
+            attacks = new List<AttackData>();
+            if (src != null)
+                for (int i = 0; i < src.Count; i++)
+                    if (src[i] != null) attacks.Add(src[i]);
+
+            mirrored = true;
+            queuedAttack = null;
+
+            cooldowns = new float[attacks.Count];
+            for (int i = 0; i < attacks.Count; i++) cooldowns[i] = GetCd(attacks[i]);
+        }
+
+        private float GetCd(AttackData ad) => mirrored ? PlayerAttackHandler.GetEffCd(ad, esm) : ad.Cooldown;
+
+        private float GetRange(AttackData ad) => ad.MaxRange > 0f ? ad.MaxRange : fallbackRange;
+
+        private void OnDestroy() => EndCast();
+        private void Update()
+        {
+            if (esm.GetStat(StatType.isAlive) != 1f|| Time.timeScale == 0f) return;
+            UpdateCooldowns();
+            if (esm.GetStat(StatType.IsAttacking) != 1f) TryAttack();
+        }
+        private void UpdateCooldowns()
+        {
+            anyReady = false;
+            for (int i = 0; i < attacks.Count; i++)
+            {
+                if (cooldowns[i] > 0f) cooldowns[i] -= Time.deltaTime;
+                if (cooldowns[i] <= 0f) anyReady = true;
+            }
+        }
+        private void TryAttack()
+        {
+            if (attacks.Count == 0 || Target == null) return;
+            if (globalCooldown > 0 && Time.time - lastAttackEndTime < globalCooldown) return;
+
+            if (isAttackingCoroutineRunning) return;
+
+            if (queuedAttack != null)
+            {
+                float d = (Target.transform.position - transform.position).sqrMagnitude;
+                float r = GetRange(queuedAttack);
+                if (d > r * r) return;
+
+                StartCoroutine(PerformAttack(queuedAttack, attacks.IndexOf(queuedAttack)));
+                return;
+            }
+
+            if (!anyReady) return;
+
+            int chosen = ChooseAttackIndex();
+
+            if (chosen == -1) return;
+
+            StartCoroutine(PerformAttack(attacks[chosen], chosen));
+        }
+
+        private int ChooseAttackIndex()
+        {
+            float dist = (Target.transform.position - transform.position).sqrMagnitude;
+
+            availableIndexes.Clear();
+
+            float maxHp = esm.GetStat(StatType.EffMaxHp);
+            float hpPct = maxHp > 0f ? esm.GetStat(StatType.currentHp) / maxHp * 100f : 0f;
+
+            for (int i = 0; i < attacks.Count; i++)
+            {
+                AttackData a = attacks[i];
+                float r = GetRange(a);
+
+                if (cooldowns[i] > 0f || dist > r * r) continue;
+
+                if (a.MinHpPct > 0 && hpPct < a.MinHpPct) continue;
+                if (a.MaxHpPct < 100f && hpPct > a.MaxHpPct) continue;
+                if (a.PhaseReq >= 0 && (ep == null || ep.phase < a.PhaseReq)) continue;
+
+                availableIndexes.Add(i);
+            }
+
+            if (availableIndexes.Count == 0) return -1;
+
+            return availableIndexes[Random.Range(0, availableIndexes.Count)];
+        }
+
+        private System.Collections.IEnumerator PerformAttack(AttackData attack, int index)
+        {
+            if (esm.GetStat(StatType.CanAttack) <= 0f || esm.GetStat(StatType.isAlive) <= 0f) yield break;
+
+            queuedAttack = null;
+
+            isAttackingCoroutineRunning = true;
+            esm.AddStat(new(StatType.IsAttacking, 1));
+
+            yield return RunAttack(attack, index);
+
+            ReleaseMovementHold();
+
+            isAttackingCoroutineRunning = false;
+            esm.AddStat(new(StatType.IsAttacking, -1));
+            lastAttackEndTime = Time.time;
+            if (a != null) a.SetInteger(AttackIndexHash, -1);
+        }
+
+        private System.Collections.IEnumerator RunAttack(AttackData current, int currentIndex)
+        {
+            float attackStartTime = Time.time;
+
+            if (!current.CanMoveDuringAttack && !current.Rushes)
+            {
+                movementHeld = true;
+                esm.AddStat(new(StatType.CanMove, -1));
+            }
+
+            if (a != null) a.SetInteger(AttackIndexHash, currentIndex);
+
+            float castTime = current.GetEffCastTime(esm);
+
+            if (castTime > 0f)
+            {
+                isCasting = true;
+                castCancelled = false;
+
+                if (!current.CanMoveWhileCasting)
+                {
+                    castMovementHeld = true;
+                    esm.AddStat(new StatBuff(StatType.CanMove, -1f));
+                }
+
+                CastBar.Acquire(castBarPrefab, castBarTextPrefab, out castBarInstance, out castBarTextInstance);
+
+                float elapsed = 0f;
+
+                while (elapsed < castTime)
+                {
+                    if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
+                    else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
+
+                    if (castCancelled) break;
+
+                    CastBar.Tick(castBarInstance, castBarTextInstance, transform, castBarOffset, elapsed, castTime);
+
+                    yield return null;
+                    elapsed += Time.deltaTime;
+                }
+
+                bool interrupted = castCancelled;
+                EndCast();
+
+                if (interrupted)
+                {
+                    if (currentIndex >= 0) cooldowns[currentIndex] = GetCd(current);
+                    yield break;
+                }
+
+                attackStartTime = Time.time;
+            }
+
+            HandleOrbitInteractions(current);
+            HandleCleanse(current);
+
+            if (current.Rushes && em != null) em.StartRush(current);
+
+            if (current.ProjectilePrefab != null && !current.CanCharge)
+            {
+                if (current.SpawnDelay > 0) yield return new WaitForSeconds(current.SpawnDelay);
+
+                if (Target != null && ProjectileSpawner.Instance != null)
+                {
+                    Vector2 dir = (Target.transform.position - transform.position).normalized;
+                    float dist = Vector2.Distance(Target.transform.position, transform.position);
+
+                    float d = dist > current.SpawnDistance ? current.SpawnDistance : dist;
+
+                    if (mirrored)
+                    {
+                        ProjectileSpawner.Instance.Spawn(current, gameObject, transform.position, dir, d, host: this);
+                        MirageClone.NotifyCast(gameObject, current, transform.position, dir, d);
+                    }
+                    else
+                    {
+                        ProjectileSpawner.Instance.Spawn(
+                            current.ProjectilePrefab,
+                            gameObject,
+                            transform.position,
+                            dir,
+                            d,
+                            host: this
+                        );
+                        MirageClone.NotifyCast(gameObject, current.ProjectilePrefab, transform.position, dir, d);
+                    }
+                }
+            }
+
+            TriggerAttackUpgrades(current.type);
+
+            if (current.SummonChance > 0f && current.SummonCondition == SummonCondition.OnCast && Random.value <= current.SummonChance)
+            {
+                if (TryGetComponent<EntitySummonHandler>(out var summonHandler))
+                    summonHandler.Summon();
+            }
+
+            if (currentIndex >= 0) cooldowns[currentIndex] = GetCd(current);
+
+            if (current.CanCharge)
+            {
+                yield return ChargeLoop(current);
+                if (currentIndex >= 0 && !current.CooldownOnAttackStart) cooldowns[currentIndex] = GetCd(current);
+                if (castCancelled) { castCancelled = false; yield break; }
+            }
+
+            if (current.DisableAttacksWhileRushing && em != null)
+                while (em.Rushing) yield return null;
+
+            if (current.AnimationLength > 0)
+            {
+                float remaining = current.AnimationLength - (Time.time - attackStartTime);
+                if (remaining > 0) yield return new WaitForSeconds(remaining);
+            }
+
+            ReleaseMovementHold();
+
+            queuedAttack = current.NextAttack;
+        }
+
+        private System.Collections.IEnumerator ChargeLoop(AttackData attack)
+        {
+            isCharging = true;
+            castCancelled = false;
+
+            TryGetComponent<EntityProjectileHandler>(out var eph);
+
+            AttackData chargeSource = attack.ChargeAttack != null ? attack.ChargeAttack : attack;
+
+            if (eph != null) eph.BeginChargeWindow(chargeSource);
+
+            SpawnChargeSource(chargeSource);
+
+            float maxTime = Mathf.Max(attack.MaxChargeTime, attack.MinChargeTime);
+            float interval = Mathf.Max(attack.ChargeTickInterval, 0.05f);
+            float elapsed = 0f;
+            float sinceTick = 0f;
+
+            while (elapsed < maxTime)
+            {
+                if (esm.GetStat(StatType.isAlive) <= 0f) castCancelled = true;
+                else if (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f) castCancelled = true;
+
+                if (castCancelled) break;
+
+                yield return null;
+
+                elapsed += Time.deltaTime;
+                sinceTick += Time.deltaTime;
+
+                if (sinceTick < interval) continue;
+
+                sinceTick -= interval;
+
+                if (eph != null) eph.TickChargedProjectiles(chargeSource);
+
+                if (elapsed >= attack.MinChargeTime && Random.value < 0.5f) break;
+            }
+
+            if (eph != null) eph.EndChargeWindow();
+            isCharging = false;
+        }
+
+        private void SpawnChargeSource(AttackData chargeSource)
+        {
+            if (Target == null || ProjectileSpawner.Instance == null) return;
+
+            Vector2 dir = (Target.transform.position - transform.position).normalized;
+            float dist = Vector2.Distance(Target.transform.position, transform.position);
+
+            float d = dist > chargeSource.SpawnDistance ? chargeSource.SpawnDistance : dist;
+
+            ProjectileSpawner.Instance.Spawn(
+                chargeSource,
+                gameObject,
+                transform.position,
+                dir,
+                d,
+                host: this
+            );
+            MirageClone.NotifyCast(gameObject, chargeSource, transform.position, dir, d);
+        }
+
+        private void TriggerAttackUpgrades(AttackType type)
+        {
+            if (pum == null) return;
+
+            pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);
+
+            switch (type)
+            {
+                case AttackType.Basic: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnBasicAttack); break;
+                case AttackType.Skill: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnSkillAttack); break;
+                case AttackType.Ultimate: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnUltAttack); break;
+                default: break;
+            }
+        }
+
+        private void HandleCleanse(AttackData ad)
+        {
+            if (ad.CleanseDebuffs <= 0) return;
+            if (TryGetComponent<StatusEffectManager>(out var sem)) sem.RemoveDebuffs(ad.CleanseDebuffs);
+        }
+
+        private void ReleaseMovementHold()
+        {
+            if (!movementHeld) return;
+
+            movementHeld = false;
+            esm.AddStat(new(StatType.CanMove, 1));
+        }
+
+        private void EndCast()
+        {
+            CastBar.Release(ref castBarInstance, ref castBarTextInstance);
+
+            if (castMovementHeld)
+            {
+                castMovementHeld = false;
+                if (esm != null) esm.AddStat(new StatBuff(StatType.CanMove, 1f));
+            }
+
+            isCasting = false;
+            castCancelled = false;
+        }
+
+        public void CancelCast()
+        {
+            if (!isCasting && !isCharging) return;
+            if (esm != null && esm.GetStat(StatType.interruptResist) >= 1f) return;
+
+            castCancelled = true;
+        }
+
+        private void OnDisable()
+        {
+            if (isCharging && TryGetComponent<EntityProjectileHandler>(out var eph)) eph.EndChargeWindow();
+            isCharging = false;
+            queuedAttack = null;
+            EndCast();
+
+            if (esm == null) return;
+
+            ReleaseMovementHold();
+
+            if (!isAttackingCoroutineRunning) return;
+
+            isAttackingCoroutineRunning = false;
+            esm.AddStat(new(StatType.IsAttacking, -1));
+        }
+
+        private void HandleOrbitInteractions(AttackData attack)
+        {
+            if (attack == null) return;
+            if (!TryGetComponent<EntityProjectileHandler>(out var handler)) return;
+
+            if (attack.FireOrbits)
+            {
+                Vector2 dir = Target != null
+                    ? ((Vector2)Target.transform.position - (Vector2)transform.position).normalized
+                    : Vector2.right;
+                handler.ReleaseOrbits(dir, attack.RedirectCount);
+            }
+            else if (attack.AbsorbOrbitPct > 0f)
+            {
+                handler.AbsorbOrbits(attack.RedirectCount, attack.AbsorbOrbitPct);
+            }
+            else if (attack.RedirectOrbits)
+            {
+                handler.RedirectOrbits(attack.RedirectCount);
+            }
+            else if (attack.ExplodeOrbits)
+            {
+                handler.ExplodeOrbits(attack.RedirectCount);
+            }
+        }
+    }
+}
