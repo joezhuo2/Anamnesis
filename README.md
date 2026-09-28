@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.15-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.16-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.15** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.16** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -45,7 +45,7 @@ Current release: **v0.6.15** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **✨ Awakenings** | `PlayerUpgrade` assets driven by 25 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
 | **🌳 Skill Tree** | Pan/zoom tree of 236 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
 | **🧪 Status Effects** | Stackable DoTs, stuns, freezes, stat buffs and reductions, attack replacement, cleansing, and **Ethereal Mirage** clones that share your stats and repeat your attacks, with cooldown UI |
-| **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, and a five-boss **Boss Rush** gauntlet |
+| **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, a five-boss **Boss Rush** gauntlet, and a **Mirror** boss that fights with a copy of your current attacks and Awakenings on its own enemy stats |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
 | **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman. `SpawnerBox` pickups start an ambush of configurable enemies that joins the wave, then drop a weighted batch of collectibles once it is cleared |
@@ -86,7 +86,7 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Capstones** | Warp, Hypernova, Astral Disjunction and Nitro Accelerator upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion and Ultrasonic upgrade their required Awakening |
 | **Keystones** | Ethereal Mirage: casting an Ultimate summons 3 clones that follow you and mimic your attacks |
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma) |
-| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`) |
+| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`), Mirror (copies your attacks and Awakenings, Unlimited only) |
 | **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper) chaining into `BossRush Part 2` (the same five at Lv 105) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission* — separate Regular and Unlimited lists |
 | **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |

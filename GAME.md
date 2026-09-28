@@ -1067,6 +1067,9 @@ Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `So
 are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
+Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Hypercarry`,
+`Hex Cast`, `Starlit Reflexes`, and Ethereal Mirage's `Cosmic Afterimage` and `Cosmic Superimposition`.
+
 ## Hypercarry
 - Asset: `DashAdvance`
 - Unlocks: wave 35
@@ -1487,11 +1490,41 @@ The `Radiation 4 0.25 8 2 CritDmg` asset name is likewise stale: it now runs 5s 
 
 ---
 
+# Mirror Boss
+
+Folder: `Assets/data/entity/enemy/Bosses/mirror`. The `MirrorBoss` prefab is in the Unlimited
+`bossPrefabs` pool, so it can roll on any Unlimited boss wave alongside the other five bosses.
+
+When it spawns, the `MirrorBoss` component copies the player's build onto the boss:
+
+- **Attacks** (`copyAttacks`): every attack in the player's `PlayerAttackHandler.attacks` replaces the
+  boss's `EnemyAttackHandler.attacks`. Cooldowns use the player formula (attack speed and the matching
+  Basic/Skill/Ultimate cooldown reduction), read from the boss's own stats. Attacks with no max range
+  use `fallbackRange` (6), and aimed attacks point at the boss's target.
+- **Awakenings** (`copyUpgrades`): the player's active `PlayerUpgrade`s, minus any with `noMirror`,
+  are added to the boss's own `PlayerUpgradeManager`. `maxUpgrades` (`0` = all) keeps a random subset.
+  Casting a copied attack fires the boss's `OnAttack` and per-type attack triggers.
+
+The copy is a snapshot: attacks or Awakenings the player gains after the boss spawns are not added.
+Player stats, synergies and gear are never copied. The boss uses the `mirror base` stats (values before level scaling):
+
+| Stat | Value | Stat | Value |
+| --- | --- | --- | --- |
+| `maxHp` | 700 | `damageRes` | 20 |
+| `attack` | 3 | `dodgeChance` | 20 |
+| `critChance` | 15 | `dodgeResPct` | 60 |
+| `critDamage` | 40 | `spellRes` | 15 |
+| `armor` | 100 | `effectRes` | 10 |
+| `moveSpeed` | 1 | `detectionRange` | 15 |
+| `xpDrop` | 800 | `goldDrop` | 80 |
+
+`globalCooldown` is 1s. The prefab reuses the player's animator controller.
+
 # Collectibles
 
 Folder: `Assets/data/Collectibles`. Spawned by the `CollectibleSpawner` in `New.unity`,
-which holds all eleven assets, prewarms 8 pickups, ticks every 2s, caps the field at 8 live
-pickups and places them 4–8 units from the player.
+which holds all eleven assets, prewarms 8 pickups, ticks every 2s, caps the field at 10 live
+pickups and places them 3–6 units from the player.
 
 | Asset | Type | Pays | Roll | Chance | Cooldown | Lifetime | Color |
 | --- | --- | --- | --- | --- | --- | --- | --- |

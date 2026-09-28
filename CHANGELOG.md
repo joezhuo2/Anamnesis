@@ -7,6 +7,34 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.16] - 2026-09-27
+
+### Added
+- **Mirror boss**: a new `MirrorBoss` boss (`Assets/data/entity/enemy/Bosses/mirror`) that fights with a copy of
+  the player's current attacks and Awakenings, but uses its own `mirror base` enemy stats
+  - `MirrorBoss` component: `copyAttacks`, `copyUpgrades`, and `maxUpgrades` (random subset, `0` = all). The copy
+    is taken once, when the boss spawns
+  - Only attacks and `PlayerUpgrade`s are copied. Player stats, synergies and gear are not
+  - Copied attack cooldowns use the player cooldown formula (cooldown reduction, attack speed) against the
+    boss's own stats, and copied casts fire the boss's `OnAttack` / `OnBasicAttack` / `OnSkillAttack` /
+    `OnUltAttack` upgrades
+  - Base stats: 700 HP, 3 attack, 100 armor, 15% crit chance, 40% crit damage, 20% damage resistance,
+    20% dodge, 15% spell resistance, 10 effect resistance; drops 800 XP and 80 gold
+  - Reuses the player animator controller
+  - Added to the Unlimited `bossPrefabs` pool
+- `PlayerUpgrade.noMirror`: excludes an upgrade from mirror bosses. Set on **Hypercarry**, **Hex Cast**,
+  **Starlit Reflexes**, **Cosmic Afterimage** and **Cosmic Superimposition**
+- `EnemyAttackHandler.fallbackRange`: the range used for attacks with no max range (`0` = never chosen).
+  `MirrorBoss` uses 6
+- `IAimProvider`: lets a non-player caster aim its projectiles. `EnemyMovement` aims at its current target, so
+  aimed attacks cast by enemies now point at, and clamp their spawn distance to, the target instead of
+  firing to the right
+
+### Changed
+- `CollectibleSpawner` places pickups 3–6 units from the player (was 4–8) and allows 10 live pickups (was 8)
+- `PlayerUpgradeManager` only registers itself as the singleton on the object tagged `Player`, so enemies can
+  carry their own
+
 ## [v0.6.15] - 2026-09-27
 
 ### Added

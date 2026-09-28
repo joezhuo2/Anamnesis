@@ -8,8 +8,10 @@ namespace CrystalFlux.EntitySystem
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class EnemyMovement : MonoBehaviour, IKnockbackable
+    public class EnemyMovement : MonoBehaviour, IKnockbackable, IAimProvider
     {
+        public Vector2 AimPoint => target != null ? (Vector2)target.transform.position : (Vector2)transform.position + Vector2.right;
+
         public bool cardinalOnly = true;
         public bool canDeaggro = true;
         public float stoppingDistance = 0;

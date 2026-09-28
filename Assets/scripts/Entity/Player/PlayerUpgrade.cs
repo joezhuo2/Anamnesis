@@ -41,6 +41,7 @@ namespace CrystalFlux.EntitySystem
         public float chance;
         public float cooldown;
         [Tooltip("delay after triggering before effect activates")] public float delay;
+        [Tooltip("Excluded from bosses that mirror the player's upgrades")] public bool noMirror;
         public virtual void TriggerUpgradeEffect(GameObject player) {}
         public virtual void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter) {}
         public virtual void TriggerUpgradeEffect(GameObject player, GameObject target, float damageDealt) {}

@@ -53,6 +53,8 @@ namespace CrystalFlux.EntitySystem
 
         private void Awake()
         {
+            if (!CompareTag("Player")) return;
+
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
@@ -97,7 +99,7 @@ namespace CrystalFlux.EntitySystem
         {
             for (int i = 0; i < activeUpgrades.Count; i++)
             {
-                if (activeUpgrades[i] == null) continue;
+                if (activeUpgrades[i] == null || runtimeCopies.Contains(activeUpgrades[i])) continue;
 
                 PlayerUpgrade runtime = ToRuntimeCopy(activeUpgrades[i]);
                 activeUpgrades[i] = runtime;

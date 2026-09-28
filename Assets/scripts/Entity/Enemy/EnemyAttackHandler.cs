@@ -13,6 +13,7 @@ namespace CrystalFlux.EntitySystem
         public Vector2 projSpawnOffset;
         public List<AttackData> attacks;
         public float globalCooldown;
+        [Tooltip("Range used for attacks with no max range. 0 = those attacks are never chosen")] public float fallbackRange;
 
         [Header("Cast Bar")]
         public Slider castBarPrefab;
@@ -37,6 +38,8 @@ namespace CrystalFlux.EntitySystem
         private EnemyPhase ep;
         private bool anyReady;
         private EnemyMovement em;
+        private PlayerUpgradeManager pum;
+        private bool mirrored;
         private GameObject Target => em != null ? em.target : null;
 
         public bool IsCasting => isCasting || isCharging;
@@ -46,6 +49,7 @@ namespace CrystalFlux.EntitySystem
             a = GetComponent<Animator>();
             TryGetComponent(out ep);
             TryGetComponent(out em);
+            TryGetComponent(out pum);
 
             if (attacks == null) attacks = new List<AttackData>();
             else attacks.RemoveAll(atk => atk == null);
@@ -54,7 +58,30 @@ namespace CrystalFlux.EntitySystem
             for (int i = 0; i < attacks.Count; i++) cooldowns[i] = attacks[i].Cooldown;
         }
 
-        private void Start() => esm = GetComponent<IStatProvider>();
+        private void Start()
+        {
+            if (esm == null) esm = GetComponent<IStatProvider>();
+        }
+
+        public void SetAttacks(List<AttackData> src)
+        {
+            if (esm == null) esm = GetComponent<IStatProvider>();
+
+            attacks = new List<AttackData>();
+            if (src != null)
+                for (int i = 0; i < src.Count; i++)
+                    if (src[i] != null) attacks.Add(src[i]);
+
+            mirrored = true;
+            queuedAttack = null;
+
+            cooldowns = new float[attacks.Count];
+            for (int i = 0; i < attacks.Count; i++) cooldowns[i] = GetCd(attacks[i]);
+        }
+
+        private float GetCd(AttackData ad) => mirrored ? PlayerAttackHandler.GetEffCd(ad, esm) : ad.Cooldown;
+
+        private float GetRange(AttackData ad) => ad.MaxRange > 0f ? ad.MaxRange : fallbackRange;
 
         private void OnDestroy() => EndCast();
         private void Update()
@@ -82,7 +109,8 @@ namespace CrystalFlux.EntitySystem
             if (queuedAttack != null)
             {
                 float d = (Target.transform.position - transform.position).sqrMagnitude;
-                if (d > queuedAttack.MaxRange * queuedAttack.MaxRange) return;
+                float r = GetRange(queuedAttack);
+                if (d > r * r) return;
 
                 StartCoroutine(PerformAttack(queuedAttack, attacks.IndexOf(queuedAttack)));
                 return;
@@ -109,8 +137,9 @@ namespace CrystalFlux.EntitySystem
             for (int i = 0; i < attacks.Count; i++)
             {
                 AttackData a = attacks[i];
+                float r = GetRange(a);
 
-                if (cooldowns[i] > 0f || dist > (a.MaxRange * a.MaxRange)) continue;
+                if (cooldowns[i] > 0f || dist > r * r) continue;
 
                 if (a.MinHpPct > 0 && hpPct < a.MinHpPct) continue;
                 if (a.MaxHpPct < 100f && hpPct > a.MaxHpPct) continue;
@@ -190,7 +219,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (interrupted)
                 {
-                    if (currentIndex >= 0) cooldowns[currentIndex] = current.Cooldown;
+                    if (currentIndex >= 0) cooldowns[currentIndex] = GetCd(current);
                     yield break;
                 }
 
@@ -213,17 +242,27 @@ namespace CrystalFlux.EntitySystem
 
                     float d = dist > current.SpawnDistance ? current.SpawnDistance : dist;
 
-                    ProjectileSpawner.Instance.Spawn(
-                        current.ProjectilePrefab,
-                        gameObject,
-                        transform.position,
-                        dir,
-                        d,
-                        host: this
-                    );
-                    MirageClone.NotifyCast(gameObject, current.ProjectilePrefab, transform.position, dir, d);
+                    if (mirrored)
+                    {
+                        ProjectileSpawner.Instance.Spawn(current, gameObject, transform.position, dir, d, host: this);
+                        MirageClone.NotifyCast(gameObject, current, transform.position, dir, d);
+                    }
+                    else
+                    {
+                        ProjectileSpawner.Instance.Spawn(
+                            current.ProjectilePrefab,
+                            gameObject,
+                            transform.position,
+                            dir,
+                            d,
+                            host: this
+                        );
+                        MirageClone.NotifyCast(gameObject, current.ProjectilePrefab, transform.position, dir, d);
+                    }
                 }
             }
+
+            TriggerAttackUpgrades(current.type);
 
             if (current.SummonChance > 0f && current.SummonCondition == SummonCondition.OnCast && Random.value <= current.SummonChance)
             {
@@ -231,12 +270,12 @@ namespace CrystalFlux.EntitySystem
                     summonHandler.Summon();
             }
 
-            if (currentIndex >= 0) cooldowns[currentIndex] = current.Cooldown;
+            if (currentIndex >= 0) cooldowns[currentIndex] = GetCd(current);
 
             if (current.CanCharge)
             {
                 yield return ChargeLoop(current);
-                if (currentIndex >= 0 && !current.CooldownOnAttackStart) cooldowns[currentIndex] = current.Cooldown;
+                if (currentIndex >= 0 && !current.CooldownOnAttackStart) cooldowns[currentIndex] = GetCd(current);
                 if (castCancelled) { castCancelled = false; yield break; }
             }
 
@@ -315,6 +354,21 @@ namespace CrystalFlux.EntitySystem
                 host: this
             );
             MirageClone.NotifyCast(gameObject, chargeSource, transform.position, dir, d);
+        }
+
+        private void TriggerAttackUpgrades(AttackType type)
+        {
+            if (pum == null) return;
+
+            pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnAttack);
+
+            switch (type)
+            {
+                case AttackType.Basic: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnBasicAttack); break;
+                case AttackType.Skill: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnSkillAttack); break;
+                case AttackType.Ultimate: pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnUltAttack); break;
+                default: break;
+            }
         }
 
         private void HandleCleanse(AttackData ad)

@@ -17966,9 +17966,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 121516d3c52ca3948a71c5f3a3ed5253, type: 2}
   - {fileID: 11400000, guid: 4c4af91f9f3e5524d8f6708a5fd667a9, type: 2}
   prewarmCount: 8
-  minSpawnDist: 4
-  maxSpawnDist: 8
-  maxConcurrent: 8
+  minSpawnDist: 3
+  maxSpawnDist: 6
+  maxConcurrent: 10
   tickInterval: 2
 --- !u!4 &776374561
 Transform:
@@ -26756,6 +26756,7 @@ MonoBehaviour:
   - {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
   - {fileID: 9117472875837362680, guid: 05af5c27662d78449819af531e4aff51, type: 3}
   - {fileID: 6689199875529418274, guid: 0998a9989d25854438b15fceae76690a, type: 3}
+  - {fileID: 5022662664612179253, guid: 1f39f7133a7404c4abde6e8575418c51, type: 3}
 --- !u!1 &1174038199 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 626069542039898348, guid: 990cbe8a06d75e446bcb4c445486690d, type: 3}

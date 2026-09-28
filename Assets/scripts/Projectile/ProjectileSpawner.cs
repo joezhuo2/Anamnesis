@@ -278,12 +278,19 @@ namespace CrystalFlux.ProjectileSystem
             bool aimsAtMouse = source != null && source.TryGetComponent<ITeamMember>(out var itm) && itm.TeamID == 1;
 
             Vector2 mouse = center;
+            bool aims = aimsAtMouse;
             if (aimsAtMouse && MainCam != null) mouse = MainCam.ScreenToWorldPoint(InputState.mousePos);
+            else if (!aimsAtMouse && source != null && source.TryGetComponent<IAimProvider>(out var iap))
+            {
+                mouse = iap.AimPoint;
+                aims = true;
+            }
 
-            dir = dirOverride ?? (aimsAtMouse ? (mouse - center).normalized : Vector2.right);
+            Vector2 toAim = mouse - center;
+            dir = dirOverride ?? (aims && toAim != Vector2.zero ? toAim.normalized : Vector2.right);
             dist = distOverride ?? (ad != null ? ad.SpawnDistance : 0f);
 
-            if (ad != null && !ad.FixedDistance && aimsAtMouse)
+            if (ad != null && !ad.FixedDistance && aims)
                 dist = Mathf.Min(Vector2.Distance(center, mouse), dist);
         }
 

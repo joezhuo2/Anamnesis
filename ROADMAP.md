@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.6.16] **Mirror boss**: a boss that fights with your own build. When it spawns it copies your current attacks and Awakenings, then uses them against you on its own enemy stats, so the stronger your kit, the harder it hits back. A few Awakenings that only make sense on the player stay behind. Joins the Unlimited boss pool
 - [v0.6.15] **Spawner boxes**: an ambush you choose to start. Step on a box and a small group of enemies spawns around it, a couple of levels above the wave; clear them all and a spread of XP, gold, reroll and skill point pickups drops in its place. Four boxes ship (Slime, Bat, Crab and Cultist Clone), and the ambush counts toward the wave, so it has to be finished before the wave ends
 - [v0.6.14] **Reward lock**: lock one card on the reward panel and a reroll only replaces the others, so rerolling becomes a decision instead of a slot machine. One lock at a time, released after each reroll, and off in Ironman. The skill tree gains Status Effect Potency and Maximum Stamina paths, and Unlimited synergies can now roll defensive, crit, regen and utility stats
 - [v0.6.13] **Sorted cooldown bar and fixes**: attack cooldown buttons are now always ordered Basic, Skill, Ultimate. Momentum finally grants its buff, the Cultist Clone escalates as it loses health, Nocturnis can roll from wave 25, and percent Defense and Arcane Shield join the regular reward pools
