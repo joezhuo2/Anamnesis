@@ -13645,6 +13645,11 @@ MonoBehaviour:
     attackName: Subspace Blitz
     desc: Rush
     minWave: -1
+  - newAttack: {fileID: 11400000, guid: 8ae4954fe1298164e9bbb55472f4165a, type: 2}
+    icon: {fileID: 0}
+    attackName: Aeternus
+    desc: Homing True Multi
+    minWave: 25
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -13749,6 +13754,17 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Momentum
     desc: Dashing and rushing increases movement speed and rush impact
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 2453d865c8ef4199b3652e296c64a228, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Resonance
+    desc: Performing the same attacks 3 times in a row makes the next cast free and
+      grants a stack of Stellar Resonance.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 902c7526f55e0c44a8ecda7108e87534, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Midas Touch
+    desc: Every 250 gold increases damage by 2%, max 100 stacks.
     minWave: -1
   mixedPool:
   - icon: {fileID: 0}
@@ -26161,6 +26177,11 @@ MonoBehaviour:
     attackName: Subspace Blitz
     desc: Rush
     minWave: -1
+  - newAttack: {fileID: 11400000, guid: 8ae4954fe1298164e9bbb55472f4165a, type: 2}
+    icon: {fileID: 0}
+    attackName: Aeternus
+    desc: Homing True Multi
+    minWave: 25
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -26265,6 +26286,17 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Momentum
     desc: Dashing and rushing increases movement speed and rush impact
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 2453d865c8ef4199b3652e296c64a228, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Resonance
+    desc: Performing the same attacks 3 times in a row makes the next cast free and
+      grants a stack of Stellar Resonance.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 902c7526f55e0c44a8ecda7108e87534, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Midas Touch
+    desc: Every 250 gold increases damage by 2%, max 100 stacks.
     minWave: -1
   mixedPool:
   - icon: {fileID: 0}

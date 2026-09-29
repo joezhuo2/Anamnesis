@@ -254,6 +254,12 @@ namespace CrystalFlux.EntitySystem
             AttackData selected = FindAttackOfType(type);
             if (selected == null) return;
 
+            if (triggerUpgrades && IsFreeCast(type))
+            {
+                bypassCooldown = true;
+                noCost = true;
+            }
+
             if (!bypassCooldown && RefreshStacks(type, selected) <= 0)
             {
                 NotifyBlocked(type);
@@ -397,7 +403,11 @@ namespace CrystalFlux.EntitySystem
             if (selected.Rushes && pm != null) pm.StartRush(selected);
 
             if (triggerUpgrades)
+            {
+                FreeCast fc = GetFreeCast();
+                if (fc != null) fc.RegisterCast(gameObject, type);
                 TriggerUpgradesOnAttack(type);
+            }
 
             ApplyAttackAnimator(type);
             StartCoroutine(ResetAttackType(selected.AnimationLength));
@@ -639,9 +649,19 @@ namespace CrystalFlux.EntitySystem
             AttackData selected = FindAttackOfType(type);
             if (selected == null) return false;
 
+            if (IsFreeCast(type)) return true;
+
             if (RefreshStacks(type, selected) <= 0) return false;
 
             return CanAfford(selected);
+        }
+
+        private FreeCast GetFreeCast() => pum != null ? pum.GetPlayerUpgradeOfType<FreeCast>() as FreeCast : null;
+
+        public bool IsFreeCast(AttackType type)
+        {
+            FreeCast fc = GetFreeCast();
+            return fc != null && fc.IsPending(type);
         }
 
         public int GetStacks(AttackType type)

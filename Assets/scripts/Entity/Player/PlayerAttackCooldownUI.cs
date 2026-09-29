@@ -37,6 +37,9 @@ namespace CrystalFlux.EntitySystem
         [Tooltip("Attacks with a shorter effective cooldown than this do not flash when ready")]
         public float minReadyFlashCooldown = 0.5f;
 
+        [Header("Free Cast")]
+        public Color freeCastBorderColor = new(0.35f, 0.85f, 1f, 1f);
+
         [Header("Sealed")]
         public Color lockedIconColor = new(0.35f, 0.35f, 0.35f, 1f);
         public Color lockedBorderColor = new(0.4f, 0.4f, 0.4f, 1f);
@@ -193,6 +196,7 @@ namespace CrystalFlux.EntitySystem
         private Color ResolveBorderColor()
         {
             if (lastLocked) return lockedBorderColor;
+            if (cpah != null && cpah.IsFreeCast(ctype)) return freeCastBorderColor;
             if (cpah == null || !cpah.CanCast(ctype)) return blockedBorderColor;
             if (IsStacked && lastStacks > 0 && lastStacks < cad.Stacks) return partialStackBorderColor;
             return IdleBorderColor;
@@ -302,6 +306,7 @@ namespace CrystalFlux.EntitySystem
 
             List<string> lines = new() { $"{cad.type}" };
             if (cpah.IsSlotLocked(ctype)) lines.Add("Sealed");
+            else if (cpah.IsFreeCast(ctype)) lines.Add("Resonance: next cast free");
             if (effCd != 0f) lines.Add($"Cooldown: {effCd:F1}s");
             if (cad.Stacks > 1) lines.Add($"Stacks: {cpah.GetStacks(ctype)}/{cad.Stacks}");
             if (hp != 0f || hpg != 0f) lines.Add($"Health: -{hp:F0} +{hpg:F0} +{cad.HealthPctGainOnHit:F1}%");

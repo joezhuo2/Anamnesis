@@ -117,7 +117,12 @@
 - [ ] Daily/weekly challenge modifiers with seeded runs
 - [ ] run archive
 
-## Planned
+# Planned
+
+### High priority To-Do
+- cap AOE% at ~200-300%
+- [ ] **Blackout** (anamoly, no fail) - vision shrinks to a radius around the player; enemies outside it are hidden except for their attack telegraphs and projectiles. Each kill briefly widens the radius. *New feature:* a vision mask / URP 2D light overlay.
+- **Gravity Well** - *something* create an aoe attack that pulls enemies (and debuffs them?)
 
 ### Will do sometime
 - [ ] "What's new" changelog popup on update
@@ -146,21 +151,17 @@
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
 - **Something** - counter dodging creates a shockwave
-- **Gravity Well** - *something* create an extremely massive aoe attack that pulls enemies and debuffs them
 - **Gravemark** (Basic) — marks the target instead of damaging it; the next *different* attack slot that hits a marked enemy detonates every mark. Opens a slot-rotation playstyle.
 - **Riptide** (Ultimate) — rush that drags every enemy it passes through along with you (applies `Pulled` on contact), then drops them in a heap on `OnRushEnd`. Sets up AoE ultimates. (new rush dashing through enemies bool)
 - **Overclock** (Ultimate) — no damage. For 8s, every cast advances all other cooldowns by 50%, but each cast costs stamina. When the timer ends you get `Overheat`.
 - **Shatterpoint** — `OnCrit` against a stunned or frozen enemy: consumes the CC and deals 200% crit damage as true damage. 
-- **Resonance** — using the same attack slot 3 times in a row empowers the 4th cast
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
-- **Midas Touch** — passive. Every 250 gold held grants +1% `damagePct`
 - **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
 - **Event Horizon** (Ultimate) — a slow `Spiral` projectile that `Pulled`s nearby enemies and grows over its lifetime.
 - **Something** - something that grants thorns effect
 - **Something** - something that grants life steal effect
-- **Mitosis Shot** (Basic) — each projectile splits into 3 smaller copies on hit
 - **Scatter Mine** (Basic) — random-direction (`randomDir`) mines that sit still and arm after 0.5s. Opens a trap/kiting playstyle. new `armDelay` (no collision until armed).
-- **Glacial Lance** (Skill) — applies `Freeze`; hitting a frozen enemy shatters it for bonus true damage and splashes `Slow` onto nearby enemies.
+- **Perfect Parry** — `OnCounterDodge`: reflects the incoming hit as a projectile toward its source and refunds the dash cooldown. Deepens dash play.
 
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
@@ -247,11 +248,9 @@
 
 ### Awakenings (PlayerUpgrade)
 
-- [ ] **Perfect Parry** — `OnCounterDodge`: reflects the incoming hit as a projectile toward its source and refunds the dash cooldown. Deepens dash play.
   *New feature:* stack counter on `PlayerUpgrade`.
 - [ ] **Contagion** — `OnKill`: status effects on the dying enemy spread to the 3 nearest enemies at 50% of their remaining duration. Generalizes `DoTSpread` to every effect.
 - [ ] **Vampiric Resonance** — `OnOverkill`: excess damage heals you, and healing past max HP converts to overhealth. Uses overkill and overhealth.
-- [ ] **Gravity Well** — `OnRushEnd`: spawns a small `Pulled` field at the rush endpoint. Links Riptide, Kinetic Slam and Subspace Blitz.
 
 ---
 
@@ -300,21 +299,20 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 
 ## Brainstorm: QoL, Gameplay & Replayability
 - [ ] **Boss relics**: each boss drops a choice between two unique, boss-themed Awakenings that can only come from that boss (e.g. a Golem armor-to-rush-impact relic, a Reaper execute relic). Makes each boss kill memorable instead of just another reward panel.
+- [ ] **Owned upgrades list**: a pause menu tab listing every Awakening, capstone and synergy owned this run with full tooltips, so it is possible to check what the build actually does mid-run.
+- [ ] **Damage number filters**: settings to hide DoT ticks, merge rapid hits on one target into a running total, or show only crits/big hits.
+- [ ] **Awakening fusions**: specific Awakening pairs fuse into a stronger combined version when both are owned (e.g. Supersonic + Chaos Theory). Hidden recipes the player discovers, a concrete form of the v1.6 synergy bonuses.
 
 ### QoL
 - [ ] **Banish**: a limited per-run charge that removes a reward from its pool for the rest of the run. Allowed in Ironman since it is not a take-back.
 - [ ] **Reward compare**: hovering a reward shows `current -> new` for every stat it touches, and attack replacements show cooldown/damage/scaling side by side with the attack they replace.
 - [ ] **Capstone path badge**: rewards that satisfy a capstone or keystone requirement in the skill tree get a small badge so players can spot build-defining picks without memorizing the tree.
 - [ ] **Quick retry**: a death screen button (and hotkey) that restarts straight into the same gamemode, difficulty and Ironman setting, skipping the home screen.
-- [ ] **Owned upgrades list**: a pause menu tab listing every Awakening, capstone and synergy owned this run with full tooltips, so it is possible to check what the build actually does mid-run.
-- [ ] **Damage number filters**: settings to hide DoT ticks, merge rapid hits on one target into a running total, or show only crits/big hits.
 - [ ] **First-run hints**: one-time contextual tips (first dash, first corruption, first anomaly, first skill point) that can be reset in settings. Fits v1.0 "a stranger can play it".
 
 ### Gameplay
-- [ ] **Awakening fusions**: specific Awakening pairs fuse into a stronger combined version when both are owned (e.g. Supersonic + Chaos Theory). Hidden recipes the player discovers, a concrete form of the v1.6 synergy bonuses.
 
 *Theme: memory & recollection*
-- [ ] **Deja vu**: a wave replays an earlier wave's exact spawns while a faint ghost trail shows how you moved last time. Beat your earlier clear time for a bonus reward, and it quietly shows how much stronger the build has become.
 - [ ] **Constellation tracing**: stars light up across the map mid-wave; touch them in the drawn order before they fade to complete a constellation, which grants a named buff for the rest of the wave (a different one for each constellation, each with a lore line). Pulls the player around the map instead of kiting in circles.
 
 *Wave events & side objectives (candidates for the v1.2 wave events pool)*
@@ -332,10 +330,7 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **Codex**: an encyclopedia of enemies, bosses, attacks, Awakenings and status effects, with undiscovered entries shown as silhouettes. Completion itself becomes a goal and doubles as in-game documentation.
 - [ ] **Unlimited mutations**: every 25 waves in Unlimited, choose one of three permanent enemy mutations in exchange for a stacking score/reward multiplier. Keeps endless runs changing instead of just scaling numbers.
 
----
-
-## Brainstorm: New Anomalies
-- [ ] **Blackout** (no fail) - vision shrinks to a radius around the player; enemies outside it are hidden except for their attack telegraphs and projectiles. Each kill briefly widens the radius. *New feature:* a vision mask / URP 2D light overlay, which later doubles as groundwork for the screen-edge indicators in v1.3.
+## New Anomalies
 
 - [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
 - [ ] **Volatile** (no fail) - enemies explode on death after a short telegraph, damaging everything nearby, player and enemies alike. Chain reactions reward grouping enemies up, but punish meleeing a pack. *Uses:* the `AnomalySplitter` death hook pattern via `OnEnemySpawned`, the enemy telegraph system.

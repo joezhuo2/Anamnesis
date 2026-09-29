@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.17-6366F1)
+![Version](https://img.shields.io/badge/version-0.6.18-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.17** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.6.18** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -81,8 +81,8 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 |----------|---------|
 | **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova |
 | **Skills** | Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge, Subspace Blitz |
-| **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis |
-| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, Momentum, plus capstone-only Solar Wind and Oblivion, and keystone-only Ethereal Mirage |
+| **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis, Aeternus |
+| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, Momentum, Resonance, Midas Touch, plus capstone-only Solar Wind and Oblivion, and keystone-only Ethereal Mirage |
 | **Capstones** | Warp, Hypernova, Astral Disjunction and Nitro Accelerator upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion and Ultrasonic upgrade their required Awakening |
 | **Keystones** | Ethereal Mirage: casting an Ultimate summons 3 clones that follow you and mimic your attacks |
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma), Cultist Clone, Doppelganger (copies your attacks and Awakenings, Unlimited only) |
@@ -90,7 +90,7 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper) chaining into `BossRush Part 2` (the same five at Lv 105) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed* — separate Regular and Unlimited lists |
 | **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
-| **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Gain Mana, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
+| **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Free Cast, Gain Mana, Gold Buff, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
 In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20, Cultist Clone from 30, Doppelganger from 40. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel*, *Fission* and *Sealed* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.
 
@@ -133,6 +133,7 @@ Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a 
 - A non-zero `delay` on a positional condition drops the position and calls the plain `(player)` overload, so position-sensitive upgrades should leave `delay` at 0.
 - Hits from Ethereal Mirage clones count as the player's: the hit, damage, crit, overkill and kill conditions fire on the player and share its upgrade cooldowns. Clones never re-fire the attack conditions (`OnAttack`, `OnBasicAttack`, `OnSkillAttack`, `OnUltAttack`).
 - Passive Awakenings leave `conditions` empty and install their effect in `OnUnlock`, reversing it in `OnRemove` — Exsanguinate and Terminal Cascade both work this way.
+- Resonance (`FreeCast`) also leaves `conditions` empty: `PlayerAttackHandler` reports every cast to it directly, so its `chance` and `cooldown` gate only the free cast, not each cast in the streak.
 
 ---
 

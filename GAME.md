@@ -53,11 +53,31 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
 
 # Rare Pool
 
-Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 21 entries below are present in
+Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 22 entries below are present in
 `WaveManager.rarePool`. Entries marked with an unlock wave carry a `minWave` on their
 `AttackReward` and cannot be rolled before that wave; the rest are available from wave 1.
 Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave — see
 [Corruption Special Pool](#corruption-special-pool).
+
+## Aeternus
+- Asset: `Aeternus AD`
+- Unlocks: wave 25
+- Type: Ultimate
+- Cooldown: 28s (starts on cast)
+- Pattern: Single (1 count)
+- Cast: 1s, can move while casting
+- Costs: Stamina 80, Mana 80
+- Gains on hit (based on damage dealt): Stamina +1 +0.5%, Mana +1 +0.5%
+- Cleanses: 1 debuff
+- Projectile:
+  - Speed: 1.1
+  - Lifetime: 56s
+  - Pierce: 3000
+  - Size: 2
+  - Damage: 6% True
+  - Scaling: critDamage, plus 12% EffAtk, 12% EffInt, 12% EffArmor, 8% EffMaxHp
+  - Time Before Same Enemy: 0.25s
+  - Knockback: 0.15s
 
 ## Aphelion
 - Asset: `Aphelion AD`
@@ -1059,6 +1079,14 @@ The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an auth
 `StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
 again on `OnRemove`. Used by `Solar Wind`, `Shock Absorber`, `Momentum` and `Ethereal Mirage`.
 
+The `FreeCast` type (`PlayerUpgrade/FreeCast`) counts consecutive casts of one slot and makes the
+next cast free after `castsRequired`, granting `stacks` of `effect`. It has no trigger conditions:
+`PlayerAttackHandler` calls it on every player-triggered cast, and `chance` / `cooldown` gate only
+the free cast. Used by `Resonance`.
+
+The `GoldBuff` type (`PlayerUpgrade/GoldBuff`) grants its `buffs` once per `goldPerStack` gold held, up
+to `maxStacks`, and removes them on `OnRemove`. Used by `Midas Touch`.
+
 The `Overhealth` and `AddChain` types are passive: they configure the player on `OnUnlock`
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
@@ -1068,7 +1096,7 @@ are present in `WaveManager.treasurePool`. Entries marked with an unlock wave ca
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Hypercarry`,
-`Hex Cast`, `Starlit Reflexes`, and Ethereal Mirage's `Cosmic Afterimage` and `Cosmic Superimposition`.
+`Hex Cast`, `Starlit Reflexes`, `Resonance`, and Ethereal Mirage's `Cosmic Afterimage` and `Cosmic Superimposition`.
 
 ## Hypercarry
 - Asset: `DashAdvance`
@@ -1221,6 +1249,16 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Description: Marker upgrade with no trigger logic of its own; allows Health to replace
   Stamina for attack costs.
 
+## Midas Touch
+- Asset: `Midas Touch`
+- Type: GoldBuff
+- Conditions: none (passive loop while equipped)
+- Gold Per Stack: 250
+- Max Stacks: 100
+- Buffs per stack: +2% damagePct
+- Description: Every 250 gold held grants +2% damage, up to 100 stacks. Gold is checked every 0.2s
+  of real time, so spending gold in the shop drops the bonus straight away, even while paused.
+
 ## Momentum
 - Asset: `Momentum`
 - Type: GrantStatusEffect
@@ -1274,6 +1312,19 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Cooldown Effect: Reminiscence Cooldown (4s)
 - Description: 35% chance on a critical hit to immediately perform an extra attack of a
   randomly chosen equipped attack type.
+
+## Resonance
+- Asset: `Resonance`
+- Type: FreeCast
+- Conditions: none (`PlayerAttackHandler` reports each cast)
+- Chance: 100%
+- Cooldown: 0s
+- Casts Required: 3
+- Effect: `Stellar Resonance`, 1 stack per free cast granted
+- Description: Casting the same attack slot 3 times in a row makes the next cast of that slot free:
+  no resource cost and no cooldown used. Chance and cooldown are rolled when the streak completes,
+  and a failed roll resets the streak. Casting a different slot resets the streak and cancels an
+  unused free cast. Upgrade-triggered casts don't count. An interrupted free cast stays available.
 
 ## Serenade
 - Asset: `Serenade`
@@ -1460,6 +1511,7 @@ subfolders named after their class.
 | `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +4 hpRegen, +9% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Spellworn` | StatBuffs | Spellworn | 4s | - | 2 | -15% spellRes per stack |
+| `Stellar Resonance` | StatBuffs | Stellar Resonance | 11s | - | 3 | +8% resPen, +12% ProjSpd per stack (authored with `isBuff` off) |
 | `Stun 1` | Stun | Stun | 1s | - | 1 | Cannot move or attack |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
 | `Stun 3` | Stun | Stun | 3s | - | 1 | Cannot move or attack |
@@ -1564,6 +1616,7 @@ All Unlimited anomaly assets now cap at `maxWave` 128.
 | State | Border | Field |
 | --- | --- | --- |
 | Sealed | grey, plus a grey icon, a full cooldown fill and the optional `lockOverlay` | `lockedBorderColor`, `lockedIconColor` |
+| Free cast ready ([Resonance](#resonance)) | cyan | `freeCastBorderColor` |
 | Can't cast (on cooldown, can't afford, can't attack) | red | `blockedBorderColor` |
 | Stacked attack with more than 0 but fewer than max stacks | yellow | `partialStackBorderColor` |
 | Ready | green for stacked attacks, otherwise the prefab's border color | `stackedBorderColor` |
@@ -1575,7 +1628,8 @@ Flashes interrupt the border for a moment:
   cooldown or a cooldown advance. Attacks with an effective cooldown under `minReadyFlashCooldown` (0.5s)
   skip it. The check runs the frame the cooldown finishes.
 
-A sealed button's tooltip gains a "Sealed" line.
+A sealed button's tooltip gains a "Sealed" line, and a button with a free cast ready gains
+"Resonance: next cast free".
 
 # Collectibles
 

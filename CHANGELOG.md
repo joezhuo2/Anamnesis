@@ -7,6 +7,39 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.6.18] - 2026-09-28
+
+### Added
+- **Resonance** Awakening (`FreeCast` type, `PlayerUpgrade/FreeCast`): casting the same attack slot
+  `castsRequired` (3) times in a row makes the next cast of that slot free, meaning no resource cost and no
+  cooldown used. It also grants `stacks` (1) of `effect` (**Stellar Resonance**)
+  - `chance` and `cooldown` only gate the free cast. They are checked when the streak completes, and a failed
+    roll or an active cooldown resets the streak
+  - Casting a different slot resets the streak and cancels an unused free cast. Casts fired by other upgrades
+    (`triggerUpgrades` off) don't count
+  - A free cast that gets interrupted mid-cast stays available
+  - No trigger conditions: `PlayerAttackHandler` reports each cast to it directly. `noMirror` is set
+  - In both reward pools from wave 1
+- **Stellar Resonance** status effect (`StatBuffs`): 11s, max 3 stacks, +8% resPen and +12% ProjSpd per stack
+- **Midas Touch** Awakening (`GoldBuff` type, `PlayerUpgrade/GoldBuff`): every 250 gold held grants
+  +2% damagePct, up to 100 stacks
+  - `GoldBuff` fields are `goldPerStack`, `maxStacks` and a `StatBuff[] buffs`. It checks the player's gold every
+    0.2s (real time, so spending in the shop updates it while paused) and applies only the change in stacks.
+    All stacks are removed with the upgrade
+  - In both reward pools from wave 1
+- **Aeternus** Ultimate is back from on hold and moved to the Rare Pool (`Rare Pool/Aeternus`). It unlocks at
+  wave 25 in both reward pools
+  - 28s cooldown, 1s cast (can move), 80 stamina + 80 mana, cleanses 1 debuff
+  - Slow (1.1 speed), 56s lifetime, infinite pierce projectile dealing 6% True damage scaled on critDamage,
+    plus 12% EffAtk, 12% EffInt, 12% EffArmor and 8% EffMaxHp
+- Attack cooldown buttons: a slot with a free cast ready gets a cyan border (`freeCastBorderColor`, ahead of
+  the blocked check) and a "Resonance: next cast free" tooltip line
+- `PlayerAttackHandler.IsFreeCast(type)`. `CanCast` returns true while a free cast is ready
+
+### Fixed
+- The home screen version label showed v0.6.14 because `bundleVersion` in Project Settings was never bumped. It
+  now reads 0.6.18
+
 ## [v0.6.17] - 2026-09-28
 
 ### Added
