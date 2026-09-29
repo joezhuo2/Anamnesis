@@ -11,7 +11,7 @@ namespace CrystalFlux.SkillTree
 
         [Header("Pan Settings")]
         public float panSpeed = 1f;
-        public bool requireAltForPan = true;
+        public bool requireAltForPan = false;
         public float dragStartThreshold = 5f;
 
         [Header("Zoom Settings")]
@@ -26,6 +26,7 @@ namespace CrystalFlux.SkillTree
         private Vector2 initialAnchoredPos;
 
         private bool isPanning;
+        public static bool DraggedThisPress { get; private set; }
         private Vector2 panStartScreenPos;
         private Vector2 contentStartAnchoredPos;
 
@@ -126,14 +127,16 @@ namespace CrystalFlux.SkillTree
             if (panButtonHeld && !isPanning)
             {
                 isPanning = true;
+                DraggedThisPress = false;
                 panStartScreenPos = mouseScreen;
                 contentStartAnchoredPos = contentRect.anchoredPosition;
             }
             else if (panButtonHeld && isPanning)
             {
                 Vector2 delta = mouseScreen - panStartScreenPos;
-                if (delta.magnitude > dragStartThreshold)
+                if (DraggedThisPress || delta.magnitude > dragStartThreshold)
                 {
+                    DraggedThisPress = true;
                     float scale = contentRect.localScale.x;
                     contentRect.anchoredPosition = contentStartAnchoredPos + delta / scale * panSpeed;
                 }

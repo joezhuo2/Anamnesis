@@ -7,6 +7,9 @@ the `WaveManager` reward pools serialized in `Assets/New.unity`. Damage multipli
 Attack entries list the `AttackData` asset name; the paired `ProjectileData` asset is
 the same name with `PD` instead of `AD` unless noted.
 
+Projectile `Size` multiplies the projectile prefab's own scale: the final scale is
+`prefab scale x Size x (1 + aoePct%)`.
+
 ---
 
 # Starting Attacks
@@ -25,7 +28,7 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
   - Speed: 0 (melee)
   - Lifetime: 0.5s
   - Pierce: 3
-  - Size: 2.5
+  - Size: 1.5
   - Damage: 180% Phys
   - Scaling: EffAtk
   - Rotation: 270 degrees
@@ -307,7 +310,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
 
 ## Lifeforce Shard
 - Asset: `Lifeforce AD 1`
-- Type: Basic
+- Type: Additional
 - Cooldown: 0s (follow-up)
 - Pattern: Spread (3 count, 10 spread)
 - Spawn: 0.75 dist, 0.25s delay
@@ -326,7 +329,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
 
 ## Lifeforce Burst
 - Asset: `Lifeforce AD 2`
-- Type: Basic
+- Type: Additional
 - Cooldown: 0s (follow-up)
 - Pattern: Single (1 count)
 - Spawn: 0 dist, 1s delay
@@ -732,7 +735,12 @@ the remaining choices.
 # Damage Mitigation
 
 `DamageCalculator.CalculateDamageTaken` multiplies incoming damage by each of these, then rolls dodge.
-`DefenseMult(x)` is `100 / (x + 100)` for `x >= 0` and `3 - 100 / (100 - x)` below 0.
+`DefenseMult(x)` is `100 / (x + 100)` for `x >= 0` and `2 - 100 / (100 - x)` below 0, so it is
+continuous at 0 and negative values amplify damage up to 2x.
+
+`resPen` and `defShred` are read from the snapshot the projectile captured when it spawned, not from the
+attacker's live stats when it lands. Damage that is not built from a projectile (rush impacts, DoT
+detonations) still reads live stats.
 
 | Layer | Applies to | Value | Reduced by |
 | --- | --- | --- | --- |
@@ -1077,7 +1085,8 @@ player upgrades rather than attacks the player selects.
 
 The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an authored
 `StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
-again on `OnRemove`. Used by `Solar Wind`, `Shock Absorber`, `Momentum` and `Ethereal Mirage`.
+again on `OnRemove`. Used by `Solar Wind`, `Shock Absorber`, `Momentum`, `Moonbound Instinct` and
+`Ethereal Mirage`.
 
 The `FreeCast` type (`PlayerUpgrade/FreeCast`) counts consecutive casts of one slot and makes the
 next cast free after `castsRequired`, granting `stacks` of `effect`. It has no trigger conditions:
@@ -1091,12 +1100,12 @@ The `Overhealth` and `AddChain` types are passive: they configure the player on 
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
-`Oblivion` and `Ultrasonic` — the capstone-only upgrades — and the keystone-only `Ethereal Mirage` pair
+`Oblivion`, `Ultrasonic` and `Moonbound Instinct` — the capstone-only upgrades — and the keystone-only `Ethereal Mirage` pair
 are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Hypercarry`,
-`Hex Cast`, `Starlit Reflexes`, `Resonance`, and Ethereal Mirage's `Cosmic Afterimage` and `Cosmic Superimposition`.
+`Hex Cast`, `Starlit Reflexes`, `Moonbound Instinct`, `Resonance`, and Ethereal Mirage's `Cosmic Afterimage` and `Cosmic Superimposition`.
 
 ## Hypercarry
 - Asset: `DashAdvance`
@@ -1134,8 +1143,8 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
   40% of the time. `OnTeleport` dispatches without a spawn center, so the explosion lands
   on the player at the teleport destination rather than on the projectile that caused it.
 
-## Cresendo
-- Asset: `Cresendo`
+## Crescendo
+- Asset: `Crescendo`
 - Type: CooldownAdvance
 - Conditions: OnBasicAttack
 - Chance: 100%
@@ -1311,7 +1320,8 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Delay: 0.35s
 - Cooldown Effect: Reminiscence Cooldown (4s)
 - Description: 35% chance on a critical hit to immediately perform an extra attack of a
-  randomly chosen equipped attack type.
+  randomly chosen equipped attack type. Slots sealed by the Sealed anomaly are never picked, and
+  the extra attack does not count toward, or spend, a Resonance free cast.
 
 ## Resonance
 - Asset: `Resonance`
@@ -1397,6 +1407,23 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 - Delay: 0s
 - Flat Amount: 18
 - Description: Gain 18 flat mana when dashing into a projectile.
+- Upgraded by: `Node_moonboundinstinct` into [Moonbound Instinct](#moonbound-instinct-capstone)
+
+## Moonbound Instinct (Capstone)
+- Asset: `Moonbound Instinct` (`PlayerUpgrade/Tree`)
+- Type: GrantStatusEffect
+- Conditions: OnCounterDodge
+- Chance: 100%
+- Cooldown: 0.5s
+- Delay: 0s
+- Effect: `Moonbound`, 1 stack
+- `noMirror`: on
+- Description: Dashing through a hostile hit grants a stack of Moonbound (8s, max 4): +12%
+  spellDmgPct, +16% manaGainPct and +3% resPen per stack. Replaces Starlit Reflexes' flat mana.
+- Unlocked by: `Node_moonboundinstinct` ("Moonbound Instinct", 3 skill points, `undoCost` 50,
+  prerequisite `Node_mxm4`, requires Starlit Reflexes, which it consumes on unlock and returns
+  on refund). The prerequisite chain is four Maximum Mana nodes (`Node_mxm1`-`Node_mxm4`, +4 maxMana
+  each, 1 skill point each) off `Node_spr2`
 
 ## Stellar Surge
 - Asset: `StellarSurge`
@@ -1477,6 +1504,10 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 Folder: `Assets/data/StatusEffect`. `Pulled`, `Slow`, `Stun` and `Vulnerable` assets sit in
 subfolders named after their class.
 
+Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `StatBuffs` values,
+`StatReduction` percentages and `Pulled` pull speed. Flag stats in a `StatBuffs` (`isImmune`, `CanMove`,
+`CanAttack` and the other `Can*` / `Is*` toggles, `globalDoTCanCrit`, `Level`) are never scaled.
+
 | Asset | Class | Name | Duration | Tick | Max stacks | Effect |
 | --- | --- | --- | --- | --- | --- | --- |
 | `AttackInc 14 2 40` | StatBuffs | Sharpened Instincts | 14s | - | 2 | +40% atkPct per stack |
@@ -1485,17 +1516,18 @@ subfolders named after their class.
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
 | `Burn 8 1 6 15` | DoT | Burn | 8s | 1s | 5 | 15% EffAtk per tick |
 | `Afflicted` | StatReduction | Afflicted | 6s | - | 6 | -5% maxHp per stack |
-| `Celestial Protection` | StatBuffs | Celestial Protection | 8s | - | 4 | +4% damageRes, +8 armor, +5% armorPct per stack (authored with `isBuff` off) |
+| `Celestial Protection` | StatBuffs | Celestial Protection | 8s | - | 4 | +3% damageRes, +6 armor, +4% armorPct per stack |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
 | `Decay` | StatBuffs | Decay | 4s | - | 6 | -12% hpPct, -14% stRegPct, +4% resPen per stack |
-| `DotDetonator 0.5 2` | Detonator | (unnamed) | 0.5s | - | 1 | Detonates DoTs for 250% as True |
+| `DotDetonator 0.5 2` | Detonator | Detonator | 0.5s | - | 1 | Detonates every DoT stack for 250% as True, scaled by each DoT's potency, then removes them all |
 | `Freeze` | Freeze | Frozen | 2s | - | 1 | Cannot move, attack or dash; no passive health regen; knockback and pulls do nothing, and any rush in progress ends |
 | `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
 | `Mirage` | EtherealMirage | Ethereal Mirage | 18s | - | 1 | Summons 3 clones at 50% flat stats, 60% opacity, radius 2; each living clone gives +12% moveSpeedPct, -15% damagePct. See Ethereal Mirage above |
 | `Mirage Cooldown` | Info | Ethereal Mirage Cooldown | 24s | - | 1 | Cooldown marker |
 | `Momentum` | StatBuffs | Momentum | 11s | - | 1 | +6% moveSpeedPct, +14% rushImpactPct |
+| `Moonbound` | StatBuffs | Moonbound | 8s | - | 4 | +12% spellDmgPct, +16% manaGainPct, +3% resPen per stack |
 | `Overheat` | StatBuffs | Overheat | 7s | - | 5 | -8% atkPct, -12% stRegPct per stack |
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |
 | `Pulled 0.6 1 1.5 5 0.1` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 5 (+2/stack), 1.5 radius |
@@ -1511,7 +1543,7 @@ subfolders named after their class.
 | `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +4 hpRegen, +9% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Spellworn` | StatBuffs | Spellworn | 4s | - | 2 | -15% spellRes per stack |
-| `Stellar Resonance` | StatBuffs | Stellar Resonance | 11s | - | 3 | +8% resPen, +12% ProjSpd per stack (authored with `isBuff` off) |
+| `Stellar Resonance` | StatBuffs | Stellar Resonance | 11s | - | 3 | +8% resPen, +12% ProjSpd per stack |
 | `Stun 1` | Stun | Stun | 1s | - | 1 | Cannot move or attack |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |
 | `Stun 3` | Stun | Stun | 3s | - | 1 | Cannot move or attack |
@@ -1546,6 +1578,8 @@ The `Radiation 4 0.25 8 2 CritDmg` asset name is likewise stale: it now runs 5s 
 
 Folder: `Assets/data/entity/enemy/Bosses/mirror`. The `MirrorBoss` prefab is in the Unlimited
 `bossPrefabs` pool, so it can roll on any Unlimited boss wave alongside the other five bosses.
+It is also the sixth and final fight of both Boss Rush parts, shown on the boss bar as **Echo**
+(`[Lv. 85] Echo` in `BossRush`, `[Lv. 105] Echo` in `BossRush Part 2`).
 
 When it spawns, the `MirrorBoss` component copies the player's build onto the boss:
 

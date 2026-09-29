@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CrystalFlux.ProjectileSystem
 {
@@ -39,7 +40,7 @@ namespace CrystalFlux.ProjectileSystem
         [Tooltip("Extra stats added to the scaling base: base = scalingStat + sum(weight * stat)")]
         [SerializeField] private List<StatScale> extraScalings = new();
         [SerializeField] private float specialMult = 1f;
-        [SerializeField] private SpecialScalingAttribute specialSclaing = SpecialScalingAttribute.None;
+        [FormerlySerializedAs("specialSclaing")] [SerializeField] private SpecialScalingAttribute specialScaling = SpecialScalingAttribute.None;
 
         [Header("Advanced")]
         [Tooltip("Time before the projectile can hit the same enemy")]
@@ -64,7 +65,7 @@ namespace CrystalFlux.ProjectileSystem
         [Range(0, 1)] [SerializeField] private float additionalChance = 0;
         [SerializeField] private bool addAttackRequiresHit = true;
         [SerializeField] private bool additionalFollowsMouse = false;
-        [Tooltip("Distance from location where projectile splits (must be positive to work)")] [SerializeField] private float? distFromCenter = 0f;
+        [Tooltip("Distance from location where projectile splits (must be positive to work)")] [SerializeField] private float distFromCenter = 0f;
 
         [Header("Effects")]
         [SerializeField] private List<EffectData> effects = new();
@@ -98,7 +99,7 @@ namespace CrystalFlux.ProjectileSystem
         public StatType ScalingStat => scalingStat;
         public IReadOnlyList<StatScale> ExtraScalings => extraScalings;
         public float SpecialMult => specialMult;
-        public SpecialScalingAttribute SpecialSclaing => specialSclaing;
+        public SpecialScalingAttribute SpecialScaling => specialScaling;
         public float TimeBeforeSameEnemy => timeBeforeSameEnemy;
         public float FollowDistance => followDistance;
         public bool FollowSource => followSource;
@@ -112,7 +113,7 @@ namespace CrystalFlux.ProjectileSystem
         public bool AddAttackRequiresHit => addAttackRequiresHit;
         public bool AdditionalFollowsMouse => additionalFollowsMouse;
         public float AdditionalChance => additionalChance;
-        public float? DistFromCenter => distFromCenter;
+        public float DistFromCenter => distFromCenter;
         public IReadOnlyList<EffectData> Effects => effects;
         public float OrbitRadius => orbitRadius;
         public float RandOrbRadOffset => randOrbRadOffset;

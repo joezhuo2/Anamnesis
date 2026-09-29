@@ -12,17 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: Lifeforce AD 2
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  type: 0
+  type: 4
   cooldown: 0
+  stacks: 1
   projectilePrefab: {fileID: 5007806784816359958, guid: 92da32c21c25aaf44ae1afff7805d064, type: 3}
   pd: {fileID: 11400000, guid: 5e4ca59848e81fb468e900b81b6020d6, type: 2}
-  pattern: 0
+  animationLength: 0.75
   castTime: 0
   canMoveWhileCasting: 1
-  spawnDelay: 1
-  spawnDistance: 0
-  fixedDistance: 0
-  animationLength: 0.75
+  teleportToProjectile: 0
+  teleportDelay: 0
+  rushDirection: 0
+  rushAngle: 0
+  omnidirectionalRush: 0
+  rushTurnRate: 0
+  rushType: 0
+  rushTypeVal: 0
+  rushSpeedMult: 1
+  immuneWhileRushing: 0
+  disableAttacksWhileRushing: 0
+  endRushOnCollision: 0
+  bounceOnCollision: 0
+  rushImpact: 0
+  rushImpactForce: 0
+  rushImpactTime: 0
+  impactDmgMult: 0.5
+  impactAttack: {fileID: 0}
+  predictTarget: 0
   canCharge: 0
   chargeThreshold: 0.15
   minChargeTime: 0
@@ -30,6 +46,10 @@ MonoBehaviour:
   chargeTickInterval: 1
   cooldownOnAttackStart: 0
   chargeAttack: {fileID: 0}
+  pattern: 0
+  spawnDelay: 1
+  spawnDistance: 0
+  fixedDistance: 0
   projectileCount: 1
   randomCount: 0
   spread: 0
@@ -57,10 +77,14 @@ MonoBehaviour:
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
+  cleanseDebuffs: 0
   fireOrbits: 0
   absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
+  hitStop: 0
+  hitStopCooldown: 0
+  screenShake: 0
   icon: {fileID: 0}
   displayName: 

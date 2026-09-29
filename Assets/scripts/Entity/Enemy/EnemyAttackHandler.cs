@@ -233,7 +233,16 @@ namespace CrystalFlux.EntitySystem
 
             if (current.ProjectilePrefab != null && !current.CanCharge)
             {
-                if (current.SpawnDelay > 0) yield return new WaitForSeconds(current.SpawnDelay);
+                if (current.SpawnDelay > 0)
+                {
+                    yield return new WaitForSeconds(current.SpawnDelay);
+
+                    if (esm.GetStat(StatType.isAlive) <= 0f || (esm.GetStat(StatType.interruptResist) < 2f && esm.GetStat(StatType.CanAttack) <= 0f))
+                    {
+                        if (currentIndex >= 0) cooldowns[currentIndex] = GetCd(current);
+                        yield break;
+                    }
+                }
 
                 if (Target != null && ProjectileSpawner.Instance != null)
                 {
@@ -244,7 +253,7 @@ namespace CrystalFlux.EntitySystem
 
                     if (mirrored)
                     {
-                        ProjectileSpawner.Instance.Spawn(current, gameObject, transform.position, dir, d, host: this);
+                        ProjectileSpawner.Instance.Spawn(current, gameObject, transform.position, dir, d, host: this, skipDelay: true);
                         MirageClone.NotifyCast(gameObject, current, transform.position, dir, d);
                     }
                     else
@@ -255,7 +264,8 @@ namespace CrystalFlux.EntitySystem
                             transform.position,
                             dir,
                             d,
-                            host: this
+                            host: this,
+                            skipDelay: true
                         );
                         MirageClone.NotifyCast(gameObject, current.ProjectilePrefab, transform.position, dir, d);
                     }

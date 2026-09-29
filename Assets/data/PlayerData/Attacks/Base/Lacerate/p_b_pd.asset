@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
   lifetime: 0.5
-  size: 2.5
+  size: 1.5
   numPierce: 3
   destroyOnMaxPierce: 0
   movementType: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   scalingStat: 31
   extraScalings: []
   specialMult: 1
-  specialSclaing: 0
+  specialScaling: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
   followSource: 0
@@ -42,6 +42,7 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
+  distFromCenter: 0
   effects: []
   orbitRadius: 0
   randOrbRadOffset: 0

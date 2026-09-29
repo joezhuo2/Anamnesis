@@ -15,10 +15,10 @@ MonoBehaviour:
   currentTime: 0
   duration: 6
   tickInterval: 0
-  isBuff: 0
+  isBuff: 1
   icon: {fileID: -4721245407534591264, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Celestial Protection
-  desc: Each stack increases damage resistance by 3%, armor by 6, and armor by 4%.
+  desc: Each stack increases damage resistance by 3%, flat armor by 6, and total armor by 4%.
   maxStacks: 4
   loseAllStacksOnExpire: 0
   target: {fileID: 0}
@@ -26,6 +26,7 @@ MonoBehaviour:
   location: {x: 0, y: 0}
   currentStacks: 0
   potencyMultiplier: 1
+  origin: {fileID: 0}
   buffs:
   - type: 18
     value: 3

@@ -169,7 +169,7 @@ MonoBehaviour:
     bossBarPrefab: {fileID: 0}
     bossBarName: 
     statusEffectDisplayPrefab: {fileID: 0}
-  - enemyPrefab: {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+  - enemyPrefab: {fileID: 6689199875529418274, guid: 0998a9989d25854438b15fceae76690a, type: 3}
     maxTotalEnemies: 1
     maxCurrentEnemies: 1
     enemyLevel: 75

@@ -5,7 +5,7 @@ namespace CrystalFlux.ProjectileSystem
 {
     public static class DamageCalculator
     {
-        public static (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, IStatProvider esm, IStatProvider atk = null)
+        public static (float dmg, float size) CalculateDamageTaken(DamageType type, float rawDamage, IStatProvider esm, IStatProvider atk = null, DamagePacket dp = null)
         {
             float typeRes = type switch
             {
@@ -14,8 +14,9 @@ namespace CrystalFlux.ProjectileSystem
                 _ => 0f
             };
 
-            float resPen = atk != null ? atk.GetStat(StatType.resPen) : 0f;
-            float defShred = atk != null ? atk.GetStat(StatType.defShred) : 0f;
+            bool snap = dp != null && dp.hasPenSnapshot;
+            float resPen = snap ? dp.resPen : (atk != null ? atk.GetStat(StatType.resPen) : 0f);
+            float defShred = snap ? dp.defShred : (atk != null ? atk.GetStat(StatType.defShred) : 0f);
 
             float effRes = Mathf.Max(-100f, esm.GetStat(StatType.damageRes) + typeRes - resPen);
             float resMult = 1f - (effRes * 0.01f);
@@ -45,7 +46,7 @@ namespace CrystalFlux.ProjectileSystem
         }
 
         public static float DefenseMult(float effDef)
-            => effDef >= 0f ? 100f / (effDef + 100f) : 3f - (100f / (100f - effDef));
+            => effDef >= 0f ? 100f / (effDef + 100f) : 2f - (100f / (100f - effDef));
 
         public static float GetAdditionalScaling(ProjectileDamageSnapshot snapshot, DamageType type) => type switch
         {

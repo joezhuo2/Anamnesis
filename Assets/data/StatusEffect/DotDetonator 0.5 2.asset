@@ -17,7 +17,7 @@ MonoBehaviour:
   tickInterval: 0
   isBuff: 0
   icon: {fileID: 0}
-  effName: 
+  effName: Detonator
   desc: 
   maxStacks: 1
   target: {fileID: 0}

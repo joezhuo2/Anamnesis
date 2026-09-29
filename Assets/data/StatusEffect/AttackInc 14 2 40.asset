@@ -15,10 +15,10 @@ MonoBehaviour:
   currentTime: 0
   duration: 14
   tickInterval: 0
-  isBuff: 0
+  isBuff: 1
   icon: {fileID: 8367830406354533065, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Sharpened Instincts
-  desc: Inccreases attack by 40% per stack.
+  desc: Increases attack by 40% per stack.
   maxStacks: 2
   loseAllStacksOnExpire: 0
   target: {fileID: 0}
@@ -26,6 +26,7 @@ MonoBehaviour:
   location: {x: 0, y: 0}
   currentStacks: 0
   potencyMultiplier: 1
+  origin: {fileID: 0}
   buffs:
   - type: 2
     value: 40

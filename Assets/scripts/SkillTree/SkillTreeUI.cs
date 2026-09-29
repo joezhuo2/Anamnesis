@@ -109,9 +109,6 @@ namespace CrystalFlux.SkillTree
             var existingNodeUIs = nodeContainer.GetComponentsInChildren<SkillNodeUI>(true);
             var runtimeNodes = manager.tree.runtimeNodes;
 
-            var idList = new List<string>();
-            foreach (var n in runtimeNodes) idList.Add(n != null ? n.nodeID : "<null>");
-
             foreach (var nodeUI in existingNodeUIs)
             {
                 var node = FindMatchingRuntimeNode(nodeUI, runtimeNodes);

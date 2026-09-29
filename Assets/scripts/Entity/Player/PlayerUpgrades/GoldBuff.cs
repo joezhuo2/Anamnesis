@@ -81,6 +81,6 @@ public class GoldBuff : PlayerUpgrade
         if (buffs == null) return;
 
         for (int i = 0; i < buffs.Length; i++)
-            lines.Add($"{buffs[i].type} {buffs[i].value:+0.##;-0.##}");
+            lines.Add($"{buffs[i].value:+0.##;-0.##} {buffs[i]}");
     }
 }

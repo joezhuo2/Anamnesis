@@ -43,6 +43,7 @@ namespace CrystalFlux.EntitySystem
         private readonly Dictionary<AttackType, int> stackCounts = new();
         private readonly List<AttackType> cdKeyBuffer = new();
         private readonly HashSet<AttackType> lockedSlots = new();
+        private int animResetGen;
 
         private bool isCasting;
         private bool castCancelled;
@@ -64,6 +65,7 @@ namespace CrystalFlux.EntitySystem
             public bool bypassCooldown;
             public bool noCost;
             public bool triggerUpgrades;
+            public bool registerStreak;
         }
 
         public bool IsCasting => isCasting || isCharging;
@@ -102,10 +104,10 @@ namespace CrystalFlux.EntitySystem
 
             QueuedAttack q = attackQueue[0];
             attackQueue.RemoveAt(0);
-            PerformAttack(q.type, q.bypassCooldown, q.noCost, q.triggerUpgrades);
+            PerformAttack(q.type, q.bypassCooldown, q.noCost, q.triggerUpgrades, q.registerStreak);
         }
 
-        private void EnqueueAttack(AttackType type, bool bypassCooldown, bool noCost, bool triggerUpgrades)
+        private void EnqueueAttack(AttackType type, bool bypassCooldown, bool noCost, bool triggerUpgrades, bool registerStreak)
         {
             if (maxQueuedAttacks <= 0) return;
 
@@ -129,7 +131,8 @@ namespace CrystalFlux.EntitySystem
                 expireAt = expireAt,
                 bypassCooldown = bypassCooldown,
                 noCost = noCost,
-                triggerUpgrades = triggerUpgrades
+                triggerUpgrades = triggerUpgrades,
+                registerStreak = registerStreak
             });
         }
 
@@ -227,7 +230,7 @@ namespace CrystalFlux.EntitySystem
                 if (attackQueue[i].type == type) attackQueue.RemoveAt(i);
         }
 
-        public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true)
+        public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true, bool registerStreak = true)
         {
             if (lockedSlots.Contains(type))
             {
@@ -237,7 +240,7 @@ namespace CrystalFlux.EntitySystem
 
             if (isCasting || isCharging || RushLocked)
             {
-                EnqueueAttack(type, bypassCooldown, noCost, triggerUpgrades);
+                EnqueueAttack(type, bypassCooldown, noCost, triggerUpgrades, registerStreak);
                 return;
             }
 
@@ -254,7 +257,7 @@ namespace CrystalFlux.EntitySystem
             AttackData selected = FindAttackOfType(type);
             if (selected == null) return;
 
-            if (triggerUpgrades && IsFreeCast(type))
+            if (triggerUpgrades && registerStreak && IsFreeCast(type))
             {
                 bypassCooldown = true;
                 noCost = true;
@@ -287,7 +290,7 @@ namespace CrystalFlux.EntitySystem
             {
                 if (stampCooldownNow) ConsumeStack(type, selected);
 
-                StartCoroutine(CastRoutine(selected, type, castTime, noCost, triggerUpgrades, bypassCooldown, costUpgradesTriggered));
+                StartCoroutine(CastRoutine(selected, type, castTime, noCost, triggerUpgrades, bypassCooldown, costUpgradesTriggered, registerStreak));
                 return;
             }
 
@@ -299,10 +302,10 @@ namespace CrystalFlux.EntitySystem
 
             if (stampCooldownNow) ConsumeStack(type, selected);
 
-            ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown, costUpgradesTriggered);
+            ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown, costUpgradesTriggered, registerStreak);
         }
 
-        private IEnumerator CastRoutine(AttackData selected, AttackType type, float castTime, bool noCost, bool triggerUpgrades, bool bypassCooldown, bool costUpgradesTriggered)
+        private IEnumerator CastRoutine(AttackData selected, AttackType type, float castTime, bool noCost, bool triggerUpgrades, bool bypassCooldown, bool costUpgradesTriggered, bool registerStreak)
         {
             isCasting = true;
             castCancelled = false;
@@ -349,7 +352,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (paid)
                 {
-                    ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown, costUpgradesTriggered);
+                    ExecuteAttack(selected, type, triggerUpgrades, noCost, bypassCooldown, costUpgradesTriggered, registerStreak);
                     yield break;
                 }
             }
@@ -389,7 +392,7 @@ namespace CrystalFlux.EntitySystem
             castCancelled = true;
         }
 
-        private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades, bool noCost = false, bool bypassCooldown = false, bool costUpgradesTriggered = false)
+        private void ExecuteAttack(AttackData selected, AttackType type, bool triggerUpgrades, bool noCost = false, bool bypassCooldown = false, bool costUpgradesTriggered = false, bool registerStreak = true)
         {
             HandleCleanse(selected);
 
@@ -405,7 +408,7 @@ namespace CrystalFlux.EntitySystem
             if (triggerUpgrades)
             {
                 FreeCast fc = GetFreeCast();
-                if (fc != null) fc.RegisterCast(gameObject, type);
+                if (fc != null && registerStreak) fc.RegisterCast(gameObject, type);
                 TriggerUpgradesOnAttack(type);
             }
 
@@ -462,7 +465,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (castCancelled || chargeReleaseRequested)
                 {
-                    if (noCost || HandleStatChanges(selected, !costUpgradesTriggered))
+                    if (!castCancelled && (noCost || HandleStatChanges(selected, !costUpgradesTriggered)))
                     {
                         HandleOrbitInteractions(selected);
                         HandleOnCastSummon(selected);
@@ -630,7 +633,9 @@ namespace CrystalFlux.EntitySystem
 
         public IEnumerator ResetAttackType(float delay)
         {
+            int gen = ++animResetGen;
             yield return new WaitForSeconds(delay);
+            if (gen != animResetGen || a == null) yield break;
             a.SetInteger(AttackIndexHash, -1);
             a.speed = 1f;
         }

@@ -18,13 +18,15 @@ public class Reminiscence : PlayerUpgrade
 
         if (player.TryGetComponent<PlayerAttackHandler>(out var pah))
         {
-            List<AttackType> availableTypes = pah.attacks.ConvertAll(atk => atk.type);
+            List<AttackType> availableTypes = new();
+            foreach (var atk in pah.attacks)
+                if (atk != null && !pah.IsSlotLocked(atk.type)) availableTypes.Add(atk.type);
             if (availableTypes.Count == 0) return;
 
             AttackType chosen = availableTypes[Random.Range(0, availableTypes.Count)];
 
             isCasting = true;
-            try { pah.PerformAttack(chosen, true, true, true); }
+            try { pah.PerformAttack(chosen, true, true, true, false); }
             finally { isCasting = false; }
         }
 

@@ -16,7 +16,7 @@ namespace CrystalFlux.StatusEffectSystem
         {
             if (source == null || target == null || !target.TryGetComponent<IDamageable>(out var eh) || !source.TryGetComponent<IStatProvider>(out var ssm)) return;
 
-            float damage = dpt * 0.01f * ssm.GetStat(scalingStat) * currentStacks;
+            float damage = dpt * 0.01f * ssm.GetStat(scalingStat) * currentStacks * potencyMultiplier;
 
             bool globalDoTCanCrit = ssm.GetStat(StatType.globalDoTCanCrit) > 0f;
 

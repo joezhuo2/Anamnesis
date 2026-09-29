@@ -28,13 +28,14 @@ namespace CrystalFlux.StatusEffectSystem
             {
                 if (dot == null || dot.tickInterval <= 0f) continue;
 
-                float dotTickDmg = dot.dpt * 0.01f * ssm.GetStat(dot.scalingStat) * dot.currentStacks;
+                float dotTickDmg = dot.dpt * 0.01f * ssm.GetStat(dot.scalingStat) * dot.currentStacks * dot.potencyMultiplier;
                 int ticksRemaining = Mathf.Max(0, Mathf.CeilToInt((dot.duration - dot.currentTime) / dot.tickInterval));
 
                 total += dmgMult * dotTickDmg * ticksRemaining;
             }
 
-            sem.RemoveEffect<DoT>();
+            for (int i = 0; i < dots.Count && sem.GetActiveFirstEffectOfType<DoT>() != null; i++)
+                sem.RemoveEffect<DoT>();
 
             if (total <= 0f) return;
 

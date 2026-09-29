@@ -326,7 +326,7 @@ namespace CrystalFlux.ProjectileSystem
         private void HandleHitEntity(GameObject target)
         {
             if (target == null || ownerObj == null || target == ownerObj) return;
-            if (!target.TryGetComponent<IDamageable>(out var eh)) return;
+            if (!target.TryGetComponent<IDamageable>(out var eh) || !eh.IsAlive) return;
 
             var tid = target.TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
 
@@ -389,6 +389,8 @@ namespace CrystalFlux.ProjectileSystem
 
             if (hitExtras != null)
                 for (int i = 0; i < hitExtras.Count; i++) ApplyOnHit(hitExtras[i], target);
+
+            if (pd.DestroyOnMaxPierce && pierced >= pd.NumPierce) Despawn();
         }
 
         private void TriggerImpact()
@@ -432,8 +434,10 @@ namespace CrystalFlux.ProjectileSystem
 
             Vector2? addDir = pd.AdditionalFollowsMouse ? null : dir;
 
-            ProjectileSpawner.Instance.Spawn(pd.AdditionalAttack, ownerObj, transform.position, addDir, pd.AdditionalAttack.SpawnDistance, ChainOrigin);
+            ProjectileSpawner.Instance.Spawn(pd.AdditionalAttack, ownerObj, transform.position, addDir, AddSpawnDist, ChainOrigin);
         }
+
+        private float AddSpawnDist => pd.DistFromCenter > 0f ? pd.DistFromCenter : pd.AdditionalAttack.SpawnDistance;
 
         private AttackData ChainOrigin => chainRoot != null ? chainRoot : (pd != null ? pd.MainAttack : null);
 
@@ -452,8 +456,8 @@ namespace CrystalFlux.ProjectileSystem
         {
             if (ownerObj == null || pd == null || ownerStats == null) return;
 
-            float sizeMult = pd.Size + (ownerStats.GetStat(StatType.aoePct) * 0.01f);
-            transform.localScale = Vector2.Max(new Vector2(sizeMult, sizeMult), Vector2.zero);
+            float sizeMult = Mathf.Max(0f, pd.Size * (1f + (ownerStats.GetStat(StatType.aoePct) * 0.01f)));
+            transform.localScale = new Vector3(defaultScale.x * sizeMult, defaultScale.y * sizeMult, defaultScale.z);
         }
 
         private void HandleDirection()
@@ -840,7 +844,7 @@ namespace CrystalFlux.ProjectileSystem
             if (pd.AdditionalAttack != null && pd.AdditionalAttack.ProjectilePrefab != null && ProjectileSpawner.Instance != null)
             {
                 Vector2? addDir = pd.AdditionalFollowsMouse ? null : dir;
-                ProjectileSpawner.Instance.Spawn(pd.AdditionalAttack, ownerObj, transform.position, addDir, pd.AdditionalAttack.SpawnDistance, ChainOrigin);
+                ProjectileSpawner.Instance.Spawn(pd.AdditionalAttack, ownerObj, transform.position, addDir, AddSpawnDist, ChainOrigin);
             }
             Despawn();
         }

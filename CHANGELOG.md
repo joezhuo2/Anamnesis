@@ -7,6 +7,69 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.0] - 2026-09-29 - Run Variety (Release Summary)
+
+*This release is a correctness pass: a full audit of the combat, upgrade, skill tree and wave code fixed more than twenty bugs, and a new Awakening capstone, Moonbound Instinct, closes out the Starlit Reflexes line.*
+
+It also caps the development arc from `v0.6.1` through `v0.6.18`. Over that period the waves stopped looking the same: two new anomalies (Fission, Sealed), opt-in spawner box ambushes, a boss and an enemy that fight with a copy of the player's own build, stat synergies, reward locking, stackable attacks, rush attacks, Freeze, and a steady stream of new Awakenings.
+
+### Highlights
+
+- **Rushes, Freeze and Subspace Blitz (`v0.6.2`, `v0.6.4`, `v0.6.5`, `v0.6.7`)** — attacks can carry their owner with them (steered, immune, bouncing or stopping on impact) with impact damage and knockback. Subspace Blitz and the Nitro Accelerator capstone are built on it, and Freeze became its own status effect
+- **Wave events (`v0.6.1`, `v0.6.15`, `v0.6.17`)** — Fission splits slain enemies into weaker copies, spawner boxes start an ambush that pays out a spread of pickups, and Sealed locks one attack slot for the wave while speeding up the other two
+- **Enemies that copy you (`v0.6.16`, `v0.6.17`)** — the Mirror boss and the Doppelganger copy the player's attacks and Awakenings when they spawn, on their own enemy stats
+- **Build depth (`v0.6.6`, `v0.6.10`, `v0.6.11`, `v0.6.12`, `v0.6.14`)** — the Ethereal Mirage keystone, attack stacks, stat synergies, the Defense and Arcane Shield stats, and reward locking
+- **New Awakenings (`v0.6.1`, `v0.6.5`, `v0.6.8`, `v0.6.18`)** — Chaos Theory, Shock Absorber, Momentum, Resonance and Midas Touch; Aeternus added to the Rare Pool
+- **Performance (`v0.6.3`, `v0.6.9`)** — enemy follow-up attacks queue, homing retargets are throttled, health bars have their own canvases, and status effect copies and damage numbers are pooled
+- **Audit fixes (`v0.7.0`)** — detailed below
+
+### Added
+- **Moonbound Instinct** capstone (`Node_moonboundinstinct`, 3 SP, `undoCost` 50): requires and consumes Starlit Reflexes, replacing it with the `Moonbound Instinct` `GrantStatusEffect` upgrade (`OnCounterDodge`, 0.5s cooldown, `noMirror`). Each counter-dodge grants a stack of **Moonbound** (8s, max 4): +12% spellDmgPct, +16% manaGainPct and +3% resPen per stack
+- **Maximum Mana** chain: four nodes (`Node_mxm1`-`Node_mxm4`, 1 SP and +4 maxMana each) off `Node_spr2`, leading to Moonbound Instinct. The skill tree is now 240 nodes
+- **Echo in Boss Rush**: the Mirror boss is the sixth fight of both Boss Rush parts (`[Lv. 85] Echo`, `[Lv. 105] Echo`). Boss Rush `waveOffset` is now 75 and 81, so the wave counter continues from `ws_5`
+- CrystalFlux Core **0.13.0**: `DamagePacket.hasPenSnapshot` / `defShred` / `resPen`, and `PlayerEvents.OnPlayerDamaged` / `RaisePlayerDamaged`, raised for any hostile damage including DoT ticks
+- `StatusEffectManager.RemoveEffect(StatusEffect)`: removes the instance created from a specific asset
+- `ProjectileSpawner.Spawn(..., skipDelay)`, `PlayerAttackHandler.PerformAttack(..., registerStreak)`, `SkillTreePanZoom.DraggedThisPress` and `RushState.ApplyingImpact`
+
+### Changed
+- Skill tree panning no longer needs Alt: left, right or middle drag pans. Releasing a drag over a node does not undo it
+- Projectile `Size` now multiplies the prefab's own scale, and `aoePct` multiplies it instead of adding to it (`prefab scale x Size x (1 + aoePct%)`). Lacerate's size 2.5 → 1.5 to match
+- Status effect potency now scales DoT damage, `StatBuffs` values (except flag stats), `StatReduction` and `Pulled` pull speed
+- `resPen` and `defShred` come from the projectile's spawn snapshot instead of the attacker's live stats. `defShred` is no longer rounded to an int
+- Summons are scaled to the summoner's level. `EntitySummonHandler`'s buff tooltip now says the buffs stack additively
+- Zero-delay projectile patterns spawn every projectile in the same frame instead of one per frame
+- Lifeforce Shard and Lifeforce Burst (`Lifeforce AD 1` / `AD 2`) are typed `Additional` instead of `Basic`
+- Renames: `TriggerCondition.OnTargetRecievedHit` → `OnTargetReceivedHit`, `ProjectileData.specialSclaing` → `specialScaling` (`FormerlySerializedAs` keeps asset data), `Cresendo` → `Crescendo`, and the `Jellfyish` folder → `Jellyfish`
+- Removed the unused `SoulRend` undo helpers, a debug list in `SkillTreeUI`, the unused `Node_root` and a duplicate `Node_hparmor2 1` prefab
+- Player `bundleVersion` 0.6.18 → 0.7.0
+- Increased hitbox of meteor shower projectiles
+
+### Fixed
+- **Counter-dodge never fired**: immune hits were skipped before reaching the `OnCounterDodge` check. It now fires once per packet for enemy hits during an immune dash
+- **Health costs** (`Consume`) were blocked by immunity, and triggered i-frames, kill rewards, `OnTargetReceivedHit` and `OnDealDamage`. They now always apply and trigger none of these
+- Negative Defense used `3 - 100 / (100 - x)`, jumping to 2x damage just below 0. It is now `2 - 100 / (100 - x)`
+- `manaGainPct` was applied after the max-mana cap, overfilling mana
+- Detonator ignored DoT potency and only removed one DoT
+- Removing `GrantStatusEffect` / `FreeCast` upgrades went through reflection that never matched, so the effect stayed on
+- Charge attacks still fired after a stun or death interrupted the charge
+- Enemy attacks with a spawn delay waited twice, and still fired if the enemy died or was stunned during the delay
+- Dead targets could still be hit, and `destroyOnMaxPierce` projectiles lived one hit past their pierce count
+- `distFromCenter` was a `float?` and never serialized; split projectiles now use it
+- No Hit only failed on projectile hits. Rush impacts and enemy DoT ticks now fail it too
+- Summoned enemies spawned at level 0
+- Skill tree undo removed a capstone's attack instead of restoring the one it replaced, and removed Awakenings the player also owned from another source
+- The undo tooltip always said "insufficient gold" instead of the real reason
+- Tooltips did not refresh while hovered
+- A rebind clash reset the binding to default instead of the previous override
+- Reminiscence could pick a sealed slot, and its extra casts counted toward and spent a Resonance free cast
+- Overlapping animator resets cut attack animations short
+- Midas Touch's tooltip printed raw enum names
+- `StatBuff` labelled `stCostPct` as "Reduced Stamina Cost %" (Core 0.13.0)
+- `ws_5` wave 75 spawned a Slime (Frost) instead of the Grim Reaper
+- `isBuff` corrected on Celestial Protection, Stellar Resonance, Sharpened Instincts (`AttackInc 14 2 40`) and `Slow 4 15 5`; `DotDetonator 0.5 2` is named "Detonator"; description typos fixed
+- Boss Rush boss bars said Lv 70 instead of Lv 85
+
+
 ## [v0.6.18] - 2026-09-28
 
 ### Added

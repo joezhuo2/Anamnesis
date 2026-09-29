@@ -51,8 +51,13 @@ namespace CrystalFlux.SkillTree
 
         public void Restore(GameObject target)
         {
-            if (target == null || requiredAwakenings == null) return;
-            if (!target.TryGetComponent<IUpgradeHolder>(out var pum)) return;
+            if (target == null) return;
+
+            if (requiredAttacks != null && target.TryGetComponent<IAttackHandler>(out var pah))
+                foreach (var a in requiredAttacks)
+                    if (a != null && !pah.HasAttack(a)) pah.UpdateAttack(a.type, a);
+
+            if (requiredAwakenings == null || !target.TryGetComponent<IUpgradeHolder>(out var pum)) return;
 
             foreach (var u in requiredAwakenings)
                 if (u != null && !pum.HasUpgrade(u)) pum.AddUpgrade(u);

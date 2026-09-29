@@ -85,6 +85,7 @@ namespace CrystalFlux.ProjectileSystem
             int finalCount = Mathf.Max(1, ad.ProjectileCount + Random.Range(0, ad.RandomCount + 1));
             float startAngle = ad.Spread + Random.Range(-ad.RandomSpread / 2f, ad.RandomSpread / 2f);
 
+            float wait = 0f;
             for (int i = 0; i < finalCount; i++)
             {
                 float angle = startAngle + (i * (360f / finalCount));
@@ -93,8 +94,8 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 spawnPos = center + (dir * radius);
 
                 teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot));
-                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
-                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
+                wait += Random.Range(ad.MinDelay, ad.MaxDelay);
+                while (wait > 0f) { yield return null; wait -= Time.deltaTime; }
             }
         }
 
@@ -105,6 +106,7 @@ namespace CrystalFlux.ProjectileSystem
             float baseAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             float startAngle = baseAngle - (ad.Spread * (finalCount - 1) / 2f);
 
+            float wait = 0f;
             for (int i = 0; i < finalCount; i++)
             {
                 float angle = startAngle + (i * ad.Spread);
@@ -116,8 +118,8 @@ namespace CrystalFlux.ProjectileSystem
 
                 teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd, chainRoot));
 
-                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
-                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
+                wait += Random.Range(ad.MinDelay, ad.MaxDelay);
+                while (wait > 0f) { yield return null; wait -= Time.deltaTime; }
             }
         }
 
@@ -128,6 +130,7 @@ namespace CrystalFlux.ProjectileSystem
             float start = baseAngle - (ad.Spread / 2f);
             float end = baseAngle + (ad.Spread / 2f);
 
+            float wait = 0f;
             for (int i = 0; i < finalCount; i++)
             {
                 float angle = Random.Range(start, end);
@@ -138,8 +141,8 @@ namespace CrystalFlux.ProjectileSystem
 
                 teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, targetDir, true, sourceObj, pd, chainRoot));
 
-                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
-                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
+                wait += Random.Range(ad.MinDelay, ad.MaxDelay);
+                while (wait > 0f) { yield return null; wait -= Time.deltaTime; }
             }
         }
 
@@ -147,14 +150,15 @@ namespace CrystalFlux.ProjectileSystem
         {
             int finalCount = ad.ProjectileCount + Random.Range(0, ad.RandomCount + 1);
 
+            float wait = 0f;
             for (int i = 0; i < finalCount; i++)
             {
                 Vector2 randomOffset = Random.insideUnitCircle * ad.Spread;
                 Vector2 spawnPos = origin + randomOffset;
 
                 teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot));
-                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
-                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
+                wait += Random.Range(ad.MinDelay, ad.MaxDelay);
+                while (wait > 0f) { yield return null; wait -= Time.deltaTime; }
             }
         }
 
@@ -179,6 +183,7 @@ namespace CrystalFlux.ProjectileSystem
             float halfExtent = ad.Spread / 2f;
             int lineCount = dirCount * 2;
 
+            float wait = 0f;
             for (int i = 0; i < perSide * lineCount; i++)
             {
                 int slot = i / lineCount;
@@ -194,8 +199,8 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 spawnPos = origin + (Vector2.Perpendicular(travel) * offset) - (dir * halfExtent);
 
                 teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot));
-                float wait = Random.Range(ad.MinDelay, ad.MaxDelay);
-                do { yield return null; wait -= Time.deltaTime; } while (wait > 0f);
+                wait += Random.Range(ad.MinDelay, ad.MaxDelay);
+                while (wait > 0f) { yield return null; wait -= Time.deltaTime; }
             }
         }
 
@@ -207,11 +212,12 @@ namespace CrystalFlux.ProjectileSystem
             float? distOverride = null,
             AttackData chainRoot = null,
             bool fixedAim = false,
-            MonoBehaviour host = null
+            MonoBehaviour host = null,
+            bool skipDelay = false
         )
         {
             if (ad == null || ad.ProjectilePrefab == null) return;
-            SpawnInternal(ad.ProjectilePrefab, ad.Pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim, host);
+            SpawnInternal(ad.ProjectilePrefab, ad.Pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim, host, skipDelay);
         }
 
         public void Spawn(
@@ -222,12 +228,13 @@ namespace CrystalFlux.ProjectileSystem
             float? distOverride = null,
             AttackData chainRoot = null,
             bool fixedAim = false,
-            MonoBehaviour host = null
+            MonoBehaviour host = null,
+            bool skipDelay = false
         )
         {
             if (prefab == null) return;
             ResolvePrefab(prefab, out var pd, out var ad);
-            SpawnInternal(prefab, pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim, host);
+            SpawnInternal(prefab, pd, ad, source, center, dirOverride, distOverride, chainRoot, fixedAim, host, skipDelay);
         }
 
         public IEnumerator SpawnFromPattern(
@@ -334,7 +341,8 @@ namespace CrystalFlux.ProjectileSystem
             float? distOverride,
             AttackData chainRoot,
             bool fixedAim,
-            MonoBehaviour host
+            MonoBehaviour host,
+            bool skipDelay
         )
         {
             if (!Aim(ad, source, center, dirOverride, distOverride, fixedAim, out var pos, out var dir, out var dist)) return;
@@ -345,19 +353,19 @@ namespace CrystalFlux.ProjectileSystem
                 return;
             }
 
-            if (ad.SpawnDelay <= 0 && ad.Pattern == ProjectilePattern.Single)
+            if ((ad.SpawnDelay <= 0 || skipDelay) && ad.Pattern == ProjectilePattern.Single)
             {
                 TeleportOnce(ad.TeleportToProjectile && source != null, ad, source, SpawnProjectile(prefab, pos, dir, true, source, pd, chainRoot));
                 return;
             }
 
             MonoBehaviour h = host != null && host.isActiveAndEnabled ? host : this;
-            h.StartCoroutine(RunPattern(prefab, pd, ad, source, pos, dir, dist, chainRoot));
+            h.StartCoroutine(RunPattern(prefab, pd, ad, source, pos, dir, dist, chainRoot, skipDelay));
         }
 
-        private IEnumerator RunPattern(GameObject prefab, ProjectileData pd, AttackData ad, GameObject source, Vector2 spawnPos, Vector2 dir, float finalDist, AttackData chainRoot)
+        private IEnumerator RunPattern(GameObject prefab, ProjectileData pd, AttackData ad, GameObject source, Vector2 spawnPos, Vector2 dir, float finalDist, AttackData chainRoot, bool skipDelay = false)
         {
-            if (ad.SpawnDelay > 0) yield return Wait(ad.SpawnDelay);
+            if (ad.SpawnDelay > 0 && !skipDelay) yield return Wait(ad.SpawnDelay);
 
             bool tp = ad.TeleportToProjectile && source != null;
 

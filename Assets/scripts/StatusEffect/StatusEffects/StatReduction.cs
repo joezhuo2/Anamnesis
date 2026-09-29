@@ -42,7 +42,7 @@ namespace CrystalFlux.StatusEffectSystem
         {
             if (target == null || !target.TryGetComponent<IStatProvider>(out var esm)) return;
 
-            float redPct = Mathf.Clamp(redPerStack * 0.01f * currentStacks, minRed, maxRed);
+            float redPct = Mathf.Clamp(redPerStack * 0.01f * currentStacks * potencyMultiplier, minRed, maxRed);
 
             StatType writeStat = ToBaseStat(statType);
             float basis = esm.GetStat(ToBaseStat(scalingStat));

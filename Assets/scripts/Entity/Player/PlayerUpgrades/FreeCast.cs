@@ -26,10 +26,7 @@ public class FreeCast : PlayerUpgrade
         ResetState();
 
         if (effect == null || player == null) return;
-        if (!player.TryGetComponent<IStatusEffectReceiver>(out var sem)) return;
-
-        var remove = typeof(IStatusEffectReceiver).GetMethod(nameof(IStatusEffectReceiver.RemoveEffect));
-        if (remove != null) remove.MakeGenericMethod(effect.GetType()).Invoke(sem, null);
+        if (player.TryGetComponent<StatusEffectManager>(out var sem)) sem.RemoveEffect(effect);
     }
 
     public void RegisterCast(GameObject player, AttackType type)

@@ -74,6 +74,7 @@ namespace CrystalFlux.SkillTree
         public void OnPointerClick(PointerEventData eventData)
         {
             if (manager == null || node == null || manager.tree == null) return;
+            if (SkillTreePanZoom.DraggedThisPress) return;
 
             if (eventData.button == PointerEventData.InputButton.Left)
             {
@@ -126,9 +127,9 @@ namespace CrystalFlux.SkillTree
                 var playerSkillTree = FindAnyObjectByType<PlayerSkillTree>();
                 if (playerSkillTree != null && playerSkillTree.IsNodeUnlocked(node))
                 {
-                    var (canUndo, _) = playerSkillTree.CanUndo(node);
+                    var (canUndo, undoFail) = playerSkillTree.CanUndo(node);
                     if (canUndo) lines.Add($"<color=#FFD700>Left-click to undo ({node.undoCost}g)</color>");
-                    else lines.Add($"<color=#888888>Undo cost: {node.undoCost}g (insufficient gold)</color>");
+                    else lines.Add($"<color=#888888>Undo cost: {node.undoCost}g ({undoFail})</color>");
                 }
             }
 

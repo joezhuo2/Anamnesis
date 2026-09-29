@@ -8,12 +8,12 @@ public class NoDamageTrialInstance : AnomalyInstance
     public override void StartAnomaly()
     {
         base.StartAnomaly();
-        PlayerEvents.OnPlayerTakeDamage += OnPlayerDamaged;
+        PlayerEvents.OnPlayerDamaged += OnPlayerDamaged;
     }
 
     public override void Cleanup()
     {
-        PlayerEvents.OnPlayerTakeDamage -= OnPlayerDamaged;
+        PlayerEvents.OnPlayerDamaged -= OnPlayerDamaged;
         base.Cleanup();
     }
 

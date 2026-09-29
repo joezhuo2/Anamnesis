@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SkillTreeDefinition
   m_EditorClassIdentifier: Assembly-CSharp::SkillTreeDefinition
   allNodes:
-  - {fileID: 11400000, guid: d393045c0d384684b934e1b1c36da187, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: ac1428e80223cc3429204ec3269b71ab, type: 2}
   - {fileID: 11400000, guid: fbe9c6d75b8484b44a3a1c073ad7e6f7, type: 2}
   - {fileID: 11400000, guid: b46790f4b0626ac4bad9a0144dec9abe, type: 2}
@@ -249,3 +249,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1825f8272a9580a40a5344713ade8eeb, type: 2}
   - {fileID: 11400000, guid: 774d8cecda0d61845801a414e7d25619, type: 2}
   - {fileID: 11400000, guid: 1a80c5abd62f9084099302b9634764b2, type: 2}
+  - {fileID: 11400000, guid: 380bb6d0bbb1efd4a999984f5688265b, type: 2}
+  - {fileID: 11400000, guid: dd500bed2322fea4c83dedc286a0cf52, type: 2}
+  - {fileID: 11400000, guid: 5fea5672d80a81b469f6d3619532d3b6, type: 2}
+  - {fileID: 11400000, guid: a1198e270dd5ea04d9de087a7ef191f7, type: 2}
+  - {fileID: 11400000, guid: 3fa34003314bdd6439e1da3057b3d87e, type: 2}

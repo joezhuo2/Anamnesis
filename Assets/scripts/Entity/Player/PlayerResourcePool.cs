@@ -55,14 +55,15 @@ namespace CrystalFlux.EntitySystem
             if (amount > 0 && esm.GetStat(StatType.CanGainMana) <= 0f) return false;
             if (esm.GetStat(StatType.CurrentMana) + amount < 0f) return false;
 
+            if (amount > 0) amount *= 1f + (esm.GetStat(StatType.manaGainPct) * 0.01f);
+
             int newMana = Math.Min(
                 Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana) + amount),
                 Mathf.RoundToInt(esm.GetStat(StatType.EffMaxMana))
             );
             int targetChange = newMana - Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana));
             if (targetChange > amount) targetChange = Mathf.RoundToInt(amount);
-
-            if (amount > 0) targetChange = Mathf.RoundToInt(targetChange * (1f + (esm.GetStat(StatType.manaGainPct) * 0.01f)));
+            if (amount > 0 && targetChange < 0) targetChange = 0;
 
             esm.AddStat(new(StatType.CurrentMana, targetChange));
 

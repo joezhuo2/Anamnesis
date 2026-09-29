@@ -20,7 +20,7 @@ namespace CrystalFlux.ProjectileSystem
         public float addDmgPct;
         public float critChance;
         public float critDamage;
-        public int defShred;
+        public float defShred;
         public float resPen;
         public bool isValid;
         public GameObject owner;
@@ -39,7 +39,7 @@ namespace CrystalFlux.ProjectileSystem
             if (es != null)
                 for (int i = 0; i < es.Count; i++) sv += es[i].weight * esm.GetStat(es[i].stat);
             snapshot.scalingValue = sv;
-            snapshot.specialMult = (pd.SpecialSclaing) switch
+            snapshot.specialMult = (pd.SpecialScaling) switch
             {
                 SpecialScalingAttribute.Orbits => OrbitMult(pd, source),
                 SpecialScalingAttribute.HpConsumed => DamageCalculator.CalculateHpConsumedMult(pd, esm),
@@ -56,7 +56,7 @@ namespace CrystalFlux.ProjectileSystem
             snapshot.ultDmgPct = esm.GetStat(StatType.UltDmgPct);
             snapshot.critChance = esm.GetStat(StatType.critChance);
             snapshot.critDamage = esm.GetStat(StatType.critDamage);
-            snapshot.defShred = Mathf.RoundToInt(esm.GetStat(StatType.defShred));
+            snapshot.defShred = esm.GetStat(StatType.defShred);
             snapshot.resPen = esm.GetStat(StatType.resPen);
             snapshot.addDmgPct = esm.GetStat(StatType.addDmgPct);
             snapshot.isValid = true;

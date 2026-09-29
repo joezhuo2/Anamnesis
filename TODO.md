@@ -123,6 +123,7 @@
 - cap AOE% at ~200-300%
 - [ ] **Blackout** (anamoly, no fail) - vision shrinks to a radius around the player; enemies outside it are hidden except for their attack telegraphs and projectiles. Each kill briefly widens the radius. *New feature:* a vision mask / URP 2D light overlay.
 - **Gravity Well** - *something* create an aoe attack that pulls enemies (and debuffs them?)
+- left-right-top-down, circle inverse (circle, but projectiles move/converge to center) spawn patterns
 
 ### Will do sometime
 - [ ] "What's new" changelog popup on update
@@ -187,7 +188,6 @@
 
 ### Planned Capstone Nodes
 - Hex Cast (+buff -cost)
-- Starlit Reflexes (+buff -mana gain)
 
 - Shattered Singularity
 - Stellar maelstrom
@@ -208,7 +208,6 @@
 - basic cd red pct
 - skill cd red pct
 - ult cd red pct
-- max mana
 - dash spd mult
 - dash stamina cost red pct
 - exp bonus
@@ -335,3 +334,9 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
 - [ ] **Volatile** (no fail) - enemies explode on death after a short telegraph, damaging everything nearby, player and enemies alike. Chain reactions reward grouping enemies up, but punish meleeing a pack. *Uses:* the `AnomalySplitter` death hook pattern via `OnEnemySpawned`, the enemy telegraph system.
 - [ ] **Stagnation** (no fail) - standing still for more than 1.5s stacks a DoT on the player that clears once you move again. Anti-turret pressure for stationary cast builds. *New feature:* a player idle timer and a new `Stagnation` status effect; *uses:* `DoT`.
+
+### Bugs/Cleanup
+- [ ] **Same `effName` merges different assets** - `StatusEffectManager.IsSameEffect` matches by name, so Slow (5 assets), Stun (4), Possessed (4), Vulnerable (3) and Burn (2) share one instance. A stronger variant just refreshes or stacks the weaker one's parameters.
+- [ ] **No end-of-run state** - after the last Regular wave, `StartNextWave` just returns (`WaveManager.cs:361`), with no victory screen. Unlimited shows "Wave x/128" even though it is endless.
+- [ ] **EventSystem lives under the Player prefab** - if the player is destroyed (after `deathAnimTime` 1s) before the death screen pauses (`showDelay` 1s, real time), the death-screen buttons lose input. `GameController`'s fallback adds a `StandaloneInputModule` (`GameController.cs:32`), which does not work with `activeInputHandler: 1`.
+- [ ] Stale Player overrides in `New.unity` (~line 65210): `skillPoints` (field no longer exists) and `activeUpgrades.Array.data[0..1]` (array size 0; data[0] points at a deleted asset `f108d857...`).

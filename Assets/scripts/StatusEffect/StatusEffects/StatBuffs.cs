@@ -26,11 +26,21 @@ namespace CrystalFlux.StatusEffectSystem
 
             foreach (var buff in buffs)
             {
-                var b = new StatBuff(buff.type, buff.value * currentStacks);
+                float mult = IsFlag(buff.type) ? 1f : potencyMultiplier;
+                var b = new StatBuff(buff.type, buff.value * currentStacks * mult);
                 esm.AddStat(b, true);
                 curActiveBuff.Add(b);
             }
         }
+        private static bool IsFlag(StatType t) => t switch
+        {
+            StatType.isImmune or StatType.isAlive or StatType.IsDashing or StatType.IsAttacking
+                or StatType.CanMove or StatType.CanDash or StatType.CanAttack or StatType.CanGainHp
+                or StatType.CanGainMana or StatType.CanGainStamina or StatType.DashShouldApplyIFrame
+                or StatType.globalDoTCanCrit or StatType.Level => true,
+            _ => false
+        };
+
         private void UndoCurrentBuffs()
         {
             if (target != null && target.TryGetComponent<IStatProvider>(out var esm))

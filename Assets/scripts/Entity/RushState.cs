@@ -6,6 +6,8 @@ namespace CrystalFlux.EntitySystem
 {
     public class RushState
     {
+        public static bool ApplyingImpact { get; private set; }
+
         private readonly GameObject go;
         private readonly IStatProvider esm;
         private readonly System.Action onStart;
@@ -152,7 +154,9 @@ namespace CrystalFlux.EntitySystem
                     snap.specialMult *= ad.ImpactDmgMult * mult;
                     DamagePacket dp = DamagePacketBuilder.BuildDamagePacket(ad.Pd, snap, true, go, false, 1f);
                     dealt = dp.GetTotalDamage();
-                    eh.TakeDamage(dp);
+                    ApplyingImpact = true;
+                    try { eh.TakeDamage(dp); }
+                    finally { ApplyingImpact = false; }
                     DamagePacket.Release(dp);
                 }
             }

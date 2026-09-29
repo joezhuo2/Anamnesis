@@ -27,7 +27,7 @@ MonoBehaviour:
   trueMult: 0
   scalingStat: 30
   specialMult: 0.5
-  specialSclaing: 2
+  specialScaling: 2
   timeBeforeSameEnemy: 0
   followDistance: 0
   followSource: 0

@@ -307,9 +307,11 @@ namespace CrystalFlux.EntitySystem
 
         public void TakeDamage(DamagePacket dp)
         {
-            if (dp == null) return;
+            if (dp == null || !IsAlive) return;
 
-            bool tookProjectileHit = false;
+            bool tookHit = false;
+            bool tookDamage = false;
+            bool counterDodged = false;
             bool prevSuppress = _suppressHurtIFrames;
             bool prevPending = _pendingHurtIFrames;
             _suppressHurtIFrames = true;
@@ -344,15 +346,25 @@ namespace CrystalFlux.EntitySystem
                 var (dmg, sizeMult) = i.type switch
                 {
                     DamageType.True => (i.amount, 1f),
-                    DamageType.Physical => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm, atk),
-                    DamageType.Spell => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm, atk),
+                    DamageType.Physical => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm, atk, dp),
+                    DamageType.Spell => DamageCalculator.CalculateDamageTaken(i.type, i.amount, esm, atk, dp),
                     DamageType.DoT => (i.amount * (1f - (esm.GetStat(StatType.EffectRes) * 0.01f)), 1f),
                     DamageType.Heal => (-i.amount, 1f),
                     DamageType.Consume => (i.amount, 1f),
                     _ => (0f, 1f)
                 };
 
-                if (Immune && !dp.bypassIFrames && dmg > 0) continue;
+                bool consume = i.type == DamageType.Consume;
+
+                if (Immune && !dp.bypassIFrames && dmg > 0 && !consume)
+                {
+                    if (!counterDodged && cpum != null && esm.GetStat(StatType.IsDashing) > 0f && IsEnemyHit(dp, i, atkTeam))
+                    {
+                        counterDodged = true;
+                        cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCounterDodge);
+                    }
+                    continue;
+                }
 
                 Color color = i.indicatorColor != default ? i.indicatorColor : i.type switch
                 {
@@ -362,21 +374,26 @@ namespace CrystalFlux.EntitySystem
                     _ => Color.white
                 };
 
-                if (pum != null)
-                    pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTargetRecievedHit);
+                if (pum != null && !consume)
+                    pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTargetReceivedHit);
 
                 if (cpum != null && dmg > 0)
                     cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeDamage);
 
                 bool enemyHit = dmg > 0 && IsEnemyHit(dp, i, atkTeam);
 
+                bool directHit = enemyHit && (Projectile.ApplyingProjectileHit || RushState.ApplyingImpact);
+
                 if (cpum != null && enemyHit)
                 {
                     cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnTakeHit);
-                    if (Projectile.ApplyingProjectileHit) tookProjectileHit = true;
+                    if (directHit) tookHit = true;
                 }
 
-                if (enemyHit && Projectile.ApplyingProjectileHit)
+                if (cpum != null && dmg > 0 && i.type == DamageType.DoT && i.owner != null && i.owner != gameObject && (ownTeam != null ? ownTeam.TeamID : 0) != atkTeam)
+                    tookDamage = true;
+
+                if (directHit)
                 {
                     TryThorns(i.owner, dmg);
                     if (castHandler != null) castHandler.CancelCast();
@@ -391,7 +408,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (dp.sizeOverride != 1f) sizeMult = dp.sizeOverride;
 
-                if (ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames, src) && !isMirage)
+                if (ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames || consume, src, consume) && !isMirage && !consume)
                 {
                     if (GameSettings.Current.xpDropsEnabled && src != null && src.TryGetComponent<PlayerLevel>(out var pl))
                         pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
@@ -401,7 +418,7 @@ namespace CrystalFlux.EntitySystem
                         killPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnKill);
                 }
 
-                if (!_isTriggeringOnDealDamage && pum != null)
+                if (!_isTriggeringOnDealDamage && pum != null && !consume)
                 {
                     _isTriggeringOnDealDamage = true;
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnDealDamage, gameObject, dmg);
@@ -419,7 +436,8 @@ namespace CrystalFlux.EntitySystem
                 if (fireIFrames && !prevSuppress) TriggerIFrames(hurtIFrameDuration);
             }
 
-            if (cpum != null && tookProjectileHit) PlayerEvents.RaisePlayerTakeDamage(this);
+            if (cpum != null && tookHit) PlayerEvents.RaisePlayerTakeDamage(this);
+            if (cpum != null && (tookHit || tookDamage)) PlayerEvents.RaisePlayerDamaged(this);
         }
 
         private static void TryLifesteal(GameObject dealer, float damageDealt)
@@ -443,7 +461,7 @@ namespace CrystalFlux.EntitySystem
             return (ownTeam != null ? ownTeam.TeamID : 0) != atkTeam;
         }
 
-        public bool ChangeHealth(float amount, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null)
+        public bool ChangeHealth(float amount, bool showIndicator = true, float sizeMult = 1f, Color colorOverride = default, bool bypassIFrames = false, GameObject source = null, bool ignoreImmune = false)
         {
             if (amount > 0f && esm != null)
             {
@@ -454,12 +472,7 @@ namespace CrystalFlux.EntitySystem
             int finalAmount = Mathf.RoundToInt(amount);
             if (finalAmount == 0) return false;
 
-            if (cpum != null && finalAmount < 0 && Immune && esm.GetStat(StatType.IsDashing) > 0f)
-            {
-                cpum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCounterDodge);
-                return false;
-            }
-            if (finalAmount < 0 && Immune) return false;
+            if (finalAmount < 0 && Immune && !ignoreImmune) return false;
             if (finalAmount > 0 && (esm.GetStat(StatType.CanGainHp)) <= 0f) return false;
 
             if (finalAmount < 0 && CurHp > 0 && Mathf.Abs(finalAmount) >= CurHp * 3f)

@@ -54,7 +54,7 @@ namespace CrystalFlux.StatusEffectSystem
             }
 
             float distFactor = Mathf.Clamp01(dist / fullSpeedRadius);
-            float effectiveSpeed = (pullSpeed + (pullSpeedPerStack * (currentStacks - 1))) * distFactor;
+            float effectiveSpeed = (pullSpeed + (pullSpeedPerStack * (currentStacks - 1))) * potencyMultiplier * distFactor;
 
             Vector2 move = effectiveSpeed * tickInterval * dir.normalized;
 

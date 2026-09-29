@@ -89,54 +89,6 @@ namespace CrystalFlux.StatusEffectSystem
             esm.AddStat(atkBuff);
         }
 
-        private void UndoCurrentAtkBuff()
-        {
-            if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
-            {
-                if (currentActiveAtkBuff.HasValue) esm.AddStat(currentActiveAtkBuff.Value, false);
-                currentActiveAtkBuff = null;
-            }
-        }
-        private void UndoCurrentDefShredBuff()
-        {
-            if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
-            {
-                if (currentDefShredBuff.HasValue) esm.AddStat(currentDefShredBuff.Value, false);
-                currentDefShredBuff = null;
-            }
-        }
-        private void UndoCurrentResPenBuff()
-        {
-            if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
-            {
-                if (currentResPenBuff.HasValue) esm.AddStat(currentResPenBuff.Value, false);
-                currentResPenBuff = null;
-            }
-        }
-        private void UndoCurrentPhysDmgBuff()
-        {
-            if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
-            {
-                if (currentPhysDmgBuff.HasValue) esm.AddStat(currentPhysDmgBuff.Value, false);
-                currentPhysDmgBuff = null;
-            }
-        }
-        private void UndoCurrentCritDmgbuff()
-        {
-            if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
-            {
-                if (currentCritDmgbuff.HasValue) esm.AddStat(currentCritDmgbuff.Value, false);
-                currentCritDmgbuff = null;
-            }
-        }
-        private void UndoCurrentUltDmgBuff()
-        {
-            if (target != null && target.TryGetComponent<IStatProvider>(out var esm))
-            {
-                if (currentUltDmgBuff.HasValue) esm.AddStat(currentUltDmgBuff.Value, false);
-                currentUltDmgBuff = null;
-            }
-        }
         private void UndoAllBuffs()
         {
             if (target != null && target.TryGetComponent<IStatProvider>(out var esm))

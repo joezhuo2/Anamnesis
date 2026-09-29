@@ -30,7 +30,7 @@ MonoBehaviour:
   - stat: 31
     weight: 0.15
   specialMult: 1
-  specialSclaing: 0
+  specialScaling: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
   followSource: 0

@@ -24,7 +24,7 @@ namespace CrystalFlux.EntitySystem
             OnCounterDodge,
             OnProjectileHit,
             OnCrit,
-            OnTargetRecievedHit,
+            OnTargetReceivedHit,
             OnDealDamage,
             OnManaRegen,
             OnKill,

@@ -15,7 +15,7 @@ MonoBehaviour:
   currentTime: 0
   duration: 11
   tickInterval: 0
-  isBuff: 0
+  isBuff: 1
   icon: {fileID: -1259408508766424310, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Stellar Resonance
   desc: Each stack increases resistance penetration by 8% and projectile speed by

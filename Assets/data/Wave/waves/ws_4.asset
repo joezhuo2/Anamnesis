@@ -84,7 +84,7 @@ MonoBehaviour:
   - enemyPrefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
     maxTotalEnemies: 43
     maxCurrentEnemies: 21
-    enemyLevel: 53
+    enemyLevel: 52
     minSpawnFrequency: 1
     maxSpawnFrequency: 3
     minRewardChoices: 2

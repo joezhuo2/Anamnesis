@@ -2,14 +2,14 @@
 
 # Anamnesis
 
-> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 236-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
+> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 240-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
 
 ![Unity](https://img.shields.io/badge/Unity-6000.4.6f1-000000?logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-.NET-512BD4?logo=dotnet&logoColor=white)
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.6.18-6366F1)
+![Version](https://img.shields.io/badge/version-0.7.0-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.6.18** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.7.0** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -43,9 +43,9 @@ Current release: **v0.6.18** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage, knockback and attacks, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
 | **✨ Awakenings** | `PlayerUpgrade` assets driven by 25 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
-| **🌳 Skill Tree** | Pan/zoom tree of 236 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
+| **🌳 Skill Tree** | Pan/zoom tree of 240 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
 | **🧪 Status Effects** | Stackable DoTs, stuns, freezes, stat buffs and reductions, attack replacement, cleansing, and **Ethereal Mirage** clones that share your stats and repeat your attacks, with cooldown UI |
-| **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, a five-boss **Boss Rush** gauntlet, and a **Mirror** boss that fights with a copy of your current attacks and Awakenings on its own enemy stats |
+| **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, a six-boss **Boss Rush** gauntlet, and a **Mirror** boss that fights with a copy of your current attacks and Awakenings on its own enemy stats |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
 | **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman. `SpawnerBox` pickups start an ambush of configurable enemies that joins the wave, then drop a weighted batch of collectibles once it is cleared |
@@ -68,7 +68,7 @@ Full detail for every system lives in [GAME.md](GAME.md).
 | Dash | `Q` / `Right Click` |
 | Toggle skill tree | `K` |
 | Close skill tree / Settings menu | `Escape` |
-| Skill tree pan | Drag (Alt+Left / Alt+Right / Middle) |
+| Skill tree pan | Drag (Left / Right / Middle) |
 | Skill tree zoom | Mouse wheel (zoom-to-cursor) |
 
 Every keyboard binding except skill tree pan/zoom can be rebound in the settings menu; `Escape` itself is fixed.
@@ -82,12 +82,12 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova |
 | **Skills** | Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge, Subspace Blitz |
 | **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis, Aeternus |
-| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Cresendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, Momentum, Resonance, Midas Touch, plus capstone-only Solar Wind and Oblivion, and keystone-only Ethereal Mirage |
-| **Capstones** | Warp, Hypernova, Astral Disjunction and Nitro Accelerator upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion and Ultrasonic upgrade their required Awakening |
+| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Crescendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, Momentum, Resonance, Midas Touch, plus capstone-only Solar Wind, Oblivion and Moonbound Instinct, and keystone-only Ethereal Mirage |
+| **Capstones** | Warp, Hypernova, Astral Disjunction and Nitro Accelerator upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion, Ultrasonic and Moonbound Instinct upgrade their required Awakening |
 | **Keystones** | Ethereal Mirage: casting an Ultimate summons 3 clones that follow you and mimic your attacks |
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma), Cultist Clone, Doppelganger (copies your attacks and Awakenings, Unlimited only) |
-| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`), Mirror (copies your attacks and Awakenings, Unlimited only) |
-| **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper) chaining into `BossRush Part 2` (the same five at Lv 105) |
+| **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`), Mirror (copies your attacks and Awakenings; Unlimited boss pool, and the final Boss Rush fight as *Echo*) |
+| **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper → Echo) chaining into `BossRush Part 2` (the same six at Lv 105). The wave counter carries on from `ws_5` (waves 76-81, then 82-87) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed* — separate Regular and Unlimited lists |
 | **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Free Cast, Gain Mana, Gold Buff, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
@@ -108,13 +108,13 @@ Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a 
 | `OnSpawnProjectile` | A projectile the player owns is spawned, once per projectile | `(player, spawnCenter)` |
 | `OnProjectileHit` | A projectile the player owns hits a target | `(player, hitPosition)` |
 | `OnDealDamage` | A damage instance the player owns lands | `(player, target, damageDealt)` |
-| `OnTargetRecievedHit` | A target takes damage from the player | `(player)` |
+| `OnTargetReceivedHit` | A target takes damage from the player | `(player)` |
 | `OnCrit` | A critical damage instance the player owns lands | `(player)` |
 | `OnOverkill` | The player's killing blow is at least 3× the target's remaining HP | `(player)` |
 | `OnKill` | An entity dies to damage the player dealt | `(player)` |
 | `OnTakeDamage` | The player takes any damage — direct hits, DoT ticks and health costs alike | `(player)` |
 | `OnTakeHit` | The player is hit directly by an enemy. Excludes DoT ticks, health costs (`Consume`), heals, and any packet that bypasses i-frames | `(player)` |
-| `OnCounterDodge` | The player is hit while immune and dashing | `(player)` |
+| `OnCounterDodge` | An enemy hit lands while the player is immune and dashing. Fires once per damage packet | `(player)` |
 | `OnStartDash` | A dash begins | `(player)` |
 | `OnEndDash` | A dash ends | `(player)` |
 | `OnPreTeleport` | A `teleportToProjectile` attack is about to move the player, at the position the player is leaving | `(player, spawnCenter)` |

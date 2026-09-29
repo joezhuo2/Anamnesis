@@ -27,7 +27,7 @@ namespace CrystalFlux.EntitySystem
         public List<StatusEffect> onDeathEffects = new();
 
         [Header("Per-Summon Buffs")]
-        [Tooltip("Stat buffs granted to the summoner for each active summon. Stack multiplicatively per summon alive.")]
+        [Tooltip("Stat buffs granted to the summoner for each active summon. Stack additively per summon alive.")]
         public List<StatBuff> perSummonBuffs = new();
 
         private readonly List<GameObject> activeSummons = new();
@@ -48,6 +48,12 @@ namespace CrystalFlux.EntitySystem
             if (maxSummons > 0 && activeSummons.Count >= maxSummons) return null;
 
             GameObject summon = Instantiate(summonPrefab, position, rotation);
+
+            if (TryGetComponent<IStatProvider>(out var ownStats) && summon.TryGetComponent<EnemyStatManager>(out var sesm))
+            {
+                int lvl = Mathf.RoundToInt(ownStats.GetStat(StatType.Level));
+                if (lvl > 0) sesm.ScaleStatsToLevel(lvl);
+            }
 
             if (summon.TryGetComponent<IDamageable>(out var summonHealth))
                 summonHealth.OnDeath += OnSummonDeath;

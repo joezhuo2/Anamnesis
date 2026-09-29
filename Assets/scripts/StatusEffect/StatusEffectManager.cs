@@ -210,6 +210,24 @@ namespace CrystalFlux.StatusEffectSystem
 
         public void RemoveEffect<T>() where T : EffectAsset => RemoveStacks<T>(int.MaxValue);
 
+        public void RemoveEffect(StatusEffect se)
+        {
+            if (se == null) return;
+
+            StatusEffect key = se.origin != null ? se.origin : se;
+
+            for (int i = activeEffects.Count - 1; i >= 0; i--)
+            {
+                StatusEffect e = activeEffects[i];
+                if (e == null || e.origin != key) continue;
+
+                e.OnExpire();
+                activeEffects.RemoveAt(i);
+                ReleaseRuntime(e);
+                return;
+            }
+        }
+
         public void RemoveEffectAfterDelay<T>(float delay) where T : EffectAsset
             => StartCoroutine(RemoveEffectAfterDelayInternal<T>(delay));
 

@@ -11,6 +11,10 @@ namespace CrystalFlux.ProjectileSystem
             DamagePacket dp = DamagePacket.Get(owner, bypassIFrames, sizeOverride);
             if (pd == null || !snapshot.isValid) return dp;
 
+            dp.hasPenSnapshot = true;
+            dp.defShred = snapshot.defShred;
+            dp.resPen = snapshot.resPen;
+
             float attackTypeBonus = pd.MainAttack != null ? DamageCalculator.AttackTypeBonus(pd.MainAttack.type, snapshot) : 1f;
 
             void AddDamageIfValid(DamageType type, float mult)

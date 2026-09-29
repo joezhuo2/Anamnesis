@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2252a74774af25942abfcd542fc986f5, type: 3}
-  m_Name: Cresendo
+  m_Name: Crescendo
   m_EditorClassIdentifier: CrystalFlux.Entity::CooldownAdvance
-  upgradeName: Cresendo
+  upgradeName: Crescendo
   conditions: 00000000
   chance: 100
   cooldown: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
   nodeName: Maximum Stamina
   desc: +4 Maximum Stamina
-  nodeID: mx3
+  nodeID: mxs3
   icon: {fileID: 1307960878, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
   prerequisites:

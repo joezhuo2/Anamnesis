@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
+  m_Name: Node_moonboundinstinct
+  m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
+  nodeName: Moonbound Instinct
+  desc: Upgrades Stellar reflexes to moonbound instincts, amplifying all mana gain
+    and increasing spell damage dealt
+  nodeID: moonboundinstinct
+  icon: {fileID: -1376948238, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  isStartingNode: 0
+  prerequisites:
+  - {fileID: 11400000, guid: a1198e270dd5ea04d9de087a7ef191f7, type: 2}
+  incompatibleNodes: []
+  requirements:
+  - rid: 5243568321510244444
+  unlockEffects:
+  - rid: 5243568321510244445
+  cost: 3
+  undoCost: 50
+  references:
+    version: 2
+    RefIds:
+    - rid: 5243568321510244444
+      type: {class: NodeRequirement, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        requiredAttacks: []
+        requiredAwakenings:
+        - {fileID: 11400000, guid: faa3c8d59698bdb4089d810a53b1862e, type: 2}
+    - rid: 5243568321510244445
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        buffs: []
+        attacks: []
+        awakenings:
+        - {fileID: 11400000, guid: 0ca28d6fe3e5f9c4a8c87cf2bbf818c7, type: 2}

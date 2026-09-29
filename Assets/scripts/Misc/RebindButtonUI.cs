@@ -16,6 +16,7 @@ namespace CrystalFlux.SettingsSystem
         private InputAction action;
         private int bindingIndex = -1;
         private InputActionRebindingExtensions.RebindingOperation op;
+        private string prevOverride;
 
         public InputAction Action => action;
         public int BindingIndex => bindingIndex;
@@ -50,6 +51,7 @@ namespace CrystalFlux.SettingsSystem
             if (op != null || action == null || bindingIndex < 0) return;
 
             bool wasEnabled = action.enabled;
+            prevOverride = action.bindings[bindingIndex].overridePath;
             action.Disable();
 
             if (bindingText != null) bindingText.text = "...";
@@ -84,7 +86,9 @@ namespace CrystalFlux.SettingsSystem
             if (owner != null && owner.HasDuplicate(this))
             {
                 string clash = action.GetBindingDisplayString(bindingIndex);
-                action.RemoveBindingOverride(bindingIndex);
+                if (string.IsNullOrEmpty(prevOverride)) action.RemoveBindingOverride(bindingIndex);
+                else action.ApplyBindingOverride(bindingIndex, prevOverride);
+                GameInput.SaveOverrides();
                 owner.ShowStatus($"'{clash}' is already bound.");
             }
             else
