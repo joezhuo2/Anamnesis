@@ -14,15 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
   type: 0
   cooldown: 7
+  stacks: 1
   projectilePrefab: {fileID: 5726550545228558652, guid: 2a411398214f5a045832a14ba50037fc, type: 3}
   pd: {fileID: 11400000, guid: a00173a5600219d4e8c278ca6b18a06c, type: 2}
-  pattern: 4
+  animationLength: 0.75
   castTime: 0
   canMoveWhileCasting: 0
-  spawnDelay: 0.25
-  spawnDistance: 0
-  fixedDistance: 0
-  animationLength: 0.75
+  teleportToProjectile: 0
+  teleportDelay: 0
+  rushDirection: 0
+  rushAngle: 0
+  omnidirectionalRush: 0
+  rushTurnRate: 0
+  rushType: 0
+  rushTypeVal: 0
+  rushSpeedMult: 1
+  immuneWhileRushing: 0
+  disableAttacksWhileRushing: 0
+  endRushOnCollision: 0
+  bounceOnCollision: 0
+  rushImpact: 0
+  rushImpactForce: 0
+  rushImpactTime: 0
+  impactDmgMult: 0.5
+  impactAttack: {fileID: 0}
+  predictTarget: 0
   canCharge: 0
   chargeThreshold: 0.225
   minChargeTime: 0
@@ -30,6 +46,10 @@ MonoBehaviour:
   chargeTickInterval: 1
   cooldownOnAttackStart: 1
   chargeAttack: {fileID: 0}
+  pattern: 4
+  spawnDelay: 0.4
+  spawnDistance: 0
+  fixedDistance: 0
   projectileCount: 12
   randomCount: 8
   spread: 45
@@ -63,5 +83,8 @@ MonoBehaviour:
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
+  hitStop: 0
+  hitStopCooldown: 0
+  screenShake: 0
   icon: {fileID: 0}
   displayName: 

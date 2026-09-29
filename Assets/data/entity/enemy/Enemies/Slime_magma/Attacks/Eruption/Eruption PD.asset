@@ -18,7 +18,7 @@ MonoBehaviour:
   numPierce: 4
   destroyOnMaxPierce: 0
   movementType: 0
-  speed: 4
+  speed: 6
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
@@ -26,6 +26,7 @@ MonoBehaviour:
   spellMult: 0
   trueMult: 0.15
   scalingStat: 31
+  extraScalings: []
   specialMult: 1
   specialScaling: 0
   timeBeforeSameEnemy: 0
@@ -41,6 +42,7 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
+  distFromCenter: 0
   effects:
   - effect: {fileID: 11400000, guid: 584966e96fee9964f8eb741c03d14049, type: 2}
     selfApply: 0

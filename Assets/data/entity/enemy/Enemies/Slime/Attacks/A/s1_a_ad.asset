@@ -12,14 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: s1_a_ad
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  type: 0
   cooldown: 4
+  stacks: 1
   projectilePrefab: {fileID: 8726194261462263514, guid: 34db5de69d1f9ce4592bab31c85d8434, type: 3}
   pd: {fileID: 11400000, guid: 48167da11dc29c9478d53a4aa17a3dda, type: 2}
+  animationLength: 0.83
+  castTime: 0
+  canMoveWhileCasting: 1
+  teleportToProjectile: 0
+  teleportDelay: 0
+  rushDirection: 0
+  rushAngle: 0
+  omnidirectionalRush: 0
+  rushTurnRate: 0
+  rushType: 0
+  rushTypeVal: 0
+  rushSpeedMult: 1
+  immuneWhileRushing: 0
+  disableAttacksWhileRushing: 0
+  endRushOnCollision: 0
+  bounceOnCollision: 0
+  rushImpact: 0
+  rushImpactForce: 0
+  rushImpactTime: 0
+  impactDmgMult: 0.5
+  impactAttack: {fileID: 0}
+  predictTarget: 0
+  canCharge: 0
+  chargeThreshold: 0.225
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 1
+  chargeAttack: {fileID: 0}
   pattern: 1
-  spawnDelay: 0.325
+  spawnDelay: 0.6
   spawnDistance: 0.25
   fixedDistance: 1
-  animationLength: 0.83
   projectileCount: 2
   randomCount: 1
   spread: 20
@@ -47,11 +77,14 @@ MonoBehaviour:
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
+  cleanseDebuffs: 0
   fireOrbits: 0
   absorbOrbitPct: 0
   redirectOrbits: 0
   explodeOrbits: 0
   redirectCount: 0
-  type: 0
+  hitStop: 0
+  hitStopCooldown: 0
+  screenShake: 0
   icon: {fileID: 0}
   displayName: 

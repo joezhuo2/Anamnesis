@@ -14,15 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   type: 0
   cooldown: 5
+  stacks: 1
   projectilePrefab: {fileID: 8775174737362964947, guid: 8cd644b494c634342a291da2e30c9b12, type: 3}
   pd: {fileID: 11400000, guid: befa2278498fca341bcb9a73f9201de8, type: 2}
-  pattern: 5
+  animationLength: 1
   castTime: 0
   canMoveWhileCasting: 1
-  spawnDelay: 0.75
-  spawnDistance: 0.25
-  fixedDistance: 1
-  animationLength: 1
+  teleportToProjectile: 0
+  teleportDelay: 0
+  rushDirection: 0
+  rushAngle: 0
+  omnidirectionalRush: 0
+  rushTurnRate: 0
+  rushType: 0
+  rushTypeVal: 0
+  rushSpeedMult: 1
+  immuneWhileRushing: 0
+  disableAttacksWhileRushing: 0
+  endRushOnCollision: 0
+  bounceOnCollision: 0
+  rushImpact: 0
+  rushImpactForce: 0
+  rushImpactTime: 0
+  impactDmgMult: 0.5
+  impactAttack: {fileID: 0}
+  predictTarget: 0
   canCharge: 0
   chargeThreshold: 0.225
   minChargeTime: 0
@@ -30,6 +46,10 @@ MonoBehaviour:
   chargeTickInterval: 1
   cooldownOnAttackStart: 1
   chargeAttack: {fileID: 0}
+  pattern: 5
+  spawnDelay: 1
+  spawnDistance: 0.25
+  fixedDistance: 1
   projectileCount: 8
   randomCount: 0
   spread: 12
