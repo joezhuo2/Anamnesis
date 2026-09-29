@@ -24,10 +24,11 @@ Current release: **v0.7.0** — see [CHANGELOG.md](CHANGELOG.md) for release his
 ## 🔁 Core Loop
 
 1. **Pick a difficulty and a gamemode** — **Easy**, **Normal** or **Hard**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
-2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them.
-3. **Choose a reward** — buffs, rare attacks or treasure-pool Awakenings. Lock one reward and reroll the rest, pay 200 gold when out of rerolls, or corrupt the rewards for a bigger gamble.
-4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*) that trade risk for rerolls and skill points.
-5. **Spend skill points and gold** — unlock skill tree nodes, refund them for gold, level up from XP, and repeat.
+2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. 
+3. **Explore the world** — Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them.
+3. **Choose a reward** — buffs, rare attacks or Awakenings. Lock one reward and reroll the rest, pay gold when out of rerolls, or corrupt the rewards for a bigger gamble.
+4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*) that trade risk for rerolls, skill points, and an additional reward.
+5. **Spend skill points and gold** — unlock skill tree nodes, refund them with gold, level up from XP, and repeat.
 
 ---
 
