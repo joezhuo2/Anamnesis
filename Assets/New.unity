@@ -65755,7 +65755,7 @@ PrefabInstance:
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: f108d8577b8b2f64694a460e1e3aa532, type: 2}
+      objectReference: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[1]'
       value: 
