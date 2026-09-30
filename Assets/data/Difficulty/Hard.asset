@@ -22,7 +22,7 @@ MonoBehaviour:
   maxCurrentEnemiesAdd: 2
   rewardChoicesAdd: 0
   qualityBonusAdd: -0.3
-  milestoneRewardChoicesAdd: 0
+  milestoneRewardChoicesAdd: -1
   occasionalRerollChanceAdd: -0.2
   occasionalSkillPointChanceAdd: -0.2
   anomalyChanceAdd: 20

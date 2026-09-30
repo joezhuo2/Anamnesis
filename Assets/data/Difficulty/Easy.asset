@@ -21,22 +21,22 @@ MonoBehaviour:
   maxTotalEnemiesAdd: 0
   maxCurrentEnemiesAdd: 0
   rewardChoicesAdd: 1
-  qualityBonusAdd: 0.25
+  qualityBonusAdd: 0.15
   milestoneRewardChoicesAdd: 1
-  occasionalRerollChanceAdd: 0.15
-  occasionalSkillPointChanceAdd: 0.15
+  occasionalRerollChanceAdd: 0.12
+  occasionalSkillPointChanceAdd: 0.12
   anomalyChanceAdd: 0
   minAnomalyCountAdd: 1
   maxAnomalyCountAdd: 1
   anomalyRerollMinAdd: 1
   anomalyRerollMaxAdd: 2
   anomalySkillPointAdd: 1
-  anomalyQualityAdd: 0.25
-  corruptChanceAdd: 15
-  corruptPositiveChanceAdd: 15
+  anomalyQualityAdd: 0.2
+  corruptChanceAdd: 20
+  corruptPositiveChanceAdd: 10
   maxCorruptBoostAdd: 15
   rerollGoldCostAdd: 0
   startingRerollsAdd: 5
   startingSkillPointsAdd: 3
-  preRunPickCount: 3
-  preRunTreasureChance: 25
+  preRunPickCount: 4
+  preRunTreasureChance: 50

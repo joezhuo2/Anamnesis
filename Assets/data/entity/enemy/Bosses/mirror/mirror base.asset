@@ -47,7 +47,7 @@ MonoBehaviour:
   hpRegPct: 0
   healingPct: 0
   overhealth: 0
-  armor: 100
+  armor: 50
   armorPct: 0
   defense: 0
   defensePct: 0
