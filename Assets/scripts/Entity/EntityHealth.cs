@@ -95,6 +95,15 @@ namespace CrystalFlux.EntitySystem
         private Vector3 lastBarWorldPos = new(float.NaN, float.NaN, float.NaN);
         private Vector3 lastBarCamPos = new(float.NaN, float.NaN, float.NaN);
         private const float barMoveEpsilonSqr = 1e-6f;
+        private bool barHidden;
+
+        public void SetBarHidden(bool v)
+        {
+            if (barHidden == v) return;
+
+            barHidden = v;
+            lastBarWorldPos = new Vector3(float.NaN, float.NaN, float.NaN);
+        }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics() => sharedCanvas = null;
@@ -281,7 +290,7 @@ namespace CrystalFlux.EntitySystem
             lastBarCamPos = camPos;
 
             Vector3 screenPos = mainCamera.WorldToScreenPoint(worldPos + healthBarOffset);
-            bool visible = screenPos.z > 0f;
+            bool visible = screenPos.z > 0f && !barHidden;
 
             if (healthBarInstance.gameObject.activeSelf != visible)
                 healthBarInstance.gameObject.SetActive(visible);

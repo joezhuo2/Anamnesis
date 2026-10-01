@@ -7,6 +7,10 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.1] - 2026-09-30 - Nightmare Difficulty
+- new nightmare difficulty, will later introduce specific attacks only in this mode
+- new blackout anomaly
+
 ## [v0.7.0] - 2026-09-29 - Run Variety (Release Summary)
 
 *This release is a correctness pass: a full audit of the combat, upgrade, skill tree and wave code fixed more than twenty bugs, and a new Awakening capstone, Moonbound Instinct, closes out the Starlit Reflexes line.*

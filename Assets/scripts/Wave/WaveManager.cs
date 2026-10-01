@@ -146,6 +146,7 @@ namespace CrystalFlux.WaveSystem
         protected virtual void Start()
         {
             waveInfoPanel.SetActive(false);
+            EntitySystem.EnemyAttackHandler.DifficultyTier = D.tier;
 
             if (rewardTitleWrapper != null) rewardTitleWrapper.SetActive(false);
 
@@ -160,6 +161,7 @@ namespace CrystalFlux.WaveSystem
             if (d == null) return;
 
             difficulty = d;
+            EntitySystem.EnemyAttackHandler.DifficultyTier = d.tier;
 
             if (!IronmanSelector.Enabled) rerolls = Mathf.Max(0, rerolls + d.startingRerollsAdd);
             else rerolls = 0;
@@ -254,7 +256,8 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.Swarm:
                         case AnomalyType.Duel:
                         case AnomalyType.Split:
-                        case AnomalyType.Sealed: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.Sealed:
+                        case AnomalyType.Blackout: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }

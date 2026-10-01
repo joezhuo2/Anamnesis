@@ -44,7 +44,6 @@
 **Content**
 - [ ] wave events - random events that can randomly occur during waves
 - [ ] contracts - similar to anomaly, but no fail risk, easier objective, less bonus rewards
-- [ ] Nightmare/Death difficulty (new enemy ai (eg. spliting), new attacks (attackData `minDifficulty` field))
 
 ## Pre [v1.3.0] Checklist — Domains of the Unbound
 *New ways to deal damage, and somewhere interesting to deal it.*
@@ -62,7 +61,6 @@
 - [ ] Environmental hazards on maps (spikes, lava, traps)
 - [ ] portals
 - [ ] starting builds / starting kits
-- [ ] skill tree node search bar (by name, stat, etc.) - highlight nodes that are filtered (change border color), and changes other nodes to have gray/dark gray borders
 
 **QoL & Polish**
 - [ ] Screen-edge indicators for off-screen enemies, boss cursor
@@ -77,7 +75,7 @@
 
 **Content**
 - [ ] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
-- [ ] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses
+- [ ] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses (new collectible type)
 - [ ] Chests or loot drops from elites/bosses with guaranteed rare rewards
 
 **QoL & Polish**
@@ -120,10 +118,8 @@
 # Planned
 
 ### High priority To-Do
-- cap AOE% at ~200-300%
-- [ ] **Blackout** (anamoly, no fail) - vision shrinks to a radius around the player; enemies outside it are hidden except for their attack telegraphs and projectiles. Each kill briefly widens the radius. *New feature:* a vision mask / URP 2D light overlay.
 - **Gravity Well** - *something* create an aoe attack that pulls enemies (and debuffs them?)
-- left-right-top-down, circle inverse (circle, but projectiles move/converge to center) spawn patterns
+- [ ] beacon objective (defend/destroy)
 
 ### Will do sometime
 - [ ] "What's new" changelog popup on update
@@ -131,10 +127,7 @@
 - [ ] Customizable HUD layout
 - [ ] data saving - full game runs
 - [ ] Confirmation dialog before corrupting a reward (can be toggled in settings)
-- [ ] beacon objective (defend/destroy)
 - [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
-- [ ] queue skill point spending - different highlight color, can be undone
-- [ ] skill node undo grace window (no undo cost until closing the tree)
 
 ### Will Consider
 - [ ] target dummy OR dps counter
@@ -142,7 +135,6 @@
 - [ ] Scrollable Tooltips
 - [ ] Screenshot mode that hides the HUD
 - [ ] Accessibility options (colorblind mode, reduced screen shake, larger text)
-- [ ] attack cooldown over indicator
 - [ ] build/loadout slots
 - [ ] neutral entities
 - [ ] cosmetics (player skins/dash effects/attack effects)

@@ -44,6 +44,13 @@ namespace CrystalFlux.EntitySystem
 
         public bool IsCasting => isCasting || isCharging;
 
+        public static int DifficultyTier { get; set; } = 1;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => DifficultyTier = 1;
+
+        private bool DifficultyAllows(AttackData ad) => mirrored || ad == null || ad.MinDifficulty <= DifficultyTier;
+
         private void Awake()
         {
             a = GetComponent<Animator>();
@@ -144,6 +151,7 @@ namespace CrystalFlux.EntitySystem
                 if (a.MinHpPct > 0 && hpPct < a.MinHpPct) continue;
                 if (a.MaxHpPct < 100f && hpPct > a.MaxHpPct) continue;
                 if (a.PhaseReq >= 0 && (ep == null || ep.phase < a.PhaseReq)) continue;
+                if (!DifficultyAllows(a)) continue;
 
                 availableIndexes.Add(i);
             }
@@ -300,7 +308,7 @@ namespace CrystalFlux.EntitySystem
 
             ReleaseMovementHold();
 
-            queuedAttack = current.NextAttack;
+            queuedAttack = DifficultyAllows(current.NextAttack) ? current.NextAttack : null;
         }
 
         private System.Collections.IEnumerator ChargeLoop(AttackData attack)

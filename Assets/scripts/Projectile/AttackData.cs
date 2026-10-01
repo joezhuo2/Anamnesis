@@ -116,6 +116,8 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private float maxHpPct = 100f;
         [Tooltip("Phase required to use this attack, -1 => no phase required")]
         [SerializeField] private int phaseReq = -1;
+        [Tooltip("Minimum difficulty tier required for enemies to use this attack. 0 = Easy, 1 = Normal, 2 = Hard, 3 = Nightmare")]
+        [Min(0)] [SerializeField] private int minDifficulty = 0;
         [Tooltip("Next attack for the enemy to use")]
         [SerializeField] private AttackData nextAttack;
 
@@ -217,6 +219,7 @@ namespace CrystalFlux.ProjectileSystem
         public float MinHpPct => minHpPct;
         public float MaxHpPct => maxHpPct;
         public int PhaseReq => phaseReq;
+        public int MinDifficulty => minDifficulty;
         public AttackData NextAttack => nextAttack;
         public float StaminaCost => staminaCost;
         public float StaminaCostPct => staminaCostPct;

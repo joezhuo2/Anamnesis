@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15cc7e945876e6d4f83d64d2df238cf6, type: 3}
+  m_Name: Nightmare
+  m_EditorClassIdentifier: CrystalFlux.Wave::CrystalFlux.WaveSystem.DifficultyData
+  displayName: Nightmare
+  description: Enemies unlock new attacks. No mercy, no second chances.
+  frameSprite: {fileID: -8525611938847183895, guid: 0c59b69c6ce416743b1854ba53e3b88b, type: 3}
+  nameColor: {r: 0.85, g: 0.15, b: 0.2, a: 1}
+  tier: 3
+  enemyLevelAdd: 6
+  enemyLevelPerWaveAdd: 0.5
+  maxTotalEnemiesAdd: 6
+  maxCurrentEnemiesAdd: 4
+  rewardChoicesAdd: 0
+  qualityBonusAdd: -0.5
+  milestoneRewardChoicesAdd: -1
+  occasionalRerollChanceAdd: -0.3
+  occasionalSkillPointChanceAdd: -0.3
+  anomalyChanceAdd: 30
+  minAnomalyCountAdd: 0
+  maxAnomalyCountAdd: 0
+  anomalyRerollMinAdd: 1
+  anomalyRerollMaxAdd: 3
+  anomalySkillPointAdd: 2
+  anomalyQualityAdd: 0.3
+  corruptChanceAdd: 15
+  corruptPositiveChanceAdd: -20
+  maxCorruptBoostAdd: 30
+  rerollGoldCostAdd: 100
+  startingRerollsAdd: -5
+  startingSkillPointsAdd: 0
+  preRunPickCount: 0
+  preRunTreasureChance: 25

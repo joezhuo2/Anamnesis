@@ -16,6 +16,7 @@ MonoBehaviour:
   description: The balanced baseline experience.
   frameSprite: {fileID: -8860461921809640026, guid: baf095ff6c10508428e4753980cff158, type: 3}
   nameColor: {r: 1, g: 1, b: 1, a: 1}
+  tier: 1
   enemyLevelAdd: 0
   enemyLevelPerWaveAdd: 0
   maxTotalEnemiesAdd: 0

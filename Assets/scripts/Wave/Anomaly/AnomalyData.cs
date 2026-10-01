@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum AnomalyType { TimeTrial, NoDamage, StatModifier, Swarm, Duel, Split, Sealed }
+public enum AnomalyType { TimeTrial, NoDamage, StatModifier, Swarm, Duel, Split, Sealed, Blackout }
 
 [CreateAssetMenu(fileName = "amd", menuName = "Data/Anomaly")]
 public class AnomalyData : ScriptableObject
@@ -26,6 +26,7 @@ public class AnomalyData : ScriptableObject
             AnomalyType.Duel => new DuelInstance(this),
             AnomalyType.Split => new SplitInstance(this),
             AnomalyType.Sealed => new SealedInstance(this),
+            AnomalyType.Blackout => new BlackoutInstance(this),
             _ => new AnomalyInstance(this)
         };
     }

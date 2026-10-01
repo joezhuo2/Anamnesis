@@ -2571,7 +2571,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -5191,6 +5191,11 @@ MonoBehaviour:
   lineRenderer: {fileID: 506637369}
   panZoom: {fileID: 1207911049}
   refundAllButton: {fileID: 165927447}
+  searchField: {fileID: 0}
+  createSearchFieldIfMissing: 1
+  searchFieldSize: {x: 360, y: 44}
+  searchFieldOffset: {x: 0, y: -30}
+  searchPlaceholder: Search nodes (name, stat, attack...)
 --- !u!114 &172564793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12209,7 +12214,7 @@ RectTransform:
   m_GameObject: {fileID: 539410515}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1018373723}
@@ -14415,6 +14420,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b380a00df5f19494f928826ca19981c5, type: 2}
   - {fileID: 11400000, guid: 8e9e384e928884b498d256f08d2306c3, type: 2}
   - {fileID: 11400000, guid: 2151fab0400e18842a5463692850c445, type: 2}
+  - {fileID: 11400000, guid: a32dd372e35a4da1b13654eb145ba701, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
@@ -22719,7 +22725,7 @@ RectTransform:
   m_GameObject: {fileID: 1018373722}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 539410516}
@@ -27080,6 +27086,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6452de7589c34320bc8f28a23867bac5, type: 2}
   - {fileID: 11400000, guid: 2cd5f665b7f569e4b800abeaee7ecbfc, type: 2}
   - {fileID: 11400000, guid: c261428d5d552ff489dedda200b0f2e1, type: 2}
+  - {fileID: 11400000, guid: b793d07dd2b642c5a05b83e4b80f45b1, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
@@ -32408,6 +32415,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94bbc4e73f41b3d41902681858af0fa3, type: 2}
   - {fileID: 11400000, guid: 03426c734edfa8547b448d3b731c69be, type: 2}
   - {fileID: 11400000, guid: d161854970ad289408e2c02c6c11a352, type: 2}
+  - {fileID: 11400000, guid: 9bf2c82c3d614b0fa645e71796e70671, type: 2}
   root: {fileID: 2140176537}
   frameImage: {fileID: 539410517}
   nameText: {fileID: 1018373724}
@@ -41965,7 +41973,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
