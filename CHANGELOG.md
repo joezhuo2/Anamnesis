@@ -7,9 +7,41 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.2] - 2026-10-01 - Skill Tree QoL
+
+### Added
+- **Skill tree search bar**: filters nodes by name, description, node ID, stat (label or `StatType` name), and the names and tooltip lines of granted attacks and Awakenings. Space-separated terms must all match (case-insensitive)
+  - Matching nodes get a cyan border (`matchBorderColor`). The rest get a grey border (`dimBorderColor`) when unlocked or available, and dark grey (`darkBorderColor`) when locked. An empty search restores the normal borders
+  - `SkillNodeUI.borderImage` is optional. Without it, an `Outline` (`outlineDistance` 4) is added to the background image
+  - `SkillTreeUI.searchField` takes an authored `TMP_InputField`. With none assigned and `createSearchFieldIfMissing` on, a default field (360x44, top-center) is built at runtime
+  - While the field is focused, the skill tree hotkey does not close the tree, Escape unfocuses the field instead of closing it, and a drag that starts on the field does not pan. Right-clicking the field clears the search (`SkillTreeUI.ClearSearch()`)
+- **Queued skill points**: clicking a node you cannot afford, but that connects to an unlocked or already-queued node, queues it (blue, `queuedColor`). Queued nodes unlock in order whenever skill points are gained
+  - Clicking a queued node removes it, along with any later queued nodes that only connected through it. Undo and Refund All also drop queued nodes that are no longer connected
+  - The queue stops at the first node that still can't be unlocked (for example an unmet requirement). Its tooltip shows its queue position and the reason
+  - Skill points refunded by undo or Refund All do not trigger the queue
+- **Undo grace window**: nodes unlocked since the skill tree was opened can be undone for free until it is closed ("free until the tree is closed" in the tooltip). Refund All leaves their cost out too. Ironman still blocks undo
+- Projectile patterns **`LeftRightTopDown`** (`FullX` rotated 45°: lines from all four sides converge on the target) and **`CircleInverse`** (the `Circle` ring, with projectiles flying inward toward its center). Both are appended to `ProjectilePattern`, so existing assets keep their pattern
+- `PlayerSkillTree`: `QueueNode`, `DequeueNode`, `CanQueue`, `IsNodeQueued`, `QueueIndex`, `BeginGrace` / `EndGrace`, `InGrace` and `GetUndoCost`
+
+### Changed
+- `SkillTree.asmdef` references `Unity.TextMeshPro`
+- `PlayerSkillTree.AddSkillPoints` processes the skill point queue
+- Player `bundleVersion` 0.7.0 → 0.7.2
+
 ## [v0.7.1] - 2026-09-30 - Nightmare Difficulty
-- new nightmare difficulty, will later introduce specific attacks only in this mode
-- new blackout anomaly
+
+### Added
+- **Nightmare** difficulty (`Assets/data/Difficulty/Nightmare.asset`, new `headerNightmare` frame, red name), fourth in the selector: enemy level +6 and +0.5 per wave, +6 total and +4 concurrent enemies, reward quality -0.5, one fewer milestone choice, -30% occasional reroll and skill point chance, -5 starting rerolls, and rerolls cost +100g. In exchange anomalies are more common (+30%) and pay more (+1 to +3 rerolls, +2 skill points, +0.3 quality), and corruption is likelier (+15%) and stronger (+30% max boost) but less often positive (-20%). No pre-run free picks
+- `DifficultyData.tier` (Easy 0, Normal 1, Hard 2, Nightmare 3) and `AttackData.minDifficulty` (Enemy Only). Enemies skip attacks whose `minDifficulty` is above the run's tier, including a chained `nextAttack`. Mirrored attacks (Mirror boss, Doppelganger) ignore it. No attack uses it yet
+- `EnemyAttackHandler.DifficultyTier`, set by `WaveManager` on start and when the difficulty locks in (1 without a difficulty asset)
+- **Blackout** anomaly (`AnomalyType.Blackout`, no fail condition): vision shrinks to 2.5-3.5 units around the player. Enemies outside it and their health bars are hidden, but projectiles and cast bars stay visible. Each kill widens the radius by 1.5 for about 1.5s (stacking up to +4.5)
+  - Regular list waves 15-105, Unlimited list waves 0-128
+  - `BlackoutVision` builds the darkness at runtime: a soft-edged disc and four surrounding quads (alpha 0.94, sorting order -1) following the player, plus a `SpriteMask` that enemy sprites are clipped to (`BlackoutHider`, added on spawn and removed when the anomaly ends)
+- `EntityHealth.SetBarHidden(bool)`
+
+### Changed
+- `Walls` and `ForestMap` tilemaps' sorting order -1 → -2, so the Blackout darkness draws between the map and entities
+- Easy: rerolls cost 25g less
 
 ## [v0.7.0] - 2026-09-29 - Run Variety (Release Summary)
 

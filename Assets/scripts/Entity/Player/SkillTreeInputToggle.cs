@@ -38,6 +38,8 @@ namespace CrystalFlux.SkillTree
 
         private void ToggleSkillTree()
         {
+            if (SkillTreeUI.IsTypingSearch) return;
+
             var ui = ResolveUI();
             if (ui != null) ui.Toggle(gameObject);
         }

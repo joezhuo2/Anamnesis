@@ -126,6 +126,8 @@ namespace CrystalFlux.SkillTree
 
             if (panButtonHeld && !isPanning)
             {
+                if (SkillTreeUI.IsPointerOverSearch(mouseScreen)) return;
+
                 isPanning = true;
                 DraggedThisPress = false;
                 panStartScreenPos = mouseScreen;

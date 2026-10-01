@@ -332,3 +332,21 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **No end-of-run state** - after the last Regular wave, `StartNextWave` just returns (`WaveManager.cs:361`), with no victory screen. Unlimited shows "Wave x/128" even though it is endless.
 - [ ] **EventSystem lives under the Player prefab** - if the player is destroyed (after `deathAnimTime` 1s) before the death screen pauses (`showDelay` 1s, real time), the death-screen buttons lose input. `GameController`'s fallback adds a `StandaloneInputModule` (`GameController.cs:32`), which does not work with `activeInputHandler: 1`.
 - [ ] Stale Player overrides in `New.unity` (~line 65210): `skillPoints` (field no longer exists) and `activeUpgrades.Array.data[0..1]` (array size 0; data[0] points at a deleted asset `f108d857...`).
+
+### Ideas to make Nightmare harder:
+
+Enemies build up a resistance to your most-used damage type during a wave.
+Elite enemies always have an aura (attack speed, damage reduction or healing) and it stacks.
+Killed enemies drop a short-lived hazard on the ground.
+Boss phases start at 80/50/20% HP instead of the usual thresholds, and each phase adds one attack.
+Enemy projectiles speed up 0.5% per wave.
+Every 10th wave forces an anomaly, and failing it costs a skill point.
+Healing reduced by 30%, with regeneration stopping for 3s after you're hit.
+Gold income reduced by 25% and undo costs doubled.
+**Enemies sometimes dodge-dash sideways out of your aim.**
+Below 30% HP, enemies enrage: 25% faster with shorter cooldowns.
+**Wave timer: after 90s, extra enemies spawn every 8s until the wave is cleared.**
+One random enemy per wave is a hidden "marked" enemy that explodes on death.
+Status effects you apply last 30% shorter, and enemy debuffs on you last 30% longer.
+Mid-run anomalies you skipped come back later as a forced harder version.
+Damage taken stacks into a 3-hit fragility that briefly increases further damage taken.

@@ -14,6 +14,10 @@ namespace CrystalFlux.SkillTree
         [HideInInspector] public readonly List<SkillNodeDef> runtimeNodes = new();
         [HideInInspector] public bool choseStarting;
         private readonly HashSet<string> unlockedNodes = new();
+        private readonly List<string> queuedNodes = new();
+        private readonly HashSet<string> graceNodes = new();
+        private bool graceActive;
+        private bool processingQueue;
         private List<SkillNodeDef> allNodes = new();
         private readonly Dictionary<string, SkillNodeDef> nodesById = new();
         private readonly Dictionary<string, List<SkillNodeDef>> neighbours = new();
@@ -66,6 +70,7 @@ namespace CrystalFlux.SkillTree
             UpdateRuntimeNodeRequirements(runtimeNodeMap);
             BuildAdjacency();
             RestoreUnlockedNodes();
+            PruneQueue();
         }
 
         private void BuildAdjacency()
@@ -153,6 +158,130 @@ namespace CrystalFlux.SkillTree
             }
         }
 
+        public bool IsNodeQueued(SkillNodeDef node) => node != null && queuedNodes.Contains(node.nodeID);
+        public int QueueIndex(SkillNodeDef node) => node != null ? queuedNodes.IndexOf(node.nodeID) : -1;
+        public int QueuedCount => queuedNodes.Count;
+
+        public (bool canQueue, string failMessage) CanQueue(SkillNodeDef node)
+        {
+            if (node == null) return (false, "Node is null");
+            if (unlockedNodes.Contains(node.nodeID)) return (false, "Node already unlocked");
+            if (queuedNodes.Contains(node.nodeID)) return (false, "Node already queued");
+
+            return CanReachWith(node, PlannedIds(queuedNodes.Count));
+        }
+
+        public bool QueueNode(SkillNodeDef node)
+        {
+            var (canQueue, _) = CanQueue(node);
+            if (!canQueue) return false;
+
+            queuedNodes.Add(node.nodeID);
+            ProcessQueue();
+            return true;
+        }
+
+        public void DequeueNode(SkillNodeDef node)
+        {
+            if (node == null || !queuedNodes.Remove(node.nodeID)) return;
+            PruneQueue();
+        }
+
+        private HashSet<string> PlannedIds(int queuedTake)
+        {
+            var set = new HashSet<string>(unlockedNodes);
+            for (int i = 0; i < queuedTake && i < queuedNodes.Count; i++) set.Add(queuedNodes[i]);
+            return set;
+        }
+
+        private (bool ok, string failMessage) CanReachWith(SkillNodeDef node, HashSet<string> owned)
+        {
+            if (node.isStartingNode)
+            {
+                if (choseStarting) return (false, "Starting node already chosen");
+                foreach (var id in owned)
+                    if (nodesById.TryGetValue(id, out var o) && o != null && o.isStartingNode)
+                        return (false, "Starting node already chosen");
+            }
+            else
+            {
+                bool connected = false;
+                foreach (var nb in Neighbours(node.nodeID))
+                {
+                    if (nb != null && owned.Contains(nb.nodeID))
+                    {
+                        connected = true;
+                        break;
+                    }
+                }
+
+                if (!connected) return (false, "Not connected to an unlocked or queued node");
+            }
+
+            if (node.incompatibleNodes != null)
+                foreach (var n in node.incompatibleNodes)
+                    if (n != null && owned.Contains(n.nodeID)) return (false, $"Incompatible node: {n.nodeName}");
+
+            return (true, string.Empty);
+        }
+
+        private void PruneQueue()
+        {
+            var owned = new HashSet<string>(unlockedNodes);
+
+            for (int i = 0; i < queuedNodes.Count; i++)
+            {
+                string id = queuedNodes[i];
+
+                if (unlockedNodes.Contains(id) || !nodesById.TryGetValue(id, out var n) || n == null || !CanReachWith(n, owned).ok)
+                {
+                    queuedNodes.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+
+                owned.Add(id);
+            }
+        }
+
+        private void ProcessQueue()
+        {
+            if (processingQueue) return;
+            processingQueue = true;
+
+            while (queuedNodes.Count > 0)
+            {
+                if (!nodesById.TryGetValue(queuedNodes[0], out var head) || head == null)
+                {
+                    queuedNodes.RemoveAt(0);
+                    continue;
+                }
+
+                if (!CanUnlock(head).canUnlock) break;
+
+                queuedNodes.RemoveAt(0);
+                UnlockNode(head);
+            }
+
+            processingQueue = false;
+        }
+
+        public void BeginGrace()
+        {
+            graceActive = true;
+            graceNodes.Clear();
+        }
+
+        public void EndGrace()
+        {
+            graceActive = false;
+            graceNodes.Clear();
+        }
+
+        public bool InGrace(SkillNodeDef node) => node != null && graceNodes.Contains(node.nodeID);
+
+        public int GetUndoCost(SkillNodeDef node) => node == null || graceNodes.Contains(node.nodeID) ? 0 : node.undoCost;
+
         public (bool canUnlock, string failMessage) CanUnlock(SkillNodeDef node)
         {
             if (node == null) return (false, "Node is null");
@@ -211,6 +340,8 @@ namespace CrystalFlux.SkillTree
 
             TrySpend(node.cost);
             unlockedNodes.Add(node.nodeID);
+            queuedNodes.Remove(node.nodeID);
+            if (graceActive) graceNodes.Add(node.nodeID);
 
             ConsumeNodeRequirements(node);
             ApplyNodeEffects(node);
@@ -227,7 +358,8 @@ namespace CrystalFlux.SkillTree
             if (!IsNodeUnlocked(node)) return (false, "Node not unlocked");
 
             if (!TryGetComponent<ICurrencyHolder>(out var esm)) return (false, "No stat manager found");
-            if (esm.CurrentAmount < node.undoCost) return (false, $"Not enough gold ({node.undoCost}g required)");
+            int cost = GetUndoCost(node);
+            if (esm.CurrentAmount < cost) return (false, $"Not enough gold ({cost}g required)");
             if (WouldStrandDependents(node)) return (false, "Other unlocked nodes depend on this one");
 
             return (true, string.Empty);
@@ -271,14 +403,18 @@ namespace CrystalFlux.SkillTree
             var (canUndo, _) = CanUndo(node);
             if (!canUndo) return;
 
-            if (TryGetComponent<ICurrencyHolder>(out var esm) && esm.TrySpend(node.undoCost))
+            int cost = GetUndoCost(node);
+            if (TryGetComponent<ICurrencyHolder>(out var esm) && (cost <= 0 || esm.TrySpend(cost)))
             {
-                AddSkillPoints(node.cost);
+                SkillPoints += node.cost;
                 unlockedNodes.Remove(node.nodeID);
+                graceNodes.Remove(node.nodeID);
                 RemoveNodeEffects(node);
                 RestoreNodeRequirements(node);
 
                 if (node.isStartingNode) choseStarting = false;
+
+                PruneQueue();
             }
         }
 
@@ -290,7 +426,7 @@ namespace CrystalFlux.SkillTree
             foreach (var rn in runtimeNodes)
             {
                 if (rn == null || !unlockedNodes.Contains(rn.nodeID)) continue;
-                total += rn.undoCost;
+                total += GetUndoCost(rn);
             }
 
             return total;
@@ -326,7 +462,8 @@ namespace CrystalFlux.SkillTree
             if (!canRefund) return false;
 
             if (!TryGetComponent<ICurrencyHolder>(out var esm)) return false;
-            if (!esm.TrySpend(GetRefundAllCost())) return false;
+            int cost = GetRefundAllCost();
+            if (cost > 0 && !esm.TrySpend(cost)) return false;
 
             var removed = new List<SkillNodeDef>();
             foreach (var rn in runtimeNodes)
@@ -336,15 +473,17 @@ namespace CrystalFlux.SkillTree
             }
 
             unlockedNodes.Clear();
+            graceNodes.Clear();
             choseStarting = false;
 
             foreach (var node in removed)
             {
-                AddSkillPoints(node.cost);
+                SkillPoints += node.cost;
                 RemoveNodeEffects(node);
                 RestoreNodeRequirements(node);
             }
 
+            PruneQueue();
             return true;
         }
 
@@ -378,7 +517,11 @@ namespace CrystalFlux.SkillTree
                 if (req is NodeRequirement nr) nr.Restore(gameObject);
         }
 
-        public void AddSkillPoints(int amount) => SkillPoints += amount;
+        public void AddSkillPoints(int amount)
+        {
+            SkillPoints += amount;
+            if (amount > 0) ProcessQueue();
+        }
 
         public bool TrySpend(int amount)
         {

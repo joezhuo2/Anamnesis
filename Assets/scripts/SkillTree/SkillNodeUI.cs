@@ -15,10 +15,25 @@ namespace CrystalFlux.SkillTree
         public GameObject lockedOverlay;
         public GameObject unlockedCheckmark;
         public GameObject availableGlow;
+        public Color queuedColor = new(0.3f, 0.45f, 0.95f, 0.8f);
+
+        [Header("Search Highlight")]
+        [Tooltip("Optional. Recolored by the search filter. Null = an Outline on the background image is used instead")]
+        public Image borderImage;
+        public Color matchBorderColor = new(0.35f, 0.9f, 1f, 1f);
+        public Color dimBorderColor = new(0.5f, 0.5f, 0.5f, 1f);
+        public Color darkBorderColor = new(0.2f, 0.2f, 0.2f, 1f);
+        public Vector2 outlineDistance = new(4f, -4f);
 
         [HideInInspector] public SkillNodeDef node;
         private SkillTreeManager manager;
         private PlayerSkillTree playerSkillTree;
+        private Outline outline;
+        private bool hasBaseBorder;
+        private bool baseOutlineEnabled;
+        private Color baseBorderColor;
+        private bool reachable;
+        private int searchState;
 
         public void Initialize(SkillNodeDef node, SkillTreeManager manager)
         {
@@ -41,8 +56,9 @@ namespace CrystalFlux.SkillTree
 
             bool unlocked = manager.IsNodeUnlocked(node);
             var (canUnlock, _) = manager.CanUnlock(node);
+            bool queued = !unlocked && manager.tree != null && manager.tree.IsNodeQueued(node);
 
-            if (lockedOverlay != null) lockedOverlay.SetActive(!unlocked && !canUnlock);
+            if (lockedOverlay != null) lockedOverlay.SetActive(!unlocked && !canUnlock && !queued);
             if (unlockedCheckmark != null) unlockedCheckmark.SetActive(unlocked);
             if (availableGlow != null) availableGlow.SetActive(!unlocked && canUnlock);
             if (iconImage != null && node.icon != null) iconImage.sprite = node.icon;
@@ -50,9 +66,63 @@ namespace CrystalFlux.SkillTree
             if (backgroundImage != null)
             {
                 if (unlocked) backgroundImage.color = new Color(0.2f, 0.6f, 0.2f, 0.8f);
+                else if (queued) backgroundImage.color = queuedColor;
                 else if (canUnlock) backgroundImage.color = new Color(0.8f, 0.7f, 0.1f, 0.8f);
                 else backgroundImage.color = new Color(0.3f, 0.3f, 0.3f, 0.8f);
             }
+
+            reachable = unlocked || canUnlock || queued;
+            ApplyBorder();
+        }
+
+        public void SetSearchState(int state)
+        {
+            if (searchState == state) return;
+
+            searchState = state;
+            ApplyBorder();
+        }
+
+        private Color SearchBorderColor()
+        {
+            if (searchState > 0) return matchBorderColor;
+            return reachable ? dimBorderColor : darkBorderColor;
+        }
+
+        private void ApplyBorder()
+        {
+            if (borderImage != null)
+            {
+                if (!hasBaseBorder)
+                {
+                    baseBorderColor = borderImage.color;
+                    hasBaseBorder = true;
+                }
+                borderImage.color = searchState == 0 ? baseBorderColor : SearchBorderColor();
+                return;
+            }
+
+            if (backgroundImage == null) return;
+
+            if (outline == null)
+            {
+                if (backgroundImage.TryGetComponent(out outline))
+                {
+                    baseBorderColor = outline.effectColor;
+                    baseOutlineEnabled = outline.enabled;
+                }
+                else if (searchState != 0)
+                {
+                    outline = backgroundImage.gameObject.AddComponent<Outline>();
+                    outline.effectDistance = outlineDistance;
+                    baseBorderColor = outline.effectColor;
+                    baseOutlineEnabled = false;
+                }
+                else return;
+            }
+
+            outline.enabled = searchState != 0 || baseOutlineEnabled;
+            outline.effectColor = searchState == 0 ? baseBorderColor : SearchBorderColor();
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -78,8 +148,8 @@ namespace CrystalFlux.SkillTree
 
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                bool unlocked = manager.IsNodeUnlocked(node);
-                if (unlocked) UndoNode();
+                if (manager.IsNodeUnlocked(node)) UndoNode();
+                else if (manager.tree.IsNodeQueued(node)) DequeueNode();
                 else UnlockNode();
             }
         }
@@ -87,13 +157,22 @@ namespace CrystalFlux.SkillTree
         private void UnlockNode()
         {
             var (canUnlock, _) = manager.CanUnlock(node);
-            if (canUnlock)
-            {
-                manager.UnlockNode(node);
+            if (canUnlock) manager.UnlockNode(node);
+            else if (!manager.tree.QueueNode(node)) return;
 
-                var treeUI = GetComponentInParent<SkillTreeUI>();
-                if (treeUI != null) treeUI.OnNodeStateChanged(node);
-            }
+            NotifyChanged();
+        }
+
+        private void DequeueNode()
+        {
+            manager.tree.DequeueNode(node);
+            NotifyChanged();
+        }
+
+        private void NotifyChanged()
+        {
+            var treeUI = GetComponentInParent<SkillTreeUI>();
+            if (treeUI != null) treeUI.OnNodeStateChanged(node);
         }
 
         private void UndoNode()
@@ -104,9 +183,7 @@ namespace CrystalFlux.SkillTree
                 if (canUndo)
                 {
                     manager.tree.UndoNode(node);
-
-                    var treeUI = GetComponentInParent<SkillTreeUI>();
-                    if (treeUI != null) treeUI.OnNodeStateChanged(node);
+                    NotifyChanged();
                 }
             }
         }
@@ -118,9 +195,24 @@ namespace CrystalFlux.SkillTree
             List<string> lines = new();
             if (!string.IsNullOrEmpty(node.desc)) lines.Add(node.desc);
 
-            var (_, failMessage) = manager.CanUnlock(node);
-            if (!string.IsNullOrEmpty(failMessage))
-                lines.Add($"<color=#FF4444>{failMessage}</color>");
+            var tree = manager.tree;
+            int qi = tree != null ? tree.QueueIndex(node) : -1;
+            var (canUnlock, failMessage) = manager.CanUnlock(node);
+
+            if (qi >= 0)
+            {
+                lines.Add($"<color=#6F8CFF>Queued (#{qi + 1}). Unlocks automatically when affordable</color>");
+                if (!string.IsNullOrEmpty(failMessage)) lines.Add($"<color=#888888>{failMessage}</color>");
+                lines.Add("<color=#6F8CFF>Left-click to remove from queue</color>");
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(failMessage))
+                    lines.Add($"<color=#FF4444>{failMessage}</color>");
+
+                if (!canUnlock && tree != null && !tree.IsNodeUnlocked(node) && tree.CanQueue(node).canQueue)
+                    lines.Add("<color=#6F8CFF>Left-click to queue</color>");
+            }
 
             if (!GameSettings.Current.ironmanMode)
             {
@@ -128,8 +220,10 @@ namespace CrystalFlux.SkillTree
                 if (playerSkillTree != null && playerSkillTree.IsNodeUnlocked(node))
                 {
                     var (canUndo, undoFail) = playerSkillTree.CanUndo(node);
-                    if (canUndo) lines.Add($"<color=#FFD700>Left-click to undo ({node.undoCost}g)</color>");
-                    else lines.Add($"<color=#888888>Undo cost: {node.undoCost}g ({undoFail})</color>");
+                    int cost = playerSkillTree.GetUndoCost(node);
+                    string costText = playerSkillTree.InGrace(node) ? "free until the tree is closed" : $"{cost}g";
+                    if (canUndo) lines.Add($"<color=#FFD700>Left-click to undo ({costText})</color>");
+                    else lines.Add($"<color=#888888>Undo cost: {costText} ({undoFail})</color>");
                 }
             }
 

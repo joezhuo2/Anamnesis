@@ -4,6 +4,7 @@
     "references": [
         "CrystalFlux.Core",
         "CrystalFlux.Settings",
+        "Unity.TextMeshPro",
         "Unity.InputSystem",
         "UnityEngine.UI"
     ],

@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.7.0-6366F1)
+![Version](https://img.shields.io/badge/version-0.7.2-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,17 +17,17 @@
 
 </div>
 
-Current release: **v0.7.0** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.7.2** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
 ## 🔁 Core Loop
 
-1. **Pick a difficulty and a gamemode** — **Easy**, **Normal** or **Hard**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
+1. **Pick a difficulty and a gamemode** — **Easy**, **Normal**, **Hard** or **Nightmare**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
 2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. 
 3. **Explore the world** — Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them.
 3. **Choose a reward** — buffs, rare attacks or Awakenings. Lock one reward and reroll the rest, pay gold when out of rerolls, or corrupt the rewards for a bigger gamble.
-4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*) that trade risk for rerolls, skill points, and an additional reward.
+4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*, *Blackout*) that trade risk for rerolls, skill points, and an additional reward.
 5. **Spend skill points and gold** — unlock skill tree nodes, refund them with gold, level up from XP, and repeat.
 
 ---
@@ -36,15 +36,15 @@ Current release: **v0.7.0** — see [CHANGELOG.md](CHANGELOG.md) for release his
 
 | Feature | Description |
 |---------|-------------|
-| **🎚️ Difficulty** | Easy / Normal / Hard as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks). The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
+| **🎚️ Difficulty** | Easy / Normal / Hard / Nightmare as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks) and a tier that gates difficulty-only enemy attacks (`AttackData.minDifficulty`). The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
-| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave; *Sealed* locks one attack slot and speeds up the other two. Hovering a choice shows its rules and completion reward |
+| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave; *Sealed* locks one attack slot and speeds up the other two; *Blackout* shrinks your vision and hides enemies outside it, widening briefly on each kill. Hovering a choice shows its rules and completion reward |
 | **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, a reward lock that survives one reroll, once-per-wave corruption with a 4% chance of a *Corrupted* special attack, and rare *Stat Synergy* offers (a rising per-wave chance from wave 15) that convert a live percentage of one stat into another |
-| **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage, knockback and attacks, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
+| **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, inward circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage, knockback and attacks, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
 | **✨ Awakenings** | `PlayerUpgrade` assets driven by 25 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
-| **🌳 Skill Tree** | Pan/zoom tree of 240 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds, **Refund All**, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
+| **🌳 Skill Tree** | Pan/zoom tree of 240 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds (free until the tree is closed), **Refund All**, a search bar that highlights matching nodes, queued unlocks that spend skill points as they arrive, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
 | **🧪 Status Effects** | Stackable DoTs, stuns, freezes, stat buffs and reductions, attack replacement, cleansing, and **Ethereal Mirage** clones that share your stats and repeat your attacks, with cooldown UI |
 | **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, a six-boss **Boss Rush** gauntlet, and a **Mirror** boss that fights with a copy of your current attacks and Awakenings on its own enemy stats |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
@@ -89,11 +89,11 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma), Cultist Clone, Doppelganger (copies your attacks and Awakenings, Unlimited only) |
 | **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`), Mirror (copies your attacks and Awakenings; Unlimited boss pool, and the final Boss Rush fight as *Echo*) |
 | **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper → Echo) chaining into `BossRush Part 2` (the same six at Lv 105). The wave counter carries on from `ws_5` (waves 76-81, then 82-87) |
-| **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed* — separate Regular and Unlimited lists |
+| **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*, *Blackout* — separate Regular and Unlimited lists |
 | **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Cooldown Advance, Decoy, Free Cast, Gain Mana, Gold Buff, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
-In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20, Cultist Clone from 30, Doppelganger from 40. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel*, *Fission* and *Sealed* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.
+In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20, Cultist Clone from 30, Doppelganger from 40. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed* and *Blackout* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.
 
 ### Awakening trigger conditions
 
@@ -188,7 +188,7 @@ Assets/
 ├── data/                      # ScriptableObject data
 │   ├── _example/              # Template attack folder (AD/PD/controller/prefab) to copy when authoring
 │   ├── Collectibles/          # CollectibleData assets (XP, Gold, Health, Stamina, Mana, Reroll, SkillPoint, spawner boxes)
-│   ├── Difficulty/            # Easy / Normal / Hard DifficultyData assets
+│   ├── Difficulty/            # Easy / Normal / Hard / Nightmare DifficultyData assets
 │   ├── entity/                # Enemy/Player base stats, attacks, animation data, prefabs
 │   │   └── enemy/             # Split into Bosses/ and Enemies/
 │   ├── images/                # Image assets

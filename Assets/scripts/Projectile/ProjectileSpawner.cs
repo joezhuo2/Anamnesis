@@ -4,7 +4,7 @@ using CrystalFlux.Core;
 using UnityEngine;
 namespace CrystalFlux.ProjectileSystem
 {
-    public enum ProjectilePattern { Single, Spread, Circle, Barrage, SpreadBarrage, TopDown, LeftRight, Diagonal, DiagonalReverse, FullX }
+    public enum ProjectilePattern { Single, Spread, Circle, Barrage, SpreadBarrage, TopDown, LeftRight, Diagonal, DiagonalReverse, FullX, LeftRightTopDown, CircleInverse }
 
     public class ProjectileSpawner : MonoBehaviour
     {
@@ -80,7 +80,7 @@ namespace CrystalFlux.ProjectileSystem
             return false;
         }
 
-        public IEnumerator SpawnCircle(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 center, float radius, GameObject sourceObj = null, AttackData chainRoot = null, bool teleport = false)
+        public IEnumerator SpawnCircle(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 center, float radius, GameObject sourceObj = null, AttackData chainRoot = null, bool teleport = false, bool inverse = false)
         {
             int finalCount = Mathf.Max(1, ad.ProjectileCount + Random.Range(0, ad.RandomCount + 1));
             float startAngle = ad.Spread + Random.Range(-ad.RandomSpread / 2f, ad.RandomSpread / 2f);
@@ -93,7 +93,7 @@ namespace CrystalFlux.ProjectileSystem
                 Vector2 dir = new(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
                 Vector2 spawnPos = center + (dir * radius);
 
-                teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, dir, true, sourceObj, pd, chainRoot));
+                teleport = TeleportOnce(teleport, ad, sourceObj, SpawnProjectile(prefab, spawnPos, inverse ? -dir : dir, true, sourceObj, pd, chainRoot));
                 wait += Random.Range(ad.MinDelay, ad.MaxDelay);
                 while (wait > 0f) { yield return null; wait -= Time.deltaTime; }
             }
@@ -176,6 +176,9 @@ namespace CrystalFlux.ProjectileSystem
 
         public IEnumerator SpawnFullX(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null, bool teleport = false)
             => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, teleport, new Vector2(1f, 1f), new Vector2(1f, -1f), 2);
+
+        public IEnumerator SpawnLeftRightTopDown(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot = null, bool teleport = false)
+            => SpawnOpposingLines(prefab, pd, ad, origin, sourceObj, chainRoot, teleport, Vector2.right, Vector2.down, 2);
 
         private IEnumerator SpawnOpposingLines(GameObject prefab, ProjectileData pd, AttackData ad, Vector2 origin, GameObject sourceObj, AttackData chainRoot, bool teleport, Vector2 d0, Vector2 d1, int dirCount)
         {
@@ -400,6 +403,12 @@ namespace CrystalFlux.ProjectileSystem
                     break;
                 case ProjectilePattern.FullX:
                     yield return SpawnFullX(prefab, pd, ad, spawnPos, source, chainRoot, tp);
+                    break;
+                case ProjectilePattern.LeftRightTopDown:
+                    yield return SpawnLeftRightTopDown(prefab, pd, ad, spawnPos, source, chainRoot, tp);
+                    break;
+                case ProjectilePattern.CircleInverse:
+                    yield return SpawnCircle(prefab, pd, ad, spawnPos, finalDist, source, chainRoot, tp, true);
                     break;
                 default: break;
             }
