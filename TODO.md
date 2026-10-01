@@ -119,7 +119,7 @@
 
 ### High priority To-Do
 - **Gravity Well** - *something* create an aoe attack that pulls enemies (and debuffs them?)
-- [ ] beacon objective (defend/destroy)
+- beacon objective (defend/destroy)
 
 ### Will do sometime
 - [ ] "What's new" changelog popup on update
@@ -181,15 +181,15 @@
 ### Planned Capstone Nodes
 - Hex Cast (+buff -cost)
 
-- Shattered Singularity
-- Stellar maelstrom
-- Solar Collapse
-- Exodus
+- Shattered Singularity - very slow speed (hard to hit), high costs
+- Stellar maelstrom - very high costs, low homing strength
+- Solar Collapse - weak pull strength, small aoe, does not move
+- Exodus - long cooldown, multi scaling
 
 - Meteor Shower - long cast time, small hitbox, large aoe, high mana cost
-- Starfury
-- Autopilot
-- Feedback Loop
+- Starfury - low aoe, primary speed scaling
+- Autopilot - huge knockback (less grouping), low pierce
+- Feedback Loop - low damage, not guaranteed
 
 ### Stats without skill tree nodes
 - add spl dmg pct

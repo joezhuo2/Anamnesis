@@ -7,6 +7,33 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.3] - 2026-10-01 - Expert & Master Modes
+
+### Added
+- **Modes** (Simple / Expert / Master), a run setting separate from difficulty. Each mode is a `ModeData` asset (`Data/Mode`): `displayName`, `description`, `buttonSprite`, `tier` (0 Simple, 1 Expert, 2 Master), `allowCorruption`, `allowCorruptionSpecials`, `unlockUltimates` and `startingUlt`
+  - Every unlock is a per-asset toggle, so what each mode allows is set in the inspector (see the shipped assets below)
+  - Content gated by tier: `AttackData.minMode` (enemy attacks and Rare Pool / corruption special rewards), `PlayerUpgrade.minMode` (Treasure Pool Awakenings) and `SkillNodeDef.minMode` (the node can't be unlocked or queued below that tier, tooltip "Requires Expert mode")
+- **`ModeSelector`**: a single home-screen button. Each click moves to the next mode (Simple → Expert → Master → Simple) and swaps the button image to that mode's `buttonSprite`. The tooltip lists what the mode unlocks. The choice persists to `settings.json` (`modeIndex`) and locks in when a gamemode button is pressed, like the difficulty selector
+- `WaveManager.mode` and `ApplyMode(ModeData)`. On lock-in it sets the run's tier, removes the player's Ultimate if Ultimates are locked, and otherwise equips `startingUlt`
+- `RunMode` (Settings assembly): the static `Tier`, `UltimatesUnlocked` and `TierName(int)` for the active run
+- **Locked Ultimate slot**: in a mode without Ultimates, the Ultimate button stays on the cooldown bar for the whole run, greyed out like a Sealed slot (grey icon and border, full cooldown fill, `lockOverlay` shown). Its tooltip reads "Locked in this mode" and pressing it flashes the blocked border. It applies when the mode locks in at run start
+- `PlayerAttackHandler.PermaLockSlot(AttackType)` and `IsSlotPermaLocked`. A permanent lock is separate from Sealed, so a Sealed wave ending never unlocks it, and the slot's button survives `RemoveAttack`
+
+- **Coherent Strike** (Ultimate, `Assets/data/PlayerData/Attacks/Base/Coherent Strike`): a large piercing slash (350% Phys + 260% Spell, scales on EffAtk plus 50% EffInt, 18 pierce, size 3, speed 12) on a 20s cooldown, costing Stamina 35 +25% and Mana 20 +15%. Master mode's starting Ultimate; not in any reward pool
+- **Mode assets** (`Assets/data/Mode`): Simple (no corruption, Ultimates locked), Expert (Ultimates) and Master (corruption, corruption specials, Ultimates, starts with Coherent Strike). A `ModeSelector` button sits under `Selectors` on the home screen in `New.unity`
+
+### Changed
+- **Spawner boxes** spawn fewer enemies: Slime 3–8 → 2–6, Bat 2–5 → 2–4, Crab 2–6 → 2–4, Cult 1–4 → 1–3, Doppelganger 1–3 → 1–2
+- `AttackData.minDifficulty` is now `minMode` (serialized data kept via `FormerlySerializedAs`). Difficulty no longer gates enemy attacks; mode tier does
+- With Ultimates locked, `PlayerAttackHandler.UpdateAttack` ignores Ultimate attacks, so neither rewards nor skill nodes can grant one, and Ultimate rewards are left out of the reward pools
+- The corrupt button is hidden, and its tooltip skipped, when the mode doesn't allow corruption. Corruption specials only roll when the mode allows them
+- Without a `ModeData` assigned, `WaveManager` falls back to a neutral mode with corruption, specials and Ultimates all on (the old behaviour), at tier 0
+- `Wave.asmdef` references `CrystalFlux.Projectile`
+- Player `bundleVersion` 0.7.2 → 0.7.3
+
+### Removed
+- `DifficultyData.tier` and `EnemyAttackHandler.DifficultyTier`
+
 ## [v0.7.2] - 2026-10-01 - Skill Tree QoL
 
 ### Added

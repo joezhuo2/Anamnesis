@@ -11,8 +11,6 @@ namespace CrystalFlux.WaveSystem
         [TextArea(3, 10)] public string description;
         public Sprite frameSprite;
         public Color nameColor = Color.white;
-        [Tooltip("Compared against AttackData.minDifficulty. 0 = Easy, 1 = Normal, 2 = Hard, 3 = Nightmare")]
-        [Min(0)] public int tier = 1;
 
         [Header("Enemy Scaling")]
         public int enemyLevelAdd;

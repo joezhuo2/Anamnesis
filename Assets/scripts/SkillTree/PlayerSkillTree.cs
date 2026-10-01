@@ -166,6 +166,7 @@ namespace CrystalFlux.SkillTree
         {
             if (node == null) return (false, "Node is null");
             if (unlockedNodes.Contains(node.nodeID)) return (false, "Node already unlocked");
+            if (node.minMode > RunMode.Tier) return (false, $"Requires {RunMode.TierName(node.minMode)} mode");
             if (queuedNodes.Contains(node.nodeID)) return (false, "Node already queued");
 
             return CanReachWith(node, PlannedIds(queuedNodes.Count));
@@ -286,6 +287,7 @@ namespace CrystalFlux.SkillTree
         {
             if (node == null) return (false, "Node is null");
             if (unlockedNodes.Contains(node.nodeID)) return (false, "Node already unlocked");
+            if (node.minMode > RunMode.Tier) return (false, $"Requires {RunMode.TierName(node.minMode)} mode");
             if (node.isStartingNode && choseStarting) return (false, "Starting node already chosen");
             if (SkillPoints < node.cost) return (false, "Not enough skill points");
 

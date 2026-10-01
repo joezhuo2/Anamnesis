@@ -52,6 +52,26 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
   - Scaling: EffAtk
   - Knockback: 5 force for 0.15s
 
+## Coherent Strike
+- Asset: `Coherent Strike AD` / `Coherent Strike PD`
+- Unlocks: run start, as the Master mode `startingUlt` (see [Modes](#modes)). Not in any reward pool
+- Type: Ultimate
+- Cooldown: 20s (starts on cast)
+- Pattern: Single (1 count)
+- Spawn: 1 dist
+- Costs: Stamina 35 +25%, Mana 20 +15%
+- Gains on hit (based on damage dealt): Stamina +2, Mana +1
+- Hit stop 0.06s (0.5s cooldown), screen shake 0.08
+- Projectile:
+  - Speed: 12
+  - Lifetime: 1s
+  - Pierce: 18
+  - Size: 3
+  - Damage: 350% Phys, 260% Spell
+  - Scaling: EffAtk, plus 50% EffInt
+  - Rotation: 45 degrees
+  - Knockback: 5 force for 0.15s
+
 ---
 
 # Rare Pool
@@ -703,6 +723,38 @@ special cannot appear on two buttons in one corruption pass, and claiming one re
 the pool for the rest of the run. A [locked](#reward-lock) reward is skipped by corruption. Full
 stats for each attack are in the sections above.
 
+Corruption specials only roll when the run's mode has `allowCorruptionSpecials` on, and the
+Corrupt button only appears when it has `allowCorruption` on (see [Modes](#modes)). Ultimates
+in this pool are skipped when the mode locks Ultimates, as are attacks whose `minMode` is above
+the mode's tier.
+
+---
+
+# Modes
+
+Each run has a mode, picked on the home screen by `ModeSelector` (one button, each click cycles
+Simple → Expert → Master and swaps the button sprite). The choice persists to `settings.json`
+(`modeIndex`) and locks in when a gamemode button is pressed. Modes are `ModeData` assets and
+are independent of difficulty.
+
+| Field | Effect |
+|---|---|
+| `tier` | 0 Simple, 1 Expert, 2 Master. Gates `AttackData.minMode` (enemy attacks, Rare Pool and corruption special rewards), `PlayerUpgrade.minMode` (Treasure Pool Awakenings) and `SkillNodeDef.minMode` (nodes below the tier can't be unlocked or queued: "Requires Expert mode") |
+| `allowCorruption` | Shows the Corrupt button |
+| `allowCorruptionSpecials` | Lets corruption roll [corruption specials](#corruption-special-pool) |
+| `unlockUltimates` | Off: the player's Ultimate is removed, no Ultimate can be granted by rewards or skill nodes, and the Ultimate button stays on the cooldown bar greyed out like a Sealed slot ("Locked in this mode") for the whole run |
+| `startingUlt` | Equipped at run start when `unlockUltimates` is on |
+
+Without a mode asset the run behaves as before: corruption, specials and Ultimates all on, at tier 0.
+
+Shipped assets (`Assets/data/Mode`), in selector order:
+
+| Mode | Tier | Corruption | Specials | Ultimates | Starting Ultimate |
+|---|---|---|---|---|---|
+| Simple | 0 | — | — | locked | — |
+| Expert | 0 | — | — | yes | — |
+| Master | 0 | yes | yes | yes | [Coherent Strike](#coherent-strike) |
+
 | Attack | Unlock wave here | Unlock wave in `rarePool` |
 | --- | --- | --- |
 | Shattered Singularity | 0 | 25 |
@@ -729,6 +781,7 @@ the remaining choices.
 - The reroll never re-offers the locked attack, Awakening, milestone or synergy.
 - Corrupt skips the locked card, then hides every lock button.
 - Hidden in Ironman Mode, on the anomaly panel, and when the panel has only one choice.
+- The Corrupt button is also hidden when the run's mode doesn't allow corruption.
 
 ---
 
@@ -1668,7 +1721,7 @@ A sealed button's tooltip gains a "Sealed" line, and a button with a free cast r
 # Collectibles
 
 Folder: `Assets/data/Collectibles`. Spawned by the `CollectibleSpawner` in `New.unity`,
-which holds all eleven assets, prewarms 8 pickups, ticks every 2s, caps the field at 10 live
+which holds all twelve assets, prewarms 8 pickups, ticks every 2s, caps the field at 10 live
 pickups and places them 3–6 units from the player.
 
 | Asset | Type | Pays | Roll | Chance | Cooldown | Lifetime | Color |
@@ -1684,6 +1737,7 @@ pickups and places them 3–6 units from the player.
 | `Box Bat` | SpawnerBox | ambush | — | 1% | 45s | 45s | orange |
 | `Box Crab` | SpawnerBox | ambush | — | 1% | 45s | 45s | orange |
 | `Box Cult` | SpawnerBox | ambush | — | 0.5% | 60s | 60s | orange |
+| `Box Doppelganger` | SpawnerBox | ambush | — | 0.25% | 45s | 45s | orange |
 
 **Chance** is rolled per spawner tick (2s), not per second, and only one pickup can spawn
 per tick: candidates are filtered (chance above 0, not on cooldown), shuffled, and the
@@ -1716,12 +1770,13 @@ When the last ambush enemy dies, `rewardMin`–`rewardMax` collectibles drop wit
 live cap, but count toward it while on the ground. Other spawner boxes are never rolled,
 and `Reroll` entries are skipped in Ironman Mode.
 
-| Box | Enemies | Count | Level | Drops |
-| --- | --- | --- | --- | --- |
-| `Box Slime` | Slime, Frost Slime, Magma Slime | 3–8 | +2 | 2–5 |
-| `Box Bat` | Bat | 2–5 | +2 | 2–5 |
-| `Box Crab` | Crab | 2–6 | +2 | 2–5 |
-| `Box Cult` | Cultist Clone | 1–4 | +2 | 3–6 |
+| Box | Enemies | Count | Level | Drops | Reward weights (XP / Gold / Reroll / SkillPoint) |
+| --- | --- | --- | --- | --- | --- |
+| `Box Slime` | Slime, Frost Slime, Magma Slime | 2–6 | +2 | 2–5 | 6 / 5 / 2 / 1 |
+| `Box Bat` | Bat | 2–4 | +2 | 2–5 | 6 / 5 / 2 / 1 |
+| `Box Crab` | Crab | 2–4 | +2 | 2–5 | 6 / 5 / 2 / 1 |
+| `Box Cult` | Cultist Clone | 1–3 | +2 | 3–6 | 3 / 4 / 3 / 2 |
+| `Box Doppelganger` | Doppelganger | 1–2 | +2 | 2–7 | 2 / 3 / 4 / 3 |
 
-All four boxes spawn enemies within 3 units, drop rewards within 2 units, and share one
-reward table: `XP` (weight 6), `Gold` (5), `Reroll` (2), `SkillPoint` (1).
+Every box spawns enemies within 3 units and drops rewards within 2 units. The rarer boxes
+(Cult, Doppelganger) lean their drops toward rerolls and skill points.

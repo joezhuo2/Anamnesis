@@ -5,6 +5,7 @@
         "CrystalFlux.Pooling",
         "CrystalFlux.Core",
         "CrystalFlux.Entity",
+        "CrystalFlux.Projectile",
         "CrystalFlux.Settings",
         "Unity.TextMeshPro",
         "UnityEngine.UI"

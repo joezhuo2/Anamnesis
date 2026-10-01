@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
+using CrystalFlux.EntitySystem;
+using CrystalFlux.ProjectileSystem;
 using CrystalFlux.SettingsSystem;
 using TMPro;
 using UnityEngine;
@@ -14,6 +16,7 @@ namespace CrystalFlux.WaveSystem
 
         [Header("Difficulty")]
         public DifficultyData difficulty;
+        public ModeData mode;
 
         [Header("Reroll Settings")]
         public int rerollGoldCost = 200;
@@ -99,6 +102,8 @@ namespace CrystalFlux.WaveSystem
 
         protected IAnnouncer GameController => IAnnouncer.Current ?? null;
         protected DifficultyData D => difficulty != null ? difficulty : DifficultyData.Neutral;
+        protected ModeData M => mode != null ? mode : ModeData.Neutral;
+        protected bool CorruptionAllowed => !IronmanSelector.Enabled && M.allowCorruption;
         protected float Quality => additionalQuality + D.qualityBonusAdd;
         protected int RerollGoldCost => Mathf.Max(0, rerollGoldCost + D.rerollGoldCostAdd);
         protected RewardType type = RewardType.Basic;
@@ -146,7 +151,6 @@ namespace CrystalFlux.WaveSystem
         protected virtual void Start()
         {
             waveInfoPanel.SetActive(false);
-            EntitySystem.EnemyAttackHandler.DifficultyTier = D.tier;
 
             if (rewardTitleWrapper != null) rewardTitleWrapper.SetActive(false);
 
@@ -161,7 +165,6 @@ namespace CrystalFlux.WaveSystem
             if (d == null) return;
 
             difficulty = d;
-            EntitySystem.EnemyAttackHandler.DifficultyTier = d.tier;
 
             if (!IronmanSelector.Enabled) rerolls = Mathf.Max(0, rerolls + d.startingRerollsAdd);
             else rerolls = 0;
@@ -178,6 +181,41 @@ namespace CrystalFlux.WaveSystem
 
             UpdateRerollUI();
             SetupActionButtonTooltips();
+        }
+
+        public virtual void ApplyMode(ModeData m)
+        {
+            if (m == null) return;
+
+            mode = m;
+            RunMode.Tier = m.tier;
+            RunMode.UltimatesUnlocked = m.unlockUltimates;
+
+            CachePlayerAttackHandler();
+            if (cpah != null)
+            {
+                if (!m.unlockUltimates)
+                {
+                    cpah.RemoveAttack(AttackType.Ultimate);
+                    if (cpah is PlayerAttackHandler pah) pah.PermaLockSlot(AttackType.Ultimate);
+                }
+                else if (m.startingUlt != null) cpah.UpdateAttack(AttackType.Ultimate, m.startingUlt);
+            }
+
+            SetupActionButtonTooltips();
+        }
+
+        protected bool IsAllowed(AttackReward r, int wave)
+        {
+            if (r == null || r.minWave > wave || r.newAttack == null) return false;
+            if (r.newAttack.type == AttackType.Ultimate && !RunMode.UltimatesUnlocked) return false;
+            return r.newAttack is not AttackData ad || ad.MinMode <= RunMode.Tier;
+        }
+
+        protected bool IsAllowed(PlayerUpgradeReward r, int wave)
+        {
+            if (r == null || r.minWave > wave) return false;
+            return r.upgrade is not PlayerUpgrade pu || pu.minMode <= RunMode.Tier;
         }
 
         protected int EnemyLevel(int baseLevel)
@@ -219,7 +257,7 @@ namespace CrystalFlux.WaveSystem
             {
                 if (rerollButton != null && rerollButton.TryGetComponent<ITooltipDisplay>(out var td))
                     td.ShowTooltip("Reroll", $"Rerolls all unlocked reward choices.\nCost: 1 reroll token or {RerollGoldCost} gold if none are available.");
-                if (corruptButton != null && corruptButton.TryGetComponent<ITooltipDisplay>(out var td2))
+                if (CorruptionAllowed && corruptButton != null && corruptButton.TryGetComponent<ITooltipDisplay>(out var td2))
                     td2.ShowTooltip("Corrupt", "Chance to corrupt any rewards massively increase or decrease their values.\nCan only be used once per wave and removes all other options.");
             }
             if (nextWaveButton != null && nextWaveButton.TryGetComponent<ITooltipDisplay>(out var td3))
@@ -885,8 +923,8 @@ namespace CrystalFlux.WaveSystem
         protected bool HasPreRunChoices()
         {
             int wave = GetCurrentWave();
-            return availableRarePool.Exists(a => a != null && a.minWave <= wave)
-                || availableTreasurePool.Exists(t => t != null && t.minWave <= wave);
+            return availableRarePool.Exists(a => IsAllowed(a, wave))
+                || availableTreasurePool.Exists(t => IsAllowed(t, wave));
         }
 
         protected void GeneratePreRunPicks()
@@ -935,7 +973,7 @@ namespace CrystalFlux.WaveSystem
             for (int i = 0; i < availableRarePool.Count; i++)
             {
                 AttackReward candidate = availableRarePool[i];
-                if (candidate == null || candidate.minWave > wave) continue;
+                if (!IsAllowed(candidate, wave)) continue;
                 if (keptReward != null && keptReward.Attack == candidate) continue;
 
                 eligible++;
@@ -953,7 +991,7 @@ namespace CrystalFlux.WaveSystem
             for (int i = 0; i < availableCorruptionSpecialPool.Count; i++)
             {
                 AttackReward candidate = availableCorruptionSpecialPool[i];
-                if (candidate == null || candidate.minWave > wave) continue;
+                if (!IsAllowed(candidate, wave)) continue;
                 if (corruptionSpecialsThisRoll.Contains(candidate)) continue;
 
                 eligible++;
@@ -971,7 +1009,7 @@ namespace CrystalFlux.WaveSystem
             for (int i = 0; i < availableTreasurePool.Count; i++)
             {
                 PlayerUpgradeReward candidate = availableTreasurePool[i];
-                if (candidate == null || candidate.minWave > wave) continue;
+                if (!IsAllowed(candidate, wave)) continue;
                 if (keptReward != null && keptReward.Upgrade == candidate) continue;
 
                 eligible++;
@@ -1244,7 +1282,7 @@ namespace CrystalFlux.WaveSystem
         {
             if (corruptButton == null) return;
 
-            bool allowed = !IronmanSelector.Enabled && type != RewardType.Anomaly && type != RewardType.Milestone && type != RewardType.PreRun && type != RewardType.Synergy && GetCurrentWave() % 5 != 0;
+            bool allowed = CorruptionAllowed && type != RewardType.Anomaly && type != RewardType.Milestone && type != RewardType.PreRun && type != RewardType.Synergy && GetCurrentWave() % 5 != 0;
             corruptButton.gameObject.SetActive(allowed);
         }
 
@@ -1375,7 +1413,7 @@ namespace CrystalFlux.WaveSystem
 
         public void OnCorruptButtonClicked()
         {
-            if (IronmanSelector.Enabled) return;
+            if (!CorruptionAllowed) return;
 
             if (ActiveManager != null && ActiveManager != this)
             {
@@ -1401,7 +1439,7 @@ namespace CrystalFlux.WaveSystem
                 GeneratedReward gr = grb.gr;
                 if (gr == null) continue;
 
-                if (Random.value < (corruptionSpecialChance * 0.01f))
+                if (M.allowCorruptionSpecials && Random.value < (corruptionSpecialChance * 0.01f))
                 {
                     AttackReward special = PickCorruptionSpecialReward();
                     if (special != null)
@@ -1572,6 +1610,10 @@ namespace CrystalFlux.WaveSystem
         {
             cpsm ??= GameObject.FindWithTag("Player")?.GetComponent<IStatProvider>();
             cich ??= GameObject.FindWithTag("Player")?.GetComponent<ICurrencyHolder>();
+        }
+        protected void CachePlayerAttackHandler()
+        {
+            cpah ??= GameObject.FindWithTag("Player")?.GetComponent<IAttackHandler>();
         }
         protected void CachePlayerSkillTree()
         {

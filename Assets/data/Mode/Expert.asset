@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c779c3b515af46c4ba1f70004c7f94da, type: 3}
+  m_Name: Expert
+  m_EditorClassIdentifier: CrystalFlux.Wave::CrystalFlux.WaveSystem.ModeData
+  displayName: Expert
+  description: Ultimates unlocked. Enemies learn new tricks.
+  buttonSprite: {fileID: 8443825361172281733, guid: 588d3ddb27a5fc6478d4729284e74668, type: 3}
+  tier: 0
+  allowCorruption: 0
+  allowCorruptionSpecials: 0
+  unlockUltimates: 1
+  startingUlt: {fileID: 0}

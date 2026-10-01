@@ -126,7 +126,7 @@ namespace CrystalFlux.EntitySystem
                 orig.a = 0.9f;
                 cooldownImage.color = orig;
 
-                cooldownImage.fillAmount = 0f;
+                cooldownImage.fillAmount = cad == null && lastLocked ? 1f : 0f;
             }
         }
 
@@ -261,9 +261,10 @@ namespace CrystalFlux.EntitySystem
 
         private void RefreshTooltip()
         {
-            if (tooltipDisplay == null || cad == null) return;
+            if (tooltipDisplay == null) return;
+            if (cad == null && (cpah == null || !cpah.IsSlotPermaLocked(ctype))) return;
 
-            var (tt, st, os) = GetAttackTooltip();
+            var (tt, st, os) = cad != null ? GetAttackTooltip() : ($"{ctype}", "Locked in this mode", TooltipOffset);
 
             if (tt == cachedTitle && st == cachedSubtitle && os == cachedOffset) return;
 
@@ -305,7 +306,8 @@ namespace CrystalFlux.EntitySystem
             }
 
             List<string> lines = new() { $"{cad.type}" };
-            if (cpah.IsSlotLocked(ctype)) lines.Add("Sealed");
+            if (cpah.IsSlotPermaLocked(ctype)) lines.Add("Locked in this mode");
+            else if (cpah.IsSlotLocked(ctype)) lines.Add("Sealed");
             else if (cpah.IsFreeCast(ctype)) lines.Add("Resonance: next cast free");
             if (effCd != 0f) lines.Add($"Cooldown: {effCd:F1}s");
             if (cad.Stacks > 1) lines.Add($"Stacks: {cpah.GetStacks(ctype)}/{cad.Stacks}");

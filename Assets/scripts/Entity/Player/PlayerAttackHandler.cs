@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.SettingsSystem;
 using CrystalFlux.StatusEffectSystem;
 using TMPro;
 using UnityEngine;
@@ -43,6 +44,7 @@ namespace CrystalFlux.EntitySystem
         private readonly Dictionary<AttackType, int> stackCounts = new();
         private readonly List<AttackType> cdKeyBuffer = new();
         private readonly HashSet<AttackType> lockedSlots = new();
+        private readonly HashSet<AttackType> permaLockedSlots = new();
         private int animResetGen;
 
         private bool isCasting;
@@ -184,13 +186,15 @@ namespace CrystalFlux.EntitySystem
             return null;
         }
 
-        private void CreateButtonUI(AttackData attack)
+        private void CreateButtonUI(AttackData attack) => CreateButtonUI(attack.type);
+
+        private void CreateButtonUI(AttackType type)
         {
             GameObject uiObj = Instantiate(cooldownPrefab, objContainer);
-            spawnedUIElements[attack.type] = uiObj;
+            spawnedUIElements[type] = uiObj;
 
             if (uiObj.TryGetComponent<PlayerAttackCooldownUI>(out var pacui))
-                pacui.Setup(this, attack.type, esm);
+                pacui.Setup(this, type, esm);
 
             SortButtonUI();
         }
@@ -214,7 +218,24 @@ namespace CrystalFlux.EntitySystem
             }
         }
 
-        public bool IsSlotLocked(AttackType type) => lockedSlots.Contains(type);
+        public bool IsSlotLocked(AttackType type) => lockedSlots.Contains(type) || permaLockedSlots.Contains(type);
+        public bool IsSlotPermaLocked(AttackType type) => permaLockedSlots.Contains(type);
+
+        public void PermaLockSlot(AttackType type)
+        {
+            if (!permaLockedSlots.Add(type)) return;
+
+            for (int i = attackQueue.Count - 1; i >= 0; i--)
+                if (attackQueue[i].type == type) attackQueue.RemoveAt(i);
+
+            if (spawnedUIElements.TryGetValue(type, out var uiObj) && uiObj != null)
+            {
+                if (uiObj.TryGetComponent<PlayerAttackCooldownUI>(out var pacui)) pacui.Setup(this, type, esm);
+                return;
+            }
+
+            if (cooldownPrefab != null && objContainer != null) CreateButtonUI(type);
+        }
 
         public void SetSlotLocked(AttackType type, bool locked)
         {
@@ -232,7 +253,7 @@ namespace CrystalFlux.EntitySystem
 
         public void PerformAttack(AttackType type, bool bypassCooldown = false, bool noCost = false, bool triggerUpgrades = true, bool registerStreak = true)
         {
-            if (lockedSlots.Contains(type))
+            if (IsSlotLocked(type))
             {
                 NotifyBlocked(type);
                 return;
@@ -648,7 +669,7 @@ namespace CrystalFlux.EntitySystem
 
         public bool CanCast(AttackType type)
         {
-            if (lockedSlots.Contains(type)) return false;
+            if (IsSlotLocked(type)) return false;
             if (esm == null || esm.GetStat(StatType.isAlive) <= 0f || esm.GetStat(StatType.CanAttack) <= 0f) return false;
 
             AttackData selected = FindAttackOfType(type);
@@ -779,6 +800,7 @@ namespace CrystalFlux.EntitySystem
         public void UpdateAttack(AttackData newAttack)
         {
             if (newAttack == null) return;
+            if (newAttack.type == AttackType.Ultimate && !RunMode.UltimatesUnlocked) return;
 
             AttackType type = newAttack.type;
             AttackData current = FindAttackOfType(type);
@@ -810,6 +832,8 @@ namespace CrystalFlux.EntitySystem
                 Destroy(spawnedUIElements[type]);
                 spawnedUIElements.Remove(type);
             }
+
+            if (permaLockedSlots.Contains(type) && cooldownPrefab != null && objContainer != null) CreateButtonUI(type);
         }
 
         private (int finalHpCost, int finalStaminaCost) HandleHexCast(float hpCost, float staminaCost)

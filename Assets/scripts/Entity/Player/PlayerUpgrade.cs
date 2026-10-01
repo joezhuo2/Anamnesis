@@ -42,6 +42,7 @@ namespace CrystalFlux.EntitySystem
         public float cooldown;
         [Tooltip("delay after triggering before effect activates")] public float delay;
         [Tooltip("Excluded from bosses that mirror the player's upgrades")] public bool noMirror;
+        [Tooltip("Minimum mode tier required for this awakening to be offered. 0 = Simple, 1 = Expert, 2 = Master")] [Min(0)] public int minMode;
         public virtual void TriggerUpgradeEffect(GameObject player) {}
         public virtual void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter) {}
         public virtual void TriggerUpgradeEffect(GameObject player, GameObject target, float damageDealt) {}

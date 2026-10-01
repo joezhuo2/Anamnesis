@@ -15,6 +15,7 @@ namespace CrystalFlux.SkillTree
 
         [Header("Requirements")]
         public bool isStartingNode;
+        [Tooltip("Minimum mode tier required to unlock. 0 = Simple, 1 = Expert, 2 = Master")] [Min(0)] public int minMode;
         public List<SkillNodeDef> prerequisites;
         public List<SkillNodeDef> incompatibleNodes;
         [SerializeReference, TypeSelector] public List<IUnlockRequirement> requirements;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.ProjectileSystem;
+using CrystalFlux.SettingsSystem;
 using CrystalFlux.StatusEffectSystem;
 using TMPro;
 using UnityEngine;
@@ -44,12 +45,7 @@ namespace CrystalFlux.EntitySystem
 
         public bool IsCasting => isCasting || isCharging;
 
-        public static int DifficultyTier { get; set; } = 1;
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void ResetStatics() => DifficultyTier = 1;
-
-        private bool DifficultyAllows(AttackData ad) => mirrored || ad == null || ad.MinDifficulty <= DifficultyTier;
+        private bool DifficultyAllows(AttackData ad) => mirrored || ad == null || ad.MinMode <= RunMode.Tier;
 
         private void Awake()
         {

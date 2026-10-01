@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.7.2-6366F1)
+![Version](https://img.shields.io/badge/version-0.7.3-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,13 +17,13 @@
 
 </div>
 
-Current release: **v0.7.2** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.7.3** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
 ## 🔁 Core Loop
 
-1. **Pick a difficulty and a gamemode** — **Easy**, **Normal**, **Hard** or **Nightmare**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
+1. **Pick a difficulty, a mode and a gamemode** — **Easy**, **Normal**, **Hard** or **Nightmare**, **Simple**, **Expert** or **Master**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
 2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. 
 3. **Explore the world** — Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them.
 3. **Choose a reward** — buffs, rare attacks or Awakenings. Lock one reward and reroll the rest, pay gold when out of rerolls, or corrupt the rewards for a bigger gamble.
@@ -36,7 +36,8 @@ Current release: **v0.7.2** — see [CHANGELOG.md](CHANGELOG.md) for release his
 
 | Feature | Description |
 |---------|-------------|
-| **🎚️ Difficulty** | Easy / Normal / Hard / Nightmare as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks) and a tier that gates difficulty-only enemy attacks (`AttackData.minDifficulty`). The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
+| **🎚️ Difficulty** | Easy / Normal / Hard / Nightmare as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks) The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
+| **🧭 Modes** | Simple / Expert / Master as `ModeData` assets, cycled by one home-screen button that swaps sprites. Each mode toggles corruption, corruption specials and Ultimates, can equip a starting Ultimate, and has a tier that gates attacks, Awakenings and skill nodes (`minMode`). Without Ultimates, the Ultimate slot stays greyed out like a Sealed slot for the whole run. Master starts with the Coherent Strike Ultimate. Persists to `settings.json` |
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
 | **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave; *Sealed* locks one attack slot and speeds up the other two; *Blackout* shrinks your vision and hides enemies outside it, widening briefly on each kill. Hovering a choice shows its rules and completion reward |
@@ -147,7 +148,7 @@ Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a 
 | **Input** | Input System `1.19` (`PlayerControls.inputactions`) with interactive rebinding |
 | **Camera** | Cinemachine `3.1.7` |
 | **UI** | uGUI + TextMeshPro |
-| **Data** | ScriptableObjects (`AttackData`, `PlayerUpgrade`, `StatusEffect`, `DifficultyData`, `AnomalyData`, skill tree nodes) |
+| **Data** | ScriptableObjects (`AttackData`, `PlayerUpgrade`, `StatusEffect`, `DifficultyData`, `ModeData`, `AnomalyData`, skill tree nodes) |
 | **Contracts** | [CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) — interfaces, asset bases and shared value types, imported as a git package |
 | **Architecture** | Per-system assembly definitions, prefab-keyed object pooling (`PrefabPool` + `IPoolable`) |
 | **Persistence** | `GameSettings` JSON (`settings.json` in the persistent data path) |
@@ -209,7 +210,7 @@ Assets/
     ├── StatusEffect/          # [asmdef] Status effect system and implementations
     ├── SkillTree/             # [asmdef] Skill tree manager (ISkillPointHolder), UI, pan/zoom, connections
     ├── TextIndicator/         # [asmdef] Floating damage numbers, XP/Gold indicators
-    └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies, difficulty and Ironman selectors
+    └── Wave/                  # [asmdef] WaveManager, UnlimitedWaveManager, rewards, anomalies, difficulty, mode and Ironman selectors
 
 Packages/
 └── com.crystalflux.core       # (git) Contracts: IDamageable, IResourcePool, IStatusEffectReceiver, AttackAsset, DamagePacket, StatType, …

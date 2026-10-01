@@ -12,6 +12,7 @@ namespace CrystalFlux.SettingsSystem
 
         public int version = CurrentVersion;
         public int difficultyIndex = 1;
+        public int modeIndex = 0;
         public bool showEnemyHealthBars = true;
         public bool xpDropsEnabled = true;
         public bool goldDropsEnabled = true;

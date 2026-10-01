@@ -23,7 +23,7 @@ MonoBehaviour:
   ambushEnemies:
   - {fileID: 8832260180589784993, guid: f404f44f9b4482c4f9f60cccdf282411, type: 3}
   ambushMin: 2
-  ambushMax: 5
+  ambushMax: 4
   ambushRadius: 3
   ambushLevelBonus: 2
   rewards:
