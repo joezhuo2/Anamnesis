@@ -19,6 +19,7 @@ namespace CrystalFlux.WaveSystem
         public bool allowCorruption;
         public bool allowCorruptionSpecials;
         public bool unlockUltimates;
+        public bool lockAnomalySkip;
         [Tooltip("Ultimate injected into the player on run start (requires unlockUltimates)")]
         public AttackData startingUlt;
 

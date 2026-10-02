@@ -20,4 +20,5 @@ MonoBehaviour:
   allowCorruption: 0
   allowCorruptionSpecials: 0
   unlockUltimates: 0
+  lockAnomalySkip: 0
   startingUlt: {fileID: 0}

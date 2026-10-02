@@ -31,6 +31,7 @@ namespace CrystalFlux.WaveSystem
         public float anomalyChanceAdd;
         public int minAnomalyCountAdd;
         public int maxAnomalyCountAdd;
+        public bool lockAnomalyChoice;
         public int anomalyRerollMinAdd;
         public int anomalyRerollMaxAdd;
         public int anomalySkillPointAdd;

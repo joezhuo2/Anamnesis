@@ -744,6 +744,7 @@ are independent of difficulty.
 | `allowCorruptionSpecials` | Lets corruption roll [corruption specials](#corruption-special-pool) |
 | `unlockUltimates` | Off: the player's Ultimate is removed, no Ultimate can be granted by rewards or skill nodes, and the Ultimate button stays on the cooldown bar greyed out like a Sealed slot ("Locked in this mode") for the whole run |
 | `startingUlt` | Equipped at run start when `unlockUltimates` is on |
+| `lockAnomalySkip` | Hides and blocks Skip on the anomaly panel (see [Anomaly Reroll & Skip](#anomaly-reroll--skip)) |
 
 Without a mode asset the run behaves as before: corruption, specials and Ultimates all on, at tier 0.
 
@@ -754,6 +755,8 @@ Shipped assets (`Assets/data/Mode`), in selector order:
 | Simple | 0 | — | — | locked | — |
 | Expert | 1 | yes | — | yes | — |
 | Master | 2 | yes | yes | yes | [Coherent Strike](#coherent-strike) |
+
+Only Master has `lockAnomalySkip` on.
 
 The selector tooltip shows the asset's `description` only.
 
@@ -791,6 +794,23 @@ the remaining choices.
 - Corrupt skips the locked card, then hides every lock button.
 - Hidden in Ironman Mode, on the anomaly panel, and when the panel has only one choice.
 - The Corrupt button is also hidden when the run's mode doesn't allow corruption.
+
+---
+
+# Anomaly Reroll & Skip
+
+`WaveManager.OpenAnomalyButtons` and `OpenRewardButtons` both go through `OpenActionButtons`,
+which shows Reroll unless `RerollLocked` and Skip unless `SkipLocked`. The click handlers
+check the same flags, so a hidden action can't fire.
+
+| Rule | Source | Reroll | Skip |
+|---|---|---|---|
+| Ironman Mode | `IronmanSelector.Enabled` | hidden on every panel | allowed |
+| Nightmare | `DifficultyData.lockAnomalyChoice` | hidden on the anomaly panel | hidden on the anomaly panel |
+| Master | `ModeData.lockAnomalySkip` | allowed (unless Ironman) | hidden on the anomaly panel |
+
+The rules stack: Nightmare locks both no matter the mode or Ironman setting. The reroll count
+text follows the Reroll button and is re-shown whenever rerolls become available again.
 
 ---
 
@@ -1763,6 +1783,10 @@ flat counts. `Reroll` pickups are skipped entirely while Ironman Mode is on, and
 Each pickup bobs in place, pulses a glow tinted with its `lightColor`, and shows what it
 will pay as a world-space label (`+35 Gold`, `+8% HP`, `+1 Skill Point`). The same string
 pops as a floating indicator on pickup.
+
+During the Blackout anomaly, a pickup outside the vision circle (`BlackoutVision.InSight`)
+hides its sprite, glow and label, and shows them again once it is in sight, the anomaly
+ends, or it is reused from the pool. It can still be collected while hidden.
 
 ## Spawner Boxes
 

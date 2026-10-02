@@ -104,6 +104,9 @@ namespace CrystalFlux.WaveSystem
         protected DifficultyData D => difficulty != null ? difficulty : DifficultyData.Neutral;
         protected ModeData M => mode != null ? mode : ModeData.Neutral;
         protected bool CorruptionAllowed => !IronmanSelector.Enabled && M.allowCorruption;
+        protected bool anomalyButtonsOpen;
+        protected bool RerollLocked => IronmanSelector.Enabled || anomalyButtonsOpen && D.lockAnomalyChoice;
+        protected bool SkipLocked => anomalyButtonsOpen && (D.lockAnomalyChoice || M.lockAnomalySkip);
         protected float Quality => additionalQuality + D.qualityBonusAdd;
         protected int RerollGoldCost => Mathf.Max(0, rerollGoldCost + D.rerollGoldCostAdd);
         protected RewardType type = RewardType.Basic;
@@ -1299,10 +1302,11 @@ namespace CrystalFlux.WaveSystem
 
         protected void UpdateRerollUI()
         {
-            if (IronmanSelector.Enabled)
+            if (rerollText != null) rerollText.gameObject.SetActive(!RerollLocked);
+
+            if (RerollLocked)
             {
                 if (rerollButton != null) rerollButton.gameObject.SetActive(false);
-                if (rerollText != null) rerollText.gameObject.SetActive(false);
                 return;
             }
 
@@ -1334,6 +1338,8 @@ namespace CrystalFlux.WaveSystem
                 return;
             }
 
+            if (SkipLocked) return;
+
             if (type == RewardType.Anomaly)
             {
                 CloseRewardUI();
@@ -1350,13 +1356,13 @@ namespace CrystalFlux.WaveSystem
 
         protected void OnRerollButtonClicked()
         {
-            if (IronmanSelector.Enabled) return;
-
             if (ActiveManager != null && ActiveManager != this)
             {
                 ActiveManager.OnRerollButtonClicked();
                 return;
             }
+
+            if (RerollLocked) return;
 
             CachePlayerStatManager();
 
@@ -1562,13 +1568,17 @@ namespace CrystalFlux.WaveSystem
             if (corruptButton != null) corruptButton.gameObject.SetActive(false);
         }
 
-        public void OpenAnomalyButtons()
-        {
-            if (rerollButton != null) rerollButton.gameObject.SetActive(true);
-            if (skipButton != null) skipButton.gameObject.SetActive(true);
-        }
+        public void OpenAnomalyButtons() => OpenActionButtons(true);
 
-        public void OpenRewardButtons() => OpenAnomalyButtons();
+        public void OpenRewardButtons() => OpenActionButtons(false);
+
+        protected void OpenActionButtons(bool anomaly)
+        {
+            anomalyButtonsOpen = anomaly;
+            if (rerollButton != null) rerollButton.gameObject.SetActive(!RerollLocked);
+            if (skipButton != null) skipButton.gameObject.SetActive(!SkipLocked);
+            UpdateRerollUI();
+        }
 
         protected void ResumeGameLoop()
         {

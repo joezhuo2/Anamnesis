@@ -29,6 +29,7 @@ MonoBehaviour:
   anomalyChanceAdd: 0
   minAnomalyCountAdd: 0
   maxAnomalyCountAdd: 0
+  lockAnomalyChoice: 0
   anomalyRerollMinAdd: 0
   anomalyRerollMaxAdd: 0
   anomalySkillPointAdd: 0

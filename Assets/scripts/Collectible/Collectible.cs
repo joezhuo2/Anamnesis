@@ -33,8 +33,24 @@ namespace CrystalFlux.CollectibleSystem
         private float bobPhase;
         private float glowPhase;
         private bool collected;
+        private bool hidden;
 
         public CollectibleData Data => data;
+
+        private void SetHidden(bool h)
+        {
+            hidden = h;
+            if (sr != null) sr.enabled = !h;
+            if (glow != null) glow.enabled = !h;
+            if (descText != null) descText.enabled = !h;
+        }
+
+        private void UpdateBlackout()
+        {
+            BlackoutVision v = BlackoutVision.Current;
+            bool h = v != null && !v.InSight(transform.position);
+            if (h != hidden) SetHidden(h);
+        }
 
         public void Setup(CollectibleData d, int v)
         {
@@ -42,6 +58,7 @@ namespace CrystalFlux.CollectibleSystem
             value = v;
             elapsed = 0f;
             collected = false;
+            SetHidden(false);
             bobPhase = Random.Range(0f, Mathf.PI * 2f);
             glowPhase = Random.Range(0f, Mathf.PI * 2f);
 
@@ -76,6 +93,8 @@ namespace CrystalFlux.CollectibleSystem
 
         private void Update()
         {
+            UpdateBlackout();
+
             if (Time.timeScale == 0f) return;
 
             float dt = Time.deltaTime;
@@ -200,6 +219,7 @@ namespace CrystalFlux.CollectibleSystem
             value = 0;
             collected = false;
             if (col != null) col.enabled = false;
+            SetHidden(false);
         }
     }
 }

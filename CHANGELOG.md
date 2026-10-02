@@ -7,6 +7,25 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.5] - 2026-10-02 - Anomaly Reroll & Skip Rules
+
+### Added
+- `DifficultyData.lockAnomalyChoice`: hides and blocks Reroll and Skip on the anomaly panel. On for Nightmare only
+- `ModeData.lockAnomalySkip`: hides and blocks Skip on the anomaly panel. On for Master only
+- Blackout now hides collectibles outside the vision circle (sprite, glow and label), not just enemies
+
+### Changed
+- Reroll and Skip visibility goes through one check (`WaveManager.OpenActionButtons`, `RerollLocked`, `SkipLocked`), also applied when the buttons are clicked
+  - Ironman: no reroll on any panel
+  - Nightmare: no reroll or skip on anomaly choices, whatever the mode or Ironman setting
+  - Master: no skip on anomaly choices; reroll still allowed without Ironman
+- `OpenRewardButtons` and `OpenAnomalyButtons` are now separate paths instead of an alias
+- Player `bundleVersion` 0.7.4 → 0.7.5
+
+### Fixed
+- The Reroll button appeared on the anomaly panel in Ironman Mode
+- The reroll count text stayed hidden after a run in Ironman Mode followed by turning Ironman off and on again from the menu
+
 ## [v0.7.4] - 2026-10-02 - Mode Content Gating
 
 ### Added

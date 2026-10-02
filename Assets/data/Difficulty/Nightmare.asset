@@ -29,6 +29,7 @@ MonoBehaviour:
   anomalyChanceAdd: 30
   minAnomalyCountAdd: 0
   maxAnomalyCountAdd: 0
+  lockAnomalyChoice: 1
   anomalyRerollMinAdd: 1
   anomalyRerollMaxAdd: 3
   anomalySkillPointAdd: 2

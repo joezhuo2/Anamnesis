@@ -20,4 +20,5 @@ MonoBehaviour:
   allowCorruption: 1
   allowCorruptionSpecials: 1
   unlockUltimates: 1
+  lockAnomalySkip: 1
   startingUlt: {fileID: 11400000, guid: 53067447c4b57fb4b82d438bd4b79129, type: 2}
