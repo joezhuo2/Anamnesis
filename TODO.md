@@ -121,6 +121,25 @@
 - **Gravity Well** - *something* create an aoe attack that pulls enemies (and debuffs them?)
 - beacon objective (defend/destroy)
 
+
+#### Expert Attacks
+- slime => poison splash
+- frost slime => splitting ice shards
+- magma slime => explosion on spear hit
+**- reaper => long distance pull to self**
+- golem => ?
+- cultist => circle, spiral + homing projectiles
+
+#### Master Attacks
+- slime =>
+- magma slime => self buff (+spd +atk)
+- reaper => 
+**- golem => TDLR + bullet hell attack**
+- jellyfish => ?
+**- lich => long distance circle inwards attack**
+**- bat => circle + wave movement attack**
+**- crab => rush attack (with impact)**
+
 ### Will do sometime
 - [ ] "What's new" changelog popup on update
 - [ ] reward history
@@ -333,20 +352,30 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **EventSystem lives under the Player prefab** - if the player is destroyed (after `deathAnimTime` 1s) before the death screen pauses (`showDelay` 1s, real time), the death-screen buttons lose input. `GameController`'s fallback adds a `StandaloneInputModule` (`GameController.cs:32`), which does not work with `activeInputHandler: 1`.
 - [ ] Stale Player overrides in `New.unity` (~line 65210): `skillPoints` (field no longer exists) and `activeUpgrades.Array.data[0..1]` (array size 0; data[0] points at a deleted asset `f108d857...`).
 
-### Ideas to make Nightmare harder:
+## Brainstorm: Expert/Master Modes & Nightmare
 
-Enemies build up a resistance to your most-used damage type during a wave.
-Elite enemies always have an aura (attack speed, damage reduction or healing) and it stacks.
-Killed enemies drop a short-lived hazard on the ground.
-Boss phases start at 80/50/20% HP instead of the usual thresholds, and each phase adds one attack.
-Enemy projectiles speed up 0.5% per wave.
-Every 10th wave forces an anomaly, and failing it costs a skill point.
-Healing reduced by 30%, with regeneration stopping for 3s after you're hit.
-Gold income reduced by 25% and undo costs doubled.
-**Enemies sometimes dodge-dash sideways out of your aim.**
-Below 30% HP, enemies enrage: 25% faster with shorter cooldowns.
-**Wave timer: after 90s, extra enemies spawn every 8s until the wave is cleared.**
-One random enemy per wave is a hidden "marked" enemy that explodes on death.
-Status effects you apply last 30% shorter, and enemy debuffs on you last 30% longer.
-Mid-run anomalies you skipped come back later as a forced harder version.
-Damage taken stacks into a 3-hit fragility that briefly increases further damage taken.
+### Expert mode
+- [ ] **Elite enemies** — Elite/Champion variants (v1.1) only spawn from Expert up. Gives Expert its own enemy layer instead of borrowing Nightmare's attack tier. *Uses:* a `minMode` on the wave spawn entry.
+
+### Master mode
+- [ ] **Boss relics** — Master bosses drop the boss-themed relic choice. Simple/Expert bosses keep the normal reward panel. (also change some existing attacks/awakenings to be boss specific)
+- [ ] **Attack evolutions** — at attack mastery (v1.5) or at wave 50, an attack can evolve into a Master-only variant
+
+### Mode QoL
+- [ ] **Mode + difficulty records** — the death screen and the future run archive store best wave per (mode, difficulty, ironman) combo.
+- [ ] **Master + Nightmare + Ironman badge** — a named title/frame for clearing the hardest combo. Ties into nameplates/cosmetics.
+
+### Nightmare difficulty
+
+- [ ] **Wave affixes** — from wave 10, each block of 10 waves rolls one affix shown on the wave HUD: *Bolstering* (enemy deaths buff nearby enemies), *Sanguine* (deaths leave a pool that heals enemies), *Splitting* (common enemies split once), *Volcanic* (ground eruptions under the player). Every 30 waves add a second affix. One hosting system for several of the ideas above. *New fields:* `DifficultyData.affixStartWave`, `affixInterval`.
+- [ ] **Shorter telegraphs** — enemy attack telegraphs run 25% faster. *New field:* `DifficultyData.telegraphTimeMult`.
+- [ ] **Reward timer** — reward panels auto-pick a random card after 30s. Real-time pressure without making the waves harder.
+- [ ] **Level breakpoints** — every 25 waves, all enemies permanently gain a "star": +1 projectile, +10% size or +1 phase, chosen at random and shown on the wave track.
+- Elite enemies can have an aura (attack speed, damage reduction or healing) and it stacks.
+- Killed enemies drop a short-lived hazard on the ground.
+- Enemies sometimes dodge-dash sideways out of your aim.
+- Wave timer: after 60s, extra enemies spawn every 8s until the wave is cleared.
+
+### Nightmare payoff
+*Harder needs to feel worth it, not just be a number.*
+- [ ] **Nightmare-only rewards** — a small Awakening pool (new `PlayerUpgrade.minDifficulty`, set to 3) that only appears in Nightmare, e.g. "+1% damage per wave survived without healing".

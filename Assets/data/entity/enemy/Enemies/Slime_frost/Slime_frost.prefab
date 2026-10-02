@@ -106,6 +106,7 @@ MonoBehaviour:
   canDeaggro: 1
   stoppingDistance: 1.3
   flipRotation: 0
+  retargetInterval: {x: 1, y: 3}
   target: {fileID: 0}
 --- !u!114 &2265227064598355299
 MonoBehaviour:
@@ -122,7 +123,9 @@ MonoBehaviour:
   projSpawnOffset: {x: 0, y: 0}
   attacks:
   - {fileID: 11400000, guid: b3ed3095e700666429b7d921fc194d05, type: 2}
-  globalCooldown: 0
+  - {fileID: 11400000, guid: 90815947ab2a89742bebfefdbaacac82, type: 2}
+  globalCooldown: 2
+  fallbackRange: 0
   castBarPrefab: {fileID: 0}
   castBarTextPrefab: {fileID: 0}
   castBarOffset: {x: 0, y: -0.7, z: 0}

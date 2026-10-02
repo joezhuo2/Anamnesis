@@ -9,6 +9,7 @@ public class AnomalyData : ScriptableObject
     [TextArea(3, 10)] public string desc;
     public int minWave;
     public int maxWave;
+    [Tooltip("Minimum mode tier required for this anomaly to be offered. 0 = Simple, 1 = Expert, 2 = Master")] [Min(0)] public int minMode;
     public AnomalyType anomalyType;
     public float anomalyValue;
     public float anomalyMinVal;

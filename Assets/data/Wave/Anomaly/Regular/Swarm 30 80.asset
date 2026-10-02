@@ -16,6 +16,7 @@ MonoBehaviour:
   desc: All enemies in the wave are weakened, but far more of them arrive
   minWave: 40
   maxWave: 80
+  minMode: 1
   anomalyType: 3
   anomalyValue: 0
   anomalyMinVal: 30

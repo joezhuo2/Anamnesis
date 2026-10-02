@@ -739,7 +739,7 @@ are independent of difficulty.
 
 | Field | Effect |
 |---|---|
-| `tier` | 0 Simple, 1 Expert, 2 Master. Gates `AttackData.minMode` (enemy attacks, Rare Pool and corruption special rewards), `PlayerUpgrade.minMode` (Treasure Pool Awakenings) and `SkillNodeDef.minMode` (nodes below the tier can't be unlocked or queued: "Requires Expert mode") |
+| `tier` | 0 Simple, 1 Expert, 2 Master. Gates `AttackData.minMode` (enemy attacks, Rare Pool and corruption special rewards), `PlayerUpgrade.minMode` (Treasure Pool Awakenings), `SkillNodeDef.minMode` (nodes below the tier can't be unlocked or queued: "Requires Expert mode"), `AnomalyData.minMode` (anomaly offers) and `CollectibleData.minMode` (pickups and spawner box drops) |
 | `allowCorruption` | Shows the Corrupt button |
 | `allowCorruptionSpecials` | Lets corruption roll [corruption specials](#corruption-special-pool) |
 | `unlockUltimates` | Off: the player's Ultimate is removed, no Ultimate can be granted by rewards or skill nodes, and the Ultimate button stays on the cooldown bar greyed out like a Sealed slot ("Locked in this mode") for the whole run |
@@ -752,8 +752,17 @@ Shipped assets (`Assets/data/Mode`), in selector order:
 | Mode | Tier | Corruption | Specials | Ultimates | Starting Ultimate |
 |---|---|---|---|---|---|
 | Simple | 0 | — | — | locked | — |
-| Expert | 0 | — | — | yes | — |
-| Master | 0 | yes | yes | yes | [Coherent Strike](#coherent-strike) |
+| Expert | 1 | yes | — | yes | — |
+| Master | 2 | yes | yes | yes | [Coherent Strike](#coherent-strike) |
+
+The selector tooltip shows the asset's `description` only.
+
+Content gated by tier (`minMode`):
+
+| Tier | Content |
+|---|---|
+| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport |
+| Master (2) | Ethereal Mirage keystone; `Box Cult`, `Box Doppelganger`, `SkillPoint` pickups; Unlimited Fission (`USplit`); Frost Slime Snowstorm |
 
 | Attack | Unlock wave here | Unlock wave in `rarePool` |
 | --- | --- | --- |
@@ -1568,7 +1577,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 8% EffMaxHp per tick |
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
 | `Burn 8 1 6 15` | DoT | Burn | 8s | 1s | 5 | 15% EffAtk per tick |
-| `Afflicted` | StatReduction | Afflicted | 6s | - | 6 | -5% maxHp per stack |
+| `Afflicted` | StatReduction | Afflicted | 12s | - | 8 | -10% maxHp per stack |
 | `Celestial Protection` | StatBuffs | Celestial Protection | 8s | - | 4 | +3% damageRes, +6 armor, +4% armorPct per stack |
 | `Cosmic Afterimage` | Info | Cosmic Afterimage Cooldown | 6s | - | 1 | Cooldown marker |
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
@@ -1724,23 +1733,23 @@ Folder: `Assets/data/Collectibles`. Spawned by the `CollectibleSpawner` in `New.
 which holds all twelve assets, prewarms 8 pickups, ticks every 2s, caps the field at 10 live
 pickups and places them 3–6 units from the player.
 
-| Asset | Type | Pays | Roll | Chance | Cooldown | Lifetime | Color |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `XP` | Xp | % of `XpReq` | 3–15% | 8% | 10s | 30s | magenta |
-| `Gold` | Gold | gold | 5–65 | 6% | 5s | 25s | gold |
-| `Health` | Heal | % of `EffMaxHp` | 3–20% | 4% | 10s | 25s | red |
-| `Stamina` | Stamina | % of `EffMaxStamina` | 3–15% | 4% | 15s | 25s | green |
-| `Mana` | Mana | % of `EffMaxMana` | 3–15% | 3% | 15s | 25s | blue |
-| `Reroll` | Rerolls | rerolls | 1 | 2% | 15s | 20s | teal |
-| `SkillPoint` | SkillPoints | skill points | 1 | 1% | 20s | 20s | purple |
-| `Box Slime` | SpawnerBox | ambush | — | 2% | 45s | 45s | orange |
-| `Box Bat` | SpawnerBox | ambush | — | 1% | 45s | 45s | orange |
-| `Box Crab` | SpawnerBox | ambush | — | 1% | 45s | 45s | orange |
-| `Box Cult` | SpawnerBox | ambush | — | 0.5% | 60s | 60s | orange |
-| `Box Doppelganger` | SpawnerBox | ambush | — | 0.25% | 45s | 45s | orange |
+| Asset | Type | Pays | Roll | Chance | Cooldown | Lifetime | Color | Mode |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `XP` | Xp | % of `XpReq` | 3–15% | 8% | 10s | 30s | magenta | Simple |
+| `Gold` | Gold | gold | 5–65 | 6% | 5s | 25s | gold | Simple |
+| `Health` | Heal | % of `EffMaxHp` | 3–20% | 4% | 10s | 25s | red | Simple |
+| `Stamina` | Stamina | % of `EffMaxStamina` | 3–15% | 4% | 15s | 25s | green | Simple |
+| `Mana` | Mana | % of `EffMaxMana` | 3–15% | 3% | 15s | 25s | blue | Simple |
+| `Reroll` | Rerolls | rerolls | 1 | 2% | 15s | 20s | teal | Expert |
+| `SkillPoint` | SkillPoints | skill points | 1 | 1% | 20s | 20s | purple | Master |
+| `Box Slime` | SpawnerBox | ambush | — | 2% | 45s | 45s | orange | Expert |
+| `Box Bat` | SpawnerBox | ambush | — | 1% | 45s | 45s | orange | Expert |
+| `Box Crab` | SpawnerBox | ambush | — | 1% | 45s | 45s | orange | Expert |
+| `Box Cult` | SpawnerBox | ambush | — | 0.5% | 60s | 60s | orange | Master |
+| `Box Doppelganger` | SpawnerBox | ambush | — | 0.25% | 45s | 45s | orange | Master |
 
 **Chance** is rolled per spawner tick (2s), not per second, and only one pickup can spawn
-per tick: candidates are filtered (chance above 0, not on cooldown), shuffled, and the
+per tick: candidates are filtered (chance above 0, not on cooldown, `minMode` at or below the run's mode tier), shuffled, and the
 first to pass its own roll spawns. **Cooldown** then blocks that asset — and only that
 asset — for its duration, counting down even between waves. **Lifetime** (`maxTime`) only
 counts down while a wave is active, so a pickup left on the ground at wave end is still
@@ -1768,7 +1777,8 @@ When the last ambush enemy dies, `rewardMin`–`rewardMax` collectibles drop wit
 `rewardRadius` of the box. Each drop is an independent weighted roll over `rewards`
 (duplicates allowed) and rolls its own value and lifetime. Drops ignore the spawner's
 live cap, but count toward it while on the ground. Other spawner boxes are never rolled,
-and `Reroll` entries are skipped in Ironman Mode.
+`Reroll` entries are skipped in Ironman Mode, and entries above the mode tier (`SkillPoint`
+below Master, `Reroll` in Simple) are skipped.
 
 | Box | Enemies | Count | Level | Drops | Reward weights (XP / Gold / Reroll / SkillPoint) |
 | --- | --- | --- | --- | --- | --- |

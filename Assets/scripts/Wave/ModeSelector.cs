@@ -78,7 +78,7 @@ namespace CrystalFlux.WaveSystem
                 cycleButton.image.sprite = m.buttonSprite;
 
             if (TryGetComponent<ITooltipDisplay>(out var tt))
-                tt.ShowTooltip(m.displayName, m.BuildTooltipDescription(), tooltipOffset);
+                tt.ShowTooltip(m.displayName, m.description, tooltipOffset);
         }
 
         public void LockIn(WaveManager wm)

@@ -765,7 +765,7 @@ namespace CrystalFlux.WaveSystem
 
             int w = GetCurrentWave();
             bool bossNext = NextWaveIsBoss();
-            return availableAnomalies.Exists(a => a != null && w >= a.minWave && w <= a.maxWave && !(a.disallowOnBossWave && bossNext));
+            return availableAnomalies.Exists(a => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext));
         }
         protected bool GenerateAnomalyChoices()
         {
@@ -775,7 +775,7 @@ namespace CrystalFlux.WaveSystem
 
             int w = GetCurrentWave();
             bool bossNext = NextWaveIsBoss();
-            var available = availableAnomalies.FindAll(a => a != null && w >= a.minWave && w <= a.maxWave && !(a.disallowOnBossWave && bossNext));
+            var available = availableAnomalies.FindAll(a => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext));
             if (available.Count == 0) return false;
 
             type = RewardType.Anomaly;

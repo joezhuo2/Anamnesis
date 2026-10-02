@@ -6,6 +6,7 @@
         "CrystalFlux.Core",
         "CrystalFlux.Entity",
         "CrystalFlux.Wave",
+        "CrystalFlux.Settings",
         "CrystalFlux.TextIndicator",
         "Unity.TextMeshPro"
     ],

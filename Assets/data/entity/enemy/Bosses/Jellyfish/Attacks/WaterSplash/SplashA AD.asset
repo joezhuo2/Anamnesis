@@ -12,14 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
   m_Name: SplashA AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
+  type: 0
   cooldown: 8
+  stacks: 1
   projectilePrefab: {fileID: 3892982586409773782, guid: 870c1d54ecd4b764cb91284d7f957b08, type: 3}
   pd: {fileID: 11400000, guid: 89efef7e740fd5443806e6c1d1f365bf, type: 2}
+  animationLength: 0.5
+  castTime: 0
+  canMoveWhileCasting: 1
+  teleportToProjectile: 0
+  teleportDelay: 0
+  rushDirection: 0
+  rushAngle: 0
+  omnidirectionalRush: 0
+  rushTurnRate: 0
+  rushType: 0
+  rushTypeVal: 0
+  rushSpeedMult: 1
+  immuneWhileRushing: 0
+  disableAttacksWhileRushing: 0
+  endRushOnCollision: 0
+  bounceOnCollision: 0
+  rushImpact: 0
+  rushImpactForce: 0
+  rushImpactTime: 0
+  impactDmgMult: 0.5
+  impactAttack: {fileID: 0}
+  predictTarget: 0
+  canCharge: 0
+  chargeThreshold: 0.225
+  minChargeTime: 0
+  maxChargeTime: 5
+  chargeTickInterval: 1
+  cooldownOnAttackStart: 1
+  chargeAttack: {fileID: 0}
   pattern: 3
   spawnDelay: 0.25
   spawnDistance: 0.5
   fixedDistance: 1
-  animationLength: 0.5
   projectileCount: 125
   randomCount: 0
   spread: 12
@@ -31,6 +61,7 @@ MonoBehaviour:
   minHpPct: 0
   maxHpPct: 100
   phaseReq: 1
+  minMode: 1
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0
@@ -45,6 +76,16 @@ MonoBehaviour:
   healthPctGainOnHit: 0
   manaGainOnHit: 0
   manaPctGainOnHit: 0
-  type: 0
+  summonChance: 0
+  summonCondition: 0
+  cleanseDebuffs: 0
+  fireOrbits: 0
+  absorbOrbitPct: 0
+  redirectOrbits: 0
+  explodeOrbits: 0
+  redirectCount: 0
+  hitStop: 0
+  hitStopCooldown: 0
+  screenShake: 0
   icon: {fileID: 0}
   displayName: 

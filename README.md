@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.7.3-6366F1)
+![Version](https://img.shields.io/badge/version-0.7.4-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.7.3** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.7.4** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -37,7 +37,7 @@ Current release: **v0.7.3** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | Feature | Description |
 |---------|-------------|
 | **🎚️ Difficulty** | Easy / Normal / Hard / Nightmare as `DifficultyData` assets of additive offsets (enemy level, counts, rewards, corruption, rerolls, pre-run free picks) The tooltip lists only non-zero offsets; the choice persists to `settings.json` |
-| **🧭 Modes** | Simple / Expert / Master as `ModeData` assets, cycled by one home-screen button that swaps sprites. Each mode toggles corruption, corruption specials and Ultimates, can equip a starting Ultimate, and has a tier that gates attacks, Awakenings and skill nodes (`minMode`). Without Ultimates, the Ultimate slot stays greyed out like a Sealed slot for the whole run. Master starts with the Coherent Strike Ultimate. Persists to `settings.json` |
+| **🧭 Modes** | Simple / Expert / Master as `ModeData` assets, cycled by one home-screen button that swaps sprites. Each mode toggles corruption, corruption specials and Ultimates, can equip a starting Ultimate, and has a tier that gates attacks, Awakenings, skill nodes, anomalies and collectibles (`minMode`). Without Ultimates, the Ultimate slot stays greyed out like a Sealed slot for the whole run. Master starts with the Coherent Strike Ultimate. Persists to `settings.json` |
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
 | **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave; *Sealed* locks one attack slot and speeds up the other two; *Blackout* shrinks your vision and hides enemies outside it, widening briefly on each kill. Hovering a choice shows its rules and completion reward |

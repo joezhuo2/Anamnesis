@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Master
   m_EditorClassIdentifier: CrystalFlux.Wave::CrystalFlux.WaveSystem.ModeData
   displayName: Master
-  description: Everything Expert has, plus corruption and a starting ultimate. Enemies
-    fight with their full arsenal.
+  description: Everything Expert has, plus hidden corruption rewards, rare spawner
+    boxes, keystone nodes, and a starting ultimate.
   buttonSprite: {fileID: -2909159252311409833, guid: 588d3ddb27a5fc6478d4729284e74668, type: 3}
-  tier: 0
+  tier: 2
   allowCorruption: 1
   allowCorruptionSpecials: 1
   unlockUltimates: 1

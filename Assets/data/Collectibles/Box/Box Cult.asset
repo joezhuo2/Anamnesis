@@ -17,6 +17,7 @@ MonoBehaviour:
   lightColor: {r: 1, g: 0.20157912, b: 0, a: 1}
   minVal: 1
   maxVal: 1
+  minMode: 2
   chance: 0.5
   cooldown: 60
   maxTime: 60

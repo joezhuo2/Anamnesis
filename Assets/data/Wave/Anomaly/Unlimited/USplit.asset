@@ -16,8 +16,9 @@ MonoBehaviour:
   desc: Slain enemies tear apart into weaker copies of themselves.
   minWave: 0
   maxWave: 128
+  minMode: 2
   anomalyType: 5
   anomalyValue: 50
-  anomalyMinVal: 3
-  anomalyMaxVal: 5
+  anomalyMinVal: 2
+  anomalyMaxVal: 7
   disallowOnBossWave: 1

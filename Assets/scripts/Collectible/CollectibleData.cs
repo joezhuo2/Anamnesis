@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
+using CrystalFlux.SettingsSystem;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -30,6 +31,7 @@ namespace CrystalFlux.CollectibleSystem
         public int maxVal = 1;
 
         [Header("Spawning")]
+        [Tooltip("Minimum mode tier required for this collectible to spawn or drop from a spawner box. 0 = Simple, 1 = Expert, 2 = Master")] [Min(0)] public int minMode;
         [Range(0f, 100f)] public float chance = 5f;
         public float cooldown = 10f;
         public float maxTime = 20f;
@@ -96,6 +98,7 @@ namespace CrystalFlux.CollectibleSystem
         {
             if (r == null || r.data == null || r.weight <= 0f) return false;
             if (r.data.type == CollectibleType.SpawnerBox) return false;
+            if (r.data.minMode > RunMode.Tier) return false;
             return !(ironman && r.data.type == CollectibleType.Rerolls);
         }
 

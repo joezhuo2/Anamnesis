@@ -18,6 +18,7 @@ MonoBehaviour:
   nodeID: moonboundinstinct
   icon: {fileID: -1376948238, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
+  minMode: 1
   prerequisites:
   - {fileID: 11400000, guid: a1198e270dd5ea04d9de087a7ef191f7, type: 2}
   incompatibleNodes: []

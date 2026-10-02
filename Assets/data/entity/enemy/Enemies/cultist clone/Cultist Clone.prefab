@@ -126,7 +126,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad5933620eca8994dbf987d01e1707c8, type: 2}
   - {fileID: 11400000, guid: c507983e3fec1e5458b29c5dff279df1, type: 2}
   - {fileID: 11400000, guid: 47a3fbab105cdc94880bd388d1ccc6d1, type: 2}
+  - {fileID: 11400000, guid: 5ce3fca1a2a210b4683ba5a0c4920ebe, type: 2}
   globalCooldown: 2
+  fallbackRange: 0
   castBarPrefab: {fileID: 0}
   castBarTextPrefab: {fileID: 0}
   castBarOffset: {x: 0, y: -0.7, z: 0}

@@ -7,6 +7,32 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.4] - 2026-10-02 - Mode Content Gating
+
+### Added
+- `AnomalyData.minMode`: anomalies above the run's mode tier are never offered (checked in `WaveManager.HasAnomalyChoices` and `GenerateAnomalyChoices`)
+- `CollectibleData.minMode`: collectibles above the run's mode tier never spawn from `CollectibleSpawner` and are skipped as spawner box rewards
+- **Cultist Teleport** (`Bosses/Cultist/attacks/tp`, Expert+): the Cultist and Cultist Clone cast for 0.75s, then teleport onto a blast (80% Spell, size 4) spawned max 8 units away. 12s cooldown
+- **Snowstorm** (`Enemies/Slime_frost/Attacks/snowstorm`, Master): the Frost Slime fires a slow ring of 12-20 large shards (25% True, speed 1.6, size 3, 8s lifetime, unlimited pierce). 6s cooldown
+
+### Changed
+- **Mode assets**
+  - Expert: tier 0 → 1, corruption on. Unlocks Capstone nodes, spawner boxes (Slime, Bat, Crab), reroll pickups, Blackout, Swarm and Fission anomalies, and the enemy attacks below
+  - Master: tier 0 → 2. Adds the Ethereal Mirage keystone, Cult and Doppelganger boxes, skill point pickups and the Duel and Unlimited Fission (`USplit`) anomalies
+  - Simple keeps Time, No Hit, Sealed, and Stat Mod anomalies, and the base pickups (XP, Gold, Health, Stamina, Mana)
+- **Expert enemy attacks** (`minMode` 1): Jellyfish Splash, Lich Plant, Bat Mark, Crab Disc
+- The mode tooltip now shows only the asset's `description`; the auto-generated unlock lines (`ModeData.BuildTooltipDescription`) were removed. Expert and Master descriptions rewritten to list their unlocks
+- **Afflicted**: duration 6s → 12s, max stacks 6 → 8, -5% → -10% maxHp per stack
+- **Bat Mark**: 30% → 50% Spell, Afflicted chance 70% → 80%
+- **Blizzard** (Frost Slime): 18% True → 40% Spell, spawns 2 units out instead of on the slime
+- **Unlimited anomalies**: Duel max 600 → 800, Stat Mod max 400 → 600, Swarm max 60 → 70, Fission copies 3–5 → 2–7
+- Cultist Clone (`Cultist Clone.prefab`, `Cultist Clone Base`) moved from `Bosses/Cultist` to `Enemies/cultist clone`
+- `Collectible.asmdef` references `CrystalFlux.Settings`
+- Player `bundleVersion` 0.7.3 → 0.7.4
+
+### Removed
+- `ModeData.BuildTooltipDescription`
+
 ## [v0.7.3] - 2026-10-01 - Expert & Master Modes
 
 ### Added

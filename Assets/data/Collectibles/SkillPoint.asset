@@ -17,6 +17,16 @@ MonoBehaviour:
   lightColor: {r: 0.68965364, g: 0, b: 1, a: 1}
   minVal: 1
   maxVal: 1
+  minMode: 2
   chance: 1
   cooldown: 20
   maxTime: 20
+  ambushEnemies: []
+  ambushMin: 3
+  ambushMax: 5
+  ambushRadius: 3
+  ambushLevelBonus: 2
+  rewards: []
+  rewardMin: 2
+  rewardMax: 4
+  rewardRadius: 2

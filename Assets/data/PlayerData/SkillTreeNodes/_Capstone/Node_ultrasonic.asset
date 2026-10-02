@@ -18,6 +18,7 @@ MonoBehaviour:
   nodeID: ultrasonic
   icon: {fileID: 420764853, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
+  minMode: 1
   prerequisites:
   - {fileID: 11400000, guid: e7a624579748c594e8f962dc4f482a54, type: 2}
   - {fileID: 11400000, guid: 400e27581de114748ba83c00b520c43e, type: 2}

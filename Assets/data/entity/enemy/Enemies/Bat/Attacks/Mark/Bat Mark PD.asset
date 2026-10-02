@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: Bat Mark PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 4b6e965a0b528d14ab6a6e953bb73b36, type: 2}
-  speed: 0
   lifetime: 0.75
-  numPierce: 1
   size: 2.5
+  numPierce: 1
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.3
+  spellMult: 0.5
   trueMult: 0
   scalingStat: 31
+  extraScalings: []
   specialMult: 1
   specialScaling: 0
   timeBeforeSameEnemy: 0
@@ -36,11 +42,12 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
+  distFromCenter: 0
   effects:
   - effect: {fileID: 11400000, guid: 1f7b383b7966fdb4a9b1d9acfacb26a3, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.7
+    chance: 0.8
   orbitRadius: 0
   randOrbRadOffset: 0
   orbitSelf: 0

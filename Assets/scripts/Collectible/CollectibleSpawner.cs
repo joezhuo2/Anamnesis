@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
+using CrystalFlux.SettingsSystem;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
@@ -185,6 +186,7 @@ namespace CrystalFlux.CollectibleSystem
                 CollectibleData d = collectibles[i];
 
                 if (d == null || d.chance <= 0f) continue;
+                if (d.minMode > RunMode.Tier) continue;
                 if (cooldowns.ContainsKey(d)) continue;
                 if (d.type == CollectibleType.Rerolls && IronmanSelector.Enabled) continue;
                 if (d.type == CollectibleType.SpawnerBox && !d.HasAmbush) continue;

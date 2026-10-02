@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Expert
   m_EditorClassIdentifier: CrystalFlux.Wave::CrystalFlux.WaveSystem.ModeData
   displayName: Expert
-  description: Ultimates unlocked. Enemies learn new tricks.
+  description: Corruption, Capstone nodes, Ultimates, and Spawners unlocked. Enemies
+    learn new tricks.
   buttonSprite: {fileID: 8443825361172281733, guid: 588d3ddb27a5fc6478d4729284e74668, type: 3}
-  tier: 0
-  allowCorruption: 0
+  tier: 1
+  allowCorruption: 1
   allowCorruptionSpecials: 0
   unlockUltimates: 1
   startingUlt: {fileID: 0}

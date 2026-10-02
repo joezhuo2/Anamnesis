@@ -16,8 +16,9 @@ MonoBehaviour:
   desc: All enemies in the wave gain +0% Health
   minWave: 0
   maxWave: 128
+  minMode: 0
   anomalyType: 2
   anomalyValue: 0
   anomalyMinVal: 25
-  anomalyMaxVal: 400
+  anomalyMaxVal: 600
   disallowOnBossWave: 0
