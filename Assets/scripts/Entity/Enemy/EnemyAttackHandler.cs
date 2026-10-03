@@ -186,7 +186,7 @@ namespace CrystalFlux.EntitySystem
                 esm.AddStat(new(StatType.CanMove, -1));
             }
 
-            if (a != null) a.SetInteger(AttackIndexHash, currentIndex);
+            if (a != null) a.SetInteger(AttackIndexHash, current.AnimationIndex >= 0 ? current.AnimationIndex : currentIndex);
 
             float castTime = current.GetEffCastTime(esm);
 

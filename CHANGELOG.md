@@ -7,6 +7,60 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.6] - 2026-10-03 - Boss Attack Expansion
+
+### Added
+- `AttackData.animationIndex`: the Animator `attackIndex` an enemy sets when it performs the attack. `-1` (default) keeps the old behaviour of using the attack's position in `EnemyAttackHandler.attacks`
+- Cultist **Circleballs** (Expert, phase 2: below 40% HP, or 50% on the Clone): a ring of 8 piercing projectiles (`Circle`, 0.9 spell scaling, 4 knockback), `animationIndex` 2
+- Golem **TDLR Barrage** (Master, phase 1: below 80% HP): 8 slow projectiles per side from top, bottom, left and right (`LeftRightTopDown`, 10 spawn distance, 12 spread, 0.03–0.1s stagger), 11s cooldown
+- Lich **Circle-In** (Master): 5 + up to 3 random projectiles spawn 8 units out and collapse inward on the target (`CircleInverse`, 0.65 spell scaling), 5s cooldown
+- Lich now has three phases (thresholds 70% and 40%)
+
+### Changed
+- Lich: 
+  - Wave (Lich A) only unlocks in phase 1 (below 70% HP)
+  - the +40% `moveSpeedPct` and +20% `attackSpeedPct` buffs move to phase 2, so they still kick in below 40% HP. 
+  - Whirl projectile speed 3.5 → 3
+- Golem: 
+  - armor 300 → 200, 
+  - arcaneShield 0 → 350, 
+  - dodgeChance 0 → 15, 
+  - dodgeResPct 0 → 60
+- Cultist: 
+  - Teleport cast time 0.75s → 1.25s and plays `animationIndex` 3
+  - Wave spawn delay 1.15s → 1.5s
+  - Summon cooldown 12s → 14s
+- Reaper: 
+  - Strike spawn delay 0.5s → 0.8s
+  - Balls no longer apply `Burn 6 1 5 15`
+- Echo (`mirror base`) toned down
+  - maxHp 700 → 400
+  - attack 3 → 2
+  - damagePct 0 → -30
+  - critChance 15 → 10
+  - critDamage 40 → 30
+  - armor 50 → 30
+  - damageRes 20 → 10
+  - dodgeChance 20 → 5
+  - dodgeResPct 60 → 40
+  - spellRes 15 → 10
+  - effectRes 10 → 0
+  - moveSpeed 1 → 0.9
+- Doppelganger toned down
+  - maxHp 110 → 80
+  - attack 3 → 2
+  - damagePct 0 → -40
+  - critChance 10 → 3
+  - critDamage 50 → 15
+  - armor 25 → 15
+  - damageRes 10 → 5
+  - dodgeChance 15 → 5
+  - dodgeResPct 50 → 35
+  - spellRes 10 → 5
+  - effectRes 15 → 0
+  - moveSpeed 0.75 → 0.65
+- Player `bundleVersion` 0.7.5 → 0.7.6
+
 ## [v0.7.5] - 2026-10-02 - Anomaly Reroll & Skip Rules
 
 ### Added

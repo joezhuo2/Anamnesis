@@ -47,7 +47,7 @@ MonoBehaviour:
   cooldownOnAttackStart: 1
   chargeAttack: {fileID: 0}
   pattern: 0
-  spawnDelay: 0.5
+  spawnDelay: 0.8
   spawnDistance: 12
   fixedDistance: 0
   projectileCount: 1
@@ -61,6 +61,7 @@ MonoBehaviour:
   minHpPct: 30
   maxHpPct: 100
   phaseReq: -1
+  minMode: 0
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0

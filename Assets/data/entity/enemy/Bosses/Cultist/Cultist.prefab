@@ -129,6 +129,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47a3fbab105cdc94880bd388d1ccc6d1, type: 2}
   - {fileID: 11400000, guid: 5018ef59fc68157478371e978c825e20, type: 2}
   - {fileID: 11400000, guid: 5ce3fca1a2a210b4683ba5a0c4920ebe, type: 2}
+  - {fileID: 11400000, guid: 21d0e8eba7447eb4a825fe7b2ea95285, type: 2}
   globalCooldown: 3
   fallbackRange: 0
   castBarPrefab: {fileID: 5326710201406479706, guid: fe45e7807c448b3488003baa762ff520, type: 3}

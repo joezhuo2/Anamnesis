@@ -18,7 +18,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1225193988873089607, guid: b858de8ad17f72342a2c35bd44d1f004, type: 3}
   pd: {fileID: 11400000, guid: a505b7de92494fe4b886caea9ebe88e2, type: 2}
   animationLength: 0.75
-  castTime: 0.75
+  castTime: 1.25
   canMoveWhileCasting: 0
   teleportToProjectile: 1
   teleportDelay: 0
@@ -58,6 +58,7 @@ MonoBehaviour:
   maxDelay: 0
   maxRange: 8
   canMoveDuringAttack: 0
+  animationIndex: 3
   minHpPct: 0
   maxHpPct: 100
   phaseReq: -1

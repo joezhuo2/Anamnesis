@@ -108,6 +108,8 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private float maxRange;
         [Tooltip("Whether the enemy can move while performing this attaack")]
         [SerializeField] private bool canMoveDuringAttack;
+        [Tooltip("Animator attackIndex set when this attack is performed. -1 = use index in attack list")]
+        [SerializeField] private int animationIndex = -1;
         [Range(0f, 100f)]
         [Tooltip("Minimum Hp % for enemy to use this attack")]
         [SerializeField] private float minHpPct = 0f;
@@ -216,6 +218,7 @@ namespace CrystalFlux.ProjectileSystem
         public float MaxDelay => maxDelay;
         public float MaxRange => maxRange;
         public bool CanMoveDuringAttack => canMoveDuringAttack;
+        public int AnimationIndex => animationIndex;
         public float MinHpPct => minHpPct;
         public float MaxHpPct => maxHpPct;
         public int PhaseReq => phaseReq;

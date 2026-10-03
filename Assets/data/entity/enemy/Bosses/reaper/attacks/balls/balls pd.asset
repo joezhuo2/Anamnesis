@@ -43,11 +43,7 @@ MonoBehaviour:
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
   distFromCenter: 0
-  effects:
-  - effect: {fileID: 11400000, guid: b7144ba4137f1fa42866988ed565e508, type: 2}
-    selfApply: 0
-    applyCondition: 0
-    chance: 0.65
+  effects: []
   orbitRadius: 0
   randOrbRadOffset: 0
   orbitSelf: 0

@@ -764,8 +764,8 @@ Content gated by tier (`minMode`):
 
 | Tier | Content |
 |---|---|
-| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport |
-| Master (2) | Ethereal Mirage keystone; `Box Cult`, `Box Doppelganger`, `SkillPoint` pickups; Unlimited Fission (`USplit`); Frost Slime Snowstorm |
+| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport, Cultist Circleballs |
+| Master (2) | Ethereal Mirage keystone; `Box Cult`, `Box Doppelganger`, `SkillPoint` pickups; Unlimited Fission (`USplit`); Frost Slime Snowstorm; Golem TDLR Barrage; Lich Circle-In |
 
 | Attack | Unlock wave here | Unlock wave in `rarePool` |
 | --- | --- | --- |
@@ -1656,6 +1656,20 @@ The `Radiation 4 0.25 8 2 CritDmg` asset name is likewise stale: it now runs 5s 
 
 ---
 
+# Enemy Attack Animation
+
+`EnemyAttackHandler` sets the Animator `attackIndex` integer when an attack starts. It uses the
+attack's `AttackData.animationIndex` when that is 0 or above, otherwise (`-1`, the default) the
+attack's position in the `attacks` list. This lets attacks share a clip or be added to the list
+without reordering the controller.
+
+| Attack | `animationIndex` |
+|---|---|
+| Cultist Circleballs | 2 |
+| Cultist Teleport | 3 |
+
+---
+
 # Mirror Boss
 
 Folder: `Assets/data/entity/enemy/Bosses/mirror`. The `MirrorBoss` prefab is in the Unlimited
@@ -1678,12 +1692,13 @@ Player stats, synergies and gear are never copied. The boss uses the `mirror bas
 
 | Stat | Value | Stat | Value |
 | --- | --- | --- | --- |
-| `maxHp` | 700 | `damageRes` | 20 |
-| `attack` | 3 | `dodgeChance` | 20 |
-| `critChance` | 15 | `dodgeResPct` | 60 |
-| `critDamage` | 40 | `spellRes` | 15 |
-| `armor` | 100 | `effectRes` | 10 |
-| `moveSpeed` | 1 | `detectionRange` | 15 |
+| `maxHp` | 400 | `damageRes` | 10 |
+| `attack` | 2 | `dodgeChance` | 5 |
+| `damagePct` | -30 | `dodgeResPct` | 40 |
+| `critChance` | 10 | `spellRes` | 10 |
+| `critDamage` | 30 | `effectRes` | 0 |
+| `armor` | 30 | `detectionRange` | 15 |
+| `moveSpeed` | 0.9 | | |
 | `xpDrop` | 800 | `goldDrop` | 80 |
 
 `globalCooldown` is 1s. The prefab reuses the player's animator controller.
@@ -1697,13 +1712,13 @@ so every Doppelganger copies the player's attacks and Awakenings when it spawns.
 
 | Stat | Value | Stat | Value |
 | --- | --- | --- | --- |
-| `maxHp` | 225 | `damageRes` | 10 |
-| `attack` | 2 | `dodgeChance` | 15 |
-| `damagePct` | 10 | `dodgeResPct` | 50 |
-| `critChance` | 15 | `spellRes` | 10 |
-| `critDamage` | 40 | `effectRes` | 10 |
-| `armor` | 70 | `detectionRange` | 15 |
-| `moveSpeed` | 0.85 | | |
+| `maxHp` | 80 | `damageRes` | 5 |
+| `attack` | 2 | `dodgeChance` | 5 |
+| `damagePct` | -40 | `dodgeResPct` | 35 |
+| `critChance` | 3 | `spellRes` | 5 |
+| `critDamage` | 15 | `effectRes` | 0 |
+| `armor` | 15 | `detectionRange` | 15 |
+| `moveSpeed` | 0.65 | | |
 | `xpDrop` | 22 | `goldDrop` | 8 |
 
 # Sealed Anomaly

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Summon AD
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   type: 0
-  cooldown: 12
+  cooldown: 14
+  stacks: 1
   projectilePrefab: {fileID: 8980791689995069195, guid: f52af7965077f364d9ff5a0ac04faca9, type: 3}
   pd: {fileID: 11400000, guid: 9aa1aebc8fcb0444f8dd9a8bbc1561bc, type: 2}
   animationLength: 1
@@ -57,9 +58,11 @@ MonoBehaviour:
   maxDelay: 0
   maxRange: 12
   canMoveDuringAttack: 0
+  animationIndex: -1
   minHpPct: 0
   maxHpPct: 100
   phaseReq: -1
+  minMode: 0
   nextAttack: {fileID: 0}
   staminaCost: 0
   staminaCostPct: 0

@@ -107,6 +107,7 @@ MonoBehaviour:
   canDeaggro: 0
   stoppingDistance: 3
   flipRotation: 0
+  retargetInterval: {x: 1, y: 3}
   target: {fileID: 0}
 --- !u!114 &6423432274336431945
 MonoBehaviour:
@@ -125,7 +126,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3fbcbd6ac701c904e8076bb3e85cd3ba, type: 2}
   - {fileID: 11400000, guid: 88fb5d50bc45a4b4a8e705140fe9c1a3, type: 2}
   - {fileID: 11400000, guid: d4194199ecd546246be73d289971a1f7, type: 2}
+  - {fileID: 11400000, guid: 6992a894ee144db429217e9098637c52, type: 2}
   globalCooldown: 2
+  fallbackRange: 0
+  castBarPrefab: {fileID: 0}
+  castBarTextPrefab: {fileID: 0}
+  castBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!212 &3478480386570623367
 SpriteRenderer:
   serializedVersion: 2
@@ -279,6 +285,7 @@ MonoBehaviour:
   baseStats: {fileID: 11400000, guid: 2deb7f42d3e78a843974de06116552ef, type: 2}
   currentBuffs: []
   teamID: 0
+  displayName: 
 --- !u!114 &653838707023720264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,14 +299,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CrystalFlux.Entity::CrystalFlux.EntitySystem.EnemyPhase
   phaseThresholds:
+  - 70
   - 40
   phaseBuffs:
   - buff:
       type: 24
       value: 40
-    phaseReq: 1
+    phaseReq: 2
   - buff:
       type: 3
       value: 20
-    phaseReq: 1
+    phaseReq: 2
   phase: 0

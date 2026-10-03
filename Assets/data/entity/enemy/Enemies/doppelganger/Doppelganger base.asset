@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d87bbbeb6804b4bbe36ab86d5cd763, type: 3}
   m_Name: Doppelganger base
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  damagePct: 0
+  damagePct: -40
   physicalDmgPct: 0
   spellDmgPct: 0
-  attack: 3
+  attack: 2
   atkPct: 0
   intelligence: 0
   intPct: 0
   attackSpeedPct: 0
-  critChance: 10
-  critDamage: 50
+  critChance: 3
+  critDamage: 15
   aoePct: 0
   defShred: 0
   resPen: 0
@@ -40,30 +40,30 @@ MonoBehaviour:
   basicCdRedPct: 0
   skillCdRedPct: 0
   ultCdRedPct: 0
-  currentHp: 110
-  maxHp: 110
+  currentHp: 80
+  maxHp: 80
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0
   healingPct: 0
   overhealth: 0
-  armor: 25
+  armor: 15
   armorPct: 0
   defense: 0
   defensePct: 0
   arcaneShield: 0
   arcaneShieldPct: 0
-  damageRes: 10
-  dodgeChance: 15
-  dodgeResPct: 50
+  damageRes: 5
+  dodgeChance: 5
+  dodgeResPct: 35
   physicalRes: 0
-  spellRes: 10
+  spellRes: 5
   hurtTime: 0.25
-  effectRes: 15
+  effectRes: 0
   kbRes: 0
   seDurPct: 0
   seTickRatePct: 0
-  moveSpeed: 0.75
+  moveSpeed: 0.65
   moveSpeedPct: 0
   detectionRange: 11
   currentStamina: 0

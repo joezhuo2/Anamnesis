@@ -107,6 +107,7 @@ MonoBehaviour:
   canDeaggro: 1
   stoppingDistance: 1
   flipRotation: 0
+  retargetInterval: {x: 1, y: 3}
   target: {fileID: 0}
 --- !u!114 &2391128322029808473
 MonoBehaviour:
@@ -126,7 +127,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 02ce6112b369f2b49ab223f8bf3efe84, type: 2}
   - {fileID: 11400000, guid: 8d7903d99912eb640bfa48e40a8ce20f, type: 2}
   - {fileID: 11400000, guid: d503ef41de8ad854c86a710b678479f5, type: 2}
+  - {fileID: 11400000, guid: 40b20fe98cd165142aa29543e9e07fb1, type: 2}
   globalCooldown: 2
+  fallbackRange: 0
   castBarPrefab: {fileID: 5326710201406479706, guid: fe45e7807c448b3488003baa762ff520, type: 3}
   castBarTextPrefab: {fileID: 6961074376611238736, guid: 096da352af1b7ee4fbabc3c804c8d36b, type: 3}
   castBarOffset: {x: 0, y: -0.7, z: 0}
@@ -246,6 +249,7 @@ MonoBehaviour:
   baseStats: {fileID: 11400000, guid: 5c087a8a5fad7aa41a0fe06634d09c8d, type: 2}
   currentBuffs: []
   teamID: 0
+  displayName: 
 --- !u!70 &8830801630103660037
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

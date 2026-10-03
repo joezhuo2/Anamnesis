@@ -128,16 +128,13 @@
 - magma slime => explosion on spear hit
 **- reaper => long distance pull to self**
 - golem => ?
-- cultist => circle, spiral + homing projectiles
 
 #### Master Attacks
 - slime =>
 - magma slime => self buff (+spd +atk)
 - reaper => 
-**- golem => TDLR + bullet hell attack**
-- jellyfish => ?
-**- lich => long distance circle inwards attack**
-**- bat => circle + wave movement attack**
+- jellyfish =>
+- bat =>
 **- crab => rush attack (with impact)**
 
 ### Will do sometime
