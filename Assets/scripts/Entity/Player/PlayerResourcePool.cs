@@ -93,6 +93,20 @@ namespace CrystalFlux.EntitySystem
             return true;
         }
 
+        public void RefillAll()
+        {
+            if (esm == null || esm.GetStat(StatType.isAlive) <= 0f) return;
+
+            float dm = Mathf.Round(esm.GetStat(StatType.EffMaxMana)) - esm.GetStat(StatType.CurrentMana);
+            if (dm > 0f && esm.GetStat(StatType.CanGainMana) > 0f) esm.AddStat(new(StatType.CurrentMana, dm));
+
+            float ds = Mathf.Round(esm.GetStat(StatType.EffMaxStamina)) - esm.GetStat(StatType.CurrentStamina);
+            if (ds > 0f && esm.GetStat(StatType.CanGainStamina) > 0f) esm.AddStat(new(StatType.CurrentStamina, ds));
+
+            accumaltedRegen = 0f;
+            regenTimer = 0f;
+        }
+
         public void RegenStamina()
         {
             if (esm == null || esm.GetStat(StatType.isAlive) <= 0f) return;

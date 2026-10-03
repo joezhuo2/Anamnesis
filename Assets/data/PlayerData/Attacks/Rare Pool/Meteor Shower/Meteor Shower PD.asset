@@ -13,27 +13,40 @@ MonoBehaviour:
   m_Name: Meteor Shower PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
-  speed: 0
   lifetime: 0.5
-  numPierce: 4
   size: 1.25
+  numPierce: 4
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.8
+  spellMult: 1.1
   trueMult: 0
   scalingStat: 44
+  extraScalings: []
+  specialMult: 1
+  specialScaling: 0
   timeBeforeSameEnemy: 0
   followDistance: 0
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
   useTrueAngle: 1
   bypassIFrames: 0
+  randomDir: 0
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
+  distFromCenter: 0
   effects: []
   orbitRadius: 0
-  orbitSelf: 0
   randOrbRadOffset: 0
+  orbitSelf: 0
   rotateClockwise: 0
+  kbForce: 0
+  knockbackTime: 0.15

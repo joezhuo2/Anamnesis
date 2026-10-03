@@ -50,14 +50,15 @@ MonoBehaviour:
   spawnDelay: 0.5
   spawnDistance: 2
   fixedDistance: 0
-  projectileCount: 12
-  randomCount: 8
+  projectileCount: 10
+  randomCount: 6
   spread: 0
   randomSpread: 0
   minDelay: 0
   maxDelay: 0
   maxRange: 9
   canMoveDuringAttack: 0
+  animationIndex: -1
   minHpPct: 0
   maxHpPct: 100
   phaseReq: -1

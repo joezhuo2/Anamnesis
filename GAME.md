@@ -135,7 +135,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 0.75s
   - Pierce: 6
   - Size: 2
-  - Damage: 280% Spell, 30% True
+  - Damage: 180% Spell, 30% True
   - Scaling: EffInt
   - Effect: 100% on hit (Vulnerable, 8s, max 2 stacks, -20% damageRes per stack)
   - Knockback: none
@@ -293,7 +293,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 ## Ignition Flash
 - Asset: `Ignition Flash AD`
 - Type: Basic
-- Cooldown: 2.8s
+- Cooldown: 2.2s
 - Pattern: Single (1 count)
 - Spawn: 0.65 dist
 - Animation: 0.75s
@@ -400,7 +400,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 0.5s
   - Pierce: 4
   - Size: 1.25
-  - Damage: 80% Spell
+  - Damage: 110% Spell
   - Scaling: EffInt
   - Use True Angle
   - Delay: 0.05-0.12s between projectiles
@@ -634,7 +634,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 0 dist
 - Animation: 0.5s
-- Costs: Stamina 16, Mana 6
+- Costs: Stamina 10, Mana 7
 - Gains on hit: Stamina +2, Mana +1
 - Rush: toward the cursor for 0.25s at 6x move speed. Attacks pressed mid-rush are queued
   until it ends, and the rush stops on collision.
@@ -957,7 +957,7 @@ skill tree nodes.
   - Lifetime: 0.75s
   - Pierce: 6
   - Size: 2.5
-  - Damage: 360% Spell, 60% True
+  - Damage: 220% Spell, 60% True
   - Scaling: EffInt
   - Effect: 100% on hit (Vulnerable, 8s, max 2 stacks, -20% damageRes per stack)
   - Knockback: none
@@ -971,7 +971,7 @@ skill tree nodes.
 - Pattern: Single (1 count)
 - Spawn: 0 dist
 - Animation: 0.5s
-- Costs: Stamina 15, Mana 11
+- Costs: Stamina 13, Mana 11
 - Gains on hit: Stamina +2, Mana +1
 - Rush: toward the cursor for 0.3s at 8x move speed, immune while rushing. Attacks pressed
   mid-rush are queued until it ends, and the rush stops on collision.
@@ -1087,7 +1087,7 @@ player upgrades rather than attacks the player selects.
   - Lifetime: 0.75s
   - Pierce: 3000
   - Size: 3.5
-  - Damage: 360% Spell, 60% True
+  - Damage: 260% Spell, 40% True
   - Scaling: EffInt
   - Effects: 100% on hit (Spellworn, 4s, max 2 stacks, -15% spellRes per stack), 40% on hit
     (Stun, 2s)

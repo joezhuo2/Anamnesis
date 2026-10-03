@@ -64,6 +64,8 @@ namespace CrystalFlux.EntitySystem
             esm.AddStat(new(StatType.Intelligence, 2));
             esm.AddStat(new(StatType.moveSpeed, 0.008f));
 
+            if (TryGetComponent<PlayerResourcePool>(out var prp)) prp.RefillAll();
+
             if (pum != null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnLevelUp);
 
             IAnnouncer.Current?.SetTitleForDuration("Levelled Up!", 0.4f, 0.2f, 0.2f);

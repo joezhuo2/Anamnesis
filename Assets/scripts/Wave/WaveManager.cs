@@ -116,6 +116,7 @@ namespace CrystalFlux.WaveSystem
         protected IAttackHandler cpah;
         protected IUpgradeHolder cpum;
         protected ISkillPointHolder cpst;
+        protected PlayerResourcePool cprp;
         protected readonly List<AttackReward> availableRarePool = new();
         protected readonly List<AttackReward> availableCorruptionSpecialPool = new();
         protected readonly List<AttackReward> corruptionSpecialsThisRoll = new();
@@ -423,8 +424,15 @@ namespace CrystalFlux.WaveSystem
 
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
+            RefillPlayerResources();
 
             HandleWave(currentWave);
+        }
+
+        protected void RefillPlayerResources()
+        {
+            cprp ??= GameObject.FindWithTag("Player")?.GetComponent<PlayerResourcePool>();
+            if (cprp != null) cprp.RefillAll();
         }
 
         protected void HandleWave(WaveData c)

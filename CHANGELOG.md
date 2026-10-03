@@ -7,6 +7,34 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.7] - 2026-10-03 - Resource Refills & Spell Rebalance
+
+### Added
+- `PlayerResourcePool.RefillAll()`: sets current mana and stamina to their effective max. It skips `manaGainPct` and the `OnManaRegen`/`OnStaminaRegen` triggers, respects `CanGainMana`/`CanGainStamina`, and resets the stamina regen accumulator
+- Mana and stamina refill to max at the start of every wave (`WaveManager.BeginWave` and `UnlimitedWaveManager.BeginWave`, including anomaly waves) and on every level-up (`PlayerLevel.LevelUp`, before `OnLevelUp` upgrades fire)
+
+### Changed
+- Astral Nova: 
+  - spell scaling 280% → 180%
+- Astral Disjunction: 
+  - spell scaling 360% → 220%
+- Chaos Theory: 
+  - spell scaling 360% → 260%
+  - true scaling 60% → 40%
+- Meteor Shower: 
+  - spell scaling 80% → 110%
+  - cast time 1s → 0s
+- Ignition Flash: cooldown 2.8s → 2.2s
+- Subspace Blitz: 
+  - cooldown 1.5s → 1.3s
+  - stamina cost 16 → 10
+  - mana cost 6 → 7
+- Nitro Accelerator: stamina cost 15 → 13
+- Frost Slime:
+  - Blizzard random extra projectiles 3 → 2
+  - Snowstorm projectile count 12 → 10, random extra projectiles 8 → 6
+- Player `bundleVersion` 0.7.6 → 0.7.7
+
 ## [v0.7.6] - 2026-10-03 - Boss Attack Expansion
 
 ### Added
