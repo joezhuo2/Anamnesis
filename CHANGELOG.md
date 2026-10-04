@@ -7,6 +7,26 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.10] - 2026-10-04 - Hivemind & Drought
+
+### Added
+- **Hivemind** anomaly (`AnomalyType.Hivemind`, `HivemindInstance`, no fail): every enemy shares one pooled HP bar, so damage to any enemy drains the pool instead of that enemy
+  - The pool size is the average `EffMaxHp` of enemies spawned so far × the wave's total enemy count, recalculated on every spawn
+  - When the pool empties, spawning stops (`WaveManager.StopSpawning`) and every pooled enemy is killed with True damage from the player, so gold, XP and on-kill triggers still fire
+  - The pool shows on the boss bar (`duelBossBarPrefab`, or the wave's boss bar if unassigned) through the new `BossBarUI.SetupPool`. Pooled enemies' own health bars are hidden. The wave ends on "Anomaly Complete" instead of "Boss Defeated"
+  - Enemies from death splits after the pool empties are normal enemies
+- **Drought** anomaly (`AnomalyType.Drought`, `DroughtInstance`, no fail): collectibles do not spawn, and the player's natural HP and stamina regen are disabled for the wave. The wave-start mana/stamina refill still happens
+- New anomaly assets, all contract-enabled (rerolls / skill point % / bonus pool %):
+  - Hivemind and UHivemind: Expert+ (`minMode` 1), 2 / 80 / 60
+  - Drought and UDrought: all modes, 1 / 40 / 30
+- `EntityHealth.DamageRedirect`: a static hook in `ChangeHealth` that can absorb damage after overhealth, leaving the entity's HP untouched
+- `PlayerResourcePool.RegenLocked`: blocks player stamina regen and `EntityHealth` player HP regen
+- `WaveManager.DroughtActive`, `WaveManager.WaveEnemyTotal`, `WaveManager.StopSpawning()`
+
+### Changed
+- `CollectibleSpawner` skips spawning while `WaveManager.DroughtActive`
+- Player `bundleVersion` 0.7.9 → 0.7.10
+
 ## [v0.7.9] - 2026-10-04 - Contracts
 
 ### Added

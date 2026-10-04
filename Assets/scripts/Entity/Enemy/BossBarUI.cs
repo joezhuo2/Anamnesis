@@ -1,3 +1,4 @@
+using System;
 using CrystalFlux.Core;
 using TMPro;
 using UnityEngine;
@@ -15,11 +16,15 @@ namespace CrystalFlux.EntitySystem
         private int cCurHp;
 
         private IStatProvider bsm;
+        private Func<int> curSrc;
+        private Func<int> maxSrc;
 
         public void Setup(string bossName, IStatProvider esm)
         {
             if (bossNameText != null) bossNameText.text = bossName;
             bsm = esm;
+            curSrc = null;
+            maxSrc = null;
 
             if (bsm == null)
             {
@@ -42,12 +47,33 @@ namespace CrystalFlux.EntitySystem
             if (bossHPText != null) bossHPText.text = $"{cCurHp}/{cMaxHp}";
         }
 
+        public void SetupPool(string barName, Func<int> cur, Func<int> max)
+        {
+            if (bossNameText != null) bossNameText.text = barName;
+            bsm = null;
+            curSrc = cur;
+            maxSrc = max;
+            cCurHp = int.MinValue;
+            cMaxHp = int.MinValue;
+        }
+
         private void Update()
         {
-            if (bsm == null) return;
+            int curHp;
+            int maxHp;
 
-            int curHp = Mathf.Max(Mathf.RoundToInt(bsm.GetStat(StatType.currentHp)), 0);
-            int maxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
+            if (curSrc != null && maxSrc != null)
+            {
+                curHp = Mathf.Max(curSrc(), 0);
+                maxHp = maxSrc();
+            }
+            else if (bsm != null)
+            {
+                curHp = Mathf.Max(Mathf.RoundToInt(bsm.GetStat(StatType.currentHp)), 0);
+                maxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
+            }
+            else return;
+
             if (cCurHp == curHp && cMaxHp == maxHp) return;
 
             if (healthSlider != null)

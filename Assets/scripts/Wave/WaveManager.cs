@@ -109,6 +109,10 @@ namespace CrystalFlux.WaveSystem
             || contractArmed && currentContract is DuelInstance;
         protected float EnemyCountMult => (currentAnomaly != null && currentAnomaly.isActive && currentAnomaly is SwarmInstance sw ? sw.CountMultiplier : 1f)
             * (contractArmed && currentContract is SwarmInstance csw ? csw.CountMultiplier : 1f);
+        protected HivemindInstance Hivemind => currentAnomaly is HivemindInstance h && h.isActive ? h
+            : contractArmed && currentContract is HivemindInstance ch && ch.isActive ? ch : null;
+        protected bool IsDrought => currentAnomaly is DroughtInstance && currentAnomaly.isActive
+            || contractArmed && currentContract is DroughtInstance && currentContract.isActive;
         protected bool ContractHeld => currentContract != null && currentContract.amd != null && (contractPaused || contractArmed && currentContract.isActive);
         protected bool ContractBroken => contractArmed && currentContract != null && !currentContract.isActive;
 
@@ -326,7 +330,9 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.Duel:
                         case AnomalyType.Split:
                         case AnomalyType.Sealed:
-                        case AnomalyType.Blackout: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.Blackout:
+                        case AnomalyType.Hivemind:
+                        case AnomalyType.Drought: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }
@@ -556,7 +562,7 @@ namespace CrystalFlux.WaveSystem
 
             if (showCompletionMessage)
             {
-                if (activeBossBar != null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
+                if (activeBossBar != null && Hivemind == null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
                 else if (currentAnomaly != null && currentAnomaly.isActive) GameController?.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
                 else GameController?.SetTitleForDuration($"Wave {GetCurrentWave()} Complete", 0.5f, 0.25f, 0.25f);
             }
@@ -592,7 +598,7 @@ namespace CrystalFlux.WaveSystem
 
             GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(c.bossBarPrefab) : c.bossBarPrefab;
 
-            if (hasStats && bossBarSource != null && activeBossBar == null)
+            if (hasStats && !TrySpawnHivemindBar(c.bossBarPrefab) && bossBarSource != null && activeBossBar == null)
             {
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
                 activeBossBar = Instantiate(bossBarSource, spawnParent);
@@ -612,6 +618,31 @@ namespace CrystalFlux.WaveSystem
 
             totalSpawned++;
             currentEnemies.Add(enemy);
+        }
+
+        protected bool TrySpawnHivemindBar(GameObject fallback)
+        {
+            HivemindInstance h = Hivemind;
+            if (h == null) return false;
+            if (activeBossBar != null) return true;
+
+            GameObject src = DuelBossBarPrefab(fallback);
+            if (src == null) return true;
+
+            Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
+            activeBossBar = Instantiate(src, spawnParent);
+
+            if (activeBossBar.TryGetComponent<BossBarUI>(out var bb)) bb.SetupPool(h.amd != null ? h.amd.anomalyName : "Hivemind", h.PoolCur, h.PoolMax);
+            return true;
+        }
+
+        public static void StopSpawning()
+        {
+            WaveManager wm = ActiveManager;
+            if (wm == null || !wm.isWaveActive) return;
+
+            wm.waveMaxTotalEnemies = wm.totalSpawned;
+            wm.UpdateWaveText();
         }
 
         protected GameObject DuelBossBarPrefab(GameObject fallback) => duelBossBarPrefab != null ? duelBossBarPrefab : fallback;
@@ -1517,6 +1548,8 @@ namespace CrystalFlux.WaveSystem
         }
 
         public static bool WaveActive => ActiveManager != null && ActiveManager.isWaveActive;
+        public static bool DroughtActive => ActiveManager != null && ActiveManager.isWaveActive && ActiveManager.IsDrought;
+        public static int WaveEnemyTotal => ActiveManager != null ? ActiveManager.waveMaxTotalEnemies : 0;
 
         public static bool GrantRerolls(int amount)
         {

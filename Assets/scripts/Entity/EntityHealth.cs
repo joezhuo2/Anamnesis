@@ -18,6 +18,7 @@ namespace CrystalFlux.EntitySystem
         public TextMeshProUGUI healthBarTextPrefab;
 
         public event Action<GameObject> OnDeath;
+        public static Func<EntityHealth, int, bool> DamageRedirect;
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
         private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
         private bool _isTriggeringOnDealDamage;
@@ -106,7 +107,11 @@ namespace CrystalFlux.EntitySystem
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void ResetStatics() => sharedCanvas = null;
+        private static void ResetStatics()
+        {
+            sharedCanvas = null;
+            DamageRedirect = null;
+        }
 
         internal static Canvas ResolveHealthBarCanvas()
         {
@@ -506,6 +511,7 @@ namespace CrystalFlux.EntitySystem
                 targetChange -= converted;
             }
 
+            if (targetChange < 0 && DamageRedirect != null && DamageRedirect(this, -targetChange)) targetChange = 0;
             if (targetChange > 0) targetChange = Mathf.Min(targetChange, MaxHp - CurHp);
             esm.AddStat(new StatBuff(StatType.currentHp, targetChange));
 
@@ -580,6 +586,7 @@ namespace CrystalFlux.EntitySystem
             regenTimer -= regenInterval;
 
             if (esm == null || !IsAlive || esm.GetStat(StatType.CanGainHp) != 1) return;
+            if (isPlayerEntity && PlayerResourcePool.RegenLocked) return;
             if (ownSem is StatusEffectManager sm && sm.Frozen) return;
             if (CurHp >= MaxHp && !(regenOverHealth && overhealthConvPct > 0f)) return;
 

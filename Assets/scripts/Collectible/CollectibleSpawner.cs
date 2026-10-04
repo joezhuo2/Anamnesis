@@ -74,7 +74,7 @@ namespace CrystalFlux.CollectibleSystem
             TickCooldowns(dt);
             TickAmbushes();
 
-            if (!WaveManager.WaveActive) return;
+            if (!WaveManager.WaveActive || WaveManager.DroughtActive) return;
 
             tickTimer += dt;
             if (tickTimer < tickInterval) return;

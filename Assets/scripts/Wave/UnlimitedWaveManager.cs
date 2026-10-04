@@ -124,7 +124,7 @@ namespace CrystalFlux.WaveSystem
 
             if (showCompletionMessage)
             {
-                if (activeBossBar != null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
+                if (activeBossBar != null && Hivemind == null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);
                 else if (currentAnomaly != null && currentAnomaly.isActive) GameController?.SetTitleForDuration("Anomaly Complete", 0.5f, 0.25f, 0.25f);
                 else GameController?.SetTitleForDuration($"Wave {wave} Complete", 0.5f, 0.25f, 0.25f);
             }
@@ -166,7 +166,7 @@ namespace CrystalFlux.WaveSystem
 
             GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(bossBarPrefab) : (isBossWave ? bossBarPrefab : null);
 
-            if (hasStats && bossBarSource != null && activeBossBar == null)
+            if (hasStats && !TrySpawnHivemindBar(bossBarPrefab) && bossBarSource != null && activeBossBar == null)
             {
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
                 activeBossBar = Instantiate(bossBarSource, spawnParent);

@@ -331,18 +331,15 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 ## New Anomalies
 
 - [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
-- [ ] **Volatile** (no fail) - enemies explode on death after a short telegraph, damaging everything nearby, player and enemies alike. Chain reactions reward grouping enemies up, but punish meleeing a pack. *Uses:* the `AnomalySplitter` death hook pattern via `OnEnemySpawned`, the enemy telegraph system.
 
 - [ ] **Rampage** (no fail) - the boss starts the fight in its final phase (`EnemyPhase`) with reduced max HP. A short, brutal fight that skips the warm-up.
+- [ ] **Unstoppable** (no fail) - the boss is immune to knockback, stun and other hard CC for the wave, but takes `+x%` more damage. Turns CC-lock builds into raw damage races.
 - [ ] **Entourage** (no fail) - common enemies from the wave pool keep trickling in during the boss fight, and every escort alive grants the boss `x%` damage reduction. Forces target priority between boss and adds. (configurable max)
 
-- [ ] **Hivemind** (no fail) - all enemies share one pooled HP bar, so damage to any enemy damages the pool. AoE builds shine, single-target builds struggle. *Uses:* the boss bar for the pool.
-
-- [ ] **Drought** (no fail) - pickups and collectibles do not spawn this wave, and all resources do not naturally regenerate.
-- [ ] **Overcharged** (no fail) - all attack cooldowns are halved, but every cast costs `x%` max HP. Feeds `OnCast` awakenings hard.
+- [ ] **Precision** (fail) - land at least `x%` of your attacks (hits / casts). Fails at wave end if under the threshold. Rewards aim over spam.
+- [ ] **Overcharged** (no fail) - all attack cooldowns are reduced by `y%`, but every cast costs `x%` more resources. Feeds `OnCast` awakenings hard.
 
 ### Boss only
-- [ ] **Unstoppable** (no fail) - the boss is immune to knockback, stun and other hard CC for the wave, but takes `+x%` more damage. Turns CC-lock builds into raw damage races.
 - [ ] **Twin Crowns** (no fail) - a second, weaker copy of the boss spawns alongside it (both at reduced HP). Killing one enrages the other (+atk spd). Bigger reward.
 
 ### Non-boss only
@@ -353,10 +350,7 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 
 ### Any wave
 - [ ] **Shrinking Arena** (no fail) - a closing ring hurts the player outside it and resets at wave end. Forces close-range fighting. *Uses:* the `BlackoutVision` circle approach for the ring.
-- [ ] **Precision** (fail) - land at least `x%` of your attacks (hits / casts). Fails at wave end if under the threshold. Rewards aim over spam.
 - [ ] **Echoes** (no fail) - every enemy attack fires a delayed second copy after 0.5s. Doubles the bullet hell without adding enemies; works on bosses and commons alike.
-- [ ] **Bulwark** (no fail) - damage taken is reduced by `x%`, but all healing is disabled. A pure no-sustain test.
-- [ ] **Gambler** (no fail) - the reward rarity is rolled at the start of the wave and shown; taking damage downgrades it one tier per hit (floor at common), not getting hit upgrades it once at wave end.
 
 ### Bugs/Cleanup
 - [ ] **Same `effName` merges different assets** - `StatusEffectManager.IsSameEffect` matches by name, so Slow (5 assets), Stun (4), Possessed (4), Vulnerable (3) and Burn (2) share one instance. A stronger variant just refreshes or stacks the weaker one's parameters.

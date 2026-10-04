@@ -6,6 +6,7 @@ namespace CrystalFlux.EntitySystem
 {
     public class PlayerResourcePool : MonoBehaviour, IResourcePool
     {
+        public static bool RegenLocked;
         private IStatProvider esm;
         private PlayerUpgradeManager pum;
         private float regenTimer = 0f;
@@ -13,6 +14,9 @@ namespace CrystalFlux.EntitySystem
         private readonly float frf = 5f;
         private float accumaltedRegen = 0f;
         private bool isTriggeringOnManaRegen;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => RegenLocked = false;
 
         private void Start()
         {
@@ -109,7 +113,7 @@ namespace CrystalFlux.EntitySystem
 
         public void RegenStamina()
         {
-            if (esm == null || esm.GetStat(StatType.isAlive) <= 0f) return;
+            if (RegenLocked || esm == null || esm.GetStat(StatType.isAlive) <= 0f) return;
             if (esm.GetStat(StatType.CurrentStamina) >= esm.GetStat(StatType.EffMaxStamina)) return;
             if (esm.GetStat(StatType.CanGainStamina) <= 0f || esm.GetStat(StatType.EffStReg) == 0) return;
 
