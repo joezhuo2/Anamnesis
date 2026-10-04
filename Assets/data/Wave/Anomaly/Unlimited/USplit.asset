@@ -18,7 +18,7 @@ MonoBehaviour:
   maxWave: 128
   minMode: 2
   anomalyType: 5
-  anomalyValue: 50
+  anomalyValue: 65
   anomalyMinVal: 2
   anomalyMaxVal: 7
   disallowOnBossWave: 1

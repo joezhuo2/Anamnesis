@@ -120,7 +120,7 @@
 ### High priority To-Do
 - **Gravity Well** - *something* create an aoe attack that pulls enemies (and debuffs them?)
 - beacon objective (defend/destroy)
-
+- [ ] dps counter
 
 #### Expert Attacks
 - slime => poison splash
@@ -135,7 +135,6 @@
 - reaper => 
 - jellyfish =>
 - bat =>
-**- crab => rush attack (with impact)**
 
 ### Will do sometime
 - [ ] "What's new" changelog popup on update
@@ -146,7 +145,6 @@
 - [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
 
 ### Will Consider
-- [ ] target dummy OR dps counter
 - [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
 - [ ] Scrollable Tooltips
 - [ ] Screenshot mode that hides the HUD
@@ -158,14 +156,13 @@
 - [ ] background/ambience (debris/wind)
 
 ### Planned Abilities 
-- **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each status effect are on the target
+- **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each unique status effect are on the target
 - **Something** - counter dodging creates a shockwave
 - **Gravemark** (Basic) — marks the target instead of damaging it; the next *different* attack slot that hits a marked enemy detonates every mark. Opens a slot-rotation playstyle.
 - **Riptide** (Ultimate) — rush that drags every enemy it passes through along with you (applies `Pulled` on contact), then drops them in a heap on `OnRushEnd`. Sets up AoE ultimates. (new rush dashing through enemies bool)
 - **Overclock** (Ultimate) — no damage. For 8s, every cast advances all other cooldowns by 50%, but each cast costs stamina. When the timer ends you get `Overheat`.
 - **Shatterpoint** — `OnCrit` against a stunned or frozen enemy: consumes the CC and deals 200% crit damage as true damage. 
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
-- **Phoenix Flare** - allows one rebirth every `{x}` waves, and creates a massive explosion on trigger
 - **Event Horizon** (Ultimate) — a slow `Spiral` projectile that `Pulled`s nearby enemies and grows over its lifetime.
 - **Something** - something that grants thorns effect
 - **Something** - something that grants life steal effect
@@ -312,9 +309,6 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 
 ### QoL
 - [ ] **Banish**: a limited per-run charge that removes a reward from its pool for the rest of the run. Allowed in Ironman since it is not a take-back.
-- [ ] **Reward compare**: hovering a reward shows `current -> new` for every stat it touches, and attack replacements show cooldown/damage/scaling side by side with the attack they replace.
-- [ ] **Capstone path badge**: rewards that satisfy a capstone or keystone requirement in the skill tree get a small badge so players can spot build-defining picks without memorizing the tree.
-- [ ] **Quick retry**: a death screen button (and hotkey) that restarts straight into the same gamemode, difficulty and Ironman setting, skipping the home screen.
 - [ ] **First-run hints**: one-time contextual tips (first dash, first corruption, first anomaly, first skill point) that can be reset in settings. Fits v1.0 "a stranger can play it".
 
 ### Gameplay
@@ -329,8 +323,6 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 
 *New ways to earn rewards*
 - [ ] **Blind draw**: a reward panel variant with face-down cards and better rarity odds. You commit to a card before seeing it.
-- [ ] **Transmute altar**: sacrifice an owned reward to reroll it into a random reward one rarity tier higher from the same pool. A risky upgrade path that is separate from corruption.
-- [ ] **Overkill cache**: overkill damage fills a hidden meter; when it is full a crystal cache drops at the last enemy's position. Makes overkill-heavy nuke builds pay out beyond the kill itself.
 
 ### Replayability
 - [ ] **Recollection (meta progression)**: every run pays a persistent currency based on waves cleared, bosses killed and difficulty. Spent on permanent unlocks: new attacks entering the reward pools, an extra starting reroll, extra pre-run picks, new starting kits. Pairs with the v1.4 Memory collectibles.
@@ -341,7 +333,6 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 
 - [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
 - [ ] **Volatile** (no fail) - enemies explode on death after a short telegraph, damaging everything nearby, player and enemies alike. Chain reactions reward grouping enemies up, but punish meleeing a pack. *Uses:* the `AnomalySplitter` death hook pattern via `OnEnemySpawned`, the enemy telegraph system.
-- [ ] **Stagnation** (no fail) - standing still for more than 1.5s stacks a DoT on the player that clears once you move again. Anti-turret pressure for stationary cast builds. *New feature:* a player idle timer and a new `Stagnation` status effect; *uses:* `DoT`.
 
 ### Bugs/Cleanup
 - [ ] **Same `effName` merges different assets** - `StatusEffectManager.IsSameEffect` matches by name, so Slow (5 assets), Stun (4), Possessed (4), Vulnerable (3) and Burn (2) share one instance. A stronger variant just refreshes or stacks the weaker one's parameters.

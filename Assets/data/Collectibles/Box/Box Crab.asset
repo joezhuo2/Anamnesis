@@ -29,9 +29,9 @@ MonoBehaviour:
   ambushLevelBonus: 2
   rewards:
   - data: {fileID: 11400000, guid: 802859c6b3b334b46836adf266506a67, type: 2}
-    weight: 6
+    weight: 4
   - data: {fileID: 11400000, guid: 14fb9188e5eebd1418c6f67ef28403dc, type: 2}
-    weight: 5
+    weight: 4
   - data: {fileID: 11400000, guid: d2d059a491f33c846861a44db27cf176, type: 2}
     weight: 2
   - data: {fileID: 11400000, guid: 44f57e13d9679554fae52f1f8bf2fa14, type: 2}

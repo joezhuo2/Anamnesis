@@ -7,6 +7,53 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.8] - 2026-10-03 - Cult Bat Box & Balance Pass
+
+### Added
+- **Box Cult Bat** spawner box (Master, `minMode` 2): 50% chance, 60s cooldown and lifetime. Ambush of 2–4 Cultist Clones and Bats (+2 levels, radius 3); clearing it drops 3–6 pickups (XP 1, Gold 2, Reroll 2, Skill Point 2 weights). Added to the scene's collectible spawner pool
+
+### Changed
+- Collectible spawner: max spawn distance 6 → 7, max concurrent 10 → 12
+- Pickup values (max roll): Gold 65 → 80, Health 20 → 25, Mana 15 → 20, Stamina 15 → 25, XP 15 → 20
+- Spawner box drop weights (XP/Gold/Reroll/Skill Point), shifting drops away from XP and Gold:
+  - Bat: 6/5/2/1 → 5/4/2/1
+  - Crab: 6/5/2/1 → 4/4/2/1
+  - Slime: 6/5/2/1 → 4/3/2/1
+  - Cult: 3/4/3/2 → 2/3/3/2
+  - Doppelganger: 2/3/4/3 → 1/2/3/3
+- Cosmic Blaze:
+  - cast time 1s → 0s
+  - stamina cost 18 → 16, stamina cost % 8 → 7
+  - physical scaling 600% → 800%
+- Nebula: cast time 0s → 0.3s, can no longer move while casting
+- Sacred Surge: physical scaling 290% → 210%, spell scaling 140% → 90%, now also scales 100% with `EffDefense`
+- Supernova: physical scaling 160% → 120%, true scaling 20% → 15%, now also scales 100% with `EffDefense`
+- Hypernova: physical scaling 190% → 150%, spell scaling 55% → 40%, now also scales 100% with `EffDefense`
+- Stellar Maelstrom: follow distance 2 → 3
+- Bat Mark: spawn delay 0.5s → 1s, spell scaling 50% → 0% (no longer deals damage, only applies its effect)
+- Unlimited anomalies:
+  - Blackout: vision radius 2.5–3.5 → 1–3
+  - Duel: max boost 800 → 1000, can now roll on boss waves
+  - Sealed: max cooldown reduction 30 → 25
+  - Fission (Split): split chance 50 → 65
+  - Stat Mod: max boost 600 → 800
+  - Swarm: max penalty 70 → 80
+  - Time Trial: time limit 90s → 120s
+- Milestone rewards:
+  - Glass Cannon: adds -30% `defensePct`
+  - Tank: +15 `defense` → +25% `defensePct`, move speed -50% → -40%
+  - Rogue: -60 `defense` → -60% `defensePct`
+  - Berserker: -30 `arcaneShield` → -60% `arcaneShieldPct`
+  - Mana Battery: max mana +65% → +80%, mana gain +40% → +50%
+  - Critical Master: dodge chance -10 → -25
+  - Spellweaver: AoE +20% → +30%
+  - Iron Wall: +30 `defense` → +40% `defensePct`
+  - Arcane Shield: +40 `arcaneShield` → +40% `arcaneShieldPct`
+  - Executioner: resistance penetration +20 → +30
+  - Sprinter: adds +40% move speed
+  - Torturer: damage -80% → -85%, max health -35% → -45%
+- Player `bundleVersion` 0.7.7 → 0.7.8
+
 ## [v0.7.7] - 2026-10-03 - Resource Refills & Spell Rebalance
 
 ### Added

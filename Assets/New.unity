@@ -18724,10 +18724,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 121516d3c52ca3948a71c5f3a3ed5253, type: 2}
   - {fileID: 11400000, guid: 4c4af91f9f3e5524d8f6708a5fd667a9, type: 2}
   - {fileID: 11400000, guid: 4c0962552bd156d41ba5e8bec2199a23, type: 2}
+  - {fileID: 11400000, guid: 5021c93697781ea4f9c1e13d93ac11ed, type: 2}
   prewarmCount: 8
   minSpawnDist: 3
-  maxSpawnDist: 6
-  maxConcurrent: 10
+  maxSpawnDist: 7
+  maxConcurrent: 12
   tickInterval: 2
 --- !u!4 &776374561
 Transform:
@@ -27312,6 +27313,8 @@ MonoBehaviour:
       value: 20
     - type: 13
       value: -40
+    - type: 99
+      value: -30
     weight: 1
     variance: 0.15
   - rewardName: Tank
@@ -27321,10 +27324,10 @@ MonoBehaviour:
       value: 30
     - type: 13
       value: 20
-    - type: 98
-      value: 15
+    - type: 99
+      value: 25
     - type: 24
-      value: -50
+      value: -40
     weight: 1
     variance: 0.15
   - rewardName: Rogue
@@ -27336,7 +27339,7 @@ MonoBehaviour:
       value: 25
     - type: 93
       value: 30
-    - type: 98
+    - type: 99
       value: -60
     weight: 1
     variance: 0.15
@@ -27349,17 +27352,17 @@ MonoBehaviour:
       value: 30
     - type: 17
       value: -50
-    - type: 102
-      value: -30
+    - type: 103
+      value: -60
     weight: 1
     variance: 0.15
   - rewardName: Mana Battery
     displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
     baseStatBuffs:
     - type: 60
-      value: 65
+      value: 80
     - type: 58
-      value: 40
+      value: 50
     - type: 0
       value: -10
     - type: 13
@@ -27376,7 +27379,7 @@ MonoBehaviour:
     - type: 3
       value: -30
     - type: 19
-      value: -10
+      value: -25
     weight: 1
     variance: 0.15
   - rewardName: Spellweaver
@@ -27387,7 +27390,7 @@ MonoBehaviour:
     - type: 93
       value: 30
     - type: 8
-      value: 20
+      value: 30
     - type: 4
       value: -40
     - type: 3
@@ -27399,8 +27402,8 @@ MonoBehaviour:
     baseStatBuffs:
     - type: 17
       value: 70
-    - type: 98
-      value: 30
+    - type: 99
+      value: 40
     - type: 24
       value: -40
     - type: 3
@@ -27410,7 +27413,7 @@ MonoBehaviour:
   - rewardName: Arcane Shield
     displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
     baseStatBuffs:
-    - type: 102
+    - type: 103
       value: 40
     - type: 41
       value: 25
@@ -27418,21 +27421,6 @@ MonoBehaviour:
       value: -30
     - type: 5
       value: -25
-    weight: 1
-    variance: 0.15
-  - rewardName: Executioner
-    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
-    baseStatBuffs:
-    - type: 53
-      value: 80
-    - type: 9
-      value: 150
-    - type: 10
-      value: 20
-    - type: 13
-      value: -30
-    - type: 15
-      value: -40
     weight: 1
     variance: 0.15
   - rewardName: Frenzy
@@ -27493,12 +27481,29 @@ MonoBehaviour:
       value: -30
     weight: 1
     variance: 0.15
+  - rewardName: Executioner
+    displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
+    baseStatBuffs:
+    - type: 53
+      value: 80
+    - type: 9
+      value: 150
+    - type: 10
+      value: 30
+    - type: 13
+      value: -30
+    - type: 15
+      value: -40
+    weight: 1
+    variance: 0.15
   - rewardName: Sprinter
     displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
     baseStatBuffs:
     - type: 27
       value: 70
     - type: 48
+      value: 40
+    - type: 24
       value: 40
     - type: 50
       value: -20
@@ -27516,9 +27521,9 @@ MonoBehaviour:
     - type: 56
       value: 40
     - type: 0
-      value: -80
+      value: -85
     - type: 13
-      value: -35
+      value: -45
     weight: 1
     variance: 0.15
   - rewardName: Dark Caster

@@ -22,10 +22,11 @@ MonoBehaviour:
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
-  physicalMult: 6
+  physicalMult: 8
   spellMult: 0
   trueMult: 0
   scalingStat: 31
+  extraScalings: []
   specialMult: 1
   specialScaling: 0
   timeBeforeSameEnemy: 0
@@ -41,6 +42,7 @@ MonoBehaviour:
   additionalChance: 0.6
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
+  distFromCenter: 0
   effects:
   - effect: {fileID: 11400000, guid: 2fce225d1401ee24abcec872839d2555, type: 2}
     selfApply: 1

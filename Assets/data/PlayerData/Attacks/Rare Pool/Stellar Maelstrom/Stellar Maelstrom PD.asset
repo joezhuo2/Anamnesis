@@ -13,18 +13,25 @@ MonoBehaviour:
   m_Name: Stellar Maelstrom PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: a5e26884cd5205647beae0358e00234c, type: 2}
-  speed: 8
   lifetime: 1.25
-  numPierce: 1
   size: 1.5
+  numPierce: 1
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 8
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
   physicalMult: 1.8
   spellMult: 0.7
   trueMult: 0
   scalingStat: 31
+  extraScalings: []
   specialMult: 1
   specialScaling: 0
   timeBeforeSameEnemy: 0
-  followDistance: 2
+  followDistance: 3
+  followSource: 0
   rotationOffset: 0
   maxBoomerangDist: 0
   angleOverride: 0
@@ -35,6 +42,7 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
+  distFromCenter: 0
   effects: []
   orbitRadius: 0
   randOrbRadOffset: 0
