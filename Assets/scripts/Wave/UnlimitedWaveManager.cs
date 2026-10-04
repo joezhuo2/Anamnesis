@@ -122,6 +122,8 @@ namespace CrystalFlux.WaveSystem
                 yield return _waitForSeconds0_5;
             }
 
+            EvaluateWaveEnd();
+
             if (showCompletionMessage)
             {
                 if (activeBossBar != null && Hivemind == null) GameController?.SetTitleForDuration("Boss Defeated", 0.5f, 0.25f, 0.25f);

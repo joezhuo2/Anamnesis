@@ -14691,6 +14691,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a32dd372e35a4da1b13654eb145ba701, type: 2}
   - {fileID: 11400000, guid: 265357c630bb8da4ea1eb68d8eec65b4, type: 2}
   - {fileID: 11400000, guid: 3b922ed6f147c084b912ef4622f7ff27, type: 2}
+  - {fileID: 11400000, guid: e6015c5de4d649de80d8de28aee5c1a7, type: 2}
+  - {fileID: 11400000, guid: 9fdd94fc0c6c42e8bc0a016a801cea3b, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
@@ -27768,6 +27770,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b793d07dd2b642c5a05b83e4b80f45b1, type: 2}
   - {fileID: 11400000, guid: 88524fbed12bb9646958c2bc7c682df2, type: 2}
   - {fileID: 11400000, guid: 8f2fa30e41aaf7244bae88b619c3e0a0, type: 2}
+  - {fileID: 11400000, guid: 928320d371d94cc5864f6db13a3542aa, type: 2}
+  - {fileID: 11400000, guid: c37b2c085ab94b7aa4ef842fbe16ee44, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6

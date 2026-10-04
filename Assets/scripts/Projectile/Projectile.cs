@@ -17,6 +17,7 @@ namespace CrystalFlux.ProjectileSystem
 
         [HideInInspector] public GameObject ownerObj;
         public static bool ApplyingProjectileHit { get; private set; }
+        public static event System.Action<AttackData> PlayerHit;
         [HideInInspector] public Vector2 dir;
         [HideInInspector] public int pierced;
         private float effSpd;
@@ -338,6 +339,8 @@ namespace CrystalFlux.ProjectileSystem
             ApplyingProjectileHit = true;
             try { eh.TakeDamage(dp); }
             finally { ApplyingProjectileHit = prevApplyingHit; }
+
+            if (PlayerHit != null && ownerObj != null && ownerObj.CompareTag("Player")) PlayerHit(ChainOrigin);
 
             TriggerImpact();
 

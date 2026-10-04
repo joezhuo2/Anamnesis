@@ -336,9 +336,6 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **Unstoppable** (no fail) - the boss is immune to knockback, stun and other hard CC for the wave, but takes `+x%` more damage. Turns CC-lock builds into raw damage races.
 - [ ] **Entourage** (no fail) - common enemies from the wave pool keep trickling in during the boss fight, and every escort alive grants the boss `x%` damage reduction. Forces target priority between boss and adds. (configurable max)
 
-- [ ] **Precision** (fail) - land at least `x%` of your attacks (hits / casts). Fails at wave end if under the threshold. Rewards aim over spam.
-- [ ] **Overcharged** (no fail) - all attack cooldowns are reduced by `y%`, but every cast costs `x%` more resources. Feeds `OnCast` awakenings hard.
-
 ### Boss only
 - [ ] **Twin Crowns** (no fail) - a second, weaker copy of the boss spawns alongside it (both at reduced HP). Killing one enrages the other (+atk spd). Bigger reward.
 

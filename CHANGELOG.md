@@ -7,6 +7,24 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.11] - 2026-10-04 - Precision & Overcharged
+
+### Added
+- **Precision** anomaly (`AnomalyType.Precision`, `PrecisionInstance`, fail): land at least a rolled `x%` (`anomalyMinVal`-`anomalyMaxVal`) of your casts. Checked at wave end through the new `AnomalyInstance.OnWaveEnd`, so the wave finishes as a normal wave with no anomaly rewards if accuracy is under the threshold
+  - A cast is any player-initiated attack (`PlayerAttackHandler.AttackCast`) whose projectile deals damage (non-zero Physical/Spell/True/Special mult, or the charge attack's for charge attacks). Reminiscence recasts and other `registerStreak: false` casts do not count
+  - A cast lands when any projectile rooted in it (`ChainOrigin`, so additional spawns and chain retriggers count) hits an enemy (`Projectile.PlayerHit`). Each cast lands at most once, and a hit credits the latest open cast of that attack
+  - Live accuracy shows in the anomaly info text. With no damaging casts the wave passes
+- **Overcharged** anomaly (`AnomalyType.Overcharged`, `OverchargedInstance`, no fail): Basic, Skill and Ultimate gain a rolled `+y%` Cooldown Reduction (`anomalyMinVal`-`anomalyMaxVal`), but every cast costs `anomalyValue`% more HP, stamina and mana
+- New anomaly assets, all contract-enabled (rerolls / skill point % / bonus pool %):
+  - Precision: wave 10+, 55-70% threshold, 2 / 70 / 50. UPrecision: 50-75%, 2 / 70 / 50
+  - Overcharged: +25-40% CDR, +50% cost, 1 / 40 / 30. UOvercharged: +20-50% CDR, +40% cost, 1 / 40 / 30
+- `PlayerAttackHandler.CostPct`: a static percent added to every player attack cost in `GetCosts` (also used by the cooldown UI)
+- `WaveManager.EvaluateWaveEnd()`: runs `OnWaveEnd` on the active anomaly and armed contract after the last enemy dies, before completion titles and reward rolls
+
+### Changed
+- UDrought `maxWave` 105 → 128
+- Player `bundleVersion` 0.7.10 → 0.7.11
+
 ## [v0.7.10] - 2026-10-04 - Hivemind & Drought
 
 ### Added

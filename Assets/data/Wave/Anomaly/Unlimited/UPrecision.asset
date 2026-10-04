@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd68465f6c90387408c88945c62be307, type: 3}
-  m_Name: UDrought
+  m_Name: UPrecision
   m_EditorClassIdentifier: CrystalFlux.Wave::AnomalyData
-  anomalyName: Drought
+  anomalyName: Precision
   desc: 
   minWave: 0
   maxWave: 128
   minMode: 0
-  anomalyType: 9
+  anomalyType: 10
   anomalyValue: 0
-  anomalyMinVal: 0
-  anomalyMaxVal: 0
+  anomalyMinVal: 50
+  anomalyMaxVal: 75
   disallowOnBossWave: 0
   isContract: 1
-  contractRerolls: 1
-  contractSkillPointChance: 40
-  contractMixedPoolChance: 30
+  contractRerolls: 2
+  contractSkillPointChance: 70
+  contractMixedPoolChance: 50

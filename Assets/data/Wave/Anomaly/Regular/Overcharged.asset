@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd68465f6c90387408c88945c62be307, type: 3}
-  m_Name: UDrought
+  m_Name: Overcharged
   m_EditorClassIdentifier: CrystalFlux.Wave::AnomalyData
-  anomalyName: Drought
+  anomalyName: Overcharged
   desc: 
   minWave: 0
-  maxWave: 128
+  maxWave: 105
   minMode: 0
-  anomalyType: 9
-  anomalyValue: 0
-  anomalyMinVal: 0
-  anomalyMaxVal: 0
+  anomalyType: 11
+  anomalyValue: 50
+  anomalyMinVal: 25
+  anomalyMaxVal: 40
   disallowOnBossWave: 0
   isContract: 1
   contractRerolls: 1

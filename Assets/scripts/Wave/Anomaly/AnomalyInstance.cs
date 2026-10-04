@@ -26,6 +26,8 @@ public class AnomalyInstance
 
     public virtual void OnEnemySpawned(GameObject enemy, GameObject prefab, int level) { }
 
+    public virtual void OnWaveEnd() { }
+
     public virtual void FailAnomaly()
     {
         if (!isActive) return;

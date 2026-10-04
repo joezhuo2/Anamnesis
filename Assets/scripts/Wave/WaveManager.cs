@@ -332,7 +332,9 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.Sealed:
                         case AnomalyType.Blackout:
                         case AnomalyType.Hivemind:
-                        case AnomalyType.Drought: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.Drought:
+                        case AnomalyType.Precision:
+                        case AnomalyType.Overcharged: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }
@@ -508,6 +510,12 @@ namespace CrystalFlux.WaveSystem
             contractArmed = true;
         }
 
+        protected void EvaluateWaveEnd()
+        {
+            if (currentAnomaly != null && currentAnomaly.isActive) currentAnomaly.OnWaveEnd();
+            if (contractArmed && currentContract != null && currentContract.isActive) currentContract.OnWaveEnd();
+        }
+
         protected void DisarmContract()
         {
             if (currentContract != null) currentContract.ResetForWave();
@@ -559,6 +567,8 @@ namespace CrystalFlux.WaveSystem
                 CleanEnemyList();
                 yield return _waitForSeconds0_5;
             }
+
+            EvaluateWaveEnd();
 
             if (showCompletionMessage)
             {

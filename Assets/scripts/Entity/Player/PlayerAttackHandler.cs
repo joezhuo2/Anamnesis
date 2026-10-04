@@ -19,6 +19,8 @@ namespace CrystalFlux.EntitySystem
         void IAttackHandler.RemoveAttack(AttackType type) => RemoveAttack(type);
 
         private static readonly int AttackIndexHash = Animator.StringToHash("attackIndex");
+        public static event Action<AttackData> AttackCast;
+        public static float CostPct;
         public List<AttackData> starting = new();
         public GameObject cooldownPrefab;
         public Transform objContainer;
@@ -426,6 +428,8 @@ namespace CrystalFlux.EntitySystem
 
             if (selected.Rushes && pm != null) pm.StartRush(selected);
 
+            if (triggerUpgrades && registerStreak) AttackCast?.Invoke(selected);
+
             if (triggerUpgrades)
             {
                 FreeCast fc = GetFreeCast();
@@ -794,7 +798,9 @@ namespace CrystalFlux.EntitySystem
             float totalHealthCost = Mathf.Abs(attack.HealthCost + (esm.GetStat(StatType.EffMaxHp) * (attack.HealthCostPct * 0.01f)));
             float totalManaCost = Mathf.Abs(attack.ManaCost + (esm.GetStat(StatType.EffMaxMana) * (attack.ManaCostPct * 0.01f)));
 
-            return (Mathf.RoundToInt(totalHealthCost), Mathf.RoundToInt(totalStaminaCost), Mathf.RoundToInt(totalManaCost));
+            float cm = Mathf.Max(0f, 1f + (CostPct * 0.01f));
+
+            return (Mathf.RoundToInt(totalHealthCost * cm), Mathf.RoundToInt(totalStaminaCost * cm), Mathf.RoundToInt(totalManaCost * cm));
         }
 
         public void UpdateAttack(AttackData newAttack)
@@ -878,6 +884,13 @@ namespace CrystalFlux.EntitySystem
 
             lastAttackTimes[type] = newLastTime;
             RefreshStacks(type, attack);
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            AttackCast = null;
+            CostPct = 0f;
         }
 
         public static float GetEffCd(AttackData attack, IStatProvider esm)
