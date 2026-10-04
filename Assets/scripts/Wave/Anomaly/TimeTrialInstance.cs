@@ -5,6 +5,12 @@ public class TimeTrialInstance : AnomalyInstance
     public float timeRemaining;
 
     public TimeTrialInstance(AnomalyData data) : base(data) => timeRemaining = data.anomalyValue;
+
+    public override void StartAnomaly()
+    {
+        base.StartAnomaly();
+        if (amd != null) timeRemaining = amd.anomalyValue;
+    }
     public override void UpdateCheck(float dt)
     {
         if (!isActive || timeRemaining <= 0f) return;

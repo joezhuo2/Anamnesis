@@ -37,6 +37,10 @@ namespace CrystalFlux.WaveSystem
         public int anomalySkillPointAdd;
         public float anomalyQualityAdd;
 
+        [Header("Contract Offsets")]
+        public int minContractCountAdd;
+        public int maxContractCountAdd;
+
         [Header("Corruption Offsets")]
         public float corruptChanceAdd;
         public float corruptPositiveChanceAdd;
@@ -93,6 +97,9 @@ namespace CrystalFlux.WaveSystem
             AppendInt(sb, "Max anomaly rerolls", anomalyRerollMaxAdd);
             AppendInt(sb, "Anomaly skill points", anomalySkillPointAdd);
             AppendFloat(sb, "Anomaly quality", anomalyQualityAdd, "F2");
+
+            AppendInt(sb, "Min contract choices", minContractCountAdd);
+            AppendInt(sb, "Max contract choices", maxContractCountAdd);
 
             AppendPercent(sb, "Corrupt chance", corruptChanceAdd);
             AppendPercent(sb, "Corrupt positive chance", corruptPositiveChanceAdd);

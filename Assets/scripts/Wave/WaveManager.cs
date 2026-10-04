@@ -33,6 +33,7 @@ namespace CrystalFlux.WaveSystem
         [Header("Wave Info Settings")]
         public GameObject waveInfoPanel;
         public TextMeshProUGUI anomalyInfoText;
+        public TextMeshProUGUI contractInfoText;
         private string lastInfo;
         private int lastInfoTick = int.MinValue;
         public TextMeshProUGUI waveText;
@@ -63,6 +64,7 @@ namespace CrystalFlux.WaveSystem
         public GameObject rewardTitleWrapper;
         public string rewardTitle = "Choose your reward";
         public string anomalyTitle = "Select anomaly reward";
+        public string contractTitle = "Select contract";
 
         [Header("Reward Pools")]
         public List<BaseReward> baseBuffPool;
@@ -97,16 +99,27 @@ namespace CrystalFlux.WaveSystem
         public GameObject duelBossBarPrefab = null;
         public GameObject duelStatusEffectPrefab = null;
 
-        protected bool IsDuel => currentAnomaly != null && currentAnomaly.isActive && currentAnomaly is DuelInstance;
-        protected float EnemyCountMult => currentAnomaly != null && currentAnomaly.isActive && currentAnomaly is SwarmInstance sw ? sw.CountMultiplier : 1f;
+        [Header("Contract Settings")]
+        public GameObject contractPrefab = null;
+        public AnomalyInstance currentContract = null;
+        public int minContractCount = 2;
+        public int maxContractCount = 3;
+
+        protected bool IsDuel => currentAnomaly != null && currentAnomaly.isActive && currentAnomaly is DuelInstance
+            || contractArmed && currentContract is DuelInstance;
+        protected float EnemyCountMult => (currentAnomaly != null && currentAnomaly.isActive && currentAnomaly is SwarmInstance sw ? sw.CountMultiplier : 1f)
+            * (contractArmed && currentContract is SwarmInstance csw ? csw.CountMultiplier : 1f);
+        protected bool ContractHeld => currentContract != null && currentContract.amd != null && (contractPaused || contractArmed && currentContract.isActive);
+        protected bool ContractBroken => contractArmed && currentContract != null && !currentContract.isActive;
 
         protected IAnnouncer GameController => IAnnouncer.Current ?? null;
         protected DifficultyData D => difficulty != null ? difficulty : DifficultyData.Neutral;
         protected ModeData M => mode != null ? mode : ModeData.Neutral;
         protected bool CorruptionAllowed => !IronmanSelector.Enabled && M.allowCorruption;
         protected bool anomalyButtonsOpen;
+        protected bool contractButtonsOpen;
         protected bool RerollLocked => IronmanSelector.Enabled || anomalyButtonsOpen && D.lockAnomalyChoice;
-        protected bool SkipLocked => anomalyButtonsOpen && (D.lockAnomalyChoice || M.lockAnomalySkip);
+        protected bool SkipLocked => anomalyButtonsOpen && (D.lockAnomalyChoice || M.lockAnomalySkip) || contractButtonsOpen && M.lockAnomalySkip;
         protected float Quality => additionalQuality + D.qualityBonusAdd;
         protected int RerollGoldCost => Mathf.Max(0, rerollGoldCost + D.rerollGoldCostAdd);
         protected RewardType type = RewardType.Basic;
@@ -134,6 +147,14 @@ namespace CrystalFlux.WaveSystem
         protected int pendingOccasionalSkillPoints = 0;
         protected int pendingAnomalyRerolls = -1;
         protected int pendingAnomalySkillPoints = -1;
+        protected AnomalyType? contractType;
+        protected bool contractArmed;
+        protected bool contractPaused;
+        protected int pendingContractRerolls;
+        protected int pendingContractSkillPoints;
+        protected bool pendingContractPool;
+        protected bool pendingAnomalyRewards;
+        private int lastContractKey = int.MinValue;
         protected readonly List<GameObject> activeRewardButtons = new();
         protected readonly List<StatSynergy> synergiesThisRoll = new();
         protected StatSynergyManager cssm;
@@ -278,6 +299,12 @@ namespace CrystalFlux.WaveSystem
                 currentAnomaly = null;
             }
 
+            if (currentContract != null)
+            {
+                currentContract.Cleanup();
+                currentContract = null;
+            }
+
             ClearRewardButtons();
 
             if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
@@ -309,6 +336,35 @@ namespace CrystalFlux.WaveSystem
                 lastInfoTick = int.MinValue;
                 if (anomalyInfoText != null) SetAnomalyInfo("");
             }
+
+            if (contractArmed && currentContract != null && currentContract.isActive) currentContract.UpdateCheck(Time.deltaTime);
+            UpdateContractInfo();
+        }
+
+        private void UpdateContractInfo()
+        {
+            if (contractInfoText == null) return;
+
+            int key;
+            if (currentContract == null || currentContract.amd == null) key = -1;
+            else if (contractPaused) key = -2;
+            else if (!contractArmed) key = -3;
+            else if (!currentContract.isActive) key = -4;
+            else if (currentContract is TimeTrialInstance tt) key = Mathf.Max(0, Mathf.RoundToInt(tt.timeRemaining * 10f));
+            else key = -3;
+
+            if (key == lastContractKey) return;
+            lastContractKey = key;
+
+            string n = key == -1 ? "" : $"Contract: {currentContract.amd.anomalyName}";
+            contractInfoText.text = key switch
+            {
+                -1 => "",
+                -2 => $"{n} (Paused)",
+                -3 => n,
+                -4 => $"{n} - Broken",
+                _ => $"{n} - {key * 0.1f:F1}s"
+            };
         }
 
         private void SetAnomalyInfo(string s)
@@ -360,7 +416,7 @@ namespace CrystalFlux.WaveSystem
 
         protected void RefreshLockButtons()
         {
-            bool show = !IronmanSelector.Enabled && type != RewardType.Anomaly && activeRewardButtons.Count > 1;
+            bool show = !IronmanSelector.Enabled && type != RewardType.Anomaly && type != RewardType.Contract && activeRewardButtons.Count > 1;
             RewardButton lk = show ? GetLockedReward() : null;
 
             for (int i = 0; i < activeRewardButtons.Count; i++)
@@ -416,6 +472,7 @@ namespace CrystalFlux.WaveSystem
         {
             WaveData currentWave = currentSequence.waves[currentWaveIndex];
 
+            ArmContract(IsBossWave(currentWave));
             isWaveActive = true;
             currentWaveIndex++;
 
@@ -427,6 +484,29 @@ namespace CrystalFlux.WaveSystem
             RefillPlayerResources();
 
             HandleWave(currentWave);
+        }
+
+        protected void ArmContract(bool boss)
+        {
+            contractArmed = false;
+            contractPaused = false;
+            if (currentContract == null || currentContract.amd == null) return;
+
+            if (boss && currentContract.amd.disallowOnBossWave)
+            {
+                contractPaused = true;
+                return;
+            }
+
+            currentContract.StartAnomaly();
+            contractArmed = true;
+        }
+
+        protected void DisarmContract()
+        {
+            if (currentContract != null) currentContract.ResetForWave();
+            contractArmed = false;
+            contractPaused = false;
         }
 
         protected void RefillPlayerResources()
@@ -508,8 +588,7 @@ namespace CrystalFlux.WaveSystem
 
             bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
 
-            if (hasStats && currentAnomaly != null) currentAnomaly.ApplyEnemyBuffs(esm);
-            if (currentAnomaly != null) currentAnomaly.OnEnemySpawned(enemy, c.enemyPrefab, level);
+            ApplySpawnHooks(enemy, c.enemyPrefab, level, hasStats ? esm : null);
 
             GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(c.bossBarPrefab) : c.bossBarPrefab;
 
@@ -589,14 +668,25 @@ namespace CrystalFlux.WaveSystem
             GameObject enemy = EnemySpawning.SpawnEnemy(prefab, pos, radius, level);
             if (enemy == null) return null;
 
-            if (wm.currentAnomaly != null)
-            {
-                if (enemy.TryGetComponent<IStatProvider>(out var esm)) wm.currentAnomaly.ApplyEnemyBuffs(esm);
-                wm.currentAnomaly.OnEnemySpawned(enemy, prefab, level);
-            }
+            wm.ApplySpawnHooks(enemy, prefab, level, enemy.TryGetComponent<IStatProvider>(out var esm) ? esm : null);
 
             RegisterSplitEnemy(enemy);
             return enemy;
+        }
+
+        protected void ApplySpawnHooks(GameObject enemy, GameObject prefab, int level, IStatProvider esm)
+        {
+            if (currentAnomaly != null)
+            {
+                if (esm != null) currentAnomaly.ApplyEnemyBuffs(esm);
+                currentAnomaly.OnEnemySpawned(enemy, prefab, level);
+            }
+
+            if (contractArmed && currentContract != null)
+            {
+                if (esm != null) currentContract.ApplyEnemyBuffs(esm);
+                currentContract.OnEnemySpawned(enemy, prefab, level);
+            }
         }
 
         protected virtual int CurrentEnemyLevel()
@@ -629,10 +719,51 @@ namespace CrystalFlux.WaveSystem
 
             OpenRewardButtons();
             UpdateOccasionalWaveRewards(GetCurrentWave());
+            ApplyContractRewards();
+            DisarmContract();
             UpdateRerollUI();
 
-            if (currentAnomaly != null) CleanupAnomaly();
+            if (pendingContractPool) OpenContractPool();
+            else if (currentAnomaly != null) CleanupAnomaly();
             else TriggerStandardRewards(GetCurrentWave());
+        }
+
+        protected void RollContractRewards()
+        {
+            pendingContractRerolls = 0;
+            pendingContractSkillPoints = 0;
+            pendingContractPool = false;
+            if (!ContractHeld) return;
+
+            AnomalyData amd = currentContract.amd;
+            if (!IronmanSelector.Enabled) pendingContractRerolls = Mathf.Max(0, amd.contractRerolls);
+            if (Random.Range(0f, 100f) < amd.contractSkillPointChance) pendingContractSkillPoints = 1;
+            pendingContractPool = Random.Range(0f, 100f) < amd.contractMixedPoolChance;
+        }
+
+        protected void ApplyContractRewards()
+        {
+            rerolls += pendingContractRerolls;
+
+            if (pendingContractSkillPoints > 0)
+            {
+                CachePlayerSkillTree();
+                if (cpst != null) cpst.AddSkillPoints(pendingContractSkillPoints);
+            }
+
+            pendingContractRerolls = 0;
+            pendingContractSkillPoints = 0;
+        }
+
+        protected void OpenContractPool()
+        {
+            pendingContractPool = false;
+            pendingAnomalyRewards = currentAnomaly != null;
+            pendingStandardRewards = !pendingAnomalyRewards;
+
+            type = RewardType.Mixed;
+            PanelSetup();
+            GenerateMixedPool();
         }
         private void WaveCleanup()
         {
@@ -686,10 +817,12 @@ namespace CrystalFlux.WaveSystem
             bool anomalyCompleted = currentAnomaly != null && currentAnomaly.isActive;
             pendingAnomalyRerolls = anomalyCompleted ? RollAnomalyRerolls() : 0;
             pendingAnomalySkillPoints = anomalyCompleted ? AnomalySkillPointGain() : 0;
+            RollContractRewards();
 
-            int rerollGain = pendingOccasionalRerolls + pendingAnomalyRerolls;
-            int skillPointGain = pendingOccasionalSkillPoints + pendingAnomalySkillPoints;
-            if (rerollGain <= 0 && skillPointGain <= 0 || !showCompletionMessage) return;
+            int rerollGain = pendingOccasionalRerolls + pendingAnomalyRerolls + pendingContractRerolls;
+            int skillPointGain = pendingOccasionalSkillPoints + pendingAnomalySkillPoints + pendingContractSkillPoints;
+            bool broken = ContractBroken;
+            if (rerollGain <= 0 && skillPointGain <= 0 && !broken || !showCompletionMessage) return;
 
             string msg = "";
             if (rerollGain > 0) msg = $"+{rerollGain} Reroll{(rerollGain > 1 ? "s" : "")}";
@@ -698,6 +831,7 @@ namespace CrystalFlux.WaveSystem
                 if (msg.Length > 0) msg += ", ";
                 msg += $"+{skillPointGain} Skill Point{(skillPointGain > 1 ? "s" : "")}";
             }
+            if (broken) msg += msg.Length > 0 ? ", Contract Broken" : "Contract Broken";
 
             GameController?.SetSubtitleForDuration(msg, 0.5f, 0.25f, 0.25f);
         }
@@ -776,7 +910,7 @@ namespace CrystalFlux.WaveSystem
 
             int w = GetCurrentWave();
             bool bossNext = NextWaveIsBoss();
-            return availableAnomalies.Exists(a => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext));
+            return availableAnomalies.Exists(a => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext) && !IsContractType(a));
         }
         protected bool GenerateAnomalyChoices()
         {
@@ -786,7 +920,7 @@ namespace CrystalFlux.WaveSystem
 
             int w = GetCurrentWave();
             bool bossNext = NextWaveIsBoss();
-            var available = availableAnomalies.FindAll(a => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext));
+            var available = availableAnomalies.FindAll(a => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext) && !IsContractType(a));
             if (available.Count == 0) return false;
 
             type = RewardType.Anomaly;
@@ -815,6 +949,90 @@ namespace CrystalFlux.WaveSystem
 
             return true;
         }
+        protected bool IsContractType(AnomalyData a) => contractType.HasValue && a.anomalyType == contractType.Value;
+
+        protected bool IsContractEligible(AnomalyData a) => a != null && a.isContract && a.minMode <= RunMode.Tier;
+
+        protected bool HasContractChoices()
+        {
+            if (availableAnomalies == null || contractPrefab == null) return false;
+            return availableAnomalies.Exists(IsContractEligible);
+        }
+
+        public bool TryStartContract()
+        {
+            if (currentContract != null || !HasContractChoices()) return false;
+
+            ActiveManager = this;
+            return GenerateContractChoices();
+        }
+
+        protected bool GenerateContractChoices()
+        {
+            if (!HasContractChoices()) return false;
+
+            var available = availableAnomalies.FindAll(IsContractEligible);
+
+            type = RewardType.Contract;
+            OpenContractButtons();
+            PanelSetup();
+
+            int minChoices = Mathf.Max(1, minContractCount + D.minContractCountAdd);
+            int maxChoices = Mathf.Max(minChoices, maxContractCount + D.maxContractCountAdd);
+            int choices = Random.Range(minChoices, maxChoices + 1);
+            Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
+
+            for (int i = 0; i < choices; i++)
+            {
+                AnomalyData amd = available[Random.Range(0, available.Count)];
+                AnomalyInstance instance = amd.CreateInstance();
+
+                GameObject btnObj = PrefabPool.Acquire(contractPrefab, targetParent);
+                if (btnObj == null) continue;
+
+                activeRewardButtons.Add(btnObj);
+
+                if (btnObj.TryGetComponent<ContractButtonUI>(out var cb))
+                    cb.Setup(instance, OnContractButtonClicked, GetContractRewardLine(amd));
+            }
+
+            return true;
+        }
+
+        protected string GetContractRewardLine(AnomalyData amd)
+        {
+            List<string> parts = new();
+
+            if (!IronmanSelector.Enabled && amd.contractRerolls > 0) parts.Add($"+{amd.contractRerolls} Reroll{(amd.contractRerolls > 1 ? "s" : "")}");
+            if (amd.contractSkillPointChance > 0f) parts.Add($"{amd.contractSkillPointChance:0.#}% for +1 Skill Point");
+            if (amd.contractMixedPoolChance > 0f) parts.Add($"{amd.contractMixedPoolChance:0.#}% for a bonus reward");
+
+            return parts.Count > 0 ? $"Per Wave: {string.Join(", ", parts)}" : "";
+        }
+
+        protected void OnContractButtonClicked(AnomalyInstance instance)
+        {
+            if (instance != null && instance.amd != null)
+            {
+                currentContract = instance;
+                contractType = instance.amd.anomalyType;
+                lastContractKey = int.MinValue;
+            }
+
+            ContinueAfterContract();
+        }
+
+        protected void ContinueAfterContract()
+        {
+            CloseRewardUI();
+            contractButtonsOpen = false;
+
+            if (TryStartPreRunPicks()) return;
+
+            Time.timeScale = 1f;
+            StartNextWave();
+        }
+
         protected void GenerateRewards()
         {
             type = RewardType.Basic;
@@ -1284,6 +1502,7 @@ namespace CrystalFlux.WaveSystem
             rewardTitleText.text = type switch
             {
                 RewardType.Anomaly => anomalyTitle,
+                RewardType.Contract => contractTitle,
                 RewardType.Synergy => synergyTitle,
                 _ => rewardTitle
             };
@@ -1293,7 +1512,7 @@ namespace CrystalFlux.WaveSystem
         {
             if (corruptButton == null) return;
 
-            bool allowed = CorruptionAllowed && type != RewardType.Anomaly && type != RewardType.Milestone && type != RewardType.PreRun && type != RewardType.Synergy && GetCurrentWave() % 5 != 0;
+            bool allowed = CorruptionAllowed && type != RewardType.Anomaly && type != RewardType.Milestone && type != RewardType.PreRun && type != RewardType.Synergy && type != RewardType.Contract && GetCurrentWave() % 5 != 0;
             corruptButton.gameObject.SetActive(allowed);
         }
 
@@ -1348,6 +1567,12 @@ namespace CrystalFlux.WaveSystem
 
             if (SkipLocked) return;
 
+            if (type == RewardType.Contract)
+            {
+                ContinueAfterContract();
+                return;
+            }
+
             if (type == RewardType.Anomaly)
             {
                 CloseRewardUI();
@@ -1375,6 +1600,7 @@ namespace CrystalFlux.WaveSystem
             CachePlayerStatManager();
 
             if (type == RewardType.Anomaly && !HasAnomalyChoices()) return;
+            if (type == RewardType.Contract && !HasContractChoices()) return;
             if (type == RewardType.PreRun && !HasPreRunChoices()) return;
             if (type == RewardType.Synergy && !HasSynergyChoices()) return;
 
@@ -1394,6 +1620,7 @@ namespace CrystalFlux.WaveSystem
             switch (type)
             {
                 case RewardType.Anomaly: GenerateAnomalyChoices(); break;
+                case RewardType.Contract: GenerateContractChoices(); break;
                 case RewardType.PreRun: GeneratePreRunPicks(); break;
                 case RewardType.Basic: GenerateRewards(); break;
                 case RewardType.Rare: GenerateRarePool(); break;
@@ -1580,9 +1807,12 @@ namespace CrystalFlux.WaveSystem
 
         public void OpenRewardButtons() => OpenActionButtons(false);
 
-        protected void OpenActionButtons(bool anomaly)
+        public void OpenContractButtons() => OpenActionButtons(false, true);
+
+        protected void OpenActionButtons(bool anomaly, bool contract = false)
         {
             anomalyButtonsOpen = anomaly;
+            contractButtonsOpen = contract;
             if (rerollButton != null) rerollButton.gameObject.SetActive(!RerollLocked);
             if (skipButton != null) skipButton.gameObject.SetActive(!SkipLocked);
             UpdateRerollUI();
@@ -1590,7 +1820,12 @@ namespace CrystalFlux.WaveSystem
 
         protected void ResumeGameLoop()
         {
-            if (pendingStandardRewards)
+            if (pendingAnomalyRewards)
+            {
+                pendingAnomalyRewards = false;
+                CleanupAnomaly();
+            }
+            else if (pendingStandardRewards)
             {
                 TriggerStandardRewards(GetCurrentWave());
             }
@@ -1617,6 +1852,7 @@ namespace CrystalFlux.WaveSystem
 
                 if (btn.TryGetComponent<RewardButton>(out var rewardButton)) rewardButton.ResetForPooling();
                 else if (btn.TryGetComponent<AnomalyButtonUI>(out var anomalyButton)) anomalyButton.ResetForPooling();
+                else if (btn.TryGetComponent<ContractButtonUI>(out var contractButton)) contractButton.ResetForPooling();
                 else if (btn.TryGetComponent<Button>(out var button)) button.onClick.RemoveAllListeners();
 
                 PrefabPool.Release(ref btn);

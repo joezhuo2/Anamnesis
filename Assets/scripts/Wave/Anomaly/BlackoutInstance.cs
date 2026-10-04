@@ -50,7 +50,7 @@ public class BlackoutInstance : AnomalyInstance
         if (vision != null) vision.Widen();
     }
 
-    public override void Cleanup()
+    public override void ResetForWave()
     {
         for (int i = 0; i < tracked.Count; i++)
             if (tracked[i] != null) tracked[i].OnDeath -= OnEnemyDeath;
@@ -59,6 +59,6 @@ public class BlackoutInstance : AnomalyInstance
         if (vision != null) Object.Destroy(vision.gameObject);
         vision = null;
 
-        base.Cleanup();
+        base.ResetForWave();
     }
 }

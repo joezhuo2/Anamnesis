@@ -7,6 +7,40 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.9] - 2026-10-04 - Contracts
+
+### Added
+- **Contracts**: a run-long objective picked at the start of every run, built from existing anomalies
+  - `AnomalyData` gains a `Contract` header: `isContract` (the asset stays in the anomaly pool and can also be offered as a contract), `contractRerolls`, `contractSkillPointChance` (0–100) and `contractMixedPoolChance` (0–100)
+  - The contract screen opens before the pre-run picks on both Regular and Unlimited runs (`TryStartContract`, called from `RegularWaveButtonController` and `UnlimitedWaveButtonController`). It offers `minContractCount`–`maxContractCount` cards (plus the new `DifficultyData.minContractCountAdd` / `maxContractCountAdd`) from every `isContract` asset with `minMode <= RunMode.Tier`. Wave range is ignored and duplicates are allowed
+  - Reroll costs a reroll token, or gold if none are left, and is unavailable on Ironman. Skip is locked by `ModeData.lockAnomalySkip` (currently on for Master only). `DifficultyData.lockAnomalyChoice` does not affect the contract screen. The screen is skipped silently when no asset qualifies or `contractPrefab` is unassigned
+  - A held contract re-arms at the start of every wave (`ArmContract`) and resets at wave end (`DisarmContract`), applying its enemy buffs, spawn hooks, Duel and Swarm counts alongside any wave anomaly. On boss waves, contracts with `disallowOnBossWave` pause and still count as held
+  - Each wave the contract holds pays `contractRerolls` (0 on Ironman), a `contractSkillPointChance` roll for 1 skill point, and a `contractMixedPoolChance` roll for a bonus mixed reward pool. Breaking the condition (Time Trial timeout, No Hit damage) forfeits that wave's payout. Rerolls and skill points join the wave completion subtitle, which also reads "Contract Broken" when the condition fails
+  - Reward order after a wave: contract bonus pool, then the anomaly pool, then the standard reward (`pendingAnomalyRewards` chains them through `ResumeGameLoop`)
+  - Holding a contract removes every anomaly of the same `AnomalyType` from the anomaly pool for the rest of the run. Skipping the contract excludes nothing
+- **`ContractButtonUI`** and **`ContractButtonPrefab`**: contract cards with title, description and per-wave reward text. The tooltip notes the run-long duration, the forfeit rule, the boss-wave pause and which anomaly type gets removed
+- `WaveManager` fields: `contractInfoText` (HUD line: "Contract: name", plus the Time Trial timer, "(Paused)" or "- Broken"), `contractTitle`, `contractPrefab`, `minContractCount`, `maxContractCount`. Scene values: 2–3 cards on Regular, 2–4 on Unlimited
+- `RewardType.Contract`
+- Contract-enabled anomalies (rerolls / skill point % / bonus pool %):
+  - No Hit and UNoHit: 2 / 80 / 60
+  - Sealed, USealed, Stat Mod (both) and UStatMod: 1 / 60 / 40
+  - Blackout, UBlackout, Fission (both), USplit, Swarm (both), USwarm, Time Trial (30/45/60/75) and UTime: 1 / 50 / 30
+  - Duel and UDuel are not offered as contracts
+
+### Changed
+- `AnomalyInstance` teardown moved into a new virtual `ResetForWave()`. `Cleanup()` now calls it and then clears `amd`. `BlackoutInstance`, `NoDamageTrialInstance` and `SealedInstance` override `ResetForWave` instead of `Cleanup`
+- `TimeTrialInstance.StartAnomaly` resets `timeRemaining` to `anomalyValue`, so a re-armed contract gets a fresh timer every wave
+- Enemy spawn hooks in `WaveManager.SpawnEnemy`, `SpawnAmbushEnemy` and `UnlimitedWaveManager.SpawnEnemy` go through a shared `ApplySpawnHooks`, which applies both the wave anomaly and the contract
+- UBlackout: vision widen per kill 1.5 → 1
+- Reaper:
+  - Spam: cooldown 14s → 15s, no longer applies Burn
+  - Strike: spawn delay 0.8s → 1s
+  - hitbox slightly larger
+- Frost Slime:
+  - Blizzard: spell scaling 40% → 30%, Slow chance 65% → 55%, Freeze chance 20% → 15%
+  - Snowstorm: projectiles 10 (+6 random) → 8 (+5 random), Slow chance 80% → 65%, Freeze chance 35% → 25%
+- Player `bundleVersion` 0.7.8 → 0.7.9
+
 ## [v0.7.8] - 2026-10-03 - Cult Bat Box & Balance Pass
 
 ### Added

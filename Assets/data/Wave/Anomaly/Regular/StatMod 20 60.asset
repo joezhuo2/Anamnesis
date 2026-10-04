@@ -16,7 +16,13 @@ MonoBehaviour:
   desc: 
   minWave: 51
   maxWave: 105
+  minMode: 0
   anomalyType: 2
   anomalyValue: 0
   anomalyMinVal: 20
   anomalyMaxVal: 60
+  disallowOnBossWave: 0
+  isContract: 1
+  contractRerolls: 1
+  contractSkillPointChance: 60
+  contractMixedPoolChance: 40

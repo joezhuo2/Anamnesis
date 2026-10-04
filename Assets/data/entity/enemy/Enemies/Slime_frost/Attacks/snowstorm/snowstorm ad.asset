@@ -50,8 +50,8 @@ MonoBehaviour:
   spawnDelay: 0.5
   spawnDistance: 2
   fixedDistance: 0
-  projectileCount: 10
-  randomCount: 6
+  projectileCount: 8
+  randomCount: 5
   spread: 0
   randomSpread: 0
   minDelay: 0

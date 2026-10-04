@@ -16,5 +16,13 @@ MonoBehaviour:
   desc: Complete the wave in at most 45 seconds
   minWave: 21
   maxWave: 30
+  minMode: 0
   anomalyType: 0
   anomalyValue: 45
+  anomalyMinVal: 0
+  anomalyMaxVal: 0
+  disallowOnBossWave: 0
+  isContract: 1
+  contractRerolls: 1
+  contractSkillPointChance: 50
+  contractMixedPoolChance: 30

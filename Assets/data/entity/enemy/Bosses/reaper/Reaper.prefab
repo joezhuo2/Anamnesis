@@ -123,6 +123,7 @@ MonoBehaviour:
   canDeaggro: 1
   stoppingDistance: 3
   flipRotation: 1
+  retargetInterval: {x: 1, y: 3}
   target: {fileID: 0}
 --- !u!114 &4107656869611246124
 MonoBehaviour:
@@ -143,6 +144,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 963dcbc7ba74d3748809625f7c94a829, type: 2}
   - {fileID: 11400000, guid: 994bd3b4b99783d4bb9d64921e6a21f5, type: 2}
   globalCooldown: 1
+  fallbackRange: 0
   castBarPrefab: {fileID: 5326710201406479706, guid: fe45e7807c448b3488003baa762ff520, type: 3}
   castBarTextPrefab: {fileID: 6961074376611238736, guid: 096da352af1b7ee4fbabc3c804c8d36b, type: 3}
   castBarOffset: {x: 0, y: -0.7, z: 0}
@@ -302,6 +304,6 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.36923218, y: -0.2109909}
-  m_Size: {x: 0.29986572, y: 0.63352966}
+  m_Offset: {x: 0.35381708, y: -0.20071399}
+  m_Size: {x: 0.44227394, y: 0.6863823}
   m_Direction: 0

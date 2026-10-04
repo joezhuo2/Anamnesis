@@ -16,8 +16,13 @@ MonoBehaviour:
   desc: All enemies in the wave are weakened, but far more of them arrive
   minWave: 5
   maxWave: 40
+  minMode: 0
   anomalyType: 3
   anomalyValue: 0
   anomalyMinVal: 20
   anomalyMaxVal: 40
   disallowOnBossWave: 1
+  isContract: 1
+  contractRerolls: 1
+  contractSkillPointChance: 50
+  contractMixedPoolChance: 30

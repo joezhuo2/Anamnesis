@@ -16,6 +16,13 @@ public class AnomalyData : ScriptableObject
     public float anomalyMaxVal;
     public bool disallowOnBossWave;
 
+    [Header("Contract")]
+    [Tooltip("Also offered in the run-start contract pool. A held contract removes every anomaly of the same AnomalyType from the anomaly pool")]
+    public bool isContract;
+    [Tooltip("Rerolls granted each wave the contract holds (0 on Ironman)")] [Min(0)] public int contractRerolls = 1;
+    [Tooltip("Chance (0-100) for 1 skill point each wave the contract holds")] [Range(0f, 100f)] public float contractSkillPointChance = 10f;
+    [Tooltip("Chance (0-100) for an extra mixed reward pool each wave the contract holds")] [Range(0f, 100f)] public float contractMixedPoolChance = 10f;
+
     public AnomalyInstance CreateInstance()
     {
         return anomalyType switch

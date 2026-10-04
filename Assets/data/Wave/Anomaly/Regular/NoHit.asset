@@ -16,5 +16,13 @@ MonoBehaviour:
   desc: 'Complete the wave without getting hit. '
   minWave: 0
   maxWave: 105
+  minMode: 0
   anomalyType: 1
   anomalyValue: 0
+  anomalyMinVal: 0
+  anomalyMaxVal: 0
+  disallowOnBossWave: 0
+  isContract: 1
+  contractRerolls: 2
+  contractSkillPointChance: 80
+  contractMixedPoolChance: 60

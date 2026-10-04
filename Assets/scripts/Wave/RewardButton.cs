@@ -7,7 +7,7 @@ using CrystalFlux.Core;
 
 namespace CrystalFlux.WaveSystem
 {
-    public enum RewardType { Mixed, Basic, Rare, Treasure, Anomaly, Milestone, PreRun, Synergy }
+    public enum RewardType { Mixed, Basic, Rare, Treasure, Anomaly, Milestone, PreRun, Synergy, Contract }
 
     public class RewardButton : MonoBehaviour
     {

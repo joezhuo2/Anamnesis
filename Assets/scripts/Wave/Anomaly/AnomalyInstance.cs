@@ -39,10 +39,15 @@ public class AnomalyInstance
         isActive = false;
         isCompleted = true;
     }
-    public virtual void Cleanup()
+    public virtual void ResetForWave()
     {
-        amd = null;
         isActive = false;
         isCompleted = false;
+    }
+
+    public void Cleanup()
+    {
+        ResetForWave();
+        amd = null;
     }
 }

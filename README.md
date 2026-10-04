@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.7.7** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.7.9** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
@@ -28,7 +28,8 @@ Current release: **v0.7.7** — see [CHANGELOG.md](CHANGELOG.md) for release his
 3. **Explore the world** — Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them.
 3. **Choose a reward** — buffs, rare attacks or Awakenings. Lock one reward and reroll the rest, pay gold when out of rerolls, or corrupt the rewards for a bigger gamble.
 4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*, *Blackout*) that trade risk for rerolls, skill points, and an additional reward.
-5. **Spend skill points and gold** — unlock skill tree nodes, refund them with gold, level up from XP, and repeat.
+5. **Take a contract** — at the start of every run, pick a run-long anomaly that applies every wave and pays rerolls, a chance at a skill point and a chance at a bonus reward each wave you keep its condition. Holding one removes that anomaly type from the anomaly pool.
+6. **Spend skill points and gold** — unlock skill tree nodes, refund them with gold, level up from XP, and repeat.
 
 ---
 

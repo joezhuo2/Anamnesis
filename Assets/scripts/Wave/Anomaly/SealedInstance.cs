@@ -62,7 +62,7 @@ public class SealedInstance : AnomalyInstance
         }
     }
 
-    public override void Cleanup()
+    public override void ResetForWave()
     {
         if (cpah != null) cpah.SetSlotLocked(sealedSlot, false);
 
@@ -72,6 +72,6 @@ public class SealedInstance : AnomalyInstance
         appliedBuffs.Clear();
         cpah = null;
         cpsm = null;
-        base.Cleanup();
+        base.ResetForWave();
     }
 }

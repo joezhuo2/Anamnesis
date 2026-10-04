@@ -33,7 +33,7 @@ namespace CrystalFlux.WaveSystem
             IAnnouncer.Current?.DisableSubtitle();
             IAnnouncer.Current?.DisableTitle();
 
-            if (!waveManager.TryStartPreRunPicks()) waveManager.StartNextWave();
+            if (!waveManager.TryStartContract() && !waveManager.TryStartPreRunPicks()) waveManager.StartNextWave();
         }
 
         private WaveManager FindBaseWaveManager()

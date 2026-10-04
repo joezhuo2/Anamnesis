@@ -744,7 +744,7 @@ are independent of difficulty.
 | `allowCorruptionSpecials` | Lets corruption roll [corruption specials](#corruption-special-pool) |
 | `unlockUltimates` | Off: the player's Ultimate is removed, no Ultimate can be granted by rewards or skill nodes, and the Ultimate button stays on the cooldown bar greyed out like a Sealed slot ("Locked in this mode") for the whole run |
 | `startingUlt` | Equipped at run start when `unlockUltimates` is on |
-| `lockAnomalySkip` | Hides and blocks Skip on the anomaly panel (see [Anomaly Reroll & Skip](#anomaly-reroll--skip)) |
+| `lockAnomalySkip` | Hides and blocks Skip on the anomaly panel and the contract panel (see [Anomaly Reroll & Skip](#anomaly-reroll--skip)) |
 
 Without a mode asset the run behaves as before: corruption, specials and Ultimates all on, at tier 0.
 
@@ -807,10 +807,50 @@ check the same flags, so a hidden action can't fire.
 |---|---|---|---|
 | Ironman Mode | `IronmanSelector.Enabled` | hidden on every panel | allowed |
 | Nightmare | `DifficultyData.lockAnomalyChoice` | hidden on the anomaly panel | hidden on the anomaly panel |
-| Master | `ModeData.lockAnomalySkip` | allowed (unless Ironman) | hidden on the anomaly panel |
+| Master | `ModeData.lockAnomalySkip` | allowed (unless Ironman) | hidden on the anomaly and contract panels |
 
 The rules stack: Nightmare locks both no matter the mode or Ironman setting. The reroll count
 text follows the Reroll button and is re-shown whenever rerolls become available again.
+On the contract panel only Ironman (Reroll) and `lockAnomalySkip` (Skip) apply; `lockAnomalyChoice` does not.
+
+---
+
+# Contracts
+
+A contract is a run-long anomaly picked before wave 1. Any `AnomalyData` with `isContract` can be
+offered; the asset also stays in the normal anomaly pool.
+
+**Offer.** `RegularWaveButtonController` and `UnlimitedWaveButtonController` call
+`WaveManager.TryStartContract()` first, then `TryStartPreRunPicks()`, then `StartNextWave()`. The
+panel (`RewardType.Contract`, `contractTitle`) shows `minContractCount`..`maxContractCount` cards
+(plus `DifficultyData.minContractCountAdd` / `maxContractCountAdd`) built with `contractPrefab` /
+`ContractButtonUI`, drawn with duplicates from every `isContract` asset with `minMode <= RunMode.Tier`.
+`minWave` / `maxWave` are ignored. No eligible asset or no `contractPrefab` skips the panel. Picking or
+skipping continues to the pre-run picks.
+
+**Each wave.** `BeginWave` calls `ArmContract`: on a boss wave a contract with `disallowOnBossWave`
+pauses (counts as held), otherwise `StartAnomaly()` re-arms it (fresh Time Trial timer, No Hit
+subscription, Blackout vision, Sealed slot and cooldown buffs). While armed it runs `UpdateCheck`,
+`ApplyEnemyBuffs`, `OnEnemySpawned`, and feeds `IsDuel` / `EnemyCountMult`, alongside any wave anomaly.
+`EndWave` calls `DisarmContract` (`ResetForWave()`), keeping the instance and its rolled values for
+the next wave.
+
+**Payout.** Rolled in `RollAndAnnounceWaveRewards` when the contract held (`isActive` at wave end, or paused):
+
+| Field | Effect |
+|---|---|
+| `contractRerolls` | Rerolls granted (0 on Ironman) |
+| `contractSkillPointChance` | % chance for 1 skill point |
+| `contractMixedPoolChance` | % chance for a bonus mixed reward pool |
+
+A broken contract (Time Trial ran out, No Hit took damage) forfeits that wave's payout and adds
+"Contract Broken" to the completion subtitle. After a wave the reward panels run contract bonus pool,
+then the anomaly pool, then the standard reward.
+
+**Exclusion.** While a contract is held, `HasAnomalyChoices` / `GenerateAnomalyChoices` drop every
+anomaly whose `anomalyType` matches it. Skipping the contract excludes nothing.
+
+**HUD.** `contractInfoText` shows `Contract: <name>`, with the Time Trial timer, `(Paused)` or `- Broken`.
 
 ---
 

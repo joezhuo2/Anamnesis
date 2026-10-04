@@ -47,11 +47,11 @@ MonoBehaviour:
   - effect: {fileID: 11400000, guid: 3d8f29a7e7bf2034da0d5851cd5fdbe0, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.8
+    chance: 0.65
   - effect: {fileID: 11400000, guid: 7fe8c3a58a6ba1f4ebcb195c4afdfc18, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.35
+    chance: 0.25
   orbitRadius: 2.5
   randOrbRadOffset: 4
   orbitSelf: 1

@@ -22,3 +22,7 @@ MonoBehaviour:
   anomalyMinVal: 25
   anomalyMaxVal: 800
   disallowOnBossWave: 0
+  isContract: 1
+  contractRerolls: 1
+  contractSkillPointChance: 60
+  contractMixedPoolChance: 40

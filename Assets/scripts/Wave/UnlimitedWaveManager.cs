@@ -71,6 +71,7 @@ namespace CrystalFlux.WaveSystem
 
         protected override void BeginWave()
         {
+            ArmContract(isBossWave);
             isWaveActive = true;
             currentWaveIndex++;
 
@@ -161,8 +162,7 @@ namespace CrystalFlux.WaveSystem
 
             bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
 
-            if (hasStats && currentAnomaly != null) currentAnomaly.ApplyEnemyBuffs(esm);
-            if (currentAnomaly != null) currentAnomaly.OnEnemySpawned(enemy, prefab, level);
+            ApplySpawnHooks(enemy, prefab, level, hasStats ? esm : null);
 
             GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(bossBarPrefab) : (isBossWave ? bossBarPrefab : null);
 

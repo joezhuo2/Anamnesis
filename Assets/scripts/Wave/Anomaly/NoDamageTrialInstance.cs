@@ -11,10 +11,10 @@ public class NoDamageTrialInstance : AnomalyInstance
         PlayerEvents.OnPlayerDamaged += OnPlayerDamaged;
     }
 
-    public override void Cleanup()
+    public override void ResetForWave()
     {
         PlayerEvents.OnPlayerDamaged -= OnPlayerDamaged;
-        base.Cleanup();
+        base.ResetForWave();
     }
 
     private void OnPlayerDamaged(IDamageable player)

@@ -23,7 +23,7 @@ MonoBehaviour:
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.4
+  spellMult: 0.3
   trueMult: 0
   scalingStat: 31
   extraScalings: []
@@ -47,11 +47,11 @@ MonoBehaviour:
   - effect: {fileID: 11400000, guid: 3d8f29a7e7bf2034da0d5851cd5fdbe0, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.65
+    chance: 0.55
   - effect: {fileID: 11400000, guid: 7fe8c3a58a6ba1f4ebcb195c4afdfc18, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.2
+    chance: 0.15
   orbitRadius: 1
   randOrbRadOffset: 1.5
   orbitSelf: 1
