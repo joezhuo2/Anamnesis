@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.12] - 2026-10-04 - Contract Bonus Pool Retune
+
+### Changed
+- Contract bonus reward pick chance (`contractMixedPoolChance`) lowered across almost every anomaly, so the bonus pick is a rarer payout:
+  - Precision 50 → 10, UPrecision 50 → 20
+  - Drought and UDrought 30 → 10
+  - Overcharged 30 → 15, UOvercharged 30 → 20
+  - Hivemind and UHivemind 60 → 20
+  - NoHit and UNoHit 60 → 30
+  - Sealed, USealed, StatMod (10-30, 20-60) and UStatMod 40 → 20
+  - Blackout and UBlackout 30 → 25
+  - Duel (30-80, 50-150), Split (10-50, 50-105), USplit, Swarm (20-40, 30-80), USwarm, Time (30, 45, 60, 75) and UTime 30 → 20
+  - UDuel 10 → 20 (the only increase)
+- UPrecision accuracy threshold 50-75% → 60-80%
+- Player `bundleVersion` 0.7.11 → 0.7.12
+
 ## [v0.7.11] - 2026-10-04 - Precision & Overcharged
 
 ### Added

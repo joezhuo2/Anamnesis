@@ -25,4 +25,4 @@ MonoBehaviour:
   isContract: 0
   contractRerolls: 1
   contractSkillPointChance: 10
-  contractMixedPoolChance: 10
+  contractMixedPoolChance: 20
