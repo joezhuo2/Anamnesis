@@ -1,6 +1,7 @@
+using CrystalFlux.Core;
 using UnityEngine;
 
-public enum AnomalyType { TimeTrial, NoDamage, StatModifier, Swarm, Duel, Split, Sealed, Blackout, Hivemind, Drought, Precision, Overcharged }
+public enum AnomalyType { TimeTrial, NoDamage, StatModifier, Swarm, Duel, Split, Sealed, Blackout, Hivemind, Drought, Precision, Overcharged, Stampede, TwinCrowns, Rampage, Unstoppable }
 
 [CreateAssetMenu(fileName = "amd", menuName = "Data/Anomaly")]
 public class AnomalyData : ScriptableObject
@@ -15,6 +16,8 @@ public class AnomalyData : ScriptableObject
     public float anomalyMinVal;
     public float anomalyMaxVal;
     public bool disallowOnBossWave;
+    [Tooltip("Only offered when the next wave is a boss wave. Never offered as a contract")] public bool bossOnly;
+    [Tooltip("Status effect the anomaly grants (Twin Crowns enrage, Rampage). Lasts until the entity dies")] public EffectAsset anomalyEffect;
 
     [Header("Contract")]
     [Tooltip("Also offered in the run-start contract pool. A held contract removes every anomaly of the same AnomalyType from the anomaly pool")]
@@ -39,6 +42,10 @@ public class AnomalyData : ScriptableObject
             AnomalyType.Drought => new DroughtInstance(this),
             AnomalyType.Precision => new PrecisionInstance(this),
             AnomalyType.Overcharged => new OverchargedInstance(this),
+            AnomalyType.Stampede => new StampedeInstance(this),
+            AnomalyType.TwinCrowns => new TwinCrownsInstance(this),
+            AnomalyType.Rampage => new RampageInstance(this),
+            AnomalyType.Unstoppable => new UnstoppableInstance(this),
             _ => new AnomalyInstance(this)
         };
     }

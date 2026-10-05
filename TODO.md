@@ -185,7 +185,6 @@
 ## Misc
 
 ### Available Colors
-- **red-pink**
 - purple-blue
 - green-yellow
 - brown
@@ -325,35 +324,23 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 
 ### Replayability
 - [ ] **Recollection (meta progression)**: every run pays a persistent currency based on waves cleared, bosses killed and difficulty. Spent on permanent unlocks: new attacks entering the reward pools, an extra starting reroll, extra pre-run picks, new starting kits. Pairs with the v1.4 Memory collectibles.
-- [ ] **Codex**: an encyclopedia of enemies, bosses, attacks, Awakenings and status effects, with undiscovered entries shown as silhouettes. Completion itself becomes a goal and doubles as in-game documentation.
+- [ ] **Codex**: an encyclopedia of enemies, bosses, attacks, Awakenings and status effects, with undiscovered entries shown as silhouettes. Completion itself becomes a goal and doubles as in-game documentation, with a save/load state.
 - [ ] **Unlimited mutations**: every 25 waves in Unlimited, choose one of three permanent enemy mutations in exchange for a stacking score/reward multiplier. Keeps endless runs changing instead of just scaling numbers.
 
 ## New Anomalies
 
 - [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
 
-- [ ] **Rampage** (no fail) - the boss starts the fight in its final phase (`EnemyPhase`) with reduced max HP. A short, brutal fight that skips the warm-up.
-- [ ] **Unstoppable** (no fail) - the boss is immune to knockback, stun and other hard CC for the wave, but takes `+x%` more damage. Turns CC-lock builds into raw damage races.
 - [ ] **Entourage** (no fail) - common enemies from the wave pool keep trickling in during the boss fight, and every escort alive grants the boss `x%` damage reduction. Forces target priority between boss and adds. (configurable max)
-
-### Boss only
-- [ ] **Twin Crowns** (no fail) - a second, weaker copy of the boss spawns alongside it (both at reduced HP). Killing one enrages the other (+atk spd). Bigger reward.
 
 ### Non-boss only
 - [ ] **Last Stand** (no fail) - the final `x` enemies of the wave become empowered (size, damage, speed) once the rest are dead. Makes the end of a wave a mini-duel.
 - [ ] **Pacifist Start** (fail) - you cannot deal damage for the first `x` seconds of the wave; dealing damage early fails it. Kite and survive, then clean up. *Uses:* the `NoDamageTrialInstance` pattern, inverted to outgoing damage.
 - [ ] **Bloodtide** (no fail) - every enemy kill heals all other living enemies by `x%` max HP. Rewards burst and focus over spreading damage.
-- [ ] **Stampede** (no fail) - enemies spawn all at once at the start of the wave instead of trickling in (ignores `maxCurrentEnemies`), but with reduced HP.
 
 ### Any wave
 - [ ] **Shrinking Arena** (no fail) - a closing ring hurts the player outside it and resets at wave end. Forces close-range fighting. *Uses:* the `BlackoutVision` circle approach for the ring.
 - [ ] **Echoes** (no fail) - every enemy attack fires a delayed second copy after 0.5s. Doubles the bullet hell without adding enemies; works on bosses and commons alike.
-
-### Bugs/Cleanup
-- [ ] **Same `effName` merges different assets** - `StatusEffectManager.IsSameEffect` matches by name, so Slow (5 assets), Stun (4), Possessed (4), Vulnerable (3) and Burn (2) share one instance. A stronger variant just refreshes or stacks the weaker one's parameters.
-- [ ] **No end-of-run state** - after the last Regular wave, `StartNextWave` just returns (`WaveManager.cs:361`), with no victory screen. Unlimited shows "Wave x/128" even though it is endless.
-- [ ] **EventSystem lives under the Player prefab** - if the player is destroyed (after `deathAnimTime` 1s) before the death screen pauses (`showDelay` 1s, real time), the death-screen buttons lose input. `GameController`'s fallback adds a `StandaloneInputModule` (`GameController.cs:32`), which does not work with `activeInputHandler: 1`.
-- [ ] Stale Player overrides in `New.unity` (~line 65210): `skillPoints` (field no longer exists) and `activeUpgrades.Array.data[0..1]` (array size 0; data[0] points at a deleted asset `f108d857...`).
 
 ## Brainstorm: Expert/Master Modes & Nightmare
 

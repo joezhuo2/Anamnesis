@@ -10,7 +10,6 @@ public class ContractButtonUI : MonoBehaviour
 {
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descText;
-    public TextMeshProUGUI rewardText;
     public Vector2 tooltipOffset = new(100, -100);
 
     private AnomalyInstance cachedInstance;
@@ -29,7 +28,6 @@ public class ContractButtonUI : MonoBehaviour
 
         if (titleText != null) titleText.text = valid ? instance.amd.anomalyName : "";
         if (descText != null) descText.text = valid ? instance.Description : "";
-        if (rewardText != null) rewardText.text = valid ? rewardLine : "";
 
         if (TryGetComponent<ITooltipDisplay>(out var td))
         {
@@ -49,7 +47,6 @@ public class ContractButtonUI : MonoBehaviour
 
         if (titleText != null) titleText.text = "";
         if (descText != null) descText.text = "";
-        if (rewardText != null) rewardText.text = "";
 
         if (TryGetComponent<ITooltipDisplay>(out var td))
         {
@@ -63,11 +60,10 @@ public class ContractButtonUI : MonoBehaviour
         if (cachedInstance == null || cachedInstance.amd == null) return ("", "", Vector2.zero);
 
         var amd = cachedInstance.amd;
-        List<string> lines = new();
-
-        if (!string.IsNullOrEmpty(cachedInstance.Description)) lines.Add(cachedInstance.Description);
-
-        lines.Add("Lasts the whole run and applies every wave");
+        List<string> lines = new()
+        {
+            "Lasts the whole run and applies every wave"
+        };
 
         switch (cachedInstance)
         {

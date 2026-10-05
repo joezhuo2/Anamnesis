@@ -130,9 +130,20 @@ namespace CrystalFlux.StatusEffectSystem
             return false;
         }
 
-        public void Apply(EffectAsset effect, GameObject source, Vector2 location = default)
+        public bool CcImmune { get; set; }
+
+        public void Apply(EffectAsset effect, GameObject source, Vector2 location = default) => ApplyRuntime(effect, source, location);
+
+        public void ApplyPermanent(EffectAsset effect, GameObject source)
         {
-            if (effect is not StatusEffect se) return;
+            StatusEffect e = ApplyRuntime(effect, source, default);
+            if (e != null) e.duration = float.PositiveInfinity;
+        }
+
+        private StatusEffect ApplyRuntime(EffectAsset effect, GameObject source, Vector2 location)
+        {
+            if (effect is not StatusEffect se) return null;
+            if (CcImmune && se is Stun or Freeze or Pulled) return null;
 
             StatusEffect existing = null;
             for (int i = 0; i < activeEffects.Count; i++)
@@ -149,7 +160,7 @@ namespace CrystalFlux.StatusEffectSystem
                 existing.currentTime = 0f;
                 if (existing.currentStacks < existing.maxStacks) existing.currentStacks++;
                 existing.OnStack();
-                return;
+                return existing;
             }
 
             StatusEffect runtimeEffect = AcquireRuntime(se);
@@ -170,6 +181,7 @@ namespace CrystalFlux.StatusEffectSystem
             runtimeEffect.OnApply();
 
             CreateDisplayUI(runtimeEffect);
+            return runtimeEffect;
         }
 
         public void RemoveStacks<T>(int stacksToRemove) where T : EffectAsset

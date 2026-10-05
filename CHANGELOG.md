@@ -7,6 +7,37 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.7.13] - 2026-10-05 - Stampede & Boss Anomalies
+
+### Added
+- **Stampede** anomaly (`AnomalyType.Stampede`, `StampedeInstance`, no fail, non-boss): every enemy of the wave spawns in a single burst at wave start, ignoring `maxCurrentEnemies` and spawn timing, with a rolled `-x%` Health (`anomalyMinVal`-`anomalyMaxVal`)
+  - The burst uses `anomalyValue` as its spawn radius instead of `WaveManager.spawnRadius`, so the wave doesn't stack on one point
+  - Also offered as a contract (paused on boss waves through `disallowOnBossWave`)
+- **Twin Crowns** anomaly (`AnomalyType.TwinCrowns`, `TwinCrownsInstance`, no fail, boss only): a second copy of the boss spawns alongside it with a rolled `-x%` Health and Damage
+  - Killing one crown grants the survivor `anomalyEffect` for the rest of the fight
+  - One boss bar shows both crowns' combined HP (`BossBarUI.SetupPool`). The wave ends when both are dead
+  - Unlimited reuses the first crown's prefab for the twin instead of rolling a second random boss
+- **Rampage** anomaly (`AnomalyType.Rampage`, `RampageInstance`, no fail, boss only): the boss starts at its final `EnemyPhase` threshold HP (so the final phase and its phase buffs are active from the start) and gains `anomalyEffect` for the fight
+  - Bosses without phase thresholds start at `anomalyValue`% HP instead
+- **Unstoppable** anomaly (`AnomalyType.Unstoppable`, `UnstoppableInstance`, no fail, boss only): the boss is immune to knockback, Stun, Freeze and Pulled, but takes a rolled `+x%` more damage from all sources, True and DoT included
+- **Enraged** status effect (`Enraged.asset`, Stat Buffs): +30% attack, +25% attack speed, +20% movement speed. Used by Twin Crowns and Rampage
+- New anomaly assets (rolled range, contract rerolls / skill point % / bonus pool %):
+  - Stampede: -20-40% HP, radius 6, contract 1 / 40 / 20. UStampede: -25-50% HP, radius 6, contract 1 / 40 / 20
+  - Twin Crowns: -30-50%. UTwinCrowns: -25-55%
+  - Rampage and URampage: 50% HP fallback
+  - Unstoppable: +20-40%. UUnstoppable: +15-45%
+- `AnomalyData.bossOnly`: only offered when the next wave is a boss wave, never offered as a contract
+- `AnomalyData.anomalyEffect`: a status effect an anomaly grants, lasting until the entity dies
+- `StatusEffectManager.ApplyPermanent`: applies an effect with infinite duration
+- `StatusEffectManager.CcImmune`: blocks Stun, Freeze and Pulled from applying, and `EnemyMovement.ApplyKnockback` ignores knockback
+- `EntityHealth.DamageTakenMult`: a final multiplier on all incoming damage after mitigation
+- `EntityHealth.SetHpPct` and `EntityHealth.FinalPhaseHpPct`
+- `WaveManager.IsAnomalyEligible`: the shared anomaly pool filter
+
+### Changed
+- `CrystalFlux.Wave` now references `CrystalFlux.StatusEffect`
+- Player `bundleVersion` 0.7.12 → 0.7.13
+
 ## [v0.7.12] - 2026-10-04 - Contract Bonus Pool Retune
 
 ### Changed

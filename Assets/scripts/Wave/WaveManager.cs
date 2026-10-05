@@ -111,6 +111,11 @@ namespace CrystalFlux.WaveSystem
             * (contractArmed && currentContract is SwarmInstance csw ? csw.CountMultiplier : 1f);
         protected HivemindInstance Hivemind => currentAnomaly is HivemindInstance h && h.isActive ? h
             : contractArmed && currentContract is HivemindInstance ch && ch.isActive ? ch : null;
+        protected StampedeInstance Stampede => currentAnomaly is StampedeInstance s && s.isActive ? s
+            : contractArmed && currentContract is StampedeInstance cs && cs.isActive ? cs : null;
+        protected TwinCrownsInstance Twin => currentAnomaly is TwinCrownsInstance t && t.isActive ? t : null;
+        protected int BossCount => Twin != null ? 2 : 1;
+        protected float SpawnRadius => Stampede is { } st && st.SpawnRadius > 0f ? st.SpawnRadius : spawnRadius;
         protected bool IsDrought => currentAnomaly is DroughtInstance && currentAnomaly.isActive
             || contractArmed && currentContract is DroughtInstance && currentContract.isActive;
         protected bool ContractHeld => currentContract != null && currentContract.amd != null && (contractPaused || contractArmed && currentContract.isActive);
@@ -334,7 +339,11 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.Hivemind:
                         case AnomalyType.Drought:
                         case AnomalyType.Precision:
-                        case AnomalyType.Overcharged: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.Overcharged:
+                        case AnomalyType.Stampede:
+                        case AnomalyType.TwinCrowns:
+                        case AnomalyType.Rampage:
+                        case AnomalyType.Unstoppable: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }
@@ -485,7 +494,7 @@ namespace CrystalFlux.WaveSystem
             currentWaveIndex++;
 
             enemiesKilled = 0;
-            waveMaxTotalEnemies = IsBossWave(currentWave) || IsDuel ? 1 : ScaleEnemyCount(currentWave.maxTotalEnemies + D.maxTotalEnemiesAdd);
+            waveMaxTotalEnemies = IsBossWave(currentWave) ? BossCount : IsDuel ? 1 : ScaleEnemyCount(currentWave.maxTotalEnemies + D.maxTotalEnemiesAdd);
 
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
@@ -548,7 +557,7 @@ namespace CrystalFlux.WaveSystem
 
         protected IEnumerator WaveSpawnRoutine(WaveData c)
         {
-            int maxCurrent = IsBossWave(c) || IsDuel ? 1 : ScaleEnemyCount(c.maxCurrentEnemies + D.maxCurrentEnemiesAdd);
+            int maxCurrent = IsBossWave(c) ? BossCount : IsDuel ? 1 : ScaleEnemyCount(c.maxCurrentEnemies + D.maxCurrentEnemiesAdd);
 
             while (totalSpawned < waveMaxTotalEnemies)
             {
@@ -586,7 +595,21 @@ namespace CrystalFlux.WaveSystem
 
         protected void SpawnEnemies(WaveData c)
         {
-            if (IsBossWave(c) || IsDuel || c.maxTotalEnemies == 1 || c.maxCurrentEnemies == 1)
+            if (IsBossWave(c) || IsDuel)
+            {
+                int bosses = Twin != null ? waveMaxTotalEnemies - totalSpawned : 1;
+                for (int i = 0; i < bosses; i++) SpawnEnemy(c);
+                return;
+            }
+
+            if (Stampede != null)
+            {
+                int all = waveMaxTotalEnemies - totalSpawned;
+                for (int i = 0; i < all; i++) SpawnEnemy(c);
+                return;
+            }
+
+            if (c.maxTotalEnemies == 1 || c.maxCurrentEnemies == 1)
             {
                 SpawnEnemy(c);
                 return;
@@ -599,7 +622,7 @@ namespace CrystalFlux.WaveSystem
         protected void SpawnEnemy(WaveData c)
         {
             int level = EnemyLevel(c.enemyLevel);
-            var enemy = EnemySpawning.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, spawnRadius, level);
+            var enemy = EnemySpawning.SpawnEnemy(c.enemyPrefab, currentSequence.spawnLocation, SpawnRadius, level);
             if (enemy == null) return;
 
             bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
@@ -608,7 +631,7 @@ namespace CrystalFlux.WaveSystem
 
             GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(c.bossBarPrefab) : c.bossBarPrefab;
 
-            if (hasStats && !TrySpawnHivemindBar(c.bossBarPrefab) && bossBarSource != null && activeBossBar == null)
+            if (hasStats && !TrySpawnHivemindBar(c.bossBarPrefab) && !TrySpawnTwinBar(bossBarSource, c.bossBarName) && bossBarSource != null && activeBossBar == null)
             {
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
                 activeBossBar = Instantiate(bossBarSource, spawnParent);
@@ -643,6 +666,19 @@ namespace CrystalFlux.WaveSystem
             activeBossBar = Instantiate(src, spawnParent);
 
             if (activeBossBar.TryGetComponent<BossBarUI>(out var bb)) bb.SetupPool(h.amd != null ? h.amd.anomalyName : "Hivemind", h.PoolCur, h.PoolMax);
+            return true;
+        }
+
+        protected bool TrySpawnTwinBar(GameObject src, string title)
+        {
+            TwinCrownsInstance t = Twin;
+            if (t == null) return false;
+            if (activeBossBar != null || src == null) return true;
+
+            Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
+            activeBossBar = Instantiate(src, spawnParent);
+
+            if (activeBossBar.TryGetComponent<BossBarUI>(out var bb)) bb.SetupPool(title, t.PoolCur, t.PoolMax);
             return true;
         }
 
@@ -951,7 +987,7 @@ namespace CrystalFlux.WaveSystem
 
             int w = GetCurrentWave();
             bool bossNext = NextWaveIsBoss();
-            return availableAnomalies.Exists(a => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext) && !IsContractType(a));
+            return availableAnomalies.Exists(a => IsAnomalyEligible(a, w, bossNext));
         }
         protected bool GenerateAnomalyChoices()
         {
@@ -961,7 +997,7 @@ namespace CrystalFlux.WaveSystem
 
             int w = GetCurrentWave();
             bool bossNext = NextWaveIsBoss();
-            var available = availableAnomalies.FindAll(a => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext) && !IsContractType(a));
+            var available = availableAnomalies.FindAll(a => IsAnomalyEligible(a, w, bossNext));
             if (available.Count == 0) return false;
 
             type = RewardType.Anomaly;
@@ -990,9 +1026,12 @@ namespace CrystalFlux.WaveSystem
 
             return true;
         }
+        protected bool IsAnomalyEligible(AnomalyData a, int w, bool bossNext)
+            => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext) && !(a.bossOnly && !bossNext) && !IsContractType(a);
+
         protected bool IsContractType(AnomalyData a) => contractType.HasValue && a.anomalyType == contractType.Value;
 
-        protected bool IsContractEligible(AnomalyData a) => a != null && a.isContract && a.minMode <= RunMode.Tier;
+        protected bool IsContractEligible(AnomalyData a) => a != null && a.isContract && !a.bossOnly && a.minMode <= RunMode.Tier;
 
         protected bool HasContractChoices()
         {

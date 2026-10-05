@@ -82,7 +82,7 @@ namespace CrystalFlux.WaveSystem
             if (wave % 10 == 0) maxTotalEnemies += Random.Range(1, 4);
 
             enemiesKilled = 0;
-            waveMaxTotalEnemies = isBossWave || IsDuel ? 1 : ScaleEnemyCount(maxTotalEnemies);
+            waveMaxTotalEnemies = isBossWave ? BossCount : IsDuel ? 1 : ScaleEnemyCount(maxTotalEnemies);
 
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
@@ -100,7 +100,7 @@ namespace CrystalFlux.WaveSystem
         private IEnumerator WaveSpawnRoutine()
         {
             int wave = GetCurrentWave();
-            int maxCurrent = isBossWave || IsDuel ? 1 : ScaleEnemyCount(maxCurrentEnemies + D.maxCurrentEnemiesAdd);
+            int maxCurrent = isBossWave ? BossCount : IsDuel ? 1 : ScaleEnemyCount(maxCurrentEnemies + D.maxCurrentEnemiesAdd);
 
             while (totalSpawned < waveMaxTotalEnemies)
             {
@@ -142,7 +142,15 @@ namespace CrystalFlux.WaveSystem
         {
             if (isBossWave || IsDuel)
             {
-                SpawnEnemy();
+                int bosses = Twin != null ? waveMaxTotalEnemies - totalSpawned : 1;
+                for (int i = 0; i < bosses; i++) SpawnEnemy();
+                return;
+            }
+
+            if (Stampede != null)
+            {
+                int all = waveMaxTotalEnemies - totalSpawned;
+                for (int i = 0; i < all; i++) SpawnEnemy();
                 return;
             }
 
@@ -156,10 +164,10 @@ namespace CrystalFlux.WaveSystem
             int wave = GetCurrentWave();
             int level = GetEnemyLevel(wave);
 
-            GameObject prefab = isBossWave ? GetRandomBoss() : GetRandomEnemy();
+            GameObject prefab = isBossWave ? (Twin?.CrownPrefab != null ? Twin.CrownPrefab : GetRandomBoss()) : GetRandomEnemy();
             if (prefab == null) return;
 
-            var enemy = EnemySpawning.SpawnEnemy(prefab, spawnLocation, spawnRadius, level);
+            var enemy = EnemySpawning.SpawnEnemy(prefab, spawnLocation, SpawnRadius, level);
             if (enemy == null) return;
 
             bool hasStats = enemy.TryGetComponent<IStatProvider>(out var esm);
@@ -168,7 +176,7 @@ namespace CrystalFlux.WaveSystem
 
             GameObject bossBarSource = IsDuel ? DuelBossBarPrefab(bossBarPrefab) : (isBossWave ? bossBarPrefab : null);
 
-            if (hasStats && !TrySpawnHivemindBar(bossBarPrefab) && bossBarSource != null && activeBossBar == null)
+            if (hasStats && !TrySpawnHivemindBar(bossBarPrefab) && !TrySpawnTwinBar(bossBarSource, DuelTitle(enemy, prefab, level)) && bossBarSource != null && activeBossBar == null)
             {
                 Transform spawnParent = bossBarContainer != null ? bossBarContainer : waveInfoPanel.transform.parent;
                 activeBossBar = Instantiate(bossBarSource, spawnParent);

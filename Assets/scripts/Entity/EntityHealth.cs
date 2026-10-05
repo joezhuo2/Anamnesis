@@ -19,6 +19,7 @@ namespace CrystalFlux.EntitySystem
 
         public event Action<GameObject> OnDeath;
         public static Func<EntityHealth, int, bool> DamageRedirect;
+        [HideInInspector] public float DamageTakenMult = 1f;
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
         private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
         private bool _isTriggeringOnDealDamage;
@@ -369,6 +370,7 @@ namespace CrystalFlux.EntitySystem
                 };
 
                 bool consume = i.type == DamageType.Consume;
+                if (dmg > 0f && !consume) dmg *= DamageTakenMult;
 
                 if (Immune && !dp.bypassIFrames && dmg > 0 && !consume)
                 {
@@ -562,6 +564,21 @@ namespace CrystalFlux.EntitySystem
             }
             return false;
         }
+        public float FinalPhaseHpPct(float fallback)
+        {
+            if (phase == null) TryGetComponent(out phase);
+            return phase != null && phase.phaseThresholds != null && phase.phaseThresholds.Length > 0 ? phase.phaseThresholds[phase.phaseThresholds.Length - 1] : fallback;
+        }
+
+        public void SetHpPct(float pct)
+        {
+            if (esm == null || !IsAlive) return;
+
+            int target = Mathf.Clamp(Mathf.FloorToInt(MaxHp * pct * 0.01f), 1, MaxHp);
+            esm.AddStat(new StatBuff(StatType.currentHp, target - CurHp));
+            UpdatePhase();
+        }
+
         private void UpdatePhase()
         {
             if (phase == null) return;

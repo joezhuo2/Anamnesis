@@ -20,8 +20,8 @@ MonoBehaviour:
   intelligence: 0
   intPct: 0
   attackSpeedPct: 0
-  critChance: 20
-  critDamage: 50
+  critChance: 0
+  critDamage: 0
   aoePct: 0
   defShred: 0
   resPen: 0
@@ -45,8 +45,14 @@ MonoBehaviour:
   hpPct: 0
   hpRegen: 50
   hpRegPct: 0
+  healingPct: 0
+  overhealth: 0
   armor: 70
   armorPct: 0
+  defense: 0
+  defensePct: 0
+  arcaneShield: 0
+  arcaneShieldPct: 0
   damageRes: 30
   dodgeChance: 10
   dodgeResPct: 80
@@ -79,6 +85,7 @@ MonoBehaviour:
   dashShouldApplyIFrame: 0
   castTimeRedPct: 0
   interruptResist: 0
+  rushImpactPct: 0
   level: 0
   exp: 0
   expBonus: 0

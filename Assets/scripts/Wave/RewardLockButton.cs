@@ -12,6 +12,7 @@ namespace CrystalFlux.WaveSystem
         public Image iconImage;
         public Sprite lockedIcon;
         public Sprite unlockedIcon;
+        public Vector2 offset;
 
         private Action onClickCallback;
 
@@ -30,7 +31,7 @@ namespace CrystalFlux.WaveSystem
             SetLocked(locked);
 
             if (TryGetComponent<ITooltipDisplay>(out var td))
-                td.ShowTooltip("Lock", "Keeps this reward when rerolling.\nOnly one reward can be locked. The lock is released after each reroll.");
+                td.ShowTooltip("Lock", "Keeps this reward when rerolling.\nOnly one reward can be locked. The lock is released after each reroll.", offset);
 
             gameObject.SetActive(show);
         }

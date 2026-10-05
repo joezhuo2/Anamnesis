@@ -20,8 +20,8 @@ MonoBehaviour:
   intelligence: 0
   intPct: 0
   attackSpeedPct: 0
-  critChance: 20
-  critDamage: 50
+  critChance: 0
+  critDamage: 0
   aoePct: 0
   defShred: 0
   resPen: 0

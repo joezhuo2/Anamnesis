@@ -7,6 +7,7 @@
         "CrystalFlux.Entity",
         "CrystalFlux.Projectile",
         "CrystalFlux.Settings",
+        "CrystalFlux.StatusEffect",
         "Unity.TextMeshPro",
         "UnityEngine.UI"
     ],

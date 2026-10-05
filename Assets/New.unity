@@ -14048,7 +14048,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Revelation
     desc: AOE DoT Spl Atk Detonate
-    minWave: 25
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
     icon: {fileID: 0}
     attackName: Meteor Shower
@@ -14063,7 +14063,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Nirvana
     desc: Orbit Spl
-    minWave: 25
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
     icon: {fileID: 0}
     attackName: Warp
@@ -14093,7 +14093,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Luminaria
     desc: Ult Buff Hpr
-    minWave: 25
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
     icon: {fileID: 0}
     attackName: Nocturnis
@@ -14134,17 +14134,17 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Paradox
     desc: Allows DoTs to deal critical damage.
-    minWave: 35
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: 8dff3a6c6a1703f40a9e58f59dfc2ac7, type: 2}
     icon: {fileID: 0}
     upgradeName: Soul Rend
     desc: Basic and Skill grant Soul Rend on hit
-    minWave: 35
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: 40cb68c5693492e4f85d3ab4c17534c3, type: 2}
     icon: {fileID: 0}
     upgradeName: Reminiscence
     desc: Attacks may additionally perform an available attack at no cost. (4s cooldown)
-    minWave: 35
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: 1bb0ed8e066ed0043a3ee4a9b47f53a7, type: 2}
     icon: {fileID: 0}
     upgradeName: Cosmic Afterimage
@@ -14161,12 +14161,12 @@ MonoBehaviour:
     upgradeName: Serenade
     desc: When dealing damage, there is a 50% chance to deal an additional 12% of
       damage dealt as true damage.
-    minWave: 35
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: f78bf5eb68d43ed459aeb5f8392495a1, type: 2}
     icon: {fileID: 0}
     upgradeName: Hypercarry
     desc: Dashing advances all cooldowns by 12%.
-    minWave: 35
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
     icon: {fileID: 0}
     upgradeName: Supersonic
@@ -14192,17 +14192,17 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Exsanguinate
     desc: All healing received at full health converts into overhealth.
-    minWave: -1
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: a237608ee660bc44ba25b10444943273, type: 2}
     icon: {fileID: 0}
     upgradeName: Terminal Cascade
     desc: Additional attacks have a chance to trigger the original attack.
-    minWave: -1
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: de0af43916a4183438cb8491f049d136, type: 2}
     icon: {fileID: 0}
     upgradeName: Wipeout
     desc: Allows debuffs to spread to nearby enemies
-    minWave: -1
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
     icon: {fileID: 0}
     upgradeName: Chaos Theory
@@ -14224,7 +14224,7 @@ MonoBehaviour:
     upgradeName: Resonance
     desc: Performing the same attacks 3 times in a row makes the next cast free and
       grants a stack of Stellar Resonance.
-    minWave: -1
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: 902c7526f55e0c44a8ecda7108e87534, type: 2}
     icon: {fileID: 0}
     upgradeName: Midas Touch
@@ -14693,6 +14693,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b922ed6f147c084b912ef4622f7ff27, type: 2}
   - {fileID: 11400000, guid: e6015c5de4d649de80d8de28aee5c1a7, type: 2}
   - {fileID: 11400000, guid: 9fdd94fc0c6c42e8bc0a016a801cea3b, type: 2}
+  - {fileID: 11400000, guid: 325a4554d5eb490a9e7958fb726f9b69, type: 2}
+  - {fileID: 11400000, guid: a5cbc9934c224b399c606184ea9316d8, type: 2}
+  - {fileID: 11400000, guid: f7e9234d9ecb4156b064162ef08db132, type: 2}
+  - {fileID: 11400000, guid: b577fb1a756d46659c38ec2156b23974, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6
@@ -27138,7 +27142,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Revelation
     desc: AOE DoT Spl Atk Detonate
-    minWave: 25
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
     icon: {fileID: 0}
     attackName: Meteor Shower
@@ -27153,7 +27157,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Nirvana
     desc: Orbit Spl
-    minWave: 25
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
     icon: {fileID: 0}
     attackName: Warp
@@ -27183,7 +27187,7 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Luminaria
     desc: Ult Buff Hpr
-    minWave: 25
+    minWave: 20
   - newAttack: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
     icon: {fileID: 0}
     attackName: Nocturnis
@@ -27224,17 +27228,17 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Paradox
     desc: Allows DoTs to deal critical damage.
-    minWave: 35
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: 8dff3a6c6a1703f40a9e58f59dfc2ac7, type: 2}
     icon: {fileID: 0}
     upgradeName: Soul Rend
     desc: Basic and Skill grant Soul Rend on hit
-    minWave: 35
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: 40cb68c5693492e4f85d3ab4c17534c3, type: 2}
     icon: {fileID: 0}
     upgradeName: Reminiscence
     desc: Attacks may additionally perform an available attack at no cost. (4s cooldown)
-    minWave: 35
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: 1bb0ed8e066ed0043a3ee4a9b47f53a7, type: 2}
     icon: {fileID: 0}
     upgradeName: Cosmic Afterimage
@@ -27251,12 +27255,12 @@ MonoBehaviour:
     upgradeName: Serenade
     desc: When dealing damage, there is a 50% chance to deal an additional 12% of
       damage dealt as true damage.
-    minWave: 35
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: f78bf5eb68d43ed459aeb5f8392495a1, type: 2}
     icon: {fileID: 0}
     upgradeName: Hypercarry
     desc: Dashing advances all cooldowns by 12%.
-    minWave: 35
+    minWave: -1
   - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
     icon: {fileID: 0}
     upgradeName: Supersonic
@@ -27282,17 +27286,17 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Exsanguinate
     desc: All healing received at full health converts into overhealth.
-    minWave: -1
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: a237608ee660bc44ba25b10444943273, type: 2}
     icon: {fileID: 0}
     upgradeName: Terminal Cascade
     desc: Additional attacks have a chance to trigger the original attack.
-    minWave: -1
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: de0af43916a4183438cb8491f049d136, type: 2}
     icon: {fileID: 0}
     upgradeName: Wipeout
     desc: Allows debuffs to spread to nearby enemies
-    minWave: -1
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
     icon: {fileID: 0}
     upgradeName: Chaos Theory
@@ -27314,7 +27318,7 @@ MonoBehaviour:
     upgradeName: Resonance
     desc: Performing the same attacks 3 times in a row makes the next cast free and
       grants a stack of Stellar Resonance.
-    minWave: -1
+    minWave: 15
   - upgrade: {fileID: 11400000, guid: 902c7526f55e0c44a8ecda7108e87534, type: 2}
     icon: {fileID: 0}
     upgradeName: Midas Touch
@@ -27772,6 +27776,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8f2fa30e41aaf7244bae88b619c3e0a0, type: 2}
   - {fileID: 11400000, guid: 928320d371d94cc5864f6db13a3542aa, type: 2}
   - {fileID: 11400000, guid: c37b2c085ab94b7aa4ef842fbe16ee44, type: 2}
+  - {fileID: 11400000, guid: 5af7437937b14a8f813da1c6c02d9d2d, type: 2}
+  - {fileID: 11400000, guid: f45196cfd043475282952f066b078570, type: 2}
+  - {fileID: 11400000, guid: cad804cd48fd41c3aa5a65aa5e8289e3, type: 2}
+  - {fileID: 11400000, guid: 2e6559d0a552459c91f4732082ae08cf, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6

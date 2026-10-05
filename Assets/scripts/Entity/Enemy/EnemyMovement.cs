@@ -112,7 +112,7 @@ namespace CrystalFlux.EntitySystem
 
         public void ApplyKnockback(Vector2 d, float f, float t)
         {
-            if (Sem != null && Sem.Frozen) return;
+            if (Sem != null && (Sem.Frozen || Sem.CcImmune)) return;
             if (rush != null && rush.OnKnockback()) return;
             KnockbackHandler.ApplyKnockback(currentForces, d, f, t, esm.GetStat(StatType.kbRes));
         }
