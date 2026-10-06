@@ -35,7 +35,8 @@ namespace CrystalFlux.EntitySystem
             OnRushEnd,
             OnRushImpact,
             OnPreTeleport,
-            OnSummonMirage
+            OnSummonMirage,
+            OnConsumeHealth
         }
         public TriggerCondition[] conditions;
         public float chance;
@@ -46,6 +47,7 @@ namespace CrystalFlux.EntitySystem
         public virtual void TriggerUpgradeEffect(GameObject player) {}
         public virtual void TriggerUpgradeEffect(GameObject player, Vector2? spawnCenter) {}
         public virtual void TriggerUpgradeEffect(GameObject player, GameObject target, float damageDealt) {}
+        public virtual void TriggerUpgradeEffect(GameObject player, GameObject target) => TriggerUpgradeEffect(player);
         public virtual void OnUnlock(GameObject player) {}
         public virtual void OnRemove(GameObject player) {}
         public override void GetTooltipLines(List<string> lines)

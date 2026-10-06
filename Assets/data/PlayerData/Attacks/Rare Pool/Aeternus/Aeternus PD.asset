@@ -24,17 +24,17 @@ MonoBehaviour:
   spiralSpacing: 1
   physicalMult: 0
   spellMult: 0
-  trueMult: 0.06
+  trueMult: 0.15
   scalingStat: 7
   extraScalings:
   - stat: 31
-    weight: 0.12
+    weight: 0.2
   - stat: 44
-    weight: 0.12
+    weight: 0.2
   - stat: 30
-    weight: 0.08
+    weight: 0.2
   - stat: 35
-    weight: 0.12
+    weight: 0.2
   specialMult: 1
   specialScaling: 0
   timeBeforeSameEnemy: 0.25
@@ -50,6 +50,7 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
+  distFromCenter: 0
   effects: []
   orbitRadius: 0
   randOrbRadOffset: 0

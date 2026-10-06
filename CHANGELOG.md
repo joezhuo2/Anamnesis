@@ -7,6 +7,34 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.0] - 2026-10-05 - Modes & Contracts (Release Summary)
+
+*This release adds Contagion, an Awakening that spreads your DoTs from a dying enemy to the enemies nearest it, and Shatter, a status effect that turns every stun and freeze on a target into a true damage burst. It also adds a new `OnConsumeHealth` upgrade trigger and moves `OnKill` so kill upgrades can read the dying enemy's status effects.*
+
+It also caps the development arc from `v0.7.1` through `v0.7.13`. Over that period, runs started to depend on the settings you pick: a fourth difficulty, Simple / Expert / Master modes that gate content and enemy attacks, run-long contracts, nine new anomalies, a skill tree that can be searched and queued, and new boss moves at the higher modes.
+
+### Highlights
+
+- **Nightmare difficulty (`v0.7.1`, `v0.7.5`)**: a fourth difficulty with tougher, more numerous enemies, fewer rerolls and better-paying anomalies. You can't reroll or skip the anomalies it offers
+- **Expert & Master modes (`v0.7.3`, `v0.7.4`)**: a mode selector next to difficulty. Simple drops corruption and Ultimates. Expert unlocks Ultimates, Capstones, spawner boxes and extra enemy attacks. Master adds corruption specials, the Ethereal Mirage keystone, Coherent Strike and the rare boxes
+- **Contracts (`v0.7.9`, `v0.7.12`)**: every run opens with a contract offer, a run-long anomaly that pays rerolls, skill point chances and bonus reward picks for each wave you keep its condition
+- **New anomalies (`v0.7.1`, `v0.7.10`, `v0.7.11`, `v0.7.13`)**: Blackout, Hivemind, Drought, Precision, Overcharged and Stampede, plus the boss-only Twin Crowns, Rampage and Unstoppable
+- **Skill tree quality of life (`v0.7.2`)**: search by name, stat or what a node grants, queue nodes you can't afford yet, and undo anything unlocked since the tree was opened for free
+- **Boss & balance passes (`v0.7.6`, `v0.7.7`, `v0.7.8`)**: new mode-gated boss attacks for the Cultist, Golem and Lich, mana and stamina refill each wave and on level up, a Cult Bat box, larger pickup values, and spell and anomaly retunes
+- **Contagion & Shatterpoint (`v0.8.0`)**: detailed below`
+
+### Added
+- **`OnConsumeHealth` trigger condition**: fires from `PlayerAttackHandler.HandleStatChanges` after an attack's health cost is paid, only when the final cost (after Hex Cast) is above 0. Appended to the end of `PlayerUpgrade.TriggerCondition`, so existing serialized conditions keep their values
+- **Shatter status effect** (`Status Effects/Debuff/Shatter`): on apply, removes every Stun and Freeze on the target. Each removed effect deals one True damage hit of `critDmgMult` × the source's `critDamage` stat. Applying it again while it is still active triggers it again through `OnStack`
+  - **Shatterpoint** asset (`Assets/data/StatusEffect/Shatterpoint`): `critDmgMult` 4 (400% of crit damage), 0.05s duration. Nothing applies it yet
+- **DoTSpreadOnKill player upgrade** (`PlayerUpgrade/DoTSpreadOnKill`): on kill, every player-sourced DoT on the dying enemy spreads to the `maxTargets` nearest living enemies within `radius` tiles that do not already carry it. Copies keep the original's stacks (capped at `maxStacks`) and last `durationPct`% of its remaining duration
+  - **Contagion** asset (`Assets/data/PlayerData/PlayerUpgrade/Pool/Contagion`): `OnKill`, 3 targets, 3 tiles, 50% duration. Not in `WaveManager.treasurePool` yet
+- `PlayerUpgrade.TriggerUpgradeEffect(GameObject player, GameObject target)`: defaults to the one-argument overload, so existing upgrades are unaffected. Dispatched by the new `PlayerUpgradeManager.TriggerUpgrades(condition, target)`
+
+### Changed
+- `OnKill` now fires from `EntityHealth.StartDeathSequence` (after `TrySplit`, before `ClearAllEffects`) instead of after `ChangeHealth` returns in `TakeDamage`, and passes the killed entity as `target`. The dying enemy's status effects are still readable when `OnKill` upgrades run. XP and gold drops now happen after `OnKill` instead of before. The killer is tracked through `EntityHealth.killSrc`, which is only set for non-Consume, non-Mirage damage from another entity
+- Player `bundleVersion` 0.7.13 → 0.8.0
+
 ## [v0.7.13] - 2026-10-05 - Stampede & Boss Anomalies
 
 ### Added

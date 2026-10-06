@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a045d02bb19ae4344b0868beb80fa73c, type: 3}
-  m_Name: Ethereal Mirage Cooldown Indicator 1
+  m_Name: Eldritch Exchange
   m_EditorClassIdentifier: CrystalFlux.Entity::GrantStatusEffect
-  upgradeName: Ethereal Mirage Cooldown Indicator
-  conditions: 02000000
+  upgradeName: Eldritch Exchange
+  conditions: 1c000000
   chance: 100
-  cooldown: 24
+  cooldown: 2
   delay: 0
-  effect: {fileID: 11400000, guid: dfc791692f34a7544a8f5d638edb188d, type: 2}
+  noMirror: 1
+  minMode: 0
+  effect: {fileID: 11400000, guid: 77125e6584e4e5a44bf2ebae5947ac09, type: 2}
   stacks: 1

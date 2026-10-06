@@ -38,6 +38,7 @@ namespace CrystalFlux.Core
             float utilMult = Mathf.Pow(utilityGrowth, levelOffset);
 
             s.attack = Mathf.RoundToInt(s.attack * atkMult);
+            s.intelligence = Mathf.RoundToInt(s.intelligence * atkMult);
             s.critDamage *= atkMult;
             s.maxHp = Mathf.RoundToInt(s.maxHp * hpMult);
             s.hpRegen *= hprMult;

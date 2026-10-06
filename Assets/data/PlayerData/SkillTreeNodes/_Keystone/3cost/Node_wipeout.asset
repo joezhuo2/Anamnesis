@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
+  m_Name: Node_wipeout
+  m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
+  nodeName: Wipeout
+  desc: Upgrades Contagion to Wipeout, allowing DoTs to spread on every tick.
+  nodeID: wipeout
+  icon: {fileID: -370962255, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  isStartingNode: 0
+  minMode: 2
+  prerequisites:
+  - {fileID: 11400000, guid: 48357d555607549418005775b5f5e579, type: 2}
+  incompatibleNodes: []
+  requirements:
+  - rid: 8233340018161877090
+  unlockEffects:
+  - rid: 5243568234256400479
+  cost: 3
+  undoCost: 50
+  references:
+    version: 2
+    RefIds:
+    - rid: 5243568234256400479
+      type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        buffs: []
+        attacks: []
+        awakenings:
+        - {fileID: 11400000, guid: de0af43916a4183438cb8491f049d136, type: 2}
+    - rid: 8233340018161877090
+      type: {class: NodeRequirement, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
+      data:
+        requiredAttacks: []
+        requiredAwakenings:
+        - {fileID: 11400000, guid: 9c58bb189e984dde8fea6d3f9c70a5b8, type: 2}

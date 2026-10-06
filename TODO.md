@@ -1,11 +1,24 @@
 # Planned Features 
+## High priority To-Do
+- [5] frame for anomaly/contract text (hidden if N/A)
+- [4] **awakenings to move to skill tree (3 point node)** => hypercarry (center-bottom-left), reminiscence (center-top-left), resonance (center-bottom-right), serenade (center-top-right)
+- [3] finish everything in between first and second ring in skill tree
+- [3] dps counter
+- [2] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
+- [2] **Repulsion** - counter dodging creates a shockwave
+- [2] **Shatterpoint** — hook up an applier for the `Shatterpoint` status effect (e.g. an `OnCrit` upgrade against a stunned or frozen enemy)
+- [1] skill tree third circular ring (no connections yet)
+
+## Medium Priority To-Do
+- new boss rush gamemode, and starting build
+- beacon objective (defend/destroy)
 
 ## Pre [v1.0.0] Checklist — First Light
 *Everything that has to be true before a stranger can play it.*
 
 **Bigger Things**
 - [ ] Audio (SFX + music buses + menu volume control)
-- [ ] more enemy projectile telegraphs (jellyfish ball)
+- [ ] more enemy projectile telegraphs (jellyfish ball, lich drill, cultist tp, golem bullet hell)
 
 **Smaller Things**
 - [ ] Confirm every `CREDITS.md` asset license permits redistribution inside a compiled build, not just use
@@ -20,7 +33,7 @@
 
 **Content**
 - [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
-- [ ] contact damage
+- [ ] [?] contact damage
   - [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
 
 **QoL & Polish**
@@ -37,7 +50,6 @@
 
 **Systems**
 - [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
-- [ ] Permenant version of Anamolies (active until run ends) or one thats active for `X` waves, can also occur randomly at the start of every wave
 - [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
 - [ ] attack combo chains
 
@@ -59,7 +71,6 @@
 - [ ] multiple map sections
 - [ ] Environmental hazards on maps (spikes, lava, traps)
 - [ ] portals
-- [ ] starting builds / starting kits
 
 **QoL & Polish**
 - [ ] Screen-edge indicators for off-screen enemies, boss cursor
@@ -94,7 +105,6 @@
 
 **Content**
 - [ ] choose next wave style
-- [ ] restrictions on run start - choose from a pool for bonus rewards
 
 **QoL & Polish**
 - [ ] Minimap
@@ -115,11 +125,6 @@
 - [ ] run archive
 
 # Planned
-
-### High priority To-Do
-- **Gravity Well** - *something* create an aoe attack that pulls enemies (and debuffs them?)
-- beacon objective (defend/destroy)
-- [ ] dps counter
 
 #### Expert Attacks
 - slime => poison splash
@@ -156,15 +161,12 @@
 
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each unique status effect are on the target
-- **Something** - counter dodging creates a shockwave
 - **Gravemark** (Basic) — marks the target instead of damaging it; the next *different* attack slot that hits a marked enemy detonates every mark. Opens a slot-rotation playstyle.
 - **Riptide** (Ultimate) — rush that drags every enemy it passes through along with you (applies `Pulled` on contact), then drops them in a heap on `OnRushEnd`. Sets up AoE ultimates. (new rush dashing through enemies bool)
 - **Overclock** (Ultimate) — no damage. For 8s, every cast advances all other cooldowns by 50%, but each cast costs stamina. When the timer ends you get `Overheat`.
-- **Shatterpoint** — `OnCrit` against a stunned or frozen enemy: consumes the CC and deals 200% crit damage as true damage. 
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
 - **Event Horizon** (Ultimate) — a slow `Spiral` projectile that `Pulled`s nearby enemies and grows over its lifetime.
 - **Something** - something that grants thorns effect
-- **Something** - something that grants life steal effect
 - **Scatter Mine** (Basic) — random-direction (`randomDir`) mines that sit still and arm after 0.5s. Opens a trap/kiting playstyle. new `armDelay` (no collision until armed).
 - **Perfect Parry** — `OnCounterDodge`: reflects the incoming hit as a projectile toward its source and refunds the dash cooldown. Deepens dash play.
 
@@ -193,23 +195,13 @@
 - Hex Cast (+buff -cost)
 
 - Shattered Singularity - very slow speed (hard to hit), high costs
-- Stellar maelstrom - very high costs, low homing strength
-- Solar Collapse - weak pull strength, small aoe, does not move
+- Solar Collapse - very weak pull strength, small aoe, does not move
 - Exodus - long cooldown, multi scaling
 
-- Meteor Shower - long cast time, small hitbox, large aoe, high mana cost
 - Starfury - low aoe, primary speed scaling
-- Autopilot - huge knockback (less grouping), low pierce
 - Feedback Loop - low damage, not guaranteed
 
 ### Stats without skill tree nodes
-- add spl dmg pct
-- add dmg pct
-- basic dmg pct
-- skill dmg pct
-- ult dmg pct
-- basic cd red pct
-- skill cd red pct
 - ult cd red pct
 - dash spd mult
 - dash stamina cost red pct
@@ -239,23 +231,6 @@
   Projectile↔Pickup. The overlap queries in `Projectile`/`EntityProjectileHandler` already skip triggers (v0.6.3);
   an entity LayerMask would also drop walls from them.
 
----
-
-## Brainstorm: New Attacks & Awakenings
-
-### Attacks
-- [ ] **Chakram** (Basic) — boomerang (`maxBoomerangDist`) that re-hits everything on the way back and speeds up per enemy pierced. Scales with `ProjSpd`, which almost nothing uses today.
-- [ ] **Siphon Chain** (Basic) — chain lightning (`additionalAttack` retarget) that applies `Lifesteal` to the player per hop. Pairs with sustain builds.
-  *Uses:* the unused `Lifesteal` effect.
-
-### Awakenings (PlayerUpgrade)
-
-  *New feature:* stack counter on `PlayerUpgrade`.
-- [ ] **Contagion** — `OnKill`: status effects on the dying enemy spread to the 3 nearest enemies at 50% of their remaining duration. Generalizes `DoTSpread` to every effect.
-- [ ] **Vampiric Resonance** — `OnOverkill`: excess damage heals you, and healing past max HP converts to overhealth. Uses overkill and overhealth.
-
----
-
 ## Brainstorm: New Playstyle Sets
 
 ### 2. Legion — player summoner
@@ -271,20 +246,7 @@ The player fights through a squad of minions and buffs, sacrifices or commands t
 - [ ] **Shared Vessel** (Awakening) — passive. Minions inherit 30% of the player's crit chance and status effects on hit, and 20% of the damage the player takes is redirected to the nearest minion.
 - [ ] **Martyr** (Awakening) — `OnTakeHit` while a minion exists: sacrifice the oldest minion to negate the hit, and it explodes for its remaining HP.
 
-### 3. Furnace — heat resource
-
-A fourth resource, Heat, fills as you attack and bleeds off over time. High heat makes attacks stronger but burns you; venting heat turns it into burst damage.
-
-*Core feature:* a `heat` / `maxHeat` stat in `PlayerResourcePool` plus a HUD bar, attack cost entries that *add* heat, burning the player above 80% heat, and a new `SpecialScalingAttribute.Heat`.
-
-- [ ] **Stoke** (Basic) — fast jab that adds 8 heat. Its damage scales with current heat.
-- [ ] **Vent** (Skill) — dumps all heat as a cone of fire. Damage scales with the heat spent, and it applies Burn stacks equal to heat/20.
-- [ ] **Meltdown** (Ultimate) — locks heat at max for 10s with no self-burn. When it ends, releases a full-screen explosion and you become `Overheat`ed.
-- [ ] **Heat Sink** (Awakening) — `OnTakeDamage`: converts 50% of the damage taken into heat instead of HP loss while below 80% heat.
-- [ ] **Thermal Runaway** (Awakening) — passive. Every 10 heat held grants +2% `attackSpeedPct`; the self-burn tick rate also scales with heat.
-- [ ] **Cooling Dash** (Awakening) — `OnStartDash`: vents 25 heat as a ring of `Slow`.
-
-### 4. Duality — stance switching
+### Duality — stance switching (After techniques)
 
 The player swaps between two stances, Sol and Luna. Every attack has a different form in each stance, and switching mid-combo pays off.
 

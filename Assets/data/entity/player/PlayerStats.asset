@@ -49,6 +49,10 @@ MonoBehaviour:
   overhealth: 0
   armor: 0
   armorPct: 0
+  defense: 0
+  defensePct: 0
+  arcaneShield: 0
+  arcaneShieldPct: 0
   damageRes: 0
   dodgeChance: 5
   dodgeResPct: 40
@@ -72,11 +76,11 @@ MonoBehaviour:
   maxManaPct: 0
   canGainMana: 0
   dashSpeedMult: 5
-  dashCooldown: 2
+  dashCooldown: 1.5
   dashCooldownRedPct: 0
-  dashDistance: 1.5
+  dashDistance: 1.25
   dashDistancePct: 0
-  dashStaminaCost: 20
+  dashStaminaCost: 15
   dashStaminaCostRedPct: 0
   dashShouldApplyIFrame: 1
   castTimeRedPct: 0

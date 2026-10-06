@@ -23,6 +23,7 @@ namespace CrystalFlux.EntitySystem
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
         private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
         private bool _isTriggeringOnDealDamage;
+        private GameObject killSrc;
         private bool _suppressHurtIFrames;
         private bool _pendingHurtIFrames;
         private float regenTimer;
@@ -424,14 +425,14 @@ namespace CrystalFlux.EntitySystem
 
                 if (dp.sizeOverride != 1f) sizeMult = dp.sizeOverride;
 
-                if (ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames || consume, src, consume) && !isMirage && !consume)
+                killSrc = !isMirage && !consume && src != gameObject ? src : null;
+                bool died = ChangeHealth(-dmg, true, sizeMult, color, dp.bypassIFrames || consume, src, consume);
+                killSrc = null;
+                if (died && !isMirage && !consume)
                 {
                     if (GameSettings.Current.xpDropsEnabled && src != null && src.TryGetComponent<PlayerLevel>(out var pl))
                         pl.GainExp(esm.GetStat(StatType.XpDrop) * (Mathf.Pow(1.05f, esm.GetStat(StatType.Level) - 1)) * UnityEngine.Random.Range(0.8f, 1.2f));
                     DropGold(src);
-
-                    if (src != null && src != gameObject && src.TryGetComponent<PlayerUpgradeManager>(out var killPum))
-                        killPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnKill);
                 }
 
                 if (!_isTriggeringOnDealDamage && pum != null && !consume)
@@ -629,6 +630,9 @@ namespace CrystalFlux.EntitySystem
             OnDeath?.Invoke(gameObject);
 
             TrySplit();
+
+            if (killSrc != null && killSrc.TryGetComponent<PlayerUpgradeManager>(out var killPum))
+                killPum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnKill, gameObject);
 
             if (ownSem != null)
                 ownSem.ClearAllEffects();

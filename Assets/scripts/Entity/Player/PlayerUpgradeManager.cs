@@ -264,6 +264,27 @@ namespace CrystalFlux.EntitySystem
                 else u.TriggerUpgradeEffect(gameObject, spawnCenter);
             }
         }
+        public void TriggerUpgrades(PlayerUpgrade.TriggerCondition condition, GameObject target)
+        {
+            if (!byCondition.TryGetValue(condition, out var matches) || matches.Count == 0) return;
+
+            float now = Time.time;
+
+            for (int i = 0; i < matches.Count; i++)
+            {
+                PlayerUpgrade u = matches[i];
+                if (u == null) continue;
+
+                if (u.cooldown > 0f && lastTriggerTimes.TryGetValue(u, out float lastTriggerTime) && now < lastTriggerTime + u.cooldown)
+                    continue;
+
+                if (UnityEngine.Random.Range(0f, 100f) > u.chance) continue;
+
+                lastTriggerTimes[u] = now;
+                if (u.delay > 0) StartCoroutine(TriggerWithDelay(u, target));
+                else u.TriggerUpgradeEffect(gameObject, target);
+            }
+        }
         public void TriggerUpgrades(PlayerUpgrade.TriggerCondition condition, GameObject target, float damageDealt)
         {
             if (!byCondition.TryGetValue(condition, out var matches) || matches.Count == 0) return;
@@ -294,6 +315,11 @@ namespace CrystalFlux.EntitySystem
         {
             yield return new WaitForSeconds(u.delay);
             u.TriggerUpgradeEffect(gameObject, spawnCenter);
+        }
+        private IEnumerator TriggerWithDelay(PlayerUpgrade u, GameObject target)
+        {
+            yield return new WaitForSeconds(u.delay);
+            u.TriggerUpgradeEffect(gameObject, target);
         }
         private IEnumerator TriggerWithDelay(PlayerUpgrade u, GameObject target, float damageDealt)
         {

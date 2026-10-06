@@ -1222,8 +1222,8 @@ The `Overhealth` and `AddChain` types are passive: they configure the player on 
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
-`Oblivion`, `Ultrasonic` and `Moonbound Instinct` — the capstone-only upgrades — and the keystone-only `Ethereal Mirage` pair
-are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+`Oblivion`, `Ultrasonic` and `Moonbound Instinct` — the capstone-only upgrades — the keystone-only `Ethereal Mirage` pair
+and the unassigned `Contagion` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Hypercarry`,
@@ -1239,7 +1239,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Delay: 0s
 - Amount: 12
 - Advance Type: All
-- Description: Dashing advances all cooldowns by 12.
+- Description: Dashing advances all cooldowns by 12%.
 
 ## Autopilot
 - Asset: `Autopilot`
@@ -1264,6 +1264,21 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
   explosion on the player 0.15s later. The blast applies Spellworn on every hit and stuns
   40% of the time. `OnTeleport` dispatches without a spawn center, so the explosion lands
   on the player at the teleport destination rather than on the projectile that caused it.
+
+## Contagion
+- Asset: `Contagion`
+- Type: DoTSpreadOnKill
+- Conditions: OnKill
+- Chance: 100%
+- Cooldown: 0s
+- Delay: 0s (must stay 0 — the dying enemy's DoTs are cleared right after `OnKill` fires)
+- Max Targets: 3
+- Radius: 3 tiles
+- Duration: 50% of remaining
+- Description: When the player kills an enemy, every player-sourced DoT on it spreads to
+  the 3 nearest living enemies within 3 tiles that do not already carry that DoT. Each
+  copy keeps the original's stacks and lasts 50% of the original's remaining duration.
+  Copies are re-applied from the DoT's `origin` asset. Not in `WaveManager.treasurePool` yet.
 
 ## Crescendo
 - Asset: `Crescendo`
@@ -1657,6 +1672,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Pulled 0.6 1 15 3` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 15 (+2/stack), 3 radius |
 | `Radiation 4 0.25 8 2 CritDmg` | DoT | Radiation | 5s | 0.25s | 10 | 5% critDamage per tick |
 | `Reminiscence Cooldown` | Info | Reminiscence Cooldown | 4s | - | 1 | Cooldown marker |
+| `Shatterpoint` | Shatter | Shatterpoint | 0.05s | - | 1 | Removes every Stun and Freeze on the target; each removed effect deals one hit of 400% of the source's `critDamage` stat as True |
 | `Slow 3 8 10` | StatReduction | Slow | 3s | - | 8 | -10% moveSpeed per stack |
 | `Slow 5 3 15` | StatReduction | Slow | 5s | - | 3 | -15% moveSpeed per stack |
 | `Slow 4 15 5` | StatReduction | Slow | 4s | - | 15 | -5% moveSpeed per stack |

@@ -351,7 +351,7 @@ MonoBehaviour:
   iconImage: {fileID: 3285682933248743638}
   lockedIcon: {fileID: 1176914726, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   unlockedIcon: {fileID: -1045357585, guid: dbf0290d36498544480566cd430eba6d, type: 3}
-  offset: {x: -25, y: 75}
+  offset: {x: -25, y: 125}
 --- !u!114 &7325149595083289938
 MonoBehaviour:
   m_ObjectHideFlags: 0

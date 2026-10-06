@@ -3,6 +3,9 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.8.0] **Modes & Contracts**: Contagion, a new Awakening, spreads your DoTs from an enemy you kill to the 3 nearest enemies at half their remaining duration. Shatterpoint, a new status effect, breaks every stun and freeze on a target, and each one it breaks deals a burst of true damage based on your crit damage. Awakenings can now also trigger when an attack's health cost is paid
+
+### [v0.8.0] - Modes & Contracts
 - [v0.7.13] **Stampede & boss anomalies**: four new anomalies. Stampede drops the whole wave on you at once, but every enemy has less health, and it can also be taken as a contract. Three new anomalies only appear before boss waves. Twin Crowns spawns a weaker second copy of the boss, and killing one enrages the other. Rampage skips the warm-up: the boss starts in its final phase with less health and enraged. Unstoppable makes the boss immune to knockback, stuns, freezes and pulls, but it takes more damage from everything
 - [v0.7.12] **Contract bonus pool retune**: contracts pay out a bonus reward pick much less often, with most anomalies dropping to a 20% chance and Precision and Drought down to 10%. Unlimited Precision now asks for 60-80% accuracy
 - [v0.7.11] **Precision & Overcharged**: two more anomalies, both also offered as contracts. Precision asks you to land a set share of your attacks, shows your accuracy live, and fails at wave end if you fall short. Overcharged cuts your attack cooldowns but makes every cast cost more health, stamina and mana
