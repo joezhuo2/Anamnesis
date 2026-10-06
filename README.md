@@ -2,7 +2,7 @@
 
 # Anamnesis
 
-> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 240-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
+> A 2D wave-based action roguelite built in Unity 6. Survive escalating hordes, draft rewards between waves, gamble on corruption and anomalies, and rebuild your power through a 258-node skill tree — every attack, effect, upgrade and wave authored as ScriptableObject data.
 
 ![Unity](https://img.shields.io/badge/Unity-6000.4.6f1-000000?logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-.NET-512BD4?logo=dotnet&logoColor=white)
@@ -46,7 +46,7 @@ Current release: **v0.7.9** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, inward circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage, knockback and attacks, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |
 | **✨ Awakenings** | `PlayerUpgrade` assets driven by 25 trigger conditions with chance/cooldown/delay, or passive via `OnUnlock` / `OnRemove` |
-| **🌳 Skill Tree** | Pan/zoom tree of 240 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds (free until the tree is closed), **Refund All**, a search bar that highlights matching nodes, queued unlocks that spend skill points as they arrive, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
+| **🌳 Skill Tree** | Pan/zoom tree of 258 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds (free until the tree is closed), **Refund All**, a search bar that highlights matching nodes, queued unlocks that spend skill points as they arrive, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
 | **🧪 Status Effects** | Stackable DoTs, stuns, freezes, stat buffs and reductions, attack replacement, cleansing, and **Ethereal Mirage** clones that share your stats and repeat your attacks, with cooldown UI |
 | **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, a six-boss **Boss Rush** gauntlet, and a **Mirror** boss that fights with a copy of your current attacks and Awakenings on its own enemy stats |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
@@ -85,9 +85,9 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova |
 | **Skills** | Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge, Subspace Blitz |
 | **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis, Aeternus |
-| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Crescendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, Momentum, Resonance, Midas Touch, plus capstone-only Solar Wind, Oblivion and Moonbound Instinct, and keystone-only Ethereal Mirage |
+| **Awakenings** | Reminiscence, Serenade, Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Hypercarry, Autopilot, Exsanguinate, Terminal Cascade, Crescendo, Tempo, Wipeout, Chaos Theory, Shock Absorber, Momentum, Resonance, Midas Touch, plus capstone-only Solar Wind, Oblivion and Moonbound Instinct, and keystone-only Ethereal Mirage, Hypercarry, Reminiscence, Resonance and Serenade |
 | **Capstones** | Warp, Hypernova, Astral Disjunction and Nitro Accelerator upgrade their required attack; Decoy Upgraded, Solar Wind, Oblivion, Ultrasonic and Moonbound Instinct upgrade their required Awakening |
-| **Keystones** | Ethereal Mirage: casting an Ultimate summons 3 clones that follow you and mimic your attacks |
+| **Keystones** | Ethereal Mirage: casting an Ultimate summons 3 clones that follow you and mimic your attacks. Hypercarry, Reminiscence, Resonance and Serenade: Awakenings that moved out of the reward pool into 3-point Master-mode nodes |
 | **Enemies** | Bat, Crab, Slime, Slime (Frost), Slime (Magma), Cultist Clone, Doppelganger (copies your attacks and Awakenings, Unlimited only) |
 | **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`), Mirror (copies your attacks and Awakenings; Unlimited boss pool, and the final Boss Rush fight as *Echo*) |
 | **Boss Rush** | `BossRush` (Lv 85 Lich → Jellyfish → Cultist → Golem → Grim Reaper → Echo) chaining into `BossRush Part 2` (the same six at Lv 105). The wave counter carries on from `ws_5` (waves 76-81, then 82-87) |

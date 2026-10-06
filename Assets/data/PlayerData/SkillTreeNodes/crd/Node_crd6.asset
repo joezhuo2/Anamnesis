@@ -10,29 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
-  m_Name: Node_aphelion
+  m_Name: Node_crd6
   m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
-  nodeName: Aphelion
-  desc: "Fast attack that summons plenty of speedy rotating stars\t\t"
-  nodeID: aphelion
-  icon: {fileID: 1303932942, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  nodeName: Crit Damage
+  desc: +2% Crit Damage
+  nodeID: crd6
+  icon: {fileID: 103135145, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
-  minMode: 2
+  minMode: 0
   prerequisites:
-  - {fileID: 11400000, guid: ce7096d87ad780549870a58f5b56a75d, type: 2}
+  - {fileID: 11400000, guid: a320a2a3566c93b4b9f27a323f140e0f, type: 2}
   incompatibleNodes: []
   requirements: []
   unlockEffects:
-  - rid: 5243568234256400479
-  cost: 3
+  - rid: 678176144140534026
+  cost: 1
   undoCost: 50
   references:
     version: 2
     RefIds:
-    - rid: 5243568234256400479
+    - rid: 678176144140534026
       type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
       data:
-        buffs: []
-        attacks:
-        - {fileID: 11400000, guid: 64ed8dbedf1b5784abeea70a41c5077f, type: 2}
+        buffs:
+        - type: 7
+          value: 2
+        attacks: []
         awakenings: []

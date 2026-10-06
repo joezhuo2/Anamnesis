@@ -1,12 +1,11 @@
 # Planned Features 
 ## High priority To-Do
 - [5] frame for anomaly/contract text (hidden if N/A)
-- [4] **awakenings to move to skill tree (3 point node)** => hypercarry (center-bottom-left), reminiscence (center-top-left), resonance (center-bottom-right), serenade (center-top-right)
 - [3] finish everything in between first and second ring in skill tree
 - [3] dps counter
 - [2] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
 - [2] **Repulsion** - counter dodging creates a shockwave
-- [2] **Shatterpoint** — hook up an applier for the `Shatterpoint` status effect (e.g. an `OnCrit` upgrade against a stunned or frozen enemy)
+- [2] **Shatterpoint** — critical hits create a small explosion of ice, applying `Shatterpoint` to all enemies
 - [1] skill tree third circular ring (no connections yet)
 
 ## Medium Priority To-Do
@@ -28,101 +27,60 @@
 - [ ] Store page — description, screenshots, capsule art, controls
 - [ ] Window icon + splash
 
-## Pre [v1.1.0] Checklist — Starlight Remnants
-*Enemies fight back with more than stats.*
+## Features By Category
 
-**Content**
-- [ ] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
-- [ ] [?] contact damage
-  - [ ] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
+### Content
+- [5] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
+- [8] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
+- [7] Skill Points (? name) update: atk/dex/int/agi/vit/?/def/?
+- [5] Techniques - utility/QoL featured (blink tp, buff, crowd control)
+- [6] wave events - random events that can randomly occur during waves
+- [4] Player summons
+- [5] Player new "signature" that charges via a new special resource instead of a cooldown
+- [3] deployables (eg. totems/auras)
+- [2] multiple map sections
+- [2] Environmental hazards on maps (spikes, lava, traps)
+- [2] portals
+- [1] Finish Gear/Item system (slots, rarity tiers, stat rolls, equip/unequip)
+- [1] Consumables (potions, bombs, temporary buffs) with hotkeys
+- [1] Shop/merchant between waves to spend currency on items or stat boosts
+- [5] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
+- [5] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses (new collectible type)
+- [1] Chests or loot drops from elites/bosses with guaranteed rare rewards
+- [1] Elemental Damage/Defense system
+- [1] Elemental affinities/weaknesses
+- [1] attack mastery (use more to level up)
+- [1] Crafting/enchanting system for gear
+- [1] Set bonuses for equipping matching gear pieces
+- [1] Elemental reactions
+- [3] Combo/synergy bonuses for stacking related rewards
+- [2] second skill tree (Prestiage/Ascension/Mastery)
+- [2] Daily/weekly challenge modifiers with seeded runs
 
-**QoL & Polish**
-- [ ] Full stats display menu (in settings panel)
-- [ ] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
-- [ ] enemy status effect overlay on common enemies
-- [ ] wave track - show upcoming bosses/special rewards/milestones
-- [ ] Status Effect vfx
-- [ ] map debris/decor
-- [ ] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
+### Graphics
+- [2] Status Effect vfx
+- [1] map debris/decor
+- [1] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
 
-## Pre [v1.2.0] Checklist — Threads of Fate
-*Every wave stops looking the same; the settings/stats menus catch up.*
-
-**Systems**
-- [ ] Skill Points (? name) update: agi/def/str/dex/int/vit
-- [ ] Techniques - utility/QoL featured (blink tp, buff, crowd control)
-- [ ] attack combo chains
-
-**Content**
-- [ ] wave events - random events that can randomly occur during waves
-
-## Pre [v1.3.0] Checklist — Domains of the Unbound
-*New ways to deal damage, and somewhere interesting to deal it.*
-
-**Systems**
-- [ ] Player summons
-- [ ] Player new "signature" that charges via a new special resource instead of a cooldown
-- [ ] deployables (eg. totems/auras)
-- [ ] Achievement system with unlock notifications
-- [ ] Leaderboards (local/online) for boss rush/endless/highest dps
-- [ ] full run saving
-
-**Content**
-- [ ] multiple map sections
-- [ ] Environmental hazards on maps (spikes, lava, traps)
-- [ ] portals
-
-**QoL & Polish**
-- [ ] Screen-edge indicators for off-screen enemies, boss cursor
-
-## Pre [v1.4.0] Checklist — Starforged Echoes
-*The item layer itself: equip, consume, buy.*
-
-**Systems**
-- [ ] Finish Gear/Item system (slots, rarity tiers, stat rolls, equip/unequip)
-- [ ] Consumables (potions, bombs, temporary buffs) with hotkeys
-- [ ] Shop/merchant between waves to spend currency on items or stat boosts
-
-**Content**
-- [ ] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
-- [ ] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses (new collectible type)
-- [ ] Chests or loot drops from elites/bosses with guaranteed rare rewards
-
-**QoL & Polish**
-- [ ] Suggest certain stats based on player's current loadout
-- [ ] Post-Death Summary (run grade)
-- [ ] Build export/share — copy current loadout as text for sharing
-- [ ] damage breakdown (by attack, every x waves)
-- [ ] FPS counter & performance stats debug toggle
-
-## Pre [v1.5.0] Checklist — Prismatic Recollection
-*Damage gets a type, and defenses get a matching axis.*
-
-**Systems**
-- [ ] Elemental Damage/Defense system
-- [ ] Elemental affinities/weaknesses
-- [ ] attack mastery (use more to level up)
-
-**Content**
-- [ ] choose next wave style
-
-**QoL & Polish**
-- [ ] Minimap
-- [ ] Build Guide menu
-
-## Pre [v1.6.0] Checklist — Starlight Ascension
-*Both systems stop being standalone: crafted, combined, and replayed.*
-
-**Systems**
-- [ ] Crafting/enchanting system for gear
-- [ ] Set bonuses for equipping matching gear pieces
-- [ ] Elemental reactions
-- [ ] Combo/synergy bonuses for stacking related rewards
-- [ ] second skill tree (Prestiage/Ascension/Mastery)
-
-**Content**
-- [ ] Daily/weekly challenge modifiers with seeded runs
-- [ ] run archive
+### QoL
+- [1] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
+- [6] enemy status effect overlay on common enemies
+- [5] full run saving
+- [3] Suggest certain stats based on player's current loadout
+- [1] Build export/share — copy current loadout as text for sharing
+- [1] damage breakdown (by attack, every x waves)
+- [2] Leaderboards (local/online) for boss rush/endless/highest dps
+- [1] FPS counter & performance stats debug toggle
+- [3] Achievement system with unlock notifications
+- [3] Full stats display menu (in settings panel)
+- [4] Post-Death Summary (run grade)
+- [6] Screen-edge indicators for off-screen enemies, boss cursor
+- [1] run archive
+- [1] "What's new" changelog popup on update
+- [4] reward history
+- [2] Customizable HUD layout
+- [1] data saving - full game runs
+- [1] Confirmation dialog before corrupting a reward (can be toggled in settings)
 
 # Planned
 
@@ -140,14 +98,6 @@
 - jellyfish =>
 - bat =>
 
-### Will do sometime
-- [ ] "What's new" changelog popup on update
-- [ ] reward history
-- [ ] Customizable HUD layout
-- [ ] data saving - full game runs
-- [ ] Confirmation dialog before corrupting a reward (can be toggled in settings)
-- [ ] Kill Streak (combo counter, `PlayerUpgrade` condition)
-
 ### Will Consider
 - [ ] Keyboard/controller navigation for reward & skill tree menus (no mouse required)
 - [ ] Scrollable Tooltips
@@ -157,7 +107,12 @@
 - [ ] neutral entities
 - [ ] cosmetics (player skins/dash effects/attack effects)
 - [ ] nameplates/titles
+- [ ] Minimap
+- [ ] Build Guide menu
 - [ ] background/ambience (debris/wind)
+- [ ] choose next wave style
+- [ ] contact damage
+- [] attack combo chains
 
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each unique status effect are on the target
@@ -204,7 +159,6 @@
 ### Stats without skill tree nodes
 - ult cd red pct
 - dash spd mult
-- dash stamina cost red pct
 - exp bonus
 - stealing
 

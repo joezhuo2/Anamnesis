@@ -8,7 +8,7 @@ Attack entries list the `AttackData` asset name; the paired `ProjectileData` ass
 the same name with `PD` instead of `AD` unless noted.
 
 Projectile `Size` multiplies the projectile prefab's own scale: the final scale is
-`prefab scale x Size x (1 + aoePct%)`.
+`prefab scale x Size x (1 + aoePct%)`. `aoePct` is capped at 200% when read, so the multiplier never exceeds x3.
 
 ---
 
@@ -1222,8 +1222,8 @@ The `Overhealth` and `AddChain` types are passive: they configure the player on 
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
-`Oblivion`, `Ultrasonic` and `Moonbound Instinct` — the capstone-only upgrades — the keystone-only `Ethereal Mirage` pair
-and the unassigned `Contagion` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+`Oblivion`, `Ultrasonic` and `Moonbound Instinct` — the capstone-only upgrades — the keystone-only `Ethereal Mirage` pair,
+the keystone-only `Hypercarry`, `Reminiscence`, `Resonance` and `Serenade`, and the unassigned `Contagion` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Hypercarry`,
@@ -1231,7 +1231,6 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 
 ## Hypercarry
 - Asset: `DashAdvance`
-- Unlocks: wave 35
 - Type: CooldownAdvance
 - Conditions: OnStartDash
 - Chance: 100%
@@ -1240,6 +1239,8 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Amount: 12
 - Advance Type: All
 - Description: Dashing advances all cooldowns by 12%.
+- Unlocked by: `Node_hycarry` ("Hypercarry" keystone, 3 skill points, `undoCost` 50, Master mode)
+- Not in `treasurePool` — keystone-only.
 
 ## Autopilot
 - Asset: `Autopilot`
@@ -1449,7 +1450,6 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 
 ## Reminiscence
 - Asset: `Reminiscence`
-- Unlocks: wave 35
 - Type: Reminiscence
 - Conditions: OnCrit
 - Chance: 35%
@@ -1459,6 +1459,8 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Description: 35% chance on a critical hit to immediately perform an extra attack of a
   randomly chosen equipped attack type. Slots sealed by the Sealed anomaly are never picked, and
   the extra attack does not count toward, or spend, a Resonance free cast.
+- Unlocked by: `Node_remin` ("Reminiscence" keystone, 3 skill points, `undoCost` 50, Master mode)
+- Not in `treasurePool` — keystone-only.
 
 ## Resonance
 - Asset: `Resonance`
@@ -1472,10 +1474,11 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
   no resource cost and no cooldown used. Chance and cooldown are rolled when the streak completes,
   and a failed roll resets the streak. Casting a different slot resets the streak and cancels an
   unused free cast. Upgrade-triggered casts don't count. An interrupted free cast stays available.
+- Unlocked by: `Node_reso` ("Resonance" keystone, 3 skill points, `undoCost` 50, Master mode)
+- Not in `treasurePool` — keystone-only.
 
 ## Serenade
 - Asset: `Serenade`
-- Unlocks: wave 35
 - Type: AdditionalDamage
 - Conditions: OnDealDamage
 - Chance: 35%
@@ -1484,6 +1487,8 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Percent Amount: 24%
 - Damage Type: True
 - Description: 35% chance to deal 24% of the damage dealt again as True damage.
+- Unlocked by: `Node_seren` ("Serenade" keystone, 3 skill points, `undoCost` 50, Master mode)
+- Not in `treasurePool` — keystone-only.
 
 ## Shock Absorber
 - Asset: `Shock Absorber`

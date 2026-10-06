@@ -133,7 +133,7 @@ namespace CrystalFlux.Core
                 StatType.spellDmgPct => spellDmgPct,
                 StatType.critChance => critChance,
                 StatType.critDamage => critDamage,
-                StatType.aoePct => aoePct,
+                StatType.aoePct => Mathf.Min(aoePct, 200f),
                 StatType.maxHp => maxHp,
                 StatType.hpPct => hpPct,
                 StatType.hpRegen => hpRegen,

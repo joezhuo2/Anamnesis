@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.8.1] **Awakenings in the skill tree**: Hypercarry, Reminiscence, Resonance and Serenade are no longer reward picks. Each is now a 3-point Master-mode keystone on the skill tree. The tree also grows by 14 small nodes (attack speed, crit chance, crit damage, spell damage and a new dash stamina cost reduction), and area of effect is now capped at +200%
 - [v0.8.0] **Modes & Contracts**: Contagion, a new Awakening, spreads your DoTs from an enemy you kill to the 3 nearest enemies at half their remaining duration. Shatterpoint, a new status effect, breaks every stun and freeze on a target, and each one it breaks deals a burst of true damage based on your crit damage. Awakenings can now also trigger when an attack's health cost is paid
 
 ### [v0.8.0] - Modes & Contracts

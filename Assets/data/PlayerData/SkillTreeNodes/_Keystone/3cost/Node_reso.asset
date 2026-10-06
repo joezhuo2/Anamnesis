@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
-  m_Name: Node_aphelion
+  m_Name: Node_reso
   m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
-  nodeName: Aphelion
-  desc: "Fast attack that summons plenty of speedy rotating stars\t\t"
-  nodeID: aphelion
-  icon: {fileID: 1303932942, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  nodeName: Resonance
+  desc: 'Performing the same attack consecutively 3 times in a row grants a free
+    cast and the Stellar Resonance buff. '
+  nodeID: reso
+  icon: {fileID: -2134754255, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
   minMode: 2
   prerequisites:
-  - {fileID: 11400000, guid: ce7096d87ad780549870a58f5b56a75d, type: 2}
+  - {fileID: 11400000, guid: 358f8b4dce63b0e43978b1f4d25400a7, type: 2}
   incompatibleNodes: []
   requirements: []
   unlockEffects:
@@ -33,6 +34,6 @@ MonoBehaviour:
       type: {class: UnlockEffect, ns: CrystalFlux.SkillTree, asm: CrystalFlux.SkillTree}
       data:
         buffs: []
-        attacks:
-        - {fileID: 11400000, guid: 64ed8dbedf1b5784abeea70a41c5077f, type: 2}
-        awakenings: []
+        attacks: []
+        awakenings:
+        - {fileID: 11400000, guid: 2453d865c8ef4199b3652e296c64a228, type: 2}

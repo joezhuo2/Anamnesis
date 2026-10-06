@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.1] - 2026-10-06 - Awakening Keystones
+
+### Added
+- Four keystone nodes in `_Keystone/3cost` (3 skill points, `undoCost` 50, `minMode` 2): `Node_hycarry` (Hypercarry), `Node_remin` (Reminiscence), `Node_reso` (Resonance) and `Node_seren` (Serenade). Each grants its existing Awakening from `PlayerUpgrade/Pool`
+- 14 small skill tree nodes, 1 point each: attack speed `as5`-`as8` (+2%), crit chance `crc2` (+6%), crit damage `crd5`-`crd7` (+2%), spell damage `sdp4`-`sdp6` (+2%)
+- New `dscr` branch: `Node_dscr1`-`Node_dscr3`, +3% reduced dash stamina cost each
+- All 18 nodes are registered in `SkillTreeDefinition` (240 → 258 nodes)
+
+### Changed
+- Hypercarry, Reminiscence, Resonance and Serenade removed from `WaveManager.treasurePool`, so they are keystone-only. The `Unlocks: wave 35` gate on Hypercarry, Reminiscence and Serenade no longer applies
+- `EntityStats.GetValue(StatType.aoePct)` is capped at 200
+- Player `bundleVersion` 0.8.0 → 0.8.1
+
 ## [v0.8.0] - 2026-10-05 - Modes & Contracts (Release Summary)
 
 *This release adds Contagion, an Awakening that spreads your DoTs from a dying enemy to the enemies nearest it, and Shatter, a status effect that turns every stun and freeze on a target into a true damage burst. It also adds a new `OnConsumeHealth` upgrade trigger and moves `OnKill` so kill upgrades can read the dying enemy's status effects.*
