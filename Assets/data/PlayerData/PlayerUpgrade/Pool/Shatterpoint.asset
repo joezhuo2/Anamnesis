@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: Shatterpoint
   conditions: 0f000000
   chance: 100
-  cooldown: 0
+  cooldown: 0.5
   delay: 0
   noMirror: 0
   minMode: 0
