@@ -611,9 +611,8 @@ namespace CrystalFlux.EntitySystem
             float hpPerSecond = esm.GetStat(StatType.EffHpReg) / fullRegenFrequency;
             accumulatedRegen += hpPerSecond * regenInterval;
 
-            if (accumulatedRegen < 1f) return;
-
             int intRegen = Mathf.FloorToInt(accumulatedRegen);
+            if (intRegen == 0f) return;
             accumulatedRegen -= intRegen;
             ChangeHealth(intRegen, false);
 

@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.8.2] **Shatterpoint & stat floors**: Shatterpoint, a new Awakening, makes every critical hit throw out a small burst of ice that breaks the stuns and freezes on whatever it touches for a hit of true damage. Boss Rush now opens with a Lv 90 Echo fight on the way into its Lv 105 round, Aphelion, Blood Pact and Stellar Maelstrom no longer need Master mode, and health, mana, stamina, resistance and knockback resistance can no longer be pushed to nonsense values
 - [v0.8.1] **Awakenings in the skill tree**: Hypercarry, Reminiscence, Resonance and Serenade are no longer reward picks. Each is now a 3-point Master-mode keystone on the skill tree. The tree also grows by 14 small nodes (attack speed, crit chance, crit damage, spell damage and a new dash stamina cost reduction), and area of effect is now capped at +200%
 - [v0.8.0] **Modes & Contracts**: Contagion, a new Awakening, spreads your DoTs from an enemy you kill to the 3 nearest enemies at half their remaining duration. Shatterpoint, a new status effect, breaks every stun and freeze on a target, and each one it breaks deals a burst of true damage based on your crit damage. Awakenings can now also trigger when an attack's health cost is paid
 

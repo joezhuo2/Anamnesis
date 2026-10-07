@@ -15442,7 +15442,7 @@ MonoBehaviour:
   spawnRadius: 2.5
   killSpawnSpeedup: 0.15
   enableExtraSpawns: 1
-  totalWaves: 85
+  totalWaves: 96
   waveInfoPanel: {fileID: 2059475857}
   anomalyInfoText: {fileID: 1424804071}
   contractInfoText: {fileID: 1046561057}
@@ -15829,6 +15829,12 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Contagion
     desc: DoTs spread to nearby enemies on kill.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 9015f6da858ea1e4c9c3ca49f6292ab9, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Shatterpoint
+    desc: Critical hits shatter the enemy and remove their Stun or Freeze to deal
+      additional true damage.
     minWave: -1
   mixedPool:
   - icon: {fileID: 0}
@@ -29804,6 +29810,12 @@ MonoBehaviour:
     icon: {fileID: 0}
     upgradeName: Contagion
     desc: DoTs spread to nearby enemies on kill.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 9015f6da858ea1e4c9c3ca49f6292ab9, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Shatterpoint
+    desc: Critical hits shatter the enemy and remove their Stun or Freeze to deal
+      additional true damage.
     minWave: -1
   mixedPool:
   - icon: {fileID: 0}

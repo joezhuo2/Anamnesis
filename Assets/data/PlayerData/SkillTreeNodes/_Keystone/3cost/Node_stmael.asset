@@ -17,7 +17,7 @@ MonoBehaviour:
   nodeID: stmael
   icon: {fileID: -1675398384, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
-  minMode: 2
+  minMode: 0
   prerequisites:
   - {fileID: 11400000, guid: f9c4447d385252446ae9c88a66e69511, type: 2}
   incompatibleNodes: []

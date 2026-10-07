@@ -36,7 +36,7 @@ namespace CrystalFlux.Core
 
         [Header("Defense")]
         public int currentHp;
-        public int EffMaxHp => Mathf.RoundToInt(maxHp * (1f + (hpPct * 0.01f)));
+        public int EffMaxHp => Mathf.Max(1, Mathf.RoundToInt(maxHp * (1f + (hpPct * 0.01f))));
         public int maxHp;
         public float hpPct;
         public float hpRegen;
@@ -69,7 +69,7 @@ namespace CrystalFlux.Core
         public int currentStamina;
         public int maxStamina;
         public float maxStaminaPct;
-        public float EffMaxStamina => Mathf.RoundToInt(maxStamina * (1f + (maxStaminaPct * 0.01f)));
+        public float EffMaxStamina => Mathf.Max(1f, Mathf.RoundToInt(maxStamina * (1f + (maxStaminaPct * 0.01f))));
         public float staminaRegen;
         public float stRegPct;
 
@@ -77,7 +77,7 @@ namespace CrystalFlux.Core
         public int currentMana;
         public int maxMana;
         public float maxManaPct;
-        public float EffMaxMana => Mathf.RoundToInt(maxMana * (1f + (maxManaPct * 0.01f)));
+        public float EffMaxMana => Mathf.Max(1f, Mathf.RoundToInt(maxMana * (1f + (maxManaPct * 0.01f))));
         [HideInInspector] public bool canGainMana;
 
         [Header("Dash - Player Only")]
@@ -140,11 +140,11 @@ namespace CrystalFlux.Core
                 StatType.hpRegPct => hpRegPct,
                 StatType.armor => armor,
                 StatType.armorPct => armorPct,
-                StatType.damageRes => damageRes,
-                StatType.physicalRes => physicalRes,
-                StatType.spellRes => spellRes,
+                StatType.damageRes => Mathf.Min(90f, damageRes),
+                StatType.physicalRes => Mathf.Min(90f, physicalRes),
+                StatType.spellRes => Mathf.Min(90f, spellRes),
                 StatType.dodgeChance => dodgeChance,
-                StatType.dodgeResPct => dodgeResPct,
+                StatType.dodgeResPct => Mathf.Max(99f, dodgeResPct),
                 StatType.moveSpeedPct => moveSpeedPct,
                 StatType.attackSpeedPct => attackSpeedPct,
                 StatType.defShred => defShred,
@@ -177,7 +177,7 @@ namespace CrystalFlux.Core
                 StatType.dashDistancePct => dashDistancePct,
                 StatType.dashStaminaCostRedPct => dashStaminaCostRedPct,
                 StatType.addDmgPct => addDmgPct,
-                StatType.kbRes => kbRes,
+                StatType.kbRes => Mathf.Max(0f, kbRes),
                 StatType.kbPct => kbPct,
                 StatType.ExpBonus => expBonus,
                 StatType.Stealing => stealing,

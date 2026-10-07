@@ -17,7 +17,7 @@ MonoBehaviour:
   nodeID: aphelion
   icon: {fileID: 1303932942, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
-  minMode: 2
+  minMode: 0
   prerequisites:
   - {fileID: 11400000, guid: ce7096d87ad780549870a58f5b56a75d, type: 2}
   incompatibleNodes: []

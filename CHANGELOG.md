@@ -7,6 +7,27 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.2] - 2026-10-06 - Shatterpoint & Stat Floors
+
+### Added
+- **Shatterpoint** Awakening (`SpawnProjectile`, `PlayerUpgrade/Pool/Shatterpoint`): `OnCrit`, 100% chance, no cooldown. Each crit spawns a small ice burst (`Treasure Pool/Shatterpoint`, size 2, 0.5s lifetime, pierce 6, 70% True) that applies the Shatterpoint status effect to every enemy it hits, so the crit breaks their Stun and Freeze for a crit damage burst
+  - Added to both `treasurePool` lists in `New.unity` with no `minWave`
+- `ws_6` wave sequence: 15 waves, Lv 76-89 regular waves followed by a Lv 90 Echo boss. `ws_5` now chains into `ws_6`, and `ws_6` chains into `BossRush Part 2`
+
+### Changed
+- `BossRush` (the Lv 85 gauntlet) is removed. Boss Rush Part 1 is now `ws_6`'s Echo fight at Lv 90, so Boss Rush is just `BossRush Part 2` (Lv 105, `waveOffset` 81 → 90). `WaveManager.totalWaves` 85 → 96
+- `Node_aphelion`, `Node_bloodpact` and `Node_stmael` `minMode` 2 → 0, so they no longer need Master mode
+- Hypercarry, Reminiscence, Resonance and Serenade assets moved from `PlayerUpgrade/Pool` to `PlayerUpgrade/Keystone`
+- `EntityHealth.RegenHp` no longer returns early when negative HP has accumulated. `OnHealthRegen` now fires on every regen tick that passes the regen guards, excluding ticks that heal 0 HP, instead of only ticks that heal at least 1 HP
+- Player `bundleVersion` 0.8.1 → 0.8.2
+
+### Fixed
+- `EntityStats` stat floors and caps, applied when the stat is read:
+  - `EffMaxHp`, `EffMaxStamina` and `EffMaxMana` are at least 1
+  - `damageRes`, `physicalRes` and `spellRes` are capped at 90
+  - `dodgeResPct` is at most 99
+  - `kbRes` is at least 0
+
 ## [v0.8.1] - 2026-10-06 - Awakening Keystones
 
 ### Added

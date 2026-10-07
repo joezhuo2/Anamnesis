@@ -17,7 +17,7 @@ MonoBehaviour:
   nodeID: bloodpact
   icon: {fileID: -370962255, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
-  minMode: 2
+  minMode: 0
   prerequisites:
   - {fileID: 11400000, guid: e0a4fe005ca2316489d2c8f0f8705c17, type: 2}
   incompatibleNodes: []

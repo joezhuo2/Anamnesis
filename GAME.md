@@ -871,7 +871,7 @@ detonations) still reads live stats.
 | Arcane Shield | Spell | `DefenseMult(EffArcaneShield - defShred)` | `defShred` |
 | Defense | All types | `DefenseMult(EffDefense)` | - |
 
-`damageRes`, `physicalRes` and `spellRes` are not in any reward pool or gear roll. They only come from
+`damageRes`, `physicalRes` and `spellRes` are capped at 90 when read. They are not in any reward pool or gear roll. They only come from
 status effects, enemy presets and skill tree nodes. Enemies above level 1 multiply `armor` and
 `arcaneShield` by `1.07^(level - 1)`.
 
@@ -1222,8 +1222,8 @@ The `Overhealth` and `AddChain` types are passive: they configure the player on 
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
-`Oblivion`, `Ultrasonic` and `Moonbound Instinct` — the capstone-only upgrades — the keystone-only `Ethereal Mirage` pair,
-the keystone-only `Hypercarry`, `Reminiscence`, `Resonance` and `Serenade`, and the unassigned `Contagion` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+`Oblivion`, `Ultrasonic` and `Moonbound Instinct` (the capstone-only upgrades), the keystone-only `Ethereal Mirage` pair,
+the keystone-only `Hypercarry`, `Reminiscence`, `Resonance` and `Serenade` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Hypercarry`,
@@ -1279,7 +1279,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Description: When the player kills an enemy, every player-sourced DoT on it spreads to
   the 3 nearest living enemies within 3 tiles that do not already carry that DoT. Each
   copy keeps the original's stacks and lasts 50% of the original's remaining duration.
-  Copies are re-applied from the DoT's `origin` asset. Not in `WaveManager.treasurePool` yet.
+  Copies are re-applied from the DoT's `origin` asset.
 
 ## Crescendo
 - Asset: `Crescendo`
@@ -1489,6 +1489,20 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Description: 35% chance to deal 24% of the damage dealt again as True damage.
 - Unlocked by: `Node_seren` ("Serenade" keystone, 3 skill points, `undoCost` 50, Master mode)
 - Not in `treasurePool` — keystone-only.
+
+## Shatterpoint
+- Asset: `Shatterpoint`
+- Type: SpawnProjectile
+- Conditions: OnCrit
+- Chance: 100%
+- Cooldown: 0s
+- Delay: 0s
+- Projectile: `Shatterpoint.prefab` (`Shatterpoint ad` / `Shatterpoint pd`, folder `Treasure Pool/Shatterpoint`)
+  - Size: 2, lifetime 0.5s, pierce 6, random direction
+  - Damage: 70% True
+  - Effect: 100% on hit (`Shatterpoint`)
+- Description: Critical hits shatter the enemy and remove their Stun or Freeze to deal additional true damage.
+- In `treasurePool`, no unlock wave.
 
 ## Shock Absorber
 - Asset: `Shock Absorber`
@@ -1736,7 +1750,7 @@ without reordering the controller.
 Folder: `Assets/data/entity/enemy/Bosses/mirror`. The `MirrorBoss` prefab is in the Unlimited
 `bossPrefabs` pool, so it can roll on any Unlimited boss wave alongside the other five bosses.
 It is also the sixth and final fight of both Boss Rush parts, shown on the boss bar as **Echo**
-(`[Lv. 85] Echo` in `BossRush`, `[Lv. 105] Echo` in `BossRush Part 2`).
+(`[Lv. 90] Echo` closing `ws_6`, `[Lv. 105] Echo` in `BossRush Part 2`).
 
 When it spawns, the `MirrorBoss` component copies the player's build onto the boss:
 

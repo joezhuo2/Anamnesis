@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
+  m_Name: Shatterpoint pd
+  m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
+  mainAttack: {fileID: 11400000, guid: cc256bfbb122f614490ae722fcfc866d, type: 2}
+  lifetime: 0.5
+  size: 2
+  numPierce: 6
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 0
+  spellMult: 0
+  trueMult: 0.7
+  scalingStat: 31
+  extraScalings:
+  - stat: 7
+    weight: 2
+  specialMult: 1
+  specialScaling: 0
+  timeBeforeSameEnemy: 0
+  followDistance: 0
+  followSource: 0
+  rotationOffset: 0
+  maxBoomerangDist: 0
+  angleOverride: 0
+  useTrueAngle: 0
+  bypassIFrames: 0
+  randomDir: 1
+  additionalAttack: {fileID: 0}
+  additionalChance: 0
+  addAttackRequiresHit: 1
+  additionalFollowsMouse: 0
+  distFromCenter: 0
+  effects:
+  - effect: {fileID: 11400000, guid: 6c28dad2ffbc4bb2ba38488fa6ea3456, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 1
+  orbitRadius: 0
+  randOrbRadOffset: 0
+  orbitSelf: 0
+  rotateClockwise: 0
+  kbForce: 0
+  knockbackTime: 0.15
