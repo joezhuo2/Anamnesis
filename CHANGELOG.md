@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.3] - 2026-10-07 - Permanent Buffs & HUD Frames
+
+### Added
+- `WaveManager.anomalyInfoBackground` and `contractInfoBackground` frames behind the anomaly and contract text. Each is shown only while its text is active and hidden otherwise (and on destroy)
+- `New.unity`: `AnomalyDisplay` frame, and the contract text is re-anchored and resized to sit in its own frame
+
+### Changed
+- `StatusEffect.duration` of `-1` now means unlimited duration (inspector tooltip added). `StatusEffectManager.Update` skips the timer for any effect with negative duration, and `ApplyPermanent` sets `-1` instead of `float.PositiveInfinity`
+- `Enraged` `duration` 999 → -1, so it is now truly permanent
+- Hypercarry, Reminiscence, Resonance and Serenade keystones (`Node_hycarry`, `Node_remin`, `Node_reso`, `Node_seren`) moved from `_Keystone/3cost` to `_Keystone/5cost` and now cost 5 skill points instead of 3
+- `WaveManager` `bossWaveChanceIfPreviousNotBoss` 12 → 10, `minWavesBetweenBossWaves` 4 → 3
+- Player `bundleVersion` 0.8.2 → 0.8.3
+
+### Fixed
+- `EntityStats` `dodgeResPct` floor is `99.99` instead of `99`
+
 ## [v0.8.2] - 2026-10-06 - Shatterpoint & Stat Floors
 
 ### Added

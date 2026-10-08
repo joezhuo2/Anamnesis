@@ -144,7 +144,7 @@ namespace CrystalFlux.Core
                 StatType.physicalRes => Mathf.Min(90f, physicalRes),
                 StatType.spellRes => Mathf.Min(90f, spellRes),
                 StatType.dodgeChance => dodgeChance,
-                StatType.dodgeResPct => Mathf.Max(99f, dodgeResPct),
+                StatType.dodgeResPct => Mathf.Max(99.99f, dodgeResPct),
                 StatType.moveSpeedPct => moveSpeedPct,
                 StatType.attackSpeedPct => attackSpeedPct,
                 StatType.defShred => defShred,

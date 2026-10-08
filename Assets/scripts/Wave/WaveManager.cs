@@ -33,7 +33,9 @@ namespace CrystalFlux.WaveSystem
         [Header("Wave Info Settings")]
         public GameObject waveInfoPanel;
         public TextMeshProUGUI anomalyInfoText;
+        public GameObject anomalyInfoBackground;
         public TextMeshProUGUI contractInfoText;
+        public GameObject contractInfoBackground;
         private string lastInfo;
         private int lastInfoTick = int.MinValue;
         public TextMeshProUGUI waveText;
@@ -317,7 +319,11 @@ namespace CrystalFlux.WaveSystem
             ClearRewardButtons();
 
             if (spawnCoroutine != null) StopCoroutine(spawnCoroutine);
+            
+            if (contractInfoBackground != null) contractInfoBackground.SetActive(false);
+            if (anomalyInfoBackground != null) anomalyInfoBackground.SetActive(false);
         }
+        
         private void Update()
         {
             if (currentAnomaly != null && currentAnomaly.isActive)
@@ -326,6 +332,7 @@ namespace CrystalFlux.WaveSystem
 
                 if (anomalyInfoText != null)
                 {
+                    if (anomalyInfoBackground != null) anomalyInfoBackground.SetActive(true);
                     switch (currentAnomaly.amd.anomalyType)
                     {
                         case AnomalyType.TimeTrial: UpdateAnomalyTimeInfo(); break;
@@ -350,6 +357,7 @@ namespace CrystalFlux.WaveSystem
             }
             else
             {
+                anomalyInfoBackground.SetActive(false);
                 lastInfoTick = int.MinValue;
                 if (anomalyInfoText != null) SetAnomalyInfo("");
             }
@@ -361,6 +369,8 @@ namespace CrystalFlux.WaveSystem
         private void UpdateContractInfo()
         {
             if (contractInfoText == null) return;
+
+            contractInfoBackground.SetActive(true);
 
             int key;
             if (currentContract == null || currentContract.amd == null) key = -1;

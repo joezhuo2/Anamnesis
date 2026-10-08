@@ -7,7 +7,7 @@ namespace CrystalFlux.StatusEffectSystem
     {
         [Header("Basic")]
         [HideInInspector] public float currentTime;
-        public float duration;
+        [Tooltip("-1 = unlimited duration")] public float duration;
         [Tooltip("How often effect triggers")] public float tickInterval;
         public bool isBuff = false;
 

@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bf5f931752d2ea4ba15508b7504beba, type: 3}
-  m_Name: Node_seren
+  m_Name: Node_hycarry
   m_EditorClassIdentifier: Assembly-CSharp::SkillNodeDef
-  nodeName: Serenade
-  desc: When dealing damage, there is a 35% chance to deal an additional 24% of damage
-    dealt as true damage.
-  nodeID: seren
-  icon: {fileID: -3147073, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  nodeName: Hypercarry
+  desc: Dashing advances all attack cooldowns by 12%.
+  nodeID: hycarry
+  icon: {fileID: -1490088628, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   isStartingNode: 0
   minMode: 2
   prerequisites:
-  - {fileID: 11400000, guid: e697fc4baf17580409f1c87b6b275ab5, type: 2}
+  - {fileID: 11400000, guid: ce14ce3a6570ed74fa1d3b53d3fd38b6, type: 2}
   incompatibleNodes: []
   requirements: []
   unlockEffects:
   - rid: 5243568234256400479
-  cost: 3
+  cost: 5
   undoCost: 50
   references:
     version: 2
@@ -36,4 +35,4 @@ MonoBehaviour:
         buffs: []
         attacks: []
         awakenings:
-        - {fileID: 11400000, guid: c6ec0bc05c27887429bd26fce6360948, type: 2}
+        - {fileID: 11400000, guid: f78bf5eb68d43ed459aeb5f8392495a1, type: 2}

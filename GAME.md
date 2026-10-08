@@ -1239,7 +1239,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Amount: 12
 - Advance Type: All
 - Description: Dashing advances all cooldowns by 12%.
-- Unlocked by: `Node_hycarry` ("Hypercarry" keystone, 3 skill points, `undoCost` 50, Master mode)
+- Unlocked by: `Node_hycarry` ("Hypercarry" keystone, 5 skill points, `undoCost` 50, Master mode)
 - Not in `treasurePool` — keystone-only.
 
 ## Autopilot
@@ -1459,7 +1459,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Description: 35% chance on a critical hit to immediately perform an extra attack of a
   randomly chosen equipped attack type. Slots sealed by the Sealed anomaly are never picked, and
   the extra attack does not count toward, or spend, a Resonance free cast.
-- Unlocked by: `Node_remin` ("Reminiscence" keystone, 3 skill points, `undoCost` 50, Master mode)
+- Unlocked by: `Node_remin` ("Reminiscence" keystone, 5 skill points, `undoCost` 50, Master mode)
 - Not in `treasurePool` — keystone-only.
 
 ## Resonance
@@ -1474,7 +1474,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
   no resource cost and no cooldown used. Chance and cooldown are rolled when the streak completes,
   and a failed roll resets the streak. Casting a different slot resets the streak and cancels an
   unused free cast. Upgrade-triggered casts don't count. An interrupted free cast stays available.
-- Unlocked by: `Node_reso` ("Resonance" keystone, 3 skill points, `undoCost` 50, Master mode)
+- Unlocked by: `Node_reso` ("Resonance" keystone, 5 skill points, `undoCost` 50, Master mode)
 - Not in `treasurePool` — keystone-only.
 
 ## Serenade
@@ -1487,7 +1487,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Percent Amount: 24%
 - Damage Type: True
 - Description: 35% chance to deal 24% of the damage dealt again as True damage.
-- Unlocked by: `Node_seren` ("Serenade" keystone, 3 skill points, `undoCost` 50, Master mode)
+- Unlocked by: `Node_seren` ("Serenade" keystone, 5 skill points, `undoCost` 50, Master mode)
 - Not in `treasurePool` — keystone-only.
 
 ## Shatterpoint

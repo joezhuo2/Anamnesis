@@ -137,7 +137,7 @@ namespace CrystalFlux.StatusEffectSystem
         public void ApplyPermanent(EffectAsset effect, GameObject source)
         {
             StatusEffect e = ApplyRuntime(effect, source, default);
-            if (e != null) e.duration = float.PositiveInfinity;
+            if (e != null) e.duration = -1;
         }
 
         private StatusEffect ApplyRuntime(EffectAsset effect, GameObject source, Vector2 location)
@@ -306,6 +306,7 @@ namespace CrystalFlux.StatusEffectSystem
                     }
                 }
 
+                if (e.duration < 0f) return;
                 e.currentTime += dt;
 
                 float effDur = e.isBuff ? e.duration : e.duration * resMult;

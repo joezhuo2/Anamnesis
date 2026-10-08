@@ -1,8 +1,7 @@
 # Planned Features 
 ## High priority To-Do
-- [5] frame for anomaly/contract text (hidden if N/A)
 - [5] dps counter
-- [4] perm. stat buffs (change Enraged to this)
+- [5] change dodge res percent to dodge rating (same reduction formula as arcane shield/armor)
 - [4] **Blood Bank** 50% of all health lost is stored in a blood pool (unlimited dura. SE), using an ult. releases all stored health as overhealth
 - [3] **Spiteful Aegis** 25% of damage taken is added to your next hit as bonus damage.
 - [3] **Prism Bolt** (Basic) — spell bolt that splits into 2 weaker bolts on hit.

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enraged
   m_EditorClassIdentifier: Assembly-CSharp::StatBuffs
   currentTime: 0
-  duration: 999
+  duration: -1
   tickInterval: 0
   isBuff: 1
   icon: {fileID: 8367830406354533065, guid: 1a422c5f5436e5042861653928334be7, type: 3}
