@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class EntityHealth : MonoBehaviour, IDamageable
+    public partial class EntityHealth : MonoBehaviour, IDamageable
     {
         public float deathAnimTime = 1f;
         public Slider healthBarPrefab;
