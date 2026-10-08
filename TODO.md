@@ -1,16 +1,14 @@
 # Planned Features 
 ## High priority To-Do
-- [5] dps counter
-- [5] change dodge res percent to dodge rating (same reduction formula as arcane shield/armor)
 - [4] **Blood Bank** 50% of all health lost is stored in a blood pool (unlimited dura. SE), using an ult. releases all stored health as overhealth
 - [3] **Spiteful Aegis** 25% of damage taken is added to your next hit as bonus damage.
-- [3] **Prism Bolt** (Basic) — spell bolt that splits into 2 weaker bolts on hit.
 - [3] **Veil of Stars** (Ultimate) — creates an aura around you. Enemy projectiles that enter it unleashes homing stars.
-- [3] **Runic Satellite** Taking damage creates a rune that orbits you and fires homing spell bolts on hit
 - [3] **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
 - [3] finish everything in between first and second ring in skill tree
 - [3] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
 - [3] **Repulsion** - counter dodging creates a shockwave
+- [3] **Runic Satellite** Taking damage creates a rune that orbits you and fires homing spell bolts on hit
+- [3] **Prism Bolt** (Basic) — spell bolt that splits into 2 weaker bolts on hit.
 - [1] skill tree third circular ring (no connections yet)
 
 ## Medium Priority To-Do
