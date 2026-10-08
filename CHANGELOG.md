@@ -7,7 +7,7 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [Unreleased]
+## [v0.8.4] - 2026-10-08 - Dodge Rating & DPS Counter
 
 ### Added
 - **DPS counter**: `DpsMeter` tracks player damage dealt over a rolling 5s window plus run peak, `DpsCounterUI` shows it top-right. Toggled by `GameSettings.showDpsCounter` (default off) through a DPS Counter toggle that `ControlsPanelUI` clones from the damage number toggle when none is assigned. Resets on scene load
@@ -18,6 +18,7 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 - Dodge Resistance % is now Dodge Rating. Dodged hits are reduced by `DodgeRes` instead of a flat percentage
 - Player `dodgeRating` 40% → 100 (50% reduction). Enemy values are the old percentage x3, and now scale with level like armor
 - Skill nodes `Node_drp1`-`3` renamed to Dodge Rating: +3, +3, +15 (was +1%, +1%, +5%)
+- `New.unity` upgrade pools: Dodge Rating pickup 1 → 3
 
 ### Fixed
 - `EntityStats` dodge resistance used `Mathf.Max(99.99f, ...)`, which pinned it at 99.99 or higher regardless of the stat
