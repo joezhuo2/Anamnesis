@@ -7,7 +7,7 @@ namespace CrystalFlux.EntitySystem
 {
     public class DpsCounterUI : MonoBehaviour
     {
-        private const float RefreshInterval = 0.2f;
+        private const float RefreshInterval = 0.15f;
 
         public TextMeshProUGUI label;
 

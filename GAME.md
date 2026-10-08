@@ -1415,7 +1415,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Delay: 0s
 - Effect: `Momentum` (11s), 1 stack per trigger
 - Description: Starting a dash or a rush grants Momentum: +6% moveSpeedPct and +14%
-  rushImpactPct.
+  rushImpactPct per stack, max 3 stacks.
 
 ## Oblivion (Capstone)
 - Asset: `Oblivion`
@@ -1682,7 +1682,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
 | `Mirage` | EtherealMirage | Ethereal Mirage | 18s | - | 1 | Summons 3 clones at 50% flat stats, 60% opacity, radius 2; each living clone gives +12% moveSpeedPct, -15% damagePct. See Ethereal Mirage above |
 | `Mirage Cooldown` | Info | Ethereal Mirage Cooldown | 24s | - | 1 | Cooldown marker |
-| `Momentum` | StatBuffs | Momentum | 11s | - | 1 | +6% moveSpeedPct, +14% rushImpactPct |
+| `Momentum` | StatBuffs | Momentum | 11s | - | 3 | +6% moveSpeedPct, +14% rushImpactPct |
 | `Moonbound` | StatBuffs | Moonbound | 8s | - | 4 | +12% spellDmgPct, +16% manaGainPct, +3% resPen per stack |
 | `Overheat` | StatBuffs | Overheat | 7s | - | 5 | -8% atkPct, -12% stRegPct per stack |
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |

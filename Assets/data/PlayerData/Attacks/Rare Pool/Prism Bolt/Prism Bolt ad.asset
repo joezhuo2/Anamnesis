@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Prism Bolt ad
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
   type: 0
-  cooldown: 2
+  cooldown: 1.6
   stacks: 3
   projectilePrefab: {fileID: 1225193988873089607, guid: f30962625d2022d40b79a798d7fabd7e, type: 3}
   pd: {fileID: 11400000, guid: 1152c2913d5a22045a622c4614db6519, type: 2}

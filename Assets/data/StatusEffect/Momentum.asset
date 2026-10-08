@@ -19,7 +19,7 @@ MonoBehaviour:
   icon: {fileID: -8276262488406422588, guid: 1a422c5f5436e5042861653928334be7, type: 3}
   effName: Momentum
   desc: Increases movement speed by 6% and rush impact by 14% per stack, max 3 stacks.
-  maxStacks: 1
+  maxStacks: 3
   loseAllStacksOnExpire: 0
   target: {fileID: 0}
   source: {fileID: 0}

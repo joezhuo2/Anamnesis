@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
   mainAttack: {fileID: 11400000, guid: fcffe03b82e7d4b44b576d92f26ef132, type: 2}
   lifetime: 3
-  size: 3
+  size: 2
   numPierce: 4
   destroyOnMaxPierce: 0
   movementType: 0
-  speed: 2.5
+  speed: 2
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.4
+  spellMult: 0.3
   trueMult: 0
   scalingStat: 44
   extraScalings: []

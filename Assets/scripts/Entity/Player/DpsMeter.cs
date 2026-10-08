@@ -5,7 +5,7 @@ namespace CrystalFlux.EntitySystem
 {
     public static class DpsMeter
     {
-        public const float Window = 5f;
+        public const float Window = 1f;
 
         private struct Sample
         {

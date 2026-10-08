@@ -7,6 +7,15 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.7] - 2026-10-08 - Prism Bolt Rebalance
+
+### Changed
+- **Prism Bolt**: cooldown 2s → 1.6s, spell scaling 1.3x → 0.85x, pierce 8 → 6, projectile speed 3.5 → 3.25
+- **Prism Bolt Shrapnel**: spell scaling 0.4x → 0.3x, size 3 → 2, projectile speed 2.5 → 2
+- **Momentum**: max stacks 1 → 3 (matches its description, "per stack, max 3 stacks")
+- DPS counter: rolling window 5s → 1s (`DpsMeter.Window`), refresh interval 0.2s → 0.15s (`DpsCounterUI.RefreshInterval`)
+- Player `bundleVersion` 0.8.6 → 0.8.7
+
 ## [v0.8.6] - 2026-10-08 - Script Split
 
 No gameplay changes. The four largest scripts are now `partial` classes spread over files grouped by concern. Methods were moved verbatim; fields, attributes and base types stay in the original file, so `.meta` GUIDs, scenes and prefabs are untouched.

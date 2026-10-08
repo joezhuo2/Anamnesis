@@ -4,9 +4,9 @@
 - [4] **Spiteful Aegis** 25% of damage taken is added to your next hit as bonus damage.
 - [4] **Veil of Stars** (Ultimate) — creates an aura around you. Enemy projectiles that enter it unleashes homing stars.
 - [4] **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
-- [4] finish everything in between first and second ring in skill tree
 - [3] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
 - [3] **Repulsion** - counter dodging creates a shockwave
+- [2] finish everything in between first and second ring in skill tree
 - [1] skill tree third circular ring (no connections yet)
 
 ## Medium Priority To-Do
