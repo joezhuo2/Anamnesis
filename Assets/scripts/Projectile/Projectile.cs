@@ -11,7 +11,7 @@ namespace CrystalFlux.ProjectileSystem
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(RectTransform))]
-    public class Projectile : MonoBehaviour, IPoolable
+    public partial class Projectile : MonoBehaviour, IPoolable
     {
         public ProjectileData pd;
 
