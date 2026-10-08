@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace CrystalFlux.EntitySystem
 {
-    public class PlayerAttackHandler : MonoBehaviour, IAttackHandler, ICastHandler
+    public partial class PlayerAttackHandler : MonoBehaviour, IAttackHandler, ICastHandler
     {
         bool IAttackHandler.HasAttack(AttackAsset a) => HasAttack(a as AttackData);
         AttackAsset IAttackHandler.FindAttackOfType(AttackType type) => FindAttackOfType(type);
