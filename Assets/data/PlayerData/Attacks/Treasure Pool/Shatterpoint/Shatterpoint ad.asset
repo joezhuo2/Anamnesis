@@ -48,7 +48,7 @@ MonoBehaviour:
   chargeAttack: {fileID: 0}
   pattern: 0
   spawnDelay: 0
-  spawnDistance: 0
+  spawnDistance: 12
   fixedDistance: 0
   projectileCount: 1
   randomCount: 0
