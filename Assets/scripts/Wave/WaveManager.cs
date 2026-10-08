@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace CrystalFlux.WaveSystem
 {
-    public class WaveManager : MonoBehaviour
+    public partial class WaveManager : MonoBehaviour
     {
         protected static WaveManager ActiveManager;
 
