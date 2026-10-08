@@ -37,7 +37,7 @@ MonoBehaviour:
   armorPct: 50
   damageRes: 20
   dodgeChance: 5
-  dodgeResPct: 0.4
+  dodgeRating: 100
   physicalRes: 30
   spellRes: 30
   hurtTime: 0.3

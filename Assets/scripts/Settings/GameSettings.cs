@@ -18,6 +18,7 @@ namespace CrystalFlux.SettingsSystem
         public bool goldDropsEnabled = true;
         public bool showWaveCompletionMessage = true;
         public bool showDamageNumbers = true;
+        public bool showDpsCounter = false;
         public bool ironmanMode = false;
         public string bindingOverridesJson = "";
 

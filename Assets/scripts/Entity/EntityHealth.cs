@@ -443,6 +443,7 @@ namespace CrystalFlux.EntitySystem
                 }
 
                 if (dmg > 0 && i.owner != null && i.owner != gameObject) TryLifesteal(OwnerProxy.Resolve(i.owner), dmg);
+                if (dmg > 0 && !consume && pum != null && cpum == null && !isMirage && atkTeam != (ownTeam != null ? ownTeam.TeamID : 0)) DpsMeter.Record(dmg);
             }
             }
             finally

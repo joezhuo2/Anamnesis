@@ -60,7 +60,7 @@ namespace CrystalFlux.EntitySystem
         {
             List<string> lines = new();
             if (cesm.GetStat(StatType.dodgeChance) != 0f)
-                lines.Add($"Dodge: {cesm.GetStat(StatType.dodgeChance):F0}% (-{cesm.GetStat(StatType.dodgeResPct):F0}%)");
+                lines.Add($"Dodge: {cesm.GetStat(StatType.dodgeChance):F0}% (-{cesm.GetStat(StatType.DodgeRes) * 100f:F0}%)");
             if (cesm.GetStat(StatType.EffSpd) != 0)
                 lines.Add($"Speed: {cesm.GetStat(StatType.EffSpd):F2} (+{cesm.GetStat(StatType.moveSpeedPct):F0}%)");
             if (cesm.GetStat(StatType.EffDashCooldown) != 0)

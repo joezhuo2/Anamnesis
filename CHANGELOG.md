@@ -7,6 +7,21 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [Unreleased]
+
+### Added
+- **DPS counter**: `DpsMeter` tracks player damage dealt over a rolling 5s window plus run peak, `DpsCounterUI` shows it top-right. Toggled by `GameSettings.showDpsCounter` (default off) through a DPS Counter toggle that `ControlsPanelUI` clones from the damage number toggle when none is assigned. Resets on scene load
+- `EntityStats.DodgeRes` derived stat (`rating / (rating + 100)`, same formula as armor and arcane shield)
+
+### Changed
+- `CrystalFlux-Core` v0.14.0: `StatType.dodgeResPct` renamed to `dodgeRating` (same enum slot, serialized assets unaffected)
+- Dodge Resistance % is now Dodge Rating. Dodged hits are reduced by `DodgeRes` instead of a flat percentage
+- Player `dodgeRating` 40% → 100 (50% reduction). Enemy values are the old percentage x3, and now scale with level like armor
+- Skill nodes `Node_drp1`-`3` renamed to Dodge Rating: +3, +3, +15 (was +1%, +1%, +5%)
+
+### Fixed
+- `EntityStats` dodge resistance used `Mathf.Max(99.99f, ...)`, which pinned it at 99.99 or higher regardless of the stat
+
 ## [v0.8.3] - 2026-10-07 - Permanent Buffs & HUD Frames
 
 ### Added

@@ -44,6 +44,7 @@ namespace CrystalFlux.Core
             s.hpRegen *= hprMult;
             s.armor = Mathf.RoundToInt(s.armor * armorMult);
             s.arcaneShield = Mathf.RoundToInt(s.arcaneShield * armorMult);
+            s.dodgeRating *= armorMult;
 
             s.aoePct *= utilMult;
             s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct * utilMult, -100f, 100f);

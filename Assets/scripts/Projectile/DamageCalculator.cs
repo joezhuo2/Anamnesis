@@ -34,7 +34,7 @@ namespace CrystalFlux.ProjectileSystem
             float size = 1f;
 
             float dc = esm.GetStat(StatType.dodgeChance) * 0.01f;
-            float dodgeMult = 1f - (esm.GetStat(StatType.dodgeResPct) * 0.01f);
+            float dodgeMult = 1f - esm.GetStat(StatType.DodgeRes);
 
             if (UnityEngine.Random.Range(0f, 1f) < dc)
             {

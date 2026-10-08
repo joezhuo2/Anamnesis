@@ -51,7 +51,7 @@ namespace CrystalFlux.Core
         public float arcaneShieldPct;
         [Range(-200f, 100f)] public float damageRes;
         [Range(0f, 100f)] public float dodgeChance;
-        [Range(0f, 100f)] public float dodgeResPct;
+        public float dodgeRating;
         [Range(-200f, 100f)] public float physicalRes;
         [Range(-200f, 100f)] public float spellRes;
         public float hurtTime = 0.3f;
@@ -144,7 +144,8 @@ namespace CrystalFlux.Core
                 StatType.physicalRes => Mathf.Min(90f, physicalRes),
                 StatType.spellRes => Mathf.Min(90f, spellRes),
                 StatType.dodgeChance => dodgeChance,
-                StatType.dodgeResPct => Mathf.Max(99.99f, dodgeResPct),
+                StatType.dodgeRating => dodgeRating,
+                StatType.DodgeRes => Mathf.Max(0f, dodgeRating) / (Mathf.Max(0f, dodgeRating) + 100f),
                 StatType.moveSpeedPct => moveSpeedPct,
                 StatType.attackSpeedPct => attackSpeedPct,
                 StatType.defShred => defShred,
@@ -258,7 +259,7 @@ namespace CrystalFlux.Core
                 case StatType.physicalRes: physicalRes += delta; break;
                 case StatType.spellRes: spellRes += delta; break;
                 case StatType.dodgeChance: dodgeChance += delta; break;
-                case StatType.dodgeResPct: dodgeResPct += delta; break;
+                case StatType.dodgeRating: dodgeRating += delta; break;
                 case StatType.moveSpeedPct: moveSpeedPct += delta; break;
                 case StatType.attackSpeedPct: attackSpeedPct += delta; break;
                 case StatType.defShred: defShred += Mathf.RoundToInt(delta); break;

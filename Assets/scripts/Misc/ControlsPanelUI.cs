@@ -17,6 +17,7 @@ namespace CrystalFlux.SettingsSystem
         public Toggle goldDropToggle;
         public Toggle waveCompletionMessageToggle;
         public Toggle damageNumberToggle;
+        public Toggle dpsCounterToggle;
 
         [Header("Keybinds")]
         public RebindButtonUI rebindRowPrefab;
@@ -119,8 +120,26 @@ namespace CrystalFlux.SettingsSystem
             if (waveCompletionMessageToggle != null)
                 waveCompletionMessageToggle.onValueChanged.AddListener(v => Apply(s => s.showWaveCompletionMessage = v));
 
+            EnsureDpsToggle();
+
             if (damageNumberToggle != null)
                 damageNumberToggle.onValueChanged.AddListener(v => Apply(s => s.showDamageNumbers = v));
+
+            if (dpsCounterToggle != null)
+                dpsCounterToggle.onValueChanged.AddListener(v => Apply(s => s.showDpsCounter = v));
+        }
+
+        private void EnsureDpsToggle()
+        {
+            if (dpsCounterToggle != null || damageNumberToggle == null) return;
+
+            dpsCounterToggle = Instantiate(damageNumberToggle, damageNumberToggle.transform.parent);
+            dpsCounterToggle.name = "DpsCounterToggle";
+            dpsCounterToggle.onValueChanged.RemoveAllListeners();
+            dpsCounterToggle.transform.SetSiblingIndex(damageNumberToggle.transform.GetSiblingIndex() + 1);
+
+            var tmp = dpsCounterToggle.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (tmp != null) tmp.text = "DPS Counter";
         }
 
         private void Apply(System.Action<GameSettings> change)
@@ -142,6 +161,7 @@ namespace CrystalFlux.SettingsSystem
             goldDropToggle?.SetIsOnWithoutNotify(s.goldDropsEnabled);
             waveCompletionMessageToggle?.SetIsOnWithoutNotify(s.showWaveCompletionMessage);
             damageNumberToggle?.SetIsOnWithoutNotify(s.showDamageNumbers);
+            dpsCounterToggle?.SetIsOnWithoutNotify(s.showDpsCounter);
 
             suppressToggleCallbacks = false;
         }

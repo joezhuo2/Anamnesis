@@ -55,7 +55,7 @@ MonoBehaviour:
   arcaneShieldPct: 0
   damageRes: 50
   dodgeChance: 15
-  dodgeResPct: 60
+  dodgeRating: 180
   physicalRes: 0
   spellRes: 15
   hurtTime: 0.3

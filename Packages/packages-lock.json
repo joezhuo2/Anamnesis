@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.crystalflux.core": {
-      "version": "https://github.com/joezhuo2/CrystalFlux-Core.git#57096887a991271d34aed3cf51ba49894db1751c",
+      "version": "https://github.com/joezhuo2/CrystalFlux-Core.git#33f4b5f670e533330dbf336cd03ec826530c9d15",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "57096887a991271d34aed3cf51ba49894db1751c"
+      "hash": "33f4b5f670e533330dbf336cd03ec826530c9d15"
     },
     "com.unity.2d.animation": {
       "version": "14.0.3",
