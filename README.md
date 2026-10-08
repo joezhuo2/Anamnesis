@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.7.7-6366F1)
+![Version](https://img.shields.io/badge/version-0.8.6-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,9 @@
 
 </div>
 
-Current release: **v0.8.5** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.8.6** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+
+**Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 
 ---
 
@@ -258,6 +260,7 @@ Settings ─────────┬─ Entity
 - Types shared across a boundary live in `Core` as abstract bases (`AttackAsset`, `UpgradeAsset`, `EffectAsset`) rather than interfaces, because Unity cannot serialize interface-typed asset fields.
 - `Wave` never names a concrete system type — it talks to the `Core` interfaces those systems implement, plus the `EnemySpawning` and `PlayerEvents.OnPlayerTakeDamage` hooks.
 - Reward tooltips come from each asset's own `GetTooltipLines`, so `RewardButton` never reads concrete data fields.
+- The largest components (`WaveManager`, `Projectile`, `PlayerAttackHandler`, `EntityHealth`) are `partial` classes split by concern into `ClassName.Concern.cs` files. All fields stay in the main file, which keeps the script GUID scenes and prefabs bind to.
 - Attack data is **shared, not cloned**: `AttackData` and `ProjectileData` fields are private behind read-only properties. Per-run changes register on the owner instead, via `IAttackEffectSource` on `PlayerUpgradeManager`.
 
 > **Moving a `[SerializeReference]` type between assemblies breaks existing assets.** Unity stores a literal `{class, ns, asm}` triplet, so add `[MovedFrom(sourceAssembly: "...")]` when relocating one — see `UnlockEffect` and `NodeRequirement`.

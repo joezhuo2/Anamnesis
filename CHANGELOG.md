@@ -7,6 +7,18 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.6] - 2026-10-08 - Script Split
+
+No gameplay changes. The four largest scripts are now `partial` classes spread over files grouped by concern. Methods were moved verbatim; fields, attributes and base types stay in the original file, so `.meta` GUIDs, scenes and prefabs are untouched.
+
+### Changed
+- `WaveManager` (2017 lines) split into `WaveManager.cs` (fields, lifecycle, difficulty/mode, caching), `.Spawning.cs` (wave start/end, enemy spawning, boss bars, ambush/split enemies), `.Anomaly.cs` (anomaly and contract rolls, info text, rewards), `.Rewards.cs` (reward pools, pre-run picks, occasional wave rewards, claim handlers), `.MilestoneSynergy.cs` (milestone and synergy rewards) and `.RewardUI.cs` (reward panel, lock/reroll/skip/corrupt buttons, open/close/resume)
+- `Projectile` (939 lines) split into `Projectile.cs` (statics, pooling, `Setup`, owner cache, update loop), `.Hit.cs` (trigger hits, effects, additional spawns, chain retrigger, stat gains) and `.Movement.cs` (direction, homing, boomerang, pattern/cursor/orbit movement, targeting)
+- `PlayerAttackHandler` (914 lines) split into `PlayerAttackHandler.cs` (queue, lookup, slot locks and buttons, add/remove attacks), `.Casting.cs` (perform/cast/charge flow, animator, on-cast summons and upgrades) and `.Resources.cs` (cooldowns, stacks, free casts, costs)
+- `EntityHealth` (733 lines) split into `EntityHealth.cs` (lifecycle, timers, i-frames, phases), `.HealthBar.cs` (bar canvas, refresh, positioning), `.Damage.cs` (`TakeDamage`, `ChangeHealth`, lifesteal, thorns, overhealth, regen) and `.Death.cs` (death sequence, gold drop, split)
+- README: "Jump to" section links under the current release line, version badge 0.7.7 → 0.8.6, partial-class note in Design notes
+- Player `bundleVersion` 0.8.5 → 0.8.6
+
 ## [v0.8.5] - 2026-10-08 - Prism Bolt
 
 ### Added
