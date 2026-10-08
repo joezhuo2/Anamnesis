@@ -7,6 +7,15 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.5] - 2026-10-08 - Prism Bolt
+
+### Added
+- **Prism Bolt** (Basic, Rare pool, no min wave): spell bolt (1.3x spell scaling, 8 pierce, 2s cooldown, 3 stacks) that splits on hit into 2-6 `Prism Bolt Shrapnel` fragments fired in random directions (0.4x spell scaling, 4 pierce). Grants 1 stamina and 2 mana on hit. Added to the `rarePool` of both `WaveManager`s in `New.unity`
+
+### Changed
+- `RewardButton.SynergyColor` `Color.blueViolet` → `new(62, 0, 255)`
+- Player `bundleVersion` 0.8.4 → 0.8.5
+
 ## [v0.8.4] - 2026-10-08 - Dodge Rating & DPS Counter
 
 ### Added

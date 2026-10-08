@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.8.5] **Prism Bolt**: a new rare Basic attack fires a piercing spell bolt that shatters on hit into 2 to 6 weaker fragments flying off in random directions
 - [v0.8.4] **Dodge rating & DPS counter**: Dodge Resistance % is now Dodge Rating, using the same diminishing formula as armor and arcane shield (the player starts at 100, skill nodes give 3 per old percent, enemy values are tripled and scale with level), and a toggleable DPS counter shows damage dealt over a rolling 5 seconds
 - [v0.8.3] **Permanent buffs & HUD frames**: Enraged and other permanent status effects now use a duration of -1 instead of an effectively endless timer, and the contract and anomaly text each sit in their own frame that hides when there is nothing to show. The Hypercarry, Reminiscence, Resonance and Serenade keystones now cost 5 skill points, and the boss wave chance is eased slightly
 - [v0.8.2] **Shatterpoint & stat floors**: Shatterpoint, a new Awakening, makes every critical hit throw out a small burst of ice that breaks the stuns and freezes on whatever it touches for a hit of true damage. Boss Rush now opens with a Lv 90 Echo fight on the way into its Lv 105 round, Aphelion, Blood Pact and Stellar Maelstrom no longer need Master mode, and health, mana, stamina, resistance and knockback resistance can no longer be pushed to nonsense values

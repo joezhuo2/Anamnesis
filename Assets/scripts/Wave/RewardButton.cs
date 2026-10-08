@@ -21,7 +21,7 @@ namespace CrystalFlux.WaveSystem
         public RewardLockButton lockButton;
 
         public static readonly Color CorruptedSpecialColor = Color.darkBlue;
-        public static readonly Color SynergyColor = Color.blueViolet;
+        public static readonly Color SynergyColor = new(62, 0, 255);
 
         [HideInInspector] public GeneratedReward gr;
         private AttackReward ar;

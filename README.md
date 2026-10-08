@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.8.4** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.8.5** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 

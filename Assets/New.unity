@@ -15738,6 +15738,11 @@ MonoBehaviour:
     attackName: Aeternus
     desc: Homing True Multi
     minWave: 25
+  - newAttack: {fileID: 11400000, guid: ce1a1fef637038e479776b9edf9a75eb, type: 2}
+    icon: {fileID: 0}
+    attackName: Prism Bolt
+    desc: Shoots a projectile that splits into more fragments.
+    minWave: -1
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -29879,6 +29884,11 @@ MonoBehaviour:
     attackName: Aeternus
     desc: Homing True Multi
     minWave: 25
+  - newAttack: {fileID: 11400000, guid: ce1a1fef637038e479776b9edf9a75eb, type: 2}
+    icon: {fileID: 0}
+    attackName: Prism Bolt
+    desc: Shoots a projectile that splits into more fragments.
+    minWave: -1
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}

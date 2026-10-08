@@ -1,14 +1,12 @@
 # Planned Features 
 ## High priority To-Do
 - [4] **Blood Bank** 50% of all health lost is stored in a blood pool (unlimited dura. SE), using an ult. releases all stored health as overhealth
-- [3] **Spiteful Aegis** 25% of damage taken is added to your next hit as bonus damage.
-- [3] **Veil of Stars** (Ultimate) — creates an aura around you. Enemy projectiles that enter it unleashes homing stars.
-- [3] **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
-- [3] finish everything in between first and second ring in skill tree
+- [4] **Spiteful Aegis** 25% of damage taken is added to your next hit as bonus damage.
+- [4] **Veil of Stars** (Ultimate) — creates an aura around you. Enemy projectiles that enter it unleashes homing stars.
+- [4] **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
+- [4] finish everything in between first and second ring in skill tree
 - [3] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
 - [3] **Repulsion** - counter dodging creates a shockwave
-- [3] **Runic Satellite** Taking damage creates a rune that orbits you and fires homing spell bolts on hit
-- [3] **Prism Bolt** (Basic) — spell bolt that splits into 2 weaker bolts on hit.
 - [1] skill tree third circular ring (no connections yet)
 
 ## Medium Priority To-Do
@@ -33,22 +31,33 @@
 ## Features By Category
 
 ### Content
-- [5] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
+
 - [8] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
+
 - [7] Skill Points (? name) update: atk/dex/int/agi/vit/?/def/?
-- [5] Techniques - utility/QoL featured (blink tp, buff, crowd control)
+
 - [6] wave events - random events that can randomly occur during waves
-- [4] Player summons
+
+- [5] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
 - [5] Player new "signature" that charges via a new special resource instead of a cooldown
+- [5] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
+- [5] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses (new collectible type)
+- [5] Techniques - utility/QoL featured (blink tp, buff, crowd control)
+
+- [4] Player summons
+
+- [3] Combo/synergy bonuses for stacking related rewards
 - [3] deployables (eg. totems/auras)
+
+- [2] second skill tree (Prestiage/Ascension/Mastery)
+- [2] portals
 - [2] multiple map sections
 - [2] Environmental hazards on maps (spikes, lava, traps)
-- [2] portals
+- [2] Daily/weekly challenge modifiers with seeded runs
+
 - [1] Finish Gear/Item system (slots, rarity tiers, stat rolls, equip/unequip)
 - [1] Consumables (potions, bombs, temporary buffs) with hotkeys
 - [1] Shop/merchant between waves to spend currency on items or stat boosts
-- [5] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
-- [5] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses (new collectible type)
 - [1] Chests or loot drops from elites/bosses with guaranteed rare rewards
 - [1] Elemental Damage/Defense system
 - [1] Elemental affinities/weaknesses
@@ -56,34 +65,37 @@
 - [1] Crafting/enchanting system for gear
 - [1] Set bonuses for equipping matching gear pieces
 - [1] Elemental reactions
-- [3] Combo/synergy bonuses for stacking related rewards
-- [2] second skill tree (Prestiage/Ascension/Mastery)
-- [2] Daily/weekly challenge modifiers with seeded runs
 
 ### Graphics
 - [2] Status Effect vfx
+
 - [1] map debris/decor
 - [1] Background Overlays - reward menu, home screen, settings menu, scroll menu, death menu
 
 ### QoL
-- [1] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 - [6] enemy status effect overlay on common enemies
+- [6] Screen-edge indicators for off-screen enemies, boss cursor
+
 - [5] full run saving
+
+- [4] reward history
+- [4] Post-Death Summary (run grade)
+
 - [3] Suggest certain stats based on player's current loadout
-- [1] Build export/share — copy current loadout as text for sharing
-- [1] damage breakdown (by attack, every x waves)
-- [2] Leaderboards (local/online) for boss rush/endless/highest dps
-- [1] FPS counter & performance stats debug toggle
 - [3] Achievement system with unlock notifications
 - [3] Full stats display menu (in settings panel)
-- [4] Post-Death Summary (run grade)
-- [6] Screen-edge indicators for off-screen enemies, boss cursor
+
+- [2] Leaderboards (local/online) for boss rush/endless/highest dps
+- [2] Customizable HUD layout
+
+- [1] FPS counter & performance stats debug toggle
+- [1] damage breakdown (by attack, every x waves)
 - [1] run archive
 - [1] "What's new" changelog popup on update
-- [4] reward history
-- [2] Customizable HUD layout
 - [1] data saving - full game runs
+- [1] Build export/share — copy current loadout as text for sharing
 - [1] Confirmation dialog before corrupting a reward (can be toggled in settings)
+- [1] Status effect sort options (duration, num of stacks, etc.) - configurable in settings
 
 # Planned
 
