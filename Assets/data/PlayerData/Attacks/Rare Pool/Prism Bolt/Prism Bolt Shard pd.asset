@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
-  m_Name: Prism Bolt pd
+  m_Name: Prism Bolt Shard pd
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
-  mainAttack: {fileID: 11400000, guid: ce1a1fef637038e479776b9edf9a75eb, type: 2}
+  mainAttack: {fileID: 11400000, guid: 48d68fcb7dec03f4f94cf7c901efd169, type: 2}
   lifetime: 3
-  size: 2
-  numPierce: 6
+  size: 1.75
+  numPierce: 4
   destroyOnMaxPierce: 0
   movementType: 0
-  speed: 3.25
+  speed: 2.5
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.85
+  spellMult: 0.55
   trueMult: 0
   scalingStat: 44
   extraScalings: []
@@ -33,12 +33,12 @@ MonoBehaviour:
   followDistance: 0
   followSource: 0
   rotationOffset: 0
-  maxBoomerangDist: 5
+  maxBoomerangDist: 4
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
-  randomDir: 0
-  additionalAttack: {fileID: 11400000, guid: 48d68fcb7dec03f4f94cf7c901efd169, type: 2}
+  randomDir: 1
+  additionalAttack: {fileID: 11400000, guid: fcffe03b82e7d4b44b576d92f26ef132, type: 2}
   additionalChance: 1
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
@@ -48,5 +48,5 @@ MonoBehaviour:
   randOrbRadOffset: 0
   orbitSelf: 0
   rotateClockwise: 0
-  kbForce: 3
+  kbForce: 2
   knockbackTime: 0.15

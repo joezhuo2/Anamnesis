@@ -7,6 +7,20 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.10] - 2026-10-09 - Prism Bolt Shards
+
+### Added
+- **Prism Bolt Shard** (`Prism Bolt Shard  ad` / `Prism Bolt Shard pd`, new prefab, animation and controller): a middle tier between Prism Bolt and its shrapnel. Prism Bolt now creates 2-4 shards on hit (Circle, 2 count +2 random, 0.12-0.4s random delay) instead of shrapnel directly. Shards fly in random directions (0.55x spell scaling, 4 pierce, size 1.75, speed 2.5, 3s lifetime, 2 knockback), grant 2 mana on hit, and each one creates `Prism Bolt Shrapnel` on hit
+
+### Changed
+- **Prism Bolt**: cooldown 1.6s → 1.8s, spell scaling 0.7x → 0.85x, knockback 1 → 3, on-hit spawn offset 0 → 0.5, on-hit attack Prism Bolt Shrapnel → Prism Bolt Shard
+- **Prism Bolt Shrapnel**: now spawned by Prism Bolt Shard. Fragments 2-6 → 2-5, spawned at a fixed 0 distance (was 0.25), spell scaling 0.25x → 0.2x, pierce 4 → 2, speed 2 → 1.75, lifetime 3s → 2s, knockback 2 → 1. No longer costs 1 mana per cast; grants 1 mana on hit instead
+- Player `bundleVersion` 0.8.9 → 0.8.10
+
+### Docs
+- `GAME.md`: added the previously undocumented Prism Bolt, Prism Bolt Shard and Prism Bolt Shrapnel entries; Rare Pool entry count 22 → 23
+- `README.md`: Prism Bolt added to the Basic Attacks list
+
 ## [v0.8.9] - 2026-10-09 - Blood Bank
 
 ### Added

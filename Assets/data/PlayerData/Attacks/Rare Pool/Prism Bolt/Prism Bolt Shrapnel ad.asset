@@ -48,10 +48,10 @@ MonoBehaviour:
   chargeAttack: {fileID: 0}
   pattern: 2
   spawnDelay: 0
-  spawnDistance: 0.25
-  fixedDistance: 0
+  spawnDistance: 0
+  fixedDistance: 1
   projectileCount: 2
-  randomCount: 4
+  randomCount: 3
   spread: 0
   randomSpread: 0
   minDelay: 0.1
@@ -68,14 +68,14 @@ MonoBehaviour:
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 0
-  manaCost: 1
+  manaCost: 0
   manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 0
   staminaPctGainOnHit: 0
   healthGainOnHit: 0
   healthPctGainOnHit: 0
-  manaGainOnHit: 0
+  manaGainOnHit: 1
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0

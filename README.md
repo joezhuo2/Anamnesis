@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.8.9-6366F1)
+![Version](https://img.shields.io/badge/version-0.8.10-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.8.9** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.8.10** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 **Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 
@@ -84,7 +84,7 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 
 | Category | Entries |
 |----------|---------|
-| **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova |
+| **Basic Attacks** | Blaze, Lacerate, Aphelion, Astral Nova, Blood Pact, Ignition Flash, Supernova, Prism Bolt |
 | **Skills** | Warp, Cyclone Cleave, Meteor Shower, Nebula, Stellar Maelstrom, Lifeforce, Sacred Surge, Subspace Blitz |
 | **Ultimates** | Nirvana, Revelation, Shattered Singularity, Solar Collapse, Starfury, Exodus, Luminaria, Nocturnis, Aeternus |
 | **Awakenings** | Feedback Loop, Soul Rend, Supersonic, Hex Cast, Stellar Surge, Starlit Reflexes, Paradox, Decoy, Autopilot, Exsanguinate, Terminal Cascade, Crescendo, Tempo, Chaos Theory, Shock Absorber, Momentum, Midas Touch, Contagion, Shatterpoint, Blood Bank, plus capstone-only Solar Wind, Oblivion and Moonbound Instinct, and keystone-only Ethereal Mirage, Eldritch Exchange, Hypercarry, Reminiscence, Resonance, Serenade and Wipeout |

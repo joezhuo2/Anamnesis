@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: Prism Bolt Shrapnel pd
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
   mainAttack: {fileID: 11400000, guid: fcffe03b82e7d4b44b576d92f26ef132, type: 2}
-  lifetime: 3
+  lifetime: 2
   size: 2
-  numPierce: 4
+  numPierce: 2
   destroyOnMaxPierce: 0
   movementType: 0
-  speed: 2
+  speed: 1.75
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.25
+  spellMult: 0.2
   trueMult: 0
   scalingStat: 44
   extraScalings: []
@@ -33,7 +33,7 @@ MonoBehaviour:
   followDistance: 0
   followSource: 0
   rotationOffset: 0
-  maxBoomerangDist: 4
+  maxBoomerangDist: 3
   angleOverride: 0
   useTrueAngle: 0
   bypassIFrames: 0
@@ -48,5 +48,5 @@ MonoBehaviour:
   randOrbRadOffset: 0
   orbitSelf: 0
   rotateClockwise: 0
-  kbForce: 2
+  kbForce: 1
   knockbackTime: 0.15

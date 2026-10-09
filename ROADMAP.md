@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.8.10] **Prism Bolt shards**: Prism Bolt now shatters into 2 to 4 shards, and each shard splinters into its own smaller shrapnel on hit, so a single bolt cascades through crowds. The bolt itself hits harder and knocks back further but recovers a little slower
 - [v0.8.9] **Blood Bank**: a new Awakening stores half of all health you lose in a blood pool, and casting an Ultimate releases it all as overhealth. Overhealth from any source now decays over time even without an Overhealth upgrade, while Exsanguinate and Oblivion bleed off overhealth more slowly
 - [v0.8.8] **Rare attack tuning**: Prism Bolt and its shrapnel hit a little softer, Meteor Shower drops more but smaller, slightly weaker meteors at a slower pace, Aeternus leans less on its base true damage and more on attack, Intelligence, armor and max HP, Reminiscence triggers less often, and the Hivemind contract now pauses on boss waves
 - [v0.8.7] **Prism Bolt rebalance**: Prism Bolt hits for less, pierces fewer enemies and flies slightly slower, but recovers faster and its shrapnel is smaller and slower. Momentum now stacks up to 3 times, and the DPS counter measures damage over the last second and refreshes slightly faster

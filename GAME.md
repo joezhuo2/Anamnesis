@@ -76,7 +76,7 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
 
 # Rare Pool
 
-Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 22 entries below are present in
+Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 23 entries below are present in
 `WaveManager.rarePool`. Entries marked with an unlock wave carry a `minWave` on their
 `AttackReward` and cannot be rolled before that wave; the rest are available from wave 1.
 Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€” see
@@ -487,6 +487,61 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Time Before Same Enemy: 0.33s
   - Use True Angle
   - Knockback: none
+
+## Prism Bolt
+- Asset: `Prism Bolt ad` / `Prism Bolt pd`
+- Type: Basic
+- Cooldown: 1.8s, 3 stacks
+- Pattern: Single (1 count)
+- Spawn: 0.25 dist
+- Animation: 0.5s
+- Gains on hit: Stamina +1, Mana +2
+- Projectile:
+  - Speed: 3.25
+  - Lifetime: 3s
+  - Pierce: 6
+  - Size: 2
+  - Damage: 85% Spell
+  - Scaling: EffInt
+  - Additional: 100% chance on hit to create Prism Bolt Shard (0.5 from center)
+  - Knockback: 3 force for 0.15s
+
+## Prism Bolt Shard
+- Asset: `Prism Bolt Shard  ad` (two spaces) / `Prism Bolt Shard pd`
+- Type: Additional
+- Cooldown: 0s (follow-up)
+- Pattern: Circle (2 count +2 random)
+- Spawn: 0 dist (fixed), 0.12-0.4s random delay per shard
+- Animation: 0s
+- Gains on hit: Mana +2
+- Projectile:
+  - Speed: 2.5
+  - Lifetime: 3s
+  - Pierce: 4
+  - Size: 1.75
+  - Damage: 55% Spell
+  - Scaling: EffInt
+  - Random direction
+  - Additional: 100% chance on hit to create Prism Bolt Shrapnel (0.5 from center)
+  - Knockback: 2 force for 0.15s
+
+## Prism Bolt Shrapnel
+- Asset: `Prism Bolt Shrapnel ad` / `Prism Bolt Shrapnel pd`
+- Type: Additional
+- Cooldown: 0s (follow-up)
+- Pattern: Circle (2 count +3 random)
+- Spawn: 0 dist (fixed), 0.1-0.3s random delay per fragment
+- Animation: 0s
+- Gains on hit: Mana +1
+- Projectile:
+  - Speed: 1.75
+  - Lifetime: 2s
+  - Pierce: 2
+  - Size: 2
+  - Damage: 20% Spell
+  - Scaling: EffInt
+  - Random direction
+  - Knockback: 1 force for 0.15s
 
 ## Revelation
 - Asset: `Revelation AD`
