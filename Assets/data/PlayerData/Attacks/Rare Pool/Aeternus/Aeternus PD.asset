@@ -24,17 +24,17 @@ MonoBehaviour:
   spiralSpacing: 1
   physicalMult: 0
   spellMult: 0
-  trueMult: 0.15
+  trueMult: 0.1
   scalingStat: 7
   extraScalings:
   - stat: 31
-    weight: 0.2
+    weight: 0.3
   - stat: 44
-    weight: 0.2
+    weight: 0.3
   - stat: 30
-    weight: 0.2
+    weight: 0.3
   - stat: 35
-    weight: 0.2
+    weight: 0.3
   specialMult: 1
   specialScaling: 0
   timeBeforeSameEnemy: 0.25

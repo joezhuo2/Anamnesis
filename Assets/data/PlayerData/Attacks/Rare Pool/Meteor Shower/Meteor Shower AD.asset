@@ -51,11 +51,11 @@ MonoBehaviour:
   spawnDistance: 5
   fixedDistance: 0
   projectileCount: 48
-  randomCount: 28
+  randomCount: 32
   spread: 3
   randomSpread: 0
-  minDelay: 0.05
-  maxDelay: 0.12
+  minDelay: 0.06
+  maxDelay: 0.14
   maxRange: 0
   canMoveDuringAttack: 0
   animationIndex: -1

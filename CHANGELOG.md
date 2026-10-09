@@ -7,6 +7,17 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.8] - 2026-10-08 - Rare Attack Tuning
+
+### Changed
+- **Prism Bolt**: spell scaling 0.85x → 0.7x
+- **Prism Bolt Shrapnel**: spell scaling 0.3x → 0.25x
+- **Meteor Shower**: random extra meteors 28 → 32, delay between meteors 0.05–0.12s → 0.06–0.14s, size 1.25 → 1, spell scaling 1.1x → 1x
+- **Aeternus**: true scaling 15% → 10%, extra scalings (EffAtk, EffInt, EffArmor, EffMaxHp) 20% → 30% each
+- **Reminiscence**: chance 35% → 30%, cooldown 2s → 3s
+- **Hivemind / UHivemind** contracts: `disallowOnBossWave` on, so the contract pauses on boss waves
+- Player `bundleVersion` 0.8.7 → 0.8.8
+
 ## [v0.8.7] - 2026-10-08 - Prism Bolt Rebalance
 
 ### Changed

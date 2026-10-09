@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
   lifetime: 0.5
-  size: 1.25
+  size: 1
   numPierce: 4
   destroyOnMaxPierce: 0
   movementType: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 1.1
+  spellMult: 1
   trueMult: 0
   scalingStat: 44
   extraScalings: []

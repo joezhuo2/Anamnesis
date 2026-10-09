@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.8.8] **Rare attack tuning**: Prism Bolt and its shrapnel hit a little softer, Meteor Shower drops more but smaller, slightly weaker meteors at a slower pace, Aeternus leans less on its base true damage and more on attack, Intelligence, armor and max HP, Reminiscence triggers less often, and the Hivemind contract now pauses on boss waves
 - [v0.8.7] **Prism Bolt rebalance**: Prism Bolt hits for less, pierces fewer enemies and flies slightly slower, but recovers faster and its shrapnel is smaller and slower. Momentum now stacks up to 3 times, and the DPS counter measures damage over the last second and refreshes slightly faster
 - [v0.8.6] **Script split**: no gameplay changes. The four largest scripts (the wave manager, projectiles, the player attack handler and entity health) are now split by concern into smaller files, so each one is easier to read and change
 - [v0.8.5] **Prism Bolt**: a new rare Basic attack fires a piercing spell bolt that shatters on hit into 2 to 6 weaker fragments flying off in random directions

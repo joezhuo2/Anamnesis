@@ -97,8 +97,8 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 56s
   - Pierce: 3000
   - Size: 2
-  - Damage: 6% True
-  - Scaling: critDamage, plus 12% EffAtk, 12% EffInt, 12% EffArmor, 8% EffMaxHp
+  - Damage: 10% True
+  - Scaling: critDamage, plus 30% EffAtk, 30% EffInt, 30% EffArmor, 30% EffMaxHp
   - Time Before Same Enemy: 0.25s
   - Knockback: 0.15s
 
@@ -390,7 +390,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Asset: `Meteor Shower AD`
 - Type: Skill
 - Cooldown: 5s
-- Pattern: Barrage (48 count +28 random, 3 radius)
+- Pattern: Barrage (48 count +32 random, 3 radius)
 - Spawn: 5 dist
 - Animation: 0.5s
 - Costs: Stamina 15, Mana 48
@@ -399,11 +399,11 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Speed: 0 (melee)
   - Lifetime: 0.5s
   - Pierce: 4
-  - Size: 1.25
-  - Damage: 110% Spell
+  - Size: 1
+  - Damage: 100% Spell
   - Scaling: EffInt
   - Use True Angle
-  - Delay: 0.05-0.12s between projectiles
+  - Delay: 0.06-0.14s between projectiles
   - Knockback: none
 
 ## Nebula
@@ -1452,11 +1452,11 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Asset: `Reminiscence`
 - Type: Reminiscence
 - Conditions: OnCrit
-- Chance: 35%
-- Cooldown: 2s
+- Chance: 30%
+- Cooldown: 3s
 - Delay: 0.35s
 - Cooldown Effect: Reminiscence Cooldown (4s)
-- Description: 35% chance on a critical hit to immediately perform an extra attack of a
+- Description: 30% chance on a critical hit to immediately perform an extra attack of a
   randomly chosen equipped attack type. Slots sealed by the Sealed anomaly are never picked, and
   the extra attack does not count toward, or spend, a Resonance free cast.
 - Unlocked by: `Node_remin` ("Reminiscence" keystone, 5 skill points, `undoCost` 50, Master mode)
