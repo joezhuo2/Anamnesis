@@ -15843,6 +15843,12 @@ MonoBehaviour:
     desc: Critical hits shatter the enemy and remove their Stun or Freeze to deal
       additional true damage.
     minWave: -1
+  - upgrade: {fileID: 11400000, guid: 8228772e53bf47749fcf6cee08f5decf, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Blood Bank
+    desc: Taking damage stores health lost in a blood bank. Use an ultimate to restore
+      all health in the blood bank as overhealth.
+    minWave: -1
   mixedPool:
   - icon: {fileID: 0}
     baseBuff:
@@ -29988,6 +29994,12 @@ MonoBehaviour:
     upgradeName: Shatterpoint
     desc: Critical hits shatter the enemy and remove their Stun or Freeze to deal
       additional true damage.
+    minWave: -1
+  - upgrade: {fileID: 11400000, guid: 8228772e53bf47749fcf6cee08f5decf, type: 2}
+    icon: {fileID: 0}
+    upgradeName: Blood Bank
+    desc: Taking damage stores health lost in a blood bank. Use an ultimate to restore
+      all health in the blood bank as overhealth.
     minWave: -1
   mixedPool:
   - icon: {fileID: 0}
@@ -71760,7 +71772,7 @@ PrefabInstance:
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
+      objectReference: {fileID: 11400000, guid: 8228772e53bf47749fcf6cee08f5decf, type: 2}
     - target: {fileID: 3978305546849488184, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'activeUpgrades.Array.data[1]'
       value: 

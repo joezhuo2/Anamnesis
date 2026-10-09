@@ -17,7 +17,9 @@ MonoBehaviour:
   chance: 0
   cooldown: 0
   delay: 0
+  noMirror: 0
+  minMode: 0
   conversionPct: 50
-  decayPct: 25
+  decayPct: 20
   decayInterval: 0.5
   convertRegen: 0

@@ -1,8 +1,7 @@
 # Planned Features 
 ## High priority To-Do
-- [4] **Blood Bank** 50% of all health lost is stored in a blood pool (unlimited dura. SE), using an ult. releases all stored health as overhealth
-- [4] **Spiteful Aegis** 25% of damage taken is added to your next hit as bonus damage.
-- [4] **Veil of Stars** (Ultimate) — creates an aura around you. Enemy projectiles that enter it unleashes homing stars.
+- [6] move paradox to skill tree
+- [4] **Veil of Stars** (Ultimate) — creates an aura with `configurable `tile radius around you (with overlay) that grants a `status effect`. Enemy projectiles that enter have a `configurable` chance to it spawn a `projectile`.
 - [4] **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
 - [3] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
 - [3] **Repulsion** - counter dodging creates a shockwave
@@ -170,23 +169,6 @@
 
 - Starfury - low aoe, primary speed scaling
 - Feedback Loop - low damage, not guaranteed
-
-### Stats without skill tree nodes
-- ult cd red pct
-- dash spd mult
-- exp bonus
-- stealing
-
-### next non-basic skill tree nodes
-- crit chance
-- crit damage
-- atk spd pct
-- aoe pct
-- def shred
-- res pen
-- healing pct
-- damage res 
-- move spd pct
 
 ## Performance Improvements
 

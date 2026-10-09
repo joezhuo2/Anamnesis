@@ -32,8 +32,10 @@ namespace CrystalFlux.EntitySystem
         private const float hurtIFrameDuration = 0.4f;
         private float accumulatedRegen;
         private float overhealthConvPct;
-        private float overhealthDecayPct;
-        private float overhealthDecayInterval;
+        public const float DefaultOverhealthDecayPct = 25f;
+        public const float DefaultOverhealthDecayInterval = 0.5f;
+        private float overhealthDecayPct = DefaultOverhealthDecayPct;
+        private float overhealthDecayInterval = DefaultOverhealthDecayInterval;
         private float overhealthDecayTimer;
         private bool regenOverHealth;
         private float immunityEndTime;

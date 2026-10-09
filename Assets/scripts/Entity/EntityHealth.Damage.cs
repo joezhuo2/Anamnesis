@@ -22,6 +22,11 @@ namespace CrystalFlux.EntitySystem
             if (overhealthConvPct <= 0f) AddOverhealth(-Overhealth);
         }
 
+        public void GrantOverhealth(float amount)
+        {
+            if (amount > 0f) AddOverhealth(amount);
+        }
+
         private void AddOverhealth(float delta)
         {
             if (esm == null || delta == 0f) return;
@@ -196,6 +201,12 @@ namespace CrystalFlux.EntitySystem
             if (ownSem.GetActiveFirstEffectOfType<Thorns>() is Thorns th) th.TryReflect(attacker, damageTaken);
         }
 
+        private void TryStoreBlood(int healthLost)
+        {
+            if (healthLost <= 0 || ownSem == null) return;
+            if (ownSem.GetActiveFirstEffectOfType<BloodPool>() is BloodPool bp) bp.Store(healthLost);
+        }
+
         private bool IsEnemyHit(DamagePacket dp, DamageInstance i, int atkTeam)
         {
             if (dp.bypassIFrames) return false;
@@ -243,6 +254,7 @@ namespace CrystalFlux.EntitySystem
 
             if (targetChange < 0 && DamageRedirect != null && DamageRedirect(this, -targetChange)) targetChange = 0;
             if (targetChange > 0) targetChange = Mathf.Min(targetChange, MaxHp - CurHp);
+            else if (targetChange < 0) TryStoreBlood(Mathf.Min(-targetChange, CurHp));
             esm.AddStat(new StatBuff(StatType.currentHp, targetChange));
 
             UpdatePhase();

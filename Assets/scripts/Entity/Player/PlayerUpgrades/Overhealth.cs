@@ -19,7 +19,7 @@ public class Overhealth : PlayerUpgrade
     public override void OnRemove(GameObject player)
     {
         if (player != null && player.TryGetComponent<EntityHealth>(out var eh))
-            eh.SetOverhealth(0f, 0f, 0f, false);
+            eh.SetOverhealth(0f, EntityHealth.DefaultOverhealthDecayPct, EntityHealth.DefaultOverhealthDecayInterval, false);
     }
 
     public override void GetTooltipLines(List<string> lines)

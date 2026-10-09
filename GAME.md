@@ -1114,6 +1114,20 @@ player upgrades rather than attacks the player selects.
   - Homing: 0.5 follow distance
   - Knockback: 8 force for 0.15s
 
+## Blood Bank
+- Asset: `Blood Bank`
+- Type: BloodBank
+- Conditions: OnUltAttack
+- Chance: 100%
+- Cooldown: 0s
+- Delay: 0s
+- Store: 50% of all health lost
+- Effect: `Blood Pool` (permanent)
+- Description: 50% of all health lost is stored in a Blood Pool (shown on the status effect
+  tooltip as `Stored: N`). Casting an Ultimate releases everything stored as overhealth, which
+  then decays at the default 25% per 0.5s unless an Overhealth upgrade sets its own rate.
+- In `treasurePool`, no unlock wave.
+
 ## Chaos Theory
 - Asset: `Chaos Theory AD`
 - Type: Additional
@@ -1207,7 +1221,7 @@ player upgrades rather than attacks the player selects.
 
 The `GrantStatusEffect` type (`PlayerUpgrade/GrantStatusEffect`) applies an authored
 `StatusEffect` to the player for `stacks` stacks under any trigger condition, and removes it
-again on `OnRemove`. Used by `Solar Wind`, `Shock Absorber`, `Momentum`, `Moonbound Instinct` and
+again on `OnRemove`. Used by `Eldritch Exchange`, `Solar Wind`, `Shock Absorber`, `Momentum`, `Moonbound Instinct` and
 `Ethereal Mirage`.
 
 The `FreeCast` type (`PlayerUpgrade/FreeCast`) counts consecutive casts of one slot and makes the
@@ -1221,12 +1235,23 @@ to `maxStacks`, and removes them on `OnRemove`. Used by `Midas Touch`.
 The `Overhealth` and `AddChain` types are passive: they configure the player on `OnUnlock`
 and undo it on `OnRemove`, so they carry no trigger conditions, chance or cooldown.
 
+Overhealth from any source sits above `EffMaxHp`, is spent before health when damage lands and is
+cleared on death. Without an `Overhealth` upgrade it decays by the `EntityHealth` default of 25% of
+the current pool every 0.5s (`DefaultOverhealthDecayPct` / `DefaultOverhealthDecayInterval`);
+an `Overhealth` upgrade overrides that rate and restores the default when removed.
+
+The `BloodBank` type (`PlayerUpgrade/BloodBank`) applies its `bloodPool` status effect permanently
+on `OnUnlock` and writes its `storePct` into it. `EntityHealth.ChangeHealth` feeds every point of
+real health lost into the pool (overhealth-absorbed damage and overkill past 0 HP don't count;
+health spent on attack costs does). Any trigger condition releases the whole pool as overhealth.
+Used by `Blood Bank`.
+
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
 `Oblivion`, `Ultrasonic` and `Moonbound Instinct` (the capstone-only upgrades), the keystone-only `Ethereal Mirage` pair,
-the keystone-only `Hypercarry`, `Reminiscence`, `Resonance` and `Serenade` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+the keystone-only `Eldritch Exchange`, `Hypercarry`, `Reminiscence`, `Resonance` and `Serenade` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
-Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Hypercarry`,
+Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Eldritch Exchange`, `Hypercarry`,
 `Hex Cast`, `Starlit Reflexes`, `Moonbound Instinct`, `Resonance`, and Ethereal Mirage's `Cosmic Afterimage` and `Cosmic Superimposition`.
 
 ## Hypercarry
@@ -1327,6 +1352,20 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
   `Node_ms2`, requires the base Decoy upgrade, which it consumes on unlock and returns
   on refund)
 
+## Eldritch Exchange (Keystone)
+- Asset: `Eldritch Exchange`
+- Type: GrantStatusEffect
+- Conditions: OnConsumeHealth
+- Chance: 100%
+- Cooldown: 2s
+- Delay: 0s
+- Effect: `eldex` (Lifesteal, 8s, 10 stacks), 1 stack per trigger
+- Description: Paying health for an attack grants a stack of Lifesteal: each stack has a 50%
+  chance to heal 0.5% of damage dealt on hit (1s cooldown).
+- Unlocked by: `Node_eldex` ("Eldritch Exchange" keystone, 5 skill points, `undoCost` 50, Master
+  mode, prerequisite `Node_hp3b`)
+- Not in `treasurePool` — keystone-only.
+
 ## Ethereal Mirage (Keystone)
 - Asset: `Ethereal Mirage` (folder `PlayerUpgrade/Keystone`)
 - Type: GrantStatusEffect
@@ -1362,13 +1401,14 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 
 ## Exsanguinate
 - Asset: `Exsanguinate`
+- Unlocks: wave 15
 - Type: Overhealth
 - Conditions: none (applied on unlock)
 - Conversion: 50% of healing received at full health
-- Decay: 25% of the current pool per 0.5s
+- Decay: 20% of the current pool per 0.5s
 - Convert Regen: off (see note)
 - Description: While at full health, half of every heal becomes overhealth instead. Overhealth
-  sits above `EffMaxHp`, is spent before health when damage lands, and bleeds off 25% of what
+  sits above `EffMaxHp`, is spent before health when damage lands, and bleeds off 20% of what
   remains every 0.5s. Cleared on death.
 - Note: `convertRegen` is authored off, so health regen is *not* one of the heals that convert
   — regen stops at full health as usual. Before v0.4.9 the `RegenHp` guard ignored the flag
@@ -1422,11 +1462,11 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Type: Overhealth
 - Conditions: none (applied on unlock)
 - Conversion: 100% of healing received at full health
-- Decay: 20% of the current pool per 0.5s
+- Decay: 15% of the current pool per 0.5s
 - Convert Regen: on (see note)
 - Description: Exsanguinate with every number improved. At full health the entire heal —
   health regen included, which Exsanguinate no longer converts — becomes overhealth instead
-  of being wasted, and the pool bleeds off 20% every 0.5s rather than 25%. Cleared on death.
+  of being wasted, and the pool bleeds off 15% every 0.5s rather than 20%. Cleared on death.
 - Unlocked by: `Node_oblivion` ("Oblivion" capstone, 3 skill points, prerequisites `Node_h2`
   and `Node_h2a`, requires the Exsanguinate Awakening). Unlocking it consumes Exsanguinate —
   both upgrades write the same `EntityHealth.SetOverhealth` config, so they never stack.
@@ -1439,7 +1479,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 
 ## Paradox
 - Asset: `Paradox`
-- Unlocks: wave 35
+- Unlocks: wave 15
 - Type: Paradox
 - Conditions: none
 - Chance: 0%
@@ -1495,7 +1535,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Type: SpawnProjectile
 - Conditions: OnCrit
 - Chance: 100%
-- Cooldown: 0s
+- Cooldown: 0.5s
 - Delay: 0s
 - Projectile: `Shatterpoint.prefab` (`Shatterpoint ad` / `Shatterpoint pd`, folder `Treasure Pool/Shatterpoint`)
   - Size: 2, lifetime 0.5s, pierce 6, random direction
@@ -1533,7 +1573,6 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 
 ## Soul Rend
 - Asset: `SoulRendPU`
-- Unlocks: wave 35
 - Type: SoulRendPU
 - Conditions: OnUltAttack
 - Chance: 100%
@@ -1632,6 +1671,7 @@ Soul Rend buff (1.5s duration, max 100 stacks):
 
 ## Terminal Cascade
 - Asset: `Terminal Cascade`
+- Unlocks: wave 15
 - Type: AddChain
 - Conditions: none (applied on unlock)
 - Retrigger Chance: 12%
@@ -1652,6 +1692,9 @@ Soul Rend buff (1.5s duration, max 100 stacks):
   already carry it. Re-applied from the debuff's `origin` asset, so a spread chain never
   clones a clone. Per-debuff timers are pruned every 2s, and the loop sits out
   zero-timescale frames.
+- Unlocked by: `Node_wipeout` ("Wipeout" keystone, 3 skill points, `undoCost` 50, Master mode,
+  prerequisite `Node_sepp4`, requires the Contagion Awakening)
+- Not in `treasurePool` — keystone-only.
 
 ---
 
@@ -1667,6 +1710,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | Asset | Class | Name | Duration | Tick | Max stacks | Effect |
 | --- | --- | --- | --- | --- | --- | --- |
 | `AttackInc 14 2 40` | StatBuffs | Sharpened Instincts | 14s | - | 2 | +40% atkPct per stack |
+| `Blood Pool` | BloodPool | Blood Pool | permanent | - | 1 | Stores `storePct`% of health lost (set by Blood Bank, 50%); emptied into overhealth when Blood Bank triggers |
 | `Blaze Soul` | AttackReplacement | Blaze Soul | 6s | - | 1 | Replaces the attack with `Blaze A1 AD` (Cosmic Blaze) |
 | `Bleed 5 1 3 30 EffAtk` | DoT | Bleed | 3s | 0.5s | 5 | 8% EffMaxHp per tick |
 | `Burn 6 1 5 15` | DoT | Burn | 6s | 1s | 5 | 35% EffAtk per tick |
@@ -1677,6 +1721,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Crumbling 6 10 4` | StatReduction | Crumbling | 6s | - | 4 | -10% armor per stack |
 | `Decay` | StatBuffs | Decay | 4s | - | 6 | -12% hpPct, -14% stRegPct, +4% resPen per stack |
 | `DotDetonator 0.5 2` | Detonator | Detonator | 0.5s | - | 1 | Detonates every DoT stack for 250% as True, scaled by each DoT's potency, then removes them all |
+| `Enraged` | StatBuffs | Enraged | permanent | - | 1 | +30% atkPct, +25% attackSpeedPct, +20% moveSpeedPct |
 | `Freeze` | Freeze | Frozen | 2s | - | 1 | Cannot move, attack or dash; no passive health regen; knockback and pulls do nothing, and any rush in progress ends |
 | `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
@@ -1710,6 +1755,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Vulnerable 6 3 8` | StatBuffs | Vulnerable | 6s | - | 3 | -8% damageRes per stack |
 | `Vulnerable 8 2 20` | StatBuffs | Vulnerable | 8s | - | 2 | -20% damageRes per stack |
 | `Voltaic Pulse` | StatBuffs | Voltaic Pulse | 9s | - | 4 | +12% physicalDmgPct, +8% moveSpeedPct, -5% damageRes per stack |
+| `eldex` | Lifesteal | Lifesteal | 8s | - | 10 | Each stack: 50% chance to heal 0.5% of damage dealt on hit, 1s cooldown. See Eldritch Exchange above |
 | `Weaken 5 10 4` | StatReduction | Weaken | 5s | - | 4 | -10% attack per stack |
 
 Used by enemies rather than the player: `Crumbling 6 10 4` (Crab, and the Golem's Orbit),
@@ -1728,6 +1774,8 @@ lands 40% of the time. The player's Nitro Accelerator also applies `Stun 3`, to 
 `Slow 5 3 15` is authored but no longer referenced by any projectile — Blizzard moved to
 `Slow 6 15 5` in v0.3.9, which was reauthored as `Slow 4 15 5` (4s instead of 6s) in v0.4.1_2.
 The `Radiation 4 0.25 8 2 CritDmg` asset name is likewise stale: it now runs 5s with 10 stacks.
+`Pulled source` (1s, pull speed 40) is authored but not referenced by anything.
+`Enraged` is applied permanently by the Twin Crowns and Rampage anomalies.
 
 ---
 

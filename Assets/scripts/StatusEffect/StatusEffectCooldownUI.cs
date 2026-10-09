@@ -91,7 +91,8 @@ namespace CrystalFlux.StatusEffectSystem
         public (string title, string subtitle, Vector2 offset) GetStatusEffectTooltip()
         {
             List<string> lines = new();
-            if (!string.IsNullOrEmpty(cse.desc)) lines.Add(cse.desc);
+            string desc = cse.GetDesc();
+            if (!string.IsNullOrEmpty(desc)) lines.Add(desc);
 
             string name = cse.effName + ((cse.maxStacks > 1 && cse.currentStacks > 1) ? $"[{cse.currentStacks}]" : "");
 

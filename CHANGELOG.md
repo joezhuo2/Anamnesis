@@ -7,6 +7,24 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.9] - 2026-10-09 - Blood Bank
+
+### Added
+- **Blood Bank** Awakening (`BloodBank`, `PlayerUpgrade/Pool/Blood Bank`): `OnUltAttack`, 100% chance, no cooldown, in `treasurePool` with no unlock wave. 50% (`storePct`) of all health lost is stored in a permanent **Blood Pool** status effect; casting an Ultimate releases the whole pool as overhealth. Damage soaked by overhealth and overkill past 0 HP aren't stored; health paid for attack costs is
+- **Blood Pool** status effect (`BloodPool`, `Assets/data/StatusEffect/Blood Pool`): permanent buff that holds the stored health; its tooltip shows `Stored: N`
+- `EntityHealth.GrantOverhealth(amount)`, and `ChangeHealth` now reports real health lost to an active Blood Pool
+- `StatusEffect.GetDesc()`: overridable tooltip description, so effects can show live values. `StatusEffectCooldownUI` uses it
+
+### Changed
+- Overhealth now decays by default: 25% of the pool every 0.5s (`EntityHealth.DefaultOverhealthDecayPct` / `DefaultOverhealthDecayInterval`) when no Overhealth upgrade is equipped. Before, overhealth from other sources never decayed. Removing an Overhealth upgrade now restores this default instead of setting decay to 0
+- **Exsanguinate**: decay 25% → 20% per 0.5s
+- **Oblivion**: decay 20% → 15% per 0.5s
+- Player `bundleVersion` 0.8.8 → 0.8.9
+
+### Docs
+- `GAME.md` resynced with the assets: added Blood Bank, the Blood Pool / Enraged / `eldex` status effect rows and the previously undocumented **Eldritch Exchange** keystone; Wipeout now lists its unlock node; Shatterpoint cooldown 0s → 0.5s; Paradox unlock wave 35 → 15; Exsanguinate and Terminal Cascade gain their wave-15 gate; Soul Rend's stale wave-35 gate removed
+- `README.md`: Awakening and keystone lists match the current reward pool and skill tree, trigger condition count 25 → 29, and the Upgrade Effects list gains Blood Bank, DoT Spread and DoT Spread On Kill
+
 ## [v0.8.8] - 2026-10-08 - Rare Attack Tuning
 
 ### Changed
