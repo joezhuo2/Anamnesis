@@ -24,7 +24,7 @@ namespace CrystalFlux.WaveEventSystem
 
         [Header("Damage")]
         [Tooltip("Stats of the hidden hazard source, scaled to the current enemy level like spawned enemies")] public EntityStats hazardStats;
-        [Tooltip("Added to the current wave enemy level")] public int levelBonus;
+        [Tooltip("Added to the current wave enemy level, plus the difficulty's eventLevelBonusAdd")] public int levelBonus;
         [Tooltip("Seconds the hazard source outlives the last volley. Projectiles alive past this deal no damage")] [Min(0f)] public float ownerLinger = 10f;
 
         public override IEnumerator Run(WaveEventContext ctx)
@@ -67,7 +67,7 @@ namespace CrystalFlux.WaveEventSystem
             hazard = go.AddComponent<HazardOwner>();
 
             go.SetActive(true);
-            esm.ScaleStatsToLevel(WaveManager.EnemyLevelFor(levelBonus));
+            esm.ScaleStatsToLevel(WaveManager.EnemyLevelFor(levelBonus + WaveManager.Difficulty.eventLevelBonusAdd));
             return go;
         }
 
