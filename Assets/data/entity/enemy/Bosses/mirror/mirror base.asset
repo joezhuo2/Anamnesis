@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d87bbbeb6804b4bbe36ab86d5cd763, type: 3}
   m_Name: mirror base
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  damagePct: -30
+  damagePct: -20
   physicalDmgPct: 0
   spellDmgPct: 0
   attack: 2
@@ -40,8 +40,8 @@ MonoBehaviour:
   basicCdRedPct: 0
   skillCdRedPct: 0
   ultCdRedPct: 0
-  currentHp: 400
-  maxHp: 400
+  currentHp: 450
+  maxHp: 450
   hpPct: 0
   hpRegen: 0
   hpRegPct: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   seTickRatePct: 0
   moveSpeed: 0.9
   moveSpeedPct: 0
-  detectionRange: 15
+  detectionRange: 30
   currentStamina: 0
   maxStamina: 0
   maxStaminaPct: 0

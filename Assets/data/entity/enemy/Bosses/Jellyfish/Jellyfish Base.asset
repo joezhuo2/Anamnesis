@@ -65,7 +65,7 @@ MonoBehaviour:
   seTickRatePct: 0
   moveSpeed: 0.6
   moveSpeedPct: 0
-  detectionRange: 12
+  detectionRange: 30
   currentStamina: 0
   maxStamina: 0
   maxStaminaPct: 0
