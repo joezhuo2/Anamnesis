@@ -16,6 +16,7 @@ namespace CrystalFlux.ProjectileSystem
         public IOrbitRegister Orbit { get; private set; }
         public IChargeRegister Charge { get; private set; }
         public int Team { get; private set; }
+        public bool Hazard { get; private set; }
         public IReadOnlyList<IOnHitEffect> OnHit => onHit;
 
         private readonly List<IOnHitEffect> onHit = new();
@@ -59,6 +60,7 @@ namespace CrystalFlux.ProjectileSystem
             Orbit = orb;
             Charge = chg;
             Team = TryGetComponent(out ITeamMember itm) ? itm.TeamID : 0;
+            Hazard = TryGetComponent<HazardOwner>(out _);
 
             Proxy.GetComponents(onHit);
         }
