@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.8.13** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.8.14** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 **Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 
@@ -54,7 +54,7 @@ Current release: **v0.8.13** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
 | **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman. `SpawnerBox` pickups start an ambush of configurable enemies that joins the wave, then drop a weighted batch of collectibles once it is cleared |
-| **🌧️ Wave Events** | `WaveEventData` events rolled mid-wave by a `WaveEventSpawner`, one at a time with a minimum gap between them, gated by mode, wave range and Ironman. Each announces itself with a colored title, then plays out around the player. *Spawn Enemy* events reserve their whole count on the wave so it can't end until they are cleared; *Blessing Drop* events shower weighted collectibles and carry over into the next wave if one ends mid-drop |
+| **🌧️ Wave Events** | `WaveEventData` events rolled mid-wave by a `WaveEventSpawner`, one at a time with a minimum gap between them and never the same one twice in a row, gated by mode, wave range and Ironman, picked by weight and scaled by difficulty. Each announces itself with a colored title, then plays out around the player. *Spawn Enemy* events reserve their whole count on the wave so it can't end until they are cleared; *Blessing Drop* events shower weighted collectibles and carry over into the next wave if one ends mid-drop |
 | **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, quit buttons, a *You Died* screen, and the build version on the home screen — all persisted to `settings.json` |
 | **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, cooldown buttons that flash red when blocked and green when ready, yellow while partly restocked and grey while sealed, and unscaled hover scaling that animates while paused |
 
