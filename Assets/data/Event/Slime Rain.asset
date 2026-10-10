@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e1c1da183063ed41b83ee4e02d3cedf, type: 3}
+  m_Name: Slime Rain
+  m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnEnemyEventData
+  title: Slime Rain
+  subtitle: 
+  titleColor: {r: 0.5671678, g: 1, b: 0.25, a: 1}
+  titleDurationOverride: 0
+  chance: 5
+  radiusIncrease: 0
+  minMode: 1
+  minWave: 10
+  maxWave: 128
+  allowOnIronman: 1
+  enemies:
+  - {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
+  - {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
+  - {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
+  minSpawns: 6
+  maxSpawns: 14
+  minInterval: 0.3
+  maxInterval: 0.8
+  levelBonus: 1

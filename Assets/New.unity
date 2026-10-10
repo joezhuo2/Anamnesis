@@ -20776,12 +20776,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776374559}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 274.94742, y: 110.07812, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -89.37833, y: -138.4531, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1423153586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &785655820
 PrefabInstance:
@@ -22153,6 +22153,59 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: b4c6a9a6aa9b94649b0661bd1f6e640f, type: 3}
   m_PrefabInstance: {fileID: 715823670}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &896881845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 896881847}
+  - component: {fileID: 896881846}
+  m_Layer: 0
+  m_Name: EventSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &896881846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896881845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56da8a01faf642e41aa076f70906d571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.WaveEventSpawner
+  events:
+  - {fileID: 11400000, guid: 4d96229e90b49004ba8931264eb8c2eb, type: 2}
+  - {fileID: 11400000, guid: fb26c1b9e396c9842b23f790c739c6ec, type: 2}
+  - {fileID: 11400000, guid: b4524f4ee1b01ca4196dc59ad16d231f, type: 2}
+  rollInterval: 5
+  minTimeBetweenEvents: 30
+  baseRadius: 5
+  minDistance: 2
+  titleDuration: 2
+--- !u!4 &896881847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896881845}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -205.72598, y: 28.289734, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1423153586}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &896930216 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3299970995789871467, guid: 867b42658f5450240aa594618bc3e366, type: 3}
@@ -36958,7 +37011,9 @@ Transform:
   m_LocalPosition: {x: 364.32574, y: 248.53122, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 776374561}
+  - {fileID: 896881847}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1423153587
@@ -72134,5 +72189,4 @@ SceneRoots:
   - {fileID: 954713621}
   - {fileID: 1465221077}
   - {fileID: 1423153586}
-  - {fileID: 776374561}
   - {fileID: 554513013}

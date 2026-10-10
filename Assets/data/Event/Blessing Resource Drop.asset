@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550ca328f8ecdf843ab323fbc8e019e2, type: 3}
+  m_Name: Blessing Resource Drop
+  m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.BlessingDropEventData
+  title: 'Blessing: Resources'
+  subtitle: 
+  titleColor: {r: 0.3018868, g: 0.96248215, b: 1, a: 1}
+  titleDurationOverride: 0
+  chance: 10
+  radiusIncrease: 2
+  minMode: 1
+  minWave: 0
+  maxWave: 128
+  allowOnIronman: 1
+  rewards:
+  - data: {fileID: 11400000, guid: 9369ae0ad568ca04bb3cd4d3e321c45e, type: 2}
+    weight: 3
+  - data: {fileID: 11400000, guid: 0f28b7132a0654c4085e5ecb2f8d6b0a, type: 2}
+    weight: 1
+  - data: {fileID: 11400000, guid: 2d204a9e68272514e874df1eef5c206a, type: 2}
+    weight: 2
+  minDrops: 3
+  maxDrops: 6
+  minInterval: 0.5
+  maxInterval: 1.5
