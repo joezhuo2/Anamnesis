@@ -2019,19 +2019,20 @@ Every box spawns enemies within 3 units and drops rewards within 2 units. The ra
 # Wave Events
 
 Folder: `Assets/data/Event`. Rolled by the `EventSpawner` object (`WaveEventSpawner`) in `New.unity`,
-which holds all eight assets, rolls every 5s, waits at least 30s after an event ends before
-rolling again, and places spawns 2 units from the player out to `6 + radiusIncrease` units.
+which holds all nine assets, rolls every 5s, waits at least 30s after an event ends before
+rolling again, and places spawns from the player's position (`minDistance` 0) out to `6 + radiusIncrease` units.
 
 | Asset | Type | Chance | Radius | Waves | Mode | Ironman | Title color |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `Slime Rain` | Spawn Enemy | 6% | 2–6 | 10–128 | Expert | yes | green |
-| `Bat Swarm` | Spawn Enemy | 4% | 2–7 | 20–128 | Expert | yes | purple |
-| `Crab Tide` | Spawn Enemy | 4% | 2–5 | 15–128 | Expert | yes | red |
-| `Cult Gathering` | Spawn Enemy | 2% | 2–7 | 30–128 | Master | yes | magenta |
-| `Blessing Resource Drop` | Blessing Drop | 10% | 2–8 | 1–128 | Expert | yes | cyan |
-| `Blessing Materials Drop` | Blessing Drop | 3% | 2–8 | 1–128 | Expert | no | orange |
-| `Blessing Starfall` | Blessing Drop | 1% | 2–9 | 35–128 | Expert | yes | violet |
-| `Gold Rush` | Blessing Drop | 6% | 2–7 | 1–128 | Expert | no | gold |
+| `Slime Rain` | Spawn Enemy | 6% | 0–6 | 10–128 | Expert | yes | green |
+| `Bat Swarm` | Spawn Enemy | 4% | 0–7 | 20–128 | Expert | yes | purple |
+| `Crab Tide` | Spawn Enemy | 4% | 0–5 | 15–128 | Expert | yes | red |
+| `Cult Gathering` | Spawn Enemy | 2% | 0–7 | 30–128 | Master | yes | magenta |
+| `Blessing Resource Drop` | Blessing Drop | 10% | 0–8 | 1–128 | Expert | yes | cyan |
+| `Blessing Materials Drop` | Blessing Drop | 3% | 0–8 | 1–128 | Expert | no | orange |
+| `Blessing Starfall` | Blessing Drop | 1% | 0–9 | 35–128 | Expert | yes | violet |
+| `Gold Rush` | Blessing Drop | 6% | 0–7 | 1–128 | Expert | no | gold |
+| `Static Field` | Spawn Projectile | 8% | 0–5 | 25–128 | Expert | yes | blue |
 
 **Rolling.** Only one event runs at a time. The roll timer only advances while a wave is active
 and still has enemies to clear. It stops during Drought, between waves, and in the completion
@@ -2099,3 +2100,30 @@ the next wave.
 `Blessing Materials Drop` and `Blessing Starfall` are Expert+, so their `SkillPoint` entries only
 drop in Master. `Blessing Starfall` is allowed on Ironman, where its `Reroll` entries are skipped,
 so every drop is a `SkillPoint` in Master and nothing drops in Expert.
+
+## Spawn Projectile
+
+Fires `minVolleys`–`maxVolleys` volleys, spaced `minInterval`–`maxInterval` seconds apart. Each
+volley is a uniform pick from `attacks` and runs that attack's full pattern, so spreads, circles
+and barrages all work. The interval pauses during Drought and between waves.
+
+The projectiles hit the player and enemies alike. When the event starts it builds a hidden hazard
+source from `hazardStats` on team -1, scaled to the current wave's enemy level plus `levelBonus`
+(and the difficulty's `eventLevelBonusAdd`) with the same growth as spawned enemies. Damage,
+crits, pierce, knockback, status effects and additional attacks all work as they do for any other
+owner. The source has no collider, so nothing can hit or target it, and it is destroyed
+`ownerLinger` seconds after the last volley; a projectile still alive after that deals no damage.
+Hazard hits never cause hit-stop or screen shake, but the player's own hurt feedback still plays.
+Kills, the DPS meter and on-hit stat gains are not credited to the player.
+
+`aimMode` picks where each volley goes:
+
+| Mode | Origin | Direction |
+| --- | --- | --- |
+| `TowardPlayer` | a fresh ring point | at the player |
+| `CenteredOnPlayer` | the player, at the attack's `spawnDistance` | random |
+| `RandomDirection` | a fresh ring point | random |
+
+| Event | Attack | Volleys | Interval | Aim | Damage | Effect |
+| --- | --- | --- | --- | --- | --- | --- |
+| `Static Field` | Static Field (0.5s, pierces 8) | 3–9 | 0.3–0.9s | `TowardPlayer` | 1.2× spell of hazard attack (5 base) | 60% Stun |
