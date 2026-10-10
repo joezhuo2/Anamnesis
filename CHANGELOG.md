@@ -7,6 +7,24 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.14] - 2026-10-10 - Event Roll Tuning
+
+### Added
+- `WaveEventData.weight` (default 1, 0 = never fires): when several events pass their chance on the same roll, one is picked by weight
+- `DifficultyData` event offsets: `eventChanceMult` scales every wave event's chance (capped at 100%), `eventLevelBonusAdd` is added to Spawn Enemy events' `levelBonus`. Both show in the difficulty tooltip
+  - Easy ×0.75, Normal ×1, Hard ×1.25 / +1 level, Nightmare ×1.5 / +2 levels
+- `WaveManager.Difficulty`: the active run's `DifficultyData` (neutral when none)
+
+### Changed
+- `WaveEventSpawner` roll: every eligible event rolls its own chance and the passers are picked between by weight, instead of shuffling and taking the first to pass
+- `WaveEventSpawner` never fires the same event twice in a row, unless it is the only eligible one. Resets each run
+- Player `bundleVersion` 0.8.13 → 0.8.14
+
+### Docs
+- `GAME.md`: Wave Events rolling rules cover weight, repeat avoidance and the new difficulty scaling table
+- `README.md`: current release v0.8.13 → v0.8.14; wave events feature row mentions weights, repeats and difficulty
+- `TODO.md`: finished "Event weights", "Event history" and "Mode/difficulty scaling" entries removed
+
 ## [v0.8.13] - 2026-10-10 - More Wave Events
 
 ### Added

@@ -2035,11 +2035,25 @@ rolling again, and places spawns 2 units from the player out to `6 + radiusIncre
 
 **Rolling.** Only one event runs at a time. The roll timer only advances while a wave is active
 and still has enemies to clear. It stops during Drought, between waves, and in the completion
-window after the last enemy dies. The gap before the first event of a run is skipped. On each roll,
-the eligible events are shuffled. An event is eligible when its chance is above 0, its `minMode` is
-at or below the run's tier, the wave is within `minWave`–`maxWave` (0 = unbounded), and Ironman is
-off or `allowOnIronman` is set. The first event to pass its own chance roll fires. Boss and Duel
-waves are not excluded.
+window after the last enemy dies. The gap before the first event of a run is skipped. An event is
+eligible when its chance and `weight` are above 0, its `minMode` is at or below the run's tier, the
+wave is within `minWave`–`maxWave` (0 = unbounded), and Ironman is off or `allowOnIronman` is set.
+The event that fired last is left out, unless it is the only eligible one, so the same event never
+fires twice in a row (reset each run). On each roll, every remaining event rolls its own chance
+(times the difficulty's `eventChanceMult`, capped at 100%). If more than one passes, one is picked
+by `weight` (default 1 on every shipped event, so ties are uniform). Boss and Duel waves are not
+excluded.
+
+**Difficulty.** `DifficultyData.eventChanceMult` scales every event's chance, and
+`eventLevelBonusAdd` is added to the `levelBonus` of Spawn Enemy events. Both show in the
+difficulty tooltip.
+
+| Difficulty | Event chance | Event enemy level |
+| --- | --- | --- |
+| Easy | ×0.75 | +0 |
+| Normal | ×1 | +0 |
+| Hard | ×1.25 | +1 |
+| Nightmare | ×1.5 | +2 |
 
 **Announcement.** When an event fires, its `title` and `subtitle` replace whatever is on screen,
 tinted with `titleColor`. The spawner's `titleDuration` (2s) is split into a 20% fade in, a 60%
@@ -2055,7 +2069,7 @@ Rolls `minSpawns`–`maxSpawns` enemies and reserves them all on the wave at onc
 grows by the full count straight away, and the wave can't end until every reserved enemy has
 spawned and died. Each spawn is a uniform pick from `enemies`, spaced `minInterval`–`maxInterval`
 seconds apart (never paused, so the reservation can't stall the wave). It uses the current wave's
-enemy level plus `levelBonus` and gets the active anomaly's and contract's buffs and spawn hooks,
+enemy level plus `levelBonus` (and the difficulty's `eventLevelBonusAdd`) and gets the active anomaly's and contract's buffs and spawn hooks,
 the same as a spawner box ambush. A spawn that fails (no player) gives its slot back to the wave.
 
 | Event | Enemies | Count | Interval | Level |

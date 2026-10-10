@@ -46,6 +46,10 @@ namespace CrystalFlux.WaveSystem
         public float corruptPositiveChanceAdd;
         public float maxCorruptBoostAdd;
 
+        [Header("Event Offsets")]
+        [Tooltip("Multiplies every wave event's chance, capped at 100%")] [Min(0f)] public float eventChanceMult = 1f;
+        [Tooltip("Added to the levelBonus of enemy-spawning wave events")] public int eventLevelBonusAdd;
+
         [Header("Economy Offsets")]
         public int rerollGoldCostAdd;
         public int startingRerollsAdd;
@@ -104,6 +108,10 @@ namespace CrystalFlux.WaveSystem
             AppendPercent(sb, "Corrupt chance", corruptChanceAdd);
             AppendPercent(sb, "Corrupt positive chance", corruptPositiveChanceAdd);
             AppendPercent(sb, "Max corrupt boost", maxCorruptBoostAdd);
+
+            if (!Mathf.Approximately(eventChanceMult, 1f))
+                AppendRaw(sb, $"Event chance x{eventChanceMult:0.##}");
+            AppendInt(sb, "Event enemy level", eventLevelBonusAdd);
 
             AppendInt(sb, "Reroll cost", rerollGoldCostAdd, "g");
             AppendInt(sb, "Starting rerolls", startingRerollsAdd);

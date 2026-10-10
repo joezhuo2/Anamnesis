@@ -314,6 +314,7 @@ namespace CrystalFlux.WaveSystem
         public static int WaveEnemyTotal => ActiveManager != null ? ActiveManager.waveMaxTotalEnemies : 0;
         public static int CurrentWave => WaveActive ? ActiveManager.GetCurrentWave() : 0;
         public static bool WaveAcceptingEvents => WaveActive && !ActiveManager.waveResolving;
+        public static DifficultyData Difficulty => ActiveManager != null ? ActiveManager.D : DifficultyData.Neutral;
         public virtual int GetCurrentWave() => currentWaveIndex + currentSequence.waveOffset;
         protected void CachePlayerStatManager()
         {

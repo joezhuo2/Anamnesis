@@ -17,6 +17,7 @@ MonoBehaviour:
   titleColor: {r: 0.6084906, g: 0.11193932, b: 0.4646978, a: 1}
   titleDurationOverride: 0
   chance: 2
+  weight: 8
   radiusIncrease: 1
   minMode: 2
   minWave: 30

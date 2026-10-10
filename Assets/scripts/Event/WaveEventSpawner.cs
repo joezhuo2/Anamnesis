@@ -29,6 +29,7 @@ namespace CrystalFlux.WaveEventSystem
         private float rollTimer;
         private float sinceLastEvent = float.PositiveInfinity;
         private GameObject player;
+        private WaveEventData lastEvent;
 
         private void OnDisable()
         {
@@ -38,6 +39,7 @@ namespace CrystalFlux.WaveEventSystem
             isRunning = false;
             rollTimer = 0f;
             sinceLastEvent = float.PositiveInfinity;
+            lastEvent = null;
         }
 
         private void Update()
@@ -56,6 +58,7 @@ namespace CrystalFlux.WaveEventSystem
             if (pick == null) return;
 
             isRunning = true;
+            lastEvent = pick;
             routine = StartCoroutine(RunEvent(pick));
         }
 
@@ -66,23 +69,36 @@ namespace CrystalFlux.WaveEventSystem
             int wave = WaveManager.CurrentWave;
             int tier = RunMode.Tier;
             bool ironman = IronmanSelector.Enabled;
+            float chanceMult = WaveManager.Difficulty.eventChanceMult;
 
             rollBuffer.Clear();
+            bool repeatOnly = true;
             for (int i = 0; i < events.Count; i++)
             {
                 WaveEventData e = events[i];
-                if (e != null && e.IsEligible(wave, tier, ironman)) rollBuffer.Add(e);
+                if (e == null || !e.IsEligible(wave, tier, ironman)) continue;
+
+                rollBuffer.Add(e);
+                if (e != lastEvent) repeatOnly = false;
             }
 
-            Shuffle(rollBuffer);
+            // Never the same event twice in a row, unless it's the only one eligible.
+            if (!repeatOnly) rollBuffer.Remove(lastEvent);
+
+            float totalWeight = 0f;
+            for (int i = rollBuffer.Count - 1; i >= 0; i--)
+            {
+                if (Random.value * 100f >= Mathf.Min(100f, rollBuffer[i].chance * chanceMult)) rollBuffer.RemoveAt(i);
+                else totalWeight += rollBuffer[i].weight;
+            }
 
             WaveEventData pick = null;
+            float r = Random.value * totalWeight;
             for (int i = 0; i < rollBuffer.Count; i++)
             {
-                if (Random.value * 100f >= rollBuffer[i].chance) continue;
-
                 pick = rollBuffer[i];
-                break;
+                r -= pick.weight;
+                if (r < 0f) break;
             }
 
             rollBuffer.Clear();
@@ -120,15 +136,6 @@ namespace CrystalFlux.WaveEventSystem
         {
             if (player == null) player = GameObject.FindWithTag("Player");
             return player;
-        }
-
-        private static void Shuffle(List<WaveEventData> list)
-        {
-            for (int i = list.Count - 1; i > 0; i--)
-            {
-                int j = Random.Range(0, i + 1);
-                (list[i], list[j]) = (list[j], list[i]);
-            }
         }
     }
 }
