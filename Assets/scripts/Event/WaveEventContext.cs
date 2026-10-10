@@ -2,7 +2,7 @@ using System.Collections;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     public class WaveEventContext
     {

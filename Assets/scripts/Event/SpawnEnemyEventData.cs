@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     [CreateAssetMenu(fileName = "Spawn Enemy Event", menuName = "Data/Events/Spawn Enemy")]
     public class SpawnEnemyEventData : WaveEventData

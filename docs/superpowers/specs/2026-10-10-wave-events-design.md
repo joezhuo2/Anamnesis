@@ -26,7 +26,7 @@ Out (for now):
 ## Assembly
 
 New folder `Assets/scripts/Event/` with `Event.asmdef`:
-- name `CrystalFlux.Event`, rootNamespace `CrystalFlux.EventSystem`
+- name `CrystalFlux.Event`, rootNamespace `CrystalFlux.WaveEventSystem`
 - references: `CrystalFlux.Core`, `CrystalFlux.Wave`, `CrystalFlux.Collectible`, `CrystalFlux.Settings`
 
 ## Data

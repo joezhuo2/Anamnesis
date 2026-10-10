@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     public abstract class WaveEventData : ScriptableObject
     {

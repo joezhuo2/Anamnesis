@@ -1,6 +1,6 @@
 {
     "name": "CrystalFlux.Event",
-    "rootNamespace": "CrystalFlux.EventSystem",
+    "rootNamespace": "CrystalFlux.WaveEventSystem",
     "references": [
         "CrystalFlux.Core",
         "CrystalFlux.Wave",
