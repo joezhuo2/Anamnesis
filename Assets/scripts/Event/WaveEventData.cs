@@ -13,6 +13,7 @@ namespace CrystalFlux.WaveEventSystem
 
         [Header("Spawning")]
         [Tooltip("Chance (0-100) to fire on each spawner roll")] [Range(0f, 100f)] public float chance = 10f;
+        [Tooltip("Relative weight when several events pass their chance on the same roll. 0 = never fires")] [Min(0f)] public float weight = 1f;
         [Tooltip("Added to the spawner's baseRadius. Can be negative")] public float radiusIncrease;
 
         [Header("Gating")]
@@ -23,7 +24,7 @@ namespace CrystalFlux.WaveEventSystem
 
         public bool IsEligible(int wave, int tier, bool ironman)
         {
-            if (chance <= 0f || tier < minMode) return false;
+            if (chance <= 0f || weight <= 0f || tier < minMode) return false;
             if (minWave > 0 && wave < minWave) return false;
             if (maxWave > 0 && wave > maxWave) return false;
             return allowOnIronman || !ironman;
