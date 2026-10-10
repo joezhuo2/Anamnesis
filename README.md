@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.8.16** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.8.17** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 **Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 

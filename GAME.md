@@ -1875,12 +1875,12 @@ Player stats, synergies and gear are never copied. The boss uses the `mirror bas
 
 | Stat | Value | Stat | Value |
 | --- | --- | --- | --- |
-| `maxHp` | 400 | `damageRes` | 10 |
+| `maxHp` | 450 | `damageRes` | 10 |
 | `attack` | 2 | `dodgeChance` | 5 |
-| `damagePct` | -30 | `dodgeResPct` | 40 |
+| `damagePct` | -20 | `dodgeResPct` | 40 |
 | `critChance` | 10 | `spellRes` | 10 |
 | `critDamage` | 30 | `effectRes` | 0 |
-| `armor` | 30 | `detectionRange` | 15 |
+| `armor` | 30 | `detectionRange` | 30 |
 | `moveSpeed` | 0.9 | | |
 | `xpDrop` | 800 | `goldDrop` | 80 |
 

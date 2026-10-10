@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.17] - 2026-10-10 - Bigger Forest & Boss Reach
+
+### Changed
+- `ForestMap` tilemap in `New.unity` expanded from 1,916 to 4,412 tiles (about x -35..20, y -29..23 → x -52..30, y -46..34) and moved to (0.36, 1.62)
+- Every boss's `detectionRange` raised to 30, so bosses find the player across the whole bigger map: Cultist, Golem, Euphoric Golem, Jellyfish and Lich 12 → 30, Grim Reaper 14 → 30, Echo (`mirror base`) 15 → 30
+- **Echo** (`mirror base`): `maxHp` 400 → 450, `damagePct` -30 → -20
+- Player `bundleVersion` 0.8.16 → 0.8.17
+
+### Removed
+- `Walls` tilemap (and its `TilemapCollider2D` / `Rigidbody2D`) from `New.unity`. The 221-tile water border no longer blocks the player at the map edge
+
+### Docs
+- `GAME.md`: Mirror Boss stat table updated for the new `maxHp`, `damagePct` and `detectionRange`
+- `README.md`: current release v0.8.16 → v0.8.17
+- `TODO.md`: Wave Events brainstorm header removed; finished "Frozen Ground" idea removed; "Blood Moon" reworded (separate damage and speed bonus, configurable tint opacity and color)
+
 ## [v0.8.16] - 2026-10-10 - Event Subtitles & Glacial Expanse
 
 ### Added
