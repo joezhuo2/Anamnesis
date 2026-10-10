@@ -625,7 +625,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Asset: `Solar Collapse AD`
 - Unlocks: wave 25
 - Type: Ultimate
-- Cooldown: 14s
+- Cooldown: 12s
 - Pattern: Single (1 count)
 - Spawn: 2 dist
 - Animation: 0.5s
@@ -633,14 +633,14 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Gains on hit: Stamina +3%
 - Projectile:
   - Speed: 0 (melee)
-  - Lifetime: 6s
+  - Lifetime: 8s
   - Pierce: 3000
-  - Size: 3
-  - Damage: 340% Phys, 25% True
+  - Size: 3.5
+  - Damage: 350% Phys, 30% True
   - Scaling: EffAtk
   - Time Before Same Enemy: 0.5s
   - Effects: 30% on hit (Slow, 3s, max 8 stacks, -10% moveSpeed per stack) + 100% on hit
-    (Pulled, 0.75s, pull speed 1.4 +2 per stack, 1.5 radius)
+    (Pulled, 0.75s, pull speed 4 +2 per stack, 1.5 radius)
   - Knockback: none
 
 ## Starfury
@@ -656,10 +656,12 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Speed: 0 (melee)
   - Lifetime: 1s
   - Pierce: 3000
-  - Size: 4
+  - Size: 5
   - Damage: 90% Spell, 15% True
   - Scaling: moveSpeedPct + 60% EffInt
   - Time Before Same Enemy: 0.1s
+  - Effects: 100% on hit (Starstruck, 4s, max 2 stacks, -20% spellRes and -15% moveSpeedPct per
+    stack), 4% on hit (Freeze, 2s)
   - Knockback: none
 
 ## Stellar Maelstrom
@@ -1215,7 +1217,7 @@ player upgrades rather than attacks the player selects.
   - Lifetime: 1.5s
   - Pierce: 4
   - Size: 2
-  - Damage: 25% Spell, 8% True
+  - Damage: 35% Spell, 8% True
   - Scaling: EffInt
   - Knockback: none
 
@@ -1303,7 +1305,7 @@ Used by `Blood Bank`.
 
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
 `Oblivion`, `Ultrasonic` and `Moonbound Instinct` (the capstone-only upgrades), the keystone-only `Ethereal Mirage` pair,
-the keystone-only `Eldritch Exchange`, `Hypercarry`, `Reminiscence`, `Resonance` and `Serenade` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
+the keystone-only `Eldritch Exchange`, `Hypercarry`, `Paradox`, `Reminiscence`, `Resonance` and `Serenade` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on
 their `PlayerUpgradeReward` and cannot be rolled before that wave.
 
 Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss): `Eldritch Exchange`, `Hypercarry`,
@@ -1474,12 +1476,12 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Asset: `FeedbackLoop`
 - Type: SpawnProjectile
 - Conditions: OnProjectileHit
-- Chance: 70%
-- Cooldown: 0.3s
+- Chance: 85%
+- Cooldown: 0.15s
 - Delay: 0s
 - Projectile: `Feedback Loop.prefab`
-- Description: 70% chance on projectile hit to spawn a ring of 6 Feedback Loop
-  projectiles, at most once every 0.3s.
+- Description: 85% chance on projectile hit to spawn a ring of 6 Feedback Loop
+  projectiles, at most once every 0.15s.
 
 ## Hex Cast
 - Asset: `HexCast`
@@ -1532,9 +1534,8 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
   rather than being implied by a non-zero conversion percent â€” see the `RegenHp` note in the
   v0.4.9 changelog, the guard needs one more pass before this reads correctly at runtime.
 
-## Paradox
-- Asset: `Paradox`
-- Unlocks: wave 15
+## Paradox (Keystone)
+- Asset: `Paradox` (folder `PlayerUpgrade/Keystone`)
 - Type: Paradox
 - Conditions: none
 - Chance: 0%
@@ -1542,6 +1543,9 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Delay: 0s
 - Description: On unlock, grants globalDoTCanCrit; removed on unequip. Allows global DoTs
   to crit.
+- Unlocked by: `Node_paradox` ("Paradox" keystone, 5 skill points, `undoCost` 50, Master mode,
+  prerequisite `Node_sepp6`)
+- Not in `treasurePool` â€” keystone-only.
 
 ## Reminiscence
 - Asset: `Reminiscence`
@@ -1787,7 +1791,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Overheat` | StatBuffs | Overheat | 7s | - | 5 | -8% atkPct, -12% stRegPct per stack |
 | `Poison 2 0.5 1 20 Atk` | DoT | Poison | 2s | 0.5s | 1 | 20% EffAtk per tick |
 | `Pulled 0.6 1 1.5 5 0.1` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 5 (+2/stack), 1.5 radius |
-| `Pulled 0.75 1 1.4 2 1.5` | Pulled | Possessed | 0.75s | 0.016s | 1 | Pull speed 1.4 (+2/stack), 1.5 radius |
+| `Pulled 0.75 1 1.4 2 1.5` | Pulled | Possessed | 0.75s | 0.016s | 1 | Pull speed 4 (+2/stack), 1.5 radius (asset name is stale) |
 | `Pulled 0.6 1 15 3` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 15 (+2/stack), 3 radius |
 | `Radiation 4 0.25 8 2 CritDmg` | DoT | Radiation | 5s | 0.25s | 10 | 5% critDamage per tick |
 | `Reminiscence Cooldown` | Info | Reminiscence Cooldown | 4s | - | 1 | Cooldown marker |
@@ -1800,6 +1804,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Solar Wind` | StatBuffs | Solar Wind | 8s | - | 6 | +4 hpRegen, +9% hpRegPct, +6% moveSpeedPct per stack; all stacks drop on expiry |
 | `Soul Rend` | SoulRend | Soul Rend | 1.5s | - | 100 | See the Soul Rend upgrade above |
 | `Spellworn` | StatBuffs | Spellworn | 4s | - | 2 | -15% spellRes per stack |
+| `Starstruck` | StatBuffs | Starstruck | 4s | - | 2 | -20% spellRes, -15% moveSpeedPct per stack |
 | `Stellar Resonance` | StatBuffs | Stellar Resonance | 11s | - | 3 | +8% resPen, +12% ProjSpd per stack |
 | `Stun 1` | Stun | Stun | 1s | - | 1 | Cannot move or attack |
 | `Stun 2` | Stun | Stun | 2s | - | 1 | Cannot move or attack |

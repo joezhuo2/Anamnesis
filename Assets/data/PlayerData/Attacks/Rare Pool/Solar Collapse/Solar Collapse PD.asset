@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: Solar Collapse PD
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
-  speed: 0
-  lifetime: 6
+  lifetime: 8
+  size: 3.5
   numPierce: 3000
-  size: 3
-  physicalMult: 3.4
+  destroyOnMaxPierce: 0
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 3.5
   spellMult: 0
-  trueMult: 0.25
+  trueMult: 0.3
   scalingStat: 31
+  extraScalings: []
   specialMult: 1
   specialScaling: 0
   timeBeforeSameEnemy: 0.5
@@ -36,6 +42,7 @@ MonoBehaviour:
   additionalChance: 0
   addAttackRequiresHit: 1
   additionalFollowsMouse: 0
+  distFromCenter: 0
   effects:
   - effect: {fileID: 11400000, guid: 2fa1031192e42eb4397cd571882ae582, type: 2}
     selfApply: 0

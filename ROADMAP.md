@@ -3,6 +3,7 @@
 Summarized major feature updates, newest first. Upcoming work lives in the milestone checklists in `TODO.md`.
 
 ### [v1.0.0] - First Light
+- [v0.8.11] **Paradox keystone and Starfury**: Paradox moved out of the reward pool into a 5-point Master-mode keystone at the end of a new Status Effect Potency chain, Starfury now afflicts enemies with Starstruck (and has a small chance to freeze them) with a wider radius, Solar Collapse comes back faster and hits harder, pulls enemies in much faster and lasts longer, and Feedback Loop procs more often for more damage
 - [v0.8.10] **Prism Bolt shards**: Prism Bolt now shatters into 2 to 4 shards, and each shard splinters into its own smaller shrapnel on hit, so a single bolt cascades through crowds. The bolt itself hits harder and knocks back further but recovers a little slower
 - [v0.8.9] **Blood Bank**: a new Awakening stores half of all health you lose in a blood pool, and casting an Ultimate releases it all as overhealth. Overhealth from any source now decays over time even without an Overhealth upgrade, while Exsanguinate and Oblivion bleed off overhealth more slowly
 - [v0.8.8] **Rare attack tuning**: Prism Bolt and its shrapnel hit a little softer, Meteor Shower drops more but smaller, slightly weaker meteors at a slower pace, Aeternus leans less on its base true damage and more on attack, Intelligence, armor and max HP, Reminiscence triggers less often, and the Hivemind contract now pauses on boss waves

@@ -7,6 +7,24 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.11] - 2026-10-09 - Paradox Keystone
+
+### Added
+- **Paradox** is now a keystone: `Node_paradox` (5 skill points, `undoCost` 50, Master mode) unlocks it, behind new `Node_sepp5` and `Node_sepp6` (+3% Status Effect Potency each, 1 point) that extend the `Node_skdp2` chain. The three nodes are registered in `SkillTreeDefinition`
+- **Starstruck** status effect (`Assets/data/StatusEffect/Starstruck`): 4s, max 2 stacks, -20% spellRes and -15% moveSpeedPct per stack
+
+### Changed
+- **Paradox**: asset moved from `PlayerUpgrade/Pool` to `PlayerUpgrade/Keystone` and removed from `treasurePool` (the wave-15 reward entry is gone), so it is only obtainable through the skill tree
+- **Starfury**: size 4 → 5; now applies Starstruck (100% on hit) and Freeze (4% on hit)
+- **Solar Collapse**: cooldown 14s → 12s, lifetime 6s → 8s, size 3 → 3.5, physical scaling 3.4x → 3.5x, true scaling 0.25x → 0.3x; its Pulled effect's pull speed 1.4 → 4
+- **Feedback Loop**: trigger chance 70% → 85%, cooldown 0.3s → 0.15s; projectile spell scaling 0.25x → 0.35x
+- Player `bundleVersion` 0.8.10 → 0.8.11
+
+### Docs
+- `GAME.md`: Paradox is now documented as a keystone with its unlock node; Starfury, Solar Collapse, Feedback Loop (upgrade and attack) and the `Pulled 0.75 1 1.4 2 1.5` row match the assets; added the Starstruck row
+- `README.md`: skill tree node count 258 → 261, Paradox moved to the keystone lists
+- `TODO.md`: finished "move paradox to skill tree" removed; Veil of Stars and Anvil Stance moved to Planned Abilities; Solar Collapse, Starfury and Feedback Loop tuning notes removed
+
 ## [v0.8.10] - 2026-10-09 - Prism Bolt Shards
 
 ### Added

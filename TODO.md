@@ -1,8 +1,5 @@
 # Planned Features 
 ## High priority To-Do
-- [6] move paradox to skill tree
-- [4] **Veil of Stars** (Ultimate) — creates an aura with `configurable `tile radius around you (with overlay) that grants a `status effect`. Enemy projectiles that enter have a `configurable` chance to it spawn a `projectile`.
-- [4] **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
 - [3] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
 - [3] **Repulsion** - counter dodging creates a shockwave
 - [2] finish everything in between first and second ring in skill tree
@@ -131,13 +128,15 @@
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each unique status effect are on the target
 - **Gravemark** (Basic) — marks the target instead of damaging it; the next *different* attack slot that hits a marked enemy detonates every mark. Opens a slot-rotation playstyle.
-- **Riptide** (Ultimate) — rush that drags every enemy it passes through along with you (applies `Pulled` on contact), then drops them in a heap on `OnRushEnd`. Sets up AoE ultimates. (new rush dashing through enemies bool)
+- **Riptide** (Skill) — rush that drags every enemy it passes through along with you (applies `Pulled` on contact), then drops them in a heap on `OnRushEnd`. Sets up AoE ultimates. (new rush dashing through enemies bool)
 - **Overclock** (Ultimate) — no damage. For 8s, every cast advances all other cooldowns by 50%, but each cast costs stamina. When the timer ends you get `Overheat`.
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
 - **Event Horizon** (Ultimate) — a slow `Spiral` projectile that `Pulled`s nearby enemies and grows over its lifetime.
 - **Something** - something that grants thorns effect
 - **Scatter Mine** (Basic) — random-direction (`randomDir`) mines that sit still and arm after 0.5s. Opens a trap/kiting playstyle. new `armDelay` (no collision until armed).
 - **Perfect Parry** — `OnCounterDodge`: reflects the incoming hit as a projectile toward its source and refunds the dash cooldown. Deepens dash play.
+- **Veil of Stars** (Ultimate) — creates an aura with `configurable `tile radius around you (with overlay) that grants a `status effect`. Enemy projectiles that enter have a `configurable` chance to it spawn a `projectile`.
+- **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
 
 ## Open Items
 - Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
@@ -164,11 +163,7 @@
 - Hex Cast (+buff -cost)
 
 - Shattered Singularity - very slow speed (hard to hit), high costs
-- Solar Collapse - very weak pull strength, small aoe, does not move
 - Exodus - long cooldown, multi scaling
-
-- Starfury - low aoe, primary speed scaling
-- Feedback Loop - low damage, not guaranteed
 
 ## Performance Improvements
 
