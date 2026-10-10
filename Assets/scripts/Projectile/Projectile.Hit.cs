@@ -108,7 +108,7 @@ namespace CrystalFlux.ProjectileSystem
         private void TriggerImpact()
         {
             var ad = pd.MainAttack;
-            if (ad == null) return;
+            if (ad == null || (oc != null && oc.Hazard)) return;
 
             HitFeedback.Stop(ad.HitStop, ad.HitStopCooldown);
             HitFeedback.Shake(ad.ScreenShake);
