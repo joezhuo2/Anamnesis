@@ -1,6 +1,6 @@
 # Game Data Reference
 
-Synced against the assets in `Assets/data/PlayerData/`, `Assets/data/Collectibles/` and
+Synced against the assets in `Assets/data/PlayerData/`, `Assets/data/Collectibles/`, `Assets/data/Event/` and
 the `WaveManager` reward pools serialized in `Assets/New.unity`. Damage multipliers are shown as percentages
 (asset value x 100). Scaling stats use the exact `StatType` enum name.
 
@@ -1993,7 +1993,8 @@ each a random pick from `ambushEnemies`, within `ambushRadius` of the box. They 
 current wave's enemy level (the `WaveData` level on the regular manager, the wave-scaled
 level on Unlimited) plus `ambushLevelBonus`, get the active anomaly's buffs and spawn hooks,
 and are added to the wave's enemy count like split enemies, so the wave can't end until
-they are dead. The box only triggers while a wave is active; outside one it stays put.
+they are dead. The box only triggers while a wave is active and still has enemies to clear.
+Outside a wave, or in the completion window after the last enemy dies, it stays put.
 
 When the last ambush enemy dies, `rewardMin`–`rewardMax` collectibles drop within
 `rewardRadius` of the box. Each drop is an independent weighted roll over `rewards`
@@ -2012,3 +2013,63 @@ below Master, `Reroll` in Simple) are skipped.
 
 Every box spawns enemies within 3 units and drops rewards within 2 units. The rarer boxes
 (Cult, Doppelganger) lean their drops toward rerolls and skill points.
+
+---
+
+# Wave Events
+
+Folder: `Assets/data/Event`. Rolled by the `EventSpawner` object (`WaveEventSpawner`) in `New.unity`,
+which holds all three assets, rolls every 5s, waits at least 30s after an event ends before
+rolling again, and places spawns 2 units from the player out to `5 + radiusIncrease` units.
+
+| Asset | Type | Chance | Radius | Waves | Mode | Ironman | Title color |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `Slime Rain` | Spawn Enemy | 5% | 2–5 | 10–128 | Expert | yes | green |
+| `Blessing Resource Drop` | Blessing Drop | 10% | 2–7 | 1–128 | Expert | yes | cyan |
+| `Blessing Materials Drop` | Blessing Drop | 3% | 2–7 | 1–128 | Expert | no | orange |
+
+**Rolling.** Only one event runs at a time. The roll timer only advances while a wave is active
+and still has enemies to clear. It stops during Drought, between waves, and in the completion
+window after the last enemy dies. The gap before the first event of a run is skipped. On each roll,
+the eligible events are shuffled. An event is eligible when its chance is above 0, its `minMode` is
+at or below the run's tier, the wave is within `minWave`–`maxWave` (0 = unbounded), and Ironman is
+off or `allowOnIronman` is set. The first event to pass its own chance roll fires. Boss and Duel
+waves are not excluded.
+
+**Announcement.** When an event fires, its `title` and `subtitle` replace whatever is on screen,
+tinted with `titleColor`. The spawner's `titleDuration` (2s) is split into a 20% fade in, a 60%
+hold and a 20% fade out (0.4s / 1.2s / 0.4s). An event can set its own total with
+`titleDurationOverride`.
+
+**Spawn positions** are rolled fresh for every spawn around the player's current position, so a
+staggered event follows the player.
+
+## Spawn Enemy
+
+Rolls `minSpawns`–`maxSpawns` enemies and reserves them all on the wave at once. "Enemies: x/y"
+grows by the full count straight away, and the wave can't end until every reserved enemy has
+spawned and died. Each spawn is a uniform pick from `enemies`, spaced `minInterval`–`maxInterval`
+seconds apart (never paused, so the reservation can't stall the wave). It uses the current wave's
+enemy level plus `levelBonus` and gets the active anomaly's and contract's buffs and spawn hooks,
+the same as a spawner box ambush. A spawn that fails (no player) gives its slot back to the wave.
+
+| Event | Enemies | Count | Interval | Level |
+| --- | --- | --- | --- | --- |
+| `Slime Rain` | Slime, Frost Slime, Magma Slime | 6–14 | 0.3–0.8s | +1 |
+
+## Blessing Drop
+
+Drops `minDrops`–`maxDrops` collectibles, spaced `minInterval`–`maxInterval` seconds apart. Each
+drop is an independent weighted roll over `rewards` and rolls its own value and lifetime. It uses
+the same filter as spawner box rewards: spawner boxes are never dropped, `Reroll` is skipped in
+Ironman Mode, and entries above the mode tier are skipped. Drops go through the
+`CollectibleSpawner` pool and ignore its live cap, but count toward it while on the ground. The
+interval pauses during Drought and between waves, so a drop that is still running carries on into
+the next wave.
+
+| Event | Drops | Interval | Reward weights |
+| --- | --- | --- | --- |
+| `Blessing Resource Drop` | 3–6 | 0.5–1.5s | Health 3 / Mana 1 / Stamina 2 |
+| `Blessing Materials Drop` | 3–8 | 0.5–1.5s | XP 4 / Gold 2 / Reroll 3 / SkillPoint 1 |
+
+`Blessing Materials Drop` is Expert+, so its `SkillPoint` entries only drop in Master.

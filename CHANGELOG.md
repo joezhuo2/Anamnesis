@@ -7,6 +7,36 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.12] - 2026-10-10 - Wave Events
+
+### Added
+- **Wave events**: new `CrystalFlux.Event` assembly (`Assets/scripts/Event`, namespace `CrystalFlux.WaveEventSystem`) referencing `Core`, `Wave`, `Collectible` and `Settings`
+  - `WaveEventData`: abstract ScriptableObject base with `title`, `subtitle`, `titleColor`, `titleDurationOverride`, `chance` (0-100 per roll), `radiusIncrease` (can be negative), and `minMode` / `minWave` / `maxWave` / `allowOnIronman` gating
+  - `WaveEventSpawner`: rolls every `rollInterval` while a wave is active (paused during Drought, between waves and in the wave completion window). It runs one event at a time and waits `minTimeBetweenEvents` after an event ends. Spawns land between `minDistance` and `baseRadius + radiusIncrease` around the player's current position. The title and subtitle use `titleColor` and split `titleDuration` into a 20% fade in, 60% hold and 20% fade out
+  - `SpawnEnemyEventData` (`Data/Events/Spawn Enemy`): reserves `minSpawns`-`maxSpawns` enemies on the wave up front, then spawns a uniform pick from `enemies` every `minInterval`-`maxInterval` seconds at the current enemy level + `levelBonus`. The wave can't end until every reserved enemy has spawned and died
+  - `BlessingDropEventData` (`Data/Events/Blessing Drop`): drops `minDrops`-`maxDrops` weighted collectibles from `rewards` every `minInterval`-`maxInterval` seconds, with the same filter as spawner box rewards. The interval pauses during Drought and between waves, so an unfinished drop carries over into the next wave
+- **Event assets** (`Assets/data/Event`):
+  - **Slime Rain**: 5%, waves 10-128, Expert. 6-14 Slime / Frost Slime / Magma Slime at +1 level, 0.3-0.8s apart
+  - **Blessing: Resources**: 10%, waves 1-128, Expert. 3-6 drops of Health 3 / Mana 1 / Stamina 2
+  - **Blessing: Materials**: 3%, waves 1-128, Expert, not on Ironman. 3-8 drops of XP 4 / Gold 2 / Reroll 3 / SkillPoint 1
+- `EventSpawner` in `New.unity` with all three events: roll every 5s, 30s between events, radius 2-5, 2s title
+- `WaveManager.ReserveEnemies` / `ConsumeReservation`: enemies reserved on a wave count toward its total and hold it open until they spawn. Also adds `WaveManager.CurrentWave` and `WaveManager.WaveAcceptingEvents`
+- `CollectibleData.PickWeighted`: the spawner box weighted reward roll, now shared with Blessing Drop
+
+### Changed
+- The regular and Unlimited spawn loops, plus the Twin Crowns, Stampede and extra-spawn counts, now use `RemainingToSpawn`, which subtracts reserved enemies. `StopSpawning` keeps reserved enemies in the wave total
+- `CollectibleSpawner.SpawnAt` is now public and ignores a missing prefab or `CollectibleData`
+- Player `bundleVersion` 0.8.11 → 0.8.12
+
+### Fixed
+- Spawner box ambushes could trigger in the wave completion window (after the last enemy died, during the completion message). Their enemies were then left out of wave tracking and carried into later waves. `SpawnAmbushEnemy` now refuses while the wave is wrapping up, so the box stays put
+
+### Docs
+- `GAME.md`: new Wave Events section (spawner settings, gating, the three event assets); spawner box trigger rule updated for the completion window
+- `README.md`: wave events in the core loop, feature and content tables; `Event` added to the project structure and assembly boundaries
+- `TODO.md`: finished "wave events" entry removed
+- Design spec and implementation plan under `docs/superpowers/`
+
 ## [v0.8.11] - 2026-10-09 - Paradox Keystone
 
 ### Added

@@ -27,7 +27,7 @@ Current release: **v0.8.11** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 
 1. **Pick a difficulty, a mode and a gamemode** — **Easy**, **Normal**, **Hard** or **Nightmare**, **Simple**, **Expert** or **Master**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
 2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. 
-3. **Explore the world** — Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them.
+3. **Explore the world** — Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them. Wave events can fire too: a *Slime Rain* that adds a burst of slimes to the wave, or a *Blessing* that showers resources or materials around you.
 3. **Choose a reward** — buffs, rare attacks or Awakenings. Lock one reward and reroll the rest, pay gold when out of rerolls, or corrupt the rewards for a bigger gamble.
 4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*, *Blackout*) that trade risk for rerolls, skill points, and an additional reward.
 5. **Take a contract** — at the start of every run, pick a run-long anomaly that applies every wave and pays rerolls, a chance at a skill point and a chance at a bonus reward each wave you keep its condition. Holding one removes that anomaly type from the anomaly pool.
@@ -54,6 +54,7 @@ Current release: **v0.8.11** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
 | **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman. `SpawnerBox` pickups start an ambush of configurable enemies that joins the wave, then drop a weighted batch of collectibles once it is cleared |
+| **🌧️ Wave Events** | `WaveEventData` events rolled mid-wave by a `WaveEventSpawner`, one at a time with a minimum gap between them, gated by mode, wave range and Ironman. Each announces itself with a colored title, then plays out around the player. *Spawn Enemy* events reserve their whole count on the wave so it can't end until they are cleared; *Blessing Drop* events shower weighted collectibles and carry over into the next wave if one ends mid-drop |
 | **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, quit buttons, a *You Died* screen, and the build version on the home screen — all persisted to `settings.json` |
 | **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, cooldown buttons that flash red when blocked and green when ready, yellow while partly restocked and grey while sealed, and unscaled hover scaling that animates while paused |
 
@@ -95,6 +96,7 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Boss Rush** | `ws_6` (Lv 76-89 waves, then Echo at Lv 90) chaining into `BossRush Part 2` (Lv 105 Lich → Jellyfish → Cultist → Golem → Grim Reaper → Echo). The wave counter carries on from `ws_5` (waves 76-90, then 91-96) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*, *Blackout* — separate Regular and Unlimited lists |
 | **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
+| **Wave Events** | `Slime Rain`, `Blessing Resource Drop`, `Blessing Materials Drop` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Blood Bank, Cooldown Advance, Decoy, DoT Spread, DoT Spread On Kill, Free Cast, Gain Mana, Gold Buff, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
 In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20, Cultist Clone from 30, Doppelganger from 40. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed* and *Blackout* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.
@@ -151,7 +153,7 @@ Every `PlayerUpgrade` asset lists one or more `TriggerCondition` values, plus a 
 | **Input** | Input System `1.19` (`PlayerControls.inputactions`) with interactive rebinding |
 | **Camera** | Cinemachine `3.1.7` |
 | **UI** | uGUI + TextMeshPro |
-| **Data** | ScriptableObjects (`AttackData`, `PlayerUpgrade`, `StatusEffect`, `DifficultyData`, `ModeData`, `AnomalyData`, skill tree nodes) |
+| **Data** | ScriptableObjects (`AttackData`, `PlayerUpgrade`, `StatusEffect`, `DifficultyData`, `ModeData`, `AnomalyData`, `WaveEventData`, skill tree nodes) |
 | **Contracts** | [CrystalFlux-Core](https://github.com/joezhuo2/CrystalFlux-Core) — interfaces, asset bases and shared value types, imported as a git package |
 | **Architecture** | Per-system assembly definitions, prefab-keyed object pooling (`PrefabPool` + `IPoolable`) |
 | **Persistence** | `GameSettings` JSON (`settings.json` in the persistent data path) |
@@ -193,6 +195,7 @@ Assets/
 │   ├── _example/              # Template attack folder (AD/PD/controller/prefab) to copy when authoring
 │   ├── Collectibles/          # CollectibleData assets (XP, Gold, Health, Stamina, Mana, Reroll, SkillPoint, spawner boxes)
 │   ├── Difficulty/            # Easy / Normal / Hard / Nightmare DifficultyData assets
+│   ├── Event/                 # WaveEventData assets (Slime Rain, Blessing drops)
 │   ├── entity/                # Enemy/Player base stats, attacks, animation data, prefabs
 │   │   └── enemy/             # Split into Bosses/ and Enemies/
 │   ├── images/                # Image assets
@@ -205,6 +208,7 @@ Assets/
     ├── Entity/                # [asmdef] Player, Enemy, stats, health, levelling, summoning, XP
     │   ├── Enemy/             # Enemy AI, movement, attack handlers, spawner, stats
     │   └── Player/            # Player movement, attack, resources, UI, upgrades, level
+    ├── Event/                 # [asmdef] WaveEventSpawner, WaveEventData and its Spawn Enemy / Blessing Drop events
     ├── Items/                 # Items/Gear system (Assembly-CSharp)
     ├── Misc/                  # Game Controller (IAnnouncer), settings menu, death screen, restart (Assembly-CSharp)
     ├── Pooling/               # [asmdef] PrefabPool + IPoolable — shared prefab-keyed object pool
@@ -229,7 +233,8 @@ Each `[asmdef]` folder compiles to its own assembly, so cross-system dependencie
 Core (package) ───┼─ SkillTree
                   ├─ Wave
                   ├─ Entity ──→ Projectile, StatusEffect, SkillTree, TextIndicator
-                  └─ Collectible ──→ Entity, Wave, TextIndicator
+                  ├─ Collectible ──→ Entity, Wave, TextIndicator
+                  └─ Event ──→ Wave, Collectible
 
                   ┌─ Projectile
                   ├─ StatusEffect
@@ -241,17 +246,19 @@ Pooling ──────────┼─ Wave
 TextIndicator ── (references Pooling and TextMeshPro only)
 
 Settings ─────────┬─ Entity
-                  └─ Wave
+                  ├─ Wave
+                  └─ Event
 ```
 
 | Assembly | Rule |
 |----------|------|
 | **Core** | References nothing. Contracts only — interfaces, abstract `ScriptableObject` bases, shared value types — shipped as its own package |
 | **Pooling** | References nothing. `PrefabPool` and `IPoolable`, used by every assembly that spawns something |
-| **Settings** | References nothing. `GameSettings` and its bootstrap, read by `Entity` and `Wave`; the menu UI lives in `Misc` |
+| **Settings** | References nothing. `GameSettings` and its bootstrap, read by `Entity`, `Wave` and `Event`; the menu UI lives in `Misc` |
 | **Projectile / StatusEffect / SkillTree / Wave** | Never reference each other — only `Core`, plus `Pooling` where they spawn. A cross-reference is a compile error |
 | **Entity** | The only assembly that composes the leaf systems |
 | **Collectible** | Composes `Entity`, `Wave` and `TextIndicator` to pay out and announce a pickup. Nothing references it back — the spawner is placed in the scene |
+| **Event** | Composes `Wave` and `Collectible` (plus `Settings` for the mode tier) to roll events, spawn enemies into the wave and drop pickups. Nothing references it back — the spawner is placed in the scene |
 | **TextIndicator** | References only `Pooling` and TextMeshPro |
 | **Items / Misc** | Stay in `Assembly-CSharp`, which auto-references everything above |
 
