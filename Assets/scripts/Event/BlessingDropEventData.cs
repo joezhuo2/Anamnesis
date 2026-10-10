@@ -4,7 +4,7 @@ using CrystalFlux.CollectibleSystem;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     [CreateAssetMenu(fileName = "Blessing Drop Event", menuName = "Data/Events/Blessing Drop")]
     public class BlessingDropEventData : WaveEventData

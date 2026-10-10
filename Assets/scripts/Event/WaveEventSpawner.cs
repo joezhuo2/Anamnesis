@@ -5,7 +5,7 @@ using CrystalFlux.SettingsSystem;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     public class WaveEventSpawner : MonoBehaviour
     {

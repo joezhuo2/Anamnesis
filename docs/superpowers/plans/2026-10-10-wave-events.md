@@ -278,7 +278,7 @@ git commit -m "feat(Collectible): public SpawnAt and shared weighted reward pick
 ```json
 {
     "name": "CrystalFlux.Event",
-    "rootNamespace": "CrystalFlux.EventSystem",
+    "rootNamespace": "CrystalFlux.WaveEventSystem",
     "references": [
         "CrystalFlux.Core",
         "CrystalFlux.Wave",
@@ -303,7 +303,7 @@ git commit -m "feat(Collectible): public SpawnAt and shared weighted reward pick
 using System.Collections;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     public abstract class WaveEventData : ScriptableObject
     {
@@ -347,7 +347,7 @@ using System.Collections;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     public class WaveEventContext
     {
@@ -403,7 +403,7 @@ namespace CrystalFlux.EventSystem
 Unity is closed, so there is no csproj for the new assembly yet. Derive one from the Collectible csproj. It is gitignored, and Unity overwrites it on its next open.
 
 ```bash
-sed -e 's#<RootNamespace>CrystalFlux.CollectibleSystem<#<RootNamespace>CrystalFlux.EventSystem<#' \
+sed -e 's#<RootNamespace>CrystalFlux.CollectibleSystem<#<RootNamespace>CrystalFlux.WaveEventSystem<#' \
     -e 's#<AssemblyName>CrystalFlux.Collectible<#<AssemblyName>CrystalFlux.Event<#' \
     -e 's#<Compile Include="Assets\\scripts\\Collectible\\CollectibleSpawner.cs" />#<Compile Include="Assets\\scripts\\Event\\*.cs" />#' \
     -e '/<Compile Include="Assets\\scripts\\Collectible\\/d' \
@@ -450,7 +450,7 @@ using CrystalFlux.SettingsSystem;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     public class WaveEventSpawner : MonoBehaviour
     {
@@ -616,7 +616,7 @@ using System.Collections.Generic;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     [CreateAssetMenu(fileName = "Spawn Enemy Event", menuName = "Data/Events/Spawn Enemy")]
     public class SpawnEnemyEventData : WaveEventData
@@ -714,7 +714,7 @@ using CrystalFlux.CollectibleSystem;
 using CrystalFlux.WaveSystem;
 using UnityEngine;
 
-namespace CrystalFlux.EventSystem
+namespace CrystalFlux.WaveEventSystem
 {
     [CreateAssetMenu(fileName = "Blessing Drop Event", menuName = "Data/Events/Blessing Drop")]
     public class BlessingDropEventData : WaveEventData
