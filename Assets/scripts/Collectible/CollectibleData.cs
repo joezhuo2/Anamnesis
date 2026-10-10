@@ -68,28 +68,30 @@ namespace CrystalFlux.CollectibleSystem
             return null;
         }
 
-        public CollectibleData PickReward(bool ironman)
+        public CollectibleData PickReward(bool ironman) => PickWeighted(rewards, ironman);
+
+        public static CollectibleData PickWeighted(List<SpawnerBoxReward> list, bool ironman)
         {
-            if (rewards == null || rewards.Count == 0) return null;
+            if (list == null || list.Count == 0) return null;
 
             float total = 0f;
-            for (int i = 0; i < rewards.Count; i++)
-                if (IsValidReward(rewards[i], ironman)) total += rewards[i].weight;
+            for (int i = 0; i < list.Count; i++)
+                if (IsValidReward(list[i], ironman)) total += list[i].weight;
 
             if (total <= 0f) return null;
 
             float roll = Random.value * total;
-            for (int i = 0; i < rewards.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                SpawnerBoxReward r = rewards[i];
+                SpawnerBoxReward r = list[i];
                 if (!IsValidReward(r, ironman)) continue;
 
                 roll -= r.weight;
                 if (roll <= 0f) return r.data;
             }
 
-            for (int i = rewards.Count - 1; i >= 0; i--)
-                if (IsValidReward(rewards[i], ironman)) return rewards[i].data;
+            for (int i = list.Count - 1; i >= 0; i--)
+                if (IsValidReward(list[i], ironman)) return list[i].data;
 
             return null;
         }
