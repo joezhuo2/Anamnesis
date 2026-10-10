@@ -149,6 +149,7 @@ namespace CrystalFlux.WaveSystem
         protected int totalSpawned = 0;
         protected int enemiesKilled = 0;
         protected int waveMaxTotalEnemies = 0;
+        protected int reservedEnemies = 0;
         protected readonly List<GameObject> currentEnemies = new();
         protected bool isWaveActive = false;
         protected Coroutine spawnCoroutine;
@@ -310,6 +311,7 @@ namespace CrystalFlux.WaveSystem
         public static bool WaveActive => ActiveManager != null && ActiveManager.isWaveActive;
         public static bool DroughtActive => ActiveManager != null && ActiveManager.isWaveActive && ActiveManager.IsDrought;
         public static int WaveEnemyTotal => ActiveManager != null ? ActiveManager.waveMaxTotalEnemies : 0;
+        public static int CurrentWave => WaveActive ? ActiveManager.GetCurrentWave() : 0;
         public virtual int GetCurrentWave() => currentWaveIndex + currentSequence.waveOffset;
         protected void CachePlayerStatManager()
         {
