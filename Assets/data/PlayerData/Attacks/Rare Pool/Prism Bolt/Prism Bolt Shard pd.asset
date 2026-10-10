@@ -15,7 +15,7 @@ MonoBehaviour:
   mainAttack: {fileID: 11400000, guid: 48d68fcb7dec03f4f94cf7c901efd169, type: 2}
   lifetime: 3
   size: 1.75
-  numPierce: 4
+  numPierce: 3
   destroyOnMaxPierce: 0
   movementType: 0
   speed: 2.5
@@ -23,7 +23,7 @@ MonoBehaviour:
   waveFrequency: 1
   spiralSpacing: 1
   physicalMult: 0
-  spellMult: 0.55
+  spellMult: 0.3
   trueMult: 0
   scalingStat: 44
   extraScalings: []

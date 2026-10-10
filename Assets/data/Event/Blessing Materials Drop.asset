@@ -20,7 +20,7 @@ MonoBehaviour:
   weight: 6
   radiusIncrease: 2
   minMode: 1
-  minWave: 0
+  minWave: 15
   maxWave: 128
   allowOnIronman: 0
   rewards:

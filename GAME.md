@@ -97,7 +97,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
   - Lifetime: 56s
   - Pierce: 3000
   - Size: 2
-  - Damage: 10% True
+  - Damage: 7% True
   - Scaling: critDamage, plus 30% EffAtk, 30% EffInt, 30% EffArmor, 30% EffMaxHp
   - Time Before Same Enemy: 0.25s
   - Knockback: 0.15s
@@ -491,7 +491,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
 ## Prism Bolt
 - Asset: `Prism Bolt ad` / `Prism Bolt pd`
 - Type: Basic
-- Cooldown: 1.8s, 3 stacks
+- Cooldown: 1.9s, 3 stacks
 - Pattern: Single (1 count)
 - Spawn: 0.25 dist
 - Animation: 0.5s
@@ -499,9 +499,9 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
 - Projectile:
   - Speed: 3.25
   - Lifetime: 3s
-  - Pierce: 6
+  - Pierce: 4
   - Size: 2
-  - Damage: 85% Spell
+  - Damage: 55% Spell
   - Scaling: EffInt
   - Additional: 100% chance on hit to create Prism Bolt Shard (0.5 from center)
   - Knockback: 3 force for 0.15s
@@ -517,9 +517,9 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
 - Projectile:
   - Speed: 2.5
   - Lifetime: 3s
-  - Pierce: 4
+  - Pierce: 3
   - Size: 1.75
-  - Damage: 55% Spell
+  - Damage: 30% Spell
   - Scaling: EffInt
   - Random direction
   - Additional: 100% chance on hit to create Prism Bolt Shrapnel (0.5 from center)
@@ -538,7 +538,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave �
   - Lifetime: 2s
   - Pierce: 2
   - Size: 2
-  - Damage: 20% Spell
+  - Damage: 15% Spell
   - Scaling: EffInt
   - Random direction
   - Knockback: 1 force for 0.15s
@@ -2019,7 +2019,7 @@ Every box spawns enemies within 3 units and drops rewards within 2 units. The ra
 # Wave Events
 
 Folder: `Assets/data/Event`. Rolled by the `EventSpawner` object (`WaveEventSpawner`) in `New.unity`,
-which holds all eleven assets, rolls every 5s, waits at least 30s after an event ends before
+which holds all eleven assets, rolls every 4s, waits at least 30s after an event ends before
 rolling again, and places spawns from the player's position (`minDistance` 0) out to `6 + radiusIncrease` units.
 
 | Asset | Type | Chance | Weight | Radius | Waves | Mode | Ironman | Title color | Subtitle |
@@ -2029,7 +2029,7 @@ rolling again, and places spawns from the player's position (`minDistance` 0) ou
 | `Crab Tide` | Spawn Enemy | 4% | 10 | 0–5 | 15–128 | Expert | yes | red | The tide brings claws |
 | `Cult Gathering` | Spawn Enemy | 2% | 8 | 0–7 | 30–128 | Master | yes | magenta | The faithful convene |
 | `Blessing Resource Drop` | Blessing Drop | 10% | 15 | 0–8 | 1–128 | Expert | yes | cyan | Restoration rains down |
-| `Blessing Materials Drop` | Blessing Drop | 3% | 6 | 0–8 | 1–128 | Expert | no | orange | Riches fall from above |
+| `Blessing Materials Drop` | Blessing Drop | 3% | 6 | 0–8 | 15–128 | Expert | no | orange | Riches fall from above |
 | `Blessing Starfall` | Blessing Drop | 1% | 2 | 0–9 | 35–128 | Expert | yes | violet | The stars grant their favor |
 | `Gold Rush` | Blessing Drop | 6% | 12 | 0–7 | 1–128 | Expert | no | gold | Grab it while it lasts |
 | `Static Field` | Spawn Projectile | 8% | 3 | 0–5 | 25–128 | Expert | yes | blue | You hear roars of thunder in the distance |

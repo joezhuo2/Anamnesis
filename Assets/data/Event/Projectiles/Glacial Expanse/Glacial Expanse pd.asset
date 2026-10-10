@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
   m_Name: Glacial Expanse pd
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
-  mainAttack: {fileID: 0}
+  mainAttack: {fileID: 11400000, guid: 5bd2da7591e9ef34eab30484a86e1985, type: 2}
   lifetime: 8
   size: 2
   numPierce: 1

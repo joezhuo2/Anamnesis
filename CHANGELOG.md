@@ -7,6 +7,26 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.19] - 2026-10-10 - Rare Tuning & Event Pacing
+
+### Changed
+- **Prism Bolt**: cooldown 1.8s → 1.9s, spell scaling 0.85x → 0.55x, pierce 6 → 4
+- **Prism Bolt Shard**: spell scaling 0.55x → 0.3x, pierce 4 → 3
+- **Prism Bolt Shrapnel**: spell scaling 0.2x → 0.15x
+- **Aeternus**: true scaling 10% → 7%
+- `Blessing Materials Drop`: `minWave` 0 → 15, so it no longer fires before wave 15
+- `EventSpawner` `rollInterval` 5s → 4s, so events roll more often
+- Wave `spawnRadius`: `RegularWaveManager` 2.5 → 4, `UnlimitedWaveManager` 4 → 5
+- Player `bundleVersion` 0.8.18 → 0.8.19
+
+### Fixed
+- `Glacial Expanse pd` had an empty `mainAttack`; it now points at `Glacial Expanse ad`
+
+### Docs
+- `GAME.md`: Aeternus, Prism Bolt, Prism Bolt Shard and Prism Bolt Shrapnel numbers updated; Wave Events roll interval 5s → 4s and `Blessing Materials Drop` waves 1–128 → 15–128
+- `README.md`: current release v0.8.18 → v0.8.19
+- `TODO.md`: *Echoes* anomaly delay 0.5s → 1s
+
 ## [v0.8.18] - 2026-10-10 - Blood Moon
 
 ### Added

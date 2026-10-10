@@ -245,7 +245,7 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 
 ### Any wave
 - [ ] **Shrinking Arena** (no fail) - a closing ring hurts the player outside it and resets at wave end. Forces close-range fighting. *Uses:* the `BlackoutVision` circle approach for the ring.
-- [ ] **Echoes** (no fail) - every enemy attack fires a delayed second copy after 0.5s. Doubles the bullet hell without adding enemies; works on bosses and commons alike.
+- [ ] **Echoes** (no fail) - every enemy attack fires a delayed second copy after 1s. Doubles the bullet hell without adding enemies; works on bosses and commons alike.
 
 ## Brainstorm: Expert/Master Modes & Nightmare
 
@@ -276,8 +276,6 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **Nightmare-only rewards** — a small Awakening pool (new `PlayerUpgrade.minDifficulty`, set to 3) that only appears in Nightmare, e.g. "+1% damage per wave survived without healing".
 
 ### New event types
-- [ ] **Supply Cache** — a breakable crate spawns far out (`radiusIncrease` positive). Breaking it drops a reward from a `SpawnerBoxReward` list. Pulls the player away from safe spots.
-- [ ] **Treasure Slime** — a fleeing, non-attacking slime that runs away from the player and drops collectibles each time it is hit. Escapes after `x` seconds. *New:* a flee movement mode on `EnemyMovement` (reverse target direction).
 - [ ] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
 
 - [ ] **Cursed Offering** — an altar appears. Touching it gives a choice: take a random debuff for the rest of the wave for a guaranteed reward, or ignore it. *Uses:* a small two-button prompt, or auto-accept on touch to keep it simple.

@@ -13000,7 +13000,7 @@ MonoBehaviour:
   mode: {fileID: 0}
   rerollGoldCost: 200
   currentSequence: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
-  spawnRadius: 2.5
+  spawnRadius: 4
   killSpawnSpeedup: 0.15
   enableExtraSpawns: 1
   totalWaves: 96
@@ -19755,7 +19755,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad139473b21dd034bb153d5352c4cb07, type: 2}
   - {fileID: 11400000, guid: f6181d689cc1d9d4dbf8c3b1140978da, type: 2}
   - {fileID: 11400000, guid: de0639d314d64cbea216baadf6fc9553, type: 2}
-  rollInterval: 5
+  rollInterval: 4
   minTimeBetweenEvents: 30
   baseRadius: 6
   minDistance: 0
@@ -27403,7 +27403,7 @@ MonoBehaviour:
   mode: {fileID: 0}
   rerollGoldCost: 100
   currentSequence: {fileID: 0}
-  spawnRadius: 4
+  spawnRadius: 5
   killSpawnSpeedup: 0.3
   enableExtraSpawns: 0
   totalWaves: 128
