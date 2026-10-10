@@ -7,6 +7,27 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.15] - 2026-10-10 - Hazard Projectiles
+
+### Added
+- **Spawn Projectile event** (`SpawnProjectileEventData`, `Data/Events/Spawn Projectile`): fires `minVolleys`-`maxVolleys` volleys, each a uniform pick from `attacks`, `minInterval`-`maxInterval` seconds apart (paused during Drought and between waves). Its projectiles hit the player and enemies alike, and keep their patterns, pierce, knockback, status effects and additional attacks
+  - `aimMode`: `TowardPlayer` (ring point, fired at the player), `CenteredOnPlayer` (pattern runs around the player) or `RandomDirection` (ring point, random direction)
+  - Damage comes from a hidden hazard source built from `hazardStats` on team -1, scaled to the current enemy level + `levelBonus` + the difficulty's `eventLevelBonusAdd`. It has no collider, so nothing can hit or target it, and it is destroyed `ownerLinger` seconds after the last volley
+- `HazardOwner` (`Projectile`): marks a team-neutral projectile source. Its projectiles skip hit-stop and screen shake (the player's hurt feedback still plays), and it aims follow-mouse additional attacks at its target
+- `WaveManager.EnemyLevelFor(bonus)`: current enemy level plus a bonus, at least 1
+- `WaveEventContext.Player`
+- **Static Field** event asset (`Assets/data/Event/Projectiles/Static Field`): 8%, waves 25-128, Expert, radius -1. 3-9 lightning strikes fired at the player 0.3-0.9s apart, 1.2x spell damage off the hazard's attack, 60% chance to Stun
+
+### Changed
+- `Event` assembly now also references `Entity` and `Projectile`
+- `EventSpawner` `minDistance` 2 → 0, so events can spawn right on the player
+- Player `bundleVersion` 0.8.14 → 0.8.15
+
+### Docs
+- `GAME.md`: new Spawn Projectile section; Wave Events table covers Static Field and radii start at 0; Static Field falls under the existing Expert tier row
+- `README.md`: current release v0.8.14 → v0.8.15; Spawn Projectile events in the core loop, features, content, project structure and assembly boundaries
+- `TODO.md`: Gravity Storm, Static Field and Frozen Ground ideas reworded; Mirror Image and Echo of the Fallen ideas removed
+
 ## [v0.8.14] - 2026-10-10 - Event Roll Tuning
 
 ### Added

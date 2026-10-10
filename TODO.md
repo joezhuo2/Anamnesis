@@ -282,9 +282,9 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 ### New event types
 - [ ] **Supply Cache** — a breakable crate spawns far out (`radiusIncrease` positive). Breaking it drops a reward from a `SpawnerBoxReward` list. Pulls the player away from safe spots.
 - [ ] **Treasure Slime** — a fleeing, non-attacking slime that runs away from the player and drops collectibles each time it is hit. Escapes after `x` seconds. *New:* a flee movement mode on `EnemyMovement` (reverse target direction).
-- [ ] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies (not the player) toward a random point in the ring. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
-- [ ] **Static Field** — lightning strikes telegraphed spots near the player for `x` seconds. Hits enemies and the player alike. A smaller, faster sibling of Meteorfall.
-- [ ] **Frozen Ground** — patches of ice appear near the player; anything standing on them gets `Slow`, then `Freeze` after `x` seconds of standing still. Pushes movement and pairs with Anvil Stance as a counter-pick.
+- [ ] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
+- [ ] **Static Field** — lightning strikes telegraphed spots near the player for `x` seconds. Hits enemies and the player alike. A smaller, faster sibling of Meteorfall. (can stun)
+- [ ] **Frozen Ground** — patches of ice appear near the player; anything standing on them gets `Slow`, then `Freeze` after `x` seconds of standing still. (can slow/freeze)
 - [ ] **Blood Moon** — for `x` seconds enemies take and deal +`x`% damage. Short, swingy, readable. Tint the screen while active.
 
 - [ ] **Cursed Offering** — an altar appears. Touching it gives a choice: take a random debuff for the rest of the wave for a guaranteed reward, or ignore it. *Uses:* a small two-button prompt, or auto-accept on touch to keep it simple.
