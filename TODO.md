@@ -280,24 +280,18 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 *Pool for `WaveEventSpawner`. Existing: Slime Rain, Bat Swarm, Crab Tide, Cult Gathering, Blessing Resource Drop, Blessing Materials Drop, Blessing Starfall, Gold Rush. Resonance pillars, Meteorfall, Lost wisp escort and Constellation tracing are listed under Gameplay above.*
 
 ### New event types
-- [ ] **Elite Hunt** — one enemy from the wave spawns with a marker, an HP bar and boosted stats. Kill it within `x` seconds for a guaranteed drop; it despawns (no reward) if the timer runs out. Lightweight preview of the Elite/Champion variants. *Uses:* `SpawnAmbushEnemy` + a timer-bound reward hook.
+- [ ] **Supply Cache** — a breakable crate spawns far out (`radiusIncrease` positive). Breaking it drops a reward from a `SpawnerBoxReward` list. Pulls the player away from safe spots.
 - [ ] **Treasure Slime** — a fleeing, non-attacking slime that runs away from the player and drops collectibles each time it is hit. Escapes after `x` seconds. *New:* a flee movement mode on `EnemyMovement` (reverse target direction).
-- [ ] **Bounty** — the next `x` kills each drop a collectible. Shown as a counter on the title subtitle. No spawns, just a kill listener and `CollectibleSpawner.SpawnAt` at the corpse.
-- [ ] **Frenzy** — for `x` seconds every enemy on the map gains move/attack speed, and kills during the window grant bonus mana/stamina. Risk/reward tempo spike. *Uses:* a temporary status effect applied to `WaveManager.currentEnemies`.
-- [ ] **Blood Moon** — for `x` seconds enemies take and deal +`x`% damage. Short, swingy, readable. Tint the screen while active.
-- [ ] **Sanctuary** — a healing circle appears in the ring around the player for `x` seconds. Standing in it regenerates HP but enemies inside it are buffed. *Uses:* the `BlackoutVision` circle approach for the zone.
-- [ ] **Rift Breach** — a portal opens at a spawn point and spits enemies until destroyed (has HP, can be attacked). Closing it fast stops the stream and drops a reward. Ties into the planned portals and the beacon destroy objective. *Uses:* the enemy reservation API, ending the reservation early when the rift dies.
-- [ ] **Mirror Image** (`minMode` 2) — a doppelganger spawns that copies the player's equipped basic attack. *Uses:* the doppelganger enemy that `Box Doppelganger` spawns.
 - [ ] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies (not the player) toward a random point in the ring. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
 - [ ] **Static Field** — lightning strikes telegraphed spots near the player for `x` seconds. Hits enemies and the player alike. A smaller, faster sibling of Meteorfall.
 - [ ] **Frozen Ground** — patches of ice appear near the player; anything standing on them gets `Slow`, then `Freeze` after `x` seconds of standing still. Pushes movement and pairs with Anvil Stance as a counter-pick.
-- [ ] **Supply Cache** — a breakable crate spawns far out (`radiusIncrease` positive). Breaking it drops a reward from a `SpawnerBoxReward` list. Pulls the player away from safe spots.
-- [ ] **Echo of the Fallen** — a ghost of a boss killed earlier in the run returns at reduced HP for one phase. Only eligible after that boss has died this run. Strong reward on kill.
+- [ ] **Blood Moon** — for `x` seconds enemies take and deal +`x`% damage. Short, swingy, readable. Tint the screen while active.
+
 - [ ] **Cursed Offering** — an altar appears. Touching it gives a choice: take a random debuff for the rest of the wave for a guaranteed reward, or ignore it. *Uses:* a small two-button prompt, or auto-accept on touch to keep it simple.
+- [ ] **Sanctuary** — a healing circle appears in the ring around the player for `x` seconds. Standing in it regenerates HP but enemies inside it are buffed. *Uses:* the `BlackoutVision` circle approach for the zone.con destroy objective. *Uses:* the enemy reservation API, ending the reservation early when the rift dies.
+- [ ] **Elite Hunt** — one enemy from the wave spawns with a marker, an HP bar and boosted stats. Kill it within `x` seconds for a guaranteed drop; it despawns (no reward) if the timer runs out. Lightweight preview of the Elite/Champion variants. *Uses:* `SpawnAmbushEnemy` + a timer-bound reward hook.
 - [ ] **Chain Reaction** — for `x` seconds, killed enemies explode for a % of their max HP, damaging other enemies. Rewards clumping and AoE builds.
+- [ ] **Rift Breach** — a portal opens at a spawn point and spits enemies until destroyed (has HP, can be attacked). Closing it fast stops the stream and drops a reward. Ties into the planned portals and the bea
 
 ### Spawner ideas
-- [ ] **Event weights** — a `weight` field alongside `chance`, so rarer events stay rare once the pool grows.
 - [ ] **Event chains** — an event can list a follow-up event that fires on success (e.g. Rift Breach closed fast -> Blessing Drop).
-- [ ] **Event history** — avoid the same event twice in a row (per-run `lastEvent` check in the roll).
-- [ ] **Mode/difficulty scaling** — Nightmare raises event chance and enemy-event `levelBonus`; Simple lowers it.
