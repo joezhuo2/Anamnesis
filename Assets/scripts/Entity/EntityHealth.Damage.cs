@@ -102,7 +102,11 @@ namespace CrystalFlux.EntitySystem
                 };
 
                 bool consume = i.type == DamageType.Consume;
-                if (dmg > 0f && !consume) dmg *= DamageTakenMult;
+                if (dmg > 0f && !consume)
+                {
+                    dmg *= DamageTakenMult;
+                    if (EnemyGlobalBuffs.AppliesTo(esm)) dmg *= EnemyGlobalBuffs.DamageTakenMult;
+                }
 
                 if (Immune && !dp.bypassIFrames && dmg > 0 && !consume)
                 {
