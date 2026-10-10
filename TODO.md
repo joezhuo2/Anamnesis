@@ -32,8 +32,6 @@
 
 - [7] Skill Points (? name) update: atk/dex/int/agi/vit/?/def/?
 
-- [6] wave events - random events that can randomly occur during waves
-
 - [5] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
 - [5] Player new "signature" that charges via a new special resource instead of a cooldown
 - [5] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
@@ -42,7 +40,6 @@
 
 - [4] Player summons
 
-- [3] Combo/synergy bonuses for stacking related rewards
 - [3] deployables (eg. totems/auras)
 
 - [2] second skill tree (Prestiage/Ascension/Mastery)
