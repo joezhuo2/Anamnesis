@@ -8,6 +8,7 @@ namespace CrystalFlux.WaveEventSystem
     {
         private readonly System.Func<GameObject> player;
 
+        public GameObject Player => player?.Invoke();
         public float MinDistance { get; }
         public float MaxDistance { get; }
 

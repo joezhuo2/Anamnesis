@@ -298,6 +298,12 @@ namespace CrystalFlux.WaveSystem
             return enemy;
         }
 
+        public static int EnemyLevelFor(int levelBonus)
+        {
+            WaveManager wm = ActiveManager;
+            return Mathf.Max(1, (wm != null ? wm.CurrentEnemyLevel() : 1) + levelBonus);
+        }
+
         protected void ApplySpawnHooks(GameObject enemy, GameObject prefab, int level, IStatProvider esm)
         {
             if (currentAnomaly != null)
