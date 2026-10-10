@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bat Swarm
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnEnemyEventData
   title: Bat Swarm
-  subtitle: 
+  subtitle: Wings gather around you
   titleColor: {r: 0.47677532, g: 0.09411711, b: 0.6650944, a: 1}
   titleDurationOverride: 0
   chance: 4

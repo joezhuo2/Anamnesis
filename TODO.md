@@ -283,7 +283,6 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **Supply Cache** — a breakable crate spawns far out (`radiusIncrease` positive). Breaking it drops a reward from a `SpawnerBoxReward` list. Pulls the player away from safe spots.
 - [ ] **Treasure Slime** — a fleeing, non-attacking slime that runs away from the player and drops collectibles each time it is hit. Escapes after `x` seconds. *New:* a flee movement mode on `EnemyMovement` (reverse target direction).
 - [ ] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
-- [ ] **Static Field** — lightning strikes telegraphed spots near the player for `x` seconds. Hits enemies and the player alike. A smaller, faster sibling of Meteorfall. (can stun)
 - [ ] **Frozen Ground** — patches of ice appear near the player; anything standing on them gets `Slow`, then `Freeze` after `x` seconds of standing still. (can slow/freeze)
 - [ ] **Blood Moon** — for `x` seconds enemies take and deal +`x`% damage. Short, swingy, readable. Tint the screen while active.
 

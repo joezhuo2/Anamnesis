@@ -7,6 +7,30 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.16] - 2026-10-10 - Event Subtitles & Glacial Expanse
+
+### Added
+- **Glacial Expanse** event asset (`Assets/data/Event/Projectiles/Glacial Expanse`), added to `EventSpawner`: 6%, weight 3, waves 30-128, Expert, radius +3. 5-11 frost fields fired at the player 0.4-1.3s apart. Each lasts 8s, deals 1.4x physical damage off the hazard's attack to anything inside every 0.33s, with a 77% chance to Slow and 15% to Freeze
+- Subtitles on every wave event:
+  - **Slime Rain**: "The sky turns sticky"
+  - **Bat Swarm**: "Wings gather around you"
+  - **Crab Tide**: "The tide brings claws"
+  - **Cult Gathering**: "The faithful convene"
+  - **Blessing: Resources**: "Restoration rains down"
+  - **Blessing: Materials**: "Riches fall from above"
+  - **Blessing: Starfall**: "The stars grant their favor"
+  - **Gold Rush**: "Grab it while it lasts"
+  - **Static Field**: "You hear roars of thunder in the distance"
+
+### Changed
+- **Static Field**: weight 3, volleys 3-9 → 4-13
+- Player `bundleVersion` 0.8.15 → 0.8.16
+
+### Docs
+- `GAME.md`: Wave Events table gains Weight and Subtitle columns and a Glacial Expanse row; the rolling rules no longer claim every shipped event has weight 1; difficulty `eventLevelBonusAdd` noted for Spawn Projectile events; Spawn Projectile table covers Glacial Expanse and Static Field's new volley count
+- `README.md`: current release v0.8.15 → v0.8.16; Glacial Expanse in the core loop and content table
+- `TODO.md`: finished "Static Field" idea removed
+
 ## [v0.8.15] - 2026-10-10 - Hazard Projectiles
 
 ### Added

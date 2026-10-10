@@ -2019,20 +2019,21 @@ Every box spawns enemies within 3 units and drops rewards within 2 units. The ra
 # Wave Events
 
 Folder: `Assets/data/Event`. Rolled by the `EventSpawner` object (`WaveEventSpawner`) in `New.unity`,
-which holds all nine assets, rolls every 5s, waits at least 30s after an event ends before
+which holds all ten assets, rolls every 5s, waits at least 30s after an event ends before
 rolling again, and places spawns from the player's position (`minDistance` 0) out to `6 + radiusIncrease` units.
 
-| Asset | Type | Chance | Radius | Waves | Mode | Ironman | Title color |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `Slime Rain` | Spawn Enemy | 6% | 0–6 | 10–128 | Expert | yes | green |
-| `Bat Swarm` | Spawn Enemy | 4% | 0–7 | 20–128 | Expert | yes | purple |
-| `Crab Tide` | Spawn Enemy | 4% | 0–5 | 15–128 | Expert | yes | red |
-| `Cult Gathering` | Spawn Enemy | 2% | 0–7 | 30–128 | Master | yes | magenta |
-| `Blessing Resource Drop` | Blessing Drop | 10% | 0–8 | 1–128 | Expert | yes | cyan |
-| `Blessing Materials Drop` | Blessing Drop | 3% | 0–8 | 1–128 | Expert | no | orange |
-| `Blessing Starfall` | Blessing Drop | 1% | 0–9 | 35–128 | Expert | yes | violet |
-| `Gold Rush` | Blessing Drop | 6% | 0–7 | 1–128 | Expert | no | gold |
-| `Static Field` | Spawn Projectile | 8% | 0–5 | 25–128 | Expert | yes | blue |
+| Asset | Type | Chance | Weight | Radius | Waves | Mode | Ironman | Title color | Subtitle |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `Slime Rain` | Spawn Enemy | 6% | 10 | 0–6 | 10–128 | Expert | yes | green | The sky turns sticky |
+| `Bat Swarm` | Spawn Enemy | 4% | 10 | 0–7 | 20–128 | Expert | yes | purple | Wings gather around you |
+| `Crab Tide` | Spawn Enemy | 4% | 10 | 0–5 | 15–128 | Expert | yes | red | The tide brings claws |
+| `Cult Gathering` | Spawn Enemy | 2% | 8 | 0–7 | 30–128 | Master | yes | magenta | The faithful convene |
+| `Blessing Resource Drop` | Blessing Drop | 10% | 15 | 0–8 | 1–128 | Expert | yes | cyan | Restoration rains down |
+| `Blessing Materials Drop` | Blessing Drop | 3% | 6 | 0–8 | 1–128 | Expert | no | orange | Riches fall from above |
+| `Blessing Starfall` | Blessing Drop | 1% | 2 | 0–9 | 35–128 | Expert | yes | violet | The stars grant their favor |
+| `Gold Rush` | Blessing Drop | 6% | 12 | 0–7 | 1–128 | Expert | no | gold | Grab it while it lasts |
+| `Static Field` | Spawn Projectile | 8% | 3 | 0–5 | 25–128 | Expert | yes | blue | You hear roars of thunder in the distance |
+| `Glacial Expanse` | Spawn Projectile | 100% | 3 | 0–9 | 30–128 | Expert | yes | ice blue | Fields of frost form around you |
 
 **Rolling.** Only one event runs at a time. The roll timer only advances while a wave is active
 and still has enemies to clear. It stops during Drought, between waves, and in the completion
@@ -2042,11 +2043,11 @@ wave is within `minWave`–`maxWave` (0 = unbounded), and Ironman is off or `all
 The event that fired last is left out, unless it is the only eligible one, so the same event never
 fires twice in a row (reset each run). On each roll, every remaining event rolls its own chance
 (times the difficulty's `eventChanceMult`, capped at 100%). If more than one passes, one is picked
-by `weight` (default 1 on every shipped event, so ties are uniform). Boss and Duel waves are not
+by `weight` (see the table; an asset without one defaults to 1). Boss and Duel waves are not
 excluded.
 
 **Difficulty.** `DifficultyData.eventChanceMult` scales every event's chance, and
-`eventLevelBonusAdd` is added to the `levelBonus` of Spawn Enemy events. Both show in the
+`eventLevelBonusAdd` is added to the `levelBonus` of Spawn Enemy and Spawn Projectile events. Both show in the
 difficulty tooltip.
 
 | Difficulty | Event chance | Event enemy level |
@@ -2126,4 +2127,5 @@ Kills, the DPS meter and on-hit stat gains are not credited to the player.
 
 | Event | Attack | Volleys | Interval | Aim | Damage | Effect |
 | --- | --- | --- | --- | --- | --- | --- |
-| `Static Field` | Static Field (0.5s, pierces 8) | 3–9 | 0.3–0.9s | `TowardPlayer` | 1.2× spell of hazard attack (5 base) | 60% Stun |
+| `Static Field` | Static Field (0.5s, pierces 8) | 4–13 | 0.3–0.9s | `TowardPlayer` | 1.2× spell of hazard attack (5 base) | 60% Stun |
+| `Glacial Expanse` | Glacial Expanse (8s, size 2, hits each target every 0.33s) | 5–11 | 0.4–1.3s | `TowardPlayer` | 1.4× physical of hazard attack (3 base) | 77% Slow, 15% Freeze |

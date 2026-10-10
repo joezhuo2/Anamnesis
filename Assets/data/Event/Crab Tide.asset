@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Crab Tide
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnEnemyEventData
   title: Crab Tide
-  subtitle: 
+  subtitle: The tide brings claws
   titleColor: {r: 0.8726415, g: 0.1679926, b: 0.09878958, a: 1}
   titleDurationOverride: 0
   chance: 4

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blessing Resource Drop
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.BlessingDropEventData
   title: 'Blessing: Resources'
-  subtitle: 
+  subtitle: Restoration rains down
   titleColor: {r: 0.3018868, g: 0.96248215, b: 1, a: 1}
   titleDurationOverride: 0
   chance: 10

@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.8.15** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.8.16** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 **Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 
@@ -27,7 +27,7 @@ Current release: **v0.8.15** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 
 1. **Pick a difficulty, a mode and a gamemode** — **Easy**, **Normal**, **Hard** or **Nightmare**, **Simple**, **Expert** or **Master**, optionally **Ironman**, then **Regular** (escalating sequence) or **Unlimited** (infinite scaling, periodic bosses, endless rewards).
 2. **Survive the wave** — enemies scale exponentially, split on death, and gain extra spawns every 10 waves, with boss waves along the way. 
-3. **Explore the world** — Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them. Wave events can fire too: a *Slime Rain*, *Bat Swarm*, *Crab Tide* or *Cult Gathering* that adds a burst of enemies to the wave, a *Blessing* or *Gold Rush* that showers resources, materials or gold around you, or a *Static Field* whose lightning strikes hit you and enemies alike.
+3. **Explore the world** — Collectibles surface around you mid-wave for health, XP, stamina, mana, gold, skill points or rerolls, and spawner boxes trade a small ambush for a pile of them. Wave events can fire too: a *Slime Rain*, *Bat Swarm*, *Crab Tide* or *Cult Gathering* that adds a burst of enemies to the wave, a *Blessing* or *Gold Rush* that showers resources, materials or gold around you, or a *Static Field* or *Glacial Expanse* whose lightning strikes and frost fields hit you and enemies alike.
 3. **Choose a reward** — buffs, rare attacks or Awakenings. Lock one reward and reroll the rest, pay gold when out of rerolls, or corrupt the rewards for a bigger gamble.
 4. **Face anomalies** — optional wave modifiers (*Time Trial*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*, *Blackout*) that trade risk for rerolls, skill points, and an additional reward.
 5. **Take a contract** — at the start of every run, pick a run-long anomaly that applies every wave and pays rerolls, a chance at a skill point and a chance at a bonus reward each wave you keep its condition. Holding one removes that anomaly type from the anomaly pool.
@@ -96,7 +96,7 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Boss Rush** | `ws_6` (Lv 76-89 waves, then Echo at Lv 90) chaining into `BossRush Part 2` (Lv 105 Lich → Jellyfish → Cultist → Golem → Grim Reaper → Echo). The wave counter carries on from `ws_5` (waves 76-90, then 91-96) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*, *Blackout* — separate Regular and Unlimited lists |
 | **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
-| **Wave Events** | `Slime Rain`, `Bat Swarm`, `Crab Tide`, `Cult Gathering`, `Blessing Resource Drop`, `Blessing Materials Drop`, `Blessing Starfall`, `Gold Rush`, `Static Field` |
+| **Wave Events** | `Slime Rain`, `Bat Swarm`, `Crab Tide`, `Cult Gathering`, `Blessing Resource Drop`, `Blessing Materials Drop`, `Blessing Starfall`, `Gold Rush`, `Static Field`, `Glacial Expanse` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Blood Bank, Cooldown Advance, Decoy, DoT Spread, DoT Spread On Kill, Free Cast, Gain Mana, Gold Buff, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 
 In Unlimited waves the roster unlocks as the run goes: Slime from wave 0, Crab from 5, Slime (Magma) from 10, Bat from 15, Slime (Frost) from 20, Cultist Clone from 30, Doppelganger from 40. *Time Trial* and *No Hit* can be failed; *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed* and *Blackout* always pay out, and *Swarm* / *Duel* / *Fission* never appear before a boss wave.

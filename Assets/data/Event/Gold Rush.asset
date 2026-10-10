@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gold Rush
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.BlessingDropEventData
   title: Gold Rush
-  subtitle: 
+  subtitle: Grab it while it lasts
   titleColor: {r: 1, g: 0.73574835, b: 0, a: 1}
   titleDurationOverride: 0
   chance: 6

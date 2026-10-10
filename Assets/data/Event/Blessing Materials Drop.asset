@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blessing Materials Drop
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.BlessingDropEventData
   title: 'Blessing: Materials'
-  subtitle: 
+  subtitle: Riches fall from above
   titleColor: {r: 1, g: 0.51760834, b: 0.30196083, a: 1}
   titleDurationOverride: 0
   chance: 3

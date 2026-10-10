@@ -2860,7 +2860,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 554513013}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &147106606
 Rigidbody2D:
@@ -14403,7 +14403,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1904120274}
-  - {fileID: 147106605}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &554993034
@@ -22192,6 +22191,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c85452ff3f7527d4882f19cbfce6c3d5, type: 2}
   - {fileID: 11400000, guid: 4d96229e90b49004ba8931264eb8c2eb, type: 2}
   - {fileID: 11400000, guid: ad139473b21dd034bb153d5352c4cb07, type: 2}
+  - {fileID: 11400000, guid: f6181d689cc1d9d4dbf8c3b1140978da, type: 2}
   rollInterval: 5
   minTimeBetweenEvents: 30
   baseRadius: 6
@@ -72195,4 +72195,5 @@ SceneRoots:
   - {fileID: 954713621}
   - {fileID: 1465221077}
   - {fileID: 1423153586}
+  - {fileID: 147106605}
   - {fileID: 554513013}

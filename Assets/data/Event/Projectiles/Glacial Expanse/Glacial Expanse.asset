@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be9c62cf528ca1b45b5dae08f1da73f9, type: 3}
-  m_Name: Static Field
+  m_Name: Glacial Expanse
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnProjectileEventData
-  title: Static Field
-  subtitle: You hear roars of thunder in the distance
-  titleColor: {r: 0.19010323, g: 0.24534848, b: 0.8396226, a: 1}
+  title: Glacial Expanse
+  subtitle: Fields of frost form around you
+  titleColor: {r: 0.31305623, g: 0.990566, b: 0.98349494, a: 1}
   titleDurationOverride: 0
-  chance: 8
+  chance: 6
   weight: 3
-  radiusIncrease: -1
+  radiusIncrease: 3
   minMode: 1
-  minWave: 25
+  minWave: 30
   maxWave: 128
   allowOnIronman: 1
   attacks:
-  - {fileID: 11400000, guid: 7513bafbbdeec51499d36286437a6ec0, type: 2}
-  minVolleys: 4
-  maxVolleys: 13
-  minInterval: 0.3
-  maxInterval: 0.9
+  - {fileID: 11400000, guid: 5bd2da7591e9ef34eab30484a86e1985, type: 2}
+  minVolleys: 5
+  maxVolleys: 11
+  minInterval: 0.4
+  maxInterval: 1.3
   aimMode: 0
-  hazardStats: {fileID: 11400000, guid: b5851f64b79ee264aa37f06f9b1812c0, type: 2}
+  hazardStats: {fileID: 11400000, guid: 796ae2be2daae4f46905de3a8e8d3f69, type: 2}
   levelBonus: 0
   ownerLinger: 10

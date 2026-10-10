@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cult Gathering
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnEnemyEventData
   title: Cult Gathering
-  subtitle: 
+  subtitle: The faithful convene
   titleColor: {r: 0.6084906, g: 0.11193932, b: 0.4646978, a: 1}
   titleDurationOverride: 0
   chance: 2

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Slime Rain
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnEnemyEventData
   title: Slime Rain
-  subtitle: 
+  subtitle: The sky turns sticky
   titleColor: {r: 0.5671678, g: 1, b: 0.25, a: 1}
   titleDurationOverride: 0
   chance: 6
