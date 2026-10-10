@@ -5,7 +5,9 @@
         "CrystalFlux.Core",
         "CrystalFlux.Wave",
         "CrystalFlux.Collectible",
-        "CrystalFlux.Settings"
+        "CrystalFlux.Settings",
+        "CrystalFlux.Entity",
+        "CrystalFlux.Projectile"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
