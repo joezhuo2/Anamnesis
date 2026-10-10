@@ -18,7 +18,7 @@ namespace CrystalFlux.EventSystem
             MaxDistance = Mathf.Max(MinDistance, maxDistance);
         }
 
-        public static bool Paused => !WaveManager.WaveActive || WaveManager.DroughtActive;
+        public static bool Paused => !WaveManager.WaveAcceptingEvents || WaveManager.DroughtActive;
 
         public IEnumerator WaitWhilePaused()
         {
