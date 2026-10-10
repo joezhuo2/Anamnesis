@@ -1,0 +1,19 @@
+{
+    "name": "CrystalFlux.Event",
+    "rootNamespace": "CrystalFlux.EventSystem",
+    "references": [
+        "CrystalFlux.Core",
+        "CrystalFlux.Wave",
+        "CrystalFlux.Collectible",
+        "CrystalFlux.Settings"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
