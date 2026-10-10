@@ -7,7 +7,8 @@
         "CrystalFlux.Collectible",
         "CrystalFlux.Settings",
         "CrystalFlux.Entity",
-        "CrystalFlux.Projectile"
+        "CrystalFlux.Projectile",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

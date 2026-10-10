@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d931cfa09d14f839439e1621ec099a7, type: 3}
+  m_Name: Blood Moon
+  m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.BloodMoonEventData
+  title: Blood Moon
+  subtitle: The moon bleeds, and the hunt quickens
+  titleColor: {r: 0.85, g: 0.08, b: 0.12, a: 1}
+  titleDurationOverride: 0
+  chance: 5
+  weight: 6
+  radiusIncrease: 0
+  minMode: 1
+  minWave: 20
+  maxWave: 128
+  allowOnIronman: 1
+  duration: 15
+  bonusPct: 25
+  tintColor: {r: 0.55, g: 0, b: 0.05, a: 1}
+  tintOpacity: 0.18
+  fadeIn: 1
+  fadeOut: 1.5
+  tintSortingOrder: -1

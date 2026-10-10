@@ -1,3 +1,4 @@
+using CrystalFlux.EntitySystem;
 using UnityEngine;
 
 namespace CrystalFlux.Core
@@ -11,6 +12,20 @@ namespace CrystalFlux.Core
             base.Awake();
 
             if (s != null && s.level > 1) ScaleBaseStats(s.level);
+        }
+
+        public override float GetStat(StatType type)
+        {
+            float v = base.GetStat(type);
+            if (s == null || teamID != EnemyGlobalBuffs.EnemyTeam) return v;
+
+            return type switch
+            {
+                StatType.damagePct => v + EnemyGlobalBuffs.DamagePct,
+                StatType.moveSpeedPct => v + EnemyGlobalBuffs.MoveSpeedPct,
+                StatType.EffSpd => v + (s.moveSpeed * EnemyGlobalBuffs.MoveSpeedPct * 0.01f),
+                _ => v
+            };
         }
 
         public void ScaleStatsToLevel(int targetLevel)

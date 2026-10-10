@@ -279,7 +279,6 @@ The player swaps between two stances, Sol and Luna. Every attack has a different
 - [ ] **Supply Cache** — a breakable crate spawns far out (`radiusIncrease` positive). Breaking it drops a reward from a `SpawnerBoxReward` list. Pulls the player away from safe spots.
 - [ ] **Treasure Slime** — a fleeing, non-attacking slime that runs away from the player and drops collectibles each time it is hit. Escapes after `x` seconds. *New:* a flee movement mode on `EnemyMovement` (reverse target direction).
 - [ ] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
-- [ ] **Blood Moon** — for `x` seconds enemies take and deal +`y`% damage and also move `y`% faster. Tint the screen while active. (configurable opacity/color)
 
 - [ ] **Cursed Offering** — an altar appears. Touching it gives a choice: take a random debuff for the rest of the wave for a guaranteed reward, or ignore it. *Uses:* a small two-button prompt, or auto-accept on touch to keep it simple.
 - [ ] **Sanctuary** — a healing circle appears in the ring around the player for `x` seconds. Standing in it regenerates HP but enemies inside it are buffed. *Uses:* the `BlackoutVision` circle approach for the zone.con destroy objective. *Uses:* the enemy reservation API, ending the reservation early when the rift dies.
