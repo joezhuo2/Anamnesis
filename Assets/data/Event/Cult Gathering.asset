@@ -10,24 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e1c1da183063ed41b83ee4e02d3cedf, type: 3}
-  m_Name: Slime Rain
+  m_Name: Cult Gathering
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnEnemyEventData
-  title: Slime Rain
+  title: Cult Gathering
   subtitle: 
-  titleColor: {r: 0.5671678, g: 1, b: 0.25, a: 1}
+  titleColor: {r: 0.6084906, g: 0.11193932, b: 0.4646978, a: 1}
   titleDurationOverride: 0
-  chance: 6
-  radiusIncrease: 0
-  minMode: 1
-  minWave: 10
+  chance: 2
+  radiusIncrease: 1
+  minMode: 2
+  minWave: 30
   maxWave: 128
   allowOnIronman: 1
   enemies:
-  - {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
-  - {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
-  - {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
-  minSpawns: 4
-  maxSpawns: 11
-  minInterval: 0.3
-  maxInterval: 0.8
-  levelBonus: 1
+  - {fileID: 7457594691964507130, guid: ed6d4b1b71927f8408ba7d44890b6322, type: 3}
+  minSpawns: 1
+  maxSpawns: 4
+  minInterval: 0.5
+  maxInterval: 1.2
+  levelBonus: 3

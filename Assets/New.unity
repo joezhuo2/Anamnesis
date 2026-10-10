@@ -22183,12 +22183,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.WaveEventSpawner
   events:
-  - {fileID: 11400000, guid: 4d96229e90b49004ba8931264eb8c2eb, type: 2}
-  - {fileID: 11400000, guid: fb26c1b9e396c9842b23f790c739c6ec, type: 2}
+  - {fileID: 11400000, guid: f37bca1ae783276459fdc11a8245cfc0, type: 2}
   - {fileID: 11400000, guid: b4524f4ee1b01ca4196dc59ad16d231f, type: 2}
+  - {fileID: 11400000, guid: fb26c1b9e396c9842b23f790c739c6ec, type: 2}
+  - {fileID: 11400000, guid: 69cb29627183c2b4a8d88445b5da07aa, type: 2}
+  - {fileID: 11400000, guid: 837ec67272db36a4aa187f67576a26ed, type: 2}
+  - {fileID: 11400000, guid: c7ea9f5b2d4bcaa4fb9dfa8bc045db6b, type: 2}
+  - {fileID: 11400000, guid: c85452ff3f7527d4882f19cbfce6c3d5, type: 2}
+  - {fileID: 11400000, guid: 4d96229e90b49004ba8931264eb8c2eb, type: 2}
   rollInterval: 5
   minTimeBetweenEvents: 30
-  baseRadius: 5
+  baseRadius: 6
   minDistance: 2
   titleDuration: 2
 --- !u!4 &896881847

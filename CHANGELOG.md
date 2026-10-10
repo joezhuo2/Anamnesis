@@ -7,6 +7,27 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.13] - 2026-10-10 - More Wave Events
+
+### Added
+- **Event assets** (`Assets/data/Event`), all added to `EventSpawner` in `New.unity`:
+  - **Bat Swarm**: 4%, waves 20-128, Expert. 3-7 Bats at +2 level, 0.3-0.8s apart
+  - **Crab Tide**: 4%, waves 15-128, Expert, radius -1. 2-6 Crabs at +1 level, 0.4-0.8s apart
+  - **Cult Gathering**: 2%, waves 30-128, Master. 1-4 Cultist Clones at +3 level, 0.5-1.2s apart
+  - **Blessing: Starfall**: 1%, waves 35-128, Expert, radius +3. 2-6 drops of Reroll 3 / SkillPoint 2, 0.3-0.9s apart, not allowed on ironman
+  - **Gold Rush**: 6%, waves 1-128, Expert, not on Ironman. 4-11 Gold drops, 0.3-0.8s apart
+
+### Changed
+- **Slime Rain**: chance 5% → 6%, count 6-14 → 4-11
+- **Blessing: Materials**: title color shifted to a deeper orange
+- `EventSpawner` `baseRadius` 5 → 6, so every event's outer spawn radius grows by 1
+- Player `bundleVersion` 0.8.12 → 0.8.13
+
+### Docs
+- `GAME.md`: Wave Events tables cover all eight events, with radii updated for `baseRadius` 6, Slime Rain retuned, and a note on Blessing: Starfall in Ironman (rerolls skipped, so only skill points drop in Master and nothing drops in Expert); event gating added to the mode tier table
+- `README.md`: current release v0.8.11 → v0.8.13; new events in the core loop, content table and project structure
+- `TODO.md`: new Wave Events brainstorm (event type ideas and spawner ideas)
+
 ## [v0.8.12] - 2026-10-10 - Wave Events
 
 ### Added

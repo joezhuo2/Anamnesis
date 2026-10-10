@@ -10,28 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 550ca328f8ecdf843ab323fbc8e019e2, type: 3}
-  m_Name: Blessing Materials Drop
+  m_Name: Blessing Starfall
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.BlessingDropEventData
-  title: 'Blessing: Materials'
+  title: 'Blessing: Starfall'
   subtitle: 
-  titleColor: {r: 1, g: 0.51760834, b: 0.30196083, a: 1}
+  titleColor: {r: 0.6683767, g: 0.34603062, b: 0.9056604, a: 1}
   titleDurationOverride: 0
-  chance: 3
-  radiusIncrease: 2
+  chance: 1
+  radiusIncrease: 3
   minMode: 1
-  minWave: 0
+  minWave: 35
   maxWave: 128
   allowOnIronman: 0
   rewards:
   - data: {fileID: 11400000, guid: d2d059a491f33c846861a44db27cf176, type: 2}
     weight: 3
   - data: {fileID: 11400000, guid: 44f57e13d9679554fae52f1f8bf2fa14, type: 2}
-    weight: 1
-  - data: {fileID: 11400000, guid: 14fb9188e5eebd1418c6f67ef28403dc, type: 2}
     weight: 2
-  - data: {fileID: 11400000, guid: 802859c6b3b334b46836adf266506a67, type: 2}
-    weight: 4
-  minDrops: 3
-  maxDrops: 8
-  minInterval: 0.5
-  maxInterval: 1.5
+  minDrops: 2
+  maxDrops: 6
+  minInterval: 0.3
+  maxInterval: 0.9

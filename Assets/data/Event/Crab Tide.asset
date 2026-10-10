@@ -10,24 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e1c1da183063ed41b83ee4e02d3cedf, type: 3}
-  m_Name: Slime Rain
+  m_Name: Crab Tide
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnEnemyEventData
-  title: Slime Rain
+  title: Crab Tide
   subtitle: 
-  titleColor: {r: 0.5671678, g: 1, b: 0.25, a: 1}
+  titleColor: {r: 0.8726415, g: 0.1679926, b: 0.09878958, a: 1}
   titleDurationOverride: 0
-  chance: 6
-  radiusIncrease: 0
+  chance: 4
+  radiusIncrease: -1
   minMode: 1
-  minWave: 10
+  minWave: 15
   maxWave: 128
   allowOnIronman: 1
   enemies:
-  - {fileID: 1470929175521350649, guid: 50a5bd0543f380d44b1c78896d94d76c, type: 3}
-  - {fileID: 8565583941750561499, guid: eb2bc84fa75e6664b880d6df08deeacc, type: 3}
-  - {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
-  minSpawns: 4
-  maxSpawns: 11
-  minInterval: 0.3
+  - {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
+  minSpawns: 2
+  maxSpawns: 6
+  minInterval: 0.4
   maxInterval: 0.8
   levelBonus: 1

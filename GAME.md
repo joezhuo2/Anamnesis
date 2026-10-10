@@ -821,8 +821,8 @@ Content gated by tier (`minMode`):
 
 | Tier | Content |
 |---|---|
-| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport, Cultist Circleballs |
-| Master (2) | Ethereal Mirage keystone; `Box Cult`, `Box Doppelganger`, `SkillPoint` pickups; Unlimited Fission (`USplit`); Frost Slime Snowstorm; Golem TDLR Barrage; Lich Circle-In |
+| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; every wave event except Cult Gathering; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport, Cultist Circleballs |
+| Master (2) | Ethereal Mirage keystone; `Box Cult`, `Box Doppelganger`, `SkillPoint` pickups; Cult Gathering wave event; Unlimited Fission (`USplit`); Frost Slime Snowstorm; Golem TDLR Barrage; Lich Circle-In |
 
 | Attack | Unlock wave here | Unlock wave in `rarePool` |
 | --- | --- | --- |
@@ -2019,14 +2019,19 @@ Every box spawns enemies within 3 units and drops rewards within 2 units. The ra
 # Wave Events
 
 Folder: `Assets/data/Event`. Rolled by the `EventSpawner` object (`WaveEventSpawner`) in `New.unity`,
-which holds all three assets, rolls every 5s, waits at least 30s after an event ends before
-rolling again, and places spawns 2 units from the player out to `5 + radiusIncrease` units.
+which holds all eight assets, rolls every 5s, waits at least 30s after an event ends before
+rolling again, and places spawns 2 units from the player out to `6 + radiusIncrease` units.
 
 | Asset | Type | Chance | Radius | Waves | Mode | Ironman | Title color |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `Slime Rain` | Spawn Enemy | 5% | 2–5 | 10–128 | Expert | yes | green |
-| `Blessing Resource Drop` | Blessing Drop | 10% | 2–7 | 1–128 | Expert | yes | cyan |
-| `Blessing Materials Drop` | Blessing Drop | 3% | 2–7 | 1–128 | Expert | no | orange |
+| `Slime Rain` | Spawn Enemy | 6% | 2–6 | 10–128 | Expert | yes | green |
+| `Bat Swarm` | Spawn Enemy | 4% | 2–7 | 20–128 | Expert | yes | purple |
+| `Crab Tide` | Spawn Enemy | 4% | 2–5 | 15–128 | Expert | yes | red |
+| `Cult Gathering` | Spawn Enemy | 2% | 2–7 | 30–128 | Master | yes | magenta |
+| `Blessing Resource Drop` | Blessing Drop | 10% | 2–8 | 1–128 | Expert | yes | cyan |
+| `Blessing Materials Drop` | Blessing Drop | 3% | 2–8 | 1–128 | Expert | no | orange |
+| `Blessing Starfall` | Blessing Drop | 1% | 2–9 | 35–128 | Expert | yes | violet |
+| `Gold Rush` | Blessing Drop | 6% | 2–7 | 1–128 | Expert | no | gold |
 
 **Rolling.** Only one event runs at a time. The roll timer only advances while a wave is active
 and still has enemies to clear. It stops during Drought, between waves, and in the completion
@@ -2055,7 +2060,10 @@ the same as a spawner box ambush. A spawn that fails (no player) gives its slot 
 
 | Event | Enemies | Count | Interval | Level |
 | --- | --- | --- | --- | --- |
-| `Slime Rain` | Slime, Frost Slime, Magma Slime | 6–14 | 0.3–0.8s | +1 |
+| `Slime Rain` | Slime, Frost Slime, Magma Slime | 4–11 | 0.3–0.8s | +1 |
+| `Bat Swarm` | Bat | 3–7 | 0.3–0.8s | +2 |
+| `Crab Tide` | Crab | 2–6 | 0.4–0.8s | +1 |
+| `Cult Gathering` | Cultist Clone | 1–4 | 0.5–1.2s | +3 |
 
 ## Blessing Drop
 
@@ -2071,5 +2079,9 @@ the next wave.
 | --- | --- | --- | --- |
 | `Blessing Resource Drop` | 3–6 | 0.5–1.5s | Health 3 / Mana 1 / Stamina 2 |
 | `Blessing Materials Drop` | 3–8 | 0.5–1.5s | XP 4 / Gold 2 / Reroll 3 / SkillPoint 1 |
+| `Blessing Starfall` | 2–6 | 0.3–0.9s | Reroll 3 / SkillPoint 2 |
+| `Gold Rush` | 4–11 | 0.3–0.8s | Gold 1 |
 
-`Blessing Materials Drop` is Expert+, so its `SkillPoint` entries only drop in Master.
+`Blessing Materials Drop` and `Blessing Starfall` are Expert+, so their `SkillPoint` entries only
+drop in Master. `Blessing Starfall` is allowed on Ironman, where its `Reroll` entries are skipped,
+so every drop is a `SkillPoint` in Master and nothing drops in Expert.
