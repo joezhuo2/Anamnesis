@@ -14,7 +14,7 @@ namespace CrystalFlux.WaveEventSystem
         [Min(0)] public int maxSpawns = 10;
         [Tooltip("Seconds between consecutive spawns")] [Min(0f)] public float minInterval = 0.2f;
         [Min(0f)] public float maxInterval = 0.6f;
-        [Tooltip("Added to the current wave enemy level")] public int levelBonus;
+        [Tooltip("Added to the current wave enemy level, plus the difficulty's eventLevelBonusAdd")] public int levelBonus;
 
         public override IEnumerator Run(WaveEventContext ctx)
         {
@@ -22,6 +22,7 @@ namespace CrystalFlux.WaveEventSystem
             if (n <= 0 || PickEnemy() == null || !WaveManager.ReserveEnemies(n)) yield break;
 
             int wave = WaveManager.CurrentWave;
+            int level = levelBonus + WaveManager.Difficulty.eventLevelBonusAdd;
 
             for (int i = 0; i < n; i++)
             {
@@ -36,7 +37,7 @@ namespace CrystalFlux.WaveEventSystem
 
                 GameObject prefab = PickEnemy();
                 if (prefab != null && ctx.TryGetSpawnPoint(out Vector2 pos))
-                    WaveManager.SpawnAmbushEnemy(prefab, pos, 0f, levelBonus);
+                    WaveManager.SpawnAmbushEnemy(prefab, pos, 0f, level);
 
                 WaveManager.ConsumeReservation();
             }
