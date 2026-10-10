@@ -60,6 +60,7 @@ namespace CrystalFlux.WaveSystem
             ActiveManager = this;
 
             totalSpawned = 0;
+            reservedEnemies = 0;
             currentEnemies.Clear();
 
             isBossWave = ShouldBeBossWave(currentWaveIndex + 1);
@@ -102,7 +103,7 @@ namespace CrystalFlux.WaveSystem
             int wave = GetCurrentWave();
             int maxCurrent = isBossWave ? BossCount : IsDuel ? 1 : ScaleEnemyCount(maxCurrentEnemies + D.maxCurrentEnemiesAdd);
 
-            while (totalSpawned < waveMaxTotalEnemies)
+            while (RemainingToSpawn > 0)
             {
                 CleanEnemyList();
                 if (currentEnemies.Count >= maxCurrent)
@@ -116,7 +117,7 @@ namespace CrystalFlux.WaveSystem
                 float spawnDelay = Random.Range(GetMinSpawnFrequency(wave), GetMaxSpawnFrequency(wave));
                 yield return WaitForNextSpawn(spawnDelay);
             }
-            while (currentEnemies.Count > 0)
+            while (currentEnemies.Count > 0 || reservedEnemies > 0)
             {
                 CleanEnemyList();
                 yield return _waitForSeconds0_5;
@@ -142,20 +143,20 @@ namespace CrystalFlux.WaveSystem
         {
             if (isBossWave || IsDuel)
             {
-                int bosses = Twin != null ? waveMaxTotalEnemies - totalSpawned : 1;
+                int bosses = Twin != null ? RemainingToSpawn : 1;
                 for (int i = 0; i < bosses; i++) SpawnEnemy();
                 return;
             }
 
             if (Stampede != null)
             {
-                int all = waveMaxTotalEnemies - totalSpawned;
+                int all = RemainingToSpawn;
                 for (int i = 0; i < all; i++) SpawnEnemy();
                 return;
             }
 
             int wave = GetCurrentWave();
-            int spawnCount = enableExtraSpawns ? Mathf.Min(Mathf.RoundToInt(wave / 10) + 1, waveMaxTotalEnemies - totalSpawned) : 1;
+            int spawnCount = enableExtraSpawns ? Mathf.Min(Mathf.RoundToInt(wave / 10) + 1, RemainingToSpawn) : 1;
             for (int i = 0; i < spawnCount; i++) SpawnEnemy();
         }
 

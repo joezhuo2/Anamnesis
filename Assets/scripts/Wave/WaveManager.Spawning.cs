@@ -29,6 +29,7 @@ namespace CrystalFlux.WaveSystem
             }
 
             totalSpawned = 0;
+            reservedEnemies = 0;
             currentEnemies.Clear();
 
             if (!RollAndGenerateAnomaly()) BeginWave();
@@ -79,7 +80,7 @@ namespace CrystalFlux.WaveSystem
         {
             int maxCurrent = IsBossWave(c) ? BossCount : IsDuel ? 1 : ScaleEnemyCount(c.maxCurrentEnemies + D.maxCurrentEnemiesAdd);
 
-            while (totalSpawned < waveMaxTotalEnemies)
+            while (RemainingToSpawn > 0)
             {
                 CleanEnemyList();
                 if (currentEnemies.Count >= maxCurrent)
@@ -91,7 +92,7 @@ namespace CrystalFlux.WaveSystem
                 SpawnEnemies(c);
                 yield return WaitForNextSpawn(Random.Range(c.minSpawnFrequency, c.maxSpawnFrequency));
             }
-            while (currentEnemies.Count > 0)
+            while (currentEnemies.Count > 0 || reservedEnemies > 0)
             {
                 CleanEnemyList();
                 yield return _waitForSeconds0_5;
@@ -117,14 +118,14 @@ namespace CrystalFlux.WaveSystem
         {
             if (IsBossWave(c) || IsDuel)
             {
-                int bosses = Twin != null ? waveMaxTotalEnemies - totalSpawned : 1;
+                int bosses = Twin != null ? RemainingToSpawn : 1;
                 for (int i = 0; i < bosses; i++) SpawnEnemy(c);
                 return;
             }
 
             if (Stampede != null)
             {
-                int all = waveMaxTotalEnemies - totalSpawned;
+                int all = RemainingToSpawn;
                 for (int i = 0; i < all; i++) SpawnEnemy(c);
                 return;
             }
@@ -135,7 +136,7 @@ namespace CrystalFlux.WaveSystem
                 return;
             }
 
-            int spawnCount = enableExtraSpawns ? Mathf.Min(Mathf.RoundToInt(GetCurrentWave() / 10) + 1, waveMaxTotalEnemies - totalSpawned) : 1;
+            int spawnCount = enableExtraSpawns ? Mathf.Min(Mathf.RoundToInt(GetCurrentWave() / 10) + 1, RemainingToSpawn) : 1;
             for (int i = 0; i < spawnCount; i++) SpawnEnemy(c);
         }
 
@@ -207,7 +208,7 @@ namespace CrystalFlux.WaveSystem
             WaveManager wm = ActiveManager;
             if (wm == null || !wm.isWaveActive) return;
 
-            wm.waveMaxTotalEnemies = wm.totalSpawned;
+            wm.waveMaxTotalEnemies = wm.totalSpawned + wm.reservedEnemies;
             wm.UpdateWaveText();
         }
 
@@ -254,6 +255,29 @@ namespace CrystalFlux.WaveSystem
             ActiveManager.totalSpawned++;
             ActiveManager.waveMaxTotalEnemies++;
             ActiveManager.UpdateWaveText();
+        }
+
+        protected int RemainingToSpawn => waveMaxTotalEnemies - totalSpawned - reservedEnemies;
+
+        public static bool ReserveEnemies(int count)
+        {
+            WaveManager wm = ActiveManager;
+            if (count <= 0 || wm == null || !wm.isWaveActive) return false;
+
+            wm.reservedEnemies += count;
+            wm.waveMaxTotalEnemies += count;
+            wm.UpdateWaveText();
+            return true;
+        }
+
+        public static void ConsumeReservation()
+        {
+            WaveManager wm = ActiveManager;
+            if (wm == null || wm.reservedEnemies <= 0) return;
+
+            wm.reservedEnemies--;
+            wm.waveMaxTotalEnemies--;
+            wm.UpdateWaveText();
         }
 
         public static GameObject SpawnAmbushEnemy(GameObject prefab, Vector2 pos, float radius, int levelBonus)
