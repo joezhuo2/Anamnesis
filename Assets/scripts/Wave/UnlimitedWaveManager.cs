@@ -74,6 +74,7 @@ namespace CrystalFlux.WaveSystem
         {
             ArmContract(isBossWave);
             isWaveActive = true;
+            waveResolving = false;
             currentWaveIndex++;
 
             int wave = GetCurrentWave();
@@ -122,6 +123,8 @@ namespace CrystalFlux.WaveSystem
                 CleanEnemyList();
                 yield return _waitForSeconds0_5;
             }
+
+            waveResolving = true;
 
             EvaluateWaveEnd();
 

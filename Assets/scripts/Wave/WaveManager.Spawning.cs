@@ -41,6 +41,7 @@ namespace CrystalFlux.WaveSystem
 
             ArmContract(IsBossWave(currentWave));
             isWaveActive = true;
+            waveResolving = false;
             currentWaveIndex++;
 
             enemiesKilled = 0;
@@ -97,6 +98,8 @@ namespace CrystalFlux.WaveSystem
                 CleanEnemyList();
                 yield return _waitForSeconds0_5;
             }
+
+            waveResolving = true;
 
             EvaluateWaveEnd();
 
@@ -262,7 +265,7 @@ namespace CrystalFlux.WaveSystem
         public static bool ReserveEnemies(int count)
         {
             WaveManager wm = ActiveManager;
-            if (count <= 0 || wm == null || !wm.isWaveActive) return false;
+            if (count <= 0 || wm == null || !wm.isWaveActive || wm.waveResolving) return false;
 
             wm.reservedEnemies += count;
             wm.waveMaxTotalEnemies += count;
@@ -283,7 +286,7 @@ namespace CrystalFlux.WaveSystem
         public static GameObject SpawnAmbushEnemy(GameObject prefab, Vector2 pos, float radius, int levelBonus)
         {
             WaveManager wm = ActiveManager;
-            if (prefab == null || wm == null || !wm.isWaveActive) return null;
+            if (prefab == null || wm == null || !wm.isWaveActive || wm.waveResolving) return null;
 
             int level = Mathf.Max(1, wm.CurrentEnemyLevel() + levelBonus);
             GameObject enemy = EnemySpawning.SpawnEnemy(prefab, pos, radius, level);
