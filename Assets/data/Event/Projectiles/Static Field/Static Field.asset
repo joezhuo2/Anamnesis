@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9c62cf528ca1b45b5dae08f1da73f9, type: 3}
+  m_Name: Static Field
+  m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.SpawnProjectileEventData
+  title: Static Field
+  subtitle: 
+  titleColor: {r: 0.19010323, g: 0.24534848, b: 0.8396226, a: 1}
+  titleDurationOverride: 0
+  chance: 8
+  radiusIncrease: -1
+  minMode: 1
+  minWave: 25
+  maxWave: 128
+  allowOnIronman: 1
+  attacks:
+  - {fileID: 11400000, guid: 7513bafbbdeec51499d36286437a6ec0, type: 2}
+  minVolleys: 3
+  maxVolleys: 9
+  minInterval: 0.3
+  maxInterval: 0.9
+  aimMode: 0
+  hazardStats: {fileID: 11400000, guid: b5851f64b79ee264aa37f06f9b1812c0, type: 2}
+  levelBonus: 0
+  ownerLinger: 10
