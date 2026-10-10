@@ -2019,7 +2019,7 @@ Every box spawns enemies within 3 units and drops rewards within 2 units. The ra
 # Wave Events
 
 Folder: `Assets/data/Event`. Rolled by the `EventSpawner` object (`WaveEventSpawner`) in `New.unity`,
-which holds all ten assets, rolls every 5s, waits at least 30s after an event ends before
+which holds all eleven assets, rolls every 5s, waits at least 30s after an event ends before
 rolling again, and places spawns from the player's position (`minDistance` 0) out to `6 + radiusIncrease` units.
 
 | Asset | Type | Chance | Weight | Radius | Waves | Mode | Ironman | Title color | Subtitle |
@@ -2033,7 +2033,8 @@ rolling again, and places spawns from the player's position (`minDistance` 0) ou
 | `Blessing Starfall` | Blessing Drop | 1% | 2 | 0–9 | 35–128 | Expert | yes | violet | The stars grant their favor |
 | `Gold Rush` | Blessing Drop | 6% | 12 | 0–7 | 1–128 | Expert | no | gold | Grab it while it lasts |
 | `Static Field` | Spawn Projectile | 8% | 3 | 0–5 | 25–128 | Expert | yes | blue | You hear roars of thunder in the distance |
-| `Glacial Expanse` | Spawn Projectile | 100% | 3 | 0–9 | 30–128 | Expert | yes | ice blue | Fields of frost form around you |
+| `Glacial Expanse` | Spawn Projectile | 6% | 3 | 0–9 | 30–128 | Expert | yes | ice blue | Fields of frost form around you |
+| `Blood Moon` | Blood Moon | 5% | 6 | — | 20–128 | Expert | yes | crimson | The moon bleeds, and the hunt quickens |
 
 **Rolling.** Only one event runs at a time. The roll timer only advances while a wave is active
 and still has enemies to clear. It stops during Drought, between waves, and in the completion
@@ -2129,3 +2130,29 @@ Kills, the DPS meter and on-hit stat gains are not credited to the player.
 | --- | --- | --- | --- | --- | --- | --- |
 | `Static Field` | Static Field (0.5s, pierces 8) | 4–13 | 0.3–0.9s | `TowardPlayer` | 1.2× spell of hazard attack (5 base) | 60% Stun |
 | `Glacial Expanse` | Glacial Expanse (8s, size 2, hits each target every 0.33s) | 5–11 | 0.4–1.3s | `TowardPlayer` | 1.4× physical of hazard attack (3 base) | 77% Slow, 15% Freeze |
+
+## Blood Moon
+
+For `duration` seconds every enemy (team 0) is buffed by `bonusPct` through `EnemyGlobalBuffs`.
+It covers enemies already alive and anything that spawns or splits during the event, and ends for
+all of them at once. The player, the player's summons and Spawn Projectile hazard sources (team -1)
+are not affected.
+
+- **Damage dealt**: `bonusPct` is added to the enemy's `damagePct`, alongside its own and any
+  anomaly or contract bonus. Projectiles take it when they are fired, so a shot fired during the
+  event keeps the bonus after it ends.
+- **Damage taken**: incoming damage is multiplied by `1 + bonusPct / 100`, after resistances,
+  armor and dodge, on top of any other damage-taken multiplier such as *Unstoppable*'s. Consume
+  damage and heals are not changed.
+- **Move speed**: `bonusPct` is added to the enemy's `moveSpeedPct`, so its speed becomes
+  `moveSpeed × (1 + (moveSpeedPct + bonusPct) / 100)`.
+
+The timer pauses during Drought and between waves, so a Blood Moon that is still running carries on
+into the next wave. While it runs, a full-screen overlay canvas (`tintSortingOrder`, -1 = under
+the HUD) tints the screen with `tintColor` at `tintOpacity`. The tint fades in over `fadeIn`
+seconds when the buff starts and fades out over `fadeOut` seconds after it ends. The buff and the
+tint live on one scene object, so a restart mid-event removes the buff along with it.
+
+| Event | Duration | Bonus | Tint | Opacity | Fade in / out |
+| --- | --- | --- | --- | --- | --- |
+| `Blood Moon` | 15s | +25% | dark red (0.55, 0, 0.05) | 18% | 1s / 1.5s |

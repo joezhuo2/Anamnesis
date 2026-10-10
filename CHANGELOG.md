@@ -7,6 +7,24 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.18] - 2026-10-10 - Blood Moon
+
+### Added
+- **Blood Moon event** (`BloodMoonEventData`, `Data/Events/Blood Moon`): for `duration` seconds every enemy deals `bonusPct`% more damage (added to `damagePct`), takes `bonusPct`% more damage (multiplier after resistances) and moves `bonusPct`% faster (added to `moveSpeedPct`). Covers enemies alive at the start and everything that spawns during it. The timer pauses during Drought and between waves
+  - Screen tint: a full-screen overlay canvas with configurable `tintColor`, `tintOpacity`, `fadeIn`, `fadeOut` and `tintSortingOrder` (-1 = under the HUD)
+  - `BloodMoonEffect` owns both the buff and the tint, so the buff is removed when it is destroyed, including on a restart mid-event
+- `EnemyGlobalBuffs` (`Entity`): temporary damage, damage-taken and move speed bonuses shared by every team 0 enemy. Sources add and remove the same values, so overlapping sources stack. Read by `EnemyStatManager.GetStat` (`damagePct`, `moveSpeedPct`, `EffSpd`) and `EntityHealth`'s damage-taken step
+- **Blood Moon** event asset (`Assets/data/Event/Blood Moon`), added to `EventSpawner`: 5%, weight 6, waves 20-128, Expert, allowed on Ironman. 15s of +25% under an 18% dark red tint (1s fade in, 1.5s fade out). Subtitle: "The moon bleeds, and the hunt quickens"
+
+### Changed
+- `Event` assembly now also references `UnityEngine.UI`
+- Player `bundleVersion` 0.8.17 → 0.8.18
+
+### Docs
+- `GAME.md`: new Blood Moon section; Wave Events table gains a Blood Moon row and now counts eleven assets; Glacial Expanse's chance corrected from 100% to 6%, matching the asset
+- `README.md`: current release v0.8.17 → v0.8.18; Blood Moon in the core loop, features, content, project structure and assembly boundaries
+- `TODO.md`: finished "Blood Moon" idea removed
+
 ## [v0.8.17] - 2026-10-10 - Bigger Forest & Boss Reach
 
 ### Changed

@@ -19754,6 +19754,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4d96229e90b49004ba8931264eb8c2eb, type: 2}
   - {fileID: 11400000, guid: ad139473b21dd034bb153d5352c4cb07, type: 2}
   - {fileID: 11400000, guid: f6181d689cc1d9d4dbf8c3b1140978da, type: 2}
+  - {fileID: 11400000, guid: de0639d314d64cbea216baadf6fc9553, type: 2}
   rollInterval: 5
   minTimeBetweenEvents: 30
   baseRadius: 6
