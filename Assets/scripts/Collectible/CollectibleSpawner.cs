@@ -220,8 +220,10 @@ namespace CrystalFlux.CollectibleSystem
             SpawnAt(d, pos);
         }
 
-        private void SpawnAt(CollectibleData d, Vector2 pos)
+        public void SpawnAt(CollectibleData d, Vector2 pos)
         {
+            if (prefab == null || d == null) return;
+
             Collectible c = PrefabPool.Acquire(prefab, null);
             if (c == null) return;
 
