@@ -9,7 +9,7 @@ public class AnomalyData : ScriptableObject
     public string anomalyName;
     [TextArea(3, 10)] public string desc;
     public int minWave;
-    public int maxWave;
+    [Tooltip("Last wave this anomaly can be offered on. -1 = no upper bound")] public int maxWave;
     [Tooltip("Minimum mode tier required for this anomaly to be offered. 0 = Simple, 1 = Expert, 2 = Master")] [Min(0)] public int minMode;
     public AnomalyType anomalyType;
     public float anomalyValue;

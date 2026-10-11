@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Swarm
   desc: All enemies in the wave are weakened, but far more of them arrive.
   minWave: 0
-  maxWave: 128
+  maxWave: -1
   minMode: 1
   anomalyType: 3
   anomalyValue: 0

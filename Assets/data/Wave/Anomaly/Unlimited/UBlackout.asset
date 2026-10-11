@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Blackout
   desc: The darkness corrupts you...
   minWave: 0
-  maxWave: 128
+  maxWave: -1
   minMode: 1
   anomalyType: 7
   anomalyValue: 1

@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Augment
   desc: All enemies in the wave gain +0% Health
   minWave: 0
-  maxWave: 128
+  maxWave: -1
   minMode: 0
   anomalyType: 2
   anomalyValue: 0

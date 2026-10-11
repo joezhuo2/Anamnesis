@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Precision
   desc: 
   minWave: 0
-  maxWave: 128
+  maxWave: -1
   minMode: 0
   anomalyType: 10
   anomalyValue: 0

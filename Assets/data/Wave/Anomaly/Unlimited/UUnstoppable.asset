@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Unstoppable
   desc: 
   minWave: 0
-  maxWave: 128
+  maxWave: -1
   minMode: 0
   anomalyType: 15
   anomalyValue: 0

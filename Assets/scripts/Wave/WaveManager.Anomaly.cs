@@ -265,7 +265,7 @@ namespace CrystalFlux.WaveSystem
             return true;
         }
         protected bool IsAnomalyEligible(AnomalyData a, int w, bool bossNext)
-            => a != null && w >= a.minWave && w <= a.maxWave && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext) && !(a.bossOnly && !bossNext) && !IsContractType(a);
+            => a != null && w >= a.minWave && (a.maxWave < 0 || w <= a.maxWave) && a.minMode <= RunMode.Tier && !(a.disallowOnBossWave && bossNext) && !(a.bossOnly && !bossNext) && !IsContractType(a);
 
         protected bool IsContractType(AnomalyData a) => contractType.HasValue && a.anomalyType == contractType.Value;
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   anomalyName: Sealed
   desc: 
   minWave: 0
-  maxWave: 128
+  maxWave: -1
   minMode: 0
   anomalyType: 6
   anomalyValue: 0
