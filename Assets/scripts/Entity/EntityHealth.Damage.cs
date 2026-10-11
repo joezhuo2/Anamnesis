@@ -153,7 +153,7 @@ namespace CrystalFlux.EntitySystem
 
                 if (i.isCrit)
                 {
-                    if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit);
+                    if (pum!= null) pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnCrit, gameObject);
 
                     sizeMult *= 1.5f;
                 }
