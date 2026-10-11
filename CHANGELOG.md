@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.21] - 2026-10-10 - Blessing Radius & Feedback Loop
+
+### Changed
+- **Blessing Resource Drop**: `radiusIncrease` +2 → -1, so drops land within 5 units instead of 8
+- **Blessing Materials Drop**: `radiusIncrease` +2 → -1, so drops land within 5 units instead of 8
+- **Gold Rush**: `radiusIncrease` +1 → -2, so drops land within 4 units instead of 7
+- **Feedback Loop** (projectile): spell scaling 0.35x → 0.4x, true scaling 8% → 0
+- Player `bundleVersion` 0.8.20 → 0.8.21
+
+### Docs
+- `GAME.md`: Wave Events table radii for the three Blessing Drop events; Feedback Loop projectile damage
+- `README.md`: current release v0.8.20 → v0.8.21
+
 ## [v0.8.20] - 2026-10-10 - Contracts & Rare Pool Tuning Update
 
 ### Changed

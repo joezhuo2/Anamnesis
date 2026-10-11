@@ -18,7 +18,7 @@ MonoBehaviour:
   titleDurationOverride: 0
   chance: 3
   weight: 6
-  radiusIncrease: 2
+  radiusIncrease: -1
   minMode: 1
   minWave: 15
   maxWave: 128

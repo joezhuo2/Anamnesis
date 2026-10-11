@@ -1217,7 +1217,7 @@ player upgrades rather than attacks the player selects.
   - Lifetime: 1.5s
   - Pierce: 4
   - Size: 2
-  - Damage: 35% Spell, 8% True
+  - Damage: 40% Spell
   - Scaling: EffInt
   - Knockback: none
 
@@ -2028,10 +2028,10 @@ rolling again, and places spawns from the player's position (`minDistance` 0) ou
 | `Bat Swarm` | Spawn Enemy | 4% | 10 | 0–7 | 20–128 | Expert | yes | purple | Wings gather around you |
 | `Crab Tide` | Spawn Enemy | 4% | 10 | 0–5 | 15–128 | Expert | yes | red | The tide brings claws |
 | `Cult Gathering` | Spawn Enemy | 2% | 8 | 0–7 | 30–128 | Master | yes | magenta | The faithful convene |
-| `Blessing Resource Drop` | Blessing Drop | 10% | 15 | 0–8 | 1–128 | Expert | yes | cyan | Restoration rains down |
-| `Blessing Materials Drop` | Blessing Drop | 3% | 6 | 0–8 | 15–128 | Expert | no | orange | Riches fall from above |
+| `Blessing Resource Drop` | Blessing Drop | 10% | 15 | 0–5 | 1–128 | Expert | yes | cyan | Restoration rains down |
+| `Blessing Materials Drop` | Blessing Drop | 3% | 6 | 0–5 | 15–128 | Expert | no | orange | Riches fall from above |
 | `Blessing Starfall` | Blessing Drop | 1% | 2 | 0–9 | 35–128 | Expert | yes | violet | The stars grant their favor |
-| `Gold Rush` | Blessing Drop | 6% | 12 | 0–7 | 1–128 | Expert | no | gold | Grab it while it lasts |
+| `Gold Rush` | Blessing Drop | 6% | 12 | 0–4 | 1–128 | Expert | no | gold | Grab it while it lasts |
 | `Static Field` | Spawn Projectile | 8% | 3 | 0–5 | 25–128 | Expert | yes | blue | You hear roars of thunder in the distance |
 | `Glacial Expanse` | Spawn Projectile | 6% | 3 | 0–9 | 30–128 | Expert | yes | ice blue | Fields of frost form around you |
 | `Blood Moon` | Blood Moon | 5% | 6 | — | 20–128 | Expert | yes | crimson | The moon bleeds, and the hunt quickens |
