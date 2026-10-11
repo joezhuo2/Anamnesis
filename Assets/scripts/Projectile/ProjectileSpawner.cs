@@ -352,7 +352,30 @@ namespace CrystalFlux.ProjectileSystem
         )
         {
             if (!Aim(ad, source, center, dirOverride, distOverride, fixedAim, out var pos, out var dir, out var dist)) return;
+            Dispatch(prefab, pd, ad, source, pos, dir, dist, chainRoot, host, skipDelay, ignoreTarget);
+        }
 
+        public void SpawnUnaimed(GameObject prefab, GameObject source, Vector2 center)
+        {
+            if (prefab == null) return;
+            ResolvePrefab(prefab, out var pd, out var ad);
+            Dispatch(prefab, pd, ad, source, center, Vector2.right, ad != null ? ad.SpawnDistance : 0f, null, null, false, null);
+        }
+
+        private void Dispatch(
+            GameObject prefab,
+            ProjectileData pd,
+            AttackData ad,
+            GameObject source,
+            Vector2 pos,
+            Vector2 dir,
+            float dist,
+            AttackData chainRoot,
+            MonoBehaviour host,
+            bool skipDelay,
+            GameObject ignoreTarget
+        )
+        {
             if (ad == null)
             {
                 SpawnProjectile(prefab, pos, dir, true, source, pd, chainRoot, ignoreTarget);

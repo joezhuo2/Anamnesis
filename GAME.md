@@ -1334,6 +1334,13 @@ real health lost into the pool (overhealth-absorbed damage and overkill past 0 H
 health spent on attack costs does). Any trigger condition releases the whole pool as overhealth.
 Used by `Blood Bank`.
 
+The `SpawnProjectile` type (`PlayerUpgrade/SpawnProjectile`) spawns its projectile where it was
+triggered and never aims at the cursor: on the crit target for `OnCrit`, on the hit or spawn
+position for `OnProjectileHit` and `OnSpawnProjectile`, and on the player otherwise. The attack's
+`spawnDistance` only sets a pattern's radius (e.g. a Circle ring), never an offset toward the
+cursor. Used by `Autopilot`, `Chaos Theory`, `Feedback Loop`, `Shatterpoint`, `Supersonic` and
+`Ultrasonic`.
+
 Folder: `Assets/data/PlayerData/PlayerUpgrade`. All except `Decoy Upgraded`, `Solar Wind`,
 `Oblivion`, `Ultrasonic` and `Moonbound Instinct` (the capstone-only upgrades), the keystone-only `Ethereal Mirage` pair,
 the keystone-only `Eldritch Exchange`, `Hypercarry`, `Paradox`, `Reminiscence`, `Resonance` and `Serenade` are present in `WaveManager.treasurePool`. Entries marked with an unlock wave carry a `minWave` on

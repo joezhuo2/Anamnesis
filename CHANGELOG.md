@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.26] - 2026-10-11 - Unaimed Awakenings
+
+### Fixed
+- **Projectile-spawning Awakenings** (`SpawnProjectile` upgrades) aimed at the cursor. Shatterpoint landed at the mouse (its `spawnDistance` 12 pulled it up to 12 units toward the cursor), and Feedback Loop and Ultrasonic rings were shifted toward it. They now spawn where they trigger ([#22](https://github.com/joezhuo2/Anamnesis/issues/22))
+- **Shatterpoint** now bursts on the crit target instead of the player
+
+### Changed
+- New `ProjectileSpawner.SpawnUnaimed(prefab, source, center)`: spawns a prefab's pattern centred on `center` with no cursor aim; `spawnDistance` is used only as the pattern radius
+- `SpawnProjectile` routes all three trigger overloads through `SpawnUnaimed` and adds a `(player, target)` override that spawns on the target
+- `OnCrit` is raised through the `(condition, target)` overload with the crit victim. Upgrades that don't override the target overload behave as before
+- Player `bundleVersion` 0.8.25 → 0.8.26
+
+### Docs
+- `README.md`: current release v0.8.25 → v0.8.26
+- `GAME.md`: documented `SpawnProjectile` spawn location
+
 ## [v0.8.25] - 2026-10-11 - Stat Cap Pool
 
 ### Fixed
