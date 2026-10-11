@@ -15,6 +15,13 @@ Some stats are capped when read (`StatCaps`). Capped at 100: `critChance`, `aoeP
 `spellRes`, `basicCdRedPct`, `skillCdRedPct`, `ultCdRedPct`. The base and mixed reward pools skip a stat once it is
 at its cap; a roll can still push it past the cap. Milestone and synergy rewards ignore caps.
 
+A reward slot never stays empty while any pool has something to offer. If its pool has nothing
+left (every stat capped, or every Rare/Treasure entry claimed, gated or already on the panel), the
+slot falls back to another category. Order: Basic pool tries base stats, mixed stats, Rare, Treasure.
+Mixed pool tries its rolled category, then mixed stats, Rare, Treasure, base stats. Rare and Treasure
+pools try their own pool, the other one, mixed stats, then base stats. Rare and Treasure entries are
+never offered twice on the same panel.
+
 An additional attack spawned by a hit can never hit the enemy whose hit triggered it; it can still
 hit every other enemy. Additional attacks spawned without a hit (lifetime expiry, orbit explode) have no such restriction.
 
