@@ -7,6 +7,7 @@
 
 ## Medium Priority To-Do
 - new boss rush gamemode, and starting build
+- new sandbox mode (choose wave type before starting, choose reward type when completed (normal/mixed/rare/treasure) (contracts/anomaly still only mixed))
 - beacon objective (defend/destroy)
 
 ## Pre [v1.0.0] Checklist — First Light
@@ -136,16 +137,6 @@
 - **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
 
 ## Open Items
-- Enemy pooling is deliberately not done. Enemies are still `Instantiate`d per spawn (plus per split death)
-  and `Destroy`ed on death, along with the per-spawn `EntityStats` clone (the `AttackData` clone chain is
-  gone as of v0.4.10 — attacks are shared assets now). Three things block a straight swap to `PrefabPool`: cleanup is `Destroy`-bound across eight
-  components (`EntityStatManager`, `EntityHealth`, `EnemyAttackHandler`, `EnemyMovement`,
-  `StatusEffectManager`, `EnemyPhase`, `EntitySummonHandler`, `EntityProjectileHandler`) with no `OnDisable`
-  counterparts; `EnemyStatManager.ScaleBaseStats` is non-idempotent, so level scaling compounds on a reused
-  stat clone; and `WaveManager.CleanEnemyList` counts kills purely by Unity fake-null
-  (`RemoveAll(e => e == null)`), which a deactivated enemy never satisfies, so the wave-completion gate would
-  never close. Also latched with no reset: `EntityHealth.barRetired`, the animator `isDead` bool,
-  `EnemyPhase.phase`, `EnemyMovement.cScale`, and `EnemyAttackHandler.cooldowns`.
 - `SkillTreePanZoom` still polls `Mouse.current` / `Keyboard.current` directly and hard-codes Alt plus the mouse buttons, so skill tree pan and zoom cannot be rebound. Those controls are mouse-driven anyway
 - `GameRestart` reloads the scene rather than tearing a run down, so anything held in a static that is not reset on scene unload survives the restart. `Projectile` and `MenuPause` are handled above; other statics have not been audited
 
@@ -155,18 +146,6 @@
 - purple-blue
 - green-yellow
 - brown
-
-## Performance Improvements
-
-### Medium
-
-- [ ] Physics layers: everything sits on `Default` and the 2D collision matrix is all-ones
-  (`ProjectSettings/Physics2DSettings.asset:56`). Projectile triggers pair with other projectiles, pickups and
-  walls, so dense barrages get O(n²) broadphase pairs, plus `OnTriggerEnter2D`/`OnTriggerStay2D` callbacks
-  every physics step (`Projectile.OnTriggerEnter2D`/`OnTriggerStay2D`: `hit.Contains` + interface `TryGetComponent` per pair per step).
-  Fix: add Player/Enemy/Projectile/Environment/Pickup layers, disable Projectile↔Projectile and
-  Projectile↔Pickup. The overlap queries in `Projectile`/`EntityProjectileHandler` already skip triggers (v0.6.3);
-  an entity LayerMask would also drop walls from them.
 
 ## Brainstorm: QoL, Gameplay & Replayability
 - [ ] **Boss relics**: each boss drops a choice between two unique, boss-themed Awakenings that can only come from that boss (e.g. a Golem armor-to-rush-impact relic, a Reaper execute relic). Makes each boss kill memorable instead of just another reward panel.
@@ -220,10 +199,10 @@
 - [ ] **Shorter telegraphs** — enemy attack telegraphs run 25% faster. *New field:* `DifficultyData.telegraphTimeMult`.
 - [ ] **Reward timer** — reward panels auto-pick a random card after 30s. Real-time pressure without making the waves harder.
 - [ ] **Level breakpoints** — every 25 waves, all enemies permanently gain a "star": +1 projectile, +10% size or +1 phase, chosen at random and shown on the wave track.
-- Elite enemies can have an aura (attack speed, damage reduction or healing) and it stacks.
-- Killed enemies drop a short-lived hazard on the ground.
-- Enemies sometimes dodge-dash sideways out of your aim.
-- Wave timer: after 60s, extra enemies spawn every 8s until the wave is cleared.
+- [ ] Elite enemies can have an aura (attack speed, damage reduction or healing) and it stacks.
+- [ ] Killed enemies drop a short-lived hazard on the ground.
+- [ ] Enemies sometimes dodge-dash sideways out of your aim.
+- [ ] Wave timer: after 60s, extra enemies spawn every 8s until the wave is cleared.
 
 ### Nightmare payoff
 *Harder needs to feel worth it, not just be a number.*
