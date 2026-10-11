@@ -22,7 +22,9 @@ MonoBehaviour:
   anomalyMinVal: 0
   anomalyMaxVal: 0
   disallowOnBossWave: 1
-  isContract: 1
+  bossOnly: 0
+  anomalyEffect: {fileID: 0}
+  isContract: 0
   contractRerolls: 2
   contractSkillPointChance: 80
   contractMixedPoolChance: 20

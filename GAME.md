@@ -400,7 +400,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 0.5s
   - Pierce: 4
   - Size: 1
-  - Damage: 100% Spell
+  - Damage: 85% Spell
   - Scaling: EffInt
   - Use True Angle
   - Delay: 0.06-0.14s between projectiles
@@ -511,7 +511,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Type: Additional
 - Cooldown: 0s (follow-up)
 - Pattern: Circle (2 count +2 random)
-- Spawn: 0 dist (fixed), 0.12-0.4s random delay per shard
+- Spawn: 0 dist (fixed), 0.16-0.5s random delay per shard
 - Animation: 0s
 - Gains on hit: Mana +2
 - Projectile:
@@ -529,8 +529,8 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Asset: `Prism Bolt Shrapnel ad` / `Prism Bolt Shrapnel pd`
 - Type: Additional
 - Cooldown: 0s (follow-up)
-- Pattern: Circle (2 count +3 random)
-- Spawn: 0 dist (fixed), 0.1-0.3s random delay per fragment
+- Pattern: Circle (2 count +2 random)
+- Spawn: 0 dist (fixed), 0.18-0.6s random delay per fragment
 - Animation: 0s
 - Gains on hit: Mana +1
 - Projectile:

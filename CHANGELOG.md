@@ -7,6 +7,21 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.20] - 2026-10-10 - Contracts & Rare Pool Tuning Update
+
+### Changed
+- **Hivemind**: can no longer appear as a contract
+- **Stampede**: can no longer appear as a contract
+- **Meteor Shower**: spell: 100% → 85%
+- **Prism Bolt**: delay (shard) 0.12-0.4s → 0.16-0.5s, delay(shrapnel) 0.1-0.3s → 0.18-0.6s, count (shrapnel) 2-5 → 2-4
+- **Unlimited Sealed** (`USealed`): contract rerolls 1 → 2
+- Player `bundleVersion` 0.8.19 → 0.8.20
+
+### Docs
+- `GAME.md`: Meteor Shower damage 100% → 85%; Prism Bolt Shard and Prism Bolt Shrapnel delays and Shrapnel count (2 +2 random) updated
+- `README.md`: current release v0.8.19 → v0.8.20
+- `TODO.md`: finished Planned Capstone Nodes, Legion and Duality brainstorm sections removed
+
 ## [v0.8.19] - 2026-10-10 - Rare Tuning & Event Pacing
 
 ### Changed

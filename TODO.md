@@ -156,12 +156,6 @@
 - green-yellow
 - brown
 
-### Planned Capstone Nodes
-- Hex Cast (+buff -cost)
-
-- Shattered Singularity - very slow speed (hard to hit), high costs
-- Exodus - long cooldown, multi scaling
-
 ## Performance Improvements
 
 ### Medium
@@ -173,36 +167,6 @@
   Fix: add Player/Enemy/Projectile/Environment/Pickup layers, disable Projectile↔Projectile and
   Projectile↔Pickup. The overlap queries in `Projectile`/`EntityProjectileHandler` already skip triggers (v0.6.3);
   an entity LayerMask would also drop walls from them.
-
-## Brainstorm: New Playstyle Sets
-
-### 2. Legion — player summoner
-
-The player fights through a squad of minions and buffs, sacrifices or commands them. Reuses the enemy-side `EntitySummonHandler`.
-
-*Core feature:* player-owned summons with an `EntityStats` block that scales off the player's stats, a minion cap, target-following AI that reuses `EnemyMovement` with the target set to the nearest enemy, and new `OnMinionSpawn` / `OnMinionDeath` trigger conditions.
-
-- [ ] **Conscript** (Basic) — a weak hit whose kills raise the slain enemy as a minion for 10s (up to the cap).
-- [ ] **Rally** (Skill) — every minion rushes to the cursor, using rush impact for its damage. Minions arriving together share their knockback.
-- [ ] **Grand Muster** (Ultimate) — fills the minion cap with elite minions that copy the player's equipped basic attack for 15s.
-- [ ] **Blood Tithe** (Awakening) — `OnMinionDeath`: heal 3% max HP and advance skill cooldown by 0.5s.
-- [ ] **Shared Vessel** (Awakening) — passive. Minions inherit 30% of the player's crit chance and status effects on hit, and 20% of the damage the player takes is redirected to the nearest minion.
-- [ ] **Martyr** (Awakening) — `OnTakeHit` while a minion exists: sacrifice the oldest minion to negate the hit, and it explodes for its remaining HP.
-
-### Duality — stance switching (After techniques)
-
-The player swaps between two stances, Sol and Luna. Every attack has a different form in each stance, and switching mid-combo pays off.
-
-*Core feature:* a `Stance` state on the player with a swap binding, an alternate `ProjectileData` per stance on `AttackData` (swapped in the way `AttackReplacement` does), and a new `OnStanceSwap` trigger condition.
-
-- [ ] **Twin Moons** (Basic) — Sol: a single heavy physical slash. Luna: 3 spell needles in a spread that apply Vulnerable.
-- [ ] **Eclipse Step** (Skill) — swaps stance instantly and teleports behind the nearest enemy. The first attack in the new stance crits.
-- [ ] **Equinox** (Ultimate) — for 8s, both stances are active at once, so every attack fires both forms.
-- [ ] **Balance** (Awakening) — passive. Damage in Sol raises Luna's damage for 3s, and damage in Luna raises Sol's, so the bonuses alternate when you swap.
-- [ ] **Twilight Burst** (Awakening) — `OnStanceSwap`: releases a ring that deals damage and cleanses one debuff. 1.5s cooldown.
-- [ ] **Zenith** (Awakening) — `OnStanceSwap` after at least 5s in one stance: the next attack deals +150% damage.
-
----
 
 ## Brainstorm: QoL, Gameplay & Replayability
 - [ ] **Boss relics**: each boss drops a choice between two unique, boss-themed Awakenings that can only come from that boss (e.g. a Golem armor-to-rush-impact relic, a Reaper execute relic). Makes each boss kill memorable instead of just another reward panel.

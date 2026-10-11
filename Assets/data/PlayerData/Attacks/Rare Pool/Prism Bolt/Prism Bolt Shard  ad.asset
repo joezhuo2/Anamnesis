@@ -54,8 +54,8 @@ MonoBehaviour:
   randomCount: 2
   spread: 0
   randomSpread: 0
-  minDelay: 0.12
-  maxDelay: 0.4
+  minDelay: 0.16
+  maxDelay: 0.5
   maxRange: 0
   canMoveDuringAttack: 0
   animationIndex: -1
