@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.25] - 2026-10-11 - Stat Cap Pool
+
+### Fixed
+- **Reward pools** (base and mixed) no longer offer stats that are already at their cap, such as AOE% ([#24](https://github.com/joezhuo2/Anamnesis/issues/24)). A roll can still push a stat past its cap. Milestone and synergy rewards are unchanged
+- **Effect res** above 100 made DoT damage and status effects negative. It is now clamped at 100
+
+### Changed
+- New central stat cap table (`StatCaps`). Caps at 100: crit chance, AOE%, dodge chance, effect res, knockback res, dash cooldown reduction, dash stamina cost reduction. Caps at 90: cast time reduction, damage/physical/spell res, basic/skill/ult cooldown reduction
+- Player `bundleVersion` 0.8.24 → 0.8.25
+
+### Docs
+- `README.md`: current release v0.8.24 → v0.8.25
+
 ## [v0.8.24] - 2026-10-11 - Unlimited Wave Cap Fix
 
 ### Fixed
