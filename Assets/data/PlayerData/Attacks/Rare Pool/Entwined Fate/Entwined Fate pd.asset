@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Entwined Fate pd
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
   mainAttack: {fileID: 11400000, guid: 45ea950474f484a4d856700b90519b8e, type: 2}
-  lifetime: 26
-  size: 2
+  lifetime: 24
+  size: 1.75
   numPierce: 6
   destroyOnMaxPierce: 1
   movementType: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
   waveAmplitude: 1
   waveFrequency: 1
   spiralSpacing: 1
-  physicalMult: 0.5
+  physicalMult: 0.45
   spellMult: 0.15
   trueMult: 0
   scalingStat: 30
@@ -48,10 +48,6 @@ MonoBehaviour:
     selfApply: 0
     applyCondition: 0
     chance: 1
-  - effect: {fileID: 11400000, guid: 77125e6584e4e5a44bf2ebae5947ac09, type: 2}
-    selfApply: 1
-    applyCondition: 0
-    chance: 0.2
   - effect: {fileID: 11400000, guid: 3904fc62d67fe364ebdd2250e2efe9c2, type: 2}
     selfApply: 1
     applyCondition: 0
