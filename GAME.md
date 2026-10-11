@@ -8,7 +8,10 @@ Attack entries list the `AttackData` asset name; the paired `ProjectileData` ass
 the same name with `PD` instead of `AD` unless noted.
 
 Projectile `Size` multiplies the projectile prefab's own scale: the final scale is
-`prefab scale x Size x (1 + aoePct%)`. `aoePct` is capped at 200% when read, so the multiplier never exceeds x3.
+`prefab scale x Size x (1 + aoePct%)`. `aoePct` is capped at 100% when read, so the multiplier never exceeds x2.
+
+An additional attack spawned by a hit can never hit the enemy whose hit triggered it; it can still
+hit every other enemy. Additional attacks spawned without a hit (lifetime expiry, orbit explode) have no such restriction.
 
 ---
 
@@ -501,7 +504,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 3s
   - Pierce: 4
   - Size: 2
-  - Damage: 55% Spell
+  - Damage: 50% Spell
   - Scaling: EffInt
   - Additional: 100% chance on hit to create Prism Bolt Shard (0.5 from center)
   - Knockback: 3 force for 0.15s
@@ -519,7 +522,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 3s
   - Pierce: 3
   - Size: 1.75
-  - Damage: 30% Spell
+  - Damage: 25% Spell
   - Scaling: EffInt
   - Random direction
   - Additional: 100% chance on hit to create Prism Bolt Shrapnel (0.5 from center)
@@ -538,7 +541,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Lifetime: 2s
   - Pierce: 2
   - Size: 2
-  - Damage: 15% Spell
+  - Damage: 12% Spell
   - Scaling: EffInt
   - Random direction
   - Knockback: 1 force for 0.15s
@@ -1215,9 +1218,9 @@ player upgrades rather than attacks the player selects.
 - Projectile:
   - Speed: 16
   - Lifetime: 1.5s
-  - Pierce: 4
+  - Pierce: 3
   - Size: 2
-  - Damage: 40% Spell
+  - Damage: 30% Spell
   - Scaling: EffInt
   - Knockback: none
 
@@ -1598,7 +1601,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Delay: 0s
 - Projectile: `Shatterpoint.prefab` (`Shatterpoint ad` / `Shatterpoint pd`, folder `Treasure Pool/Shatterpoint`)
   - Size: 2, lifetime 0.5s, pierce 6, random direction
-  - Damage: 70% True
+  - Damage: 50% True
   - Effect: 100% on hit (`Shatterpoint`)
 - Description: Critical hits shatter the enemy and remove their Stun or Freeze to deal additional true damage.
 - In `treasurePool`, no unlock wave.

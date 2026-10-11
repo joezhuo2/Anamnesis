@@ -89,7 +89,7 @@ namespace CrystalFlux.ProjectileSystem
             }
 
             if (pd.AdditionalChance > 0f && pd.AdditionalAttack != null && Random.value <= pd.AdditionalChance)
-                HandleAdditionalSpawns();
+                HandleAdditionalSpawns(target);
             else if (canTriggerAdd) TryRetriggerChain();
 
             canTriggerAdd = false;
@@ -133,7 +133,7 @@ namespace CrystalFlux.ProjectileSystem
             else if (ownerObj != target) ApplyEffect(target, ed);
         }
 
-        private void HandleAdditionalSpawns()
+        private void HandleAdditionalSpawns(GameObject hitTarget = null)
         {
             if (!canTriggerAdd) return;
             if (ProjectileSpawner.Instance == null) return;
@@ -146,7 +146,7 @@ namespace CrystalFlux.ProjectileSystem
 
             Vector2? addDir = pd.AdditionalFollowsMouse ? null : dir;
 
-            ProjectileSpawner.Instance.Spawn(pd.AdditionalAttack, ownerObj, transform.position, addDir, AddSpawnDist, ChainOrigin);
+            ProjectileSpawner.Instance.Spawn(pd.AdditionalAttack, ownerObj, transform.position, addDir, AddSpawnDist, ChainOrigin, ignoreTarget: hitTarget);
         }
 
         private void TryRetriggerChain()

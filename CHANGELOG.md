@@ -7,6 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.22] - 2026-10-10 - Additional Attack Targeting & Damage Tuning
+
+### Changed
+- **Additional attacks**: projectiles spawned by an on-hit `additionalAttack` can no longer hit the enemy whose hit triggered them; other enemies are unaffected. Spawns from lifetime expiry or `Explode()` are unrestricted
+- **AoE cap**: `EntityStats.GetValue(StatType.aoePct)` cap 200 → 100, so projectile size multiplier maxes at x2 instead of x3
+- **Prism Bolt**: spell 55% → 50%
+- **Prism Bolt Shard**: spell 30% → 25%
+- **Prism Bolt Shrapnel**: spell 15% → 12%
+- **Feedback Loop** (projectile): spell 40% → 30%, pierce 4 → 3
+- **Shatterpoint** (projectile): true 70% → 50%
+- Player `bundleVersion` 0.8.21 → 0.8.22
+
+### Docs
+- `GAME.md`: aoePct cap 200% → 100% (x2); note on additional attacks ignoring the triggering enemy; Prism Bolt, Prism Bolt Shard, Prism Bolt Shrapnel, Feedback Loop and Shatterpoint damage/pierce
+- `README.md`: current release v0.8.21 → v0.8.22
+
 ## [v0.8.21] - 2026-10-10 - Blessing Radius & Feedback Loop
 
 ### Changed

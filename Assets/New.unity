@@ -13334,7 +13334,7 @@ MonoBehaviour:
   - upgrade: {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
     icon: {fileID: 0}
     upgradeName: Feedback Loop
-    desc: Projectiles have a 70% chance to create shrapnel on hit (0.3s cooldown).
+    desc: Projectiles have a chance to create shrapnel on hit.
     minWave: -1
   - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
     icon: {fileID: 0}
@@ -27742,7 +27742,7 @@ MonoBehaviour:
   - upgrade: {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
     icon: {fileID: 0}
     upgradeName: Feedback Loop
-    desc: Projectiles have a 70% chance to create shrapnel on hit (0.3s cooldown).
+    desc: Projectiles have a chance to create shrapnel on hit.
     minWave: -1
   - upgrade: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
     icon: {fileID: 0}

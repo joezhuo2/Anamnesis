@@ -160,7 +160,7 @@ namespace CrystalFlux.ProjectileSystem
             if (rb != null) rb.linearVelocity = Vector2.zero;
         }
 
-        public void Setup(Vector2 direction, GameObject owner, ProjectileData pdOverride, AttackData chainRootOverride = null)
+        public void Setup(Vector2 direction, GameObject owner, ProjectileData pdOverride, AttackData chainRootOverride = null, GameObject ignoreTarget = null)
         {
             pd = pdOverride != null ? pdOverride : defaultPd;
             chainRoot = chainRootOverride;
@@ -181,6 +181,7 @@ namespace CrystalFlux.ProjectileSystem
             hit.Clear();
             hitExpiryTargets.Clear();
             hitExpiryTimes.Clear();
+            if (ignoreTarget != null) hit.Add(ignoreTarget);
             canTriggerAdd = true;
             pierced = 0;
 
