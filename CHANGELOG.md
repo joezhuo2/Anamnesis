@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.24] - 2026-10-11 - Unlimited Wave Cap Fix
+
+### Fixed
+- **Unlimited anomalies** stopped appearing after wave 128 because every `U*` anomaly asset had `maxWave` 128. `AnomalyData.maxWave` -1 now means no upper bound, and all 16 Unlimited anomaly assets use it ([#25](https://github.com/joezhuo2/Anamnesis/issues/25))
+- **Unlimited wave text** showed `Wave 129/128` past the scene's `totalWaves`. Unlimited now shows `Wave X` with no total; Regular still shows `Wave X/Y` ([#25](https://github.com/joezhuo2/Anamnesis/issues/25))
+
+### Changed
+- Player `bundleVersion` 0.8.23 → 0.8.24
+
+### Docs
+- `GAME.md`: Sealed table `Unlimited/USealed` waves 0–128 → 0+; Unlimited anomaly `maxWave` note updated to -1 (no upper bound)
+- `README.md`: current release v0.8.23 → v0.8.24
+
 ## [v0.8.23] - 2026-10-11 - Entwined Fate
 
 ### Added

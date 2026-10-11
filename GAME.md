@@ -1946,9 +1946,9 @@ so every Doppelganger copies the player's attacks and Awakenings when it spawns.
 | Asset | Waves | Cooldown reduction | Boss waves |
 | --- | --- | --- | --- |
 | `Regular/Sealed` | 10–105 | 15–30% | allowed |
-| `Unlimited/USealed` | 0–128 | 5–30% | allowed |
+| `Unlimited/USealed` | 0+ | 5–30% | allowed |
 
-All Unlimited anomaly assets now cap at `maxWave` 128.
+All Unlimited anomaly assets use `maxWave` -1 (no upper bound), so they keep rolling past wave 128.
 
 # Attack Cooldown Buttons
 
