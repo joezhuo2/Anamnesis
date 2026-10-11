@@ -7,6 +7,21 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.27] - 2026-10-11 - No Empty Hands
+
+### Fixed
+- **Empty reward pools**: a reward slot whose pool had nothing left to offer was skipped, so a panel could open with fewer cards than rolled, or none. This happened when the Rare/Treasure pools were exhausted or gated by wave or mode. Each slot now falls back to another reward category. When every stat in a pool was capped, the pool offered a capped stat anyway; it now falls back too ([#32](https://github.com/joezhuo2/Anamnesis/issues/32))
+- **Duplicate cards**: the Rare and Treasure pools (and their picks inside the mixed and pre-run pools) could offer the same entry twice on one panel. They now skip entries already shown
+
+### Changed
+- `WaveManager.GetWeightedRandom` returns `null` when every stat in the pool is capped, instead of the first (capped) entry
+- New `WaveManager.TryAddStat(pool)`; `TryAddPreRunRare`/`TryAddPreRunTreasure` renamed to `TryAddRare`/`TryAddTreasure` and shared by all pools. Removed the unused `GetWeightedRandomBuff`/`GetWeightedRandomMixedBuff` wrappers
+- Player `bundleVersion` 0.8.26 → 0.8.27
+
+### Docs
+- `README.md`: current release v0.8.26 → v0.8.27
+- `GAME.md`: documented reward slot fallback order
+
 ## [v0.8.26] - 2026-10-11 - Unaimed Awakenings
 
 ### Fixed

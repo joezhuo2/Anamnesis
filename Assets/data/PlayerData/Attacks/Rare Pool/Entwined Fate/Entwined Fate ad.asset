@@ -50,7 +50,7 @@ MonoBehaviour:
   spawnDelay: 0
   spawnDistance: 0
   fixedDistance: 0
-  projectileCount: 10
+  projectileCount: 8
   randomCount: 6
   spread: 8
   randomSpread: 0
@@ -64,17 +64,17 @@ MonoBehaviour:
   phaseReq: -1
   minMode: 0
   nextAttack: {fileID: 0}
-  staminaCost: 65
+  staminaCost: 50
   staminaCostPct: 0
   healthCost: 0
   healthCostPct: 30
-  manaCost: 30
+  manaCost: 20
   manaCostPct: 0
   basedOnDmgDealt: 1
   staminaGainOnHit: 1
   staminaPctGainOnHit: 0
-  healthGainOnHit: 3
-  healthPctGainOnHit: 1
+  healthGainOnHit: 4
+  healthPctGainOnHit: 2
   manaGainOnHit: 1
   manaPctGainOnHit: 0
   summonChance: 0

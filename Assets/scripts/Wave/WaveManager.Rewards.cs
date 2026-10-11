@@ -102,22 +102,8 @@ namespace CrystalFlux.WaveSystem
             int rewardChoices = PoolPreSetup();
 
             for (int i = 0; i < rewardChoices; i++)
-            {
-                if (baseBuffPool.Count == 0 || rarityData.Count == 0) break;
+                if (!TryAddStat(baseBuffPool) && !TryAddStat(mixedPool) && !TryAddRare() && !TryAddTreasure()) break;
 
-                BaseReward randomBuff = GetWeightedRandomBuff();
-
-                RarityData chosenRarity = WaveQuality.GetWeightedRandomRarity(GetCurrentWave(), rarityData, Quality);
-
-                GeneratedReward generated = new() { br = randomBuff, rd = chosenRarity };
-
-                GameObject btnObj = GetOrCreateRewardButton();
-
-                CachePlayerStatManager();
-                string changeLine = BuildChangeLine(randomBuff.baseBuff.type, generated.finalVal);
-
-                if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(generated, OnRewardClaimed, changeLine);
-            }
             additionalQuality = 0f;
         }
         protected void GenerateMixedPool()
@@ -128,36 +114,11 @@ namespace CrystalFlux.WaveSystem
             for (int i = 0; i < rewardChoices; i++)
             {
                 float poolRoll = Random.Range(0f, 100f);
+                bool added = poolRoll < 75f ? TryAddStat(mixedPool)
+                    : poolRoll < 90f ? TryAddRare()
+                    : TryAddTreasure();
 
-                if (poolRoll < 75f)
-                {
-                    if (mixedPool.Count == 0 || rarityData.Count == 0) continue;
-
-                    BaseReward randomBuff = GetWeightedRandomMixedBuff();
-                    RarityData chosenRarity = WaveQuality.GetWeightedRandomRarity(GetCurrentWave(), rarityData, Quality);
-                    GeneratedReward generated = new() { br = randomBuff, rd = chosenRarity };
-
-                    GameObject btnObj = GetOrCreateRewardButton();
-
-                    CachePlayerStatManager();
-                    string changeLine = BuildChangeLine(randomBuff.baseBuff.type, generated.finalVal);
-
-                    if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(generated, OnRewardClaimed, changeLine);
-                }
-                else if (poolRoll < 90f)
-                {
-                    AttackReward buff = PickRareReward();
-                    if (buff == null) continue;
-                    GameObject btnObj = GetOrCreateRewardButton();
-                    if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(buff, OnAttackRewardClaimed);
-                }
-                else
-                {
-                    PlayerUpgradeReward buff = PickTreasureReward();
-                    if (buff == null) continue;
-                    GameObject btnObj = GetOrCreateRewardButton();
-                    if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(buff, OnPlayerUpgradeRewardClaimed);
-                }
+                if (!added && !TryAddStat(mixedPool) && !TryAddRare() && !TryAddTreasure() && !TryAddStat(baseBuffPool)) break;
             }
 
             additionalQuality = 0f;
@@ -168,16 +129,7 @@ namespace CrystalFlux.WaveSystem
             int rewardChoices = PoolPreSetup();
 
             for (int i = 0; i < rewardChoices; i++)
-            {
-                AttackReward buff = PickRareReward();
-
-                if (buff == null) break;
-
-                GameObject btnObj = GetOrCreateRewardButton();
-
-                if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
-                    rewardButton.Setup(buff, OnAttackRewardClaimed);
-            }
+                if (!TryAddRare() && !TryAddTreasure() && !TryAddStat(mixedPool) && !TryAddStat(baseBuffPool)) break;
         }
         protected void GenerateTreasurePool()
         {
@@ -185,16 +137,25 @@ namespace CrystalFlux.WaveSystem
             int rewardChoices = PoolPreSetup();
 
             for (int i = 0; i < rewardChoices; i++)
-            {
-                PlayerUpgradeReward buff = PickTreasureReward();
+                if (!TryAddTreasure() && !TryAddRare() && !TryAddStat(mixedPool) && !TryAddStat(baseBuffPool)) break;
+        }
 
-                if (buff == null) break;
+        private bool TryAddStat(List<BaseReward> pool)
+        {
+            if (pool == null || pool.Count == 0 || rarityData.Count == 0) return false;
 
-                GameObject btnObj = GetOrCreateRewardButton();
+            BaseReward randomBuff = GetWeightedRandom(pool);
+            if (randomBuff == null) return false;
 
-                if (btnObj.TryGetComponent<RewardButton>(out var rewardButton))
-                    rewardButton.Setup(buff, OnPlayerUpgradeRewardClaimed);
-            }
+            GameObject btnObj = GetOrCreateRewardButton();
+            if (btnObj == null) return false;
+
+            RarityData chosenRarity = WaveQuality.GetWeightedRandomRarity(GetCurrentWave(), rarityData, Quality);
+            GeneratedReward generated = new() { br = randomBuff, rd = chosenRarity };
+            string changeLine = BuildChangeLine(randomBuff.baseBuff.type, generated.finalVal);
+
+            if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(generated, OnRewardClaimed, changeLine);
+            return true;
         }
 
         public bool TryStartPreRunPicks()
@@ -228,13 +189,13 @@ namespace CrystalFlux.WaveSystem
 
             for (int i = 0; i < picks; i++)
             {
-                if (Random.Range(0f, 100f) < D.preRunTreasureChance && TryAddPreRunTreasure()) continue;
-                if (TryAddPreRunRare()) continue;
-                TryAddPreRunTreasure();
+                if (Random.Range(0f, 100f) < D.preRunTreasureChance && TryAddTreasure()) continue;
+                if (TryAddRare()) continue;
+                TryAddTreasure();
             }
         }
 
-        private bool TryAddPreRunRare()
+        private bool TryAddRare()
         {
             AttackReward buff = PickRareReward();
             if (buff == null) return false;
@@ -245,7 +206,7 @@ namespace CrystalFlux.WaveSystem
             if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(buff, OnAttackRewardClaimed);
             return true;
         }
-        private bool TryAddPreRunTreasure()
+        private bool TryAddTreasure()
         {
             PlayerUpgradeReward buff = PickTreasureReward();
             if (buff == null) return false;
@@ -267,6 +228,7 @@ namespace CrystalFlux.WaveSystem
                 AttackReward candidate = availableRarePool[i];
                 if (!IsAllowed(candidate, wave)) continue;
                 if (keptReward != null && keptReward.Attack == candidate) continue;
+                if (IsOffered(candidate)) continue;
 
                 eligible++;
                 if (Random.Range(0, eligible) == 0) chosen = candidate;
@@ -303,6 +265,7 @@ namespace CrystalFlux.WaveSystem
                 PlayerUpgradeReward candidate = availableTreasurePool[i];
                 if (!IsAllowed(candidate, wave)) continue;
                 if (keptReward != null && keptReward.Upgrade == candidate) continue;
+                if (IsOffered(candidate)) continue;
 
                 eligible++;
                 if (Random.Range(0, eligible) == 0) chosen = candidate;
@@ -311,29 +274,41 @@ namespace CrystalFlux.WaveSystem
             return chosen;
         }
 
-        protected BaseReward GetWeightedRandomBuff() => GetWeightedRandom(baseBuffPool);
+        private bool IsOffered(AttackReward a)
+        {
+            foreach (GameObject go in activeRewardButtons)
+                if (go != null && go.TryGetComponent<RewardButton>(out var rb) && rb.Attack == a) return true;
+            return false;
+        }
 
-        protected BaseReward GetWeightedRandomMixedBuff() => GetWeightedRandom(mixedPool);
+        private bool IsOffered(PlayerUpgradeReward u)
+        {
+            foreach (GameObject go in activeRewardButtons)
+                if (go != null && go.TryGetComponent<RewardButton>(out var rb) && rb.Upgrade == u) return true;
+            return false;
+        }
 
         private BaseReward GetWeightedRandom(List<BaseReward> pool)
         {
             CachePlayerStatManager();
 
             float totalWeight = 0;
-            foreach (var b in pool) if (!IsMaxed(b)) totalWeight += b.weight;
-            if (totalWeight <= 0f) return pool[0];
+            foreach (var b in pool) if (b != null && !IsMaxed(b)) totalWeight += b.weight;
+            if (totalWeight <= 0f) return null;
 
             float roll = Random.Range(0f, totalWeight);
             float weightSum = 0;
+            BaseReward last = null;
 
             foreach (var b in pool)
             {
-                if (IsMaxed(b)) continue;
+                if (b == null || IsMaxed(b) || b.weight <= 0f) continue;
                 weightSum += b.weight;
+                last = b;
                 if (roll <= weightSum) return b;
             }
 
-            return pool[0];
+            return last;
         }
 
         private bool IsMaxed(BaseReward b) => cpsm != null && b.baseBuff.value > 0f && StatCaps.IsMaxed(b.baseBuff.type, cpsm.GetStat(b.baseBuff.type));
