@@ -337,9 +337,11 @@ namespace CrystalFlux.WaveSystem
             UpdateWaveText();
         }
 
+        protected virtual string WaveLabel() => $"Wave {GetCurrentWave()}/{totalWaves}";
+
         protected void UpdateWaveText()
         {
-            if (waveText != null) waveText.text = $"Wave {GetCurrentWave()}/{totalWaves}\nEnemies: {enemiesKilled}/{waveMaxTotalEnemies}";
+            if (waveText != null) waveText.text = $"{WaveLabel()}\nEnemies: {enemiesKilled}/{waveMaxTotalEnemies}";
         }
         
         protected void EndWave()

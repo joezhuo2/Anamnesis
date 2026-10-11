@@ -231,6 +231,8 @@ namespace CrystalFlux.WaveSystem
 
         public override int GetCurrentWave() => currentWaveIndex;
 
+        protected override string WaveLabel() => $"Wave {GetCurrentWave()}";
+
         private bool ShouldBeBossWave(int wave)
         {
             if (wave <= minWavesBetweenBossWaves) return false;
