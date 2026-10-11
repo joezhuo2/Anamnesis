@@ -122,7 +122,9 @@ namespace CrystalFlux.Core
         public bool canGainStamina;
         [HideInInspector] public bool globalDoTCanCrit;
 
-        public float GetValue(StatType type)
+        public float GetValue(StatType type) => StatCaps.Clamp(type, GetRawValue(type));
+
+        private float GetRawValue(StatType type)
         {
             return type switch
             {
@@ -133,16 +135,16 @@ namespace CrystalFlux.Core
                 StatType.spellDmgPct => spellDmgPct,
                 StatType.critChance => critChance,
                 StatType.critDamage => critDamage,
-                StatType.aoePct => Mathf.Min(aoePct, 100f),
+                StatType.aoePct => aoePct,
                 StatType.maxHp => maxHp,
                 StatType.hpPct => hpPct,
                 StatType.hpRegen => hpRegen,
                 StatType.hpRegPct => hpRegPct,
                 StatType.armor => armor,
                 StatType.armorPct => armorPct,
-                StatType.damageRes => Mathf.Min(90f, damageRes),
-                StatType.physicalRes => Mathf.Min(90f, physicalRes),
-                StatType.spellRes => Mathf.Min(90f, spellRes),
+                StatType.damageRes => damageRes,
+                StatType.physicalRes => physicalRes,
+                StatType.spellRes => spellRes,
                 StatType.dodgeChance => dodgeChance,
                 StatType.dodgeRating => dodgeRating,
                 StatType.DodgeRes => Mathf.Max(0f, dodgeRating) / (Mathf.Max(0f, dodgeRating) + 100f),

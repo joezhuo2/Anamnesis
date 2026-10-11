@@ -311,39 +311,32 @@ namespace CrystalFlux.WaveSystem
             return chosen;
         }
 
-        protected BaseReward GetWeightedRandomBuff()
+        protected BaseReward GetWeightedRandomBuff() => GetWeightedRandom(baseBuffPool);
+
+        protected BaseReward GetWeightedRandomMixedBuff() => GetWeightedRandom(mixedPool);
+
+        private BaseReward GetWeightedRandom(List<BaseReward> pool)
         {
+            CachePlayerStatManager();
+
             float totalWeight = 0;
-            foreach (var b in baseBuffPool) totalWeight += b.weight;
+            foreach (var b in pool) if (!IsMaxed(b)) totalWeight += b.weight;
+            if (totalWeight <= 0f) return pool[0];
 
             float roll = Random.Range(0f, totalWeight);
             float weightSum = 0;
 
-            foreach (var b in baseBuffPool)
+            foreach (var b in pool)
             {
+                if (IsMaxed(b)) continue;
                 weightSum += b.weight;
                 if (roll <= weightSum) return b;
             }
 
-            return baseBuffPool[0];
+            return pool[0];
         }
 
-        protected BaseReward GetWeightedRandomMixedBuff()
-        {
-            float totalWeight = 0;
-            foreach (var b in mixedPool) totalWeight += b.weight;
-
-            float roll = Random.Range(0f, totalWeight);
-            float weightSum = 0;
-
-            foreach (var b in mixedPool)
-            {
-                weightSum += b.weight;
-                if (roll <= weightSum) return b;
-            }
-
-            return mixedPool[0];
-        }
+        private bool IsMaxed(BaseReward b) => cpsm != null && b.baseBuff.value > 0f && StatCaps.IsMaxed(b.baseBuff.type, cpsm.GetStat(b.baseBuff.type));
         protected void OnRewardClaimed(GeneratedReward chosenReward)
         {
             CloseRewardUI();

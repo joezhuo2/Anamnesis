@@ -10,6 +10,11 @@ the same name with `PD` instead of `AD` unless noted.
 Projectile `Size` multiplies the projectile prefab's own scale: the final scale is
 `prefab scale x Size x (1 + aoePct%)`. `aoePct` is capped at 100% when read, so the multiplier never exceeds x2.
 
+Some stats are capped when read (`StatCaps`). Capped at 100: `critChance`, `aoePct`, `dodgeChance`, `EffectRes`,
+`kbRes`, `dashCooldownRedPct`, `dashStaminaCostRedPct`. Capped at 90: `castTimeRedPct`, `damageRes`, `physicalRes`,
+`spellRes`, `basicCdRedPct`, `skillCdRedPct`, `ultCdRedPct`. The base and mixed reward pools skip a stat once it is
+at its cap; a roll can still push it past the cap. Milestone and synergy rewards ignore caps.
+
 An additional attack spawned by a hit can never hit the enemy whose hit triggered it; it can still
 hit every other enemy. Additional attacks spawned without a hit (lifetime expiry, orbit explode) have no such restriction.
 
