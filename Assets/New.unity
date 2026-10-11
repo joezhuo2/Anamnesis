@@ -13304,6 +13304,11 @@ MonoBehaviour:
     attackName: Prism Bolt
     desc: Shoots a projectile that splits into more fragments.
     minWave: -1
+  - newAttack: {fileID: 11400000, guid: 45ea950474f484a4d856700b90519b8e, type: 2}
+    icon: {fileID: 0}
+    attackName: Entwined Fate
+    desc: Spawns a garden of leeching bushes that grant thorns and lifesteal.
+    minWave: -1
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
     icon: {fileID: 0}
@@ -27711,6 +27716,11 @@ MonoBehaviour:
     icon: {fileID: 0}
     attackName: Prism Bolt
     desc: Shoots a projectile that splits into more fragments.
+    minWave: -1
+  - newAttack: {fileID: 11400000, guid: 45ea950474f484a4d856700b90519b8e, type: 2}
+    icon: {fileID: 0}
+    attackName: Entwined Fate
+    desc: Spawns a garden of leeching bushes that grant thorns and lifesteal.
     minWave: -1
   treasurePool:
   - upgrade: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
@@ -94695,7 +94705,7 @@ PrefabInstance:
     - target: {fileID: 5936995857291776566, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: 'starting.Array.data[2]'
       value: 
-      objectReference: {fileID: 11400000, guid: 8ae4954fe1298164e9bbb55472f4165a, type: 2}
+      objectReference: {fileID: 11400000, guid: 45ea950474f484a4d856700b90519b8e, type: 2}
     - target: {fileID: 8884305214242378816, guid: b8d45dad534ee4e4298ff232007d5f18, type: 3}
       propertyPath: m_ScrollWheelAction
       value: 

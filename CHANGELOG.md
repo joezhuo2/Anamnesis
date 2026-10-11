@@ -7,6 +7,23 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.23] - 2026-10-11 - Entwined Fate
+
+### Added
+- **Entwined Fate** (Rare Pool skill, available from wave 1): scatters 10-16 stationary leeching bushes in an 8-unit radius around the player. Each bush lasts 26s, pierces 6, deals 50% Phys + 15% Spell (EffMaxHp scaling), slows on hit, and has a 20% chance per hit to grant the player Lifesteal and a 20% chance to grant Thorns. 34s cooldown; costs 65 Stamina, 30% Health, 30 Mana
+- **Thorns** status effect (12s): taking damage from an enemy projectile reflects 30% of it to the attacker as True damage (can crit)
+
+### Changed
+- **Lifesteal** status effect asset renamed `eldex` → `Lifesteal` (same GUID; Eldritch Exchange is unaffected)
+- **Lifeforce**: Lifeforce Shard now fires along the projectile's direction instead of toward the mouse
+- **Lifeforce Shard**: spawn distance 0.75 → 0, spawn delay 0.25s → 0.1s
+- Player `bundleVersion` 0.8.22 → 0.8.23
+
+### Docs
+- `GAME.md`: Entwined Fate entry; Rare Pool count 23 → 24; Lifeforce and Lifeforce Shard updated; Status Effects table: `eldex` row renamed to `Lifesteal`, `Thorns` added, `Slow 5 3 15` note updated
+- `README.md`: current release v0.8.22 → v0.8.23
+- `TODO.md`: removed Resonance Pillars, Meteorfall, Pacifist Start, Shrinking Arena, Chain Reaction and Event Chains ideas
+
 ## [v0.8.22] - 2026-10-10 - Additional Attack Targeting & Damage Tuning
 
 ### Changed

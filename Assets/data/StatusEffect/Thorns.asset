@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8f7efd6ec7a914a8682abb56ac8f57, type: 3}
+  m_Name: Thorns
+  m_EditorClassIdentifier: CrystalFlux.StatusEffect::CrystalFlux.StatusEffectSystem.Thorns
+  currentTime: 0
+  duration: 12
+  tickInterval: 0
+  isBuff: 1
+  icon: {fileID: 4773514653529381359, guid: 1a422c5f5436e5042861653928334be7, type: 3}
+  effName: Thorns
+  desc: Taking damage reflects 30% of incoming damage as true damage
+  maxStacks: 1
+  loseAllStacksOnExpire: 0
+  target: {fileID: 0}
+  source: {fileID: 0}
+  location: {x: 0, y: 0}
+  currentStacks: 0
+  potencyMultiplier: 1
+  origin: {fileID: 0}
+  procChance: 100
+  reflectPct: 30
+  procCooldown: 0
+  dmgType: 3
+  indicatorColor: {r: 0.6556604, g: 0, b: 0, a: 1}
+  canCrit: 1

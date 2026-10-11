@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79d9dec80cbeae54a8922067a82416ad, type: 3}
-  m_Name: Lifeforce AD 2
-  m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  type: 4
-  cooldown: 0
+  m_Name: Entwined Fate ad
+  m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
+  type: 1
+  cooldown: 34
   stacks: 1
-  projectilePrefab: {fileID: 5007806784816359958, guid: 92da32c21c25aaf44ae1afff7805d064, type: 3}
-  pd: {fileID: 11400000, guid: 5e4ca59848e81fb468e900b81b6020d6, type: 2}
-  animationLength: 0.75
-  castTime: 0
-  canMoveWhileCasting: 1
+  projectilePrefab: {fileID: 1225193988873089607, guid: 6ce4716618091064495427fe2b781f68, type: 3}
+  pd: {fileID: 11400000, guid: 54297316d9b3c6b43a43d910e20bb466, type: 2}
+  animationLength: 0.5
+  castTime: 1
+  canMoveWhileCasting: 0
   teleportToProjectile: 0
   teleportDelay: 0
   rushDirection: 0
@@ -40,22 +40,22 @@ MonoBehaviour:
   impactAttack: {fileID: 0}
   predictTarget: 0
   canCharge: 0
-  chargeThreshold: 0.15
+  chargeThreshold: 0.225
   minChargeTime: 0
   maxChargeTime: 5
   chargeTickInterval: 1
-  cooldownOnAttackStart: 0
+  cooldownOnAttackStart: 1
   chargeAttack: {fileID: 0}
-  pattern: 0
-  spawnDelay: 1
+  pattern: 3
+  spawnDelay: 0
   spawnDistance: 0
   fixedDistance: 0
-  projectileCount: 1
-  randomCount: 0
-  spread: 0
+  projectileCount: 10
+  randomCount: 6
+  spread: 8
   randomSpread: 0
-  minDelay: 0
-  maxDelay: 0
+  minDelay: 0.3
+  maxDelay: 0.8
   maxRange: 0
   canMoveDuringAttack: 0
   animationIndex: -1
@@ -64,22 +64,22 @@ MonoBehaviour:
   phaseReq: -1
   minMode: 0
   nextAttack: {fileID: 0}
-  staminaCost: 0
+  staminaCost: 65
   staminaCostPct: 0
   healthCost: 0
-  healthCostPct: 0
-  manaCost: 0
+  healthCostPct: 30
+  manaCost: 30
   manaCostPct: 0
   basedOnDmgDealt: 1
-  staminaGainOnHit: 4
+  staminaGainOnHit: 1
   staminaPctGainOnHit: 0
-  healthGainOnHit: 5
-  healthPctGainOnHit: 3
-  manaGainOnHit: 2
+  healthGainOnHit: 3
+  healthPctGainOnHit: 1
+  manaGainOnHit: 1
   manaPctGainOnHit: 0
   summonChance: 0
   summonCondition: 0
-  cleanseDebuffs: 0
+  cleanseDebuffs: 1
   fireOrbits: 0
   absorbOrbitPct: 0
   redirectOrbits: 0
@@ -88,5 +88,5 @@ MonoBehaviour:
   hitStop: 0
   hitStopCooldown: 0
   screenShake: 0
-  icon: {fileID: 0}
-  displayName: 
+  icon: {fileID: -857607416, guid: dbf0290d36498544480566cd430eba6d, type: 3}
+  displayName: Entwined Fate

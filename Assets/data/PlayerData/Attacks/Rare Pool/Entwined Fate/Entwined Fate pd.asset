@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a86569bbcddcbba44af8b67a3e4f513c, type: 3}
+  m_Name: Entwined Fate pd
+  m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
+  mainAttack: {fileID: 11400000, guid: 45ea950474f484a4d856700b90519b8e, type: 2}
+  lifetime: 26
+  size: 2
+  numPierce: 6
+  destroyOnMaxPierce: 1
+  movementType: 0
+  speed: 0
+  waveAmplitude: 1
+  waveFrequency: 1
+  spiralSpacing: 1
+  physicalMult: 0.5
+  spellMult: 0.15
+  trueMult: 0
+  scalingStat: 30
+  extraScalings: []
+  specialMult: 1
+  specialScaling: 0
+  timeBeforeSameEnemy: 0.25
+  followDistance: 0
+  followSource: 0
+  rotationOffset: 0
+  maxBoomerangDist: 0
+  angleOverride: 0
+  useTrueAngle: 0
+  bypassIFrames: 0
+  randomDir: 0
+  additionalAttack: {fileID: 0}
+  additionalChance: 0
+  addAttackRequiresHit: 1
+  additionalFollowsMouse: 0
+  distFromCenter: 0
+  effects:
+  - effect: {fileID: 11400000, guid: 250277c2dfedd4246aedf91ddab8d9f4, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 1
+  - effect: {fileID: 11400000, guid: 77125e6584e4e5a44bf2ebae5947ac09, type: 2}
+    selfApply: 1
+    applyCondition: 0
+    chance: 0.2
+  - effect: {fileID: 11400000, guid: 3904fc62d67fe364ebdd2250e2efe9c2, type: 2}
+    selfApply: 1
+    applyCondition: 0
+    chance: 0.2
+  orbitRadius: 0
+  randOrbRadOffset: 0
+  orbitSelf: 0
+  rotateClockwise: 0
+  kbForce: 0
+  knockbackTime: 0.15

@@ -79,7 +79,7 @@ Folder: `Assets/data/PlayerData/Attacks/Base`
 
 # Rare Pool
 
-Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 23 entries below are present in
+Folder: `Assets/data/PlayerData/Attacks/Rare Pool`. All 24 entries below are present in
 `WaveManager.rarePool`. Entries marked with an unlock wave carry a `minWave` on their
 `AttackReward` and cannot be rolled before that wave; the rest are available from wave 1.
 Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€” see
@@ -238,6 +238,29 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Effect: 70% on hit (Bleed, 3s, 0.5s tick, max 5 stacks, 8% EffMaxHp per tick as DoT)
   - Knockback: 4 force for 0.15s
 
+## Entwined Fate
+- Asset: `Entwined Fate ad`
+- Type: Skill
+- Cooldown: 34s (starts on cast)
+- Pattern: Barrage (10 count +6 random, 8 radius), 0.3-0.8s random delay per bush
+- Spawn: 0 dist
+- Cast: 1s, rooted while casting
+- Animation: 0.5s
+- Costs: Stamina 65, Health 30%, Mana 30
+- Gains on hit (based on damage dealt): Stamina +1, Health +3 +1%, Mana +1
+- Cleanses: 1 debuff
+- Projectile:
+  - Speed: 0 (stationary)
+  - Lifetime: 26s
+  - Pierce: 6 (destroyed at max pierce)
+  - Size: 2
+  - Damage: 50% Phys, 15% Spell
+  - Scaling: EffMaxHp
+  - Time Before Same Enemy: 0.25s
+  - Effects: 100% on hit (Slow, 5s, max 3 stacks, -15% moveSpeed per stack) + 20% self on
+    hit (Lifesteal, 8s, max 10 stacks) + 20% self on hit (Thorns, 12s, reflects 30% of
+    incoming damage as True)
+
 ## Exodus
 - Asset: `Exodus A AD`
 - Unlocks: wave 25
@@ -328,7 +351,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Damage: 90% Spell
   - Scaling: EffMaxHp
   - Special: 0.5x multiplier scaling on HpConsumed
-  - Additional: 100% chance on hit to create Lifeforce Shard (follows mouse)
+  - Additional: 100% chance on hit to create Lifeforce Shard (fires along the projectile's direction)
   - Knockback: 6 force for 0.15s
 
 ## Lifeforce Shard
@@ -336,7 +359,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Type: Additional
 - Cooldown: 0s (follow-up)
 - Pattern: Spread (3 count, 10 spread)
-- Spawn: 0.75 dist, 0.25s delay
+- Spawn: 0 dist, 0.1s delay
 - Animation: 0.75s
 - Gains on hit: Stamina +2, Mana +2
 - Projectile:
@@ -1419,7 +1442,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Chance: 100%
 - Cooldown: 2s
 - Delay: 0s
-- Effect: `eldex` (Lifesteal, 8s, 10 stacks), 1 stack per trigger
+- Effect: `Lifesteal` (8s, 10 stacks), 1 stack per trigger
 - Description: Paying health for an attack grants a stack of Lifesteal: each stack has a 50%
   chance to heal 0.5% of damage dealt on hit (1s cooldown).
 - Unlocked by: `Node_eldex` ("Eldritch Exchange" keystone, 5 skill points, `undoCost` 50, Master
@@ -1787,6 +1810,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Freeze` | Freeze | Frozen | 2s | - | 1 | Cannot move, attack or dash; no passive health regen; knockback and pulls do nothing, and any rush in progress ends |
 | `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
+| `Lifesteal` | Lifesteal | Lifesteal | 8s | - | 10 | Each stack: 50% chance to heal 0.5% of damage dealt on hit, 1s cooldown. Granted by Eldritch Exchange and Entwined Fate |
 | `Mirage` | EtherealMirage | Ethereal Mirage | 18s | - | 1 | Summons 3 clones at 50% flat stats, 60% opacity, radius 2; each living clone gives +12% moveSpeedPct, -15% damagePct. See Ethereal Mirage above |
 | `Mirage Cooldown` | Info | Ethereal Mirage Cooldown | 24s | - | 1 | Cooldown marker |
 | `Momentum` | StatBuffs | Momentum | 11s | - | 3 | +6% moveSpeedPct, +14% rushImpactPct |
@@ -1814,11 +1838,11 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Stun 3` | Stun | Stun | 3s | - | 1 | Cannot move or attack |
 | `Stun 6` | Stun | Stun | 6s | - | 1 | Cannot move or attack |
 | `Supersonic Cooldown` | Info | Supersonic Cooldown | 3s | - | 1 | Cooldown marker |
+| `Thorns` | Thorns | Thorns | 12s | - | 1 | Taking damage reflects 30% of the incoming damage to the attacker as True; can crit |
 | `Vulnerable 6 30` | StatBuffs | Vulnerable | 6s | - | 1 | -30% damageRes |
 | `Vulnerable 6 3 8` | StatBuffs | Vulnerable | 6s | - | 3 | -8% damageRes per stack |
 | `Vulnerable 8 2 20` | StatBuffs | Vulnerable | 8s | - | 2 | -20% damageRes per stack |
 | `Voltaic Pulse` | StatBuffs | Voltaic Pulse | 9s | - | 4 | +12% physicalDmgPct, +8% moveSpeedPct, -5% damageRes per stack |
-| `eldex` | Lifesteal | Lifesteal | 8s | - | 10 | Each stack: 50% chance to heal 0.5% of damage dealt on hit, 1s cooldown. See Eldritch Exchange above |
 | `Weaken 5 10 4` | StatReduction | Weaken | 5s | - | 4 | -10% attack per stack |
 
 Used by enemies rather than the player: `Crumbling 6 10 4` (Crab, and the Golem's Orbit),
@@ -1834,8 +1858,8 @@ lands 40% of the time. The player's Nitro Accelerator also applies `Stun 3`, to 
 `Vulnerable 6 3 8` is shared â€” Ignition Flash, Nitro Explosion and the Golem's Cross all apply it.
 `Decay` is self-applied on every Nitro Accelerator cast.
 
-`Slow 5 3 15` is authored but no longer referenced by any projectile â€” Blizzard moved to
-`Slow 6 15 5` in v0.3.9, which was reauthored as `Slow 4 15 5` (4s instead of 6s) in v0.4.1_2.
+`Slow 5 3 15` was Blizzard's slow until v0.3.9 (Blizzard now uses `Slow 4 15 5`); since v0.8.23 it is
+applied by Entwined Fate.
 The `Radiation 4 0.25 8 2 CritDmg` asset name is likewise stale: it now runs 5s with 10 stacks.
 `Pulled source` (1s, pull speed 40) is authored but not referenced by anything.
 `Enraged` is applied permanently by the Twin Crowns and Rampage anomalies.

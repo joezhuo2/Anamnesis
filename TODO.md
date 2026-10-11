@@ -183,9 +183,6 @@
 *Theme: memory & recollection*
 - [ ] **Constellation tracing**: stars light up across the map mid-wave; touch them in the drawn order before they fade to complete a constellation, which grants a named buff for the rest of the wave (a different one for each constellation, each with a lore line). Pulls the player around the map instead of kiting in circles.
 
-*Wave events & side objectives (candidates for the v1.2 wave events pool)*
-- [ ] **Resonance pillars**: three pillars that each have to be hit by a different attack slot (Basic, Skill, Ultimate) within a short window. Lighting all three releases a shockwave and drops a reward. Rewards slot rotation over spamming one attack.
-- [ ] **Meteorfall**: telegraphed meteors crash onto the map, damaging whatever is under them (enemies included). Each crater leaves a crystal that you can break open for **a new type of reward**
 - [ ] **Lost wisp escort**: a friendly wisp appears and drifts slowly toward a beacon while enemies switch to target it. Get it there alive for a reward, with a bigger reward if it arrives above 50% HP. The mirror image of the planned defend/destroy beacon.
 
 *New ways to earn rewards*
@@ -199,16 +196,9 @@
 ## New Anomalies
 
 - [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
-
 - [ ] **Entourage** (no fail) - common enemies from the wave pool keep trickling in during the boss fight, and every escort alive grants the boss `x%` damage reduction. Forces target priority between boss and adds. (configurable max)
-
-### Non-boss only
 - [ ] **Last Stand** (no fail) - the final `x` enemies of the wave become empowered (size, damage, speed) once the rest are dead. Makes the end of a wave a mini-duel.
-- [ ] **Pacifist Start** (fail) - you cannot deal damage for the first `x` seconds of the wave; dealing damage early fails it. Kite and survive, then clean up. *Uses:* the `NoDamageTrialInstance` pattern, inverted to outgoing damage.
 - [ ] **Bloodtide** (no fail) - every enemy kill heals all other living enemies by `x%` max HP. Rewards burst and focus over spreading damage.
-
-### Any wave
-- [ ] **Shrinking Arena** (no fail) - a closing ring hurts the player outside it and resets at wave end. Forces close-range fighting. *Uses:* the `BlackoutVision` circle approach for the ring.
 - [ ] **Echoes** (no fail) - every enemy attack fires a delayed second copy after 1s. Doubles the bullet hell without adding enemies; works on bosses and commons alike.
 
 ## Brainstorm: Expert/Master Modes & Nightmare
@@ -245,8 +235,4 @@
 - [ ] **Cursed Offering** — an altar appears. Touching it gives a choice: take a random debuff for the rest of the wave for a guaranteed reward, or ignore it. *Uses:* a small two-button prompt, or auto-accept on touch to keep it simple.
 - [ ] **Sanctuary** — a healing circle appears in the ring around the player for `x` seconds. Standing in it regenerates HP but enemies inside it are buffed. *Uses:* the `BlackoutVision` circle approach for the zone.con destroy objective. *Uses:* the enemy reservation API, ending the reservation early when the rift dies.
 - [ ] **Elite Hunt** — one enemy from the wave spawns with a marker, an HP bar and boosted stats. Kill it within `x` seconds for a guaranteed drop; it despawns (no reward) if the timer runs out. Lightweight preview of the Elite/Champion variants. *Uses:* `SpawnAmbushEnemy` + a timer-bound reward hook.
-- [ ] **Chain Reaction** — for `x` seconds, killed enemies explode for a % of their max HP, damaging other enemies. Rewards clumping and AoE builds.
 - [ ] **Rift Breach** — a portal opens at a spawn point and spits enemies until destroyed (has HP, can be attacked). Closing it fast stops the stream and drops a reward. Ties into the planned portals and the bea
-
-### Spawner ideas
-- [ ] **Event chains** — an event can list a follow-up event that fires on success (e.g. Rift Breach closed fast -> Blessing Drop).
