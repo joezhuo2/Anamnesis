@@ -7,7 +7,12 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [v0.8.27] - 2026-10-11 - No Empty Hands
+## [v0.8.28] - 2026-10-11 - Seamless Blackout
+
+### Fixed
+- **Blackout horizontal line**: a thin horizontal line appeared at certain player positions while the Blackout anomaly was active. It was caused by sub-pixel seams between the separate sprites (disc + four side quads) making up the dark overlay. The overlay is now a single continuous mesh in `BlackoutVision`, so no seams exist ([#17](https://github.com/joezhuo2/Anamnesis/issues/17))
+
+## [v0.8.27] - 2026-10-11 - No Empty Pools
 
 ### Fixed
 - **Empty reward pools**: a reward slot whose pool had nothing left to offer was skipped, so a panel could open with fewer cards than rolled, or none. This happened when the Rare/Treasure pools were exhausted or gated by wave or mode. Each slot now falls back to another reward category. When every stat in a pool was capped, the pool offered a capped stat anyway; it now falls back too ([#32](https://github.com/joezhuo2/Anamnesis/issues/32))

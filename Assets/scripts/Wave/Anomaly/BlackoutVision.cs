@@ -4,23 +4,22 @@ public class BlackoutVision : MonoBehaviour
 {
     public static BlackoutVision Current { get; private set; }
 
-    private const int DiscTexSize = 256;
     private const int MaskTexSize = 128;
     private const float EdgeStart = 0.65f;
     private const float MaskFrac = 0.85f;
-    private const float SideSize = 400f;
+    private const float FarExtent = 2000f;
+    private const int Segments = 64;
+    private const int GradientRings = 10;
     private const int SortingOrder = -1;
     private const float BonusDuration = 1.5f;
     private const float RadiusLerpSpeed = 10f;
 
-    private static Sprite discSprite;
-    private static Sprite solidSprite;
     private static Sprite maskSprite;
+    private static Material spriteMaterial;
 
     private Transform player;
-    private Transform disc;
+    private Transform shade;
     private Transform mask;
-    private readonly Transform[] sides = new Transform[4];
     private float baseRadius;
     private float perKill;
     private float maxBonus;
@@ -49,10 +48,7 @@ public class BlackoutVision : MonoBehaviour
 
         EnsureSprites();
 
-        Color c = new(0f, 0f, 0f, Mathf.Clamp01(darkness));
-
-        disc = CreatePart("Disc", discSprite, c).transform;
-        for (int i = 0; i < sides.Length; i++) sides[i] = CreatePart($"Side{i}", solidSprite, c).transform;
+        shade = CreateShade(Mathf.Clamp01(darkness)).transform;
 
         GameObject mgo = new("Mask");
         mgo.transform.SetParent(transform, false);
@@ -108,52 +104,109 @@ public class BlackoutVision : MonoBehaviour
     private void ApplyRadius()
     {
         float r = shown;
-        float d = r * 2f;
 
-        disc.localScale = new Vector3(d, d, 1f);
-        mask.localScale = new Vector3(d * MaskFrac, d * MaskFrac, 1f);
-
-        float off = r + SideSize * 0.5f;
-        float wide = d + SideSize * 2f;
-
-        sides[0].localPosition = new Vector3(0f, off, 0f);
-        sides[0].localScale = new Vector3(wide, SideSize, 1f);
-        sides[1].localPosition = new Vector3(0f, -off, 0f);
-        sides[1].localScale = new Vector3(wide, SideSize, 1f);
-        sides[2].localPosition = new Vector3(-off, 0f, 0f);
-        sides[2].localScale = new Vector3(SideSize, d, 1f);
-        sides[3].localPosition = new Vector3(off, 0f, 0f);
-        sides[3].localScale = new Vector3(SideSize, d, 1f);
+        shade.localScale = new Vector3(r, r, 1f);
+        mask.localScale = new Vector3(r * 2f * MaskFrac, r * 2f * MaskFrac, 1f);
     }
 
-    private GameObject CreatePart(string n, Sprite s, Color c)
+    // One continuous mesh (clear centre, fading ring, dark square out to FarExtent) so there are no
+    // seams between separate sprites for sub-pixel rounding to open into a visible line.
+    private GameObject CreateShade(float darkness)
     {
-        GameObject go = new(n);
+        GameObject go = new("Shade");
         go.transform.SetParent(transform, false);
 
-        SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = s;
-        sr.color = c;
-        sr.sortingOrder = SortingOrder;
+        int ringCount = GradientRings + 1;
+        int vertCount = 1 + (ringCount + 1) * Segments;
+        Vector3[] verts = new Vector3[vertCount];
+        Color[] cols = new Color[vertCount];
+
+        verts[0] = Vector3.zero;
+        cols[0] = new Color(0f, 0f, 0f, 0f);
+
+        for (int j = 0; j < ringCount; j++)
+        {
+            float t = j / (float)GradientRings;
+            float rad = Mathf.Lerp(EdgeStart, 1f, t);
+            float a = Mathf.SmoothStep(0f, 1f, t) * darkness;
+
+            for (int i = 0; i < Segments; i++)
+            {
+                float ang = i * Mathf.PI * 2f / Segments;
+                int k = 1 + j * Segments + i;
+                verts[k] = new Vector3(Mathf.Cos(ang) * rad, Mathf.Sin(ang) * rad, 0f);
+                cols[k] = new Color(0f, 0f, 0f, a);
+            }
+        }
+
+        for (int i = 0; i < Segments; i++)
+        {
+            float ang = i * Mathf.PI * 2f / Segments;
+            float cs = Mathf.Cos(ang);
+            float sn = Mathf.Sin(ang);
+            float m = Mathf.Max(Mathf.Abs(cs), Mathf.Abs(sn));
+            int k = 1 + ringCount * Segments + i;
+            verts[k] = new Vector3(cs / m * FarExtent, sn / m * FarExtent, 0f);
+            cols[k] = new Color(0f, 0f, 0f, darkness);
+        }
+
+        int[] tris = new int[(Segments + ringCount * Segments * 2) * 3];
+        int n = 0;
+
+        for (int i = 0; i < Segments; i++)
+        {
+            tris[n++] = 0;
+            tris[n++] = 1 + i;
+            tris[n++] = 1 + (i + 1) % Segments;
+        }
+
+        for (int j = 0; j < ringCount; j++)
+            for (int i = 0; i < Segments; i++)
+            {
+                int i2 = (i + 1) % Segments;
+                int a0 = 1 + j * Segments + i;
+                int a1 = 1 + j * Segments + i2;
+                int b0 = 1 + (j + 1) * Segments + i;
+                int b1 = 1 + (j + 1) * Segments + i2;
+
+                tris[n++] = a0;
+                tris[n++] = b0;
+                tris[n++] = a1;
+                tris[n++] = a1;
+                tris[n++] = b0;
+                tris[n++] = b1;
+            }
+
+        Mesh mesh = new() { name = "BlackoutShade", hideFlags = HideFlags.HideAndDontSave };
+        mesh.vertices = verts;
+        mesh.colors = cols;
+        mesh.triangles = tris;
+        mesh.bounds = new Bounds(Vector3.zero, new Vector3(FarExtent * 2f, FarExtent * 2f, 1f));
+
+        go.AddComponent<MeshFilter>().sharedMesh = mesh;
+
+        MeshRenderer mr = go.AddComponent<MeshRenderer>();
+        mr.sharedMaterial = GetSpriteMaterial();
+        mr.sortingOrder = SortingOrder;
+        mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        mr.receiveShadows = false;
 
         return go;
     }
 
+    private static Material GetSpriteMaterial()
+    {
+        if (spriteMaterial != null) return spriteMaterial;
+
+        GameObject tmp = new("BlackoutMatProbe");
+        spriteMaterial = tmp.AddComponent<SpriteRenderer>().sharedMaterial;
+        Destroy(tmp);
+        return spriteMaterial;
+    }
+
     private static void EnsureSprites()
     {
-        if (discSprite == null) discSprite = BuildRadialSprite(DiscTexSize, d => Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(EdgeStart, 1f, d)));
         if (maskSprite == null) maskSprite = BuildRadialSprite(MaskTexSize, d => d <= 1f ? 1f : 0f);
-
-        if (solidSprite == null)
-        {
-            Texture2D t = new(4, 4, TextureFormat.RGBA32, false) { hideFlags = HideFlags.HideAndDontSave };
-            Color[] px = new Color[16];
-            for (int i = 0; i < px.Length; i++) px[i] = Color.white;
-            t.SetPixels(px);
-            t.Apply();
-            solidSprite = Sprite.Create(t, new Rect(0f, 0f, 4f, 4f), new Vector2(0.5f, 0.5f), 4f);
-            solidSprite.hideFlags = HideFlags.HideAndDontSave;
-        }
     }
 
     private static Sprite BuildRadialSprite(int size, System.Func<float, float> alphaAt)
