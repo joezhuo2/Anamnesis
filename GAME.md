@@ -2093,7 +2093,7 @@ Every box spawns enemies within 3 units and drops rewards within 2 units. The ra
 # Wave Events
 
 Folder: `Assets/data/Event`. Rolled by the `EventSpawner` object (`WaveEventSpawner`) in `New.unity`,
-which holds all eleven assets, rolls every 4s, waits at least 30s after an event ends before
+which holds all twelve assets, rolls every 4s, waits at least 30s after an event ends before
 rolling again, and places spawns from the player's position (`minDistance` 0) out to `6 + radiusIncrease` units.
 
 | Asset | Type | Chance | Weight | Radius | Waves | Mode | Ironman | Title color | Subtitle |
@@ -2109,6 +2109,7 @@ rolling again, and places spawns from the player's position (`minDistance` 0) ou
 | `Static Field` | Spawn Projectile | 8% | 3 | 0–5 | 25–128 | Expert | yes | blue | You hear roars of thunder in the distance |
 | `Glacial Expanse` | Spawn Projectile | 6% | 3 | 0–9 | 30–128 | Expert | yes | ice blue | Fields of frost form around you |
 | `Blood Moon` | Blood Moon | 5% | 6 | — | 20–128 | Expert | yes | crimson | The moon bleeds, and the hunt quickens |
+| `Hunted` | Hunted | 3% | 3 | — | 10–128 | Expert | yes | dark red | Something is coming for you |
 
 **Rolling.** Only one event runs at a time. The roll timer only advances while a wave is active
 and still has enemies to clear. It stops during Drought, between waves, and in the completion
@@ -2230,3 +2231,18 @@ tint live on one scene object, so a restart mid-event removes the buff along wit
 | Event | Duration | Bonus | Tint | Opacity | Fade in / out |
 | --- | --- | --- | --- | --- | --- |
 | `Blood Moon` | 15s | +25% | dark red (0.55, 0, 0.05) | 18% | 1s / 1.5s |
+
+## Hunted
+
+Picks one prefab uniformly from `hunters` and spawns it at a spawn point around the player. The
+hunter is immune (`StatType.isImmune`) and cannot be killed. It is not registered with the wave, so
+it is not counted in "Enemies: x/y" and never holds the wave open. It uses the current wave's enemy
+level plus `levelBonus` (and the difficulty's `eventLevelBonusAdd`). The immune buff is applied one
+frame after spawn, since `EntityStatManager.Start` resets the flag.
+
+It lasts `duration` seconds (code default 20s; the `Hunted` asset uses 15s). The timer pauses during
+Drought and between waves. It is destroyed when the timer runs out or the wave ends, whichever comes first.
+
+| Event | Duration | Hunters | Level |
+| --- | --- | --- | --- |
+| `Hunted` | 15s | 6 prefabs, picked uniformly | +0 |
