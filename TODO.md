@@ -1,12 +1,10 @@
 # Planned Features 
 ## High priority To-Do
-- [5] **Rift Breach** — a portal opens at a spawn point and spawns enemies (in the curent pool) until destroyed (has HP, no attacks). Closing it fast stops the stream and drops a reward.
-- [5] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
-- [5] **Hunted** — an unkillable enemy (chosen from a pool) spawns that only chases the player, and it despawns after `x` seconds. 
+- [5] **Rift Breach** (event) — a portal opens at a spawn point and spawns enemies (in the curent pool) until destroyed (has HP, no attacks). Closing it fast stops the stream and drops a reward.
+- [5] **Gravity Storm** (event) `— every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
 - [4] **Capture Point** — a zone appears in the ring around the player. Standing inside it fills a capture bar (it drains while you are outside), and enemies spawn at the zone's edge until it is captured. A full bar drops a reward. A small version of the planned defend beacon.
-- [4] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern. (can be contract)
 - [4] **Entourage** (no fail) - common enemies from the wave pool keep trickling in during the boss fight, and every escort alive grants the boss `x%` damage reduction. Forces target priority between boss and adds. (configurable max)
-- [4] **Last Stand** (no fail) - the final `x` enemies of the wave become empowered (size, damage reduction, damage dealt, move speed) once the rest are dead. Makes the end of a wave a mini-duel. (can be contract)
+- [4] **Last Stand** (no fail) - the final `x` enemies of the wave become empowered (configurable boost to (all of the following): size, damage reduction, damage dealt, move speed) once the rest are dead. Makes the end of a wave a mini-duel. (can be contract)
 - [4] **Bloodtide** (no fail) - every enemy kill heals all other living enemies by `x%` max HP. Rewards burst and focus over spreading damage. (can be contract)
 - [4] **Echoes** (no fail) - every enemy attack fires a delayed second copy after 1s. Doubles the bullet hell without adding enemies; works on bosses and commons alike. (can be contract)
 - [4] fix lang files for certain stats (eg. rush impact)
