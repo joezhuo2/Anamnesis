@@ -155,6 +155,17 @@ namespace CrystalFlux.EntitySystem
             return dir * esm.GetStat(StatType.EffSpd);
         }
 
+        // Multiplies the enemy's size. Face() rebuilds localScale from cScale, so a plain transform write would be undone on the next flip.
+        public void ScaleSize(float mult)
+        {
+            if (cTransform == null) transform.localScale *= mult;
+            else
+            {
+                cScale *= mult;
+                cTransform.localScale = cScale;
+            }
+        }
+
         private void Face(float x)
         {
             if (x == 0) return;

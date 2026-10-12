@@ -262,6 +262,22 @@ namespace CrystalFlux.WaveSystem
 
         protected int RemainingToSpawn => waveMaxTotalEnemies - totalSpawned - reservedEnemies;
 
+        public static bool SpawnsPending => ActiveManager != null && ActiveManager.isWaveActive && (ActiveManager.RemainingToSpawn > 0 || ActiveManager.reservedEnemies > 0);
+
+        public static int LivingEnemyCount()
+        {
+            WaveManager wm = ActiveManager;
+            if (wm == null) return 0;
+
+            int n = 0;
+            for (int i = 0; i < wm.currentEnemies.Count; i++)
+            {
+                GameObject e = wm.currentEnemies[i];
+                if (e != null && (!e.TryGetComponent<EntityHealth>(out var eh) || eh.IsAlive)) n++;
+            }
+            return n;
+        }
+
         public static bool ReserveEnemies(int count)
         {
             WaveManager wm = ActiveManager;
