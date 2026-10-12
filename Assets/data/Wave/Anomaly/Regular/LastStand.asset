@@ -19,17 +19,15 @@ MonoBehaviour:
   minMode: 0
   anomalyType: 17
   anomalyValue: 0
-  anomalyMinVal: 0
-  anomalyMaxVal: 0
+  anomalyMinVal: 30
+  anomalyMaxVal: 50
   disallowOnBossWave: 1
   bossOnly: 0
   anomalyEffect: {fileID: 0}
-  lastStandMin: 20
-  lastStandMax: 50
-  rewardQuality: 0.25
-  rewardRerolls: 2
-  rewardSkillPoints: 1
+  rewardQuality: 0.35
+  rewardRerolls: 3
+  rewardSkillPoints: 2
   isContract: 1
-  contractRerolls: 1
-  contractSkillPointChance: 35
-  contractMixedPoolChance: 15
+  contractRerolls: 2
+  contractSkillPointChance: 60
+  contractMixedPoolChance: 20

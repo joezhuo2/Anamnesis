@@ -19,10 +19,6 @@ public class AnomalyData : ScriptableObject
     [Tooltip("Only offered when the next wave is a boss wave. Never offered as a contract")] public bool bossOnly;
     [Tooltip("Status effect the anomaly grants (Twin Crowns enrage, Rampage). Lasts until the entity dies")] public EffectAsset anomalyEffect;
 
-    [Header("Last Stand")]
-    [Tooltip("Last Stand: the final min-max % of the wave's enemies are marked (percent rolled each wave). Each boost (size, damage reduction, damage, move speed) is rolled separately from this same range")] [Min(0f)] public float lastStandMin = 20f;
-    [Min(0f)] public float lastStandMax = 50f;
-
     [Header("Completion Reward")]
     [Tooltip("Reward quality added on completion (rolled +-30%). Difficulty offset anomalyQualityAdd stacks on top")] [Min(0f)] public float rewardQuality = 0.2f;
     [Tooltip("Rerolls granted on completion (rolled +-30%, 0 on Ironman)")] [Min(0f)] public float rewardRerolls = 2f;

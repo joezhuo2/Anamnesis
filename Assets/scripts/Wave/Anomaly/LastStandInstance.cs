@@ -23,7 +23,7 @@ public class LastStandInstance : AnomalyInstance
     private float RollPct()
     {
         if (amd == null) return 0f;
-        return Mathf.Round(Random.Range(amd.lastStandMin, Mathf.Max(amd.lastStandMin, amd.lastStandMax)));
+        return Mathf.Round(Random.Range(amd.anomalyMinVal, Mathf.Max(amd.anomalyMinVal, amd.anomalyMaxVal)));
     }
 
     private void Roll()

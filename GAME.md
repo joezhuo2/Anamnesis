@@ -1995,7 +1995,7 @@ All Unlimited anomaly assets use `maxWave` -1 (no upper bound), so they keep rol
 `AnomalyType.LastStand`, run by `LastStandInstance`. No fail condition; it pays the standard anomaly reward and
 can also be a contract (armed every wave, standard contract payout).
 
-- Everything is rolled from one `lastStandMin`..`lastStandMax` percent range, rounded. A contract re-rolls all of it every wave.
+- Everything is rolled from one `anomalyMinVal`..`anomalyMaxVal` percent range, rounded. A contract re-rolls all of it every wave.
 - The marked enemies are the final `countPct`% of the enemies the wave spawned (at least 1), by spawn order. Ambush
   and event spawns that count toward the wave join the order, so the marked window is always the last `countPct`%.
 - Nothing happens until no spawns remain (`WaveManager.SpawnsPending`: nothing left to spawn and no reservation
