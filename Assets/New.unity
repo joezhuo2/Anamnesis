@@ -19768,8 +19768,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6181d689cc1d9d4dbf8c3b1140978da, type: 2}
   - {fileID: 11400000, guid: de0639d314d64cbea216baadf6fc9553, type: 2}
   - {fileID: 11400000, guid: 7d2e9a14c8b34f6a85e1d0c3b9a47f12, type: 2}
-  rollInterval: 4
-  minTimeBetweenEvents: 30
+  rollInterval: 5
+  minTimeBetweenEvents: 45
   baseRadius: 6
   minDistance: 0
   titleDuration: 2

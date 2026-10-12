@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileData
   mainAttack: {fileID: 11400000, guid: 53df949764372ec4b8b1b52be74feef5, type: 2}
   lifetime: 0.75
-  size: 2.5
+  size: 3
   numPierce: 6
   destroyOnMaxPierce: 0
   movementType: 0
@@ -45,6 +45,10 @@ MonoBehaviour:
   distFromCenter: 0
   effects:
   - effect: {fileID: 11400000, guid: 8514239ac6067df4a904017e9be22381, type: 2}
+    selfApply: 0
+    applyCondition: 0
+    chance: 1
+  - effect: {fileID: 11400000, guid: 7b227cb15c582744994c04526dff35e1, type: 2}
     selfApply: 0
     applyCondition: 0
     chance: 1
