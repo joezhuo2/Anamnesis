@@ -24,16 +24,8 @@ MonoBehaviour:
   disallowOnBossWave: 1
   bossOnly: 0
   anomalyEffect: {fileID: 0}
-  lastStandMinCount: 1
-  lastStandMaxCount: 3
-  lastStandMinSize: 20
-  lastStandMaxSize: 50
-  lastStandMinReduction: 20
-  lastStandMaxReduction: 40
-  lastStandMinDamage: 20
-  lastStandMaxDamage: 50
-  lastStandMinMoveSpeed: 20
-  lastStandMaxMoveSpeed: 40
+  lastStandMin: 20
+  lastStandMax: 50
   rewardQuality: 0.3
   rewardRerolls: 2
   rewardSkillPoints: 1

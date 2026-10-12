@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LastStandInstance : AnomalyInstance
 {
-    public int count;
+    public float countPct;
     public float sizePct;
     public float reductionPct;
     public float damagePct;
@@ -15,30 +15,24 @@ public class LastStandInstance : AnomalyInstance
     private readonly List<EntityHealth> spawned = new();
     private bool empowered;
 
-    public LastStandInstance(AnomalyData data) : base(data)
+    public LastStandInstance(AnomalyData data) : base(data) => Roll();
+
+    public override string Description =>
+        $"The final {countPct}% of the wave's enemies are marked. Once every other enemy falls, they gain +{sizePct}% Size, +{reductionPct}% Damage Reduction, +{damagePct}% Damage and +{moveSpeedPct}% Move Speed";
+
+    private float RollPct()
     {
-        sizePct = RollPct(data.lastStandMinSize, data.lastStandMaxSize);
-        reductionPct = RollPct(data.lastStandMinReduction, data.lastStandMaxReduction);
-        damagePct = RollPct(data.lastStandMinDamage, data.lastStandMaxDamage);
-        moveSpeedPct = RollPct(data.lastStandMinMoveSpeed, data.lastStandMaxMoveSpeed);
-        RollCount();
+        if (amd == null) return 0f;
+        return Mathf.Round(Random.Range(amd.lastStandMin, Mathf.Max(amd.lastStandMin, amd.lastStandMax)));
     }
 
-    public override string Description
+    private void Roll()
     {
-        get
-        {
-            string who = count == 1 ? "The final enemy" : $"The final {count} enemies";
-            return $"{who} of the wave are marked. Once every other enemy falls, they gain +{sizePct}% Size, +{reductionPct}% Damage Reduction, +{damagePct}% Damage and +{moveSpeedPct}% Move Speed";
-        }
-    }
-
-    private static float RollPct(float min, float max) => Mathf.Round(Random.Range(min, Mathf.Max(min, max)));
-
-    private void RollCount()
-    {
-        if (amd == null) { count = 1; return; }
-        count = Mathf.Max(1, Mathf.RoundToInt(Random.Range((float)amd.lastStandMinCount, Mathf.Max(amd.lastStandMinCount, amd.lastStandMaxCount))));
+        countPct = RollPct();
+        sizePct = RollPct();
+        reductionPct = RollPct();
+        damagePct = RollPct();
+        moveSpeedPct = RollPct();
     }
 
     public override void StartAnomaly()
@@ -54,13 +48,14 @@ public class LastStandInstance : AnomalyInstance
         if (enemy.TryGetComponent<EntityHealth>(out var eh)) spawned.Add(eh);
     }
 
-    // The marked enemies are always the last `count` entries of the spawn order, so ambush and split spawns
+    // The marked enemies are always the last countPct% of the spawn order, so ambush and split spawns
     // that join mid-wave simply shift the window. Nothing is committed until spawning is finished.
     public override void UpdateCheck(float dt)
     {
         if (empowered || spawned.Count == 0 || WaveManager.SpawnsPending) return;
 
-        int first = Mathf.Max(0, spawned.Count - count);
+        int count = Mathf.Clamp(Mathf.RoundToInt(spawned.Count * countPct * 0.01f), 1, spawned.Count);
+        int first = spawned.Count - count;
         int markedAlive = 0;
         for (int i = first; i < spawned.Count; i++)
             if (Alive(spawned[i])) markedAlive++;
@@ -96,7 +91,7 @@ public class LastStandInstance : AnomalyInstance
     {
         spawned.Clear();
         empowered = false;
-        RollCount();
+        Roll();
         base.ResetForWave();
     }
 }

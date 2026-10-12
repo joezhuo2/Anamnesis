@@ -20,16 +20,8 @@ public class AnomalyData : ScriptableObject
     [Tooltip("Status effect the anomaly grants (Twin Crowns enrage, Rampage). Lasts until the entity dies")] public EffectAsset anomalyEffect;
 
     [Header("Last Stand")]
-    [Tooltip("The final X enemies of the wave are marked. X is rolled between min and max each wave")] [Min(1)] public int lastStandMinCount = 1;
-    [Min(1)] public int lastStandMaxCount = 3;
-    [Tooltip("Size bonus (%) the marked enemies gain once empowered. Rolled once between min and max")] [Min(0f)] public float lastStandMinSize = 20f;
-    [Min(0f)] public float lastStandMaxSize = 50f;
-    [Tooltip("Damage reduction (%) the marked enemies gain once empowered. Rolled once between min and max")] [Min(0f)] public float lastStandMinReduction = 20f;
-    [Min(0f)] public float lastStandMaxReduction = 40f;
-    [Tooltip("Damage dealt bonus (%) the marked enemies gain once empowered. Rolled once between min and max")] [Min(0f)] public float lastStandMinDamage = 20f;
-    [Min(0f)] public float lastStandMaxDamage = 50f;
-    [Tooltip("Move speed bonus (%) the marked enemies gain once empowered. Rolled once between min and max")] [Min(0f)] public float lastStandMinMoveSpeed = 20f;
-    [Min(0f)] public float lastStandMaxMoveSpeed = 40f;
+    [Tooltip("Last Stand: the final min-max % of the wave's enemies are marked (percent rolled each wave). Each boost (size, damage reduction, damage, move speed) is rolled separately from this same range")] [Min(0f)] public float lastStandMin = 20f;
+    [Min(0f)] public float lastStandMax = 50f;
 
     [Header("Completion Reward")]
     [Tooltip("Reward quality added on completion (rolled +-30%). Difficulty offset anomalyQualityAdd stacks on top")] [Min(0f)] public float rewardQuality = 0.2f;
