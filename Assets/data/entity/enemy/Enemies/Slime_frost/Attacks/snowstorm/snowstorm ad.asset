@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: snowstorm ad
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.AttackData
   type: 0
-  cooldown: 6
+  cooldown: 9
   stacks: 1
   projectilePrefab: {fileID: 1225193988873089607, guid: fcbe8055d8f197344816a584b2ed2deb, type: 3}
   pd: {fileID: 11400000, guid: c58ad8b5bda96ea41ae39cf9d40fa4f5, type: 2}

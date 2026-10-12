@@ -302,7 +302,6 @@ namespace CrystalFlux.WaveSystem
             }
             else if (ActiveManager == null || ActiveManager == this)
             {
-                // Regular and Unlimited managers share one info UI; the idle one must not hide it.
                 if (anomalyInfoBackground != null) anomalyInfoBackground.SetActive(false);
                 lastInfoTick = int.MinValue;
                 if (anomalyInfoText != null) SetAnomalyInfo("");

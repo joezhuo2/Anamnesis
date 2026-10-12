@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrystalFlux.Projectile::CrystalFlux.ProjectileSystem.ProjectileData
   mainAttack: {fileID: 11400000, guid: 90815947ab2a89742bebfefdbaacac82, type: 2}
   lifetime: 8
-  size: 3
+  size: 2.5
   numPierce: 3000
   destroyOnMaxPierce: 0
   movementType: 0
@@ -47,11 +47,11 @@ MonoBehaviour:
   - effect: {fileID: 11400000, guid: 3d8f29a7e7bf2034da0d5851cd5fdbe0, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.65
+    chance: 0.55
   - effect: {fileID: 11400000, guid: 7fe8c3a58a6ba1f4ebcb195c4afdfc18, type: 2}
     selfApply: 0
     applyCondition: 0
-    chance: 0.25
+    chance: 0.15
   orbitRadius: 2.5
   randOrbRadOffset: 4
   orbitSelf: 1
