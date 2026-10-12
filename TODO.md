@@ -1,7 +1,5 @@
 # Planned Features 
 ## High priority To-Do
-- [5] cooldown refresh coolectible => 3 variants: all attacks, dash, and both, all by configurable min/max
-- [5] dash charges => allows holding multiple dash charges, like attack stacks, default 1, should be in mixed pool, 1 weight
 - [5] **Rift Breach** — a portal opens at a spawn point and spawns enemies (in the curent pool) until destroyed (has HP, no attacks). Closing it fast stops the stream and drops a reward.
 - [5] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
 - [5] **Hunted** — an unkillable enemy (chosen from a pool) spawns that only chases the player, and it despawns after `x` seconds. 
@@ -15,6 +13,7 @@
 - [4] move certain awakenings/attacks to be hard/nightmare only
 - [3] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
 - [3] **Repulsion** - counter dodging creates a shockwave
+- [3] dash charges => allows holding multiple dash charges, like attack stacks, default 1, should be in mixed pool, 1 weight
 - [2] finish everything in between first and second ring in skill tree
 - [1] skill tree third circular ring (no connections yet)
 

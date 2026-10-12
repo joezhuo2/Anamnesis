@@ -14,16 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.HuntedEventData
   title: Hunted
   subtitle: Something is coming for you
-  titleColor: {r: 0.8726415, g: 0.1679926, b: 0.09878958, a: 1}
+  titleColor: {r: 0.6273585, g: 0.118907586, b: 0.06806249, a: 1}
   titleDurationOverride: 0
-  chance: 4
-  weight: 5
+  chance: 3
+  weight: 3
   radiusIncrease: 0
   minMode: 1
   minWave: 10
   maxWave: 0
   allowOnIronman: 1
   hunters:
-  - {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
-  duration: 20
+  - {fileID: 1340896494091933513, guid: 410742dd25f7fd946b56e4245fd64796, type: 3}
+  - {fileID: 6689199875529418274, guid: 0998a9989d25854438b15fceae76690a, type: 3}
+  - {fileID: 5022662664612179253, guid: 1f39f7133a7404c4abde6e8575418c51, type: 3}
+  - {fileID: 4826314347224335878, guid: 1e6097bab30ae7e488a38e93013173e3, type: 3}
+  - {fileID: 9117472875837362680, guid: 05af5c27662d78449819af531e4aff51, type: 3}
+  - {fileID: 7457594691964507130, guid: 24bacf361cba81f488717cc41f41440e, type: 3}
+  duration: 15
   levelBonus: 0

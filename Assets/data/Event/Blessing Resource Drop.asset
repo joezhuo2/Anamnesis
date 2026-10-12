@@ -30,6 +30,8 @@ MonoBehaviour:
     weight: 1
   - data: {fileID: 11400000, guid: 2d204a9e68272514e874df1eef5c206a, type: 2}
     weight: 2
+  - data: {fileID: 11400000, guid: 18b4dc6754e6b674fb3cc3f40bd1800d, type: 2}
+    weight: 2
   minDrops: 3
   maxDrops: 6
   minInterval: 0.5

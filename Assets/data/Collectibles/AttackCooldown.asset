@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrystalFlux.Collectible::CrystalFlux.CollectibleSystem.CollectibleData
   sprite: {fileID: -743533798, guid: dbf0290d36498544480566cd430eba6d, type: 3}
   type: 9
-  lightColor: {r: 1, g: 1, b: 1, a: 1}
+  lightColor: {r: 0.9292453, g: 0.38134125, b: 0.38134125, a: 1}
   minVal: 5
   maxVal: 25
   minMode: 1
