@@ -7,6 +7,15 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.32] - 2026-10-12 - Hunted
+
+### Added
+- **Hunted wave event** (`HuntedEventData`, `Assets/data/Event/Hunted.asset`): a random hunter is picked from a configurable `hunters` pool and spawns near the player with the immune flag (`StatType.isImmune`), so it cannot be killed. Its own movement and attacks decide how it pursues the player. It lasts `duration` seconds (code default 20s; the Hunted asset uses 15s), pauses during Drought and between waves, and despawns early when the wave ends. It is not registered with the wave, so it is not counted in the enemy total and never holds the wave open. Its level is the current wave level plus `levelBonus` and the difficulty's `eventLevelBonusAdd`
+
+### Docs
+- `GAME.md`: Hunted listed in the Wave Events table and described in its own section
+- `README.md`: Hunted added to the wave event list
+
 ## [v0.8.31] - 2026-10-12 - Cooldown Refresh Collectibles
 
 ### Added
