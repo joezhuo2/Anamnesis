@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd68465f6c90387408c88945c62be307, type: 3}
+  m_Name: LastStand
+  m_EditorClassIdentifier: CrystalFlux.Wave::AnomalyData
+  anomalyName: Last Stand
+  desc: 
+  minWave: 0
+  maxWave: 105
+  minMode: 0
+  anomalyType: 17
+  anomalyValue: 0
+  anomalyMinVal: 0
+  anomalyMaxVal: 0
+  disallowOnBossWave: 1
+  bossOnly: 0
+  anomalyEffect: {fileID: 0}
+  lastStandMinCount: 1
+  lastStandMaxCount: 3
+  lastStandMinSize: 20
+  lastStandMaxSize: 50
+  lastStandMinReduction: 20
+  lastStandMaxReduction: 40
+  lastStandMinDamage: 20
+  lastStandMaxDamage: 50
+  lastStandMinMoveSpeed: 20
+  lastStandMaxMoveSpeed: 40
+  rewardQuality: 0.25
+  rewardRerolls: 2
+  rewardSkillPoints: 1
+  isContract: 1
+  contractRerolls: 1
+  contractSkillPointChance: 35
+  contractMixedPoolChance: 15
