@@ -7,6 +7,16 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.31] - 2026-10-12 - Cooldown Refresh Collectibles
+
+### Added
+- **Cooldown refresh collectibles** (`CollectibleType.CooldownAttacks`, `CollectibleType.CooldownDash`, `CollectibleType.CooldownAll`): picking one up advances the matching cooldowns by a configurable percentage (`minVal`/`maxVal`, read as percent of the cooldown; 100 = full refresh). `CooldownAttacks` covers all attack cooldowns, `CooldownDash` the dash cooldown and `CooldownAll` both. HUD text reads `-X% Attack Cooldowns`, `-X% Dash Cooldowns` or `-X% All Cooldowns`, and `Cooldowns Refreshed` at 100 or more. Implemented in `CollectibleData`
+- Cooldown refresh pickups obey the normal spawn chance, spawn cooldown, `maxTime` lifetime and `minMode`, and can be dropped as spawner box rewards
+
+### Docs
+- `GAME.md`: cooldown refresh collectibles listed under Collectibles
+- `README.md`: current release v0.8.30 → v0.8.31, collectible list includes the cooldown refresh types
+
 ## [v0.8.30] - 2026-10-12 - Anomaly Rewards
 
 ### Changed

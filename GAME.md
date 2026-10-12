@@ -2049,6 +2049,13 @@ Each pickup bobs in place, pulses a glow tinted with its `lightColor`, and shows
 will pay as a world-space label (`+35 Gold`, `+8% HP`, `+1 Skill Point`). The same string
 pops as a floating indicator on pickup.
 
+**Cooldown refresh** pickups (`CooldownAttacks`, `CooldownDash`, `CooldownAll`) advance the
+matching cooldowns by `minVal`–`maxVal` percent of each cooldown (100 = full refresh).
+`CooldownAttacks` covers all attack cooldowns, `CooldownDash` the dash cooldown and
+`CooldownAll` both. Their label reads `-X% Attack Cooldowns`, `-X% Dash Cooldowns` or
+`-X% All Cooldowns`, or `Cooldowns Refreshed` at 100 or more. They follow the same chance,
+cooldown, lifetime and `minMode` rules as other pickups and can be spawner box rewards.
+
 During the Blackout anomaly, a pickup outside the vision circle (`BlackoutVision.InSight`)
 hides its sprite, glow and label, and shows them again once it is in sight, the anomaly
 ends, or it is reused from the pool. It can still be collected while hidden.
