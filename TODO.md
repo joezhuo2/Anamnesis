@@ -1,14 +1,8 @@
 # Planned Features 
 ## High priority To-Do
-- [5] **Rift Breach** (event) — a portal opens at a spawn point and spawns enemies (in the curent pool) until destroyed (has HP, no attacks). Closing it fast stops the stream and drops a reward.
-- [5] **Gravity Storm** (event) — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE.
-- [4] **Capture Point** (event) — a zone appears in the ring around the player. Standing inside it fills a capture bar (it drains while you are outside), and enemies spawn at the zone's edge until it is captured. A full bar drops a reward. A small version of the planned defend beacon.
 - [4] **Bloodtide** (no fail) - every enemy kill heals all other living enemies by `x%` max HP. (can be contract)
 - [4] fix lang files for certain stats (eg. rush impact)
-- [4] move certain awakenings/attacks to be hard/nightmare only
-- [3] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
-- [3] **Repulsion** - counter dodging creates a shockwave
-- [3] dash charges => allows holding multiple dash charges, like attack stacks, default 1, should be in mixed pool, 1 weight
+- [3] move certain awakenings/attacks to be hard/nightmare only
 - [2] finish everything in between first and second ring in skill tree
 - [1] skill tree third circular ring (no connections yet)
 
@@ -37,14 +31,21 @@
 ### Content
 
 - [8] ram dash (dash upgrade, dashing into enemies deal damage based on `x` and sends you back, has more iframes)
+- [8] **Gravity Storm** (event) — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE.
 
 - [7] Skill Points (? name) update: atk/dex/int/agi/vit/?/def/?
+- [7] **Rift Breach** (event) — a portal opens at a spawn point and spawns enemies (in the curent pool) until destroyed (has HP, no attacks). Closing it fast stops the stream and drops a reward.
 
+- [6] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
+- [6] **Repulsion** - counter dodging creates a shockwave
+
+- [5] dash charges => allows holding multiple dash charges, like attack stacks, default 1, should be in mixed pool, 1 weight
 - [5] Elite/Champion enemy/boss variants with unique modifiers (extra stats, new ai, splitting)
 - [5] Player new "signature" that charges via a new special resource instead of a cooldown
 - [5] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
 - [5] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses (new collectible type)
 - [5] Techniques - utility/QoL featured (blink tp, buff, crowd control)
+- [6] **Capture Point** (event) — a zone appears in the ring around the player. Standing inside it fills a capture bar (it drains while you are outside), and enemies spawn at the zone's edge until it is captured. A full bar drops a reward. A small version of the planned defend beacon.
 
 - [4] Player summons
 
