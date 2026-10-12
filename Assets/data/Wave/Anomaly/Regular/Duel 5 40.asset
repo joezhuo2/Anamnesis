@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd68465f6c90387408c88945c62be307, type: 3}
-  m_Name: Duel 50 150
+  m_Name: Duel 5 40
   m_EditorClassIdentifier: Assembly-CSharp::AnomalyData
   anomalyName: Duel
   desc: A single empowered enemy stands against you.
-  minWave: 40
-  maxWave: 80
+  minWave: 5
+  maxWave: 40
   minMode: 2
   anomalyType: 4
   anomalyValue: 0
-  anomalyMinVal: 50
-  anomalyMaxVal: 150
+  anomalyMinVal: 30
+  anomalyMaxVal: 80
   disallowOnBossWave: 1
   isContract: 0
   contractRerolls: 1

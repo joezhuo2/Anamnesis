@@ -13877,6 +13877,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a5cbc9934c224b399c606184ea9316d8, type: 2}
   - {fileID: 11400000, guid: f7e9234d9ecb4156b064162ef08db132, type: 2}
   - {fileID: 11400000, guid: b577fb1a756d46659c38ec2156b23974, type: 2}
+  - {fileID: 11400000, guid: 3ee5677adf523e64a974009af9af125f, type: 2}
+  - {fileID: 11400000, guid: 8a8360e53300801499e053c2eda3681a, type: 2}
+  - {fileID: 11400000, guid: b5381fa654306134791a01a917779ba1, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
   maxAnomalyCount: 6

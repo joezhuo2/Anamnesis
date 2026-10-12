@@ -7,6 +7,23 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.30] - 2026-10-12 - Anomaly Rewards
+
+### Changed
+- **Anomaly completion rewards are per-anomaly data**: the flat reward (reward quality +0.1-0.3, 1-3 rerolls, +1 skill point) is replaced by three `AnomalyData` fields, `rewardQuality` (default 0.2), `rewardRerolls` (default 2) and `rewardSkillPoints` (default 1), under the new "Completion Reward" header. Each value rolls +-30% on completion, so a harder anomaly can pay more by raising its asset values. An asset with no stored value uses the default
+- Reward quality now rolls 0.14-0.26 at the default value (was 0.1-0.3). Rerolls still roll 1-3 and skill points stay 1 at the defaults
+- Difficulty offsets `anomalyRerollMinAdd` / `anomalyRerollMaxAdd` shift the low / high end of the rolled reroll range, `anomalySkillPointAdd` shifts skill points and `anomalyQualityAdd` is added to the quality roll, as before. Ironman still grants 0 rerolls
+- The anomaly button tooltip reward line is built per anomaly from its own values (e.g. `+1-3 Rerolls`, `+1-2 Skill Points`), and omits a part whose value is 0
+- `WaveManager.RollAnomalyRerolls` / `AnomalySkillPointGain` / `GetAnomalyRewardLine` now take the `AnomalyData`; added `RollAnomalySkillPoints` and `RollAnomalyQuality`
+
+### Balance
+- **Every anomaly asset is tuned to its difficulty** (quality / rerolls / skill points). Easy and low-threat anomalies pay little: Drought 0.1 / 1 / 0, Hivemind 0.1 / 1 / 0, Overcharged 0.15 / 1 / 1, Split 10-50 0.15 / 1 / 1, Time 30 0.2 / 2 / 1. The mid tier pays 0.25-0.35 / 2-3 / 1: Stampede, Precision, Unstoppable, Rampage and Time 45 / 60. The hardest pay up to 0.5 / 4 / 2: No Hit, Twin Crowns, Duel 80-105, Time 75 pays 0.4 / 3 / 2 and Blackout 0.4 / 3 / 2. Unlimited variants are tuned the same way (e.g. UDuel, URampage, USealed, UTwinCrowns 0.5 / 4 / 2; UDrought 0.1 / 1 / 0). Assets left unset (Duel 5-40, Sealed, Split 50-105, StatMod 20-60, Swarm 30-80) pay the default 0.2 / 2 / 1
+- **Duel is split into three wave bands**: `Duel 30 80` → `Duel 5 40` (waves 5-40, default reward), `Duel 50 150` → `Duel 40 80` (waves 40-80, 0.35 / 3 / 2) and a new `Duel 80 105` (waves 80-105, Expert and up, 0.5 / 4 / 2). `UDuel` now pays 0.5 / 4 / 2
+
+### Docs
+- `GAME.md`: new "Anomaly Completion Reward" section
+- `README.md`: current release v0.8.29 → v0.8.30
+
 ## [v0.8.29] - 2026-10-11 - Quality Boost
 
 ### Added

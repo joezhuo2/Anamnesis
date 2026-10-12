@@ -22,6 +22,11 @@ MonoBehaviour:
   anomalyMinVal: 0
   anomalyMaxVal: 0
   disallowOnBossWave: 0
+  bossOnly: 0
+  anomalyEffect: {fileID: 0}
+  rewardQuality: 0.1
+  rewardRerolls: 1
+  rewardSkillPoints: 0
   isContract: 1
   contractRerolls: 1
   contractSkillPointChance: 40

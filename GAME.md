@@ -910,6 +910,27 @@ On the contract panel only Ironman (Reroll) and `lockAnomalySkip` (Skip) apply; 
 
 ---
 
+# Anomaly Completion Reward
+
+Completing a wave anomaly pays the values on its `AnomalyData` asset (`Completion Reward` header). The old flat
+reward is gone; the defaults reproduce it.
+
+| Field | Default | Effect |
+| --- | --- | --- |
+| `rewardQuality` | 0.2 | Added to `additionalQuality` for the next Basic/Mixed pool |
+| `rewardRerolls` | 2 | Rerolls granted (0 on Ironman) |
+| `rewardSkillPoints` | 1 | Skill points granted |
+
+- Each value rolls +-30%: quality is `rewardQuality x U(0.7, 1.3)`; rerolls and skill points roll an integer
+  between `round(v x 0.7)` and `round(v x 1.3)`. At the defaults that is quality 0.14-0.26, 1-3 rerolls, 1 skill point.
+- Difficulty offsets apply after the roll: `anomalyRerollMinAdd` / `anomalyRerollMaxAdd` move the low / high end of the
+  reroll range, `anomalySkillPointAdd` shifts skill points, `anomalyQualityAdd` is added to quality.
+- Assets are tuned by threat: Drought, Hivemind and `UStampede` pay the least (0.1-0.15 quality, 1 reroll, 0-1 skill
+  point); No Hit, Twin Crowns, `Duel 80 105` and the late Unlimited anomalies pay the most (up to 0.5 quality, 4 rerolls, 2 skill points).
+  Assets with no stored value (`Duel 5 40`, `Sealed`, `Split 50 105`, `StatMod 20 60`, `Swarm 30 80`) use the defaults.
+- The anomaly button tooltip shows the reroll and skill point ranges for that anomaly. Contracts are unaffected;
+  they pay their own per-wave `contract*` values.
+
 # Contracts
 
 A contract is a run-long anomaly picked before wave 1. Any `AnomalyData` with `isContract` can be

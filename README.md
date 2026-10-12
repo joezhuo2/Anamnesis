@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.8.29-6366F1)
+![Version](https://img.shields.io/badge/version-0.8.30-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.8.29** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.8.30** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 **Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 
@@ -43,7 +43,7 @@ Current release: **v0.8.29** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **🧭 Modes** | Simple / Expert / Master as `ModeData` assets, cycled by one home-screen button that swaps sprites. Each mode toggles corruption, corruption specials and Ultimates, can equip a starting Ultimate, and has a tier that gates attacks, Awakenings, skill nodes, anomalies and collectibles (`minMode`). Without Ultimates, the Ultimate slot stays greyed out like a Sealed slot for the whole run. Master starts with the Coherent Strike Ultimate. Persists to `settings.json` |
 | **💀 Ironman Mode** | Home-screen toggle that removes every take-back: 0 rerolls, no corruption, no skill node refunds |
 | **🌊 Wave System** | Scriptable sequences, boss waves with boss bars, a live progress indicator (`Wave 7/68 (12/30)`), and an **Unlimited** mode that scales level, counts and spawn rate forever |
-| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave; *Sealed* locks one attack slot and speeds up the other two; *Blackout* shrinks your vision and hides enemies outside it, widening briefly on each kill. Hovering a choice shows its rules and completion reward |
+| **🌀 Anomalies** | `AnomalyData` modifiers with wave ranges and a `disallowOnBossWave` flag. *Swarm* weakens enemies but multiplies their count; *Duel* collapses the wave into one buffed enemy; *Fission* makes slain enemies burst into weaker copies that all count toward the wave; *Sealed* locks one attack slot and speeds up the other two; *Blackout* shrinks your vision and hides enemies outside it, widening briefly on each kill. Hovering a choice shows its rules and completion reward; each anomaly sets its own reward quality, rerolls and skill points |
 | **🎲 Rewards & Corruption** | Randomized buffs, rare attacks and Awakenings with wave gating, milestone bundles every 25 waves, a reward lock that survives one reroll, once-per-wave corruption with a 4% chance of a *Corrupted* special attack, and rare *Stat Synergy* offers (a rising per-wave chance from wave 15) that convert a live percentage of one stat into another |
 | **⚔️ Data-Driven Attacks** | `AttackData` with projectile patterns (circle, inward circle, spread, barrage, converging lines), wave/spiral/boomerang/follow-cursor paths, orbit interactions, summons, rushes that carry the attacker (steerable, bouncing, impact damage, knockback and attacks, interrupt-resistance tiers), multi-stat damage scaling, resource costs, chained on-hit attacks, and per-attack hit stop and screen shake |
 | **⏳ Cast & Charge** | Interruptible cast times with a pooled cast bar, and hold-to-sustain charged attacks that drain cost per tick and re-snapshot damage mid-hold |

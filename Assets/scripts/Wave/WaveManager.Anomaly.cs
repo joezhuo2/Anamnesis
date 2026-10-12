@@ -12,32 +12,59 @@ namespace CrystalFlux.WaveSystem
 {
     public partial class WaveManager
     {
-        protected int RollAnomalyRerolls()
+        private const float AnomalyRewardVariance = 0.3f;
+
+        private static (int min, int max) AnomalyVarianceRange(float value)
+            => (Mathf.RoundToInt(value * (1f - AnomalyRewardVariance)), Mathf.RoundToInt(value * (1f + AnomalyRewardVariance)));
+
+        private (int min, int max) AnomalyRerollRange(AnomalyData amd)
+        {
+            var (lo, hi) = AnomalyVarianceRange(amd != null ? amd.rewardRerolls : 0f);
+            int min = Mathf.Max(0, lo + D.anomalyRerollMinAdd);
+            return (min, Mathf.Max(min, hi + D.anomalyRerollMaxAdd));
+        }
+
+        private (int min, int max) AnomalySkillPointRange(AnomalyData amd)
+        {
+            var (lo, hi) = AnomalyVarianceRange(amd != null ? amd.rewardSkillPoints : 0f);
+            int min = Mathf.Max(0, lo + D.anomalySkillPointAdd);
+            return (min, Mathf.Max(min, hi + D.anomalySkillPointAdd));
+        }
+
+        protected int RollAnomalyRerolls(AnomalyData amd)
         {
             if (IronmanSelector.Enabled) return 0;
 
-            int min = Mathf.Max(0, 1 + D.anomalyRerollMinAdd);
-            int max = Mathf.Max(min, 3 + D.anomalyRerollMaxAdd);
+            var (min, max) = AnomalyRerollRange(amd);
             return Random.Range(min, max + 1);
         }
 
-        protected int AnomalySkillPointGain() => Mathf.Max(0, 1 + D.anomalySkillPointAdd);
+        protected int RollAnomalySkillPoints(AnomalyData amd)
+        {
+            var (min, max) = AnomalySkillPointRange(amd);
+            return Random.Range(min, max + 1);
+        }
 
-        protected string GetAnomalyRewardLine()
+        protected float RollAnomalyQuality(AnomalyData amd)
+        {
+            float v = amd != null ? amd.rewardQuality : 0f;
+            return v * Random.Range(1f - AnomalyRewardVariance, 1f + AnomalyRewardVariance) + D.anomalyQualityAdd;
+        }
+
+        protected string GetAnomalyRewardLine(AnomalyData amd)
         {
             List<string> parts = new();
 
             if (!IronmanSelector.Enabled)
             {
-                int min = Mathf.Max(0, 1 + D.anomalyRerollMinAdd);
-                int max = Mathf.Max(min, 3 + D.anomalyRerollMaxAdd);
+                var (min, max) = AnomalyRerollRange(amd);
                 if (max > 0) parts.Add(min == max ? $"+{min} Reroll{(min > 1 ? "s" : "")}" : $"+{min}-{max} Rerolls");
             }
 
-            int sp = AnomalySkillPointGain();
-            if (sp > 0) parts.Add($"+{sp} Skill Point{(sp > 1 ? "s" : "")}");
+            var (spMin, spMax) = AnomalySkillPointRange(amd);
+            if (spMax > 0) parts.Add(spMin == spMax ? $"+{spMin} Skill Point{(spMin > 1 ? "s" : "")}" : $"+{spMin}-{spMax} Skill Points");
 
-            parts.Add("Increased Reward Quality");
+            if ((amd != null ? amd.rewardQuality : 0f) + D.anomalyQualityAdd > 0f) parts.Add("Increased Reward Quality");
 
             return $"Completion Reward: {string.Join(", ", parts)}";
         }
@@ -180,21 +207,22 @@ namespace CrystalFlux.WaveSystem
 
         protected void HandleAnomalyRewards()
         {
+            AnomalyData amd = currentAnomaly.amd;
             currentAnomaly.CompleteAnomaly();
             currentAnomaly.Cleanup();
             currentAnomaly = null;
 
             pendingStandardRewards = true;
 
-            int c = pendingAnomalyRerolls >= 0 ? pendingAnomalyRerolls : RollAnomalyRerolls();
-            int sp = pendingAnomalySkillPoints >= 0 ? pendingAnomalySkillPoints : AnomalySkillPointGain();
+            int c = pendingAnomalyRerolls >= 0 ? pendingAnomalyRerolls : RollAnomalyRerolls(amd);
+            int sp = pendingAnomalySkillPoints >= 0 ? pendingAnomalySkillPoints : RollAnomalySkillPoints(amd);
             pendingAnomalyRerolls = -1;
             pendingAnomalySkillPoints = -1;
 
             rerolls += c;
             UpdateRerollUI();
 
-            additionalQuality += Random.Range(0.1f, 0.3f) + D.anomalyQualityAdd;
+            additionalQuality += RollAnomalyQuality(amd);
 
             CachePlayerSkillTree();
             if (cpst != null && sp > 0) cpst.AddSkillPoints(sp);
@@ -245,12 +273,12 @@ namespace CrystalFlux.WaveSystem
             int minChoices = Mathf.Max(1, minAnomalyCount + D.minAnomalyCountAdd);
             int maxChoices = Mathf.Max(minChoices, maxAnomalyCount + D.maxAnomalyCountAdd);
             int choices = Random.Range(minChoices, maxChoices + 1);
-            string rewardLine = GetAnomalyRewardLine();
 
             for (int i = 0; i < choices; i++)
             {
                 AnomalyData amd = available[Random.Range(0, available.Count)];
                 AnomalyInstance instance = amd.CreateInstance();
+                string rewardLine = GetAnomalyRewardLine(amd);
 
                 Transform targetParent = buttonContainer != null ? buttonContainer : rewardPanel.transform;
                 GameObject btnObj = PrefabPool.Acquire(anomalyPrefab, targetParent);
