@@ -1,5 +1,19 @@
 # Planned Features 
 ## High priority To-Do
+- [6] per-anomaly reward quality multiplier/reroll/skill point rewards, marking its difficulty
+- [6] **Rift Breach** — a portal opens at a spawn point and spawns enemies (in the curent pool) until destroyed (has HP, no attacks). Closing it fast stops the stream and drops a reward.
+- [5] cooldown refresh coolectible => 3 variants: all attacks, dash, and both, all by configurable min/max
+- [5] dash charges => allows holding multiple dash charges, like attack stacks, default 1, should be in mixed pool, 1 weight
+- [5] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
+- [5] **Hunted** — an unkillable enemy (chosen from a pool) spawns that only chases the player, and it despawns after `x` seconds. 
+- [4] **Capture Point** — a zone appears in the ring around the player. Standing inside it fills a capture bar (it drains while you are outside), and enemies spawn at the zone's edge until it is captured. A full bar drops a reward. A small version of the planned defend beacon.
+- [4] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern. (can be contract)
+- [4] **Entourage** (no fail) - common enemies from the wave pool keep trickling in during the boss fight, and every escort alive grants the boss `x%` damage reduction. Forces target priority between boss and adds. (configurable max)
+- [4] **Last Stand** (no fail) - the final `x` enemies of the wave become empowered (size, damage reduction, damage dealt, move speed) once the rest are dead. Makes the end of a wave a mini-duel. (can be contract)
+- [4] **Bloodtide** (no fail) - every enemy kill heals all other living enemies by `x%` max HP. Rewards burst and focus over spreading damage. (can be contract)
+- [4] **Echoes** (no fail) - every enemy attack fires a delayed second copy after 1s. Doubles the bullet hell without adding enemies; works on bosses and commons alike. (can be contract)
+- [4] fix lang files for certain stats (eg. rush impact)
+- [4] move certain awakenings/attacks to be hard/nightmare only
 - [3] **Gravity Well** - teleporing, dashing, and rushing create an aoe attack that pulls enemies
 - [3] **Repulsion** - counter dodging creates a shockwave
 - [2] finish everything in between first and second ring in skill tree
@@ -121,7 +135,7 @@
 - [ ] background/ambience (debris/wind)
 - [ ] choose next wave style
 - [ ] contact damage
-- [] attack combo chains
+- [ ] attack combo chains
 
 ### Planned Abilities 
 - **Exploit** - *something* applies *something else* to the target, increasing status effect damage taken by `{x}%` for each unique status effect are on the target
@@ -148,7 +162,6 @@
 - brown
 
 ## Brainstorm: QoL, Gameplay & Replayability
-- [ ] **Boss relics**: each boss drops a choice between two unique, boss-themed Awakenings that can only come from that boss (e.g. a Golem armor-to-rush-impact relic, a Reaper execute relic). Makes each boss kill memorable instead of just another reward panel.
 - [ ] **Owned upgrades list**: a pause menu tab listing every Awakening, capstone and synergy owned this run with full tooltips, so it is possible to check what the build actually does mid-run.
 - [ ] **Damage number filters**: settings to hide DoT ticks, merge rapid hits on one target into a running total, or show only crits/big hits.
 - [ ] **Awakening fusions**: specific Awakening pairs fuse into a stronger combined version when both are owned (e.g. Supersonic + Chaos Theory). Hidden recipes the player discovers, a concrete form of the v1.6 synergy bonuses.
@@ -159,26 +172,12 @@
 
 ### Gameplay
 
-*Theme: memory & recollection*
 - [ ] **Constellation tracing**: stars light up across the map mid-wave; touch them in the drawn order before they fade to complete a constellation, which grants a named buff for the rest of the wave (a different one for each constellation, each with a lore line). Pulls the player around the map instead of kiting in circles.
-
 - [ ] **Lost wisp escort**: a friendly wisp appears and drifts slowly toward a beacon while enemies switch to target it. Get it there alive for a reward, with a bigger reward if it arrives above 50% HP. The mirror image of the planned defend/destroy beacon.
-
-*New ways to earn rewards*
 - [ ] **Blind draw**: a reward panel variant with face-down cards and better rarity odds. You commit to a card before seeing it.
-
-### Replayability
 - [ ] **Recollection (meta progression)**: every run pays a persistent currency based on waves cleared, bosses killed and difficulty. Spent on permanent unlocks: new attacks entering the reward pools, an extra starting reroll, extra pre-run picks, new starting kits. Pairs with the v1.4 Memory collectibles.
 - [ ] **Codex**: an encyclopedia of enemies, bosses, attacks, Awakenings and status effects, with undiscovered entries shown as silhouettes. Completion itself becomes a goal and doubles as in-game documentation, with a save/load state.
 - [ ] **Unlimited mutations**: every 25 waves in Unlimited, choose one of three permanent enemy mutations in exchange for a stacking score/reward multiplier. Keeps endless runs changing instead of just scaling numbers.
-
-## New Anomalies
-
-- [ ] **Grounded** (fail) - dashing is disabled for the wave, and the anomaly fails the moment a dash is attempted. Same shape as No Hit, so it is cheap to build and a real test for dash-reliant builds. *Uses:* `PlayerMovement.TryStartDash`, the `NoDamageTrialInstance` pattern.
-- [ ] **Entourage** (no fail) - common enemies from the wave pool keep trickling in during the boss fight, and every escort alive grants the boss `x%` damage reduction. Forces target priority between boss and adds. (configurable max)
-- [ ] **Last Stand** (no fail) - the final `x` enemies of the wave become empowered (size, damage, speed) once the rest are dead. Makes the end of a wave a mini-duel.
-- [ ] **Bloodtide** (no fail) - every enemy kill heals all other living enemies by `x%` max HP. Rewards burst and focus over spreading damage.
-- [ ] **Echoes** (no fail) - every enemy attack fires a delayed second copy after 1s. Doubles the bullet hell without adding enemies; works on bosses and commons alike.
 
 ## Brainstorm: Expert/Master Modes & Nightmare
 
@@ -196,7 +195,6 @@
 ### Nightmare difficulty
 
 - [ ] **Wave affixes** — from wave 10, each block of 10 waves rolls one affix shown on the wave HUD: *Bolstering* (enemy deaths buff nearby enemies), *Sanguine* (deaths leave a pool that heals enemies), *Splitting* (common enemies split once), *Volcanic* (ground eruptions under the player). Every 30 waves add a second affix. One hosting system for several of the ideas above. *New fields:* `DifficultyData.affixStartWave`, `affixInterval`.
-- [ ] **Shorter telegraphs** — enemy attack telegraphs run 25% faster. *New field:* `DifficultyData.telegraphTimeMult`.
 - [ ] **Reward timer** — reward panels auto-pick a random card after 30s. Real-time pressure without making the waves harder.
 - [ ] **Level breakpoints** — every 25 waves, all enemies permanently gain a "star": +1 projectile, +10% size or +1 phase, chosen at random and shown on the wave track.
 - [ ] Elite enemies can have an aura (attack speed, damage reduction or healing) and it stacks.
@@ -204,14 +202,9 @@
 - [ ] Enemies sometimes dodge-dash sideways out of your aim.
 - [ ] Wave timer: after 60s, extra enemies spawn every 8s until the wave is cleared.
 
-### Nightmare payoff
-*Harder needs to feel worth it, not just be a number.*
-- [ ] **Nightmare-only rewards** — a small Awakening pool (new `PlayerUpgrade.minDifficulty`, set to 3) that only appears in Nightmare, e.g. "+1% damage per wave survived without healing".
-
 ### New event types
-- [ ] **Gravity Storm** — every few seconds a `Pulled` pulse drags enemies and players toward itself. Bunches enemies up for AoE. *Uses:* the `Pulled` status effect from Solar Collapse / Warp Rift.
 
 - [ ] **Cursed Offering** — an altar appears. Touching it gives a choice: take a random debuff for the rest of the wave for a guaranteed reward, or ignore it. *Uses:* a small two-button prompt, or auto-accept on touch to keep it simple.
 - [ ] **Sanctuary** — a healing circle appears in the ring around the player for `x` seconds. Standing in it regenerates HP but enemies inside it are buffed. *Uses:* the `BlackoutVision` circle approach for the zone.con destroy objective. *Uses:* the enemy reservation API, ending the reservation early when the rift dies.
 - [ ] **Elite Hunt** — one enemy from the wave spawns with a marker, an HP bar and boosted stats. Kill it within `x` seconds for a guaranteed drop; it despawns (no reward) if the timer runs out. Lightweight preview of the Elite/Champion variants. *Uses:* `SpawnAmbushEnemy` + a timer-bound reward hook.
-- [ ] **Rift Breach** — a portal opens at a spawn point and spits enemies until destroyed (has HP, can be attacked). Closing it fast stops the stream and drops a reward. Ties into the planned portals and the bea
+- [ ] **Wandering Merchant** — a merchant appears for `x` seconds and offers one trade: pay something for a random reward. Walk away to decline. A preview of the planned shop.

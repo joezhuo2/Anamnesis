@@ -7,6 +7,14 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.29] - 2026-10-11 - Quality Boost
+
+### Added
+- **Quality collectible** (`CollectibleType.Quality`): picking it up adds a configurable percentage (`minVal`/`maxVal`, read as percent) to reward quality. The bonus applies to the next Basic/Mixed stat reward pool when the wave ends, then resets. It shares `additionalQuality` with the anomaly bonus. Implemented in `CollectibleData` and `WaveManager.GrantQuality`
+
+### Docs
+- `README.md`: current release v0.8.28 → v0.8.29, collectible list includes `Quality`
+
 ## [v0.8.28] - 2026-10-11 - Seamless Blackout
 
 ### Fixed

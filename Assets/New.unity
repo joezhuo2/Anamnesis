@@ -18329,6 +18329,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c4af91f9f3e5524d8f6708a5fd667a9, type: 2}
   - {fileID: 11400000, guid: 4c0962552bd156d41ba5e8bec2199a23, type: 2}
   - {fileID: 11400000, guid: 5021c93697781ea4f9c1e13d93ac11ed, type: 2}
+  - {fileID: 11400000, guid: 73d92a17f187da14bab1344cc3db0047, type: 2}
   prewarmCount: 8
   minSpawnDist: 3
   maxSpawnDist: 7

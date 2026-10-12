@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.8.28-6366F1)
+![Version](https://img.shields.io/badge/version-0.8.29-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.8.28** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.8.29** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 **Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 
@@ -95,7 +95,7 @@ Every keyboard binding except skill tree pan/zoom can be rebound in the settings
 | **Bosses** | Cultist (clone summoning), Jellyfish, Lich, Golem (phase-gated moveset), The Grim Reaper (phase-gated moveset, Lv 75 capstone of `ws_5`), Mirror (copies your attacks and Awakenings; Unlimited boss pool, and the final Boss Rush fight as *Echo*) |
 | **Boss Rush** | `ws_6` (Lv 76-89 waves, then Echo at Lv 90) chaining into `BossRush Part 2` (Lv 105 Lich → Jellyfish → Cultist → Golem → Grim Reaper → Echo). The wave counter carries on from `ws_5` (waves 76-90, then 91-96) |
 | **Anomalies** | *Time Trial I-IV*, *No Hit*, *Augment*, *Swarm*, *Duel*, *Fission*, *Sealed*, *Blackout* — separate Regular and Unlimited lists |
-| **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
+| **Collectibles** | `XP`, `Gold`, `Health`, `Stamina`, `Mana`, `Reroll`, `SkillPoint`, `Quality`, `Box Slime`, `Box Bat`, `Box Crab`, `Box Cult` |
 | **Wave Events** | `Slime Rain`, `Bat Swarm`, `Crab Tide`, `Cult Gathering`, `Blessing Resource Drop`, `Blessing Materials Drop`, `Blessing Starfall`, `Gold Rush`, `Static Field`, `Glacial Expanse`, `Blood Moon` |
 | **Upgrade Effects** | Add Chain, Additional Damage, Blood Bank, Cooldown Advance, Decoy, DoT Spread, DoT Spread On Kill, Free Cast, Gain Mana, Gold Buff, Grant Status Effect, Hex Cast, Overhealth, Paradox, Reminiscence, Soul Rend, Spawn Projectile, Stellar Surge |
 

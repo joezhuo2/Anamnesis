@@ -36,6 +36,8 @@ MonoBehaviour:
     weight: 2
   - data: {fileID: 11400000, guid: 44f57e13d9679554fae52f1f8bf2fa14, type: 2}
     weight: 1
+  - data: {fileID: 11400000, guid: 73d92a17f187da14bab1344cc3db0047, type: 2}
+    weight: 3
   rewardMin: 2
   rewardMax: 5
   rewardRadius: 2
