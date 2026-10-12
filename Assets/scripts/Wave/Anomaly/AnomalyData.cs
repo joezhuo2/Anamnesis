@@ -1,7 +1,7 @@
 using CrystalFlux.Core;
 using UnityEngine;
 
-public enum AnomalyType { TimeTrial, NoDamage, StatModifier, Swarm, Duel, Split, Sealed, Blackout, Hivemind, Drought, Precision, Overcharged, Stampede, TwinCrowns, Rampage, Unstoppable, Grounded }
+public enum AnomalyType { TimeTrial, NoDamage, StatModifier, Swarm, Duel, Split, Sealed, Blackout, Hivemind, Drought, Precision, Overcharged, Stampede, TwinCrowns, Rampage, Unstoppable, Grounded, LastStand }
 
 [CreateAssetMenu(fileName = "amd", menuName = "Data/Anomaly")]
 public class AnomalyData : ScriptableObject
@@ -18,6 +18,18 @@ public class AnomalyData : ScriptableObject
     public bool disallowOnBossWave;
     [Tooltip("Only offered when the next wave is a boss wave. Never offered as a contract")] public bool bossOnly;
     [Tooltip("Status effect the anomaly grants (Twin Crowns enrage, Rampage). Lasts until the entity dies")] public EffectAsset anomalyEffect;
+
+    [Header("Last Stand")]
+    [Tooltip("The final X enemies of the wave are marked. X is rolled between min and max each wave")] [Min(1)] public int lastStandMinCount = 1;
+    [Min(1)] public int lastStandMaxCount = 3;
+    [Tooltip("Size bonus (%) the marked enemies gain once empowered. Rolled once between min and max")] [Min(0f)] public float lastStandMinSize = 20f;
+    [Min(0f)] public float lastStandMaxSize = 50f;
+    [Tooltip("Damage reduction (%) the marked enemies gain once empowered. Rolled once between min and max")] [Min(0f)] public float lastStandMinReduction = 20f;
+    [Min(0f)] public float lastStandMaxReduction = 40f;
+    [Tooltip("Damage dealt bonus (%) the marked enemies gain once empowered. Rolled once between min and max")] [Min(0f)] public float lastStandMinDamage = 20f;
+    [Min(0f)] public float lastStandMaxDamage = 50f;
+    [Tooltip("Move speed bonus (%) the marked enemies gain once empowered. Rolled once between min and max")] [Min(0f)] public float lastStandMinMoveSpeed = 20f;
+    [Min(0f)] public float lastStandMaxMoveSpeed = 40f;
 
     [Header("Completion Reward")]
     [Tooltip("Reward quality added on completion (rolled +-30%). Difficulty offset anomalyQualityAdd stacks on top")] [Min(0f)] public float rewardQuality = 0.2f;
@@ -52,6 +64,7 @@ public class AnomalyData : ScriptableObject
             AnomalyType.Rampage => new RampageInstance(this),
             AnomalyType.Unstoppable => new UnstoppableInstance(this),
             AnomalyType.Grounded => new GroundedInstance(this),
+            AnomalyType.LastStand => new LastStandInstance(this),
             _ => new AnomalyInstance(this)
         };
     }
