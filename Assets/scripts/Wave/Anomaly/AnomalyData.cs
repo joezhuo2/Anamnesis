@@ -19,6 +19,11 @@ public class AnomalyData : ScriptableObject
     [Tooltip("Only offered when the next wave is a boss wave. Never offered as a contract")] public bool bossOnly;
     [Tooltip("Status effect the anomaly grants (Twin Crowns enrage, Rampage). Lasts until the entity dies")] public EffectAsset anomalyEffect;
 
+    [Header("Completion Reward")]
+    [Tooltip("Reward quality added on completion (rolled +-30%). Difficulty offset anomalyQualityAdd stacks on top")] [Min(0f)] public float rewardQuality = 0.2f;
+    [Tooltip("Rerolls granted on completion (rolled +-30%, 0 on Ironman)")] [Min(0f)] public float rewardRerolls = 2f;
+    [Tooltip("Skill points granted on completion (rolled +-30%)")] [Min(0f)] public float rewardSkillPoints = 1f;
+
     [Header("Contract")]
     [Tooltip("Also offered in the run-start contract pool. A held contract removes every anomaly of the same AnomalyType from the anomaly pool")]
     public bool isContract;

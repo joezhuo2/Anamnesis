@@ -62,8 +62,9 @@ namespace CrystalFlux.WaveSystem
             RollOccasionalWaveRewards(wave);
 
             bool anomalyCompleted = currentAnomaly != null && currentAnomaly.isActive;
-            pendingAnomalyRerolls = anomalyCompleted ? RollAnomalyRerolls() : 0;
-            pendingAnomalySkillPoints = anomalyCompleted ? AnomalySkillPointGain() : 0;
+            AnomalyData completedAmd = anomalyCompleted ? currentAnomaly.amd : null;
+            pendingAnomalyRerolls = anomalyCompleted ? RollAnomalyRerolls(completedAmd) : 0;
+            pendingAnomalySkillPoints = anomalyCompleted ? RollAnomalySkillPoints(completedAmd) : 0;
             RollContractRewards();
 
             int rerollGain = pendingOccasionalRerolls + pendingAnomalyRerolls + pendingContractRerolls;
