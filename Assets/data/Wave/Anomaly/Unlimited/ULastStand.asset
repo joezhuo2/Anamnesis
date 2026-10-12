@@ -19,8 +19,8 @@ MonoBehaviour:
   minMode: 0
   anomalyType: 17
   anomalyValue: 0
-  anomalyMinVal: 20
-  anomalyMaxVal: 50
+  anomalyMinVal: 30
+  anomalyMaxVal: 60
   disallowOnBossWave: 1
   bossOnly: 0
   anomalyEffect: {fileID: 0}

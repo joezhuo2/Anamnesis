@@ -19,7 +19,7 @@ MonoBehaviour:
   minMode: 0
   anomalyType: 17
   anomalyValue: 0
-  anomalyMinVal: 30
+  anomalyMinVal: 20
   anomalyMaxVal: 50
   disallowOnBossWave: 1
   bossOnly: 0
