@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace CrystalFlux.CollectibleSystem
 {
-    public enum CollectibleType { Heal, Xp, Stamina, Mana, Gold, SkillPoints, Rerolls, SpawnerBox, Quality }
+    public enum CollectibleType { Heal, Xp, Stamina, Mana, Gold, SkillPoints, Rerolls, SpawnerBox, Quality, CooldownAttacks, CooldownDash, CooldownAll }
 
     [Serializable]
     public class SpawnerBoxReward
@@ -118,6 +118,9 @@ namespace CrystalFlux.CollectibleSystem
                 CollectibleType.SkillPoints => $"+{v} Skill Point{(v == 1 ? "" : "s")}",
                 CollectibleType.Rerolls => $"+{v} Reroll{(v == 1 ? "" : "s")}",
                 CollectibleType.Quality => $"+{v}% Reward Quality",
+                CollectibleType.CooldownAttacks => CooldownDesc(v, "Attack"),
+                CollectibleType.CooldownDash => CooldownDesc(v, "Dash"),
+                CollectibleType.CooldownAll => CooldownDesc(v, "All"),
                 CollectibleType.SpawnerBox => "Ambush!",
                 _ => $"+{v}"
             };
@@ -147,9 +150,39 @@ namespace CrystalFlux.CollectibleSystem
                     return WaveManager.GrantRerolls(v);
                 case CollectibleType.Quality:
                     return WaveManager.GrantQuality(v * 0.01f);
+                case CollectibleType.CooldownAttacks:
+                    return ApplyCooldown(player, v, true, false);
+                case CollectibleType.CooldownDash:
+                    return ApplyCooldown(player, v, false, true);
+                case CollectibleType.CooldownAll:
+                    return ApplyCooldown(player, v, true, true);
                 default:
                     return false;
             }
+        }
+
+        private static string CooldownDesc(int v, string what)
+        {
+            return v >= 100 ? $"{what} Cooldowns Refreshed" : $"-{v}% {what} Cooldowns";
+        }
+
+        private static bool ApplyCooldown(GameObject player, int pct, bool attacks, bool dash)
+        {
+            bool applied = false;
+
+            if (attacks && player.TryGetComponent<PlayerAttackHandler>(out var pah))
+            {
+                pah.AdvanceAllCooldowns(pct);
+                applied = true;
+            }
+
+            if (dash && player.TryGetComponent<PlayerMovement>(out var pm))
+            {
+                pm.AdvanceDash(pct);
+                applied = true;
+            }
+
+            return applied;
         }
 
         private static bool ApplyXp(GameObject player, int pct)
