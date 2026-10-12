@@ -1992,8 +1992,8 @@ All Unlimited anomaly assets use `maxWave` -1 (no upper bound), so they keep rol
 
 # Last Stand Anomaly
 
-`AnomalyType.LastStand`, run by `LastStandInstance`. No fail condition; it pays the standard anomaly reward and
-can also be a contract (armed every wave, standard contract payout).
+`AnomalyType.LastStand`, run by `LastStandInstance`. No fail condition; it pays its own `rewardQuality`, `rewardRerolls`
+and `rewardSkillPoints`, and can also be a contract (armed every wave, paying its own `contract*` values).
 
 - Everything is rolled from one `anomalyMinVal`..`anomalyMaxVal` percent range, rounded. A contract re-rolls all of it every wave.
 - The marked enemies are the final `countPct`% of the enemies the wave spawned (at least 1), by spawn order. Ambush
@@ -2007,10 +2007,10 @@ can also be a contract (armed every wave, standard contract payout).
 - Enemies are instantiated, not pooled, so no scale reset is needed.
 - Enemies registered by *Split* clones are not marked, but they count as living enemies and delay the empower.
 
-| Asset | Waves | Range (count %, and each boost) | Boss waves |
+| Asset | Waves | Range (count %, and each boost) | Quality / rerolls / skill points | Contract rerolls / skill point chance / mixed pool chance | Boss waves |
 | --- | --- | --- | --- |
-| `Regular/LastStand` | 0–105 | 20–50% | disallowed |
-| `Unlimited/ULastStand` | 0+ | 20–50% | disallowed |
+| `Regular/LastStand` | 0â€“105 | 20â€“50% | 0.35 / 3 / 2 | 2 / 60 / 20 | disallowed |
+| `Unlimited/ULastStand` | 0+ | 30â€“60% | 0.3 / 2 / 1 | 1 / 35 / 10 | disallowed |
 
 
 # Attack Cooldown Buttons
