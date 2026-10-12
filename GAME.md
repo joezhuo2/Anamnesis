@@ -1990,6 +1990,29 @@ so every Doppelganger copies the player's attacks and Awakenings when it spawns.
 
 All Unlimited anomaly assets use `maxWave` -1 (no upper bound), so they keep rolling past wave 128.
 
+# Last Stand Anomaly
+
+`AnomalyType.LastStand`, run by `LastStandInstance`. No fail condition; it pays the standard anomaly reward and
+can also be a contract (armed every wave, standard contract payout).
+
+- When the wave starts a count `x` is rolled from `lastStandMinCount`..`lastStandMaxCount` (rounded, at least 1).
+  A contract re-rolls it every wave. The final `x` enemies the wave spawns, by spawn order, are marked. Ambush
+  and event spawns that count toward the wave join the order, so the marked window always means the last `x`.
+- Nothing happens until no spawns remain (`WaveManager.SpawnsPending`: nothing left to spawn and no reservation
+  pending) and no living enemy exists outside the marked ones. Then every marked enemy still alive is empowered
+  at once, and a "Last Stand" title is shown. This happens once per wave. A wave smaller than `x + 1` enemies
+  empowers whichever of them remain when spawning ends.
+- Empowerment is four boosts, each rolled once per instance from its own `lastStandMin*`..`lastStandMax*` range
+  and rounded: size (`+x%` scale, through `EnemyMovement.ScaleSize` so facing flips keep it), damage reduction
+  (`StatType.damageRes`), damage dealt (`StatType.damagePct`) and move speed (`StatType.moveSpeedPct`).
+- Enemies are instantiated, not pooled, so no scale reset is needed.
+- Enemies registered by *Split* clones are not marked, but they count as living enemies and delay the empower.
+
+| Asset | Waves | Count | Size | Damage reduction | Damage | Move speed | Boss waves |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `Regular/LastStand` | 0–105 | 1–3 | 20–50% | 20–40% | 20–50% | 20–40% | disallowed |
+| `Unlimited/ULastStand` | 0+ | 1–3 | 20–50% | 20–40% | 20–50% | 20–40% | disallowed |
+
 # Attack Cooldown Buttons
 
 `PlayerAttackCooldownUI` sets the button's border color from the attack's state, highest priority first:
