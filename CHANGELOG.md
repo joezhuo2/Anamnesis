@@ -7,10 +7,18 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [Unreleased]
+## [v0.8.33] - 2026-10-12 - Grounded
 
 ### Added
-- **Grounded anomaly / contract** (`AnomalyType.Grounded`, `GroundedInstance`, `Assets/data/Wave/Anomaly/Regular/Grounded.asset`): fails the moment the dash key is pressed, even if the dash would have been blocked by cooldown or stamina. Dashing itself still works. Offered as a contract (`isContract`). Driven by the new `PlayerMovement.OnDashPressed` static event, raised at the top of `TryStartDash` (not while paused)
+- **Grounded anomaly / contract** (`AnomalyType.Grounded`, `GroundedInstance`, `Assets/data/Wave/Anomaly/Regular/Grounded.asset`): fails the moment the dash key is pressed, even if the dash would have been blocked by cooldown or stamina. Dashing itself still works. Offered as a contract (`isContract`). `UGrounded` is the Unlimited variant (no wave cap, 0.3 quality). Driven by the new `PlayerMovement.OnDashPressed` static event, raised at the top of `TryStartDash` (not while paused)
+
+### Balance
+- **Wave event pacing**: `rollInterval` 4s → 5s and `minTimeBetweenEvents` 30s → 45s, so events trigger less often
+- **Astral Disjunction**: projectile `size` 2.5 → 3 and it now applies the `Stun 2` status effect on hit
+- **Frost Slime**: `Blizzard AD` `projectileCount` 3 → 2; `snowstorm ad` `projectileCount` 8 → 5 and `randomCount` 5 → 4
+
+### Docs
+- `README.md`: current release v0.8.32 → v0.8.33, *Grounded* added to the anomaly lists
 
 ## [v0.8.32] - 2026-10-12 - Hunted
 
