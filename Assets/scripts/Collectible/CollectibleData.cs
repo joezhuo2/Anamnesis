@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace CrystalFlux.CollectibleSystem
 {
-    public enum CollectibleType { Heal, Xp, Stamina, Mana, Gold, SkillPoints, Rerolls, SpawnerBox }
+    public enum CollectibleType { Heal, Xp, Stamina, Mana, Gold, SkillPoints, Rerolls, SpawnerBox, Quality }
 
     [Serializable]
     public class SpawnerBoxReward
@@ -117,6 +117,7 @@ namespace CrystalFlux.CollectibleSystem
                 CollectibleType.Gold => $"+{v} Gold",
                 CollectibleType.SkillPoints => $"+{v} Skill Point{(v == 1 ? "" : "s")}",
                 CollectibleType.Rerolls => $"+{v} Reroll{(v == 1 ? "" : "s")}",
+                CollectibleType.Quality => $"+{v}% Reward Quality",
                 CollectibleType.SpawnerBox => "Ambush!",
                 _ => $"+{v}"
             };
@@ -144,6 +145,8 @@ namespace CrystalFlux.CollectibleSystem
                     return true;
                 case CollectibleType.Rerolls:
                     return WaveManager.GrantRerolls(v);
+                case CollectibleType.Quality:
+                    return WaveManager.GrantQuality(v * 0.01f);
                 default:
                     return false;
             }

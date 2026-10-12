@@ -145,6 +145,14 @@ namespace CrystalFlux.WaveSystem
             return true;
         }
 
+        public static bool GrantQuality(float amount)
+        {
+            if (amount <= 0f || ActiveManager == null) return false;
+
+            ActiveManager.additionalQuality += amount;
+            return true;
+        }
+
         protected void UpdateRerollUI()
         {
             if (rerollText != null) rerollText.gameObject.SetActive(!RerollLocked);
