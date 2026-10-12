@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.30] - 2026-10-12 - Anomaly Rewards
+
+### Changed
+- **Anomaly completion rewards are per-anomaly data**: the flat reward (reward quality +0.1-0.3, 1-3 rerolls, +1 skill point) is replaced by three `AnomalyData` fields, `rewardQuality` (default 0.2), `rewardRerolls` (default 2) and `rewardSkillPoints` (default 1), under the new "Completion Reward" header. Each value rolls +-30% on completion, so a harder anomaly can pay more by raising its asset values. Existing assets keep the defaults and need no edits
+- Reward quality now rolls 0.14-0.26 at the default value (was 0.1-0.3). Rerolls still roll 1-3 and skill points stay 1 at the defaults
+- Difficulty offsets `anomalyRerollMinAdd` / `anomalyRerollMaxAdd` shift the low / high end of the rolled reroll range, `anomalySkillPointAdd` shifts skill points and `anomalyQualityAdd` is added to the quality roll, as before. Ironman still grants 0 rerolls
+- The anomaly button tooltip reward line is built per anomaly from its own values (e.g. `+1-3 Rerolls`, `+1-2 Skill Points`), and omits a part whose value is 0
+- `WaveManager.RollAnomalyRerolls` / `AnomalySkillPointGain` / `GetAnomalyRewardLine` now take the `AnomalyData`; added `RollAnomalySkillPoints` and `RollAnomalyQuality`
+
+### Docs
+- `GAME.md`: new "Anomaly Completion Reward" section
+- `README.md`: current release v0.8.29 → v0.8.30
+
 ## [v0.8.29] - 2026-10-11 - Quality Boost
 
 ### Added
