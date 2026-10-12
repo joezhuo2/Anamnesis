@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3c1f0d27b5e4d8e9f6a1b2c3d4e5f60, type: 3}
+  m_Name: Hunted
+  m_EditorClassIdentifier: CrystalFlux.Event::CrystalFlux.WaveEventSystem.HuntedEventData
+  title: Hunted
+  subtitle: Something is coming for you
+  titleColor: {r: 0.8726415, g: 0.1679926, b: 0.09878958, a: 1}
+  titleDurationOverride: 0
+  chance: 4
+  weight: 5
+  radiusIncrease: 0
+  minMode: 1
+  minWave: 10
+  maxWave: 0
+  allowOnIronman: 1
+  hunters:
+  - {fileID: 3702458687039167013, guid: e791579016adae945a640f7ab8c8a046, type: 3}
+  duration: 20
+  levelBonus: 0
