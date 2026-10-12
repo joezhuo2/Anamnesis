@@ -7,6 +7,20 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.34] - 2026-10-12 - Last Stand
+
+### Added
+- **Last Stand anomaly / contract** (`AnomalyType.LastStand`, `LastStandInstance`, `Assets/data/Wave/Anomaly/Regular/LastStand.asset`, `Assets/data/Wave/Anomaly/Unlimited/ULastStand.asset`): has no fail condition. The final `countPct`% of the enemies a wave spawns (by spawn order, at least 1) are marked. Once no spawns remain and no living enemy is outside the marked set, each marked enemy still alive gains four separately rolled boosts from one `anomalyMinVal`..`anomalyMaxVal` percent range: size (through the new `EnemyMovement.ScaleSize`), damage reduction (`StatType.damageRes`), damage (`StatType.damagePct`) and move speed (`StatType.moveSpeedPct`). Empowerment happens once per wave with a "Last Stand" title. Regular runs waves 0-105 with 20-50% and pays 0.35 quality, 3 rerolls and 2 skill points. `ULastStand` has no wave cap, 30-60% and pays 0.3 quality, 2 rerolls and 1 skill point. Both are offered as contracts (`isContract`)
+- **Wave helpers**: `WaveManager.SpawnsPending` (nothing left to spawn and no reservation pending) and `WaveManager.LivingEnemyCount()`, used by Last Stand. `EnemyMovement.ScaleSize(mult)` scales the enemy and keeps the size across facing flips
+- Last Stand is added to the anomaly pool in `Assets/New.unity`
+
+### Balance
+- **Frost Slime**: `Blizzard AD` `cooldown` 7 → 8; `Blizzard PD` effect chances 0.55 → 0.8 and 0.15 → 0.35; `snowstorm ad` `cooldown` 6 → 9; `snowstorm pd` `size` 3 → 2.5 and effect chances 0.65 → 0.55 and 0.25 → 0.15
+
+### Docs
+- `GAME.md`: Last Stand section added, with its asset table and reward and contract values
+- `README.md`: current release v0.8.33 → v0.8.34, *Last Stand* added to the anomaly lists
+
 ## [v0.8.33] - 2026-10-12 - Grounded
 
 ### Added

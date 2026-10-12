@@ -1990,6 +1990,29 @@ so every Doppelganger copies the player's attacks and Awakenings when it spawns.
 
 All Unlimited anomaly assets use `maxWave` -1 (no upper bound), so they keep rolling past wave 128.
 
+# Last Stand Anomaly
+
+`AnomalyType.LastStand`, run by `LastStandInstance`. No fail condition; it pays its own `rewardQuality`, `rewardRerolls`
+and `rewardSkillPoints`, and can also be a contract (armed every wave, paying its own `contract*` values).
+
+- Everything is rolled from one `anomalyMinVal`..`anomalyMaxVal` percent range, rounded. A contract re-rolls all of it every wave.
+- The marked enemies are the final `countPct`% of the enemies the wave spawned (at least 1), by spawn order. Ambush
+  and event spawns that count toward the wave join the order, so the marked window is always the last `countPct`%.
+- Nothing happens until no spawns remain (`WaveManager.SpawnsPending`: nothing left to spawn and no reservation
+  pending) and no living enemy exists outside the marked ones. Then every marked enemy still alive is empowered
+  at once, and a "Last Stand" title is shown. This happens once per wave.
+- Empowerment is four boosts, each rolled separately from the same range: size (`+x%` scale, through
+  `EnemyMovement.ScaleSize` so facing flips keep it), damage reduction (`StatType.damageRes`), damage dealt
+  (`StatType.damagePct`) and move speed (`StatType.moveSpeedPct`).
+- Enemies are instantiated, not pooled, so no scale reset is needed.
+- Enemies registered by *Split* clones are not marked, but they count as living enemies and delay the empower.
+
+| Asset | Waves | Range (count %, and each boost) | Quality / rerolls / skill points | Contract rerolls / skill point chance / mixed pool chance | Boss waves |
+| --- | --- | --- | --- |
+| `Regular/LastStand` | 0–105 | 20–50% | 0.35 / 3 / 2 | 2 / 60 / 20 | disallowed |
+| `Unlimited/ULastStand` | 0+ | 30–60% | 0.3 / 2 / 1 | 1 / 35 / 10 | disallowed |
+
+
 # Attack Cooldown Buttons
 
 `PlayerAttackCooldownUI` sets the button's border color from the attack's state, highest priority first:

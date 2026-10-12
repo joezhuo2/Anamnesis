@@ -294,14 +294,15 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.TwinCrowns:
                         case AnomalyType.Rampage:
                         case AnomalyType.Unstoppable:
-                        case AnomalyType.Grounded: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.Grounded:
+                        case AnomalyType.LastStand: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }
             }
-            else
+            else if (ActiveManager == null || ActiveManager == this)
             {
-                anomalyInfoBackground.SetActive(false);
+                if (anomalyInfoBackground != null) anomalyInfoBackground.SetActive(false);
                 lastInfoTick = int.MinValue;
                 if (anomalyInfoText != null) SetAnomalyInfo("");
             }
