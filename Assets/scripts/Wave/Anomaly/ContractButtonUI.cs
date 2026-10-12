@@ -69,6 +69,7 @@ public class ContractButtonUI : MonoBehaviour
         {
             case TimeTrialInstance tti: lines.Add($"Clear each wave within {tti.timeRemaining:F0}s to earn its reward"); break;
             case NoDamageTrialInstance: lines.Add("Taking damage forfeits that wave's reward"); break;
+            case GroundedInstance: lines.Add("Pressing dash forfeits that wave's reward"); break;
         }
 
         if (amd.disallowOnBossWave) lines.Add("Paused on boss waves (still rewarded)");

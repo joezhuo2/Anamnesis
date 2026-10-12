@@ -1,7 +1,7 @@
 using CrystalFlux.Core;
 using UnityEngine;
 
-public enum AnomalyType { TimeTrial, NoDamage, StatModifier, Swarm, Duel, Split, Sealed, Blackout, Hivemind, Drought, Precision, Overcharged, Stampede, TwinCrowns, Rampage, Unstoppable }
+public enum AnomalyType { TimeTrial, NoDamage, StatModifier, Swarm, Duel, Split, Sealed, Blackout, Hivemind, Drought, Precision, Overcharged, Stampede, TwinCrowns, Rampage, Unstoppable, Grounded }
 
 [CreateAssetMenu(fileName = "amd", menuName = "Data/Anomaly")]
 public class AnomalyData : ScriptableObject
@@ -51,6 +51,7 @@ public class AnomalyData : ScriptableObject
             AnomalyType.TwinCrowns => new TwinCrownsInstance(this),
             AnomalyType.Rampage => new RampageInstance(this),
             AnomalyType.Unstoppable => new UnstoppableInstance(this),
+            AnomalyType.Grounded => new GroundedInstance(this),
             _ => new AnomalyInstance(this)
         };
     }

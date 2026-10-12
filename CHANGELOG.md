@@ -7,6 +7,11 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [Unreleased]
+
+### Added
+- **Grounded anomaly / contract** (`AnomalyType.Grounded`, `GroundedInstance`, `Assets/data/Wave/Anomaly/Regular/Grounded.asset`): fails the moment the dash key is pressed, even if the dash would have been blocked by cooldown or stamina. Dashing itself still works. Offered as a contract (`isContract`). Driven by the new `PlayerMovement.OnDashPressed` static event, raised at the top of `TryStartDash` (not while paused)
+
 ## [v0.8.32] - 2026-10-12 - Hunted
 
 ### Added

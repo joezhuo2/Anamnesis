@@ -293,7 +293,8 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.Stampede:
                         case AnomalyType.TwinCrowns:
                         case AnomalyType.Rampage:
-                        case AnomalyType.Unstoppable: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.Unstoppable:
+                        case AnomalyType.Grounded: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }

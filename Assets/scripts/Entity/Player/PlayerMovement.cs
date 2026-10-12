@@ -135,8 +135,11 @@ namespace CrystalFlux.EntitySystem
             KnockbackHandler.ApplyKnockback(currentForces, d, f, t, esm.GetStat(StatType.kbRes));
         }
 
+        public static event System.Action OnDashPressed;
+
         public void TryStartDash()
         {
+            if (Time.timeScale != 0f) OnDashPressed?.Invoke();
             if (Dashing || esm.GetStat(StatType.CanDash) <= 0f || Time.timeScale == 0f) return;
             if (Time.time < lastDashTime + esm.GetStat(StatType.EffDashCooldown)) return;
             if (esm.GetStat(StatType.CurrentStamina) < esm.GetStat(StatType.EffDashStaminaCost)) return;
