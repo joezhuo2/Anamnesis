@@ -278,6 +278,22 @@ namespace CrystalFlux.WaveSystem
             return n;
         }
 
+        public static bool HivemindActive => ActiveManager != null && ActiveManager.Hivemind != null;
+
+        // Fills buffer with the living enemies of the active wave, including ones no spawn hook saw (splits, ambushes).
+        public static void GetLivingEnemies(List<EntityHealth> buffer)
+        {
+            buffer.Clear();
+            WaveManager wm = ActiveManager;
+            if (wm == null) return;
+
+            for (int i = 0; i < wm.currentEnemies.Count; i++)
+            {
+                GameObject e = wm.currentEnemies[i];
+                if (e != null && e.TryGetComponent<EntityHealth>(out var eh) && eh.IsAlive) buffer.Add(eh);
+            }
+        }
+
         public static bool ReserveEnemies(int count)
         {
             WaveManager wm = ActiveManager;

@@ -1996,21 +1996,40 @@ All Unlimited anomaly assets use `maxWave` -1 (no upper bound), so they keep rol
 and `rewardSkillPoints`, and can also be a contract (armed every wave, paying its own `contract*` values).
 
 - Everything is rolled from one `anomalyMinVal`..`anomalyMaxVal` percent range, rounded. A contract re-rolls all of it every wave.
-- The marked enemies are the final `countPct`% of the enemies the wave spawned (at least 1), by spawn order. Ambush
-  and event spawns that count toward the wave join the order, so the marked window is always the last `countPct`%.
 - Nothing happens until no spawns remain (`WaveManager.SpawnsPending`: nothing left to spawn and no reservation
-  pending) and no living enemy exists outside the marked ones. Then every marked enemy still alive is empowered
-  at once, and a "Last Stand" title is shown. This happens once per wave.
+  pending) and at most `countPct`% of the enemies the wave spawned (at least 1) are still alive. Then every
+  living enemy is empowered at once, and a "Last Stand" title is shown. This happens once per wave. Who is left
+  is not decided up front, so the order enemies die in cannot skip the effect.
 - Empowerment is four boosts, each rolled separately from the same range: size (`+x%` scale, through
   `EnemyMovement.ScaleSize` so facing flips keep it), damage reduction (`StatType.damageRes`), damage dealt
   (`StatType.damagePct`) and move speed (`StatType.moveSpeedPct`).
 - Enemies are instantiated, not pooled, so no scale reset is needed.
-- Enemies registered by *Split* clones are not marked, but they count as living enemies and delay the empower.
+- Enemies registered by *Split* clones count as living enemies and delay the empower, but are never empowered themselves.
 
 | Asset | Waves | Range (count %, and each boost) | Quality / rerolls / skill points | Contract rerolls / skill point chance / mixed pool chance | Boss waves |
 | --- | --- | --- | --- |
 | `Regular/LastStand` | 0–105 | 20–50% | 0.35 / 3 / 2 | 2 / 60 / 20 | disallowed |
 | `Unlimited/ULastStand` | 0+ | 30–60% | 0.3 / 2 / 1 | 1 / 35 / 10 | disallowed |
+
+# Bloodtide Anomaly
+
+`AnomalyType.Bloodtide`, run by `BloodtideInstance`. No fail condition; it pays its own `rewardQuality`, `rewardRerolls`
+and `rewardSkillPoints`, and can also be a contract (armed every wave, paying its own `contract*` values).
+
+- `healPct` is rolled once from the `anomalyMinVal`..`anomalyMaxVal` percent range, rounded. A contract re-rolls it every wave.
+- Whenever any enemy dies (any cause, bosses and adds included), every other living enemy heals `healPct`% of its
+  `StatType.EffMaxHp` (at least 1), through `EntityHealth.ChangeHealth`. Healing is capped at max health, never kills and never
+  triggers another death. Enemies already at full health are skipped, so the heal never turns into overhealth. Healing
+  scales with the enemy's `healingPct`, and is blocked if it cannot gain health.
+- Deaths are detected through `EntityHealth.OnDeath`. Spawn hooks subscribe enemies as they spawn, and `UpdateCheck` subscribes
+  any living enemy of the wave the hooks missed (*Split* clones, ambushes), through `WaveManager.GetLivingEnemies`.
+- Nothing is healed while *Hivemind* is active, since health is pooled there.
+- At most 8 green heal numbers are shown per death; every enemy is still healed.
+
+| Asset | Waves | Heal | Quality / rerolls / skill points | Contract rerolls / skill point chance / mixed pool chance | Boss waves |
+| --- | --- | --- | --- | --- | --- |
+| `Regular/Bloodtide` | 0–105 | 3–7% | 0.3 / 2 / 1 | 2 / 65 / 20 | allowed |
+| `Unlimited/UBloodtide` | 0+ | 4–12% | 0.4 / 3 / 2 | 1 / 35 / 10 | allowed |
 
 
 # Attack Cooldown Buttons

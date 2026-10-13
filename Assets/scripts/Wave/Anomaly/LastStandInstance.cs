@@ -18,7 +18,7 @@ public class LastStandInstance : AnomalyInstance
     public LastStandInstance(AnomalyData data) : base(data) => Roll();
 
     public override string Description =>
-        $"The final {countPct}% of the wave's enemies are marked. Once every other enemy falls, they gain +{sizePct}% Size, +{reductionPct}% Damage Reduction, +{damagePct}% Damage and +{moveSpeedPct}% Move Speed";
+        $"When only the final {countPct}% of the wave's enemies remain, they gain +{sizePct}% Size, +{reductionPct}% Damage Reduction, +{damagePct}% Damage and +{moveSpeedPct}% Move Speed";
 
     private float RollPct()
     {
@@ -48,24 +48,19 @@ public class LastStandInstance : AnomalyInstance
         if (enemy.TryGetComponent<EntityHealth>(out var eh)) spawned.Add(eh);
     }
 
-    // The marked enemies are always the last countPct% of the spawn order, so ambush and split spawns
-    // that join mid-wave simply shift the window. Nothing is committed until spawning is finished.
+    // Empowers whoever is still alive once spawning is finished and no more than countPct% of the wave's enemies
+    // remain. Which enemies those are is not decided up front, so the order they die in cannot dodge it.
     public override void UpdateCheck(float dt)
     {
         if (empowered || spawned.Count == 0 || WaveManager.SpawnsPending) return;
 
         int count = Mathf.Clamp(Mathf.RoundToInt(spawned.Count * countPct * 0.01f), 1, spawned.Count);
-        int first = spawned.Count - count;
-        int markedAlive = 0;
-        for (int i = first; i < spawned.Count; i++)
-            if (Alive(spawned[i])) markedAlive++;
-
-        if (WaveManager.LivingEnemyCount() > markedAlive) return;
+        int living = WaveManager.LivingEnemyCount();
+        if (living == 0 || living > count) return;
 
         empowered = true;
-        if (markedAlive == 0) return;
 
-        for (int i = first; i < spawned.Count; i++)
+        for (int i = 0; i < spawned.Count; i++)
             if (Alive(spawned[i])) Empower(spawned[i]);
 
         IAnnouncer.Current?.SetTitleForDuration("Last Stand", 0.6f, 0.2f, 0.2f);

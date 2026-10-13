@@ -1,6 +1,5 @@
 # Planned Features 
 ## High priority To-Do
-- [4] **Bloodtide** (no fail) - every enemy kill heals all other living enemies by `x%` max HP. (can be contract)
 - [4] fix lang files for certain stats (eg. rush impact)
 - [3] move certain awakenings/attacks to be hard/nightmare only
 - [2] finish everything in between first and second ring in skill tree

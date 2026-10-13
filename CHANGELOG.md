@@ -7,10 +7,27 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.8.35] - 2026-10-12 - Bloodtide
+
+### Added
+- **Bloodtide anomaly / contract** (`AnomalyType.Bloodtide`, `BloodtideInstance`, `Assets/data/Wave/Anomaly/Regular/Bloodtide.asset`, `Assets/data/Wave/Anomaly/Unlimited/UBloodtide.asset`): has no fail condition. Whenever an enemy dies, every other living enemy heals `healPct`% of its max health (rolled once from `anomalyMinVal`..`anomalyMaxVal`, re-rolled each wave as a contract; capped at max health, never kills). Deaths are tracked through `EntityHealth.OnDeath`, including enemies the spawn hooks never saw. No healing while Hivemind is active. Allowed on boss waves. Regular runs waves 0-105 with 3-7% and pays 0.3 quality, 2 rerolls and 1 skill point; `UBloodtide` has no wave cap, 4-12% and pays 0.4 quality, 3 rerolls and 2 skill points. Both are offered as contracts (`isContract`)
+- **Wave helpers**: `WaveManager.GetLivingEnemies(buffer)` and `WaveManager.HivemindActive`, used by Bloodtide
+- Bloodtide is added to the anomaly pool in `Assets/New.unity`
+
+### Changed
+- **Anomaly info text**: the HUD line for wave anomalies (`SetAnomalyInfo`) now shows only `Current Anomaly: <name>` (`WaveManager.CurrentAnomalyLabel`), replacing the per-anomaly descriptions such as "No Damage Anomaly Active". Time Trial keeps its live timer
+
+### Fixed
+- **Last Stand** empowers the survivors instead of pre-marked enemies: once spawning ends and at most `countPct`% of the wave's enemies (at least 1) are still alive, every living enemy is empowered. Marked enemies could all die before the rest, so the effect could never trigger
+
+### Docs
+- `GAME.md`: Bloodtide section added, with its asset table; Last Stand section rewritten for survivor-based empowerment
+- `README.md`: current release v0.8.34 → v0.8.35, *Bloodtide* added to the anomaly lists, Last Stand wording updated
+
 ## [v0.8.34] - 2026-10-12 - Last Stand
 
 ### Added
-- **Last Stand anomaly / contract** (`AnomalyType.LastStand`, `LastStandInstance`, `Assets/data/Wave/Anomaly/Regular/LastStand.asset`, `Assets/data/Wave/Anomaly/Unlimited/ULastStand.asset`): has no fail condition. The final `countPct`% of the enemies a wave spawns (by spawn order, at least 1) are marked. Once no spawns remain and no living enemy is outside the marked set, each marked enemy still alive gains four separately rolled boosts from one `anomalyMinVal`..`anomalyMaxVal` percent range: size (through the new `EnemyMovement.ScaleSize`), damage reduction (`StatType.damageRes`), damage (`StatType.damagePct`) and move speed (`StatType.moveSpeedPct`). Empowerment happens once per wave with a "Last Stand" title. Regular runs waves 0-105 with 20-50% and pays 0.35 quality, 3 rerolls and 2 skill points. `ULastStand` has no wave cap, 30-60% and pays 0.3 quality, 2 rerolls and 1 skill point. Both are offered as contracts (`isContract`)
+- **Last Stand anomaly / contract** (`AnomalyType.LastStand`, `LastStandInstance`, `Assets/data/Wave/Anomaly/Regular/LastStand.asset`, `Assets/data/Wave/Anomaly/Unlimited/ULastStand.asset`): has no fail condition. Once no spawns remain and at most `countPct`% of the enemies a wave spawned (at least 1) are still alive, each living enemy gains four separately rolled boosts from one `anomalyMinVal`..`anomalyMaxVal` percent range: size (through the new `EnemyMovement.ScaleSize`), damage reduction (`StatType.damageRes`), damage (`StatType.damagePct`) and move speed (`StatType.moveSpeedPct`). Empowerment happens once per wave with a "Last Stand" title. Regular runs waves 0-105 with 20-50% and pays 0.35 quality, 3 rerolls and 2 skill points. `ULastStand` has no wave cap, 30-60% and pays 0.3 quality, 2 rerolls and 1 skill point. Both are offered as contracts (`isContract`)
 - **Wave helpers**: `WaveManager.SpawnsPending` (nothing left to spawn and no reservation pending) and `WaveManager.LivingEnemyCount()`, used by Last Stand. `EnemyMovement.ScaleSize(mult)` scales the enemy and keeps the size across facing flips
 - Last Stand is added to the anomaly pool in `Assets/New.unity`
 

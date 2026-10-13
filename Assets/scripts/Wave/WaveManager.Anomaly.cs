@@ -97,6 +97,19 @@ namespace CrystalFlux.WaveSystem
             };
         }
 
+        private AnomalyInstance labelOwner;
+        private string anomalyLabel;
+
+        private string CurrentAnomalyLabel()
+        {
+            if (!ReferenceEquals(labelOwner, currentAnomaly))
+            {
+                labelOwner = currentAnomaly;
+                anomalyLabel = $"Current Anomaly: {currentAnomaly.amd.anomalyName}";
+            }
+            return anomalyLabel;
+        }
+
         private void SetAnomalyInfo(string s)
         {
             if (ReferenceEquals(s, lastInfo)) return;
