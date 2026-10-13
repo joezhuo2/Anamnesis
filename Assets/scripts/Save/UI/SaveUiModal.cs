@@ -8,13 +8,14 @@ namespace CrystalFlux.SaveSystem
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         private static void Register()
         {
-            UIModal.IsTypingCheck = () => SaveNamePromptUI.IsTyping;
+            UIModal.IsTypingCheck = () => SaveNamePromptUI.IsTyping || SaveListPanelUI.IsTyping;
             UIModal.TryCloseTopCheck = TryCloseTop;
         }
 
         public static bool AnyOpen
             => ConfirmDialogUI.Instance != null && ConfirmDialogUI.Instance.IsOpen
-            || SaveNamePromptUI.Instance != null && SaveNamePromptUI.Instance.IsOpen;
+            || SaveNamePromptUI.Instance != null && SaveNamePromptUI.Instance.IsOpen
+            || SaveListPanelUI.Instance != null && SaveListPanelUI.Instance.IsOpen;
 
         public static bool TryCloseTop()
         {
@@ -27,6 +28,12 @@ namespace CrystalFlux.SaveSystem
             if (SaveNamePromptUI.Instance != null && SaveNamePromptUI.Instance.IsOpen)
             {
                 SaveNamePromptUI.Instance.Close();
+                return true;
+            }
+
+            if (SaveListPanelUI.Instance != null && SaveListPanelUI.Instance.IsOpen)
+            {
+                SaveListPanelUI.Instance.Close();
                 return true;
             }
 
