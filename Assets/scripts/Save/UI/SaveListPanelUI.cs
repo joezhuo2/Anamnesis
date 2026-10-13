@@ -49,6 +49,7 @@ namespace CrystalFlux.SaveSystem
         private SaveKind current = SaveKind.Build;
         private SaveFile selected;
         private bool pushedPause;
+        private int shownCount;
 
         public bool IsOpen => root != null && root.activeSelf;
 
@@ -59,6 +60,7 @@ namespace CrystalFlux.SaveSystem
 
             SetupSearchField();
             SetupSort();
+            SetupListLayout();
 
             if (buildsTab != null) buildsTab.onClick.AddListener(ShowBuilds);
             if (runsTab != null) runsTab.onClick.AddListener(ShowRuns);
@@ -115,6 +117,28 @@ namespace CrystalFlux.SaveSystem
             searchField.onValueChanged.AddListener(OnSearchChanged);
         }
 
+        private void SetupListLayout()
+        {
+            if (listContent == null) return;
+
+            if (!listContent.TryGetComponent<VerticalLayoutGroup>(out var group))
+                group = listContent.gameObject.AddComponent<VerticalLayoutGroup>();
+
+            group.spacing = 6f;
+            group.padding = new RectOffset(6, 6, 6, 6);
+            group.childAlignment = TextAnchor.UpperCenter;
+            group.childControlWidth = true;
+            group.childControlHeight = false;
+            group.childForceExpandWidth = true;
+            group.childForceExpandHeight = false;
+
+            if (!listContent.TryGetComponent<ContentSizeFitter>(out var fitter))
+                fitter = listContent.gameObject.AddComponent<ContentSizeFitter>();
+
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        }
+
         private void SetupSort()
         {
             if (sortDropdown == null) return;
@@ -147,8 +171,7 @@ namespace CrystalFlux.SaveSystem
 
         private void ApplyButtonTooltips()
         {
-            SetTooltip(loadButton, "Load", "Load the selected save.
-Loading a run removes its save.");
+            SetTooltip(loadButton, "Load", "Load the selected save. Loading a run removes its save.");
             SetTooltip(renameButton, "Rename", "Rename the selected save.");
             SetTooltip(deleteButton, "Delete", "Permanently delete the selected save.");
             SetTooltip(closeButton, "Close", "Close this window.");
@@ -217,11 +240,21 @@ Loading a run removes its save.");
             }
 
             if (titleText != null) titleText.text = current == SaveKind.Build ? "Builds" : "Runs";
-            if (emptyText != null) emptyText.gameObject.SetActive(shown.Count == 0);
+            shownCount = shown.Count;
+            UpdateStatusText();
             if (buildsTabHighlight != null) buildsTabHighlight.enabled = current == SaveKind.Build;
             if (runsTabHighlight != null) runsTabHighlight.enabled = current == SaveKind.Run;
 
             UpdateButtons();
+        }
+
+        private void UpdateStatusText()
+        {
+            if (emptyText == null) return;
+
+            string current = $"Current: {(selected != null ? selected.meta.name : "none")}";
+            emptyText.text = shownCount == 0 ? $"List is Empty\n{current}" : current;
+            emptyText.gameObject.SetActive(true);
         }
 
         private void EnsureRows(int count)
@@ -242,6 +275,7 @@ Loading a run removes its save.");
                 if (r.gameObject.activeSelf) r.SetSelected(r.File != null && r.File.meta.id == selected.meta.id);
 
             UpdateButtons();
+            UpdateStatusText();
         }
 
         private SaveRowUI SelectedRow()
