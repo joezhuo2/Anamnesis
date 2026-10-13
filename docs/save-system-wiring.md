@@ -50,7 +50,7 @@ A Button GameObject with:
 
 ### Escape menu (SettingsPanelUI children)
 - **Save Progress** button: **SaveMenuButtons**, `action = SaveProgress`. It is non-interactable before the run starts, while a reward/anomaly/contract/synergy pick is open, and after death. Saving returns to the home screen.
-- **Save Build** button: **SaveMenuButtons**, `action = SaveBuild`. Interactable only between waves with no pending picks. After saving, the label shows "Build Saved" until the next wave.
+- **Save Build** button: **SaveMenuButtons**, `action = SaveBuild`. Mid-wave it saves the build from the start of the current wave (waves chain with no idle gap). After saving, the label shows "Build Saved" until the next wave.
 
 ### Death screen (DeathScreenUI panel)
 - **Save Build** button: **SaveMenuButtons**, `action = SaveBuild`.
@@ -64,14 +64,16 @@ Escape closes the confirm dialog first, then the name prompt, then the save list
 ## 4. Playtest checklist
 
 - [ ] Rebuild catalog; no console errors on Play
-- [ ] Start Regular run, clear 2 waves, open Escape between waves: Save Progress enabled; save as "A" → returns to home
+- [ ] Start Regular run, clear 2 waves, open Escape during wave 3: Save Progress enabled; save as "A" → returns to home
 - [ ] Load Run → list shows "A" with hover info (wave, mode/difficulty, DPS, attacks, playtime, date) → Load → confirm → run starts at the saved wave
 - [ ] After loading: stats, gold, level/xp, attacks, awakenings, skill tree nodes + unspent points, synergies, contract all match pre-save. "A" is gone from the list
 - [ ] Mid-wave Save Progress → loads at the start of that wave with the state from wave start
 - [ ] With a reward/anomaly/contract/synergy panel open, Save Progress is disabled
 - [ ] Save Progress again in a loaded run: name is prefilled; confirm triggers the overwrite prompt
 - [ ] Die → death screen Save Build "B" → home → Load Build → pick "B" → label shows → choose difficulty/mode → Regular → wave 1 with full build, no pre-run picks, contract kept, owned rares/awakenings not offered
-- [ ] Escape Save Build between waves works; disabled mid-wave
+- [ ] Escape Save Build mid-wave saves the wave-start build (gold/xp gained this wave not included)
+- [ ] Unlock a skill node on the home screen, then Load Run: that node is not unlocked after load
+- [ ] Hold GoldBuff with gold, save/load twice: its stat bonus does not grow
 - [ ] Ironman run: Save Build → shows "Read only", Load disabled. Save Progress in ironman loads and stays ironman
 - [ ] Unlimited mode: Save Progress + Load Run resumes in Unlimited at the right wave
 - [ ] List: tab switch, search (name / attack / mode / difficulty, multi-word), sort (Date/Wave/DPS/Name), rename (incl. to an existing name → overwrite prompt), delete (confirm)

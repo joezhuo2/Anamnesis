@@ -23,7 +23,7 @@ Let players keep a run across sessions and reuse strong builds.
 | Save Progress with unresolved picks | Disabled (reward/synergy/milestone/anomaly/contract panel open) |
 | After Save Progress | Return to home screen |
 | Resave in same run | Name prompt prefilled with the run's last save name; same name asks to overwrite |
-| Save Build buttons | Death screen + Escape menu (Escape: only between waves, no pending picks) |
+| Save Build buttons | Death screen + Escape menu. Waves chain with no idle gap, so Escape Save Build mid-wave writes the build captured at the start of the current wave (right after picks resolved); outside an active wave it captures live |
 | Death build state | State at death (mid-wave gold/xp included), transient status-effect stats removed |
 | Hover info | Name, wave reached, mode + difficulty (+ironman), highest DPS, equipped attacks, date saved, playtime, incompatibility reason if any |
 | List actions | Delete (confirm), rename, overwrite on same name, sort (date / wave / DPS / name) |
