@@ -7,16 +7,22 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
-## [Unreleased]
+## [v0.8.35] - 2026-10-12 - Bloodtide
 
 ### Added
-- **Bloodtide anomaly / contract** (`AnomalyType.Bloodtide`, `BloodtideInstance`, `Assets/data/Wave/Anomaly/Regular/Bloodtide.asset`, `Assets/data/Wave/Anomaly/Unlimited/UBloodtide.asset`): has no fail condition. Whenever an enemy dies, every other living enemy heals `healPct`% of its max health (rolled once from `anomalyMinVal`..`anomalyMaxVal`, re-rolled each wave as a contract; capped at max health, never kills). Deaths are tracked through `EntityHealth.OnDeath`, including enemies the spawn hooks never saw. No healing while Hivemind is active. Allowed on boss waves. Regular runs waves 0-105 and pays 0.35 quality, 3 rerolls and 2 skill points; `UBloodtide` has no wave cap and pays 0.3 quality, 2 rerolls and 1 skill point. Both use 3-8% and are offered as contracts (`isContract`)
+- **Bloodtide anomaly / contract** (`AnomalyType.Bloodtide`, `BloodtideInstance`, `Assets/data/Wave/Anomaly/Regular/Bloodtide.asset`, `Assets/data/Wave/Anomaly/Unlimited/UBloodtide.asset`): has no fail condition. Whenever an enemy dies, every other living enemy heals `healPct`% of its max health (rolled once from `anomalyMinVal`..`anomalyMaxVal`, re-rolled each wave as a contract; capped at max health, never kills). Deaths are tracked through `EntityHealth.OnDeath`, including enemies the spawn hooks never saw. No healing while Hivemind is active. Allowed on boss waves. Regular runs waves 0-105 with 3-7% and pays 0.3 quality, 2 rerolls and 1 skill point; `UBloodtide` has no wave cap, 4-12% and pays 0.4 quality, 3 rerolls and 2 skill points. Both are offered as contracts (`isContract`)
 - **Wave helpers**: `WaveManager.GetLivingEnemies(buffer)` and `WaveManager.HivemindActive`, used by Bloodtide
 - Bloodtide is added to the anomaly pool in `Assets/New.unity`
 
+### Changed
+- **Anomaly info text**: the HUD line for wave anomalies (`SetAnomalyInfo`) now shows only `Current Anomaly: <name>` (`WaveManager.CurrentAnomalyLabel`), replacing the per-anomaly descriptions such as "No Damage Anomaly Active". Time Trial keeps its live timer
+
+### Fixed
+- **Last Stand** empowers the survivors instead of pre-marked enemies: once spawning ends and at most `countPct`% of the wave's enemies (at least 1) are still alive, every living enemy is empowered. Marked enemies could all die before the rest, so the effect could never trigger
+
 ### Docs
-- `GAME.md`: Bloodtide section added, with its asset table
-- `README.md`: *Bloodtide* added to the anomaly lists
+- `GAME.md`: Bloodtide section added, with its asset table; Last Stand section rewritten for survivor-based empowerment
+- `README.md`: current release v0.8.34 → v0.8.35, *Bloodtide* added to the anomaly lists, Last Stand wording updated
 
 ## [v0.8.34] - 2026-10-12 - Last Stand
 

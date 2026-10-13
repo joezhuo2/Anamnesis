@@ -100,7 +100,6 @@ namespace CrystalFlux.WaveSystem
         private AnomalyInstance labelOwner;
         private string anomalyLabel;
 
-        // Cached per instance: SetAnomalyInfo compares by reference, so a fresh string every frame would rewrite the text.
         private string CurrentAnomalyLabel()
         {
             if (!ReferenceEquals(labelOwner, currentAnomaly))

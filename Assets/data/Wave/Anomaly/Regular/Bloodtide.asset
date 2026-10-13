@@ -20,14 +20,14 @@ MonoBehaviour:
   anomalyType: 18
   anomalyValue: 0
   anomalyMinVal: 3
-  anomalyMaxVal: 8
+  anomalyMaxVal: 7
   disallowOnBossWave: 0
   bossOnly: 0
   anomalyEffect: {fileID: 0}
-  rewardQuality: 0.35
-  rewardRerolls: 3
-  rewardSkillPoints: 2
+  rewardQuality: 0.3
+  rewardRerolls: 2
+  rewardSkillPoints: 1
   isContract: 1
   contractRerolls: 2
-  contractSkillPointChance: 60
+  contractSkillPointChance: 65
   contractMixedPoolChance: 20

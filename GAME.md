@@ -2028,8 +2028,8 @@ and `rewardSkillPoints`, and can also be a contract (armed every wave, paying it
 
 | Asset | Waves | Heal | Quality / rerolls / skill points | Contract rerolls / skill point chance / mixed pool chance | Boss waves |
 | --- | --- | --- | --- | --- | --- |
-| `Regular/Bloodtide` | 0–105 | 3–8% | 0.35 / 3 / 2 | 2 / 60 / 20 | allowed |
-| `Unlimited/UBloodtide` | 0+ | 3–8% | 0.3 / 2 / 1 | 1 / 35 / 10 | allowed |
+| `Regular/Bloodtide` | 0–105 | 3–7% | 0.3 / 2 / 1 | 2 / 65 / 20 | allowed |
+| `Unlimited/UBloodtide` | 0+ | 4–12% | 0.4 / 3 / 2 | 1 / 35 / 10 | allowed |
 
 
 # Attack Cooldown Buttons
