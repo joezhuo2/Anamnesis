@@ -1,0 +1,576 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d527141aa698ba43ba0c802f52b83e7, type: 3}
+  m_Name: SaveAssetCatalog
+  m_EditorClassIdentifier: CrystalFlux.Save::CrystalFlux.SaveSystem.SaveAssetCatalog
+  entries:
+  - id: af3cd4514db8f994baaeb1f4ae50478a
+    name: example ad
+    asset: {fileID: 11400000, guid: af3cd4514db8f994baaeb1f4ae50478a, type: 2}
+  - id: ad5933620eca8994dbf987d01e1707c8
+    name: Ball AD
+    asset: {fileID: 11400000, guid: ad5933620eca8994dbf987d01e1707c8, type: 2}
+  - id: 47a3fbab105cdc94880bd388d1ccc6d1
+    name: BigBall AD
+    asset: {fileID: 11400000, guid: 47a3fbab105cdc94880bd388d1ccc6d1, type: 2}
+  - id: 21d0e8eba7447eb4a825fe7b2ea95285
+    name: circleballs ad
+    asset: {fileID: 11400000, guid: 21d0e8eba7447eb4a825fe7b2ea95285, type: 2}
+  - id: 5018ef59fc68157478371e978c825e20
+    name: Summon AD
+    asset: {fileID: 11400000, guid: 5018ef59fc68157478371e978c825e20, type: 2}
+  - id: 5ce3fca1a2a210b4683ba5a0c4920ebe
+    name: tp ad
+    asset: {fileID: 11400000, guid: 5ce3fca1a2a210b4683ba5a0c4920ebe, type: 2}
+  - id: c507983e3fec1e5458b29c5dff279df1
+    name: Wave AD
+    asset: {fileID: 11400000, guid: c507983e3fec1e5458b29c5dff279df1, type: 2}
+  - id: 8d7903d99912eb640bfa48e40a8ce20f
+    name: charge ad
+    asset: {fileID: 11400000, guid: 8d7903d99912eb640bfa48e40a8ce20f, type: 2}
+  - id: 02ce6112b369f2b49ab223f8bf3efe84
+    name: cross ad
+    asset: {fileID: 11400000, guid: 02ce6112b369f2b49ab223f8bf3efe84, type: 2}
+  - id: 142a590cfac0da84abd2139b09b561ee
+    name: cross_proj ad
+    asset: {fileID: 11400000, guid: 142a590cfac0da84abd2139b09b561ee, type: 2}
+  - id: d503ef41de8ad854c86a710b678479f5
+    name: Orbit AD
+    asset: {fileID: 11400000, guid: d503ef41de8ad854c86a710b678479f5, type: 2}
+  - id: 99b03bf5505ea004c8127f41e52c1aed
+    name: slam ad
+    asset: {fileID: 11400000, guid: 99b03bf5505ea004c8127f41e52c1aed, type: 2}
+  - id: 40b20fe98cd165142aa29543e9e07fb1
+    name: tdlrbh ad
+    asset: {fileID: 11400000, guid: 40b20fe98cd165142aa29543e9e07fb1, type: 2}
+  - id: f3cc7e014ed852f468d5721a3bbd0087
+    name: BallSpam AD
+    asset: {fileID: 11400000, guid: f3cc7e014ed852f468d5721a3bbd0087, type: 2}
+  - id: 27dfe950167aee049ab4380900febe09
+    name: Ripple AD
+    asset: {fileID: 11400000, guid: 27dfe950167aee049ab4380900febe09, type: 2}
+  - id: 924814cb946ffee43b4d474df24488b7
+    name: SplashA AD
+    asset: {fileID: 11400000, guid: 924814cb946ffee43b4d474df24488b7, type: 2}
+  - id: 1fbe50cce2240ef41949d96992814549
+    name: SplashB AD
+    asset: {fileID: 11400000, guid: 1fbe50cce2240ef41949d96992814549, type: 2}
+  - id: 6992a894ee144db429217e9098637c52
+    name: circlein ad
+    asset: {fileID: 11400000, guid: 6992a894ee144db429217e9098637c52, type: 2}
+  - id: d4194199ecd546246be73d289971a1f7
+    name: Lich B AD
+    asset: {fileID: 11400000, guid: d4194199ecd546246be73d289971a1f7, type: 2}
+  - id: 88fb5d50bc45a4b4a8e705140fe9c1a3
+    name: Lich A AD
+    asset: {fileID: 11400000, guid: 88fb5d50bc45a4b4a8e705140fe9c1a3, type: 2}
+  - id: 3fbcbd6ac701c904e8076bb3e85cd3ba
+    name: Lich A2 AD
+    asset: {fileID: 11400000, guid: 3fbcbd6ac701c904e8076bb3e85cd3ba, type: 2}
+  - id: 963dcbc7ba74d3748809625f7c94a829
+    name: balls ad
+    asset: {fileID: 11400000, guid: 963dcbc7ba74d3748809625f7c94a829, type: 2}
+  - id: 994bd3b4b99783d4bb9d64921e6a21f5
+    name: spam ad
+    asset: {fileID: 11400000, guid: 994bd3b4b99783d4bb9d64921e6a21f5, type: 2}
+  - id: 4f7fc219c5c38844c853fd4b2c8c2aec
+    name: strike ad
+    asset: {fileID: 11400000, guid: 4f7fc219c5c38844c853fd4b2c8c2aec, type: 2}
+  - id: 0c948d6df9529e946ae3ee74640e40bb
+    name: toss ad
+    asset: {fileID: 11400000, guid: 0c948d6df9529e946ae3ee74640e40bb, type: 2}
+  - id: a51593da76605a745ba87a30de4ec139
+    name: Bat Boomerang AD
+    asset: {fileID: 11400000, guid: a51593da76605a745ba87a30de4ec139, type: 2}
+  - id: 4b6e965a0b528d14ab6a6e953bb73b36
+    name: Bat Mark AD
+    asset: {fileID: 11400000, guid: 4b6e965a0b528d14ab6a6e953bb73b36, type: 2}
+  - id: c8a8a4d0239b50949b2a5304a1db279f
+    name: Crab B AD
+    asset: {fileID: 11400000, guid: c8a8a4d0239b50949b2a5304a1db279f, type: 2}
+  - id: 7f4f8986811f2b1489537d6386511433
+    name: Crab A AD
+    asset: {fileID: 11400000, guid: 7f4f8986811f2b1489537d6386511433, type: 2}
+  - id: 5b9ca13cda46da94fb3c221b94bc1a98
+    name: s1_a_ad
+    asset: {fileID: 11400000, guid: 5b9ca13cda46da94fb3c221b94bc1a98, type: 2}
+  - id: b3ed3095e700666429b7d921fc194d05
+    name: Blizzard AD
+    asset: {fileID: 11400000, guid: b3ed3095e700666429b7d921fc194d05, type: 2}
+  - id: 90815947ab2a89742bebfefdbaacac82
+    name: snowstorm ad
+    asset: {fileID: 11400000, guid: 90815947ab2a89742bebfefdbaacac82, type: 2}
+  - id: 4180ba773d81ed142a5e5ea6e45e1f8a
+    name: Eruption AD
+    asset: {fileID: 11400000, guid: 4180ba773d81ed142a5e5ea6e45e1f8a, type: 2}
+  - id: 5bd2da7591e9ef34eab30484a86e1985
+    name: Glacial Expanse ad
+    asset: {fileID: 11400000, guid: 5bd2da7591e9ef34eab30484a86e1985, type: 2}
+  - id: 7513bafbbdeec51499d36286437a6ec0
+    name: Static Field ad
+    asset: {fileID: 11400000, guid: 7513bafbbdeec51499d36286437a6ec0, type: 2}
+  - id: 53067447c4b57fb4b82d438bd4b79129
+    name: Coherent Strike AD
+    asset: {fileID: 11400000, guid: 53067447c4b57fb4b82d438bd4b79129, type: 2}
+  - id: 63c428785138db8419d8e3f680232b41
+    name: p_s_ad
+    asset: {fileID: 11400000, guid: 63c428785138db8419d8e3f680232b41, type: 2}
+  - id: c92f6ce517bb55b4893c24e55217b44a
+    name: p_b_ad
+    asset: {fileID: 11400000, guid: c92f6ce517bb55b4893c24e55217b44a, type: 2}
+  - id: 8ae4954fe1298164e9bbb55472f4165a
+    name: Aeternus AD
+    asset: {fileID: 11400000, guid: 8ae4954fe1298164e9bbb55472f4165a, type: 2}
+  - id: 64ed8dbedf1b5784abeea70a41c5077f
+    name: Aphelion AD
+    asset: {fileID: 11400000, guid: 64ed8dbedf1b5784abeea70a41c5077f, type: 2}
+  - id: 2677f44a55aa8444ab153714700a4996
+    name: Astral Nova AD
+    asset: {fileID: 11400000, guid: 2677f44a55aa8444ab153714700a4996, type: 2}
+  - id: e57b60953797705408d98a079d85adec
+    name: Blaze A AD
+    asset: {fileID: 11400000, guid: e57b60953797705408d98a079d85adec, type: 2}
+  - id: b2e11b413e606e841b42b8b037abfc0c
+    name: Blaze A1 AD
+    asset: {fileID: 11400000, guid: b2e11b413e606e841b42b8b037abfc0c, type: 2}
+  - id: 0bcc871b0e3d88d4faee6b858ef95aca
+    name: Blaze B AD
+    asset: {fileID: 11400000, guid: 0bcc871b0e3d88d4faee6b858ef95aca, type: 2}
+  - id: 34126cf8f2525994a9eb49bd077acd07
+    name: Blaze B1 AD
+    asset: {fileID: 11400000, guid: 34126cf8f2525994a9eb49bd077acd07, type: 2}
+  - id: b168d8a62ae490f4c8fef979a8bcca79
+    name: Blood Pact AD
+    asset: {fileID: 11400000, guid: b168d8a62ae490f4c8fef979a8bcca79, type: 2}
+  - id: 45ea950474f484a4d856700b90519b8e
+    name: Entwined Fate ad
+    asset: {fileID: 11400000, guid: 45ea950474f484a4d856700b90519b8e, type: 2}
+  - id: 8959ad3f839fa7a408b96be097ed75a7
+    name: Exodus A AD
+    asset: {fileID: 11400000, guid: 8959ad3f839fa7a408b96be097ed75a7, type: 2}
+  - id: 55960dcf7e4dd8c45a052a6ca07d272b
+    name: Exodus B AD
+    asset: {fileID: 11400000, guid: 55960dcf7e4dd8c45a052a6ca07d272b, type: 2}
+  - id: a4a400a0c23ca2b49853c4b2c0af1895
+    name: Exodus C AD
+    asset: {fileID: 11400000, guid: a4a400a0c23ca2b49853c4b2c0af1895, type: 2}
+  - id: 8afff44b5a5dbe947a9f4bdcc9dfce62
+    name: Ignition Flash AD
+    asset: {fileID: 11400000, guid: 8afff44b5a5dbe947a9f4bdcc9dfce62, type: 2}
+  - id: 020fea61b27ee7c48811f4b5c4a268d9
+    name: Lifeforce AD 1
+    asset: {fileID: 11400000, guid: 020fea61b27ee7c48811f4b5c4a268d9, type: 2}
+  - id: 8343bb44033ca4e41aa14c9276118998
+    name: Lifeforce AD 2
+    asset: {fileID: 11400000, guid: 8343bb44033ca4e41aa14c9276118998, type: 2}
+  - id: 32739481cac91ff4f90db8596af86b20
+    name: Lifeforce AD
+    asset: {fileID: 11400000, guid: 32739481cac91ff4f90db8596af86b20, type: 2}
+  - id: 81a447ab5f2d83c42810a5bc93d575fd
+    name: Luminaria AD
+    asset: {fileID: 11400000, guid: 81a447ab5f2d83c42810a5bc93d575fd, type: 2}
+  - id: 3eea38c15aa1c204aaa5776dc5814a6a
+    name: Meteor Shower AD
+    asset: {fileID: 11400000, guid: 3eea38c15aa1c204aaa5776dc5814a6a, type: 2}
+  - id: bd91f00154d86a04397a66652a8a79fa
+    name: Nebula AD
+    asset: {fileID: 11400000, guid: bd91f00154d86a04397a66652a8a79fa, type: 2}
+  - id: 5476f691af2c85c4a8f8e8344c5a487a
+    name: Nirvana A AD
+    asset: {fileID: 11400000, guid: 5476f691af2c85c4a8f8e8344c5a487a, type: 2}
+  - id: 403c720cde7a5004da01b21376a4a0c0
+    name: Nocturnis C AD
+    asset: {fileID: 11400000, guid: 403c720cde7a5004da01b21376a4a0c0, type: 2}
+  - id: 7af60271d4896fe4b95325e11b9f1974
+    name: Nocturnis T AD
+    asset: {fileID: 11400000, guid: 7af60271d4896fe4b95325e11b9f1974, type: 2}
+  - id: ce1a1fef637038e479776b9edf9a75eb
+    name: Prism Bolt ad
+    asset: {fileID: 11400000, guid: ce1a1fef637038e479776b9edf9a75eb, type: 2}
+  - id: 48d68fcb7dec03f4f94cf7c901efd169
+    name: Prism Bolt Shard  ad
+    asset: {fileID: 11400000, guid: 48d68fcb7dec03f4f94cf7c901efd169, type: 2}
+  - id: fcffe03b82e7d4b44b576d92f26ef132
+    name: Prism Bolt Shrapnel ad
+    asset: {fileID: 11400000, guid: fcffe03b82e7d4b44b576d92f26ef132, type: 2}
+  - id: 0824ad99600b79844a6e35ce04f50c4b
+    name: Revelation AD
+    asset: {fileID: 11400000, guid: 0824ad99600b79844a6e35ce04f50c4b, type: 2}
+  - id: 3a460cf6d9a37344499ce3a89112bf9a
+    name: Sacred Surge AD
+    asset: {fileID: 11400000, guid: 3a460cf6d9a37344499ce3a89112bf9a, type: 2}
+  - id: 2f0953e0a32bb9e4cbd8ced71255642f
+    name: Shattered Singularity A AD
+    asset: {fileID: 11400000, guid: 2f0953e0a32bb9e4cbd8ced71255642f, type: 2}
+  - id: c207eb95cf5ab114c9fac8af957ed09f
+    name: Shattered Singularity B AD
+    asset: {fileID: 11400000, guid: c207eb95cf5ab114c9fac8af957ed09f, type: 2}
+  - id: 3609fa0b3ba2ecf4eb15f0612165c7c4
+    name: Solar Collapse AD
+    asset: {fileID: 11400000, guid: 3609fa0b3ba2ecf4eb15f0612165c7c4, type: 2}
+  - id: 858bea3437e936045a1653e89167977e
+    name: Starfury AD
+    asset: {fileID: 11400000, guid: 858bea3437e936045a1653e89167977e, type: 2}
+  - id: a5e26884cd5205647beae0358e00234c
+    name: Stellar Maelstrom AD
+    asset: {fileID: 11400000, guid: a5e26884cd5205647beae0358e00234c, type: 2}
+  - id: 85c0531ceefabe643b8bf085c31052e5
+    name: Subspace Blitz AD
+    asset: {fileID: 11400000, guid: 85c0531ceefabe643b8bf085c31052e5, type: 2}
+  - id: 20b0b6bc971547c4686bb240346d350a
+    name: Supernova AD
+    asset: {fileID: 11400000, guid: 20b0b6bc971547c4686bb240346d350a, type: 2}
+  - id: 5906dcd1a1e97b24f997c95ffdf4c925
+    name: Warp A AD
+    asset: {fileID: 11400000, guid: 5906dcd1a1e97b24f997c95ffdf4c925, type: 2}
+  - id: cde4c5f98bf9dd840b0ae19c9d77fa86
+    name: Warp B AD
+    asset: {fileID: 11400000, guid: cde4c5f98bf9dd840b0ae19c9d77fa86, type: 2}
+  - id: 53df949764372ec4b8b1b52be74feef5
+    name: Astral Disjunction AD
+    asset: {fileID: 11400000, guid: 53df949764372ec4b8b1b52be74feef5, type: 2}
+  - id: b1a5467fbe69f6f4bb68a21a361d5cdf
+    name: Decoy AD
+    asset: {fileID: 11400000, guid: b1a5467fbe69f6f4bb68a21a361d5cdf, type: 2}
+  - id: d492898c3d59a70428ac472f8a5a1ee3
+    name: Hypernova AD
+    asset: {fileID: 11400000, guid: d492898c3d59a70428ac472f8a5a1ee3, type: 2}
+  - id: f10bd05eee2452a49b1b155e844a61e5
+    name: Nitro Accelerator AD
+    asset: {fileID: 11400000, guid: f10bd05eee2452a49b1b155e844a61e5, type: 2}
+  - id: 7b65758829e9704468668069eec8c128
+    name: Nitro Explosion AD
+    asset: {fileID: 11400000, guid: 7b65758829e9704468668069eec8c128, type: 2}
+  - id: d5e9b7761962f634082c47a6f3cfc83c
+    name: Ultrasonic AD
+    asset: {fileID: 11400000, guid: d5e9b7761962f634082c47a6f3cfc83c, type: 2}
+  - id: 3ec023607b72e364896a91de492c8668
+    name: Warp AA AD
+    asset: {fileID: 11400000, guid: 3ec023607b72e364896a91de492c8668, type: 2}
+  - id: 9080120a377ae5641b65561b7c9f3924
+    name: Autopilot AD
+    asset: {fileID: 11400000, guid: 9080120a377ae5641b65561b7c9f3924, type: 2}
+  - id: d0d149569aec915428da1baadf6f61c6
+    name: Chaos Theory AD
+    asset: {fileID: 11400000, guid: d0d149569aec915428da1baadf6f61c6, type: 2}
+  - id: f1593c0c133dfd7488959be27935583c
+    name: Feedback Loop AD
+    asset: {fileID: 11400000, guid: f1593c0c133dfd7488959be27935583c, type: 2}
+  - id: cc256bfbb122f614490ae722fcfc866d
+    name: Shatterpoint ad
+    asset: {fileID: 11400000, guid: cc256bfbb122f614490ae722fcfc866d, type: 2}
+  - id: ef5dff898f3ff374c837f7ed37f814d1
+    name: Shattered Vessel A AD
+    asset: {fileID: 11400000, guid: ef5dff898f3ff374c837f7ed37f814d1, type: 2}
+  - id: b98685f093b87f84a84f1d5e9af955dd
+    name: Shattered Vessel B AD
+    asset: {fileID: 11400000, guid: b98685f093b87f84a84f1d5e9af955dd, type: 2}
+  - id: 875b8effd80e1cf418e1558599cc29b5
+    name: Supersonic AD
+    asset: {fileID: 11400000, guid: 875b8effd80e1cf418e1558599cc29b5, type: 2}
+  - id: c61e3812066bf854f90111b45ff57e7a
+    name: Eldritch Exchange
+    asset: {fileID: 11400000, guid: c61e3812066bf854f90111b45ff57e7a, type: 2}
+  - id: c301a389f27e0094ca62208735d1f611
+    name: Ethereal Mirage Cooldown Indicator
+    asset: {fileID: 11400000, guid: c301a389f27e0094ca62208735d1f611, type: 2}
+  - id: a438f63948bfae542820227698da4e21
+    name: Ethereal Mirage
+    asset: {fileID: 11400000, guid: a438f63948bfae542820227698da4e21, type: 2}
+  - id: f78bf5eb68d43ed459aeb5f8392495a1
+    name: Hypercarry
+    asset: {fileID: 11400000, guid: f78bf5eb68d43ed459aeb5f8392495a1, type: 2}
+  - id: 2526bf077c7fad54d9e0fc1db17b765f
+    name: Paradox
+    asset: {fileID: 11400000, guid: 2526bf077c7fad54d9e0fc1db17b765f, type: 2}
+  - id: 40cb68c5693492e4f85d3ab4c17534c3
+    name: Reminiscence
+    asset: {fileID: 11400000, guid: 40cb68c5693492e4f85d3ab4c17534c3, type: 2}
+  - id: 2453d865c8ef4199b3652e296c64a228
+    name: Resonance
+    asset: {fileID: 11400000, guid: 2453d865c8ef4199b3652e296c64a228, type: 2}
+  - id: c6ec0bc05c27887429bd26fce6360948
+    name: Serenade
+    asset: {fileID: 11400000, guid: c6ec0bc05c27887429bd26fce6360948, type: 2}
+  - id: de0af43916a4183438cb8491f049d136
+    name: Wipeout
+    asset: {fileID: 11400000, guid: de0af43916a4183438cb8491f049d136, type: 2}
+  - id: 7b2d3c8a1b997e641985c551f65b361e
+    name: Autopilot
+    asset: {fileID: 11400000, guid: 7b2d3c8a1b997e641985c551f65b361e, type: 2}
+  - id: 8228772e53bf47749fcf6cee08f5decf
+    name: Blood Bank
+    asset: {fileID: 11400000, guid: 8228772e53bf47749fcf6cee08f5decf, type: 2}
+  - id: 243dce280268f7d4c84380397a5728fb
+    name: Chaos Theory
+    asset: {fileID: 11400000, guid: 243dce280268f7d4c84380397a5728fb, type: 2}
+  - id: 9c58bb189e984dde8fea6d3f9c70a5b8
+    name: Contagion
+    asset: {fileID: 11400000, guid: 9c58bb189e984dde8fea6d3f9c70a5b8, type: 2}
+  - id: 1bb0ed8e066ed0043a3ee4a9b47f53a7
+    name: Cosmic Afterimage
+    asset: {fileID: 11400000, guid: 1bb0ed8e066ed0043a3ee4a9b47f53a7, type: 2}
+  - id: 4044a5878da1cba4197f9b635104c9b0
+    name: Crescendo
+    asset: {fileID: 11400000, guid: 4044a5878da1cba4197f9b635104c9b0, type: 2}
+  - id: 5f5b14c3b532bb641b5037a522596e9c
+    name: Exsanguinate
+    asset: {fileID: 11400000, guid: 5f5b14c3b532bb641b5037a522596e9c, type: 2}
+  - id: c0ee9e14d8189d140a7043cbc9a7d59d
+    name: FeedbackLoop
+    asset: {fileID: 11400000, guid: c0ee9e14d8189d140a7043cbc9a7d59d, type: 2}
+  - id: 6c56e2ddcf04a1f479bd90b065dfcb34
+    name: HexCast
+    asset: {fileID: 11400000, guid: 6c56e2ddcf04a1f479bd90b065dfcb34, type: 2}
+  - id: 902c7526f55e0c44a8ecda7108e87534
+    name: Midas Touch
+    asset: {fileID: 11400000, guid: 902c7526f55e0c44a8ecda7108e87534, type: 2}
+  - id: 3ca78201d7ca54e4d9c9f5a27794f11b
+    name: Momentum
+    asset: {fileID: 11400000, guid: 3ca78201d7ca54e4d9c9f5a27794f11b, type: 2}
+  - id: 9015f6da858ea1e4c9c3ca49f6292ab9
+    name: Shatterpoint
+    asset: {fileID: 11400000, guid: 9015f6da858ea1e4c9c3ca49f6292ab9, type: 2}
+  - id: 11cc298bdc258f1498d1f6b492c1632c
+    name: Shock Absorber
+    asset: {fileID: 11400000, guid: 11cc298bdc258f1498d1f6b492c1632c, type: 2}
+  - id: 8dff3a6c6a1703f40a9e58f59dfc2ac7
+    name: SoulRendPU
+    asset: {fileID: 11400000, guid: 8dff3a6c6a1703f40a9e58f59dfc2ac7, type: 2}
+  - id: faa3c8d59698bdb4089d810a53b1862e
+    name: Starlit Reflexes
+    asset: {fileID: 11400000, guid: faa3c8d59698bdb4089d810a53b1862e, type: 2}
+  - id: d442c0a382ce7cf4cb0853a33c9f1319
+    name: StellarSurge
+    asset: {fileID: 11400000, guid: d442c0a382ce7cf4cb0853a33c9f1319, type: 2}
+  - id: 6a9c0c4f953f76e4384b8f46758b852c
+    name: Supersonic
+    asset: {fileID: 11400000, guid: 6a9c0c4f953f76e4384b8f46758b852c, type: 2}
+  - id: 9d7ae74c1477e274a9e8f086e7c72c76
+    name: Tempo
+    asset: {fileID: 11400000, guid: 9d7ae74c1477e274a9e8f086e7c72c76, type: 2}
+  - id: a237608ee660bc44ba25b10444943273
+    name: Terminal Cascade
+    asset: {fileID: 11400000, guid: a237608ee660bc44ba25b10444943273, type: 2}
+  - id: 3babb4b8643ae954c96f0016b35ec1e7
+    name: Cosmic Superimposition
+    asset: {fileID: 11400000, guid: 3babb4b8643ae954c96f0016b35ec1e7, type: 2}
+  - id: 0ca28d6fe3e5f9c4a8c87cf2bbf818c7
+    name: Moonbound Instinct
+    asset: {fileID: 11400000, guid: 0ca28d6fe3e5f9c4a8c87cf2bbf818c7, type: 2}
+  - id: 73ebe96d18d90124f8e010181c1eefbf
+    name: Oblivion
+    asset: {fileID: 11400000, guid: 73ebe96d18d90124f8e010181c1eefbf, type: 2}
+  - id: aa5d6740036e8054abca0a5472d6c4a2
+    name: SolarWind
+    asset: {fileID: 11400000, guid: aa5d6740036e8054abca0a5472d6c4a2, type: 2}
+  - id: b7975edc91dd67e42ba8ff6f75ccf0f5
+    name: Ultrasonic
+    asset: {fileID: 11400000, guid: b7975edc91dd67e42ba8ff6f75ccf0f5, type: 2}
+  - id: 47d7e3fd465d2c548af54867800ed8ff
+    name: SkillTreeDefinition
+    asset: {fileID: 11400000, guid: 47d7e3fd465d2c548af54867800ed8ff, type: 2}
+  - id: a32dd372e35a4da1b13654eb145ba701
+    name: Blackout
+    asset: {fileID: 11400000, guid: a32dd372e35a4da1b13654eb145ba701, type: 2}
+  - id: 41c9e48c7bc345f2b8255899d88a70a2
+    name: Bloodtide
+    asset: {fileID: 11400000, guid: 41c9e48c7bc345f2b8255899d88a70a2, type: 2}
+  - id: 265357c630bb8da4ea1eb68d8eec65b4
+    name: Drought
+    asset: {fileID: 11400000, guid: 265357c630bb8da4ea1eb68d8eec65b4, type: 2}
+  - id: 7b2d158b11174e17807a5390f38585a6
+    name: Duel 5 40
+    asset: {fileID: 11400000, guid: 7b2d158b11174e17807a5390f38585a6, type: 2}
+  - id: f5d72fca4788b0f4fb121bfe9c5da4f5
+    name: Duel 40 80
+    asset: {fileID: 11400000, guid: f5d72fca4788b0f4fb121bfe9c5da4f5, type: 2}
+  - id: 3ee5677adf523e64a974009af9af125f
+    name: Duel 80 105
+    asset: {fileID: 11400000, guid: 3ee5677adf523e64a974009af9af125f, type: 2}
+  - id: 94eab5fa6f644c51b37b5110d9b55efb
+    name: Grounded
+    asset: {fileID: 11400000, guid: 94eab5fa6f644c51b37b5110d9b55efb, type: 2}
+  - id: 3b922ed6f147c084b912ef4622f7ff27
+    name: Hivemind
+    asset: {fileID: 11400000, guid: 3b922ed6f147c084b912ef4622f7ff27, type: 2}
+  - id: f740af35aab0445ba5e3adacbc49c42b
+    name: LastStand
+    asset: {fileID: 11400000, guid: f740af35aab0445ba5e3adacbc49c42b, type: 2}
+  - id: 93c6fc4da2bdae544957f2ca8da253b3
+    name: NoHit
+    asset: {fileID: 11400000, guid: 93c6fc4da2bdae544957f2ca8da253b3, type: 2}
+  - id: 9fdd94fc0c6c42e8bc0a016a801cea3b
+    name: Overcharged
+    asset: {fileID: 11400000, guid: 9fdd94fc0c6c42e8bc0a016a801cea3b, type: 2}
+  - id: e6015c5de4d649de80d8de28aee5c1a7
+    name: Precision
+    asset: {fileID: 11400000, guid: e6015c5de4d649de80d8de28aee5c1a7, type: 2}
+  - id: f7e9234d9ecb4156b064162ef08db132
+    name: Rampage
+    asset: {fileID: 11400000, guid: f7e9234d9ecb4156b064162ef08db132, type: 2}
+  - id: 2151fab0400e18842a5463692850c445
+    name: Sealed
+    asset: {fileID: 11400000, guid: 2151fab0400e18842a5463692850c445, type: 2}
+  - id: b380a00df5f19494f928826ca19981c5
+    name: Split 10 50
+    asset: {fileID: 11400000, guid: b380a00df5f19494f928826ca19981c5, type: 2}
+  - id: 8e9e384e928884b498d256f08d2306c3
+    name: Split 50 105
+    asset: {fileID: 11400000, guid: 8e9e384e928884b498d256f08d2306c3, type: 2}
+  - id: 325a4554d5eb490a9e7958fb726f9b69
+    name: Stampede
+    asset: {fileID: 11400000, guid: 325a4554d5eb490a9e7958fb726f9b69, type: 2}
+  - id: c57fdda8c6062df4ab1ccc303187118d
+    name: StatMod 10 30
+    asset: {fileID: 11400000, guid: c57fdda8c6062df4ab1ccc303187118d, type: 2}
+  - id: cd15acce3a0ad044ba2eeb6762e2c971
+    name: StatMod 20 60
+    asset: {fileID: 11400000, guid: cd15acce3a0ad044ba2eeb6762e2c971, type: 2}
+  - id: fdaf1445238541e8bfdf5fa720e7200b
+    name: Swarm 20 40
+    asset: {fileID: 11400000, guid: fdaf1445238541e8bfdf5fa720e7200b, type: 2}
+  - id: 6f6979d96222242419a57c5e213bb830
+    name: Swarm 30 80
+    asset: {fileID: 11400000, guid: 6f6979d96222242419a57c5e213bb830, type: 2}
+  - id: b5381fa654306134791a01a917779ba1
+    name: Swarm 50 80
+    asset: {fileID: 11400000, guid: b5381fa654306134791a01a917779ba1, type: 2}
+  - id: 7b6a07acfa60e3f4c9965612f9969528
+    name: Time 30
+    asset: {fileID: 11400000, guid: 7b6a07acfa60e3f4c9965612f9969528, type: 2}
+  - id: c606e919e6969c94c8d5ba434c0b7055
+    name: Time 45
+    asset: {fileID: 11400000, guid: c606e919e6969c94c8d5ba434c0b7055, type: 2}
+  - id: 8cdc45e75e0d1ca41885e6e563ef285c
+    name: Time 60
+    asset: {fileID: 11400000, guid: 8cdc45e75e0d1ca41885e6e563ef285c, type: 2}
+  - id: 9e7d67e92c12ea449ae71ac414c026e2
+    name: Time 75
+    asset: {fileID: 11400000, guid: 9e7d67e92c12ea449ae71ac414c026e2, type: 2}
+  - id: 8a8360e53300801499e053c2eda3681a
+    name: Time 90
+    asset: {fileID: 11400000, guid: 8a8360e53300801499e053c2eda3681a, type: 2}
+  - id: a5cbc9934c224b399c606184ea9316d8
+    name: TwinCrowns
+    asset: {fileID: 11400000, guid: a5cbc9934c224b399c606184ea9316d8, type: 2}
+  - id: b577fb1a756d46659c38ec2156b23974
+    name: Unstoppable
+    asset: {fileID: 11400000, guid: b577fb1a756d46659c38ec2156b23974, type: 2}
+  - id: b793d07dd2b642c5a05b83e4b80f45b1
+    name: UBlackout
+    asset: {fileID: 11400000, guid: b793d07dd2b642c5a05b83e4b80f45b1, type: 2}
+  - id: 5a04ac60950d4a9e837d6bfabdbf8040
+    name: UBloodtide
+    asset: {fileID: 11400000, guid: 5a04ac60950d4a9e837d6bfabdbf8040, type: 2}
+  - id: 8f2fa30e41aaf7244bae88b619c3e0a0
+    name: UDrought
+    asset: {fileID: 11400000, guid: 8f2fa30e41aaf7244bae88b619c3e0a0, type: 2}
+  - id: 841013432574428e825c984a3af29a4b
+    name: UDuel
+    asset: {fileID: 11400000, guid: 841013432574428e825c984a3af29a4b, type: 2}
+  - id: 0678b30cc0544749888d23e62cb2c328
+    name: UGrounded
+    asset: {fileID: 11400000, guid: 0678b30cc0544749888d23e62cb2c328, type: 2}
+  - id: 88524fbed12bb9646958c2bc7c682df2
+    name: UHivemind
+    asset: {fileID: 11400000, guid: 88524fbed12bb9646958c2bc7c682df2, type: 2}
+  - id: cbb40e314a6e4813acee9d35c4edefb5
+    name: ULastStand
+    asset: {fileID: 11400000, guid: cbb40e314a6e4813acee9d35c4edefb5, type: 2}
+  - id: 2d711879a2a363d4eaa7b524885bc3e6
+    name: UNoHit
+    asset: {fileID: 11400000, guid: 2d711879a2a363d4eaa7b524885bc3e6, type: 2}
+  - id: c37b2c085ab94b7aa4ef842fbe16ee44
+    name: UOvercharged
+    asset: {fileID: 11400000, guid: c37b2c085ab94b7aa4ef842fbe16ee44, type: 2}
+  - id: 928320d371d94cc5864f6db13a3542aa
+    name: UPrecision
+    asset: {fileID: 11400000, guid: 928320d371d94cc5864f6db13a3542aa, type: 2}
+  - id: cad804cd48fd41c3aa5a65aa5e8289e3
+    name: URampage
+    asset: {fileID: 11400000, guid: cad804cd48fd41c3aa5a65aa5e8289e3, type: 2}
+  - id: c261428d5d552ff489dedda200b0f2e1
+    name: USealed
+    asset: {fileID: 11400000, guid: c261428d5d552ff489dedda200b0f2e1, type: 2}
+  - id: 2cd5f665b7f569e4b800abeaee7ecbfc
+    name: USplit
+    asset: {fileID: 11400000, guid: 2cd5f665b7f569e4b800abeaee7ecbfc, type: 2}
+  - id: 5af7437937b14a8f813da1c6c02d9d2d
+    name: UStampede
+    asset: {fileID: 11400000, guid: 5af7437937b14a8f813da1c6c02d9d2d, type: 2}
+  - id: 0431cb6a2efc82a4f8e28b30e65b6b31
+    name: UStatMod
+    asset: {fileID: 11400000, guid: 0431cb6a2efc82a4f8e28b30e65b6b31, type: 2}
+  - id: 6452de7589c34320bc8f28a23867bac5
+    name: USwarm
+    asset: {fileID: 11400000, guid: 6452de7589c34320bc8f28a23867bac5, type: 2}
+  - id: 2692db60c19e66e4bb451bebd4bc697f
+    name: UTime
+    asset: {fileID: 11400000, guid: 2692db60c19e66e4bb451bebd4bc697f, type: 2}
+  - id: f45196cfd043475282952f066b078570
+    name: UTwinCrowns
+    asset: {fileID: 11400000, guid: f45196cfd043475282952f066b078570, type: 2}
+  - id: 2e6559d0a552459c91f4732082ae08cf
+    name: UUnstoppable
+    asset: {fileID: 11400000, guid: 2e6559d0a552459c91f4732082ae08cf, type: 2}
+  - id: 94bbc4e73f41b3d41902681858af0fa3
+    name: Easy
+    asset: {fileID: 11400000, guid: 94bbc4e73f41b3d41902681858af0fa3, type: 2}
+  - id: d161854970ad289408e2c02c6c11a352
+    name: Hard
+    asset: {fileID: 11400000, guid: d161854970ad289408e2c02c6c11a352, type: 2}
+  - id: 9bf2c82c3d614b0fa645e71796e70671
+    name: Nightmare
+    asset: {fileID: 11400000, guid: 9bf2c82c3d614b0fa645e71796e70671, type: 2}
+  - id: 03426c734edfa8547b448d3b731c69be
+    name: Normal
+    asset: {fileID: 11400000, guid: 03426c734edfa8547b448d3b731c69be, type: 2}
+  - id: 41fb80233a6f487409e56acb0880dc55
+    name: Expert
+    asset: {fileID: 11400000, guid: 41fb80233a6f487409e56acb0880dc55, type: 2}
+  - id: 6da8c2d42072fce41aa782c38402d0e8
+    name: Master
+    asset: {fileID: 11400000, guid: 6da8c2d42072fce41aa782c38402d0e8, type: 2}
+  - id: 62af46b74539f404d96009598295ac0e
+    name: Simple
+    asset: {fileID: 11400000, guid: 62af46b74539f404d96009598295ac0e, type: 2}
+  - id: f0df4be58cf410b4a822c4473487d16e
+    name: BossRush Part 2
+    asset: {fileID: 11400000, guid: f0df4be58cf410b4a822c4473487d16e, type: 2}
+  - id: 94ac74c76fcafd440af3b5047ccd4d79
+    name: BossRushLv1
+    asset: {fileID: 11400000, guid: 94ac74c76fcafd440af3b5047ccd4d79, type: 2}
+  - id: a93e3b0734988af44ae5f61c128e98e7
+    name: profiling
+    asset: {fileID: 11400000, guid: a93e3b0734988af44ae5f61c128e98e7, type: 2}
+  - id: 24d951f967cb4f04daed19a11ab48242
+    name: test
+    asset: {fileID: 11400000, guid: 24d951f967cb4f04daed19a11ab48242, type: 2}
+  - id: 62bf5a081efcf1548aac34d35389f352
+    name: ws_1
+    asset: {fileID: 11400000, guid: 62bf5a081efcf1548aac34d35389f352, type: 2}
+  - id: 5d907911dbf5bc84a88b2208617ed284
+    name: ws_2
+    asset: {fileID: 11400000, guid: 5d907911dbf5bc84a88b2208617ed284, type: 2}
+  - id: 8195f81be966f3c4c87d68885ed7f96a
+    name: ws_3
+    asset: {fileID: 11400000, guid: 8195f81be966f3c4c87d68885ed7f96a, type: 2}
+  - id: e77ad60343d0822458cf92bf83748db7
+    name: ws_4
+    asset: {fileID: 11400000, guid: e77ad60343d0822458cf92bf83748db7, type: 2}
+  - id: f1fee1a9aac0b65449167800b9262cd0
+    name: ws_5
+    asset: {fileID: 11400000, guid: f1fee1a9aac0b65449167800b9262cd0, type: 2}
+  - id: 107828b9731c98848aefc88801862721
+    name: ws_6
+    asset: {fileID: 11400000, guid: 107828b9731c98848aefc88801862721, type: 2}
