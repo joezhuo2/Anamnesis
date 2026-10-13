@@ -2011,6 +2011,26 @@ and `rewardSkillPoints`, and can also be a contract (armed every wave, paying it
 | `Regular/LastStand` | 0–105 | 20–50% | 0.35 / 3 / 2 | 2 / 60 / 20 | disallowed |
 | `Unlimited/ULastStand` | 0+ | 30–60% | 0.3 / 2 / 1 | 1 / 35 / 10 | disallowed |
 
+# Bloodtide Anomaly
+
+`AnomalyType.Bloodtide`, run by `BloodtideInstance`. No fail condition; it pays its own `rewardQuality`, `rewardRerolls`
+and `rewardSkillPoints`, and can also be a contract (armed every wave, paying its own `contract*` values).
+
+- `healPct` is rolled once from the `anomalyMinVal`..`anomalyMaxVal` percent range, rounded. A contract re-rolls it every wave.
+- Whenever any enemy dies (any cause, bosses and adds included), every other living enemy heals `healPct`% of its
+  `StatType.EffMaxHp` (at least 1), through `EntityHealth.ChangeHealth`. Healing is capped at max health, never kills and never
+  triggers another death. Enemies already at full health are skipped, so the heal never turns into overhealth. Healing
+  scales with the enemy's `healingPct`, and is blocked if it cannot gain health.
+- Deaths are detected through `EntityHealth.OnDeath`. Spawn hooks subscribe enemies as they spawn, and `UpdateCheck` subscribes
+  any living enemy of the wave the hooks missed (*Split* clones, ambushes), through `WaveManager.GetLivingEnemies`.
+- Nothing is healed while *Hivemind* is active, since health is pooled there.
+- At most 8 green heal numbers are shown per death; every enemy is still healed.
+
+| Asset | Waves | Heal | Quality / rerolls / skill points | Contract rerolls / skill point chance / mixed pool chance | Boss waves |
+| --- | --- | --- | --- | --- | --- |
+| `Regular/Bloodtide` | 0–105 | 3–8% | 0.35 / 3 / 2 | 2 / 60 / 20 | allowed |
+| `Unlimited/UBloodtide` | 0+ | 3–8% | 0.3 / 2 / 1 | 1 / 35 / 10 | allowed |
+
 
 # Attack Cooldown Buttons
 

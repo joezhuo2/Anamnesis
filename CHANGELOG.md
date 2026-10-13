@@ -7,6 +7,17 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [Unreleased]
+
+### Added
+- **Bloodtide anomaly / contract** (`AnomalyType.Bloodtide`, `BloodtideInstance`, `Assets/data/Wave/Anomaly/Regular/Bloodtide.asset`, `Assets/data/Wave/Anomaly/Unlimited/UBloodtide.asset`): has no fail condition. Whenever an enemy dies, every other living enemy heals `healPct`% of its max health (rolled once from `anomalyMinVal`..`anomalyMaxVal`, re-rolled each wave as a contract; capped at max health, never kills). Deaths are tracked through `EntityHealth.OnDeath`, including enemies the spawn hooks never saw. No healing while Hivemind is active. Allowed on boss waves. Regular runs waves 0-105 and pays 0.35 quality, 3 rerolls and 2 skill points; `UBloodtide` has no wave cap and pays 0.3 quality, 2 rerolls and 1 skill point. Both use 3-8% and are offered as contracts (`isContract`)
+- **Wave helpers**: `WaveManager.GetLivingEnemies(buffer)` and `WaveManager.HivemindActive`, used by Bloodtide
+- Bloodtide is added to the anomaly pool in `Assets/New.unity`
+
+### Docs
+- `GAME.md`: Bloodtide section added, with its asset table
+- `README.md`: *Bloodtide* added to the anomaly lists
+
 ## [v0.8.34] - 2026-10-12 - Last Stand
 
 ### Added
