@@ -5,6 +5,8 @@
         "CrystalFlux.Save",
         "CrystalFlux.Core",
         "CrystalFlux.Entity",
+        "CrystalFlux.SkillTree",
+        "CrystalFlux.Wave",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
