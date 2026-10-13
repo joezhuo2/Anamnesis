@@ -58,6 +58,8 @@ namespace CrystalFlux.StatusEffectSystem
 
         protected virtual void ResetRuntime() {}
 
+        public virtual void CollectAppliedStats(System.Collections.Generic.List<StatBuff> into) {}
+
         public virtual string GetDesc() => desc;
 
         public virtual void OnTick() {}

@@ -15,6 +15,11 @@ namespace CrystalFlux.StatusEffectSystem
 
         protected override void ResetRuntime() => currentActiveDebuff = null;
 
+        public override void CollectAppliedStats(System.Collections.Generic.List<StatBuff> into)
+        {
+            if (currentActiveDebuff.HasValue) into.Add(new StatBuff(currentActiveDebuff.Value.type, -currentActiveDebuff.Value.value));
+        }
+
         public override void OnApply() => ApplyReduction();
         public override void OnStack()
         {

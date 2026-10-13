@@ -123,6 +123,14 @@ namespace CrystalFlux.StatusEffectSystem
             return at == bt || at.IsSubclassOf(bt) || bt.IsSubclassOf(at);
         }
 
+        public void CollectAppliedStats(List<StatBuff> into)
+        {
+            if (into == null) return;
+
+            for (int i = 0; i < activeEffects.Count; i++)
+                if (activeEffects[i] != null) activeEffects[i].CollectAppliedStats(into);
+        }
+
         public bool HasEffect(StatusEffect se)
         {
             for (int i = 0; i < activeEffects.Count; i++)

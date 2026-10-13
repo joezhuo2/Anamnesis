@@ -31,6 +31,16 @@ namespace CrystalFlux.StatusEffectSystem
             currentUltDmgBuff = null;
         }
 
+        public override void CollectAppliedStats(System.Collections.Generic.List<StatBuff> into)
+        {
+            if (currentActiveAtkBuff.HasValue) into.Add(currentActiveAtkBuff.Value);
+            if (currentDefShredBuff.HasValue) into.Add(currentDefShredBuff.Value);
+            if (currentResPenBuff.HasValue) into.Add(currentResPenBuff.Value);
+            if (currentPhysDmgBuff.HasValue) into.Add(currentPhysDmgBuff.Value);
+            if (currentCritDmgbuff.HasValue) into.Add(currentCritDmgbuff.Value);
+            if (currentUltDmgBuff.HasValue) into.Add(currentUltDmgBuff.Value);
+        }
+
         public override void OnApply() => ApplyBuffs();
         public override void OnStack()
         {
