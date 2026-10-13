@@ -360,6 +360,17 @@ namespace CrystalFlux.SkillTree
         {
             if (order != null)
             {
+                for (int i = unlockOrder.Count - 1; i >= 0; i--)
+                {
+                    string id = unlockOrder[i];
+                    if (order.Contains(id)) continue;
+
+                    if (nodesById.TryGetValue(id, out var stale) && stale != null) RemoveNodeEffects(stale);
+                    unlockedNodes.Remove(id);
+                    unlockOrder.RemoveAt(i);
+                    graceNodes.Remove(id);
+                }
+
                 foreach (string id in order)
                 {
                     if (string.IsNullOrEmpty(id) || unlockedNodes.Contains(id)) continue;

@@ -66,6 +66,20 @@ namespace CrystalFlux.SaveSystem.Tests
         }
 
         [Test]
+        public void RestoreUnlocked_ClearsNodesNotInSave()
+        {
+            tree.AddSkillPoints(5);
+            tree.UnlockNode(tree.runtimeNodes[0]);
+
+            tree.RestoreUnlocked(new List<string> { "b" }, 2, false);
+
+            Assert.IsFalse(tree.IsNodeUnlocked(a));
+            Assert.IsTrue(tree.IsNodeUnlocked(b));
+            CollectionAssert.AreEqual(new[] { "b" }, tree.UnlockOrder);
+            Assert.IsFalse(tree.choseStarting);
+        }
+
+        [Test]
         public void UnlockOrder_TracksUnlockAndRefund()
         {
             tree.AddSkillPoints(5);
