@@ -49,6 +49,10 @@ namespace CrystalFlux.Core
             JsonUtility.FromJsonOverwrite(json, s);
             flagDepth.Clear();
             ResetRuntimeState();
+            s.canDash = true;
+            s.canGainMana = true;
+            s.canGainStamina = true;
+            s.isDashing = false;
         }
 
         private void OnDestroy()
