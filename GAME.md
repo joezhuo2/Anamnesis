@@ -1996,16 +1996,15 @@ All Unlimited anomaly assets use `maxWave` -1 (no upper bound), so they keep rol
 and `rewardSkillPoints`, and can also be a contract (armed every wave, paying its own `contract*` values).
 
 - Everything is rolled from one `anomalyMinVal`..`anomalyMaxVal` percent range, rounded. A contract re-rolls all of it every wave.
-- The marked enemies are the final `countPct`% of the enemies the wave spawned (at least 1), by spawn order. Ambush
-  and event spawns that count toward the wave join the order, so the marked window is always the last `countPct`%.
 - Nothing happens until no spawns remain (`WaveManager.SpawnsPending`: nothing left to spawn and no reservation
-  pending) and no living enemy exists outside the marked ones. Then every marked enemy still alive is empowered
-  at once, and a "Last Stand" title is shown. This happens once per wave.
+  pending) and at most `countPct`% of the enemies the wave spawned (at least 1) are still alive. Then every
+  living enemy is empowered at once, and a "Last Stand" title is shown. This happens once per wave. Who is left
+  is not decided up front, so the order enemies die in cannot skip the effect.
 - Empowerment is four boosts, each rolled separately from the same range: size (`+x%` scale, through
   `EnemyMovement.ScaleSize` so facing flips keep it), damage reduction (`StatType.damageRes`), damage dealt
   (`StatType.damagePct`) and move speed (`StatType.moveSpeedPct`).
 - Enemies are instantiated, not pooled, so no scale reset is needed.
-- Enemies registered by *Split* clones are not marked, but they count as living enemies and delay the empower.
+- Enemies registered by *Split* clones count as living enemies and delay the empower, but are never empowered themselves.
 
 | Asset | Waves | Range (count %, and each boost) | Quality / rerolls / skill points | Contract rerolls / skill point chance / mixed pool chance | Boss waves |
 | --- | --- | --- | --- |
