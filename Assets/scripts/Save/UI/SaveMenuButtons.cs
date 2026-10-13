@@ -123,8 +123,7 @@ namespace CrystalFlux.SaveSystem
         private string DefaultDescription => action switch
         {
             SaveMenuAction.LoadBuild => "Start a new run from a saved build.",
-            SaveMenuAction.LoadRun => "Resume a saved run.
-The save is removed once loaded.",
+            SaveMenuAction.LoadRun => "Resume a saved run. The save is removed once loaded.",
             SaveMenuAction.SaveProgress => "Save the current run so it can be resumed later.",
             _ => "Save the current build to reuse in a new run.",
         };
