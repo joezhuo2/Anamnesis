@@ -295,7 +295,8 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.Rampage:
                         case AnomalyType.Unstoppable:
                         case AnomalyType.Grounded:
-                        case AnomalyType.LastStand: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.LastStand:
+                        case AnomalyType.Bloodtide: SetAnomalyInfo(currentAnomaly.Description); break;
                         default: break;
                     }
                 }
