@@ -19,6 +19,7 @@ namespace CrystalFlux.SaveSystem
 
             var effectStats = new List<StatBuff>();
             if (player.TryGetComponent<StatusEffectManager>(out var sem)) sem.CollectAppliedStats(effectStats);
+            if (player.TryGetComponent<PlayerUpgradeManager>(out var upgrades)) upgrades.CollectAppliedStats(effectStats);
             if (player.TryGetComponent<EntityStatManager>(out var esm)) b.statsJson = StatsMath.CleanStatsJson(esm.Stats, effectStats);
 
             if (player.TryGetComponent<PlayerAttackHandler>(out var pah))

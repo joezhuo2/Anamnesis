@@ -50,6 +50,7 @@ namespace CrystalFlux.EntitySystem
         public virtual void TriggerUpgradeEffect(GameObject player, GameObject target) => TriggerUpgradeEffect(player);
         public virtual void OnUnlock(GameObject player) {}
         public virtual void OnRemove(GameObject player) {}
+        public virtual void CollectAppliedStats(List<StatBuff> into) {}
         public override void GetTooltipLines(List<string> lines)
         {
             lines.Add($"Trigger: {string.Join(", ", conditions)}");

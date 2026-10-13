@@ -31,6 +31,14 @@ public class GoldBuff : PlayerUpgrade
         loop = host.StartCoroutine(PollLoop(player));
     }
 
+    public override void CollectAppliedStats(List<StatBuff> into)
+    {
+        if (into == null || buffs == null || applied == 0) return;
+
+        for (int i = 0; i < buffs.Length; i++)
+            into.Add(new StatBuff(buffs[i].type, buffs[i].value * applied));
+    }
+
     public override void OnRemove(GameObject player)
     {
         StopLoop();

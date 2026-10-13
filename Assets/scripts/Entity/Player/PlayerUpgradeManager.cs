@@ -210,6 +210,14 @@ namespace CrystalFlux.EntitySystem
             IndexUpgrade(runtime);
             runtime.OnUnlock(gameObject);
         }
+        public void CollectAppliedStats(List<StatBuff> into)
+        {
+            if (into == null) return;
+
+            for (int i = 0; i < activeUpgrades.Count; i++)
+                if (activeUpgrades[i] != null) activeUpgrades[i].CollectAppliedStats(into);
+        }
+
         public void SetUpgradesExact(IList<PlayerUpgrade> wanted)
         {
             if (wanted == null) return;

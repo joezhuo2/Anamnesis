@@ -47,6 +47,7 @@ namespace CrystalFlux.SaveSystem
 
             var permanent = new List<StatBuff>();
             if (player.TryGetComponent<StatusEffectManager>(out var sem)) sem.CollectAppliedStats(permanent);
+            if (pum != null) pum.CollectAppliedStats(permanent);
 
             if (player.TryGetComponent<EntityStatManager>(out var esm))
             {
