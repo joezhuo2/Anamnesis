@@ -28,6 +28,8 @@ namespace CrystalFlux.WaveSystem
                 else return;
             }
 
+            NotifyWaveStarting();
+
             totalSpawned = 0;
             reservedEnemies = 0;
             currentEnemies.Clear();

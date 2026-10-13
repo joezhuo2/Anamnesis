@@ -53,11 +53,28 @@ namespace CrystalFlux.WaveSystem
             maxTotalEnemies = Mathf.Max(1, baseMaxTotalEnemies + d.maxTotalEnemiesAdd);
         }
 
+        public override void CaptureRunState(RunStateDto dto)
+        {
+            base.CaptureRunState(dto);
+            dto.unlimitedLastBossWave = lastBossWave;
+            dto.unlimitedMaxTotalEnemies = maxTotalEnemies;
+        }
+
+        public override void RestoreRunState(RunStateDto dto)
+        {
+            base.RestoreRunState(dto);
+            if (dto == null) return;
+
+            lastBossWave = dto.unlimitedLastBossWave;
+            if (dto.unlimitedMaxTotalEnemies > 0) maxTotalEnemies = dto.unlimitedMaxTotalEnemies;
+        }
+
         public override void StartNextWave()
         {
             if (isWaveActive) return;
 
             ActiveManager = this;
+            NotifyWaveStarting();
 
             totalSpawned = 0;
             reservedEnemies = 0;
