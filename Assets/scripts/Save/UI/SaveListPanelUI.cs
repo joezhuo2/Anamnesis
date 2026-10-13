@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using CrystalFlux.Core;
+using CrystalFlux.UISystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -139,7 +141,26 @@ namespace CrystalFlux.SaveSystem
                 pushedPause = true;
             }
 
+            ApplyButtonTooltips();
             Refresh();
+        }
+
+        private void ApplyButtonTooltips()
+        {
+            SetTooltip(loadButton, "Load", "Load the selected save.
+Loading a run removes its save.");
+            SetTooltip(renameButton, "Rename", "Rename the selected save.");
+            SetTooltip(deleteButton, "Delete", "Permanently delete the selected save.");
+            SetTooltip(closeButton, "Close", "Close this window.");
+            SetTooltip(buildsTab, "Builds", "Show saved builds.");
+            SetTooltip(runsTab, "Runs", "Show saved runs.");
+        }
+
+        private static void SetTooltip(Button b, string title, string description)
+        {
+            if (b == null) return;
+            if (!b.TryGetComponent<ITooltipDisplay>(out var tt)) tt = b.gameObject.AddComponent<TooltipTrigger>();
+            tt.ShowTooltip(title, description);
         }
 
         public void Close()
