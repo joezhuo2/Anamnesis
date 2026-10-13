@@ -8,6 +8,7 @@
         "CrystalFlux.SkillTree",
         "CrystalFlux.Wave",
         "CrystalFlux.Projectile",
+        "CrystalFlux.Settings",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
