@@ -1,4 +1,5 @@
 using CrystalFlux.EntitySystem;
+using CrystalFlux.SettingsSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,7 +39,7 @@ namespace CrystalFlux.SkillTree
 
         private void ToggleSkillTree()
         {
-            if (SkillTreeUI.IsTypingSearch) return;
+            if (SkillTreeUI.IsTypingSearch || UIModal.IsTyping) return;
 
             var ui = ResolveUI();
             if (ui != null) ui.Toggle(gameObject);
