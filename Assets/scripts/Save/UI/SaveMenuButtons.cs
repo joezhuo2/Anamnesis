@@ -1,3 +1,5 @@
+using CrystalFlux.Core;
+using CrystalFlux.UISystem;
 using CrystalFlux.WaveSystem;
 using TMPro;
 using UnityEngine;
@@ -11,13 +13,14 @@ namespace CrystalFlux.SaveSystem
     public class SaveMenuButtons : MonoBehaviour
     {
         public SaveMenuAction action;
-        public TextMeshProUGUI label;
-        public string savedLabel = "Build Saved";
+        public string tooltipTitle;
+        [TextArea] public string tooltipDescription;
+        [TextArea] public string savedDescription = "Build saved for this wave.";
+        public Vector2 tooltipOffset;
         [Tooltip("Hidden once a run starts (load buttons only). Defaults to this object")]
         public GameObject hideRoot;
 
         private Button button;
-        private string defaultLabel;
         private bool saved;
 
         private bool IsLoad => action == SaveMenuAction.LoadBuild || action == SaveMenuAction.LoadRun;
@@ -28,11 +31,15 @@ namespace CrystalFlux.SaveSystem
             button.onClick.AddListener(OnClick);
 
             if (hideRoot == null) hideRoot = gameObject;
-            if (label == null) label = GetComponentInChildren<TextMeshProUGUI>(true);
-            if (label != null) defaultLabel = label.text;
+            if (!TryGetComponent<ITooltipDisplay>(out _)) gameObject.AddComponent<TooltipTrigger>();
+
+            foreach (TextMeshProUGUI t in GetComponentsInChildren<TextMeshProUGUI>(true))
+                if (t.gameObject != gameObject) t.gameObject.SetActive(false);
 
             WaveManager.WaveStarting += OnWaveStarting;
         }
+
+        private void Start() => ApplyTooltip();
 
         private void OnDestroy()
         {
@@ -93,7 +100,33 @@ namespace CrystalFlux.SaveSystem
         public void SetSaved(bool value)
         {
             saved = value;
-            if (label != null && defaultLabel != null) label.text = saved ? savedLabel : defaultLabel;
+            ApplyTooltip();
         }
+
+        private void ApplyTooltip()
+        {
+            if (!TryGetComponent<ITooltipDisplay>(out var tt)) return;
+
+            string title = string.IsNullOrEmpty(tooltipTitle) ? DefaultTitle : tooltipTitle;
+            string description = saved ? savedDescription : string.IsNullOrEmpty(tooltipDescription) ? DefaultDescription : tooltipDescription;
+            tt.ShowTooltip(title, description, tooltipOffset);
+        }
+
+        private string DefaultTitle => action switch
+        {
+            SaveMenuAction.LoadBuild => "Load Build",
+            SaveMenuAction.LoadRun => "Load Run",
+            SaveMenuAction.SaveProgress => "Save Progress",
+            _ => "Save Build",
+        };
+
+        private string DefaultDescription => action switch
+        {
+            SaveMenuAction.LoadBuild => "Start a new run from a saved build.",
+            SaveMenuAction.LoadRun => "Resume a saved run.
+The save is removed once loaded.",
+            SaveMenuAction.SaveProgress => "Save the current run so it can be resumed later.",
+            _ => "Save the current build to reuse in a new run.",
+        };
     }
 }
