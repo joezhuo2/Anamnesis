@@ -279,7 +279,7 @@ namespace CrystalFlux.WaveSystem
                     switch (currentAnomaly.amd.anomalyType)
                     {
                         case AnomalyType.TimeTrial: UpdateAnomalyTimeInfo(); break;
-                        case AnomalyType.NoDamage: SetAnomalyInfo("No Damage Anomaly Active"); break;
+                        case AnomalyType.NoDamage:
                         case AnomalyType.StatModifier:
                         case AnomalyType.Swarm:
                         case AnomalyType.Duel:
@@ -296,7 +296,7 @@ namespace CrystalFlux.WaveSystem
                         case AnomalyType.Unstoppable:
                         case AnomalyType.Grounded:
                         case AnomalyType.LastStand:
-                        case AnomalyType.Bloodtide: SetAnomalyInfo(currentAnomaly.Description); break;
+                        case AnomalyType.Bloodtide: SetAnomalyInfo(CurrentAnomalyLabel()); break;
                         default: break;
                     }
                 }

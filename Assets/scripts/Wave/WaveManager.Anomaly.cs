@@ -97,6 +97,20 @@ namespace CrystalFlux.WaveSystem
             };
         }
 
+        private AnomalyInstance labelOwner;
+        private string anomalyLabel;
+
+        // Cached per instance: SetAnomalyInfo compares by reference, so a fresh string every frame would rewrite the text.
+        private string CurrentAnomalyLabel()
+        {
+            if (!ReferenceEquals(labelOwner, currentAnomaly))
+            {
+                labelOwner = currentAnomaly;
+                anomalyLabel = $"Current Anomaly: {currentAnomaly.amd.anomalyName}";
+            }
+            return anomalyLabel;
+        }
+
         private void SetAnomalyInfo(string s)
         {
             if (ReferenceEquals(s, lastInfo)) return;
