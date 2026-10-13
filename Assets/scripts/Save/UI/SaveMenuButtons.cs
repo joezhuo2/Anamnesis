@@ -48,7 +48,11 @@ namespace CrystalFlux.SaveSystem
 
         private void Update()
         {
-            if (IsLoad) return;
+            if (IsLoad)
+            {
+                if (WaveManager.Active != null && hideRoot != null && hideRoot.activeSelf) hideRoot.SetActive(false);
+                return;
+            }
 
             RunSaveController c = RunSaveController.Instance;
             bool can = c != null && !saved && (action == SaveMenuAction.SaveProgress ? c.CanSaveProgress : c.CanSaveBuild);

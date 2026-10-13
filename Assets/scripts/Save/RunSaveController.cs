@@ -94,7 +94,7 @@ namespace CrystalFlux.SaveSystem
             get
             {
                 WaveManager wm = Wm;
-                return catalog != null && wm != null && RunSaveRules.CanSaveBuild(wm.IsRunStarted, wm.IsIdleBetweenWaves, PlayerDead);
+                return catalog != null && wm != null && RunSaveRules.CanSaveBuild(wm.IsRunStarted, wm.IsWaveActive, RunSession.WaveStartBuild != null, PlayerDead);
             }
         }
 
@@ -160,8 +160,10 @@ namespace CrystalFlux.SaveSystem
             if (!CanSaveBuild) return false;
 
             WaveManager wm = Wm;
-            BuildData b = BuildCapture.Capture(Player, catalog, wm.CurrentContract);
-            return Write(SaveKind.Build, name, overwriteExisting, b, null, wm, Mathf.Max(1, wm.CurrentWaveNumber));
+            bool live = PlayerDead || !wm.IsWaveActive;
+            BuildData b = live ? BuildCapture.Capture(Player, catalog, wm.CurrentContract) : RunSession.WaveStartBuild;
+            int wave = live ? Mathf.Max(1, wm.CurrentWaveNumber) : Mathf.Max(1, RunSession.WaveStartNumber - 1);
+            return Write(SaveKind.Build, name, overwriteExisting, b, null, wm, wave);
         }
 
         private bool Write(SaveKind kind, string name, bool overwrite, BuildData b, RunData r, WaveManager wm, int wave)
@@ -185,8 +187,7 @@ namespace CrystalFlux.SaveSystem
 
             RunSession.PendingLoad = f;
 
-            WaveManager wm = Wm;
-            if (wm != null && wm.IsRunStarted)
+            if (Wm != null)
             {
                 RunSession.RequestHomeScreen?.Invoke();
                 return;
@@ -231,19 +232,27 @@ namespace CrystalFlux.SaveSystem
                 if (!BuildApplier.CanResolve(f.build, catalog)) throw new InvalidOperationException("Build references missing data");
 
                 IronmanSelector.SetEnabled(f.run.ironman);
-                DifficultySelector.Current?.Select(d);
-                ModeSelector.Current?.Select(m);
 
-                if (DifficultySelector.Current != null) DifficultySelector.Current.LockIn(wm);
-                else wm.ApplyDifficulty(d);
+                DifficultySelector ds = DifficultySelector.Current;
+                if (ds != null && ds.Select(d)) ds.LockIn(wm);
+                else
+                {
+                    wm.ApplyDifficulty(d);
+                    if (ds != null) ds.LockIn(null);
+                }
 
-                if (ModeSelector.Current != null) ModeSelector.Current.LockIn(wm);
-                else wm.ApplyMode(m);
+                ModeSelector ms = ModeSelector.Current;
+                if (ms != null && ms.Select(m)) ms.LockIn(wm);
+                else
+                {
+                    wm.ApplyMode(m);
+                    if (ms != null) ms.LockIn(null);
+                }
 
                 IronmanSelector.Current?.LockIn();
 
-                if (!BuildApplier.ApplyBuild(Player, f.build, catalog)) throw new InvalidOperationException("Build restore failed");
                 wm.RestoreContract(BuildApplier.RecreateContract(f.build, catalog));
+                if (!BuildApplier.ApplyBuild(Player, f.build, catalog)) throw new InvalidOperationException("Build restore failed");
                 if (!BuildApplier.ApplyRun(wm, f.run, catalog)) throw new InvalidOperationException("Run restore failed");
 
                 RunSession.CurrentRunName = f.meta.name;
@@ -265,7 +274,7 @@ namespace CrystalFlux.SaveSystem
             SaveFile f = RunSession.PendingLoad;
             RunSession.PendingLoad = null;
 
-            if (!BuildApplier.ApplyBuild(Player, f.build, catalog))
+            if (!BuildApplier.CanResolve(f.build, catalog))
             {
                 Debug.LogWarning("[RunSaveController] Build restore failed");
                 PendingBuildChanged?.Invoke();
@@ -273,6 +282,7 @@ namespace CrystalFlux.SaveSystem
             }
 
             wm.RestoreContract(BuildApplier.RecreateContract(f.build, catalog));
+            BuildApplier.ApplyBuild(Player, f.build, catalog);
             if (Player != null) wm.RemoveOwnedFromPools(Player.GetComponent<IAttackHandler>(), Player.GetComponent<IUpgradeHolder>());
 
             RunSession.Playtime = 0f;

@@ -32,15 +32,23 @@ namespace CrystalFlux.SaveSystem.Tests
 
         [Test]
         public void RunSaveRules_Build_AllowedOnDeath()
-            => Assert.IsTrue(RunSaveRules.CanSaveBuild(true, false, true));
+            => Assert.IsTrue(RunSaveRules.CanSaveBuild(true, true, false, true));
 
         [Test]
-        public void RunSaveRules_Build_BlockedMidWave()
-            => Assert.IsFalse(RunSaveRules.CanSaveBuild(true, false, false));
+        public void RunSaveRules_Build_AllowedMidWave_WithSnapshot()
+            => Assert.IsTrue(RunSaveRules.CanSaveBuild(true, true, true, false));
+
+        [Test]
+        public void RunSaveRules_Build_BlockedMidWave_WithoutSnapshot()
+            => Assert.IsFalse(RunSaveRules.CanSaveBuild(true, true, false, false));
 
         [Test]
         public void RunSaveRules_Build_AllowedBetweenWaves()
-            => Assert.IsTrue(RunSaveRules.CanSaveBuild(true, true, false));
+            => Assert.IsTrue(RunSaveRules.CanSaveBuild(true, false, false, false));
+
+        [Test]
+        public void RunSaveRules_Build_BlockedBeforeRun()
+            => Assert.IsFalse(RunSaveRules.CanSaveBuild(false, false, false, false));
 
         [Test]
         public void RunSaveRules_DefaultNames()

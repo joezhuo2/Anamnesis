@@ -11,8 +11,8 @@ namespace CrystalFlux.SaveSystem
             return waveActive && hasWaveStartSnapshot;
         }
 
-        public static bool CanSaveBuild(bool runStarted, bool idleBetweenWaves, bool playerDead)
-            => playerDead || runStarted && idleBetweenWaves;
+        public static bool CanSaveBuild(bool runStarted, bool waveActive, bool hasWaveStartSnapshot, bool playerDead)
+            => playerDead || runStarted && (!waveActive || hasWaveStartSnapshot);
 
         public static string DefaultRunName(string mode, string difficulty, int wave)
             => SaveStore.NormalizeName($"{mode} {difficulty} - Wave {wave}");
