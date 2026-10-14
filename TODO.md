@@ -1,5 +1,7 @@
 # Planned Features 
 ## High priority To-Do
+- add B(billion) to number formatting, fix number formatting for stats shown in resources list, and before after on reward cards, attack hover cards, movement hover card, wave run/build hover cards
+- dodge rating pct stat
 - [4] fix lang files for certain stats (eg. rush impact)
 - [2] finish everything in between first and second ring in skill tree
 - [1] skill tree third circular ring (no connections yet)

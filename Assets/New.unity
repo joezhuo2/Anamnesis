@@ -5031,7 +5031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Confirm Restart
+  m_text: Confirm
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -16003,13 +16003,13 @@ MonoBehaviour:
     displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
     baseStatBuffs:
     - type: 103
-      value: 40
+      value: 60
     - type: 41
-      value: 25
+      value: 30
     - type: 13
-      value: -30
+      value: -20
     - type: 5
-      value: -25
+      value: -15
     weight: 1
     variance: 0.15
   - rewardName: Frenzy
@@ -16022,9 +16022,9 @@ MonoBehaviour:
     - type: 3
       value: 30
     - type: 0
-      value: -30
+      value: -20
     - type: 7
-      value: -60
+      value: -50
     weight: 1
     variance: 0.15
   - rewardName: Featherweight
@@ -16033,7 +16033,7 @@ MonoBehaviour:
     - type: 19
       value: 30
     - type: 20
-      value: 20
+      value: 80
     - type: 24
       value: 40
     - type: 0
@@ -16062,6 +16062,8 @@ MonoBehaviour:
     baseStatBuffs:
     - type: 13
       value: 60
+    - type: 43
+      value: 40
     - type: 3
       value: 25
     - type: 17
@@ -16090,7 +16092,7 @@ MonoBehaviour:
     baseStatBuffs:
     - type: 27
       value: 70
-    - type: 48
+    - type: 97
       value: 40
     - type: 24
       value: 40
@@ -16189,6 +16191,10 @@ MonoBehaviour:
     canBeSource: 0
     canBeTarget: 1
     weight: 1
+  - stat: 20
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 5
   minSynergyConversion: 8
   maxSynergyConversion: 20
   synergyChoices: 3
@@ -27413,8 +27419,8 @@ MonoBehaviour:
   title: You Died
   message: The waves claim another.
   restartButton: {fileID: 911912331}
-  quitButton: {fileID: 0}
-  firstSelected: {fileID: 2031351125}
+  quitButton: {fileID: 2031351128}
+  firstSelected: {fileID: 0}
   showDelay: 1
 --- !u!1001 &1025082603
 PrefabInstance:
@@ -32511,13 +32517,13 @@ MonoBehaviour:
     displayColor: {r: 0.009745443, g: 0.6886792, b: 0.66030383, a: 0}
     baseStatBuffs:
     - type: 103
-      value: 40
+      value: 60
     - type: 41
-      value: 25
+      value: 30
     - type: 13
-      value: -30
+      value: -20
     - type: 5
-      value: -25
+      value: -15
     weight: 1
     variance: 0.15
   - rewardName: Frenzy
@@ -32530,9 +32536,9 @@ MonoBehaviour:
     - type: 3
       value: 30
     - type: 0
-      value: -30
+      value: -20
     - type: 7
-      value: -60
+      value: -50
     weight: 1
     variance: 0.15
   - rewardName: Featherweight
@@ -32541,7 +32547,7 @@ MonoBehaviour:
     - type: 19
       value: 30
     - type: 20
-      value: 20
+      value: 80
     - type: 24
       value: 40
     - type: 0
@@ -32570,6 +32576,8 @@ MonoBehaviour:
     baseStatBuffs:
     - type: 13
       value: 60
+    - type: 43
+      value: 40
     - type: 3
       value: 25
     - type: 17
@@ -32693,6 +32701,14 @@ MonoBehaviour:
     canBeSource: 1
     canBeTarget: 1
     weight: 6
+  - stat: 8
+    canBeSource: 0
+    canBeTarget: 1
+    weight: 1
+  - stat: 20
+    canBeSource: 1
+    canBeTarget: 1
+    weight: 5
   minSynergyConversion: 8
   maxSynergyConversion: 20
   synergyChoices: 3
@@ -40764,7 +40780,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1474988716
 MonoBehaviour:
@@ -42708,7 +42724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0008720279}
+  m_AnchoredPosition: {x: 0, y: -0.000007010947}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1580127889 stripped
@@ -98451,7 +98467,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 25126720}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99480903
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
