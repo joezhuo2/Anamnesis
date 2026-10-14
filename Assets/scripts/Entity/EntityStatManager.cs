@@ -23,18 +23,36 @@ namespace CrystalFlux.Core
         protected virtual void Start()
         {
             flagDepth.Clear();
+            ResetRuntimeState();
+        }
 
-            if (s != null)
-            {
-                s.currentHp = s.EffMaxHp;
-                s.overhealth = 0f;
-                s.canAttack = true;
-                s.isAttacking = false;
-                s.canMove = true;
-                s.canGainHp = true;
-                s.isAlive = true;
-                s.isImmune = false;
-            }
+        protected void ResetRuntimeState()
+        {
+            if (s == null) return;
+
+            s.currentHp = s.EffMaxHp;
+            s.overhealth = 0f;
+            s.canAttack = true;
+            s.isAttacking = false;
+            s.canMove = true;
+            s.canGainHp = true;
+            s.isAlive = true;
+            s.isImmune = false;
+        }
+
+        public EntityStats Stats => s;
+
+        public void RestoreStatsJson(string json)
+        {
+            if (s == null || string.IsNullOrEmpty(json)) return;
+
+            JsonUtility.FromJsonOverwrite(json, s);
+            flagDepth.Clear();
+            ResetRuntimeState();
+            s.canDash = true;
+            s.canGainMana = true;
+            s.canGainStamina = true;
+            s.isDashing = false;
         }
 
         private void OnDestroy()

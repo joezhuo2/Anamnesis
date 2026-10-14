@@ -74,6 +74,17 @@ namespace CrystalFlux.WaveSystem
                 tt.ShowTooltip($"{displayName} [{(on ? "ON" : "OFF")}]", description, tooltipOffset);
         }
 
+        public static void SetEnabled(bool on)
+        {
+            if (GameSettings.Current.ironmanMode == on) return;
+
+            GameSettings.Current.ironmanMode = on;
+            GameSettings.Save();
+            GameSettings.RaiseChanged();
+
+            if (Current != null) Current.Refresh();
+        }
+
         public void LockIn()
         {
             if (lockedIn) return;

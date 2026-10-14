@@ -20,15 +20,17 @@
   <Project Path="Unity.PerformanceTesting.Editor.csproj" />
   <Project Path="Unity.Splines.csproj" />
   <Project Path="UnityEngine.TestRunner.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.2D.Tilemap.Editor.csproj" />
   <Project Path="Unity.Burst.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="CrystalFlux.Save.Tests.csproj" />
   <Project Path="Unity.VisualScripting.Flow.Editor.csproj" />
   <Project Path="Unity.2D.SpriteShape.Editor.csproj" />
   <Project Path="Unity.VisualStudio.Editor.csproj" />
   <Project Path="CrystalFlux.Wave.csproj" />
   <Project Path="Unity.InputSystem.csproj" />
   <Project Path="Unity.2D.Animation.Editor.csproj" />
+  <Project Path="CrystalFlux.Save.csproj" />
   <Project Path="CrystalFlux.Entity.csproj" />
   <Project Path="Unity.Searcher.Editor.csproj" />
   <Project Path="Unity.2D.SpriteShape.Runtime.csproj" />
@@ -97,6 +99,7 @@
   <Project Path="CrystalFlux.TextIndicator.csproj" />
   <Project Path="Unity.VisualScripting.DocCodeExamples.csproj" />
   <Project Path="Unity.PlasticSCM.Editor.Entities.csproj" />
+  <Project Path="CrystalFlux.Save.Editor.csproj" />
   <Project Path="Unity.Rendering.LightTransport.Editor.csproj" />
   <Project Path="Unity.Collections.Editor.csproj" />
   <Project Path="Unity.2D.Triangulation.Runtime.csproj" />

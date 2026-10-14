@@ -22,6 +22,8 @@ namespace CrystalFlux.EntitySystem
         public static float Peak => peak;
         public static float Total => total;
 
+        public static void SetPeak(float value) => peak = Mathf.Max(0f, value);
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics() => Reset();
 

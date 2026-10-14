@@ -49,6 +49,7 @@ namespace CrystalFlux.SettingsSystem
 
         private void ToggleMenu()
         {
+            if (UIModal.TryCloseTop()) return;
             if (DeathScreenUI.IsPlayerDead || GameRestart.IsRestarting) return;
             if (SkillTreeUI.IsAnyOpen || SkillTreeUI.EscapeConsumedThisFrame) return;
 

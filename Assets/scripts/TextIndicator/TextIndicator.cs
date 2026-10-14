@@ -34,7 +34,8 @@ namespace CrystalFlux.Core
                 return;
             }
 
-            string result = val >= 1_000_000 ? (val / 1_000_000f).ToString("0.#") + "M"
+            string result = val >= 1_000_000_000 ? (val / 1_000_000_000f).ToString("0.#") + "B"
+              : val >= 1_000_000 ? (val / 1_000_000f).ToString("0.#") + "M"
               : val >= 1_000     ? (val / 1_000f).ToString("0.#") + "k"
               : val.ToString();
 

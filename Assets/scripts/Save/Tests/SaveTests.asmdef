@@ -1,0 +1,30 @@
+{
+    "name": "CrystalFlux.Save.Tests",
+    "rootNamespace": "CrystalFlux.SaveSystem.Tests",
+    "references": [
+        "CrystalFlux.Save",
+        "CrystalFlux.Core",
+        "CrystalFlux.Entity",
+        "CrystalFlux.SkillTree",
+        "CrystalFlux.Wave",
+        "CrystalFlux.Projectile",
+        "CrystalFlux.Settings",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

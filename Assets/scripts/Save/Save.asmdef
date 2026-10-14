@@ -1,0 +1,26 @@
+{
+    "name": "CrystalFlux.Save",
+    "rootNamespace": "CrystalFlux.SaveSystem",
+    "references": [
+        "CrystalFlux.Core",
+        "CrystalFlux.Settings",
+        "CrystalFlux.Entity",
+        "CrystalFlux.Wave",
+        "CrystalFlux.SkillTree",
+        "CrystalFlux.StatusEffect",
+        "CrystalFlux.Projectile",
+        "CrystalFlux.Pooling",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

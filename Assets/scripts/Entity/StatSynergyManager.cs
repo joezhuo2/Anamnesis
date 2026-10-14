@@ -87,6 +87,23 @@ namespace CrystalFlux.Core
             Refresh();
         }
 
+        public void GetState(List<(StatType source, StatType target, float pct, float applied)> into)
+        {
+            if (into == null) return;
+
+            for (int i = 0; i < entries.Count; i++)
+                into.Add((entries[i].sy.source, entries[i].sy.target, entries[i].sy.pct, entries[i].applied));
+        }
+
+        public void RestoreState(IEnumerable<(StatType source, StatType target, float pct, float applied)> states)
+        {
+            entries.Clear();
+            if (states == null) return;
+
+            foreach (var st in states)
+                entries.Add(new Entry { sy = new StatSynergy(st.source, st.target, st.pct), applied = st.applied });
+        }
+
         public bool HasSynergy(StatType source, StatType target)
         {
             for (int i = 0; i < entries.Count; i++)

@@ -309,20 +309,21 @@ namespace CrystalFlux.EntitySystem
             if (cpah.IsSlotPermaLocked(ctype)) lines.Add("Locked in this mode");
             else if (cpah.IsSlotLocked(ctype)) lines.Add("Sealed");
             else if (cpah.IsFreeCast(ctype)) lines.Add("Resonance: next cast free");
-            if (effCd != 0f) lines.Add($"Cooldown: {effCd:F1}s");
+            static string N(float v) => NumberFormat.Abbrev(v);
+            if (effCd != 0f) lines.Add($"Cooldown: {N(effCd)}s");
             if (cad.Stacks > 1) lines.Add($"Stacks: {cpah.GetStacks(ctype)}/{cad.Stacks}");
-            if (hp != 0f || hpg != 0f) lines.Add($"Health: -{hp:F0} +{hpg:F0} +{cad.HealthPctGainOnHit:F1}%");
-            if (sp != 0f || spg != 0f) lines.Add($"Stamina: -{sp:F0} +{spg:F0} +{cad.StaminaPctGainOnHit:F1}%");
-            if (mp != 0f || mpg != 0f) lines.Add($"Mana: -{mp:F0} +{mpg:F0} +{cad.ManaPctGainOnHit:F1}%");
+            if (hp != 0f || hpg != 0f) lines.Add($"Health: -{N(hp)} +{N(hpg)} +{N(cad.HealthPctGainOnHit)}%");
+            if (sp != 0f || spg != 0f) lines.Add($"Stamina: -{N(sp)} +{N(spg)} +{N(cad.StaminaPctGainOnHit)}%");
+            if (mp != 0f || mpg != 0f) lines.Add($"Mana: -{N(mp)} +{N(mpg)} +{N(cad.ManaPctGainOnHit)}%");
             if (cesm.GetStat(StatType.critChance) != 0f || cesm.GetStat(StatType.critDamage) != 0f)
-                lines.Add($"Crit: {cesm.GetStat(StatType.critChance):F1}% +{cesm.GetStat(StatType.critDamage):F1}%");
+                lines.Add($"Crit: {N(cesm.GetStat(StatType.critChance))}% +{N(cesm.GetStat(StatType.critDamage))}%");
             if (cesm.GetStat(StatType.defShred) != 0f || cesm.GetStat(StatType.resPen) != 0f)
-                lines.Add($"Shred: {cesm.GetStat(StatType.defShred):F0}A {cesm.GetStat(StatType.resPen):F0}R");
+                lines.Add($"Shred: {N(cesm.GetStat(StatType.defShred))}A {N(cesm.GetStat(StatType.resPen))}R");
 
             List<string> dmgTypes = new();
-            if (basePhysDmg != 0f) dmgTypes.Add($"{basePhysDmg:F0}P");
-            if (baseSplDmg != 0f) dmgTypes.Add($"{baseSplDmg:F0}S");
-            if (trueDmg != 0f) dmgTypes.Add($"{trueDmg:F0}T");
+            if (basePhysDmg != 0f) dmgTypes.Add($"{N(basePhysDmg)}P");
+            if (baseSplDmg != 0f) dmgTypes.Add($"{N(baseSplDmg)}S");
+            if (trueDmg != 0f) dmgTypes.Add($"{N(trueDmg)}T");
 
             if (dmgTypes.Count > 0) lines.Add($"Base: {string.Join(" ", dmgTypes)}");
 

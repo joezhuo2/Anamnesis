@@ -10,10 +10,12 @@ namespace CrystalFlux.SkillTree
     {
         public SkillTreeDefinition definition;
         public int SkillPoints { get; private set; }
+        public IReadOnlyList<string> UnlockOrder => unlockOrder;
 
         [HideInInspector] public readonly List<SkillNodeDef> runtimeNodes = new();
         [HideInInspector] public bool choseStarting;
         private readonly HashSet<string> unlockedNodes = new();
+        private readonly List<string> unlockOrder = new();
         private readonly List<string> queuedNodes = new();
         private readonly HashSet<string> graceNodes = new();
         private bool graceActive;
@@ -156,6 +158,8 @@ namespace CrystalFlux.SkillTree
                 if (workingSavedIds.Contains(rn.nodeID))
                     unlockedNodes.Add(rn.nodeID);
             }
+
+            unlockOrder.RemoveAll(id => !unlockedNodes.Contains(id));
         }
 
         public bool IsNodeQueued(SkillNodeDef node) => node != null && queuedNodes.Contains(node.nodeID);
@@ -342,6 +346,7 @@ namespace CrystalFlux.SkillTree
 
             TrySpend(node.cost);
             unlockedNodes.Add(node.nodeID);
+            unlockOrder.Add(node.nodeID);
             queuedNodes.Remove(node.nodeID);
             if (graceActive) graceNodes.Add(node.nodeID);
 
@@ -349,6 +354,37 @@ namespace CrystalFlux.SkillTree
             ApplyNodeEffects(node);
 
             if (node.isStartingNode) choseStarting = true;
+        }
+
+        public void RestoreUnlocked(IList<string> order, int points, bool choseStartingNode)
+        {
+            if (order != null)
+            {
+                for (int i = unlockOrder.Count - 1; i >= 0; i--)
+                {
+                    string id = unlockOrder[i];
+                    if (order.Contains(id)) continue;
+
+                    if (nodesById.TryGetValue(id, out var stale) && stale != null) RemoveNodeEffects(stale);
+                    unlockedNodes.Remove(id);
+                    unlockOrder.RemoveAt(i);
+                    graceNodes.Remove(id);
+                }
+
+                foreach (string id in order)
+                {
+                    if (string.IsNullOrEmpty(id) || unlockedNodes.Contains(id)) continue;
+                    if (!nodesById.TryGetValue(id, out var node) || node == null) continue;
+
+                    unlockedNodes.Add(id);
+                    unlockOrder.Add(id);
+                    ApplyNodeEffects(node);
+                }
+            }
+
+            queuedNodes.Clear();
+            SkillPoints = Mathf.Max(0, points);
+            choseStarting = choseStartingNode;
         }
 
         public bool IsNodeUnlocked(SkillNodeDef node) => node != null && unlockedNodes.Contains(node.nodeID);
@@ -410,6 +446,7 @@ namespace CrystalFlux.SkillTree
             {
                 SkillPoints += node.cost;
                 unlockedNodes.Remove(node.nodeID);
+                unlockOrder.Remove(node.nodeID);
                 graceNodes.Remove(node.nodeID);
                 RemoveNodeEffects(node);
                 RestoreNodeRequirements(node);
@@ -475,6 +512,7 @@ namespace CrystalFlux.SkillTree
             }
 
             unlockedNodes.Clear();
+            unlockOrder.Clear();
             graceNodes.Clear();
             choseStarting = false;
 

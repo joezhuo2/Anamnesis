@@ -107,6 +107,20 @@ namespace CrystalFlux.WaveSystem
                 tt.ShowTooltip(d.displayName, d.BuildTooltipDescription(), tooltipOffset);
         }
 
+        public bool Select(DifficultyData d)
+        {
+            if (lockedIn || d == null || difficulties == null) return false;
+
+            int i = difficulties.IndexOf(d);
+            if (i < 0) return false;
+
+            index = i;
+            GameSettings.Current.difficultyIndex = index;
+            GameSettings.Save();
+            Refresh();
+            return true;
+        }
+
         public void LockIn(WaveManager wm)
         {
             if (lockedIn) return;

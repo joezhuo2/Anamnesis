@@ -276,6 +276,28 @@ namespace CrystalFlux.EntitySystem
             CreateButtonUI(newAttack);
         }
 
+        public void SetAttacksExact(IList<AttackData> wanted)
+        {
+            if (wanted == null) return;
+
+            foreach (AttackType type in UIOrder)
+            {
+                AttackData target = null;
+                for (int i = 0; i < wanted.Count; i++)
+                    if (wanted[i] != null && wanted[i].type == type) target = wanted[i];
+
+                AttackData current = FindAttackOfType(type);
+                if (target == null)
+                {
+                    if (current != null) RemoveAttack(type);
+                }
+                else if (current == null || !NormalizeAttackName(current.name).Equals(NormalizeAttackName(target.name), StringComparison.OrdinalIgnoreCase))
+                {
+                    UpdateAttack(target);
+                }
+            }
+        }
+
         public void RemoveAttack(AttackType type)
         {
             AttackData current = FindAttackOfType(type);

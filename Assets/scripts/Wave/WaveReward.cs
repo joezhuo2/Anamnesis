@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
+using CrystalFlux.EntitySystem;
 using UnityEngine;
 
 namespace CrystalFlux.WaveSystem
@@ -29,7 +30,7 @@ namespace CrystalFlux.WaveSystem
 
         public float finalVal => br.baseBuff.value * rd.mult * mult;
         public float mult = 1f;
-        public string GetDescription() => $"{(finalVal >= 0 ? "+" : "")}{finalVal:F2} {br.baseBuff.ToString()} ({rd.rarityName} x{rd.mult})";
+        public string GetDescription() => $"{NumberFormat.Signed(finalVal)} {br.baseBuff.ToString()} ({rd.rarityName} x{NumberFormat.Abbrev(rd.mult)})";
     }
 
     [System.Serializable]
@@ -78,8 +79,7 @@ namespace CrystalFlux.WaveSystem
             var lines = new List<string>();
             foreach (var buff in generatedBuffs)
             {
-                string sign = buff.value >= 0 ? "+" : "";
-                lines.Add($"{sign}{buff.value:F0} {buff.ToString()}");
+                lines.Add($"{NumberFormat.Signed(buff.value)} {buff.ToString()}");
             }
             return string.Join("\n", lines);
         }

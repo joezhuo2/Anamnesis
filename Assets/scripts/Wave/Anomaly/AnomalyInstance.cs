@@ -6,6 +6,7 @@ public class AnomalyInstance
     public AnomalyData amd;
     public bool isActive;
     public bool isCompleted;
+    public Random.State creationState;
 
     public AnomalyInstance(AnomalyData data)
     {

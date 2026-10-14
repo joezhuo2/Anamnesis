@@ -33,6 +33,24 @@ public class AnomalyData : ScriptableObject
 
     public AnomalyInstance CreateInstance()
     {
+        Random.State state = Random.state;
+        AnomalyInstance instance = Build();
+        if (instance != null) instance.creationState = state;
+        return instance;
+    }
+
+    public AnomalyInstance RecreateInstance(Random.State state)
+    {
+        Random.State previous = Random.state;
+        Random.state = state;
+        AnomalyInstance instance = Build();
+        Random.state = previous;
+        if (instance != null) instance.creationState = state;
+        return instance;
+    }
+
+    private AnomalyInstance Build()
+    {
         return anomalyType switch
         {
             AnomalyType.TimeTrial => new TimeTrialInstance(this),

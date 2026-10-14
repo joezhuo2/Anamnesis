@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.8.35-6366F1)
+![Version](https://img.shields.io/badge/version-0.9.0-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.8.35** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.9.0** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 **Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 
@@ -56,7 +56,8 @@ Current release: **v0.8.35** — see [CHANGELOG.md](CHANGELOG.md) for release hi
 | **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman. `SpawnerBox` pickups start an ambush of configurable enemies that joins the wave, then drop a weighted batch of collectibles once it is cleared |
 | **🌧️ Wave Events** | `WaveEventData` events rolled mid-wave by a `WaveEventSpawner`, one at a time with a minimum gap between them and never the same one twice in a row, gated by mode, wave range and Ironman, picked by weight and scaled by difficulty. Each announces itself with a colored title, then plays out around the player. *Spawn Enemy* events reserve their whole count on the wave so it can't end until they are cleared; *Blessing Drop* events shower weighted collectibles and carry over into the next wave if one ends mid-drop; *Spawn Projectile* events fire hazard attacks from a hidden team-neutral source that damage the player and enemies alike, with all projectile effects intact; *Blood Moon* raises every enemy's damage dealt, damage taken and move speed for a while under a red screen tint; *Hunted* spawns an immune pursuer that cannot be killed and leaves when its timer runs out or the wave ends |
 | **⚙️ Settings & Menus** | `Escape` pause panel with gameplay toggles, interactive keyboard rebinding, a restart confirmation, quit buttons, a *You Died* screen, and the build version on the home screen — all persisted to `settings.json` |
-| **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` bar readouts, cooldown buttons that flash red when blocked and green when ready, yellow while partly restocked and grey while sealed, and unscaled hover scaling that animates while paused |
+| **💾 Save & Load** | Save a run mid-wave or a build from the save menu, then load it later from a searchable, sortable save list with hover info. Saves are checked against the current asset catalog and marked *Incompatible* when a referenced asset is gone. See [docs/save-system-wiring.md](docs/save-system-wiring.md) |
+| **🖱️ UI Polish** | Floating damage/XP/gold numbers, `1.2k` / `3.4M` / `5B` readouts across resources, hover cards and rewards, cooldown buttons that flash red when blocked and green when ready, yellow while partly restocked and grey while sealed, and unscaled hover scaling that animates while paused |
 
 Full detail for every system lives in [GAME.md](GAME.md).
 

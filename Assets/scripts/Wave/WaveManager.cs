@@ -370,7 +370,7 @@ namespace CrystalFlux.WaveSystem
             float after = cpsm.GetStat(effType);
             cpsm.AddStat(new StatBuff(type, finalVal), false);
 
-            return $"{before:F2} → {after:F2}";
+            return $"{NumberFormat.Abbrev(before)} → {NumberFormat.Abbrev(after)}";
         }
         protected void SortRarityData() => rarityData.Sort((a, b) => a.mult.CompareTo(b.mult));
     }

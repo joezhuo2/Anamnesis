@@ -13,6 +13,8 @@ namespace CrystalFlux.StatusEffectSystem
 
         protected override void ResetRuntime() => curActiveBuff.Clear();
 
+        public override void CollectAppliedStats(List<StatBuff> into) => into.AddRange(curActiveBuff);
+
         public override void OnApply() => ApplyBuffs();
         public override void OnStack()
         {

@@ -81,6 +81,20 @@ namespace CrystalFlux.WaveSystem
                 tt.ShowTooltip(m.displayName, m.description, tooltipOffset);
         }
 
+        public bool Select(ModeData m)
+        {
+            if (lockedIn || m == null || modes == null) return false;
+
+            int i = modes.IndexOf(m);
+            if (i < 0) return false;
+
+            index = i;
+            GameSettings.Current.modeIndex = index;
+            GameSettings.Save();
+            Refresh();
+            return true;
+        }
+
         public void LockIn(WaveManager wm)
         {
             if (lockedIn) return;

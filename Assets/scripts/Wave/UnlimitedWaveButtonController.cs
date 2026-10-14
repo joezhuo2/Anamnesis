@@ -29,6 +29,8 @@ namespace CrystalFlux.WaveSystem
             ModeSelector.Current?.LockIn(unlimitedWaveManager);
             IronmanSelector.Current?.LockIn();
 
+            if (WaveManager.PendingLoadStarter != null && WaveManager.PendingLoadStarter(unlimitedWaveManager)) return;
+
             IAnnouncer.Current?.DisableSubtitle();
             IAnnouncer.Current?.DisableTitle();
 

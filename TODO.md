@@ -1,7 +1,8 @@
 # Planned Features 
 ## High priority To-Do
+- add B(billion) to number formatting, fix number formatting for stats shown in resources list, and before after on reward cards, attack hover cards, movement hover card, wave run/build hover cards
+- dodge rating pct stat
 - [4] fix lang files for certain stats (eg. rush impact)
-- [3] move certain awakenings/attacks to be hard/nightmare only
 - [2] finish everything in between first and second ring in skill tree
 - [1] skill tree third circular ring (no connections yet)
 
@@ -47,6 +48,7 @@
 - [6] **Capture Point** (event) — a zone appears in the ring around the player. Standing inside it fills a capture bar (it drains while you are outside), and enemies spawn at the zone's edge until it is captured. A full bar drops a reward. A small version of the planned defend beacon.
 
 - [4] Player summons
+- [4] move certain awakenings/attacks to be hard/nightmare only
 
 - [3] deployables (eg. totems/auras)
 

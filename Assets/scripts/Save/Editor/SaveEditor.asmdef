@@ -1,0 +1,23 @@
+{
+    "name": "CrystalFlux.Save.Editor",
+    "rootNamespace": "CrystalFlux.SaveSystem.Editor",
+    "references": [
+        "CrystalFlux.Save",
+        "CrystalFlux.Core",
+        "CrystalFlux.Entity",
+        "CrystalFlux.Wave",
+        "CrystalFlux.SkillTree",
+        "CrystalFlux.Projectile"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
