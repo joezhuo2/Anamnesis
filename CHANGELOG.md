@@ -7,6 +7,47 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.9.0] - 2026-10-14 - Saves (Release Summary)
+
+*This release adds saving and loading. You can save a run mid-wave or save a build, then load either from the save menu, and a save whose assets no longer exist is flagged as incompatible instead of failing to load. It also adds `k` / `M` / `B` number abbreviation across the HUD, hover cards and reward cards.*
+
+It also caps the development arc from `v0.8.1` through `v0.8.35`. Over that period, the game gained a wave event system, six new anomalies, new Awakenings and keystones, a DPS counter, a Dodge Rating stat, and a round of reward pool and balance fixes.
+
+### Highlights
+
+- **Save and load (`v0.9.0`)**: save a run mid-wave or save a build, then load either from the save menu. The save list panel has search, sort, hover info and a confirm dialog, and saves are checked against an asset catalog so incompatible ones can't be loaded
+- **Number abbreviation (`v0.9.0`)**: `k`, `M` and `B` suffixes on the resources list, reward cards (before → after), attack and movement hovers, damage text and save rows
+- **Wave events (`v0.8.12` - `v0.8.18`, `v0.8.32`)**: a new event system that fires random hazards during a wave, including Spawn Projectile volleys (Static Field, Glacial Expanse), Blood Moon and the Hunted event
+- **New anomalies and contracts (`v0.8.33` - `v0.8.35`)**: Grounded, Last Stand and Bloodtide, with per-anomaly completion rewards (`v0.8.30`) and a Quality collectible (`v0.8.29`)
+- **Awakenings and keystones (`v0.8.1`, `v0.8.2`, `v0.8.9`, `v0.8.11`, `v0.8.23`)**: Hypercarry, Reminiscence, Resonance and Serenade became keystones, with Shatterpoint, Blood Bank, Paradox and Entwined Fate added
+- **Prism Bolt (`v0.8.5` - `v0.8.10`)**: a new Rare pool Basic attack that splits into shards, then shrapnel, retuned across four patches
+- **Dodge Rating & DPS counter (`v0.8.4`)**: Dodge Resistance % became Dodge Rating, with an optional top-right DPS counter
+- **Fixes (`v0.8.24` - `v0.8.28`)**: empty and duplicate reward cards, capped stats appearing in reward pools, Unlimited anomalies stopping after wave 128, and the Blackout seam line
+
+### Added
+- **Run and build save system** (`Assets/scripts/Save/`, assembly `CrystalFlux.Save`): save DTOs, a file store, build and run capture and apply, and a run save controller that hooks into run start and load
+- **Asset catalog** (`SaveAssetCatalog`, rebuilt with **Tools > Anamnesis > Rebuild Save Catalog** and automatically on player builds) with a compatibility check against saved references
+- **Save list panel** with search, sort and hover info, a save name prompt, a confirm dialog, and save menu buttons with runtime bridges
+- **Save tooltips**: default tooltips on the save list panel buttons; the save menu button info now lives in its tooltip
+- **Player and skill tree state**: player state capture and restore hooks, skill tree unlock order tracking and restore, and status effect stat deltas exposed for clean capture
+- **Wave run state**: run state capture and restore, a wave start event, and the anomaly RNG state recorded so contracts can be recreated on load
+- **Save docs**: save/load design spec, implementation plan, editor wiring guide (`docs/save-system-wiring.md`) and playtest checklist
+- **Save tests**: edit mode tests for the save store, catalog, query, formatter, stats math, run save rules, run load transaction, and skill tree restore
+- **Dodge rating** in the stat pool and synergy
+
+### Changed
+- **Number abbreviation**: `NumberFormat.Abbrev` now uses `k`, `M` and `B` suffixes, applied across resource readouts, reward cards (before → after), attack and movement hovers, damage text and save rows
+- **Save list rows** stack vertically, and the status text shows the current selection
+- **UI updates** across the player HUD and wave UI
+- Player `bundleVersion` 0.8.35 → 0.9.0
+
+### Fixed
+- **Build saves** are reachable from the save menu, and run loading is safer
+- **Skill tree** drops nodes that are not in the save when restoring
+- **Stat restore** releases the dash and resource gates after restoring stats
+- **Saved stats** exclude upgrade-tracked stats
+- **Load run tooltip** no longer shows a stray newline
+
 ## [v0.8.35] - 2026-10-12 - Bloodtide
 
 ### Added
