@@ -184,7 +184,7 @@ namespace CrystalFlux.WaveSystem
                 {
                     float gain = cpsm.GetStat(data.sy.source) * data.sy.pct * 0.01f;
                     if (StatSynergy.IsWholeStat(data.sy.target)) gain = Mathf.Floor(gain);
-                    changeLine = $"Now: +{gain:0.##} {StatSynergy.StatName(data.sy.target)}";
+                    changeLine = $"Now: +{NumberFormat.Abbrev(gain)} {StatSynergy.StatName(data.sy.target)}";
                 }
 
                 if (btnObj.TryGetComponent<RewardButton>(out var rb)) rb.Setup(data, OnSynergyRewardClaimed, changeLine);

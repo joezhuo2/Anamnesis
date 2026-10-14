@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using CrystalFlux.Core;
+using CrystalFlux.EntitySystem;
 
 namespace CrystalFlux.WaveSystem
 {
@@ -107,7 +108,7 @@ namespace CrystalFlux.WaveSystem
             {
                 gr.GetDescription(),
                 statChangeLine,
-                $"Corrupted: {corruptMult:F2}x"
+                $"Corrupted: {NumberFormat.Abbrev(corruptMult)}x"
             };
             if (descriptionText != null) descriptionText.text = string.Join("\n", descLines);
 
@@ -297,9 +298,9 @@ namespace CrystalFlux.WaveSystem
 
             List<string> lines = new()
             {
-                $"Rarity: {gr.rd.rarityName} (x{gr.rd.mult:F2})",
-                $"Base Value: {gr.br.baseBuff.value:F2}",
-                $"Final Value: {(gr.finalVal >= 0 ? "+" : "")}{gr.finalVal:F2}",
+                $"Rarity: {gr.rd.rarityName} (x{NumberFormat.Abbrev(gr.rd.mult)})",
+                $"Base Value: {NumberFormat.Abbrev(gr.br.baseBuff.value)}",
+                $"Final Value: {NumberFormat.Signed(gr.finalVal)}",
                 $"Stat: {gr.br.baseBuff.ToString()}"
             };
 

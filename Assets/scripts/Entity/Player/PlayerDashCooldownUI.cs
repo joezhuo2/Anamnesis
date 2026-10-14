@@ -58,17 +58,18 @@ namespace CrystalFlux.EntitySystem
 
         private (string title, string subtitle, Vector2 offset) GetDashTooltip()
         {
+            string F(StatType t) => NumberFormat.Abbrev(cesm.GetStat(t));
             List<string> lines = new();
             if (cesm.GetStat(StatType.dodgeChance) != 0f)
-                lines.Add($"Dodge: {cesm.GetStat(StatType.dodgeChance):F0}% (-{cesm.GetStat(StatType.DodgeRes) * 100f:F0}%)");
+                lines.Add($"Dodge: {F(StatType.dodgeChance)}% (-{NumberFormat.Abbrev(cesm.GetStat(StatType.DodgeRes) * 100f)}%)");
             if (cesm.GetStat(StatType.EffSpd) != 0)
-                lines.Add($"Speed: {cesm.GetStat(StatType.EffSpd):F2} (+{cesm.GetStat(StatType.moveSpeedPct):F0}%)");
+                lines.Add($"Speed: {F(StatType.EffSpd)} (+{F(StatType.moveSpeedPct)}%)");
             if (cesm.GetStat(StatType.EffDashCooldown) != 0)
-                lines.Add($"Dash Cooldown: {cesm.GetStat(StatType.EffDashCooldown):F1}s");
+                lines.Add($"Dash Cooldown: {F(StatType.EffDashCooldown)}s");
             if (cesm.GetStat(StatType.EffDashDistance) != 0)
-                lines.Add($"Dash Distance: {cesm.GetStat(StatType.EffDashDistance):F1}");
+                lines.Add($"Dash Distance: {F(StatType.EffDashDistance)}");
             if (cesm.GetStat(StatType.EffDashStaminaCost) != 0)
-                lines.Add($"Dash Stamina Cost: {cesm.GetStat(StatType.EffDashStaminaCost):F1}");
+                lines.Add($"Dash Stamina Cost: {F(StatType.EffDashStaminaCost)}");
 
             return("Movement", string.Join("\n", lines), new(100, 30));
         }

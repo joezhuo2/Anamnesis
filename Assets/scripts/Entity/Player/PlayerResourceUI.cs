@@ -17,6 +17,10 @@ namespace CrystalFlux.EntitySystem
             ShowTooltip();
         }
 
+        private string F(StatType t) => NumberFormat.Abbrev(esm.GetStat(t));
+        private string Pct(StatType t) => NumberFormat.Abbrev(esm.GetStat(t));
+        private string Res(StatType t) => NumberFormat.Abbrev(esm.GetStat(t) * 100f);
+
         private (string title, string subtitle, Vector2 offset) GetResourcesTooltip()
         {
             if (esm == null) return ("Resources", "", new(100, -100));
@@ -25,19 +29,19 @@ namespace CrystalFlux.EntitySystem
             float healthPerSecond = esm.GetStat(StatType.EffHpReg) / 5f;
 
             List<string> lines = new();
-            if (staminaPerSecond != 0) lines.Add($"Stamina: {staminaPerSecond:F1}/s (+{esm.GetStat(StatType.stRegPct):F0}%)");
-            if (healthPerSecond != 0) lines.Add($"Health: {healthPerSecond:F1}/s (+{esm.GetStat(StatType.hpRegPct):F0}%)");
-            if (esm.GetStat(StatType.EffArmor) != 0) lines.Add($"Armor: {esm.GetStat(StatType.EffArmor):F0} (+{esm.GetStat(StatType.armorPct):F0}%) [-{esm.GetStat(StatType.ArmorRes)*100f:F1}%P]");
-            if (esm.GetStat(StatType.EffArcaneShield) != 0) lines.Add($"Arcane Shield: {esm.GetStat(StatType.EffArcaneShield):F0} (+{esm.GetStat(StatType.arcaneShieldPct):F0}%) [-{esm.GetStat(StatType.ArcaneShieldRes)*100f:F1}%S]");
-            if (esm.GetStat(StatType.EffDefense) != 0) lines.Add($"Defense: {esm.GetStat(StatType.EffDefense):F0} (+{esm.GetStat(StatType.defensePct):F0}%) [-{esm.GetStat(StatType.DefenseRes)*100f:F1}%]");
-            if (esm.GetStat(StatType.EffAtk) != 0) lines.Add($"Attack: {esm.GetStat(StatType.EffAtk):F0} (+{esm.GetStat(StatType.atkPct):F0}%)");
-            if (esm.GetStat(StatType.EffInt) != 0) lines.Add($"Int: {esm.GetStat(StatType.EffInt):F0} (+{esm.GetStat(StatType.IntPct):F0}%)");
-            if (esm.GetStat(StatType.EffectRes) != 0) lines.Add($"Effect Res: {esm.GetStat(StatType.EffectRes):F0}%");
+            if (staminaPerSecond != 0) lines.Add($"Stamina: {NumberFormat.Abbrev(staminaPerSecond)}/s (+{Pct(StatType.stRegPct)}%)");
+            if (healthPerSecond != 0) lines.Add($"Health: {NumberFormat.Abbrev(healthPerSecond)}/s (+{Pct(StatType.hpRegPct)}%)");
+            if (esm.GetStat(StatType.EffArmor) != 0) lines.Add($"Armor: {F(StatType.EffArmor)} (+{Pct(StatType.armorPct)}%) [-{Res(StatType.ArmorRes)}%P]");
+            if (esm.GetStat(StatType.EffArcaneShield) != 0) lines.Add($"Arcane Shield: {F(StatType.EffArcaneShield)} (+{Pct(StatType.arcaneShieldPct)}%) [-{Res(StatType.ArcaneShieldRes)}%S]");
+            if (esm.GetStat(StatType.EffDefense) != 0) lines.Add($"Defense: {F(StatType.EffDefense)} (+{Pct(StatType.defensePct)}%) [-{Res(StatType.DefenseRes)}%]");
+            if (esm.GetStat(StatType.EffAtk) != 0) lines.Add($"Attack: {F(StatType.EffAtk)} (+{Pct(StatType.atkPct)}%)");
+            if (esm.GetStat(StatType.EffInt) != 0) lines.Add($"Int: {F(StatType.EffInt)} (+{Pct(StatType.IntPct)}%)");
+            if (esm.GetStat(StatType.EffectRes) != 0) lines.Add($"Effect Res: {F(StatType.EffectRes)}%");
 
             List<string> resTypes = new();
-            if (esm.GetStat(StatType.damageRes) != 0f) resTypes.Add($"{esm.GetStat(StatType.damageRes):F1}%");
-            if (esm.GetStat(StatType.physicalRes) != 0f) resTypes.Add($"P:{esm.GetStat(StatType.physicalRes):F1}%");
-            if (esm.GetStat(StatType.spellRes) != 0f) resTypes.Add($"S:{esm.GetStat(StatType.spellRes):F1}%");
+            if (esm.GetStat(StatType.damageRes) != 0f) resTypes.Add($"{F(StatType.damageRes)}%");
+            if (esm.GetStat(StatType.physicalRes) != 0f) resTypes.Add($"P:{F(StatType.physicalRes)}%");
+            if (esm.GetStat(StatType.spellRes) != 0f) resTypes.Add($"S:{F(StatType.spellRes)}%");
 
             if (resTypes.Count > 0) lines.Add($"Res: {string.Join(" ", resTypes)}");
 

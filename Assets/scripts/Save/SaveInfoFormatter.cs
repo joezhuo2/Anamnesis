@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Text;
+using CrystalFlux.EntitySystem;
 
 namespace CrystalFlux.SaveSystem
 {
@@ -23,11 +24,11 @@ namespace CrystalFlux.SaveSystem
         public static string Lines(SaveMeta m, string incompatibleReason)
         {
             var sb = new StringBuilder();
-            sb.Append("Wave ").Append(m.wave).Append('\n');
+            sb.Append("Wave ").Append(NumberFormat.Abbrev(m.wave)).Append('\n');
             sb.Append(m.modeName).Append(" / ").Append(m.difficultyName);
             if (m.ironman) sb.Append(" / Ironman");
             sb.Append('\n');
-            sb.Append("Highest DPS: ").Append(m.peakDps.ToString("N0", CultureInfo.InvariantCulture)).Append('\n');
+            sb.Append("Highest DPS: ").Append(NumberFormat.Abbrev(m.peakDps)).Append('\n');
             if (m.attackNames != null && m.attackNames.Count > 0) sb.Append("Attacks: ").Append(string.Join(", ", m.attackNames)).Append('\n');
             sb.Append("Playtime: ").Append(FormatPlaytime(m.playtimeSeconds)).Append('\n');
             sb.Append("Saved: ").Append(FormatDate(m.savedAtUtc));
