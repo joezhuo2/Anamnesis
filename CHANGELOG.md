@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.9.1] - 2026-10-15 - Contract Fixes
+
+### Added
+- **Always trigger additional attacks** (`ProjectileData.canAlwaysTriggerAdditional`): a projectile with this set keeps triggering additional attacks on every hit instead of only once
+
+### Changed
+- **Prism Bolt**: its projectiles now always trigger additional attacks, with lower pierce (Prism Bolt 4 → 3, Shard 3 → 2) that destroys the projectile on max pierce
+- **Overcharged** is no longer offered as a contract (regular and unlimited)
+
+### Fixed
+- **Contract frame** is hidden when there is no active contract, including after skipping contract selection
+- **Failed contracts** no longer grant regular wave rewards (reward cards and the occasional reroll / skill point); anomaly rewards are still given
+
 ## [v0.9.0] - 2026-10-14 - Saves (Release Summary)
 
 *This release adds saving and loading. You can save a run mid-wave or save a build, then load either from the save menu, and a save whose assets no longer exist is flagged as incompatible instead of failing to load. It also adds `k` / `M` / `B` number abbreviation across the HUD, hover cards and reward cards.*
