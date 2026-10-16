@@ -4,19 +4,21 @@ namespace CrystalFlux.Core
 {
     public class EntityStats : ScriptableObject
     {
+        public const float MaxStatValue = 1e30f;
+
         [Header("Offense")]
         public float damagePct;
         public float physicalDmgPct;
         public float spellDmgPct;
-        public int attack;
+        public float attack;
         public float atkPct;
-        public int intelligence;
+        public float intelligence;
         public float intPct;
         public float attackSpeedPct;
         [Range(0f, 100f)] public float critChance;
         public float critDamage;
         public float aoePct;
-        public int defShred;
+        public float defShred;
         public float resPen;
         public float addPhysDmgPct;
         public float addSplDmgPct;
@@ -35,19 +37,19 @@ namespace CrystalFlux.Core
         public float ultCdRedPct;
 
         [Header("Defense")]
-        public int currentHp;
-        public int EffMaxHp => Mathf.Max(1, Mathf.RoundToInt(maxHp * (1f + (hpPct * 0.01f))));
-        public int maxHp;
+        public float currentHp;
+        public float EffMaxHp => Mathf.Clamp(Mathf.Round(maxHp * (1f + (hpPct * 0.01f))), 1f, MaxStatValue);
+        public float maxHp;
         public float hpPct;
         public float hpRegen;
         public float hpRegPct;
         public float healingPct;
         [HideInInspector] public float overhealth;
-        public int armor;
+        public float armor;
         public float armorPct;
-        public int defense;
+        public float defense;
         public float defensePct;
-        public int arcaneShield;
+        public float arcaneShield;
         public float arcaneShieldPct;
         [Range(-200f, 100f)] public float damageRes;
         [Range(0f, 100f)] public float dodgeChance;
@@ -66,18 +68,18 @@ namespace CrystalFlux.Core
         public float detectionRange;
 
         [Header("Stamina - Player Only")]
-        public int currentStamina;
-        public int maxStamina;
+        public float currentStamina;
+        public float maxStamina;
         public float maxStaminaPct;
-        public float EffMaxStamina => Mathf.Max(1f, Mathf.RoundToInt(maxStamina * (1f + (maxStaminaPct * 0.01f))));
+        public float EffMaxStamina => Mathf.Max(1f, Mathf.Round(maxStamina * (1f + (maxStaminaPct * 0.01f))));
         public float staminaRegen;
         public float stRegPct;
 
         [Header("Mana - Player Only")]
-        public int currentMana;
-        public int maxMana;
+        public float currentMana;
+        public float maxMana;
         public float maxManaPct;
-        public float EffMaxMana => Mathf.Max(1f, Mathf.RoundToInt(maxMana * (1f + (maxManaPct * 0.01f))));
+        public float EffMaxMana => Mathf.Max(1f, Mathf.Round(maxMana * (1f + (maxManaPct * 0.01f))));
         [HideInInspector] public bool canGainMana;
 
         [Header("Dash - Player Only")]
@@ -243,7 +245,7 @@ namespace CrystalFlux.Core
         {
             switch (type)
             {
-                case StatType.attack: attack += Mathf.RoundToInt(delta); break;
+                case StatType.attack: attack += Mathf.Round(delta); break;
                 case StatType.atkPct: atkPct += delta; break;
                 case StatType.damagePct: damagePct += delta; break;
                 case StatType.physicalDmgPct: physicalDmgPct += delta; break;
@@ -251,11 +253,11 @@ namespace CrystalFlux.Core
                 case StatType.critChance: critChance += delta; break;
                 case StatType.critDamage: critDamage += delta; break;
                 case StatType.aoePct: aoePct += delta; break;
-                case StatType.maxHp: maxHp += Mathf.RoundToInt(delta); break;
+                case StatType.maxHp: maxHp += Mathf.Round(delta); break;
                 case StatType.hpPct: hpPct += delta; break;
                 case StatType.hpRegen: hpRegen += delta; break;
                 case StatType.hpRegPct: hpRegPct += delta; break;
-                case StatType.armor: armor += Mathf.RoundToInt(delta); break;
+                case StatType.armor: armor += Mathf.Round(delta); break;
                 case StatType.armorPct: armorPct += delta; break;
                 case StatType.damageRes: damageRes += delta; break;
                 case StatType.physicalRes: physicalRes += delta; break;
@@ -264,21 +266,21 @@ namespace CrystalFlux.Core
                 case StatType.dodgeRating: dodgeRating += delta; break;
                 case StatType.moveSpeedPct: moveSpeedPct += delta; break;
                 case StatType.attackSpeedPct: attackSpeedPct += delta; break;
-                case StatType.defShred: defShred += Mathf.RoundToInt(delta); break;
+                case StatType.defShred: defShred += Mathf.Round(delta); break;
                 case StatType.resPen: resPen += delta; break;
-                case StatType.maxStamina: maxStamina += Mathf.RoundToInt(delta); break;
+                case StatType.maxStamina: maxStamina += Mathf.Round(delta); break;
                 case StatType.staminaRegen: staminaRegen += delta; break;
                 case StatType.stRegPct: stRegPct += delta; break;
                 case StatType.addPhysDmgPct: addPhysDmgPct += delta; break;
                 case StatType.addSplDmgPct: addSplDmgPct += delta; break;
                 case StatType.addTrueDmgPct: addTrueDmgPct += delta; break;
                 case StatType.moveSpeed: moveSpeed += delta; break;
-                case StatType.maxMana: maxMana += Mathf.RoundToInt(delta); break;
+                case StatType.maxMana: maxMana += Mathf.Round(delta); break;
                 case StatType.SkillDmgPct: skillDmgPct += delta; break;
                 case StatType.BasicDmgPct: basicDmgPct += delta; break;
                 case StatType.UltDmgPct: ultDmgPct += delta; break;
                 case StatType.EffectRes: effectRes += delta; break;
-                case StatType.Intelligence: intelligence += Mathf.RoundToInt(delta); break;
+                case StatType.Intelligence: intelligence += Mathf.Round(delta); break;
                 case StatType.IntPct: intPct += delta; break;
                 case StatType.ProjSpd: projSpd += delta; break;
                 case StatType.stCostPct: stCostPct += delta; break;
@@ -308,9 +310,9 @@ namespace CrystalFlux.Core
                 case StatType.Level: level += Mathf.RoundToInt(delta); break;
                 case StatType.IsDashing: isDashing = delta > 0; break;
                 case StatType.HurtTime: hurtTime += delta; break;
-                case StatType.CurrentMana: currentMana += Mathf.RoundToInt(delta); break;
+                case StatType.CurrentMana: currentMana += Mathf.Round(delta); break;
                 case StatType.IsAttacking: isAttacking = delta > 0; break;
-                case StatType.CurrentStamina: currentStamina += Mathf.RoundToInt(delta); break;
+                case StatType.CurrentStamina: currentStamina += Mathf.Round(delta); break;
                 case StatType.CanMove: canMove = delta > 0; break;
                 case StatType.Xp: exp += delta; break;
                 case StatType.Gold: gold += Mathf.RoundToInt(delta); break;
@@ -321,22 +323,22 @@ namespace CrystalFlux.Core
                 case StatType.CanGainStamina: canGainStamina = delta > 0; break;
                 case StatType.DashSpdMult: dashSpeedMult += delta; break;
                 case StatType.DashShouldApplyIFrame: dashShouldApplyIFrame = delta > 0; break;
-                case StatType.currentHp: currentHp += Mathf.RoundToInt(delta); break;
-                case StatType.EffAtk: attack += Mathf.RoundToInt(delta); break;
-                case StatType.EffMaxHp: maxHp += Mathf.RoundToInt(delta); break;
+                case StatType.currentHp: currentHp += Mathf.Round(delta); break;
+                case StatType.EffAtk: attack += Mathf.Round(delta); break;
+                case StatType.EffMaxHp: maxHp += Mathf.Round(delta); break;
                 case StatType.EffHpReg: hpRegen += delta; break;
                 case StatType.EffStReg: staminaRegen += delta; break;
                 case StatType.EffSpd: moveSpeed += delta; break;
-                case StatType.EffInt: intelligence += Mathf.RoundToInt(delta); break;
-                case StatType.EffMaxStamina: maxStamina += Mathf.RoundToInt(delta); break;
-                case StatType.EffMaxMana: maxMana += Mathf.RoundToInt(delta); break;
-                case StatType.EffArmor: armor += Mathf.RoundToInt(delta); break;
-                case StatType.defense: defense += Mathf.RoundToInt(delta); break;
+                case StatType.EffInt: intelligence += Mathf.Round(delta); break;
+                case StatType.EffMaxStamina: maxStamina += Mathf.Round(delta); break;
+                case StatType.EffMaxMana: maxMana += Mathf.Round(delta); break;
+                case StatType.EffArmor: armor += Mathf.Round(delta); break;
+                case StatType.defense: defense += Mathf.Round(delta); break;
                 case StatType.defensePct: defensePct += delta; break;
-                case StatType.EffDefense: defense += Mathf.RoundToInt(delta); break;
-                case StatType.arcaneShield: arcaneShield += Mathf.RoundToInt(delta); break;
+                case StatType.EffDefense: defense += Mathf.Round(delta); break;
+                case StatType.arcaneShield: arcaneShield += Mathf.Round(delta); break;
                 case StatType.arcaneShieldPct: arcaneShieldPct += delta; break;
-                case StatType.EffArcaneShield: arcaneShield += Mathf.RoundToInt(delta); break;
+                case StatType.EffArcaneShield: arcaneShield += Mathf.Round(delta); break;
                 case StatType.castTimeRedPct: castTimeRedPct += delta; break;
                 case StatType.interruptResist: interruptResist += delta; break;
                 case StatType.overhealth: overhealth = Mathf.Max(0f, overhealth + delta); break;
