@@ -205,9 +205,9 @@ namespace CrystalFlux.EntitySystem
             if (ownSem.GetActiveFirstEffectOfType<Thorns>() is Thorns th) th.TryReflect(attacker, damageTaken);
         }
 
-        private void TryStoreBlood(int healthLost)
+        private void TryStoreBlood(float healthLost)
         {
-            if (healthLost <= 0 || ownSem == null) return;
+            if (healthLost <= 0f || ownSem == null) return;
             if (ownSem.GetActiveFirstEffectOfType<BloodPool>() is BloodPool bp) bp.Store(healthLost);
         }
 
@@ -228,8 +228,8 @@ namespace CrystalFlux.EntitySystem
                 if (healingPct != 0f) amount *= Mathf.Max(0f, 1f + (healingPct * 0.01f));
             }
 
-            int finalAmount = Mathf.RoundToInt(amount);
-            if (finalAmount == 0) return false;
+            float finalAmount = Mathf.Round(amount);
+            if (finalAmount == 0f) return false;
 
             if (finalAmount < 0 && Immune && !ignoreImmune) return false;
             if (finalAmount > 0 && (esm.GetStat(StatType.CanGainHp)) <= 0f) return false;
@@ -240,18 +240,18 @@ namespace CrystalFlux.EntitySystem
                     pum.TriggerUpgrades(PlayerUpgrade.TriggerCondition.OnOverkill);
             }
 
-            int targetChange = finalAmount;
+            float targetChange = finalAmount;
             float curOverhealth = Overhealth;
 
             if (targetChange < 0 && curOverhealth >= 1f)
             {
-                int absorbed = Mathf.Min(Mathf.FloorToInt(curOverhealth), -targetChange);
+                float absorbed = Mathf.Min(Mathf.Floor(curOverhealth), -targetChange);
                 AddOverhealth(-absorbed);
                 targetChange += absorbed;
             }
             else if (targetChange > 0 && overhealthConvPct > 0f && CurHp >= MaxHp)
             {
-                int converted = Mathf.RoundToInt(targetChange * overhealthConvPct * 0.01f);
+                float converted = Mathf.Round(targetChange * overhealthConvPct * 0.01f);
                 AddOverhealth(converted);
                 targetChange -= converted;
             }
@@ -326,7 +326,7 @@ namespace CrystalFlux.EntitySystem
             float hpPerSecond = esm.GetStat(StatType.EffHpReg) / fullRegenFrequency;
             accumulatedRegen += hpPerSecond * regenInterval;
 
-            int intRegen = Mathf.FloorToInt(accumulatedRegen);
+            float intRegen = Mathf.Floor(accumulatedRegen);
             if (intRegen == 0f) return;
             accumulatedRegen -= intRegen;
             ChangeHealth(intRegen, false);

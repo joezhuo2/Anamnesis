@@ -9,6 +9,7 @@ namespace CrystalFlux.EntitySystem
     {
         private IStatProvider esm;
         private PlayerUpgradeManager pum;
+        private const int MaxLevel = 100;
         private int cLv;
 
         private void Start()
@@ -26,7 +27,7 @@ namespace CrystalFlux.EntitySystem
             float xp = esm.GetStat(StatType.Xp) + finalAmt;
             float xpReq = esm.GetStat(StatType.XpReq);
 
-            while (xp >= xpReq)
+            while (xp >= xpReq && esm.GetStat(StatType.Level) < MaxLevel)
             {
                 xp -= xpReq;
                 LevelUp();
@@ -39,7 +40,7 @@ namespace CrystalFlux.EntitySystem
             if (tis != null)
             {
                 tis.SpawnTextIndicator(
-                    Mathf.RoundToInt(finalAmt),
+                    Mathf.Round(finalAmt),
                     transform.position,
                     Color.magenta,
                     0.7f + UnityEngine.Random.Range(0f, 0.15f),

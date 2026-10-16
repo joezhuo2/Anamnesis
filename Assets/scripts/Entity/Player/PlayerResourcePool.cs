@@ -1,4 +1,3 @@
-using System;
 using CrystalFlux.Core;
 using UnityEngine;
 
@@ -61,12 +60,12 @@ namespace CrystalFlux.EntitySystem
 
             if (amount > 0) amount *= 1f + (esm.GetStat(StatType.manaGainPct) * 0.01f);
 
-            int newMana = Math.Min(
-                Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana) + amount),
-                Mathf.RoundToInt(esm.GetStat(StatType.EffMaxMana))
+            float newMana = Mathf.Min(
+                Mathf.Round(esm.GetStat(StatType.CurrentMana) + amount),
+                Mathf.Round(esm.GetStat(StatType.EffMaxMana))
             );
-            int targetChange = newMana - Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana));
-            if (targetChange > amount) targetChange = Mathf.RoundToInt(amount);
+            float targetChange = newMana - Mathf.Round(esm.GetStat(StatType.CurrentMana));
+            if (targetChange > amount) targetChange = Mathf.Round(amount);
             if (amount > 0 && targetChange < 0) targetChange = 0;
 
             esm.AddStat(new(StatType.CurrentMana, targetChange));
@@ -87,12 +86,12 @@ namespace CrystalFlux.EntitySystem
             if (amount > 0&& esm.GetStat(StatType.CanGainStamina) <= 0f) return false;
             if (esm.GetStat(StatType.CurrentStamina) + amount < 0f) return false;
 
-            int newStamina = Math.Min(
-                Mathf.RoundToInt(esm.GetStat(StatType.CurrentStamina) + amount),
-                Mathf.RoundToInt(esm.GetStat(StatType.EffMaxStamina))
+            float newStamina = Mathf.Min(
+                Mathf.Round(esm.GetStat(StatType.CurrentStamina) + amount),
+                Mathf.Round(esm.GetStat(StatType.EffMaxStamina))
             );
-            int targetChange = newStamina - Mathf.RoundToInt(esm.GetStat(StatType.CurrentStamina));
-            if (targetChange > amount) targetChange = Mathf.RoundToInt(amount);
+            float targetChange = newStamina - Mathf.Round(esm.GetStat(StatType.CurrentStamina));
+            if (targetChange > amount) targetChange = Mathf.Round(amount);
             esm.AddStat(new(StatType.CurrentStamina, targetChange));
             return true;
         }

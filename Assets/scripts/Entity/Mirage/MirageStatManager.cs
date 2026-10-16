@@ -40,7 +40,7 @@ namespace CrystalFlux.Core
         protected override void Start()
         {
             base.Start();
-            if (s != null) s.currentHp = Mathf.RoundToInt(GetStat(StatType.EffMaxHp));
+            if (s != null) s.currentHp = Mathf.Round(GetStat(StatType.EffMaxHp));
         }
 
         public void Setup(GameObject baseObj, float shr, List<StatShare> ovr)

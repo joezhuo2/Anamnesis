@@ -25,19 +25,25 @@ namespace CrystalFlux.Core
             baseFontSize = text.fontSize;
         }
 
-        public void Initialize(int val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, TextType textType, float delay = 0f)
+        private static readonly string[] Suffixes = { "", "k", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc" };
+
+        public void Initialize(float val, Vector3 sourcePos, Color color, float scale, float lifetime, float floatSpeed, TextType textType, float delay = 0f)
         {
-            if (textType == TextType.Standard && val < 1_000)
+            if (textType == TextType.Standard && val < 1_000f)
             {
                 text.SetText("{0}", val);
                 Show(sourcePos, color, scale, lifetime, floatSpeed, delay);
                 return;
             }
 
-            string result = val >= 1_000_000_000 ? (val / 1_000_000_000f).ToString("0.#") + "B"
-              : val >= 1_000_000 ? (val / 1_000_000f).ToString("0.#") + "M"
-              : val >= 1_000     ? (val / 1_000f).ToString("0.#") + "k"
-              : val.ToString();
+            float v = val;
+            int i = 0;
+            while (i < Suffixes.Length - 1 && v >= 1_000f)
+            {
+                v /= 1_000f;
+                i++;
+            }
+            string result = i == 0 ? v.ToString("0") : v.ToString("0.#") + Suffixes[i];
 
             string content = textType switch
             {

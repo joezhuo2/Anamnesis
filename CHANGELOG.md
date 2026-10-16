@@ -7,6 +7,17 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.9.2] - 2026-10-15 - Stat Overflow
+
+### Changed
+- **Stat caps**: `dodgeChance` 100 → 80, `EffectRes` 100 → 90, `attackSpeedPct` 95 → 70; `seTickRatePct`, `seDurPct`, `stCostPct` and `moveSpeedPct` now have a floor of -90
+- **Player level** is capped at 100
+- Enemy HP, attack, armor and similar stats are stored as floats and display with `k` / `M` / `B` … `Dc` abbreviations, including the boss bar
+
+### Fixed
+- **Enemy stat overflow**: boss and enemy HP no longer wrap to 1 HP or the integer limit at high waves (nightmare, ironman and master boss rush, unlimited mode); stats keep scaling with level (#44)
+- **Contract frame** no longer disappears when both wave managers are enabled; only the active wave manager updates it
+
 ## [v0.9.1] - 2026-10-15 - Contract Fixes
 
 ### Added

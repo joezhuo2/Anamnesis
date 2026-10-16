@@ -52,18 +52,22 @@ namespace CrystalFlux.Core
             float armorMult = Mathf.Pow(armorGrowth, levelOffset);
             float utilMult = Mathf.Pow(utilityGrowth, levelOffset);
 
-            s.attack = Mathf.RoundToInt(s.attack * atkMult);
-            s.intelligence = Mathf.RoundToInt(s.intelligence * atkMult);
-            s.critDamage *= atkMult;
-            s.maxHp = Mathf.RoundToInt(s.maxHp * hpMult);
-            s.hpRegen *= hprMult;
-            s.armor = Mathf.RoundToInt(s.armor * armorMult);
-            s.arcaneShield = Mathf.RoundToInt(s.arcaneShield * armorMult);
-            s.dodgeRating *= armorMult;
+            s.attack = Scale(s.attack, atkMult);
+            s.intelligence = Scale(s.intelligence, atkMult);
+            s.critDamage = Cap(s.critDamage * atkMult);
+            s.maxHp = Scale(s.maxHp, hpMult);
+            s.hpRegen = Cap(s.hpRegen * hprMult);
+            s.armor = Scale(s.armor, armorMult);
+            s.arcaneShield = Scale(s.arcaneShield, armorMult);
+            s.dodgeRating = Cap(s.dodgeRating * armorMult);
 
-            s.aoePct *= utilMult;
+            s.aoePct = Cap(s.aoePct * utilMult);
             s.moveSpeedPct = Mathf.Clamp(s.moveSpeedPct * utilMult, -100f, 100f);
             s.critChance = Mathf.Clamp(s.critChance * utilMult, 0f, 100f);
         }
+
+        private static float Cap(float v) => float.IsNaN(v) ? 0f : Mathf.Clamp(v, -EntityStats.MaxStatValue, EntityStats.MaxStatValue);
+
+        private static float Scale(float v, float mult) => Mathf.Round(Cap(v * mult));
     }
 }
