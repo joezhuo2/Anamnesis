@@ -60,6 +60,11 @@ namespace CrystalFlux.WaveSystem
         {
             int wave = GetCurrentWave();
             RollOccasionalWaveRewards(wave);
+            if (ContractBroken)
+            {
+                pendingOccasionalRerolls = 0;
+                pendingOccasionalSkillPoints = 0;
+            }
 
             bool anomalyCompleted = currentAnomaly != null && currentAnomaly.isActive;
             AnomalyData completedAmd = anomalyCompleted ? currentAnomaly.amd : null;

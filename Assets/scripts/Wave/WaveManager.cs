@@ -163,6 +163,7 @@ namespace CrystalFlux.WaveSystem
         protected AnomalyType? contractType;
         protected bool contractArmed;
         protected bool contractPaused;
+        protected bool contractBrokenWave;
         protected int pendingContractRerolls;
         protected int pendingContractSkillPoints;
         protected bool pendingContractPool;

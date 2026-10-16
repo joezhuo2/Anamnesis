@@ -383,6 +383,7 @@ namespace CrystalFlux.WaveSystem
             WaveCleanup();
             RollSynergyOffer(GetCurrentWave());
 
+            contractBrokenWave = ContractBroken;
             OpenRewardButtons();
             UpdateOccasionalWaveRewards(GetCurrentWave());
             ApplyContractRewards();
@@ -391,6 +392,7 @@ namespace CrystalFlux.WaveSystem
 
             if (pendingContractPool) OpenContractPool();
             else if (currentAnomaly != null) CleanupAnomaly();
+            else if (contractBrokenWave) ResumeGameLoop();
             else TriggerStandardRewards(GetCurrentWave());
         }
         private void WaveCleanup()

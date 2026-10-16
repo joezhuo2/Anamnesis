@@ -226,7 +226,7 @@ namespace CrystalFlux.WaveSystem
             currentAnomaly.Cleanup();
             currentAnomaly = null;
 
-            pendingStandardRewards = true;
+            pendingStandardRewards = !contractBrokenWave;
 
             int c = pendingAnomalyRerolls >= 0 ? pendingAnomalyRerolls : RollAnomalyRerolls(amd);
             int sp = pendingAnomalySkillPoints >= 0 ? pendingAnomalySkillPoints : RollAnomalySkillPoints(amd);
