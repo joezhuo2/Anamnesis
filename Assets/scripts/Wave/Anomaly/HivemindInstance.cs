@@ -22,9 +22,9 @@ public class HivemindInstance : AnomalyInstance
 
     public override string Description => "All enemies share one pooled health bar. Damage dealt to any enemy damages the pool, and every enemy falls when it empties";
 
-    public int PoolCur() => Mathf.Max(0, Mathf.CeilToInt(poolCur));
+    public float PoolCur() => Mathf.Max(0f, Mathf.Ceil(poolCur));
 
-    public int PoolMax() => Mathf.RoundToInt(poolMax);
+    public float PoolMax() => Mathf.Round(poolMax);
 
     public override void StartAnomaly()
     {

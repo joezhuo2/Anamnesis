@@ -27,7 +27,7 @@ namespace CrystalFlux.StatusEffectSystem
 
         public override string GetDesc()
         {
-            string stored = $"Stored: {Mathf.FloorToInt(Stored)}";
+            string stored = $"Stored: {Mathf.Floor(Stored):0}";
             return string.IsNullOrEmpty(desc) ? stored : $"{desc}\n{stored}";
         }
     }

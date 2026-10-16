@@ -10,7 +10,7 @@ public class TwinCrownsInstance : AnomalyInstance
     private readonly string description;
     private readonly EntityHealth[] crowns = new EntityHealth[2];
     private readonly IStatProvider[] stats = new IStatProvider[2];
-    private readonly int[] cachedMax = new int[2];
+    private readonly float[] cachedMax = new float[2];
     private readonly bool[] seenAlive = new bool[2];
     private int count;
     private bool enraged;
@@ -48,24 +48,24 @@ public class TwinCrownsInstance : AnomalyInstance
 
         crowns[count] = eh;
         stats[count] = esm;
-        cachedMax[count] = Mathf.RoundToInt(esm.GetStat(StatType.EffMaxHp));
+        cachedMax[count] = Mathf.Round(esm.GetStat(StatType.EffMaxHp));
         count++;
     }
 
-    public int PoolCur()
+    public float PoolCur()
     {
-        int sum = 0;
+        float sum = 0f;
         for (int i = 0; i < count; i++)
-            if (Alive(i)) sum += Mathf.Max(0, Mathf.RoundToInt(stats[i].GetStat(StatType.currentHp)));
+            if (Alive(i)) sum += Mathf.Max(0f, Mathf.Round(stats[i].GetStat(StatType.currentHp)));
         return sum;
     }
 
-    public int PoolMax()
+    public float PoolMax()
     {
-        int sum = 0;
+        float sum = 0f;
         for (int i = 0; i < count; i++)
         {
-            if (crowns[i] != null && stats[i] != null) cachedMax[i] = Mathf.RoundToInt(stats[i].GetStat(StatType.EffMaxHp));
+            if (crowns[i] != null && stats[i] != null) cachedMax[i] = Mathf.Round(stats[i].GetStat(StatType.EffMaxHp));
             sum += cachedMax[i];
         }
         return sum;
@@ -96,7 +96,7 @@ public class TwinCrownsInstance : AnomalyInstance
         {
             crowns[i] = null;
             stats[i] = null;
-            cachedMax[i] = 0;
+            cachedMax[i] = 0f;
             seenAlive[i] = false;
         }
         count = 0;

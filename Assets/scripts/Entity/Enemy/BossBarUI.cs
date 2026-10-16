@@ -12,12 +12,12 @@ namespace CrystalFlux.EntitySystem
         public TextMeshProUGUI bossHPText;
         public Slider healthSlider;
         public Image fillImage;
-        private int cMaxHp;
-        private int cCurHp;
+        private float cMaxHp;
+        private float cCurHp;
 
         private IStatProvider bsm;
-        private Func<int> curSrc;
-        private Func<int> maxSrc;
+        private Func<float> curSrc;
+        private Func<float> maxSrc;
 
         public void Setup(string bossName, IStatProvider esm)
         {
@@ -32,8 +32,8 @@ namespace CrystalFlux.EntitySystem
                 return;
             }
 
-            cMaxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
-            cCurHp = Mathf.RoundToInt(bsm.GetStat(StatType.currentHp));
+            cMaxHp = Mathf.Round(bsm.GetStat(StatType.EffMaxHp));
+            cCurHp = Mathf.Round(bsm.GetStat(StatType.currentHp));
 
             if (healthSlider != null)
             {
@@ -42,35 +42,35 @@ namespace CrystalFlux.EntitySystem
             }
 
             if (fillImage != null && cMaxHp > 0)
-                fillImage.fillAmount = (float)cCurHp / cMaxHp;
+                fillImage.fillAmount = cCurHp / cMaxHp;
 
-            if (bossHPText != null) bossHPText.text = $"{cCurHp}/{cMaxHp}";
+            if (bossHPText != null) bossHPText.text = NumberFormat.Bar(cCurHp, cMaxHp);
         }
 
-        public void SetupPool(string barName, Func<int> cur, Func<int> max)
+        public void SetupPool(string barName, Func<float> cur, Func<float> max)
         {
             if (bossNameText != null) bossNameText.text = barName;
             bsm = null;
             curSrc = cur;
             maxSrc = max;
-            cCurHp = int.MinValue;
-            cMaxHp = int.MinValue;
+            cCurHp = float.MinValue;
+            cMaxHp = float.MinValue;
         }
 
         private void Update()
         {
-            int curHp;
-            int maxHp;
+            float curHp;
+            float maxHp;
 
             if (curSrc != null && maxSrc != null)
             {
-                curHp = Mathf.Max(curSrc(), 0);
+                curHp = Mathf.Max(curSrc(), 0f);
                 maxHp = maxSrc();
             }
             else if (bsm != null)
             {
-                curHp = Mathf.Max(Mathf.RoundToInt(bsm.GetStat(StatType.currentHp)), 0);
-                maxHp = Mathf.RoundToInt(bsm.GetStat(StatType.EffMaxHp));
+                curHp = Mathf.Max(Mathf.Round(bsm.GetStat(StatType.currentHp)), 0f);
+                maxHp = Mathf.Round(bsm.GetStat(StatType.EffMaxHp));
             }
             else return;
 
@@ -83,9 +83,9 @@ namespace CrystalFlux.EntitySystem
             }
 
             if (fillImage != null && maxHp > 0)
-                fillImage.fillAmount = (float)curHp / maxHp;
+                fillImage.fillAmount = curHp / maxHp;
 
-            if (bossHPText != null) bossHPText.text = $"{curHp}/{maxHp}";
+            if (bossHPText != null) bossHPText.text = NumberFormat.Bar(curHp, maxHp);
 
             cCurHp = curHp;
             cMaxHp = maxHp;

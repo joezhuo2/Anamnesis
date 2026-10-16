@@ -26,27 +26,27 @@ namespace CrystalFlux.EntitySystem
         public TextMeshProUGUI levelText;
         public TextMeshProUGUI xpText;
 
-        private int lastMana = -1;
-        private int lastMaxMana = -1;
-        private int lastHp = -1;
-        private int lastMaxHp = -1;
-        private int lastStamina = -1;
-        private int lastMaxStamina = -1;
+        private float lastMana = -1f;
+        private float lastMaxMana = -1f;
+        private float lastHp = -1f;
+        private float lastMaxHp = -1f;
+        private float lastStamina = -1f;
+        private float lastMaxStamina = -1f;
         private int lastLevel = -1;
         private float lastXp = -1;
-        private int lastOverhealth = -1;
+        private float lastOverhealth = -1f;
         private IStatProvider esm;
         private EntityHealth eh;
-        private int Overhealth => eh != null ? Mathf.FloorToInt(eh.Overhealth) : 0;
-        private int CurMana => Mathf.RoundToInt(esm.GetStat(StatType.CurrentMana));
-        private int CurHp => Mathf.RoundToInt(esm.GetStat(StatType.currentHp));
-        private int CurStamina => Mathf.RoundToInt(esm.GetStat(StatType.CurrentStamina));
-        private int MaxMana => Mathf.RoundToInt(esm.GetStat(StatType.EffMaxMana));
-        private int MaxHp => Mathf.RoundToInt(esm.GetStat(StatType.EffMaxHp));
-        private int MaxStamina => Mathf.RoundToInt(esm.GetStat(StatType.EffMaxStamina));
+        private float Overhealth => eh != null ? Mathf.Floor(eh.Overhealth) : 0f;
+        private float CurMana => Mathf.Round(esm.GetStat(StatType.CurrentMana));
+        private float CurHp => Mathf.Round(esm.GetStat(StatType.currentHp));
+        private float CurStamina => Mathf.Round(esm.GetStat(StatType.CurrentStamina));
+        private float MaxMana => Mathf.Round(esm.GetStat(StatType.EffMaxMana));
+        private float MaxHp => Mathf.Round(esm.GetStat(StatType.EffMaxHp));
+        private float MaxStamina => Mathf.Round(esm.GetStat(StatType.EffMaxStamina));
         private int Level => Mathf.RoundToInt(esm.GetStat(StatType.Level));
-        private int Xp => Mathf.RoundToInt(esm.GetStat(StatType.Xp));
-        private int XpReq => Mathf.RoundToInt(esm.GetStat(StatType.XpReq));
+        private float Xp => Mathf.Round(esm.GetStat(StatType.Xp));
+        private float XpReq => Mathf.Round(esm.GetStat(StatType.XpReq));
         private bool Alive => Mathf.RoundToInt(esm.GetStat(StatType.isAlive)) > 0;
 
         private void Start()
@@ -67,7 +67,7 @@ namespace CrystalFlux.EntitySystem
             UpdateStaminaBar();
         }
 
-        private static void SetBar(Slider bar, TextMeshProUGUI label, int value, int max, int over = 0)
+        private static void SetBar(Slider bar, TextMeshProUGUI label, float value, float max, float over = 0f)
         {
             if (bar != null)
             {

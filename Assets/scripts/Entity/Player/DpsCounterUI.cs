@@ -33,7 +33,7 @@ namespace CrystalFlux.EntitySystem
             if (!show || Time.unscaledTime < nextRefresh) return;
 
             nextRefresh = Time.unscaledTime + RefreshInterval;
-            label.text = $"DPS {NumberFormat.Abbrev(Mathf.RoundToInt(DpsMeter.Current))}";
+            label.text = $"DPS {NumberFormat.Abbrev(Mathf.Round(DpsMeter.Current))}";
         }
     }
 }
