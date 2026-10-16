@@ -27,7 +27,7 @@ MonoBehaviour:
   rewardQuality: 0.15
   rewardRerolls: 1
   rewardSkillPoints: 1
-  isContract: 1
+  isContract: 0
   contractRerolls: 1
   contractSkillPointChance: 40
   contractMixedPoolChance: 15

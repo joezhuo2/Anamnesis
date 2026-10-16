@@ -45,7 +45,7 @@
 - [5] Elite "aura" variants that buff nearby enemies (e.g. attack speed, damage reduction) — encourages target prioritization
 - [5] "Memory" collectibles scattered in waves that unlock lore snippets and permanent bonuses (new collectible type)
 - [5] Techniques - utility/QoL featured (blink tp, buff, crowd control)
-- [6] **Capture Point** (event) — a zone appears in the ring around the player. Standing inside it fills a capture bar (it drains while you are outside), and enemies spawn at the zone's edge until it is captured. A full bar drops a reward. A small version of the planned defend beacon.
+- [6] **Capture Point** (event) — a zone appears in the ring around the player. Standing inside it fills a capture bar (it drains while you are outside). A full bar drops a reward.
 
 - [4] Player summons
 - [4] move certain awakenings/attacks to be hard/nightmare only
@@ -78,8 +78,7 @@
 ### QoL
 - [6] enemy status effect overlay on common enemies
 - [6] Screen-edge indicators for off-screen enemies, boss cursor
-
-- [5] full run saving
+- [6] **Owned upgrades list**: a pause menu tab listing every Awakening, capstone and synergy owned this run with full tooltips, so it is possible to check what the build actually does mid-run.
 
 - [4] reward history
 - [4] Post-Death Summary (run grade)
@@ -87,6 +86,7 @@
 - [3] Suggest certain stats based on player's current loadout
 - [3] Achievement system with unlock notifications
 - [3] Full stats display menu (in settings panel)
+- [3] **Damage number filters**: settings to hide DoT ticks, merge rapid hits on one target into a running total, or show only crits/big hits.
 
 - [2] Leaderboards (local/online) for boss rush/endless/highest dps
 - [2] Customizable HUD layout
@@ -104,8 +104,8 @@
 
 #### Expert Attacks
 - slime => poison splash
-- frost slime => splitting ice shards
-- magma slime => explosion on spear hit
+- frost slime =>
+- magma slime =>
 **- reaper => long distance pull to self**
 - golem => ?
 
@@ -142,7 +142,6 @@
 - **Kinetic Theory** - knocking enemies into other enemies causes them to take contact damage scaling off of kbPct (after contact damage update)
 - **Event Horizon** (Ultimate) — a slow `Spiral` projectile that `Pulled`s nearby enemies and grows over its lifetime.
 - **Something** - something that grants thorns effect
-- **Scatter Mine** (Basic) — random-direction (`randomDir`) mines that sit still and arm after 0.5s. Opens a trap/kiting playstyle. new `armDelay` (no collision until armed).
 - **Perfect Parry** — `OnCounterDodge`: reflects the incoming hit as a projectile toward its source and refunds the dash cooldown. Deepens dash play.
 - **Veil of Stars** (Ultimate) — creates an aura with `configurable `tile radius around you (with overlay) that grants a `status effect`. Enemy projectiles that enter have a `configurable` chance to it spawn a `projectile`.
 - **Anvil Stance** standing still for 1s grants a buff. Moving drops it after a 0.5s grace.
@@ -158,17 +157,9 @@
 - green-yellow
 - brown
 
-## Brainstorm: QoL, Gameplay & Replayability
-- [ ] **Owned upgrades list**: a pause menu tab listing every Awakening, capstone and synergy owned this run with full tooltips, so it is possible to check what the build actually does mid-run.
-- [ ] **Damage number filters**: settings to hide DoT ticks, merge rapid hits on one target into a running total, or show only crits/big hits.
 - [ ] **Awakening fusions**: specific Awakening pairs fuse into a stronger combined version when both are owned (e.g. Supersonic + Chaos Theory). Hidden recipes the player discovers, a concrete form of the v1.6 synergy bonuses.
-
-### QoL
 - [ ] **Banish**: a limited per-run charge that removes a reward from its pool for the rest of the run. Allowed in Ironman since it is not a take-back.
 - [ ] **First-run hints**: one-time contextual tips (first dash, first corruption, first anomaly, first skill point) that can be reset in settings. Fits v1.0 "a stranger can play it".
-
-### Gameplay
-
 - [ ] **Constellation tracing**: stars light up across the map mid-wave; touch them in the drawn order before they fade to complete a constellation, which grants a named buff for the rest of the wave (a different one for each constellation, each with a lore line). Pulls the player around the map instead of kiting in circles.
 - [ ] **Lost wisp escort**: a friendly wisp appears and drifts slowly toward a beacon while enemies switch to target it. Get it there alive for a reward, with a bigger reward if it arrives above 50% HP. The mirror image of the planned defend/destroy beacon.
 - [ ] **Blind draw**: a reward panel variant with face-down cards and better rarity odds. You commit to a card before seeing it.

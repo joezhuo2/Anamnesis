@@ -16,12 +16,12 @@ It also caps the development arc from `v0.8.1` through `v0.8.35`. Over that peri
 ### Highlights
 
 - **Save and load (`v0.9.0`)**: save a run mid-wave or save a build, then load either from the save menu. The save list panel has search, sort, hover info and a confirm dialog, and saves are checked against an asset catalog so incompatible ones can't be loaded
-- **Number abbreviation (`v0.9.0`)**: `k`, `M` and `B` suffixes on the resources list, reward cards (before → after), attack and movement hovers, damage text and save rows
 - **Wave events (`v0.8.12` - `v0.8.18`, `v0.8.32`)**: a new event system that fires random hazards during a wave, including Spawn Projectile volleys (Static Field, Glacial Expanse), Blood Moon and the Hunted event
 - **New anomalies and contracts (`v0.8.33` - `v0.8.35`)**: Grounded, Last Stand and Bloodtide, with per-anomaly completion rewards (`v0.8.30`) and a Quality collectible (`v0.8.29`)
 - **Awakenings and keystones (`v0.8.1`, `v0.8.2`, `v0.8.9`, `v0.8.11`, `v0.8.23`)**: Hypercarry, Reminiscence, Resonance and Serenade became keystones, with Shatterpoint, Blood Bank, Paradox and Entwined Fate added
 - **Prism Bolt (`v0.8.5` - `v0.8.10`)**: a new Rare pool Basic attack that splits into shards, then shrapnel, retuned across four patches
 - **Dodge Rating & DPS counter (`v0.8.4`)**: Dodge Resistance % became Dodge Rating, with an optional top-right DPS counter
+- **Number abbreviation (`v0.9.0`)**: `k`, `M` and `B` suffixes on the resources list, reward cards (before → after), attack and movement hovers, damage text and save rows
 - **Fixes (`v0.8.24` - `v0.8.28`)**: empty and duplicate reward cards, capped stats appearing in reward pools, Unlimited anomalies stopping after wave 128, and the Blackout seam line
 
 ### Added
