@@ -10,10 +10,12 @@ the same name with `PD` instead of `AD` unless noted.
 Projectile `Size` multiplies the projectile prefab's own scale: the final scale is
 `prefab scale x Size x (1 + aoePct%)`. `aoePct` is capped at 100% when read, so the multiplier never exceeds x2.
 
-Some stats are capped when read (`StatCaps`). Capped at 100: `critChance`, `aoePct`, `dodgeChance`, `EffectRes`,
-`kbRes`, `dashCooldownRedPct`, `dashStaminaCostRedPct`. Capped at 90: `castTimeRedPct`, `damageRes`, `physicalRes`,
-`spellRes`, `basicCdRedPct`, `skillCdRedPct`, `ultCdRedPct`. The base and mixed reward pools skip a stat once it is
-at its cap; a roll can still push it past the cap. Milestone and synergy rewards ignore caps.
+Some stats are capped when read (`StatCaps`). Capped at 100: `critChance`, `aoePct`, `kbRes`, `dashCooldownRedPct`,
+`dashStaminaCostRedPct`. Capped at 90: `castTimeRedPct`, `damageRes`, `physicalRes`, `spellRes`, `basicCdRedPct`,
+`skillCdRedPct`, `ultCdRedPct`, `EffectRes`. Capped at 80: `dodgeChance`. Capped at 70: `attackSpeedPct`. Capped at 300:
+`resPen`, `ProjSpd`, `kbPct`. Floored at -90: `seTickRatePct`, `seDurPct`, `stCostPct`, `moveSpeedPct`. The base and
+mixed reward pools skip a stat once it is at its cap; a roll can still push it past the cap. Milestone and synergy
+rewards ignore caps. Player level is capped at 100; XP stops levelling once it is reached.
 
 A reward slot never stays empty while any pool has something to offer. If its pool has nothing
 left (every stat capped, or every Rare/Treasure entry claimed, gated or already on the panel), the
