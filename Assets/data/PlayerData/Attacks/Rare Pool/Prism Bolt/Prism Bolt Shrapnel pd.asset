@@ -16,7 +16,7 @@ MonoBehaviour:
   lifetime: 2
   size: 2
   numPierce: 2
-  destroyOnMaxPierce: 0
+  destroyOnMaxPierce: 1
   movementType: 0
   speed: 1.75
   waveAmplitude: 1
@@ -41,6 +41,7 @@ MonoBehaviour:
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1
+  canAlwaysTriggerAdditional: 0
   additionalFollowsMouse: 0
   distFromCenter: 0
   effects: []

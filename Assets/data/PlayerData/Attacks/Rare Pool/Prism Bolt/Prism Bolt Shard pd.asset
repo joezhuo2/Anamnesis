@@ -15,8 +15,8 @@ MonoBehaviour:
   mainAttack: {fileID: 11400000, guid: 48d68fcb7dec03f4f94cf7c901efd169, type: 2}
   lifetime: 3
   size: 1.75
-  numPierce: 3
-  destroyOnMaxPierce: 0
+  numPierce: 2
+  destroyOnMaxPierce: 1
   movementType: 0
   speed: 2.5
   waveAmplitude: 1
@@ -41,6 +41,7 @@ MonoBehaviour:
   additionalAttack: {fileID: 11400000, guid: fcffe03b82e7d4b44b576d92f26ef132, type: 2}
   additionalChance: 1
   addAttackRequiresHit: 1
+  canAlwaysTriggerAdditional: 1
   additionalFollowsMouse: 0
   distFromCenter: 0.5
   effects: []
