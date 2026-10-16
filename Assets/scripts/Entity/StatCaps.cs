@@ -18,9 +18,13 @@ namespace CrystalFlux.Core
             { StatType.damageRes, 90f },
             { StatType.physicalRes, 90f },
             { StatType.spellRes, 90f },
+            { StatType.attackSpeedPct, 95f },
             { StatType.basicCdRedPct, 90f },
             { StatType.skillCdRedPct, 90f },
             { StatType.ultCdRedPct, 90f },
+            { StatType.resPen, 300f },
+            { StatType.ProjSpd, 300f },
+            { StatType.kbPct, 300f }
         };
 
         public static float Clamp(StatType type, float value) => Max.TryGetValue(type, out float cap) ? Mathf.Min(value, cap) : value;
