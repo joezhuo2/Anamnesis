@@ -310,7 +310,7 @@ namespace CrystalFlux.WaveSystem
             }
 
             if (contractArmed && currentContract != null && currentContract.isActive) currentContract.UpdateCheck(Time.deltaTime);
-            UpdateContractInfo();
+            if (ActiveManager == null || ActiveManager == this) UpdateContractInfo();
         }
 
         public static bool WaveActive => ActiveManager != null && ActiveManager.isWaveActive;
