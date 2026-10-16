@@ -64,6 +64,7 @@ namespace CrystalFlux.ProjectileSystem
         [SerializeField] private AttackData additionalAttack;
         [Range(0, 1)] [SerializeField] private float additionalChance = 0;
         [SerializeField] private bool addAttackRequiresHit = true;
+        [SerializeField] private bool canAlwaysTriggerAdditional = false;
         [SerializeField] private bool additionalFollowsMouse = false;
         [Tooltip("Distance from location where projectile splits (must be positive to work)")] [SerializeField] private float distFromCenter = 0f;
 
@@ -111,6 +112,7 @@ namespace CrystalFlux.ProjectileSystem
         public bool RandomDir => randomDir;
         public AttackData AdditionalAttack => additionalAttack;
         public bool AddAttackRequiresHit => addAttackRequiresHit;
+        public bool CanAlwaysTriggerAdditional => canAlwaysTriggerAdditional;
         public bool AdditionalFollowsMouse => additionalFollowsMouse;
         public float AdditionalChance => additionalChance;
         public float DistFromCenter => distFromCenter;

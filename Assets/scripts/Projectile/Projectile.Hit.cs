@@ -92,7 +92,7 @@ namespace CrystalFlux.ProjectileSystem
                 HandleAdditionalSpawns(target);
             else if (canTriggerAdd) TryRetriggerChain();
 
-            canTriggerAdd = false;
+            if (!pd.CanAlwaysTriggerAdditional) canTriggerAdd = false;
 
             var hitExtras = ExtraEffects();
 
