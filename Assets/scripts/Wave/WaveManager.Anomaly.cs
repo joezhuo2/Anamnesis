@@ -73,7 +73,8 @@ namespace CrystalFlux.WaveSystem
         {
             if (contractInfoText == null) return;
 
-            contractInfoBackground.SetActive(true);
+            bool hasContract = currentContract != null && currentContract.amd != null;
+            if (contractInfoBackground != null) contractInfoBackground.SetActive(hasContract);
 
             int key;
             if (currentContract == null || currentContract.amd == null) key = -1;
