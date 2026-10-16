@@ -39,7 +39,7 @@ namespace CrystalFlux.EntitySystem
             if (tis != null)
             {
                 tis.SpawnTextIndicator(
-                    Mathf.RoundToInt(finalAmt),
+                    Mathf.Round(finalAmt),
                     transform.position,
                     Color.magenta,
                     0.7f + UnityEngine.Random.Range(0f, 0.15f),

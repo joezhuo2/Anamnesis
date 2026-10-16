@@ -18,7 +18,7 @@ namespace CrystalFlux.EntitySystem
         public TextMeshProUGUI healthBarTextPrefab;
 
         public event Action<GameObject> OnDeath;
-        public static Func<EntityHealth, int, bool> DamageRedirect;
+        public static Func<EntityHealth, float, bool> DamageRedirect;
         [HideInInspector] public float DamageTakenMult = 1f;
         private static readonly int IsDeadHash = Animator.StringToHash("isDead");
         private static readonly int IsHurtHash = Animator.StringToHash("isHurt");
@@ -57,8 +57,8 @@ namespace CrystalFlux.EntitySystem
         public bool IsAlive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
         private bool Immune => esm != null && esm.GetStat(StatType.isImmune) > 0f;
         public float Overhealth => esm != null ? esm.GetStat(StatType.overhealth) : 0f;
-        private int CurHp => esm != null ? Mathf.RoundToInt(esm.GetStat(StatType.currentHp)) : 0;
-        private int MaxHp => esm != null ? Mathf.RoundToInt(esm.GetStat(StatType.EffMaxHp)) : 0;
+        private float CurHp => esm != null ? Mathf.Round(esm.GetStat(StatType.currentHp)) : 0f;
+        private float MaxHp => esm != null ? Mathf.Round(esm.GetStat(StatType.EffMaxHp)) : 0f;
 
         private void Start()
         {
@@ -94,9 +94,9 @@ namespace CrystalFlux.EntitySystem
         private bool barRetired;
         private bool isPlayerEntity;
         private bool BarsAllowed => isPlayerEntity || GameSettings.Current.showEnemyHealthBars;
-        private int barCurHp = int.MinValue;
-        private int barMaxHp = int.MinValue;
-        private int barOverhealth = int.MinValue;
+        private float barCurHp = float.MinValue;
+        private float barMaxHp = float.MinValue;
+        private float barOverhealth = float.MinValue;
         private Vector3 lastBarWorldPos = new(float.NaN, float.NaN, float.NaN);
         private Vector3 lastBarCamPos = new(float.NaN, float.NaN, float.NaN);
         private const float barMoveEpsilonSqr = 1e-6f;
@@ -133,7 +133,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (esm == null || !IsAlive) return;
 
-            int target = Mathf.Clamp(Mathf.FloorToInt(MaxHp * pct * 0.01f), 1, MaxHp);
+            float target = Mathf.Clamp(Mathf.Floor(MaxHp * pct * 0.01f), 1f, MaxHp);
             esm.AddStat(new StatBuff(StatType.currentHp, target - CurHp));
             UpdatePhase();
         }
@@ -142,7 +142,7 @@ namespace CrystalFlux.EntitySystem
         {
             if (phase == null) return;
 
-            float hpPct = (float)CurHp / MaxHp * 100f;
+            float hpPct = CurHp / MaxHp * 100f;
             int newPhase = 0;
             for (int i = 0; i < phase.phaseThresholds.Length; i++)
             {

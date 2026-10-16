@@ -9,7 +9,7 @@ public class HivemindInstance : AnomalyInstance
 {
     private readonly HashSet<EntityHealth> members = new();
     private readonly List<EntityHealth> drainBuffer = new();
-    private readonly System.Func<EntityHealth, int, bool> absorb;
+    private readonly System.Func<EntityHealth, float, bool> absorb;
     private float poolCur;
     private float poolMax;
     private float hpSum;
@@ -49,7 +49,7 @@ public class HivemindInstance : AnomalyInstance
         eh.SetBarHidden(true);
     }
 
-    private bool Absorb(EntityHealth eh, int dmg)
+    private bool Absorb(EntityHealth eh, float dmg)
     {
         if (!isActive || draining || depleted || eh == null || !members.Contains(eh)) return false;
 

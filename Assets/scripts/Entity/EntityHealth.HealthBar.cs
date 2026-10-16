@@ -87,9 +87,9 @@ namespace CrystalFlux.EntitySystem
                 EnsureOwnCanvas(healthBarTextInstance);
             }
 
-            barCurHp = int.MinValue;
-            barMaxHp = int.MinValue;
-            barOverhealth = int.MinValue;
+            barCurHp = float.MinValue;
+            barMaxHp = float.MinValue;
+            barOverhealth = float.MinValue;
             lastBarWorldPos = new Vector3(float.NaN, float.NaN, float.NaN);
             lastBarCamPos = new Vector3(float.NaN, float.NaN, float.NaN);
             RefreshHealthBar();
@@ -105,9 +105,9 @@ namespace CrystalFlux.EntitySystem
         {
             if (healthBarInstance == null) return;
 
-            int cur = CurHp;
-            int max = MaxHp;
-            int over = Mathf.FloorToInt(Overhealth);
+            float cur = CurHp;
+            float max = MaxHp;
+            float over = Mathf.Floor(Overhealth);
             if (cur == barCurHp && max == barMaxHp && over == barOverhealth) return;
 
             barCurHp = cur;

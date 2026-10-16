@@ -60,7 +60,7 @@ namespace CrystalFlux.Core
             return root;
         }
 
-        public void SpawnTextIndicator(int damage, Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, TextType type)
+        public void SpawnTextIndicator(float damage,Vector2 sourcePos, Color color, float scale, float lifetime, float floatSpeed, float delay, TextType type)
         {
             if (prefab == null || canvas == null) return;
 

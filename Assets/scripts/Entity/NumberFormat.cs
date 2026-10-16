@@ -5,7 +5,7 @@ namespace CrystalFlux.EntitySystem
 {
     public static class NumberFormat
     {
-        private static readonly string[] Suffixes = { "", "k", "M", "B" };
+        private static readonly string[] Suffixes = { "", "k", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc" };
 
         public static string Abbrev(float val)
         {
@@ -25,8 +25,8 @@ namespace CrystalFlux.EntitySystem
 
         public static string Signed(float val) => (val >= 0f ? "+" : "") + Abbrev(val);
 
-        public static string Bar(int cur, int max, int over = 0) =>
-            over > 0
+        public static string Bar(float cur, float max, float over = 0f) =>
+            over > 0f
                 ? $"{Abbrev(cur + over)}(+{Abbrev(over)})/{Abbrev(max)}"
                 : $"{Abbrev(cur)}/{Abbrev(max)}";
     }
