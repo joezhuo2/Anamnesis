@@ -13,6 +13,7 @@ namespace CrystalFlux.WaveSystem
         [Tooltip("% added to the chance after each eligible wave without a mutation")] public float mutationChanceRamp = 5f;
         public int mutationMinGap = 5;
         public float mutationAnnounceDuration = 3f;
+        public Color mutationAnnounceColor = new(0.7f, 0.4f, 1f);
 
         private readonly List<MutationState> mutations = new();
         private int lastMutationWave;
@@ -69,12 +70,13 @@ namespace CrystalFlux.WaveSystem
         {
             if (GameController == null) return;
 
-            GameController.SetTitleForDuration($"Mutation: {added.Label}", mutationAnnounceDuration, 0.5f, 0.5f);
+            string hex = ColorUtility.ToHtmlStringRGB(mutationAnnounceColor);
+            GameController.SetTitleForDuration($"<color=#{hex}>Mutation: {added.Label}</color>", mutationAnnounceDuration, 0.5f, 0.5f);
 
             var active = new List<string>();
             foreach (var m in mutations)
                 if (m != added) active.Add(m.Label);
-            if (active.Count > 0) GameController.SetSubtitleForDuration(string.Join(", ", active), mutationAnnounceDuration, 0.5f, 0.5f);
+            if (active.Count > 0) GameController.SetSubtitleForDuration($"<color=#{hex}>{string.Join(", ", active)}</color>", mutationAnnounceDuration, 0.5f, 0.5f);
         }
 
         protected void ApplyMutations(GameObject enemy, GameObject prefab, int level, IStatProvider esm, int splitGeneration = 0)
