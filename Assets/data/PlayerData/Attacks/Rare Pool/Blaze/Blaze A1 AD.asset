@@ -64,8 +64,8 @@ MonoBehaviour:
   phaseReq: -1
   minMode: 0
   nextAttack: {fileID: 0}
-  staminaCost: 16
-  staminaCostPct: 7
+  staminaCost: 14
+  staminaCostPct: 6
   healthCost: 0
   healthCostPct: 0
   manaCost: 0
