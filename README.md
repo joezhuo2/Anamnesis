@@ -9,7 +9,7 @@
 ![URP](https://img.shields.io/badge/URP_2D-17.4-222C37?logo=unity&logoColor=white)
 ![Input System](https://img.shields.io/badge/Input_System-1.19-4A90D9)
 ![Cinemachine](https://img.shields.io/badge/Cinemachine-3.1.7-E0457B)
-![Version](https://img.shields.io/badge/version-0.9.3-6366F1)
+![Version](https://img.shields.io/badge/version-0.9.4-6366F1)
 ![License](https://img.shields.io/badge/License-Source--Available-orange)
 
 | [📖 About](./README.md) | [📜 Changelog](./CHANGELOG.md) | [🗺️ Roadmap](./ROADMAP.md) | [📝 Upcoming](./TODO.md) | [👏 Credits](./CREDITS.md) | [⚔️ Game Index](./GAME.md)
@@ -17,7 +17,7 @@
 
 </div>
 
-Current release: **v0.9.3** — see [CHANGELOG.md](CHANGELOG.md) for release history.
+Current release: **v0.9.4** — see [CHANGELOG.md](CHANGELOG.md) for release history.
 
 **Jump to:** [🔁 Core Loop](#-core-loop) · [✨ Features](#-features) · [🎮 Controls](#-controls) · [📚 Content](#-content) · [🏗️ Tech Stack](#️-tech-stack) · [🚀 Quick Start](#-quick-start) · [📁 Project Structure](#-project-structure) · [📄 License](#-license)
 
@@ -51,6 +51,7 @@ Current release: **v0.9.3** — see [CHANGELOG.md](CHANGELOG.md) for release his
 | **🌳 Skill Tree** | Pan/zoom tree of 261 nodes with bidirectional (OR) connections, incompatible nodes, gold refunds (free until the tree is closed), **Refund All**, a search bar that highlights matching nodes, queued unlocks that spend skill points as they arrive, capstones that upgrade an owned attack or Awakening in place, and keystones that grant a build-defining Awakening |
 | **🧪 Status Effects** | Stackable DoTs, stuns, freezes, stat buffs and reductions, attack replacement, cleansing, and **Ethereal Mirage** clones that share your stats and repeat your attacks, with cooldown UI |
 | **👹 Enemies** | Splitting on death, HP-threshold phases that buff stats and unlock attacks, a global spawner, a six-boss **Boss Rush** gauntlet, and a **Mirror** boss that fights with a copy of your current attacks and Awakenings on its own enemy stats |
+| **🧬 Mutations** | Expert and Master runs from wave 20 can permanently mutate the enemies with random effects such as lifesteal, thorns, shields, evasion or splitting, with levels that stack up to III |
 | **❤️ Resources** | Health, stamina and mana, dash, knockback with resistance, and an **overhealth** pool spent before HP |
 | **📈 Progression** | XP and gold drops with 15% variance, level-up stat gains and skill points, and a Stealing stat that boosts gold |
 | **💎 Collectibles** | `CollectibleData` pickups spawned around the player mid-wave, each with its own roll chance, spawn cooldown, value range and on-ground lifetime. Health, XP, stamina and mana pay a percentage of the matching live stat; gold, skill points and rerolls are flat. They keep their remaining time across a wave break, and reroll pickups never spawn in Ironman. `SpawnerBox` pickups start an ambush of configurable enemies that joins the wave, then drop a weighted batch of collectibles once it is cleared |

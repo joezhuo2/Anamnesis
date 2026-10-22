@@ -861,7 +861,7 @@ Content gated by tier (`minMode`):
 
 | Tier | Content |
 |---|---|
-| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; every wave event except Cult Gathering; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport, Cultist Circleballs |
+| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; every wave event except Cult Gathering; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport, Cultist Circleballs; Mutations |
 | Master (2) | Ethereal Mirage keystone; `Box Cult`, `Box Doppelganger`, `SkillPoint` pickups; Cult Gathering wave event; Unlimited Fission (`USplit`); Frost Slime Snowstorm; Golem TDLR Barrage; Lich Circle-In |
 
 | Attack | Unlock wave here | Unlock wave in `rarePool` |
@@ -971,6 +971,27 @@ anomaly whose `anomalyType` matches it. Skipping the contract excludes nothing.
 **HUD.** `contractInfoText` shows `Contract: <name>`, with the Time Trial timer, `(Paused)` or `- Broken`.
 
 ---
+
+# Mutations
+Expert and Master only (`WaveManager.mutationMinMode`, default 1). Rolled in `BeginWave` (Regular and Unlimited) once the
+wave number reaches `mutationStartWave` (20): `mutationBaseChance` (5%) plus a bonus that grows by `mutationChanceRamp`
+(5%) after each eligible wave without a mutation and resets on one. At least `mutationMinGap` (5) waves pass between
+mutations. A roll picks a random mutation that is not yet level III; one the enemies already have levels up and rerolls
+its value. Mutations last for the rest of the run, apply to every enemy spawned through the wave's spawn hooks and are
+saved with run saves. The title announces the new mutation and the subtitle lists the others already active.
+
+| Mutation | Level I | Level II | Level III |
+|---|---|---|---|
+| Lifesteal | heal 8-16% of damage dealt | 12-24% | 25-48% |
+| Overhealth | converts 80-120% of overheal, decays 15-25% / 0.5s | 120-180%, 12-18% / 0.5s | 200-300%, 6-12% / 0.5s |
+| Damage / Effect / Spell / Physical Resistance, Attack Speed (each separate) | +10-30 | +25-40 | +45-70 |
+| Shields | one packet deals at most 35-70% max HP | 20-60% | 15-45% |
+| Thorns | reflect 2-6% of direct-hit damage as Physical | 4-14% Physical | 2-4% True |
+| Evasive | 0.1-0.3s immunity after a hit | 0.15-0.4s | 0.3-0.7s |
+| Splitting | 15-25% on death to split into 2-3 same-level copies | 25-45%, 2-5 | 35-60%, 3-7 |
+
+Overhealth also converts regen at full HP. Split copies get every other mutation; they only split again (once) while the
+Fission anomaly is active.
 
 # Damage Mitigation
 

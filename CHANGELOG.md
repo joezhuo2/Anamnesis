@@ -7,6 +7,20 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.9.4] - 2026-10-22 - Mutations
+
+### Added
+- **Mutations** (Expert and Master modes): from wave 20, each wave has a 5% chance at wave start to give enemies a permanent random mutation for the rest of the run. The chance rises by 5% after every eligible wave without one, and at least 5 waves pass between mutations. Rolling a mutation the enemies already have raises its level (max III) and rerolls its value (#62)
+  - **Lifesteal**: heal 8-16% / 12-24% / 25-48% of damage dealt
+  - **Overhealth**: overheal converts 80-120% / 120-180% / 200-300% to overhealth, decaying 15-25% / 12-18% / 6-12% every 0.5s
+  - **Damage, Effect, Spell, Physical Resistance** and **Attack Speed** (each its own mutation): +10-30% / 25-40% / 45-70%
+  - **Shields**: one damage packet deals at most 35-70% / 20-60% / 15-45% of max HP
+  - **Thorns**: reflect 2-6% / 4-14% physical, or 2-4% true at level III, of direct-hit damage taken
+  - **Evasive**: 0.1-0.3s / 0.15-0.4s / 0.3-0.7s immunity after being hit
+  - **Splitting**: 15-25% / 25-45% / 35-60% chance on death to split into 2-3 / 2-5 / 3-7 copies; during Fission the copies can split once more
+- A mutation announcement shows the new mutation as the title and the already-active ones as the subtitle
+- Mutations are saved with runs
+
 ## [v0.9.3] - 2026-10-22 - Rare Rebalance
 
 ### Changed
