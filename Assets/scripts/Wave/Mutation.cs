@@ -16,7 +16,8 @@ namespace CrystalFlux.WaveSystem
         Shields,
         Thorns,
         IFrames,
-        Splitting
+        Splitting,
+        Dodge
     }
 
     [Serializable]
@@ -38,6 +39,8 @@ namespace CrystalFlux.WaveSystem
         private static readonly float[,] thorns = { { 2, 6 }, { 4, 14 }, { 2, 4 } };
         private static readonly float[,] iFrames = { { 0.1f, 0.3f }, { 0.15f, 0.4f }, { 0.3f, 0.7f } };
         private static readonly float[,] splitChance = { { 15, 25 }, { 25, 45 }, { 35, 60 } };
+        private static readonly float[,] dodgeChance = { { 25, 35 }, { 30, 40 }, { 35, 50 } };
+        private static readonly float[,] dodgeRating = { { 80, 120 }, { 150, 200 }, { 180, 220 } };
         public static readonly int[,] SplitCount = { { 2, 3 }, { 2, 5 }, { 3, 7 } };
 
         public static int Count => Enum.GetValues(typeof(MutationType)).Length;
@@ -56,6 +59,7 @@ namespace CrystalFlux.WaveSystem
                 case MutationType.Thorns: value = Roll(thorns, i); break;
                 case MutationType.IFrames: value = Roll(iFrames, i, 0.01f); break;
                 case MutationType.Splitting: value = Roll(splitChance, i); break;
+                case MutationType.Dodge: value = Roll(dodgeChance, i); value2 = Roll(dodgeRating, i); break;
                 default: value = Roll(stat, i); break;
             }
         }
