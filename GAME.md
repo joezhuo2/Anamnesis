@@ -861,7 +861,7 @@ Content gated by tier (`minMode`):
 
 | Tier | Content |
 |---|---|
-| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; every wave event except Cult Gathering; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport, Cultist Circleballs; Mutations |
+| Expert (1) | Capstone nodes; `Box Slime`, `Box Bat`, `Box Crab`, `Reroll` pickups; every wave event except Cult Gathering; Blackout, Duel and Fission anomalies (Regular and Unlimited); enemy attacks Jellyfish SplashA, Lich B (Plant), Bat Mark, Crab B (Disc), Cultist Teleport, Cultist Circleballs |
 | Master (2) | Ethereal Mirage keystone; `Box Cult`, `Box Doppelganger`, `SkillPoint` pickups; Cult Gathering wave event; Unlimited Fission (`USplit`); Frost Slime Snowstorm; Golem TDLR Barrage; Lich Circle-In |
 
 | Attack | Unlock wave here | Unlock wave in `rarePool` |
@@ -973,7 +973,7 @@ anomaly whose `anomalyType` matches it. Skipping the contract excludes nothing.
 ---
 
 # Mutations
-Expert and Master only (`WaveManager.mutationMinMode`, default 1). Rolled in `BeginWave` (Regular and Unlimited) once the
+Hard and Nightmare only (`DifficultyData.mutations`). Rolled in `BeginWave` (Regular and Unlimited) once the
 wave number reaches `mutationStartWave` (20): `mutationBaseChance` (5%) plus a bonus that grows by `mutationChanceRamp`
 (5%) after each eligible wave without a mutation and resets on one. At least `mutationMinGap` (5) waves pass between
 mutations. A roll picks a random mutation that is not yet level III; one the enemies already have levels up and rerolls
@@ -989,6 +989,7 @@ saved with run saves. The title announces the new mutation and the subtitle list
 | Thorns | reflect 2-6% of direct-hit damage as Physical | 4-14% Physical | 2-4% True |
 | Evasive | 0.1-0.3s immunity after a hit | 0.15-0.4s | 0.3-0.7s |
 | Splitting | 15-25% on death to split into 2-3 same-level copies | 25-45%, 2-5 | 35-60%, 3-7 |
+| Dodge | +25-35% dodge chance, +80-120 dodge rating | +30-40%, +150-200 | +35-50%, +180-220 |
 
 Overhealth also converts regen at full HP. Split copies get every other mutation; they only split again (once) while the
 Fission anomaly is active.
