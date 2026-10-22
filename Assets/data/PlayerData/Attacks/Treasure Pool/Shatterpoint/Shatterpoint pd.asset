@@ -24,7 +24,7 @@ MonoBehaviour:
   spiralSpacing: 1
   physicalMult: 0
   spellMult: 0
-  trueMult: 0.18
+  trueMult: 0.06
   scalingStat: 31
   extraScalings:
   - stat: 7
@@ -43,6 +43,7 @@ MonoBehaviour:
   additionalAttack: {fileID: 0}
   additionalChance: 0
   addAttackRequiresHit: 1
+  canAlwaysTriggerAdditional: 0
   additionalFollowsMouse: 0
   distFromCenter: 0
   effects:

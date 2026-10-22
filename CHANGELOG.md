@@ -7,6 +7,19 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.9.3] - 2026-10-22 - Rare Rebalance
+
+### Changed
+- **Stat caps**: `attackSpeedPct` 70 → 60
+- **Aphelion**: cooldown 2.2s → 1.8s, stamina cost 6 → 4, mana cost 8 → 6, now gains 1 mana on hit; spell scaling 55% → 70%
+- **Blaze**: cooldown 26s → 14s, projectile lifetime 1s → 2s; follow-up stamina cost 16 (+7%) → 14 (+6%)
+- **Entwined Fate**: health on hit 4 (+2%) → 6 (+1%), lifetime 24s → 28s, pierce 6 → 8, physical scaling 45% → 40%
+- **Lifeforce Burst**: health on hit 5 (+3%) → 6 (+4%), size 3 → 4
+- **Shatterpoint**: projectile true scaling 18% → 6%, upgrade cooldown 0.5s → 1.5s, status effect crit damage multiplier 400% → 800%
+- **Feedback Loop**: cooldown 0.15s → 0.3s
+- **Heartburn**: per stack crit damage 12% → 8%, damage bonus 4% → 3%, stamina cost 18% → 14%; max stacks 15 → 25
+- **Reminiscence** cooldown 4s → 3s
+
 ## [v0.9.2] - 2026-10-15 - Stat Overflow
 
 ### Changed

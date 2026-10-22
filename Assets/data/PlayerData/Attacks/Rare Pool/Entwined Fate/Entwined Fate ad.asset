@@ -73,8 +73,8 @@ MonoBehaviour:
   basedOnDmgDealt: 1
   staminaGainOnHit: 1
   staminaPctGainOnHit: 0
-  healthGainOnHit: 4
-  healthPctGainOnHit: 2
+  healthGainOnHit: 6
+  healthPctGainOnHit: 1
   manaGainOnHit: 1
   manaPctGainOnHit: 0
   summonChance: 0

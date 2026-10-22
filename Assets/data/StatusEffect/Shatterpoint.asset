@@ -18,7 +18,7 @@ MonoBehaviour:
   isBuff: 0
   icon: {fileID: 0}
   effName: Shatterpoint
-  desc: Consumes all stun and freeze effects. Each consumed effect deals 400% of the source's crit damage as true damage.
+  desc: 
   maxStacks: 1
   loseAllStacksOnExpire: 0
   target: {fileID: 0}
@@ -27,5 +27,5 @@ MonoBehaviour:
   currentStacks: 0
   potencyMultiplier: 1
   origin: {fileID: 0}
-  critDmgMult: 4
+  critDmgMult: 8
   indicatorColor: {r: 0.6784314, g: 0.84705883, b: 0.9019608, a: 1}
