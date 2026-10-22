@@ -12,7 +12,7 @@ Projectile `Size` multiplies the projectile prefab's own scale: the final scale 
 
 Some stats are capped when read (`StatCaps`). Capped at 100: `critChance`, `aoePct`, `kbRes`, `dashCooldownRedPct`,
 `dashStaminaCostRedPct`. Capped at 90: `castTimeRedPct`, `damageRes`, `physicalRes`, `spellRes`, `basicCdRedPct`,
-`skillCdRedPct`, `ultCdRedPct`, `EffectRes`. Capped at 80: `dodgeChance`. Capped at 70: `attackSpeedPct`. Capped at 300:
+`skillCdRedPct`, `ultCdRedPct`, `EffectRes`. Capped at 80: `dodgeChance`. Capped at 60: `attackSpeedPct`. Capped at 300:
 `resPen`, `ProjSpd`, `kbPct`. Floored at -90: `seTickRatePct`, `seDurPct`, `stCostPct`, `moveSpeedPct`. The base and
 mixed reward pools skip a stat once it is at its cap; a roll can still push it past the cap. Milestone and synergy
 rewards ignore caps. Player level is capped at 100; XP stops levelling once it is reached.
@@ -122,18 +122,18 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 ## Aphelion
 - Asset: `Aphelion AD`
 - Type: Basic
-- Cooldown: 2.2s
+- Cooldown: 1.8s
 - Pattern: Single (1 count)
 - Spawn: 0 dist
 - Animation: 0.5s
-- Costs: Stamina 6, Mana 8
-- Gains on hit: Stamina +1, Mana +2%
+- Costs: Stamina 4, Mana 6
+- Gains on hit: Stamina +1, Mana +1 +2%
 - Projectile:
   - Speed: 6
   - Lifetime: 10.5s
   - Pierce: 3000
   - Size: 2
-  - Damage: 55% Spell
+  - Damage: 70% Spell
   - Scaling: EffInt
   - Time Before Same Enemy: 0.5s
   - Orbit: radius 1 (+1 random), orbits self, CCW
@@ -160,14 +160,14 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 ## Blaze
 - Asset: `Blaze A AD`
 - Type: Basic
-- Cooldown: 26s
+- Cooldown: 14s
 - Pattern: Single (1 count)
 - Spawn: 0.5 dist
 - Animation: 1s
 - Gains on hit: Stamina +6, Mana +3
 - Projectile:
   - Speed: 0 (melee)
-  - Lifetime: 1s
+  - Lifetime: 2s
   - Pierce: 3000
   - Size: 2.5
   - Damage: 930% Phys
@@ -184,7 +184,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Spawn: 0.5 dist
 - Animation: 0.5s
 - Cast: 1s, rooted while casting
-- Costs: Stamina 18 +8%
+- Costs: Stamina 14 +6%
 - Gains on hit: Stamina +3
 - Projectile:
   - Speed: 12
@@ -194,7 +194,7 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
   - Damage: 600% Phys
   - Scaling: EffAtk
   - Effects: 100% self on cast (Blaze Soul, refreshes the 6s replacement) + 100% self on
-    cast (Heartburn, 6s, max 15 stacks: +4% damagePct, +12% critDamage, +18% stCostPct,
+    cast (Heartburn, 6s, max 25 stacks: +3% damagePct, +8% critDamage, +14% stCostPct,
     -16% hpRegPct per stack)
   - Additional: 60% chance on hit to create Blaze Hyperspark
   - Knockback: 12 force for 0.15s
@@ -265,10 +265,10 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Cleanses: 1 debuff
 - Projectile:
   - Speed: 0 (stationary)
-  - Lifetime: 26s
-  - Pierce: 6 (destroyed at max pierce)
+  - Lifetime: 28s
+  - Pierce: 8 (destroyed at max pierce)
   - Size: 2
-  - Damage: 50% Phys, 15% Spell
+  - Damage: 40% Phys, 15% Spell
   - Scaling: EffMaxHp
   - Time Before Same Enemy: 0.25s
   - Effects: 100% on hit (Slow, 5s, max 3 stacks, -15% moveSpeed per stack) + 20% self on
@@ -394,12 +394,12 @@ Seven of them also sit in `corruptionSpecialPool` at a much lower unlock wave â€
 - Pattern: Single (1 count)
 - Spawn: 0 dist, 1s delay
 - Animation: 0.75s
-- Gains on hit: Stamina +4, Health +5 +3%, Mana +2
+- Gains on hit: Stamina +4, Health +6 +4%, Mana +2
 - Projectile:
   - Speed: 0 (melee)
   - Lifetime: 0.75s
   - Pierce: 3000
-  - Size: 3
+  - Size: 4
   - Damage: 180% Spell, 15% True
   - Scaling: EffMaxHp
   - Knockback: 6 force for 0.15s
@@ -1545,7 +1545,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Type: SpawnProjectile
 - Conditions: OnProjectileHit
 - Chance: 85%
-- Cooldown: 0.15s
+- Cooldown: 0.3s
 - Delay: 0s
 - Projectile: `Feedback Loop.prefab`
 - Description: 85% chance on projectile hit to spawn a ring of 6 Feedback Loop
@@ -1622,7 +1622,7 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Chance: 30%
 - Cooldown: 3s
 - Delay: 0.35s
-- Cooldown Effect: Reminiscence Cooldown (4s)
+- Cooldown Effect: Reminiscence Cooldown (3s)
 - Description: 30% chance on a critical hit to immediately perform an extra attack of a
   randomly chosen equipped attack type. Slots sealed by the Sealed anomaly are never picked, and
   the extra attack does not count toward, or spend, a Resonance free cast.
@@ -1662,11 +1662,11 @@ Upgrades with `noMirror` set are never copied by the [Mirror Boss](#mirror-boss)
 - Type: SpawnProjectile
 - Conditions: OnCrit
 - Chance: 100%
-- Cooldown: 0.5s
+- Cooldown: 1.5s
 - Delay: 0s
 - Projectile: `Shatterpoint.prefab` (`Shatterpoint ad` / `Shatterpoint pd`, folder `Treasure Pool/Shatterpoint`)
   - Size: 2, lifetime 0.5s, pierce 6, random direction
-  - Damage: 50% True
+  - Damage: 6% True
   - Effect: 100% on hit (`Shatterpoint`)
 - Description: Critical hits shatter the enemy and remove their Stun or Freeze to deal additional true damage.
 - In `treasurePool`, no unlock wave.
@@ -1850,7 +1850,7 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `DotDetonator 0.5 2` | Detonator | Detonator | 0.5s | - | 1 | Detonates every DoT stack for 250% as True, scaled by each DoT's potency, then removes them all |
 | `Enraged` | StatBuffs | Enraged | permanent | - | 1 | +30% atkPct, +25% attackSpeedPct, +20% moveSpeedPct |
 | `Freeze` | Freeze | Frozen | 2s | - | 1 | Cannot move, attack or dash; no passive health regen; knockback and pulls do nothing, and any rush in progress ends |
-| `Heartburn` | StatBuffs | Heartburn | 6s | - | 15 | +4% damagePct, +12% critDamage, +18% stCostPct, -16% hpRegPct per stack |
+| `Heartburn` | StatBuffs | Heartburn | 6s | - | 25 | +3% damagePct, +8% critDamage, +14% stCostPct, -16% hpRegPct per stack |
 | `Holy Bounty` | StatBuffs | Holy Bounty | 24s | - | 1 | +80% addDmgPct, +30% resPen, +15% damageRes |
 | `Lifesteal` | Lifesteal | Lifesteal | 8s | - | 10 | Each stack: 50% chance to heal 0.5% of damage dealt on hit, 1s cooldown. Granted by Eldritch Exchange and Entwined Fate |
 | `Mirage` | EtherealMirage | Ethereal Mirage | 18s | - | 1 | Summons 3 clones at 50% flat stats, 60% opacity, radius 2; each living clone gives +12% moveSpeedPct, -15% damagePct. See Ethereal Mirage above |
@@ -1863,8 +1863,8 @@ Status effect potency (`sePotPct` on the applier) scales DoT damage per tick, `S
 | `Pulled 0.75 1 1.4 2 1.5` | Pulled | Possessed | 0.75s | 0.016s | 1 | Pull speed 4 (+2/stack), 1.5 radius (asset name is stale) |
 | `Pulled 0.6 1 15 3` | Pulled | Possessed | 0.6s | 0.016s | 1 | Pull speed 15 (+2/stack), 3 radius |
 | `Radiation 4 0.25 8 2 CritDmg` | DoT | Radiation | 5s | 0.25s | 10 | 5% critDamage per tick |
-| `Reminiscence Cooldown` | Info | Reminiscence Cooldown | 4s | - | 1 | Cooldown marker |
-| `Shatterpoint` | Shatter | Shatterpoint | 0.05s | - | 1 | Removes every Stun and Freeze on the target; each removed effect deals one hit of 400% of the source's `critDamage` stat as True |
+| `Reminiscence Cooldown` | Info | Reminiscence Cooldown | 3s | - | 1 | Cooldown marker |
+| `Shatterpoint` | Shatter | Shatterpoint | 0.05s | - | 1 | Removes every Stun and Freeze on the target; each removed effect deals one hit of 800% of the source's `critDamage` stat as True |
 | `Slow 3 8 10` | StatReduction | Slow | 3s | - | 8 | -10% moveSpeed per stack |
 | `Slow 5 3 15` | StatReduction | Slow | 5s | - | 3 | -15% moveSpeed per stack |
 | `Slow 4 15 5` | StatReduction | Slow | 4s | - | 15 | -5% moveSpeed per stack |
