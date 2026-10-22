@@ -15,7 +15,7 @@ MonoBehaviour:
   upgradeName: Feedback Loop
   conditions: 0e000000
   chance: 85
-  cooldown: 0.15
+  cooldown: 0.3
   delay: 0
   noMirror: 0
   minMode: 0
