@@ -106,6 +106,7 @@ namespace CrystalFlux.WaveSystem
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
             RefillPlayerResources();
+            RollMutation();
 
             HandleWave();
         }
