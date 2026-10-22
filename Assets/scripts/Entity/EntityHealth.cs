@@ -52,6 +52,7 @@ namespace CrystalFlux.EntitySystem
         private ICastHandler castHandler;
         private IStatusEffectReceiver ownSem;
         private EnemyPhase phase;
+        private EnemyMutationEffects mutations;
         private bool isMirage;
         private Canvas cachedCanvas;
         public bool IsAlive => esm != null && esm.GetStat(StatType.isAlive) > 0f;
@@ -86,6 +87,7 @@ namespace CrystalFlux.EntitySystem
             TryGetComponent(out castHandler);
             TryGetComponent(out ownSem);
             TryGetComponent(out phase);
+            TryGetComponent(out mutations);
         }
 
         public const string HealthBarCanvasName = "HealthBarCanvas";
