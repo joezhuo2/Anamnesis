@@ -94,7 +94,10 @@ namespace CrystalFlux.SaveSystem
                 pendingAnomalyRerolls = r.pendingAnomalyRerolls,
                 pendingAnomalySkillPoints = r.pendingAnomalySkillPoints,
                 unlimitedLastBossWave = r.unlimitedLastBossWave,
-                unlimitedMaxTotalEnemies = r.unlimitedMaxTotalEnemies
+                unlimitedMaxTotalEnemies = r.unlimitedMaxTotalEnemies,
+                mutations = r.mutations ?? new(),
+                lastMutationWave = r.lastMutationWave,
+                mutationBonusChance = r.mutationBonusChance
             };
 
             foreach (var id in r.availableRareIds)

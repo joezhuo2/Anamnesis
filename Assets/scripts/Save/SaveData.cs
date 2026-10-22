@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CrystalFlux.Core;
+using CrystalFlux.WaveSystem;
 
 namespace CrystalFlux.SaveSystem
 {
@@ -96,6 +97,9 @@ namespace CrystalFlux.SaveSystem
         public int pendingAnomalySkillPoints = -1;
         public int unlimitedLastBossWave;
         public int unlimitedMaxTotalEnemies;
+        public List<MutationState> mutations = new();
+        public int lastMutationWave;
+        public float mutationBonusChance;
     }
 
     [Serializable]
