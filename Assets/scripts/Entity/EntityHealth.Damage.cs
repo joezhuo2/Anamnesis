@@ -59,6 +59,8 @@ namespace CrystalFlux.EntitySystem
             bool tookHit = false;
             bool tookDamage = false;
             bool counterDodged = false;
+            bool mutationIFrames = false;
+            float shieldLeft = mutations != null && mutations.shieldCapPct > 0f ? MaxHp * mutations.shieldCapPct * 0.01f : float.PositiveInfinity;
             bool prevSuppress = _suppressHurtIFrames;
             bool prevPending = _pendingHurtIFrames;
             _suppressHurtIFrames = true;
@@ -118,6 +120,12 @@ namespace CrystalFlux.EntitySystem
                     continue;
                 }
 
+                if (dmg > 0f && !consume)
+                {
+                    dmg = Mathf.Min(dmg, shieldLeft);
+                    shieldLeft -= dmg;
+                }
+
                 Color color = i.indicatorColor != default ? i.indicatorColor : i.type switch
                 {
                     DamageType.Physical => Color.gray,
@@ -144,6 +152,8 @@ namespace CrystalFlux.EntitySystem
 
                 if (cpum != null && dmg > 0 && i.type == DamageType.DoT && i.owner != null && i.owner != gameObject && (ownTeam != null ? ownTeam.TeamID : 0) != atkTeam)
                     tookDamage = true;
+
+                if (enemyHit && mutations != null) mutationIFrames = true;
 
                 if (directHit)
                 {
@@ -189,19 +199,24 @@ namespace CrystalFlux.EntitySystem
                 if (fireIFrames && !prevSuppress) TriggerIFrames(hurtIFrameDuration);
             }
 
+            if (mutationIFrames && mutations.iFrameDuration > 0f && IsAlive) TriggerIFrames(mutations.iFrameDuration);
+
             if (cpum != null && tookHit) PlayerEvents.RaisePlayerTakeDamage(this);
             if (cpum != null && (tookHit || tookDamage)) PlayerEvents.RaisePlayerDamaged(this);
         }
 
         private static void TryLifesteal(GameObject dealer, float damageDealt)
         {
+            if (dealer.TryGetComponent<EnemyMutationEffects>(out var m)) m.Lifesteal(damageDealt);
             if (!dealer.TryGetComponent<IStatusEffectReceiver>(out var sem)) return;
             if (sem.GetActiveFirstEffectOfType<Lifesteal>() is Lifesteal ls) ls.TryLifesteal(damageDealt);
         }
 
         private void TryThorns(GameObject attacker, float damageTaken)
         {
-            if (attacker == null || ownSem == null) return;
+            if (attacker == null) return;
+            if (mutations != null) mutations.Reflect(OwnerProxy.Resolve(attacker), damageTaken);
+            if (ownSem == null) return;
             if (ownSem.GetActiveFirstEffectOfType<Thorns>() is Thorns th) th.TryReflect(attacker, damageTaken);
         }
 

@@ -83,6 +83,9 @@ namespace CrystalFlux.SaveSystem
             r.pendingAnomalySkillPoints = dto.pendingAnomalySkillPoints;
             r.unlimitedLastBossWave = dto.unlimitedLastBossWave;
             r.unlimitedMaxTotalEnemies = dto.unlimitedMaxTotalEnemies;
+            r.mutations = dto.mutations;
+            r.lastMutationWave = dto.lastMutationWave;
+            r.mutationBonusChance = dto.mutationBonusChance;
             return r;
         }
 

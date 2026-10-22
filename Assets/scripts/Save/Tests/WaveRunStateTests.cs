@@ -66,6 +66,44 @@ namespace CrystalFlux.SaveSystem.Tests
         }
 
         [Test]
+        public void RunState_Mutations_RoundTripThroughJson()
+        {
+            var m = new MutationState { type = MutationType.Overhealth };
+            m.LevelUp();
+            m.LevelUp();
+            var dto = new RunStateDto { lastMutationWave = 25, mutationBonusChance = 10f };
+            dto.mutations.Add(m);
+            dto.mutations.Add(new MutationState { type = MutationType.Thorns });
+
+            wm.RestoreRunState(dto);
+            var back = new RunStateDto();
+            wm.CaptureRunState(back);
+
+            var json = JsonUtility.ToJson(new SaveSystem.RunData { mutations = back.mutations });
+            var loaded = JsonUtility.FromJson<SaveSystem.RunData>(json).mutations;
+
+            Assert.AreEqual(1, loaded.Count);
+            Assert.AreEqual(MutationType.Overhealth, loaded[0].type);
+            Assert.AreEqual(2, loaded[0].level);
+            Assert.AreEqual(m.value, loaded[0].value);
+            Assert.AreEqual(m.value2, loaded[0].value2);
+            Assert.AreEqual(25, back.lastMutationWave);
+            Assert.AreEqual(10f, back.mutationBonusChance);
+        }
+
+        [Test]
+        public void Mutation_LevelUp_CapsAtMaxAndRollsInRange()
+        {
+            var m = new MutationState { type = MutationType.IFrames };
+            for (int i = 0; i < 5; i++) m.LevelUp();
+
+            Assert.IsTrue(m.IsMaxed);
+            Assert.AreEqual(MutationState.MaxLevel, m.level);
+            Assert.That(m.value, Is.InRange(0.3f, 0.7f));
+            Assert.AreEqual("Evasive III", m.Label);
+        }
+
+        [Test]
         public void IsIdleBetweenWaves_FalseBeforeRunStarts()
         {
             Assert.IsFalse(wm.IsRunStarted);

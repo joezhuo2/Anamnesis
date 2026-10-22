@@ -52,6 +52,7 @@ namespace CrystalFlux.WaveSystem
             waveInfoPanel.SetActive(true);
             UpdateWaveText();
             RefillPlayerResources();
+            RollMutation();
 
             HandleWave(currentWave);
         }
@@ -340,6 +341,8 @@ namespace CrystalFlux.WaveSystem
 
         protected void ApplySpawnHooks(GameObject enemy, GameObject prefab, int level, IStatProvider esm)
         {
+            ApplyMutations(enemy, prefab, level, esm);
+
             if (currentAnomaly != null)
             {
                 if (esm != null) currentAnomaly.ApplyEnemyBuffs(esm);

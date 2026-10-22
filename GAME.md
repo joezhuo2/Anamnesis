@@ -972,6 +972,28 @@ anomaly whose `anomalyType` matches it. Skipping the contract excludes nothing.
 
 ---
 
+# Mutations
+Hard and Nightmare only (`DifficultyData.mutations`). Rolled in `BeginWave` (Regular and Unlimited) once the
+wave number reaches `mutationStartWave` (20): `mutationBaseChance` (5%) plus a bonus that grows by `mutationChanceRamp`
+(5%) after each eligible wave without a mutation and resets on one. At least `mutationMinGap` (5) waves pass between
+mutations. A roll picks a random mutation that is not yet level III; one the enemies already have levels up and rerolls
+its value. Mutations last for the rest of the run, apply to every enemy spawned through the wave's spawn hooks and are
+saved with run saves. The title announces the new mutation and the subtitle lists the others already active.
+
+| Mutation | Level I | Level II | Level III |
+|---|---|---|---|
+| Lifesteal | heal 8-16% of damage dealt | 12-24% | 25-48% |
+| Overhealth | converts 80-120% of overheal, decays 15-25% / 0.5s | 120-180%, 12-18% / 0.5s | 200-300%, 6-12% / 0.5s |
+| Damage / Effect / Spell / Physical Resistance, Attack Speed (each separate) | +10-30 | +25-40 | +45-70 |
+| Shields | one packet deals at most 35-70% max HP | 20-60% | 15-45% |
+| Thorns | reflect 2-6% of direct-hit damage as Physical | 4-14% Physical | 2-4% True |
+| Evasive | 0.1-0.3s immunity after a hit | 0.15-0.4s | 0.3-0.7s |
+| Splitting | 15-25% on death to split into 2-3 same-level copies | 25-45%, 2-5 | 35-60%, 3-7 |
+| Dodge | +25-35% dodge chance, +80-120 dodge rating | +30-40%, +150-200 | +35-50%, +180-220 |
+
+Overhealth also converts regen at full HP. Split copies get every other mutation; they only split again (once) while the
+Fission anomaly is active.
+
 # Damage Mitigation
 
 `DamageCalculator.CalculateDamageTaken` multiplies incoming damage by each of these, then rolls dodge.

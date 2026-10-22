@@ -19,5 +19,8 @@ namespace CrystalFlux.WaveSystem
         public int pendingAnomalySkillPoints = -1;
         public int unlimitedLastBossWave;
         public int unlimitedMaxTotalEnemies;
+        public List<MutationState> mutations = new();
+        public int lastMutationWave;
+        public float mutationBonusChance;
     }
 }

@@ -57,6 +57,11 @@ namespace CrystalFlux.WaveSystem
             dto.pendingOccasionalSkillPoints = pendingOccasionalSkillPoints;
             dto.pendingAnomalyRerolls = pendingAnomalyRerolls;
             dto.pendingAnomalySkillPoints = pendingAnomalySkillPoints;
+
+            dto.mutations.Clear();
+            dto.mutations.AddRange(mutations);
+            dto.lastMutationWave = lastMutationWave;
+            dto.mutationBonusChance = mutationBonusChance;
         }
 
         public virtual void RestoreRunState(RunStateDto dto)
@@ -81,6 +86,13 @@ namespace CrystalFlux.WaveSystem
             pendingOccasionalSkillPoints = dto.pendingOccasionalSkillPoints;
             pendingAnomalyRerolls = dto.pendingAnomalyRerolls;
             pendingAnomalySkillPoints = dto.pendingAnomalySkillPoints;
+
+            mutations.Clear();
+            if (dto.mutations != null)
+                foreach (var m in dto.mutations)
+                    if (m != null && m.level > 0) mutations.Add(m);
+            lastMutationWave = dto.lastMutationWave;
+            mutationBonusChance = dto.mutationBonusChance;
 
             UpdateRerollUI();
         }

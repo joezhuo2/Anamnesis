@@ -1,3 +1,4 @@
+using System;
 using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
 using CrystalFlux.WaveSystem;
@@ -14,6 +15,8 @@ public class AnomalySplitter : MonoBehaviour
     private int maxSplits;
     private int levelReduction;
     private EntityHealth health;
+
+    public Action<GameObject> onSplit;
 
     public void Setup(GameObject enemyPrefab, int enemyLevel, float chance, int min, int max, int lvReduction)
     {
@@ -34,9 +37,9 @@ public class AnomalySplitter : MonoBehaviour
         Unsubscribe();
 
         if (prefab == null || !WaveManager.WaveActive) return;
-        if (Random.Range(0f, 100f) >= splitChance) return;
+        if (UnityEngine.Random.Range(0f, 100f) >= splitChance) return;
 
-        int count = Random.Range(minSplits, maxSplits + 1);
+        int count = UnityEngine.Random.Range(minSplits, maxSplits + 1);
         int splitLevel = Mathf.Max(1, level - levelReduction);
         Vector2 pos = dead != null ? dead.transform.position : transform.position;
 
@@ -44,6 +47,7 @@ public class AnomalySplitter : MonoBehaviour
         {
             GameObject clone = EnemySpawning.SpawnEnemy(prefab, pos, splitRadius, splitLevel);
             WaveManager.RegisterSplitEnemy(clone);
+            if (clone != null) onSplit?.Invoke(clone);
         }
     }
 
@@ -57,5 +61,6 @@ public class AnomalySplitter : MonoBehaviour
     {
         Unsubscribe();
         prefab = null;
+        onSplit = null;
     }
 }
