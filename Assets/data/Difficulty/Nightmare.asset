@@ -39,6 +39,7 @@ MonoBehaviour:
   maxCorruptBoostAdd: 30
   eventChanceMult: 1.5
   eventLevelBonusAdd: 2
+  mutations: 1
   rerollGoldCostAdd: 100
   startingRerollsAdd: -5
   startingSkillPointsAdd: 0

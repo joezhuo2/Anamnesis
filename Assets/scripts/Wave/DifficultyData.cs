@@ -49,6 +49,7 @@ namespace CrystalFlux.WaveSystem
         [Header("Event Offsets")]
         [Tooltip("Multiplies every wave event's chance, capped at 100%")] [Min(0f)] public float eventChanceMult = 1f;
         [Tooltip("Added to the levelBonus of enemy-spawning wave events")] public int eventLevelBonusAdd;
+        [Tooltip("Enemies can gain permanent mutations from WaveManager.mutationStartWave")] public bool mutations;
 
         [Header("Economy Offsets")]
         public int rerollGoldCostAdd;

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using CrystalFlux.Core;
 using CrystalFlux.EntitySystem;
-using CrystalFlux.SettingsSystem;
 using UnityEngine;
 
 namespace CrystalFlux.WaveSystem
@@ -13,7 +12,6 @@ namespace CrystalFlux.WaveSystem
         [Tooltip("% chance at wave start once eligible")] public float mutationBaseChance = 5f;
         [Tooltip("% added to the chance after each eligible wave without a mutation")] public float mutationChanceRamp = 5f;
         public int mutationMinGap = 5;
-        [Tooltip("RunMode tier required (0 Simple, 1 Expert, 2 Master)")] public int mutationMinMode = 1;
         public float mutationAnnounceDuration = 3f;
 
         private readonly List<MutationState> mutations = new();
@@ -27,7 +25,7 @@ namespace CrystalFlux.WaveSystem
         protected void RollMutation()
         {
             int wave = GetCurrentWave();
-            if (RunMode.Tier < mutationMinMode || wave < mutationStartWave) return;
+            if (!D.mutations || wave < mutationStartWave) return;
             if (lastMutationWave > 0 && wave - lastMutationWave < mutationMinGap) return;
 
             if (Random.Range(0f, 100f) >= mutationBaseChance + mutationBonusChance)
@@ -105,6 +103,10 @@ namespace CrystalFlux.WaveSystem
                         break;
                     case MutationType.Overhealth:
                         if (enemy.TryGetComponent<EntityHealth>(out var eh)) eh.SetOverhealth(m.value2, m.value, EntityHealth.DefaultOverhealthDecayInterval, true);
+                        break;
+                    case MutationType.Dodge:
+                        esm?.AddStat(new StatBuff(StatType.dodgeChance, m.value));
+                        esm?.AddStat(new StatBuff(StatType.dodgeRating, m.value2));
                         break;
                     case MutationType.Splitting:
                         AddMutationSplitter(enemy, prefab, level, m, splitGeneration);
