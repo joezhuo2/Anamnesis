@@ -31872,10 +31872,10 @@ MonoBehaviour:
   rerollText: {fileID: 186757956}
   nextWaveButton: {fileID: 353364456}
   corruptButton: {fileID: 552836096}
-  corruptChance: 45
-  corruptPositiveChance: 30
-  maxCorruptBoost: 135
-  corruptionSpecialChance: 4
+  corruptChance: 40
+  corruptPositiveChance: 25
+  maxCorruptBoost: 150
+  corruptionSpecialChance: 3
   corruptionSpecialPool:
   - newAttack: {fileID: 11400000, guid: 2f0953e0a32bb9e4cbd8ced71255642f, type: 2}
     icon: {fileID: 0}
@@ -32647,7 +32647,7 @@ MonoBehaviour:
     weight: 1
     variance: 0.15
   milestoneInterval: 15
-  milestoneRewardChoices: 4
+  milestoneRewardChoices: 3
   synergyStatPool:
   - stat: 1
     canBeSource: 1
@@ -32709,12 +32709,12 @@ MonoBehaviour:
     canBeSource: 1
     canBeTarget: 1
     weight: 5
-  minSynergyConversion: 8
-  maxSynergyConversion: 20
+  minSynergyConversion: 1
+  maxSynergyConversion: 3
   synergyChoices: 3
-  synergyMinWave: 15
-  synergyBaseChance: 2
-  synergyChanceGrowth: 2
+  synergyMinWave: 30
+  synergyBaseChance: 1
+  synergyChanceGrowth: 1
   synergyTitle: Choose a synergy
   availableAnomalies:
   - {fileID: 11400000, guid: 2d711879a2a363d4eaa7b524885bc3e6, type: 2}
@@ -32738,13 +32738,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a04ac60950d4a9e837d6bfabdbf8040, type: 2}
   anomalyPrefab: {fileID: 5150596133793642932, guid: b3f580be18867e1458c892364bba6149, type: 3}
   minAnomalyCount: 1
-  maxAnomalyCount: 6
+  maxAnomalyCount: 5
   anomalyChance: 20
   anomalyGlobalMinWave: 3
   duelBossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
   duelStatusEffectPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
   contractPrefab: {fileID: 5150596133793642932, guid: 36656ed890625144dbe034d75c905d8f, type: 3}
-  minContractCount: 2
+  minContractCount: 1
   maxContractCount: 4
   spawnLocation: {x: 0, y: 0}
   maxCurrentEnemies: 12
@@ -32752,13 +32752,13 @@ MonoBehaviour:
   baseEnemyLevel: 1
   minSpawnFrequency: 2
   maxSpawnFrequency: 5
-  spawnSpeedIncreasePerWave: 0.12
+  spawnSpeedIncreasePerWave: 0.15
   minRewardChoices: 2
   maxRewardChoices: 6
   bossBarPrefab: {fileID: 2955816817654674522, guid: 1d26dd022c88740469dbea369e990c99, type: 3}
   statusEffectDisplayPrefab: {fileID: 4531567771420624445, guid: af3ce56ac4b5d6c41aff58c30bde7840, type: 3}
-  bossWaveChance: 15
-  bossWaveChanceIfPreviousNotBoss: 10
+  bossWaveChance: 18
+  bossWaveChanceIfPreviousNotBoss: 12
   minWavesBetweenBossWaves: 3
   enemyPrefabs:
   - prefab: {fileID: 2492915923741323917, guid: df714fb1d7c1612499dc4ea12b268127, type: 3}
@@ -42724,7 +42724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000007010947}
+  m_AnchoredPosition: {x: 0, y: 0.00074116583}
   m_SizeDelta: {x: 0, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1580127889 stripped
