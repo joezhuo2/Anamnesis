@@ -40141,6 +40141,24 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1434897410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434897401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce044fca03049dca103fcc797782aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrystalFlux.Wave::CrystalFlux.WaveSystem.HomeScreenUI
+  hideOnHome:
+  - {fileID: 359406444}
+  - {fileID: 477087765}
+  - {fileID: 1186772503}
+  - {fileID: 942575034}
+  - {fileID: 278195975}
 --- !u!1 &1434897401
 GameObject:
   m_ObjectHideFlags: 0
@@ -40153,6 +40171,7 @@ GameObject:
   - component: {fileID: 1434897405}
   - component: {fileID: 1434897404}
   - component: {fileID: 1434897403}
+  - component: {fileID: 1434897410}
   m_Layer: 0
   m_Name: PlayerUICanvas
   m_TagString: Untagged
