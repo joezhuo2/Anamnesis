@@ -197,7 +197,11 @@ namespace CrystalFlux.WaveSystem
             CloseRewardButtons();
             UpdateRerollUI();
             SetupActionButtonTooltips();
+
+            PlayerUpgradeManager.UpgradeAdded += OnUpgradeAdded;
         }
+
+        private void OnUpgradeAdded(PlayerUpgrade pu) => availableTreasurePool.RemoveAll(t => t != null && t.upgrade == pu);
 
         public virtual void ApplyDifficulty(DifficultyData d)
         {
@@ -246,6 +250,7 @@ namespace CrystalFlux.WaveSystem
 
         private void OnDestroy()
         {
+            PlayerUpgradeManager.UpgradeAdded -= OnUpgradeAdded;
             if (ActiveManager == this) ActiveManager = null;
 
             if (currentAnomaly != null)

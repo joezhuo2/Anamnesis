@@ -14,6 +14,11 @@ namespace CrystalFlux.EntitySystem
         void IUpgradeHolder.RemoveUpgrade(UpgradeAsset pu) => RemoveUpgrade(pu as PlayerUpgrade);
 
         public static PlayerUpgradeManager Instance { get; private set; }
+        public static event Action<PlayerUpgrade> UpgradeAdded;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => UpgradeAdded = null;
+
         public List<PlayerUpgrade> activeUpgrades = new();
         private readonly Dictionary<PlayerUpgrade, float> lastTriggerTimes = new();
         private readonly HashSet<PlayerUpgrade> runtimeCopies = new();
@@ -209,6 +214,7 @@ namespace CrystalFlux.EntitySystem
             activeUpgrades.Add(runtime);
             IndexUpgrade(runtime);
             runtime.OnUnlock(gameObject);
+            UpgradeAdded?.Invoke(pu);
         }
         public void CollectAppliedStats(List<StatBuff> into)
         {

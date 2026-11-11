@@ -138,6 +138,7 @@ namespace CrystalFlux.EntitySystem
         {
             GameObject other = c.rigidbody != null ? c.rigidbody.gameObject : c.gameObject;
             if (other == null || other == go) return;
+            if (go.TryGetComponent<IDamageable>(out var self) && !self.IsAlive) return;
 
             if (go.TryGetComponent<ITeamMember>(out var own) && other.TryGetComponent<ITeamMember>(out var otm) && own.TeamID == otm.TeamID) return;
 

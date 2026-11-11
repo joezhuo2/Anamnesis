@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CrystalFlux.SettingsSystem
 {
@@ -8,8 +9,29 @@ namespace CrystalFlux.SettingsSystem
         public RestartConfirmPanelUI restartConfirmPanel;
 
         private bool isOpen;
+        private GameObject inputBlocker;
 
-        private void Awake() => gameObject.SetActive(false);
+        private void Awake()
+        {
+            CreateInputBlocker();
+            gameObject.SetActive(false);
+        }
+
+        private void CreateInputBlocker()
+        {
+            var canvas = GetComponentInParent<Canvas>(true);
+            if (canvas == null) return;
+
+            inputBlocker = new GameObject("InputBlocker", typeof(RectTransform), typeof(Image));
+            var rt = (RectTransform)inputBlocker.transform;
+            rt.SetParent(canvas.transform, false);
+            rt.SetSiblingIndex(transform.GetSiblingIndex());
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = rt.offsetMax = Vector2.zero;
+            inputBlocker.GetComponent<Image>().color = Color.clear;
+            inputBlocker.SetActive(false);
+        }
 
         public bool IsOpen => isOpen;
 
@@ -39,6 +61,7 @@ namespace CrystalFlux.SettingsSystem
 
             isOpen = !isOpen;
             gameObject.SetActive(isOpen);
+            if (inputBlocker != null) inputBlocker.SetActive(isOpen);
 
             if (isOpen)
             {
