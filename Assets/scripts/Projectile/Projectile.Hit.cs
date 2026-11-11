@@ -36,6 +36,7 @@ namespace CrystalFlux.ProjectileSystem
         private void HandleHitEntity(GameObject target)
         {
             if (target == null || ownerObj == null || target == ownerObj) return;
+            if (ownerObj.TryGetComponent<IDamageable>(out var owner) && !owner.IsAlive) return;
             if (!target.TryGetComponent<IDamageable>(out var eh) || !eh.IsAlive) return;
 
             var tid = target.TryGetComponent<ITeamMember>(out var itm) ? itm.TeamID : 0;
