@@ -7,6 +7,15 @@ and this project *roughly* follows [Semantic Versioning](https://semver.org/spec
 
 ⚠️ Represents potentially unstable/low-tested version.
 
+## [v0.9.5] - 2026-11-10 - Fixes
+
+### Fixed
+- **Escape menu** blocks clicks on buttons behind it (rewards, wave start, etc.) (#48)
+- **Skill tree** draws above the wave text overlay (#51)
+- **Home screen** hides the player HUD (resources, dash, attack cooldowns, DPS, skill tree button) and disables movement, attack and skill tree input until a run starts (#47)
+- **Owned awakenings** (including ones from skill tree nodes, then consumed by keystones) are removed from the treasure reward pool, so a base awakening is not offered again after its keystone (#43)
+- **Dying enemies** can no longer deal damage: projectiles from dead owners and rush impacts from dying enemies are ignored (#31)
+
 ## [v0.9.4] - 2026-10-22 - Mutations
 
 ### Added
